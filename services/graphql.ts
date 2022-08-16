@@ -7,8 +7,8 @@ const initFetcher = (variables = {}) => {
   const env = process.env.NODE_ENV;
   const url =
     env == "production"
-      ? process.env.NEXT_PUBLIC_GQL_PROD_URL
-      : process.env.NEXT_PUBLIC_GQL_DEV_URL;
+      ? process.env.NEXT_PUBLIC_CORSE_FILTER_PROD_URL
+      : process.env.NEXT_PUBLIC_CORSE_FILTER_DEV_URL;
 
   const graphQLClient = new GraphQLClient(url || "");
 
