@@ -1,0 +1,36 @@
+import { ImageType } from "./selector";
+
+export type Sides = "give" | "get";
+export type Limit = { [key in Sides]: number };
+
+export interface DirRates {
+  [key: string]: Rate;
+}
+
+export interface Rate {
+  name: string;
+  course: number;
+  min_fee: string;
+  from_fee: string;
+  to_fee: string;
+  min: Limit;
+  max: Limit;
+  reserve: Limit;
+  param: string;
+  cities?: { [key: string]: string[] };
+}
+
+export interface Top {
+  ru_description: string;
+  en_description: string;
+  code: string;
+  title: string;
+  color: string;
+  image: ImageType;
+}
+export type ExchangerId = string;
+
+export interface DirTops {
+  uniqueRates: { [key: string]: DirRates }; // это уникальные свойства
+  bestRates: DirRates; // это задачка с дождем, чтобы в зависимости от суммы выдавался результат
+}
