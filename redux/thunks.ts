@@ -5,12 +5,17 @@ import axios from "axios";
 import { setPm } from "./mainReducer";
 
 type Side = "give" | "get";
+const env = process.env.NODE_ENV;
+const courseFilterLink =
+  env === "production"
+    ? process.env.NEXT_PUBLIC_GQL_PROD_URL
+    : "http://localhost:5000";
 
 export const fetchFiatByCode = createAsyncThunk(
   "currencies/fetchFiatByCode",
   async ({ code, side }: { code: string; side: Side }) => {
     const response = await axios
-      .get(`https://coingecko-parser.herokuapp.com/${code.toLowerCase()}`)
+      .get(`${process.env.NEXT_PUBLIC_COINGECKO_URL}/${code.toLowerCase()}`)
       .catch((err) => console.error(err));
     const fiatRates = response?.data;
     return {
@@ -24,7 +29,7 @@ export const fetchDirRates = createAsyncThunk(
   "rates/fetchDirRates",
   async (dir: string) => {
     const response = await axios
-      .get(`http://localhost:5000/dir=${dir}/tops=false`)
+      .get(`${courseFilterLink}/dir=${dir}/tops=false`)
       .catch((err) => console.error(err));
     return response?.data as DirRates;
   }
@@ -34,7 +39,7 @@ export const fetchDirTops = createAsyncThunk(
   "rates/fetchDirTops",
   async (dir: string, thunkAPI) => {
     const response = await axios
-      .get(`http://localhost:5000/dir=${dir}/tops=true`)
+      .get(`${courseFilterLink}/dir=${dir}/tops=true`)
       .catch((err) => console.error(err));
     return response?.data as DirTops;
   }
@@ -44,7 +49,7 @@ export const fetchPossiblePairs = createAsyncThunk(
   "currencies/fetchPossiblePairs",
   async ({ code, side }: { code: string; side: Side }) => {
     const response = await axios
-      .get(`http://localhost:5000/possible_pairs/code=${code}`)
+      .get(`${courseFilterLink}/possible_pairs/code=${code}`)
       .catch((err) => console.error(err));
     const possiblePairs = response?.data as string[];
     return {
