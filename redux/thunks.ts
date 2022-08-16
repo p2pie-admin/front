@@ -8,8 +8,8 @@ type Side = "give" | "get";
 const env = process.env.NODE_ENV;
 const courseFilterLink =
   env === "production"
-    ? process.env.NEXT_PUBLIC_GQL_PROD_URL
-    : "http://localhost:5000";
+    ? process.env.NEXT_PUBLIC_CORSE_FILTER_PROD_URL
+    : process.env.NEXT_PUBLIC_CORSE_FILTER_DEV_URL;
 
 export const fetchFiatByCode = createAsyncThunk(
   "currencies/fetchFiatByCode",
