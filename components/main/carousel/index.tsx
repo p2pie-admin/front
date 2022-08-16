@@ -50,7 +50,7 @@ const Carousel = () => {
           return (
             <Flex
               pos="relative"
-              key={top.code}
+              key={top.code + "_"}
               justifyContent="space-between"
               flexDirection="column"
               overflow="hidden"
