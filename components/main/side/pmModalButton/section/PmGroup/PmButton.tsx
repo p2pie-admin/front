@@ -1,7 +1,6 @@
 import PmAvatar from "./PmAvatar";
 import { Button, useColorModeValue } from "@chakra-ui/react";
 import { Function } from "styled-icons/remix-fill";
-import { IconType } from "../../../../../../types/selector";
 
 export default function PmButton({
   children,
@@ -10,7 +9,7 @@ export default function PmButton({
   disabled,
 }: {
   children: JSX.Element | JSX.Element[];
-  icon?: IconType;
+  icon?: any;
   handleToggle: any;
   disabled: boolean;
 }) {
