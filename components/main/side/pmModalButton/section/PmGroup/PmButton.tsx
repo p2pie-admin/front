@@ -19,7 +19,7 @@ export default function PmButton({
   return (
     <Button
       w="100%"
-      p="0 4px"
+      p="0 5px"
       bgColor="transparent"
       boxShadow="none"
       disabled={disabled}
