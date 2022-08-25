@@ -1,6 +1,5 @@
 import PmAvatar from "./PmAvatar";
 import { Button, useColorModeValue } from "@chakra-ui/react";
-import { Function } from "styled-icons/remix-fill";
 
 export default function PmButton({
   children,

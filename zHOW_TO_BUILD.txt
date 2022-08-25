@@ -9,3 +9,6 @@
     yarn build
     yarn start-dev
 
+Если ругается, что лимит билдов
+
+    heroku builds:cancel
