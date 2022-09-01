@@ -2,6 +2,9 @@ import { Button, Icon, Image, Box, useColorModeValue } from "@chakra-ui/react";
 import { ArrowRight } from "@styled-icons/heroicons-outline/ArrowRight";
 import PmAvatar from "../side/pmModalButton/section/PmGroup/PmAvatar";
 import Router from "next/router";
+import CircularMenu from "./circular-menu";
+import PopularSideContext from "./PopularSideContext";
+import { useState } from "react";
 
 const PopularDir = ({ dir }: { dir: string }) => {
   const [giveShortName, getShortName] = dir.split("_");
@@ -15,8 +18,16 @@ const PopularDir = ({ dir }: { dir: string }) => {
       h="100%"
       p="0"
       borderRadius="2rem"
-      // leftIcon={<PmAvatar icon={null} />}
-      // rightIcon={<PmAvatar icon={null} />}
+      leftIcon={
+        <PopularSideContext.Provider value={"give"}>
+          <CircularMenu />
+        </PopularSideContext.Provider>
+      }
+      rightIcon={
+        <PopularSideContext.Provider value={"get"}>
+          <CircularMenu />
+        </PopularSideContext.Provider>
+      }
     >
       <Icon as={ArrowRight} w="4" h="4" />
     </Button>

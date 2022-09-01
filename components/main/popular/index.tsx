@@ -4,7 +4,7 @@ import PopularDir from "./PopularDir";
 const PopularDirs = () => {
   const popularDirs = ["BTC_SBERRUB", "ETH_QWRUB"];
 
-  const recentDirs = ["BTC_CASHRUB", "SBERRUB_BTC"];
+  const recentDirs = ["BTC_CASHRUB", "SBERRUB_BTC", "c", "cc"];
 
   return (
     <Box
@@ -29,7 +29,9 @@ const PopularDirs = () => {
         popular
       </Text>
       <Wrap justify="center">
-        {popularDirs.map((dir) => (
+        {popularDirs.map((
+          dir // важно так как CircularPm выдает ошибку на серверной части
+        ) => (
           <WrapItem key={`popular_${dir}`}>
             <PopularDir dir={dir} />
           </WrapItem>

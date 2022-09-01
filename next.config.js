@@ -8,6 +8,10 @@ const nextConfig = {
     //
     ignoreBuildErrors: true,
   },
+  // experimental: {
+  //   // выключил, потому что https://github.com/vercel/next.js/issues/32360 для CircularMenu
+  //   esmExternals: false,
+  // },
 };
 
 module.exports = nextConfig;
