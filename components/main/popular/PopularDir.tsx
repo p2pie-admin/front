@@ -1,31 +1,59 @@
-import { Button, Icon, Image, Box, useColorModeValue } from "@chakra-ui/react";
+import { Button, Icon, Image, useOutsideClick } from "@chakra-ui/react";
 import { ArrowRight } from "@styled-icons/heroicons-outline/ArrowRight";
-import PmAvatar from "../side/pmModalButton/section/PmGroup/PmAvatar";
-import Router from "next/router";
 import CircularMenu from "./circular-menu";
 import PopularSideContext from "./PopularSideContext";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { setActivePopular } from "../../../redux/mainReducer";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { IPopularGroup } from "../../../types/popular";
 
-const PopularDir = ({ dir }: { dir: string }) => {
-  const [giveShortName, getShortName] = dir.split("_");
+const PopularDir = ({
+  giveGroup,
+  getGroup,
+  dirId,
+}: {
+  giveGroup: IPopularGroup;
+  getGroup: IPopularGroup;
+  dirId: string;
+}) => {
+  const ref = useRef();
+
+  const dispatch = useAppDispatch();
+  const activePopular = useAppSelector((state) => state.main.activePopular);
+
+  const handleDirClick = () => {
+    if (activePopular === dirId) {
+      dispatch(setActivePopular(undefined));
+      return;
+    }
+    dispatch(setActivePopular(dirId));
+  };
+
+  useOutsideClick({
+    ref: ref,
+    handler: () => dispatch(setActivePopular(undefined)),
+  });
 
   return (
     <Button
-      key={dir}
-      onClick={() => {}}
+      filter={"brightness(1)"}
+      ref={ref}
+      key={dirId}
+      onClick={handleDirClick}
       position="relative"
       variant="primary_dark"
       h="100%"
       p="0"
+      mx="5"
       borderRadius="2rem"
       leftIcon={
         <PopularSideContext.Provider value={"give"}>
-          <CircularMenu />
+          <CircularMenu dirId={dirId} group={giveGroup} />
         </PopularSideContext.Provider>
       }
       rightIcon={
         <PopularSideContext.Provider value={"get"}>
-          <CircularMenu />
+          <CircularMenu dirId={dirId} group={getGroup} />
         </PopularSideContext.Provider>
       }
     >

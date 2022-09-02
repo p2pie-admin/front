@@ -5,38 +5,36 @@ import { ToggleLayer } from "react-laag";
 import Button from "./Button";
 import Menu from "./Menu";
 import { Box } from "@chakra-ui/react";
+import { setActivePopular } from "../../../../redux/mainReducer";
+import { useAppSelector } from "../../../../redux/hooks";
+import { IPopular, IPopularGroup } from "../../../../types/popular";
 
-function CircularMenu() {
+function CircularMenu({
+  dirId,
+  group,
+}: {
+  dirId: string;
+  group: IPopularGroup;
+}) {
+  const activePopular = useAppSelector((state) => state.main.activePopular);
+
   return (
     <Box>
       <ToggleLayer
+        isOpen={activePopular === dirId}
         ResizeObserver={ResizeObserver}
         placement={{
           anchor: "CENTER",
         }}
-        renderLayer={({ isOpen, layerProps, close }) => {
+        renderLayer={({ isOpen, layerProps }) => {
           return (
             <AnimatePresence>
-              {isOpen && (
-                <Menu
-                  {...layerProps}
-                  close={close}
-                  items={[
-                    { Icon: "", value: "image", label: "Image" },
-                    { Icon: "Video", value: "video", label: "Video" },
-                    { Icon: "Music", value: "music", label: "Music" },
-                    { Icon: "File", value: "file", label: "File" },
-                    { Icon: "Location", value: "location", label: "Location" },
-                  ]}
-                />
-              )}
+              {isOpen && <Menu {...layerProps} group={group} />}
             </AnimatePresence>
           );
         }}
       >
-        {({ triggerRef, toggle, isOpen }) => (
-          <Button ref={triggerRef} onClick={toggle} isOpen={isOpen} />
-        )}
+        {({ triggerRef }) => <Button ref={triggerRef} group={group} />}
       </ToggleLayer>
     </Box>
   );

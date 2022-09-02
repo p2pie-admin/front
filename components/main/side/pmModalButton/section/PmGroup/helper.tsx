@@ -39,14 +39,12 @@ export const getPmsFromPmGroup = (pm_group: PmGroupType): PmType[] => {
   return pm_group.options.map((option) => {
     const code = getOptionCode(option, pm_group?.prefix);
     const short_name = (option.name || option.currency.code).toUpperCase();
-    const en_full_name = pm_group.en_name + " " + short_name;
-    const ru_full_name = pm_group.ru_name
-      ? pm_group.ru_name + " " + short_name
-      : "";
+    const en_name = pm_group.en_name + " " + short_name;
+    const ru_name = pm_group.ru_name ? pm_group.ru_name + " " + short_name : "";
     return {
       code, // USDTERC20
-      en_full_name, // Tether ERC-20
-      ru_full_name,
+      en_name, // Tether ERC-20
+      ru_name,
       short_name, // ERC-20
       currency: option.currency, // USDT
       icon: pm_group.icon,

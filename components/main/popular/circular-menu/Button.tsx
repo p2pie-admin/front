@@ -1,11 +1,12 @@
 import * as React from "react";
 import styled, { css } from "styled-components";
+import { IPopularGroup } from "../../../../types/popular";
 import { PRIMARY, PRIMARY_2, BUTTON_SIZE } from "./constants";
+import Icon from "../../../shared/Icon";
 
 const buttonHover = css`
   &:hover {
-    background-color: ${PRIMARY_2};
-    transform: scale(1.03);
+    transform: scale(1.1);
   }
 `;
 
@@ -14,7 +15,6 @@ const ButtonBase = styled.button`
   height: ${BUTTON_SIZE}px;
   color: white;
   border: none;
-  background-color: ${(p) => (p.isOpen ? PRIMARY_2 : PRIMARY)};
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -22,7 +22,7 @@ const ButtonBase = styled.button`
   outline: 0;
   cursor: pointer;
   transition: 0.2s ease-in-out;
-  transform: scale(${(p) => (p.isOpen ? 1.03 : 1)});
+  transform: scale(1);
 
   ${(p) => !p.isOpen && buttonHover}
 
@@ -33,7 +33,7 @@ const ButtonBase = styled.button`
 `;
 
 const Button = React.forwardRef(function Button(
-  { style, className, isOpen, onClick },
+  { style, className, isOpen, onClick, group }: { group: IPopularGroup },
   ref
 ) {
   return (
@@ -44,7 +44,7 @@ const Button = React.forwardRef(function Button(
       isOpen={isOpen}
       onClick={onClick}
     >
-      +
+      <Icon icon={group.icon} big />
     </ButtonBase>
   );
 });

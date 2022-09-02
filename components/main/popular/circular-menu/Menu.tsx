@@ -12,7 +12,10 @@ import { ToggleLayer, useHover } from "react-laag";
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useContext, useState } from "react";
 import { Button } from "@chakra-ui/react";
+import Icon from "../../../shared/Icon";
 import PopularSideContext from "../PopularSideContext";
+import { IPM, IPopularGroup } from "../../../../types/popular";
+import PmButton from "../../side/pmModalButton/section/PmGroup/PmButton";
 
 /**
  * Positioning Stuff
@@ -22,8 +25,8 @@ function getTransform(progress, radius, index, totalItems, side) {
   const k = side === "give" ? -1 : 1; // переворачивает угол раскрытия веера, чтобы раскрывалось по бокам
   const value = (index / totalItems) * progress;
 
-  const x = k * radius * Math.cos(Math.PI * (value - 0.4));
-  const y = k * radius * Math.sin(Math.PI * (value - 0.4));
+  const x = k * radius * Math.cos(Math.PI * (value - 0.34));
+  const y = k * radius * Math.sin(Math.PI * (value - 0.34));
 
   const scale = progress / 2 + 0.5;
 
@@ -47,16 +50,14 @@ const Circle = styled(motion.div)`
   position: absolute;
   width: ${ITEM_SIZE}px;
   height: ${ITEM_SIZE}px;
-  background-color: white;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   border: 1px solid ${BORDER};
-  box-shadow: 1px 1px 6px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 4px 28px 0px rgba(0, 0, 0, 0.5);
   cursor: pointer;
   transition: box-shadow 0.15s ease-in-out, border 0.15s ease-in-out;
-  color: ${TEXT};
   pointer-events: all;
   will-change: transform;
 
@@ -67,22 +68,13 @@ const Circle = styled(motion.div)`
   &:hover {
     box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.15);
     color: ${PRIMARY};
-
     & svg {
       transform: scale(1.15);
     }
   }
 `;
 
-function MenuItem({
-  style,
-  className,
-  Icon,
-  onClick,
-  label,
-  index,
-  totalItems,
-}) {
+function MenuItem({ style, index, totalItems, pm }: { pm: IPM }) {
   const side = useContext(PopularSideContext) as "give" | "get";
   return (
     <ToggleLayer
@@ -115,9 +107,7 @@ function MenuItem({
         return (
           <Circle
             ref={triggerRef}
-            className={className}
             style={style}
-            onClick={onClick}
             initial={{ x: 0, opacity: 0 }}
             animate={{ x: 1, opacity: 1 }}
             exit={{ x: 0, opacity: 0 }}
@@ -133,7 +123,7 @@ function MenuItem({
               mass: 5,
             }}
           >
-            "a"
+            <Icon icon={pm.icon} />
           </Circle>
         );
       }}
@@ -155,17 +145,18 @@ const MenuBase = styled.div`
   border-radius: 50%;
 `;
 
-const Menu = React.forwardRef(function Menu({ style, close, items }, ref) {
+const Menu = React.forwardRef(function Menu(
+  { style, group }: { group: IPopularGroup },
+  ref
+) {
   return (
-    <MenuBase ref={ref} style={style} onClick={close}>
-      {items.map((item, index) => (
+    <MenuBase ref={ref} style={style}>
+      {group.pms.map((pm, index) => (
         <MenuItem
           key={index}
-          Icon={item.Icon}
-          label={item.label}
-          onClick={() => console.log(item.value)}
+          pm={pm}
           index={index}
-          totalItems={items.length}
+          totalItems={group.pms.length}
         />
       ))}
     </MenuBase>

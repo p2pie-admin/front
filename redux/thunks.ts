@@ -2,7 +2,10 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { DirRates, DirTops } from "../types/rates";
 import { FiatRates } from "../types/selector";
 import axios from "axios";
-import { setPm } from "./mainReducer";
+
+import { popularQuery } from "../services/initialQueries";
+import initFetcher from "../services/graphql";
+import { IPopular } from "../types/popular";
 
 type Side = "give" | "get";
 const env = process.env.NODE_ENV;
@@ -56,6 +59,16 @@ export const fetchPossiblePairs = createAsyncThunk(
       possiblePairs,
       side,
     };
+  }
+);
+
+export const fetchPopular = createAsyncThunk(
+  "initial/fetchPopular",
+  async () => {
+    const fetcher = initFetcher();
+    const response = await fetcher(popularQuery);
+    console.log("response", response.popularDirs);
+    return response?.popularDirs as IPopular[];
   }
 );
 

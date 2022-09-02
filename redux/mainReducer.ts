@@ -8,9 +8,11 @@ import {
   fetchDirRates,
   fetchDirTops,
   fetchFiatByCode,
+  fetchPopular,
   fetchPossiblePairs,
 } from "./thunks";
 import { PmType } from "../types/selector";
+import { IPopular } from "../types/popular";
 
 type Side = "give" | "get";
 
@@ -30,6 +32,8 @@ export interface MainState {
   amountInput?: AmountInput;
   amountOutputs: AmountOutputs;
   swiperIdVisible: number;
+  activePopular?: string;
+  populars: IPopular[];
 }
 
 const initialState: MainState = {
@@ -38,6 +42,7 @@ const initialState: MainState = {
   pendingDirTops: false,
   amountOutputs: initialAmountOutputs,
   swiperIdVisible: 0,
+  populars: [],
 };
 
 export const ratesSlice = createSlice({
@@ -79,9 +84,18 @@ export const ratesSlice = createSlice({
       state.amountInput = action.payload;
       state.amountOutputs = setAmountOutputs(state, action.payload);
     },
+    setActivePopular: (
+      state: MainState,
+      action: PayloadAction<string | undefined>
+    ) => {
+      state.activePopular = action.payload;
+    },
   },
-
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
   extraReducers: (builder) => {
+    builder.addCase(fetchPopular.fulfilled, (state, action) => {
+      state.populars = action.payload;
+    });
     builder.addCase(fetchDirRates.fulfilled, (state, action) => {
       state.dirRates = action.payload;
     });
@@ -156,6 +170,7 @@ export const {
   setPm,
   setSearchBarInputValue,
   setSwiperIdVisible,
+  setActivePopular,
 } = ratesSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

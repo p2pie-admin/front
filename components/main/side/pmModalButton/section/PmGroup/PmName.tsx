@@ -10,13 +10,13 @@ export default function PmName({
   name: string;
   code?: string;
 }) {
-  const { isCrypto } = useContext(SectionContext);
+  const { currencyVisible } = useContext(SectionContext);
   const color = useColorModeValue("gray.600", "gray.100");
   const nameSameAsCurrency = code?.toUpperCase() === name.toUpperCase();
 
   return (
     <>
-      {isCrypto ? (
+      {currencyVisible ? (
         <VStack spacing={0} align="start">
           <Text fontSize="sm" variant="primary" color="bg.100">
             {code?.toUpperCase()}

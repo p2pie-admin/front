@@ -1,7 +1,7 @@
 import { Image, Box } from "@chakra-ui/react";
 import React from "react";
 
-const PmAvatar = ({ icon }: { icon: any }) => {
+const PmAvatar = ({ icon, big = false }: { icon: any; big?: boolean }) => {
   const env = process.env.NODE_ENV;
   const SRC =
     env === "production"
@@ -16,8 +16,8 @@ const PmAvatar = ({ icon }: { icon: any }) => {
   return (
     <Box overflow="hidden" borderRadius="50%">
       <Image
-        w={8}
-        h={8}
+        w={big ? 10 : 8}
+        h={big ? 10 : 8}
         fallbackSrc={fallbackSRC}
         src={icon ? SRC + icon.url : ""}
         alt={icon ? icon.alternativeText : ""}

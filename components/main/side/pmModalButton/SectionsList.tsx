@@ -26,7 +26,9 @@ const SectionsList = ({ sections }: { sections: SectionType[] }) => {
             key={section.id}
             value={{
               columns: section.columns,
-              isCrypto: !id, // id == 0 is crypto
+              currencyVisible:
+                section.en_title.toLowerCase().includes("crypto") ||
+                section.en_title.toLowerCase().includes("cash"),
             }}
           >
             <Section

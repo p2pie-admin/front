@@ -1,14 +1,15 @@
 import { Wrap, WrapItem, useColorModeValue, Text, Box } from "@chakra-ui/react";
+import { useAppSelector } from "../../../redux/hooks";
 import PopularDir from "./PopularDir";
 
 const PopularDirs = () => {
-  const popularDirs = ["BTC_SBERRUB", "ETH_QWRUB"];
-
-  const recentDirs = ["BTC_CASHRUB", "SBERRUB_BTC", "c", "cc"];
+  const populars = useAppSelector((state) => state.main.populars);
+  const activePopular = useAppSelector((state) => state.main.activePopular);
 
   return (
     <Box
       bgColor={useColorModeValue("gray.50", "bg.500")}
+      filter={activePopular ? "brightness(0.3)" : "unset"}
       w="100%"
       mt="5"
       minH="10vh"
@@ -26,30 +27,16 @@ const PopularDirs = () => {
         textAlign="center"
         color={useColorModeValue("bg.400", "bg.300")}
       >
-        popular
+        популярные направления:
       </Text>
       <Wrap justify="center">
-        {popularDirs.map((
-          dir // важно так как CircularPm выдает ошибку на серверной части
-        ) => (
-          <WrapItem key={`popular_${dir}`}>
-            <PopularDir dir={dir} />
-          </WrapItem>
-        ))}
-      </Wrap>
-      <Text
-        fontSize="md"
-        m="2"
-        w="100%"
-        textAlign="center"
-        color={useColorModeValue("bg.400", "bg.300")}
-      >
-        recent
-      </Text>
-      <Wrap justify="center">
-        {recentDirs.map((dir) => (
-          <WrapItem key={`recent_${dir}`}>
-            <PopularDir dir={dir} />
+        {populars.map((popular) => (
+          <WrapItem key={`popular_${popular.id}`}>
+            <PopularDir
+              dirId={popular.id}
+              giveGroup={popular.popular_groups[0]}
+              getGroup={popular.popular_groups[1]}
+            />
           </WrapItem>
         ))}
       </Wrap>

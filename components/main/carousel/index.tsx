@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, shallowEqual } from "react-redux";
 import capsFirst from "./utils/capsFirst";
 import Swiper from "./swiper";
 import StarRatings from "react-star-ratings";

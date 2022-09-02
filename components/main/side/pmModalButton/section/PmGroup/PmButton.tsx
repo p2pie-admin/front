@@ -1,4 +1,4 @@
-import PmAvatar from "./PmAvatar";
+import PmAvatar from "../../../../../shared/Icon";
 import { Button, useColorModeValue } from "@chakra-ui/react";
 
 export default function PmButton({

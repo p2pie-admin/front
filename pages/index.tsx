@@ -4,6 +4,10 @@ import { Box, Text } from "@chakra-ui/react";
 import Main from "../components/main";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { fetchPopular } from "../redux/thunks";
+
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   // must be async
   return {
@@ -14,6 +18,12 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 };
 
 const Home: NextPage = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchPopular());
+  }, []);
+
   return (
     <>
       <Head>

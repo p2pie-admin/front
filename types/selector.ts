@@ -61,14 +61,14 @@ interface FiatRates {
 /// дополнительный тип
 
 interface PmType {
-  en_full_name: string; // Tether ERC-20
-  ru_full_name: string;
-  short_name: string; // ERC-20
+  en_name: string; // Tether ERC-20
+  ru_name: string;
+  short_name: string; // ERC-20 отобразить в подгруппе
   code: string; // USDTERC20
   currency: CurrencyType; // USDT
   icon?: ImageType;
   fiat?: FiatRates;
-  possible_pairs: string[];
+  possible_pairs?: string[];
 }
 
 type Side = "give" | "get";
