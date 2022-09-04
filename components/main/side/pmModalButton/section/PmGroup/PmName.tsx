@@ -11,7 +11,6 @@ export default function PmName({
   code?: string;
 }) {
   const { currencyVisible } = useContext(SectionContext);
-  const color = useColorModeValue("gray.600", "gray.100");
   const nameSameAsCurrency = code?.toUpperCase() === name.toUpperCase();
 
   return (

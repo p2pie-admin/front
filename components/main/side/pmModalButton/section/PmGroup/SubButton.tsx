@@ -16,7 +16,9 @@ export const SubButton = ({
     w="100%"
     size="sm"
     disabled={disabled}
-    gridColumn={`span ${pm.short_name.length > 5 ? 2 : 1}`}
+    gridColumn={`span ${
+      pm.subgroup_name && pm.subgroup_name.length > 5 ? 2 : 1
+    }`}
     variant="primary_shaded"
     onClick={() => choosePm(pm)}
   >

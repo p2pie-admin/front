@@ -1,17 +1,8 @@
-import { CurrencyType, ImageType } from "./selector";
-
-export interface IPM {
-  code: string;
-  en_name: string;
-  ru_name: string;
-  short_name: string;
-  icon: ImageType;
-  currency: CurrencyType;
-}
+import { CurrencyType, ImageType, PmType } from "./selector";
 
 export interface IPopularGroup {
   id: string;
-  pms: IPM[];
+  pms: PmType[];
   icon: ImageType;
   en_name: string;
   ru_name: string;

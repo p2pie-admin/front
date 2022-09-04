@@ -44,7 +44,6 @@ const PopularDir = ({
       variant="primary_dark"
       h="100%"
       p="0"
-      mx="5"
       borderRadius="2rem"
       leftIcon={
         <PopularSideContext.Provider value={"give"}>

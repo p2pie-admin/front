@@ -17,9 +17,12 @@ const courseFilterLink =
 export const fetchFiatByCode = createAsyncThunk(
   "currencies/fetchFiatByCode",
   async ({ code, side }: { code: string; side: Side }) => {
+    console.log(
+      `${process.env.NEXT_PUBLIC_COINGECKO_URL}/${code.toLowerCase()}`
+    );
     const response = await axios
       .get(`${process.env.NEXT_PUBLIC_COINGECKO_URL}/${code.toLowerCase()}`)
-      .catch((err) => console.error(err));
+      .catch((err) => console.error("ERROR: ", err));
     const fiatRates = response?.data;
     return {
       fiatRates,

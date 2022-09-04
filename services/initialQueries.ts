@@ -15,7 +15,8 @@ export const popularQuery = gql`
                     code
                     en_name
                     ru_name
-                    short_name
+                    subgroup_name
+                    tag
                     icon {
                       data {
                         attributes {
@@ -25,14 +26,10 @@ export const popularQuery = gql`
                       }
                     }
                     currency {
-                      ... on ComponentSelectorCurrency {
-                        currency {
-                          data {
-                            attributes {
-                              code
-                              accuracy
-                            }
-                          }
+                      data {
+                        attributes {
+                          code
+                          accuracy
                         }
                       }
                     }

@@ -62,7 +62,7 @@ const Subitems = ({
                   key={pm.code}
                   disabled={singlePmHasUnmetPairs(pm, possiblePairs)}
                 >
-                  {pm.short_name}
+                  {pm.subgroup_name || pm.currency.code.toUpperCase()}
                 </SubButton>
               ))}
             </Grid>

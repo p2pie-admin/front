@@ -11,22 +11,31 @@ import {
 import { ToggleLayer, useHover } from "react-laag";
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useContext, useState } from "react";
-import { Button } from "@chakra-ui/react";
+import { Box, Button, Flex, Tag, Text } from "@chakra-ui/react";
 import Icon from "../../../shared/Icon";
 import PopularSideContext from "../PopularSideContext";
-import { IPM, IPopularGroup } from "../../../../types/popular";
+import { IPopularGroup } from "../../../../types/popular";
 import PmButton from "../../side/pmModalButton/section/PmGroup/PmButton";
+import { useAppDispatch } from "../../../../redux/hooks";
+import { setActiveSide, setPm } from "../../../../redux/mainReducer";
+import { PmType, Side } from "../../../../types/selector";
 
 /**
  * Positioning Stuff
  */
 
-function getTransform(progress, radius, index, totalItems, side) {
+function getTransform(
+  progress: number,
+  radius: number,
+  index: number,
+  totalItems: number,
+  side: Side
+) {
   const k = side === "give" ? -1 : 1; // переворачивает угол раскрытия веера, чтобы раскрывалось по бокам
   const value = (index / totalItems) * progress;
 
-  const x = k * radius * Math.cos(Math.PI * (value - 0.34));
-  const y = k * radius * Math.sin(Math.PI * (value - 0.34));
+  const x = k * radius * Math.cos(Math.PI * (value - 0.35));
+  const y = k * radius * Math.sin(Math.PI * (value - 0.35));
 
   const scale = progress / 2 + 0.5;
 
@@ -74,7 +83,7 @@ const Circle = styled(motion.div)`
   }
 `;
 
-function MenuItem({ style, index, totalItems, pm }: { pm: IPM }) {
+function MenuItem({ index, totalItems, pm }: { pm: PmType }) {
   const side = useContext(PopularSideContext) as "give" | "get";
   return (
     <ToggleLayer
@@ -104,10 +113,12 @@ function MenuItem({ style, index, totalItems, pm }: { pm: IPM }) {
       }}
     >
       {({ triggerRef }) => {
+        const dispatch = useAppDispatch();
+
         return (
           <Circle
+            onClick={() => dispatch(setPm({ pm, side }))}
             ref={triggerRef}
-            style={style}
             initial={{ x: 0, opacity: 0 }}
             animate={{ x: 1, opacity: 1 }}
             exit={{ x: 0, opacity: 0 }}
@@ -124,6 +135,17 @@ function MenuItem({ style, index, totalItems, pm }: { pm: IPM }) {
             }}
           >
             <Icon icon={pm.icon} />
+            <Flex
+              position="absolute"
+              w="8"
+              right="-4"
+              bottom="-1"
+              justifyContent="center"
+            >
+              <Box bgColor="bg.700" borderRadius="lg" px="1">
+                <Text fontSize="11px">{pm.tag}</Text>
+              </Box>
+            </Flex>
           </Circle>
         );
       }}

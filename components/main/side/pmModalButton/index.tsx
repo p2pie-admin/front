@@ -1,14 +1,13 @@
 import { Box, Button, HStack, Icon, Tag, Text, VStack } from "@chakra-ui/react";
 import { useContext } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-
 import SideContext from "../../SideContext";
-import { batch } from "react-redux";
 import { ChevronDown } from "@styled-icons/evaicons-solid/ChevronDown";
 import PmAvatar from "../../../shared/Icon";
 import { capitalize } from "./section/PmGroup/helper";
 import { setActiveSide } from "../../../../redux/mainReducer";
 import SelectorModal from "./SelectorModal";
+import side from "..";
 
 const SelectorButton = () => {
   const dispatch = useAppDispatch();
@@ -18,11 +17,8 @@ const SelectorButton = () => {
   const PmCurrencyName = useAppSelector((state) =>
     state.main[`${side}Pm`]?.currency.code.toUpperCase()
   );
-  const PmShortName = useAppSelector(
-    (state) => state.main[`${side}Pm`]?.short_name
-  );
-  const tag =
-    PmShortName !== PmCurrencyName ? capitalize(PmShortName) : undefined;
+  const tag = useAppSelector((state) => state.main[`${side}Pm`]?.subgroup_name);
+
   const PmIcon = useAppSelector((state) => state.main[`${side}Pm`]?.icon);
 
   const handleModalOpen = () => dispatch(setActiveSide(side));
@@ -46,8 +42,13 @@ const SelectorButton = () => {
           <Box>
             <Text fontSize="lg">{PmCurrencyName}</Text>
             {tag && (
-              <Box position="absolute" w="fit-content" right={0} bottom={-2}>
-                <Tag size="sm" bgColor="bg.700" borderRadius="2xl">
+              <Box position="absolute" w="fit-content" right={-3} bottom={-2.5}>
+                <Tag
+                  size="sm"
+                  bgColor="bg.600"
+                  borderRadius="2xl"
+                  color="bg.200"
+                >
                   {tag}
                 </Tag>
               </Box>

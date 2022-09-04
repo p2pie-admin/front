@@ -42,7 +42,7 @@ const PmGroup = ({ pm_group }: { pm_group: PmGroupType }) => {
     batch(() => {
       dispatch(fetchFiatByCode({ code: selectedPm.code, side: activeSide })); // нужен только код валюты,  reducer сам запишет куда надо
       dispatch(fetchPossiblePairs({ code: selectedPm.code, side: activeSide }));
-      dispatch(setPm(selectedPm));
+      dispatch(setPm({ pm: selectedPm, side: activeSide }));
       dispatch(setActiveSide(null));
       oppositePm?.code && dispatch(fetchDirTops(dir));
     });

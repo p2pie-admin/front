@@ -57,9 +57,12 @@ export const ratesSlice = createSlice({
       state.searchBarInputValue = action.payload;
     },
 
-    setPm: (state: MainState, action: PayloadAction<PmType>) => {
-      if (state.activeSide === "give") state.givePm = action.payload;
-      if (state.activeSide === "get") state.getPm = action.payload;
+    setPm: (
+      state: MainState,
+      action: PayloadAction<{ pm: PmType; side: Side }>
+    ) => {
+      if (action.payload.side === "give") state.givePm = action.payload.pm;
+      if (action.payload.side === "get") state.getPm = action.payload.pm;
     },
 
     setActiveSide: (state: MainState, action: PayloadAction<Side | null>) => {
