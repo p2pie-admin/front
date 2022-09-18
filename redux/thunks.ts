@@ -11,8 +11,8 @@ type Side = "give" | "get";
 const env = process.env.NODE_ENV;
 const courseFilterLink =
   env === "production"
-    ? process.env.NEXT_PUBLIC_CORSE_FILTER_PROD_URL
-    : process.env.NEXT_PUBLIC_CORSE_FILTER_DEV_URL;
+    ? process.env.NEXT_PUBLIC_COURSE_FILTER_PROD_URL
+    : process.env.NEXT_PUBLIC_COURSE_FILTER_DEV_URL;
 
 export const fetchFiatByCode = createAsyncThunk(
   "currencies/fetchFiatByCode",
