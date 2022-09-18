@@ -83,7 +83,15 @@ const Circle = styled(motion.div)`
   }
 `;
 
-function MenuItem({ index, totalItems, pm }: { pm: PmType }) {
+function MenuItem({
+  index,
+  totalItems,
+  pm,
+}: {
+  pm: PmType;
+  index: number;
+  totalItems: number;
+}) {
   const side = useContext(PopularSideContext) as "give" | "get";
   return (
     <ToggleLayer
