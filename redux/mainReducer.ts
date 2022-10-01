@@ -65,6 +65,11 @@ export const ratesSlice = createSlice({
       if (action.payload.side === "get") state.getPm = action.payload.pm;
     },
 
+    clearPms: (state: MainState) => {
+      state.getPm = undefined;
+      state.givePm = undefined;
+    },
+
     setActiveSide: (state: MainState, action: PayloadAction<Side | null>) => {
       state.activeSide = action.payload;
     },
@@ -174,6 +179,7 @@ export const {
   setSearchBarInputValue,
   setSwiperIdVisible,
   setActivePopular,
+  clearPms,
 } = ratesSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

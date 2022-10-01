@@ -25,7 +25,7 @@ const ButtonBase = styled.button`
   transform: scale(1);
 `;
 
-const Button = React.forwardRef(function Button(
+const PmButton = React.forwardRef(function Button(
   { group }: { group: IPopularGroup },
   ref
 ) {
@@ -36,4 +36,4 @@ const Button = React.forwardRef(function Button(
   );
 });
 
-export default Button;
+export default PmButton;

@@ -1,9 +1,9 @@
 import { Button, Icon, Image, useOutsideClick } from "@chakra-ui/react";
 import { ArrowRight } from "@styled-icons/heroicons-outline/ArrowRight";
-import CircularMenu from "./circular-menu";
+import PopularSide from "./circular-menu";
 import PopularSideContext from "./PopularSideContext";
 import { useRef, useState } from "react";
-import { setActivePopular } from "../../../redux/mainReducer";
+import { clearPms, setActivePopular, setPm } from "../../../redux/mainReducer";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { IPopularGroup } from "../../../types/popular";
 
@@ -21,12 +21,22 @@ const PopularDir = ({
   const dispatch = useAppDispatch();
   const activePopular = useAppSelector((state) => state.main.activePopular);
 
+  const clearSelectedPms = () => {
+    dispatch(clearPms());
+  };
+
   const handleDirClick = () => {
-    if (activePopular === dirId) {
-      dispatch(setActivePopular(undefined));
-      return;
+    //clearSelectedPms();
+    if (giveGroup.pms.length > 1 || getGroup.pms.length > 1) {
+      dispatch(setActivePopular(dirId));
     }
-    dispatch(setActivePopular(dirId));
+
+    // если в одном из популярных всего один вариант, то ставим его выбранным в селекторе
+    [giveGroup, getGroup].map(({ pms }, index) => {
+      if (pms.length < 1) return;
+      if (pms.length < 2)
+        dispatch(setPm({ pm: pms[0], side: index ? "get" : "give" }));
+    });
   };
 
   useOutsideClick({
@@ -47,12 +57,12 @@ const PopularDir = ({
       borderRadius="2rem"
       leftIcon={
         <PopularSideContext.Provider value={"give"}>
-          <CircularMenu dirId={dirId} group={giveGroup} />
+          <PopularSide dirId={dirId} group={giveGroup} />
         </PopularSideContext.Provider>
       }
       rightIcon={
         <PopularSideContext.Provider value={"get"}>
-          <CircularMenu dirId={dirId} group={getGroup} />
+          <PopularSide dirId={dirId} group={getGroup} />
         </PopularSideContext.Provider>
       }
     >

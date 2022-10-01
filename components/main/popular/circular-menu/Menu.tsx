@@ -15,7 +15,6 @@ import { Box, Button, Flex, Tag, Text } from "@chakra-ui/react";
 import Icon from "../../../shared/Icon";
 import PopularSideContext from "../PopularSideContext";
 import { IPopularGroup } from "../../../../types/popular";
-import PmButton from "../../side/pmModalButton/section/PmGroup/PmButton";
 import { useAppDispatch } from "../../../../redux/hooks";
 import { setActiveSide, setPm } from "../../../../redux/mainReducer";
 import { PmType, Side } from "../../../../types/selector";
@@ -33,9 +32,12 @@ function getTransform(
 ) {
   const k = side === "give" ? -1 : 1; // переворачивает угол раскрытия веера, чтобы раскрывалось по бокам
   const value = (index / totalItems) * progress;
-
-  const x = k * radius * Math.cos(Math.PI * (value - 0.35));
-  const y = k * radius * Math.sin(Math.PI * (value - 0.35));
+  const angleCorrections = [0, 0.25, 0.25, 0.33, 0.377, 0.402];
+  const r = totalItems < 2 ? 0 : radius;
+  const x =
+    k * r * Math.cos(Math.PI * (value - angleCorrections[totalItems] || 0.35));
+  const y =
+    k * r * Math.sin(Math.PI * (value - angleCorrections[totalItems] || 0.35));
 
   const scale = progress / 2 + 0.5;
 
@@ -125,7 +127,9 @@ function MenuItem({
 
         return (
           <Circle
-            onClick={() => dispatch(setPm({ pm, side }))}
+            onClick={(e) => {
+              dispatch(setPm({ pm, side }));
+            }}
             ref={triggerRef}
             initial={{ x: 0, opacity: 0 }}
             animate={{ x: 1, opacity: 1 }}

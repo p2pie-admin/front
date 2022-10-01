@@ -2,14 +2,14 @@ import ResizeObserver from "resize-observer-polyfill";
 import { AnimatePresence } from "framer-motion";
 import { ToggleLayer } from "react-laag";
 
-import Button from "./Button";
+import Button from "./PmButton";
 import Menu from "./Menu";
 import { Box } from "@chakra-ui/react";
 import { setActivePopular } from "../../../../redux/mainReducer";
 import { useAppSelector } from "../../../../redux/hooks";
 import { IPopular, IPopularGroup } from "../../../../types/popular";
 
-function CircularMenu({
+function PopularSide({
   dirId,
   group,
 }: {
@@ -40,4 +40,4 @@ function CircularMenu({
   );
 }
 
-export default CircularMenu;
+export default PopularSide;
