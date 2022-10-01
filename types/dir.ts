@@ -1,6 +1,6 @@
 import { CurrencyType, ImageType, PmType } from "./selector";
 
-export interface IPopularGroup {
+export interface IDirGroup {
   id: string;
   pms: PmType[];
   icon: ImageType;
@@ -8,7 +8,7 @@ export interface IPopularGroup {
   ru_name: string;
 }
 
-export interface IPopular {
+export interface IDir {
   id: string;
-  popular_groups: IPopularGroup[];
+  groups: IDirGroup[];
 }

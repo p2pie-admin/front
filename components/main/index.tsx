@@ -3,14 +3,16 @@ import Greeting from "./Greeting";
 import Side from "./side";
 import ReverseButton from "./ReverseButton";
 import SideContext from "./SideContext";
-import PopularDirs from "./popular";
 import Carousel from "../main/carousel";
 import { useAppSelector } from "../../redux/hooks";
+import Dirs from "./dir";
 
 const Main = () => {
   const dirTopsExist = useAppSelector(
     (state) => !!state.main.dirTops?.uniqueRates
   );
+  const activeDir = useAppSelector((state) => state.main.activeDir);
+  const populars = useAppSelector((state) => state.main.populars);
 
   return (
     <>
@@ -45,7 +47,19 @@ const Main = () => {
             <Side />
           </SideContext.Provider>
 
-          {dirTopsExist ? <Carousel /> : <PopularDirs />}
+          {dirTopsExist && <Carousel />}
+
+          <Box
+            bgColor={useColorModeValue("gray.50", "bg.500")}
+            filter={activeDir ? "brightness(0.3)" : "unset"}
+            w="100%"
+            mt="5"
+            minH="10vh"
+            p={{ base: "10px 2px", md: "2", sm: "1" }}
+            borderRadius="xl"
+          >
+            <Dirs dirs={populars} />
+          </Box>
         </Flex>
       </Box>
     </>

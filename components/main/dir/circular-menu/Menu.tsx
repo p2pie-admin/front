@@ -13,8 +13,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import React, { useContext, useState } from "react";
 import { Box, Button, Flex, Tag, Text } from "@chakra-ui/react";
 import Icon from "../../../shared/Icon";
-import PopularSideContext from "../PopularSideContext";
-import { IPopularGroup } from "../../../../types/popular";
+import DirSideContext from "../DirSideContext";
+import { IDirGroup } from "../../../../types/dir";
 import { useAppDispatch } from "../../../../redux/hooks";
 import { setActiveSide, setPm } from "../../../../redux/mainReducer";
 import { PmType, Side } from "../../../../types/selector";
@@ -32,12 +32,21 @@ function getTransform(
 ) {
   const k = side === "give" ? -1 : 1; // переворачивает угол раскрытия веера, чтобы раскрывалось по бокам
   const value = (index / totalItems) * progress;
-  const angleCorrections = [0, 0.25, 0.25, 0.33, 0.377, 0.402];
-  const r = totalItems < 2 ? 0 : radius;
-  const x =
-    k * r * Math.cos(Math.PI * (value - angleCorrections[totalItems] || 0.35));
-  const y =
-    k * r * Math.sin(Math.PI * (value - angleCorrections[totalItems] || 0.35));
+  const angleCorrections = [
+    0,
+    0.1,
+    0.25,
+    0.33,
+    0.377,
+    0.402,
+    0.414,
+    0.429,
+    0.438,
+    0.444,
+  ];
+  const r = totalItems < 2 ? 0 : radius + totalItems ** 1.5;
+  const x = k * r * Math.cos(Math.PI * (value - angleCorrections[totalItems]));
+  const y = k * r * Math.sin(Math.PI * (value - angleCorrections[totalItems]));
 
   const scale = progress / 2 + 0.5;
 
@@ -94,7 +103,7 @@ function MenuItem({
   index: number;
   totalItems: number;
 }) {
-  const side = useContext(PopularSideContext) as "give" | "get";
+  const side = useContext(DirSideContext) as "give" | "get";
   return (
     <ToggleLayer
       ResizeObserver={ResizeObserver}
@@ -180,7 +189,7 @@ const MenuBase = styled.div`
 `;
 
 const Menu = React.forwardRef(function Menu(
-  { style, group }: { group: IPopularGroup },
+  { style, group }: { group: IDirGroup },
   ref
 ) {
   return (

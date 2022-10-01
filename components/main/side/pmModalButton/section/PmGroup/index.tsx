@@ -7,7 +7,7 @@ import { batch } from "react-redux";
 import {
   fetchDirRates,
   fetchDirTops,
-  fetchFiatByCode,
+  fetchFiatByCurrencyCode,
   fetchPossiblePairs,
 } from "../../../../../../redux/thunks";
 import { PmGroupType, PmType } from "../../../../../../types/selector";
@@ -40,13 +40,17 @@ const PmGroup = ({ pm_group }: { pm_group: PmGroupType }) => {
         ? `${selectedPm.code.toUpperCase()}_${getPm?.code.toUpperCase()}`
         : `${givePm?.code.toUpperCase()}_${selectedPm.code.toUpperCase()}`;
     batch(() => {
-      dispatch(fetchFiatByCode({ code: selectedPm.code, side: activeSide })); // нужен только код валюты,  reducer сам запишет куда надо
+      dispatch(
+        fetchFiatByCurrencyCode({
+          code: selectedPm.currency.code,
+          side: activeSide,
+        })
+      ); // нужен только код валюты,  reducer сам запишет куда надо
       dispatch(fetchPossiblePairs({ code: selectedPm.code, side: activeSide }));
       dispatch(setPm({ pm: selectedPm, side: activeSide }));
       dispatch(setActiveSide(null));
-      oppositePm?.code && dispatch(fetchDirTops(dir));
+      oppositePm?.code && dispatch(fetchDirTops());
     });
-    console.log(dir);
   };
 
   const pms = getPmsFromPmGroup(pm_group);

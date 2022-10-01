@@ -7,12 +7,12 @@ import { RootState } from "./store";
 import {
   fetchDirRates,
   fetchDirTops,
-  fetchFiatByCode,
+  fetchFiatByCurrencyCode,
   fetchPopular,
   fetchPossiblePairs,
 } from "./thunks";
 import { PmType } from "../types/selector";
-import { IPopular } from "../types/popular";
+import { IDir } from "../types/dir";
 
 type Side = "give" | "get";
 
@@ -32,8 +32,8 @@ export interface MainState {
   amountInput?: AmountInput;
   amountOutputs: AmountOutputs;
   swiperIdVisible: number;
-  activePopular?: string;
-  populars: IPopular[];
+  activeDir?: string;
+  populars: IDir[];
 }
 
 const initialState: MainState = {
@@ -92,11 +92,14 @@ export const ratesSlice = createSlice({
       state.amountInput = action.payload;
       state.amountOutputs = setAmountOutputs(state, action.payload);
     },
-    setActivePopular: (
+    setActiveDir: (
       state: MainState,
       action: PayloadAction<string | undefined>
     ) => {
-      state.activePopular = action.payload;
+      state.activeDir = action.payload;
+    },
+    reverseDir: (state: MainState) => {
+      [state.givePm, state.getPm] = [state.getPm, state.givePm];
     },
   },
   //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -124,7 +127,7 @@ export const ratesSlice = createSlice({
       state.amountOutputs = setAmountOutputs(state);
       state.pendingDirTops = false;
     });
-    builder.addCase(fetchFiatByCode.fulfilled, (state, action) => {
+    builder.addCase(fetchFiatByCurrencyCode.fulfilled, (state, action) => {
       const key = (action.payload.side + "Pm") as "givePm" | "getPm";
       if (state[key]) {
         state[key]!.fiat = action.payload.fiatRates;
@@ -178,8 +181,9 @@ export const {
   setPm,
   setSearchBarInputValue,
   setSwiperIdVisible,
-  setActivePopular,
+  setActiveDir,
   clearPms,
+  reverseDir,
 } = ratesSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

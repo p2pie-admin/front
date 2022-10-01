@@ -5,7 +5,8 @@ import axios from "axios";
 
 import { popularQuery } from "../services/initialQueries";
 import initFetcher from "../services/graphql";
-import { IPopular } from "../types/popular";
+import { IDir } from "../types/dir";
+import { MainState } from "./mainReducer";
 
 type Side = "give" | "get";
 const env = process.env.NODE_ENV;
@@ -14,8 +15,8 @@ const courseFilterLink =
     ? process.env.NEXT_PUBLIC_COURSE_FILTER_PROD_URL
     : process.env.NEXT_PUBLIC_COURSE_FILTER_DEV_URL;
 
-export const fetchFiatByCode = createAsyncThunk(
-  "currencies/fetchFiatByCode",
+export const fetchFiatByCurrencyCode = createAsyncThunk(
+  "currencies/fetchFiatByCurrencyCode",
   async ({ code, side }: { code: string; side: Side }) => {
     console.log(
       `${process.env.NEXT_PUBLIC_COINGECKO_URL}/${code.toLowerCase()}`
@@ -43,7 +44,10 @@ export const fetchDirRates = createAsyncThunk(
 
 export const fetchDirTops = createAsyncThunk(
   "rates/fetchDirTops",
-  async (dir: string, thunkAPI) => {
+  async (_, thunkAPI) => {
+    const { main } = thunkAPI.getState() as { main: MainState };
+    const dir = `${main.givePm?.code}_${main.getPm?.code}`;
+    console.log("DIRRRR", dir);
     const response = await axios
       .get(`${courseFilterLink}/dir=${dir}/tops=true`)
       .catch((err) => console.error(err));
@@ -70,8 +74,7 @@ export const fetchPopular = createAsyncThunk(
   async () => {
     const fetcher = initFetcher();
     const response = await fetcher(popularQuery);
-    console.log("response", response.popularDirs);
-    return response?.popularDirs as IPopular[];
+    return response?.popularDirs as IDir[];
   }
 );
 

@@ -6,7 +6,7 @@ export const popularQuery = gql`
       data {
         id
         attributes {
-          popular_groups {
+          groups {
             ... on ComponentPopularPopularGroup {
               id
               pms {

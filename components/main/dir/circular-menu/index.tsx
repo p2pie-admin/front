@@ -5,23 +5,16 @@ import { ToggleLayer } from "react-laag";
 import Button from "./PmButton";
 import Menu from "./Menu";
 import { Box } from "@chakra-ui/react";
-import { setActivePopular } from "../../../../redux/mainReducer";
 import { useAppSelector } from "../../../../redux/hooks";
-import { IPopular, IPopularGroup } from "../../../../types/popular";
+import { IDirGroup } from "../../../../types/dir";
 
-function PopularSide({
-  dirId,
-  group,
-}: {
-  dirId: string;
-  group: IPopularGroup;
-}) {
-  const activePopular = useAppSelector((state) => state.main.activePopular);
+function DirSide({ dirId, group }: { dirId: string; group: IDirGroup }) {
+  const activeDir = useAppSelector((state) => state.main.activeDir);
 
   return (
     <Box>
       <ToggleLayer
-        isOpen={activePopular === dirId}
+        isOpen={activeDir === dirId}
         ResizeObserver={ResizeObserver}
         placement={{
           anchor: "CENTER",
@@ -40,4 +33,4 @@ function PopularSide({
   );
 }
 
-export default PopularSide;
+export default DirSide;

@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled, { css } from "styled-components";
-import { IPopularGroup } from "../../../../types/popular";
+import { IDirGroup } from "../../../../types/dir";
 import { PRIMARY, PRIMARY_2, BUTTON_SIZE } from "./constants";
 import Icon from "../../../shared/Icon";
 
@@ -26,7 +26,7 @@ const ButtonBase = styled.button`
 `;
 
 const PmButton = React.forwardRef(function Button(
-  { group }: { group: IPopularGroup },
+  { group }: { group: IDirGroup },
   ref
 ) {
   return (

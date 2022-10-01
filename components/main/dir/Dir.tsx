@@ -1,25 +1,25 @@
 import { Button, Icon, Image, useOutsideClick } from "@chakra-ui/react";
 import { ArrowRight } from "@styled-icons/heroicons-outline/ArrowRight";
-import PopularSide from "./circular-menu";
-import PopularSideContext from "./PopularSideContext";
+import DirSide from "./circular-menu";
 import { useRef, useState } from "react";
-import { clearPms, setActivePopular, setPm } from "../../../redux/mainReducer";
+import { clearPms, setActiveDir, setPm } from "../../../redux/mainReducer";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { IPopularGroup } from "../../../types/popular";
+import { IDirGroup } from "../../../types/dir";
+import DirSideContext from "./DirSideContext";
 
-const PopularDir = ({
+const Dir = ({
   giveGroup,
   getGroup,
   dirId,
 }: {
-  giveGroup: IPopularGroup;
-  getGroup: IPopularGroup;
+  giveGroup: IDirGroup;
+  getGroup: IDirGroup;
   dirId: string;
 }) => {
   const ref = useRef();
 
   const dispatch = useAppDispatch();
-  const activePopular = useAppSelector((state) => state.main.activePopular);
+  const activeDir = useAppSelector((state) => state.main.activeDir);
 
   const clearSelectedPms = () => {
     dispatch(clearPms());
@@ -28,7 +28,7 @@ const PopularDir = ({
   const handleDirClick = () => {
     //clearSelectedPms();
     if (giveGroup.pms.length > 1 || getGroup.pms.length > 1) {
-      dispatch(setActivePopular(dirId));
+      dispatch(setActiveDir(dirId));
     }
 
     // если в одном из популярных всего один вариант, то ставим его выбранным в селекторе
@@ -41,7 +41,7 @@ const PopularDir = ({
 
   useOutsideClick({
     ref: ref,
-    handler: () => dispatch(setActivePopular(undefined)),
+    handler: () => dispatch(setActiveDir(undefined)),
   });
 
   return (
@@ -56,14 +56,14 @@ const PopularDir = ({
       p="0"
       borderRadius="2rem"
       leftIcon={
-        <PopularSideContext.Provider value={"give"}>
-          <PopularSide dirId={dirId} group={giveGroup} />
-        </PopularSideContext.Provider>
+        <DirSideContext.Provider value={"give"}>
+          <DirSide dirId={dirId} group={giveGroup} />
+        </DirSideContext.Provider>
       }
       rightIcon={
-        <PopularSideContext.Provider value={"get"}>
-          <PopularSide dirId={dirId} group={getGroup} />
-        </PopularSideContext.Provider>
+        <DirSideContext.Provider value={"get"}>
+          <DirSide dirId={dirId} group={getGroup} />
+        </DirSideContext.Provider>
       }
     >
       <Icon as={ArrowRight} w="4" h="4" />
@@ -71,4 +71,4 @@ const PopularDir = ({
   );
 };
 
-export default PopularDir;
+export default Dir;
