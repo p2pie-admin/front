@@ -8,6 +8,7 @@ const TopsQuery = gql`
         attributes {
           ru_description
           en_description
+
           code
           title
           color

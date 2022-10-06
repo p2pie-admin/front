@@ -2,7 +2,7 @@ import * as React from "react";
 import styled, { css } from "styled-components";
 import { IDirGroup } from "../../../../types/dir";
 import { PRIMARY, PRIMARY_2, BUTTON_SIZE } from "./constants";
-import Icon from "../../../shared/Icon";
+import Icon from "../../../shared/Avatar";
 
 const buttonHover = css`
   &:hover {

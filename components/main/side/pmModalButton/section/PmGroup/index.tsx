@@ -35,10 +35,6 @@ const PmGroup = ({ pm_group }: { pm_group: PmGroupType }) => {
   const choosePm = (selectedPm: PmType) => {
     if (!activeSide) return;
     const oppositePm = activeSide === "give" ? getPm : givePm;
-    const dir =
-      activeSide === "give"
-        ? `${selectedPm.code.toUpperCase()}_${getPm?.code.toUpperCase()}`
-        : `${givePm?.code.toUpperCase()}_${selectedPm.code.toUpperCase()}`;
     batch(() => {
       dispatch(
         fetchFiatByCurrencyCode({

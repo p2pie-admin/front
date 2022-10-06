@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import SideContext from "../../SideContext";
 import { ChevronDown } from "@styled-icons/evaicons-solid/ChevronDown";
-import PmAvatar from "../../../shared/Icon";
+import PmAvatar from "../../../shared/Avatar";
 import { capitalize } from "./section/PmGroup/helper";
 import { setActiveSide } from "../../../../redux/mainReducer";
 import SelectorModal from "./SelectorModal";
@@ -34,8 +34,10 @@ const SelectorButton = () => {
         py="2"
         px="2"
         h="12"
+        display="flex"
+        justifyContent="space-between"
         borderRadius="2rem"
-        leftIcon={PmCurrencyName ? <PmAvatar icon={PmIcon} /> : <></>}
+        leftIcon={PmCurrencyName ? <PmAvatar icon={PmIcon} /> : ""}
         rightIcon={<Icon as={ChevronDown} w="6" h="6" />}
       >
         {PmCurrencyName ? (
@@ -55,7 +57,7 @@ const SelectorButton = () => {
             )}
           </Box>
         ) : (
-          <Text ml="3" fontSize="lg">
+          <Text ml="2" fontSize="xl">
             {capitalize(side)}
           </Text>
         )}

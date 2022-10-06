@@ -8,9 +8,6 @@ import { useAppSelector } from "../../redux/hooks";
 import Dirs from "./dir";
 
 const Main = () => {
-  const dirTopsExist = useAppSelector(
-    (state) => !!state.main.dirTops?.uniqueRates
-  );
   const activeDir = useAppSelector((state) => state.main.activeDir);
   const populars = useAppSelector((state) => state.main.populars);
 
@@ -47,16 +44,16 @@ const Main = () => {
             <Side />
           </SideContext.Provider>
 
-          {dirTopsExist && <Carousel />}
+          <Carousel />
 
           <Box
             bgColor={useColorModeValue("gray.50", "bg.500")}
-            filter={activeDir ? "brightness(0.3)" : "unset"}
-            w="100%"
-            mt="5"
             minH="10vh"
             p={{ base: "10px 2px", md: "2", sm: "1" }}
             borderRadius="xl"
+            filter={activeDir ? "brightness(0.3)" : "unset"}
+            w="100%"
+            mt="5"
           >
             <Dirs dirs={populars} />
           </Box>

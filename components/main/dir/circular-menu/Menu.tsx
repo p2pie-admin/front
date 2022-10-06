@@ -12,7 +12,7 @@ import { ToggleLayer, useHover } from "react-laag";
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useContext, useState } from "react";
 import { Box, Button, Flex, Tag, Text } from "@chakra-ui/react";
-import Icon from "../../../shared/Icon";
+import Icon from "../../../shared/Avatar";
 import DirSideContext from "../DirSideContext";
 import { IDirGroup } from "../../../../types/dir";
 import { useAppDispatch } from "../../../../redux/hooks";
@@ -44,7 +44,7 @@ function getTransform(
     0.438,
     0.444,
   ];
-  const r = totalItems < 2 ? 0 : radius + totalItems ** 1.5;
+  const r = totalItems < 2 ? 0 : radius + totalItems ** 1.6;
   const x = k * r * Math.cos(Math.PI * (value - angleCorrections[totalItems]));
   const y = k * r * Math.sin(Math.PI * (value - angleCorrections[totalItems]));
 
@@ -144,7 +144,12 @@ function MenuItem({
             animate={{ x: 1, opacity: 1 }}
             exit={{ x: 0, opacity: 0 }}
             transformTemplate={({ x }) => {
-              const value = parseFloat(x.replace("px", ""));
+              const value =
+                typeof x === "number"
+                  ? x
+                  : !x
+                  ? 0
+                  : parseFloat(x.replace("px", ""));
               return getTransform(value, RADIUS, index, totalItems, side);
             }}
             transition={{

@@ -47,7 +47,7 @@ export const fetchDirTops = createAsyncThunk(
   async (_, thunkAPI) => {
     const { main } = thunkAPI.getState() as { main: MainState };
     const dir = `${main.givePm?.code}_${main.getPm?.code}`;
-    console.log("DIRRRR", dir);
+
     const response = await axios
       .get(`${courseFilterLink}/dir=${dir}/tops=true`)
       .catch((err) => console.error(err));

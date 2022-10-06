@@ -20,7 +20,7 @@ export interface Rate {
   cities?: { [key: string]: string[] };
 }
 
-export interface Top {
+export interface ITop {
   ru_description: string;
   en_description: string;
   code: string;

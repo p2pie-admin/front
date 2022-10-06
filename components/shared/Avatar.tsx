@@ -1,7 +1,7 @@
 import { Image, Box } from "@chakra-ui/react";
 import React from "react";
 
-const PmAvatar = ({ icon, big = false }: { icon: any; big?: boolean }) => {
+const Avatar = ({ icon, big = false }: { icon: any; big?: boolean }) => {
   const env = process.env.NODE_ENV;
   const SRC =
     env === "production"
@@ -26,4 +26,4 @@ const PmAvatar = ({ icon, big = false }: { icon: any; big?: boolean }) => {
   );
 };
 
-export default PmAvatar;
+export default Avatar;
