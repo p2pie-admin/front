@@ -21,10 +21,7 @@ const Side = () => {
         borderRadius="50"
         alignItems="center"
         justifyContent="space-between"
-        boxShadow={useColorModeValue(
-          "0px 0px 2px rgb(0 0 0 / 25%), 10px 10px 15px #e3e3e3, -10px 10px 15px #e3e3e3, -15px -15px 15px rgb(255 255 255 / 40%), 15px -15px 15px rgb(255 255 255 / 40%), inset 0px 2px 0px white",
-          "none"
-        )}
+        boxShadow="inset -1px 1px 28px rgba(0,0,0,0.1);"
       >
         <PmModalButton />
         <AmountInput />

@@ -9,6 +9,7 @@ import {
   Button,
   Icon,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import StarRatings from "react-star-ratings";
 import { ExternalLink } from "styled-icons/evaicons-solid";
@@ -25,11 +26,14 @@ const Top = ({ top, rate }: { top: ITop; rate: Rate }) => {
       flexDirection="column"
       overflow="hidden"
       color="bg.50"
-      boxShadow=" 0px 0px 8px 0px rgba(0,0,0, .2)"
       bgColor={"bg.600"}
       rounded={12}
       flex={1}
       p={5}
+      boxShadow={useColorModeValue(
+        "0px 0px 2px rgb(0 0 0 / 25%), 10px 10px 15px #e3e3e3, -10px 10px 15px #e3e3e3, -15px -15px 15px rgb(255 255 255 / 40%), 15px -15px 15px rgb(255 255 255 / 40%), inset 0px 2px 0px white",
+        "none"
+      )}
     >
       <Wave />
       <VStack mb={6} align="start" w="100%">
@@ -60,7 +64,7 @@ const Top = ({ top, rate }: { top: ITop; rate: Rate }) => {
         <HStack alignItems="center">
           <Box pb="1.5">
             <StarRatings
-              rating={3.7}
+              rating={rate.admin_rating}
               starRatedColor={"#f5a951"}
               changeRating={() => {}}
               starHoverColor={"#ed8b36"}
@@ -73,7 +77,7 @@ const Top = ({ top, rate }: { top: ITop; rate: Rate }) => {
           </Box>
 
           <Text w="fit-content" fontSize="xs">
-            3.7 out of 5
+            {rate.admin_rating ? `${rate.admin_rating} out of 5` : ""}
           </Text>
         </HStack>
       </VStack>
@@ -81,7 +85,7 @@ const Top = ({ top, rate }: { top: ITop; rate: Rate }) => {
       <Flex justifyContent="space-between">
         <VStack cursor="help"></VStack>
         <Button
-          onClick={() => alert(`Post ${name} clicked`)}
+          onClick={() => alert(`Post ${rate.name} clicked`)}
           variant="orange_regular"
           fontWeight="bold"
           color="white"

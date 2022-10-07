@@ -74,7 +74,7 @@ const Circle = styled(motion.div)`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid ${BORDER};
+
   box-shadow: 2px 4px 28px 0px rgba(0, 0, 0, 0.5);
   cursor: pointer;
   transition: box-shadow 0.15s ease-in-out, border 0.15s ease-in-out;

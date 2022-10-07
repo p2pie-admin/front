@@ -15,11 +15,11 @@ const Main = () => {
     <>
       <Greeting />
       <Box
-        p="2px"
-        bgGradient={useColorModeValue(
-          "linear(to-b, bg.50, white)",
-          "linear(to-bl, bg.600, bg.800)"
-        )}
+        p="1px"
+        bgGradient={{
+          base: "transparent",
+          sm: "linear(to-bl, purple.800, bg.800)",
+        }}
         borderRadius={{ base: "0", sm: "xl" }}
       >
         <Flex

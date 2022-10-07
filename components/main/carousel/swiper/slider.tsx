@@ -4,9 +4,10 @@ import {
   Button,
   useColorModeValue,
   Progress,
+  IconButton,
 } from "@chakra-ui/react";
 import { useLayoutEffect } from "react";
-import { ChevronLeft, ChevronRight } from "styled-icons/bootstrap";
+import { ChevronRight } from "@styled-icons/boxicons-regular/ChevronRight";
 import useBoundingRect from "../hooks/useBoundingRect";
 import percentage from "../utils/percentage";
 
@@ -64,6 +65,20 @@ function Slider({
     handleSwiperIdVisible(0);
   };
 
+  const SwiperButton = ({ isLeft = false }: { isLeft?: boolean }) => (
+    <Button
+      onClick={!swiperIdVisible ? handleGoToEnd : handleDecrementClick}
+      onFocus={handleFocus}
+      color="gray.200"
+      p="1"
+      borderRadius="50%"
+      variant="primary_shaded"
+      transform={isLeft ? "rotate(180deg)" : "none"}
+    >
+      <ChevronRight boxSize={9} />
+    </Button>
+  );
+
   return (
     <>
       <Box
@@ -99,21 +114,7 @@ function Slider({
       </Box>
 
       <Flex w={`${itemWidth}px`} mt={`${gap / 2}px`} mx="auto">
-        <Button
-          onClick={!swiperIdVisible ? handleGoToEnd : handleDecrementClick}
-          onFocus={handleFocus}
-          color="gray.200"
-          variant="link"
-          minW={8}
-          p="1"
-          borderRadius="2xl"
-          bgGradient={useColorModeValue(
-            "linear(to-br, primary.400, primary.500)",
-            "linear(to-br, bg.700, bg.800)"
-          )}
-        >
-          <ChevronLeft boxSize={9} color="bg.300" />
-        </Button>
+        <SwiperButton isLeft />
 
         <Progress
           value={percentage(swiperIdVisible, positions.length - constraint)}
@@ -130,25 +131,7 @@ function Slider({
           }}
         />
 
-        <Button
-          onClick={
-            swiperIdVisible === positions.length - 1
-              ? handleGoToStart
-              : handleIncrementClick
-          }
-          onFocus={handleFocus}
-          color="gray.200"
-          variant="link"
-          minW={8}
-          p="1"
-          borderRadius="2xl"
-          bgGradient={useColorModeValue(
-            "linear(to-br, primary.400, primary.500)",
-            "linear(to-br, bg.700, bg.800)"
-          )}
-        >
-          <ChevronRight boxSize={9} color="bg.300" />
-        </Button>
+        <SwiperButton />
       </Flex>
     </>
   );
