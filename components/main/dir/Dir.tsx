@@ -46,12 +46,12 @@ const Dir = ({
 
   return (
     <Button
-      filter={"brightness(1)"}
       ref={ref}
       key={dirId}
       onClick={handleDirClick}
       position="relative"
-      variant="primary_dark"
+      variant="primary_black"
+      filter={activeDir ? "brightness(0.6)" : "unset"}
       h="100%"
       p="0"
       borderRadius="2rem"

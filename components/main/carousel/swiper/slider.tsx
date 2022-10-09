@@ -39,40 +39,54 @@ function Slider({
     initSliderWidth,
   ]);
 
-  const handleFocus = () => {
-    setTrackIsActive(true);
-  };
-
   const handleDecrementClick = () => {
-    setTrackIsActive(true);
     !(swiperIdVisible === positions.length - positions.length) &&
       handleSwiperIdVisible(swiperIdVisible - 1);
   };
 
   const handleIncrementClick = () => {
-    setTrackIsActive(true);
     !(swiperIdVisible === positions.length - constraint) &&
       handleSwiperIdVisible(swiperIdVisible + 1);
   };
 
   const handleGoToEnd = () => {
-    setTrackIsActive(true);
     handleSwiperIdVisible(positions.length - 1);
   };
 
   const handleGoToStart = () => {
-    setTrackIsActive(true);
     handleSwiperIdVisible(0);
   };
 
   const SwiperButton = ({ isLeft = false }: { isLeft?: boolean }) => (
     <Button
-      onClick={!swiperIdVisible ? handleGoToEnd : handleDecrementClick}
-      onFocus={handleFocus}
+      key={isLeft ? "leftSwiperButton" : "rightSwiperButton"}
+      position={{
+        base: "relative",
+        md: "absolute",
+      }}
+      left={{
+        base: "0",
+        md: isLeft ? "-14" : "auto",
+      }}
+      right={{
+        base: "0",
+        md: isLeft ? "auto" : "-14",
+      }}
+      mx="2"
+      top="42%"
+      onClick={
+        isLeft
+          ? !swiperIdVisible
+            ? handleGoToEnd
+            : handleDecrementClick
+          : swiperIdVisible === positions.length - 1
+          ? handleGoToStart
+          : handleIncrementClick
+      }
       color="gray.200"
       p="1"
       borderRadius="50%"
-      variant="primary_shaded"
+      bgColor="bg.700"
       transform={isLeft ? "rotate(180deg)" : "none"}
     >
       <ChevronRight boxSize={9} />
@@ -80,7 +94,7 @@ function Slider({
   );
 
   return (
-    <>
+    <Box position="relative">
       <Box
         mt="3"
         w="100%"
@@ -90,7 +104,7 @@ function Slider({
         position="relative"
         overflow="hidden"
         _before={{
-          bgGradient: "linear(to-r, bg.700, transparent)",
+          bgGradient: "linear(to-r, bg.800, transparent)",
           position: "absolute",
           w: `${gap / 1.5}px`,
           content: "''",
@@ -100,7 +114,7 @@ function Slider({
           top: 0,
         }}
         _after={{
-          bgGradient: "linear(to-l, bg.700, transparent)",
+          bgGradient: "linear(to-l, bg.800, transparent)",
           position: "absolute",
           w: `${gap / 1.5}px`,
           content: "''",
@@ -117,23 +131,22 @@ function Slider({
         <SwiperButton isLeft />
 
         <Progress
-          value={percentage(swiperIdVisible, positions.length - constraint)}
+          value={percentage(swiperIdVisible, positions.length - constraint) + 5}
           alignSelf="center"
-          m="1"
           borderRadius="2"
-          bg={useColorModeValue("bg.100", "bg.500")}
+          bg={useColorModeValue("bg.100", "bg.700")}
           flex={1}
           h="3px"
           sx={{
             "> div": {
-              backgroundColor: useColorModeValue("primary.400", "primary.200"),
+              backgroundColor: useColorModeValue("primary.400", "orange.400"),
             },
           }}
         />
 
         <SwiperButton />
       </Flex>
-    </>
+    </Box>
   );
 }
 

@@ -4,16 +4,27 @@ import { IDir } from "../../../types/dir";
 import Dir from "./Dir";
 
 const Dirs = ({ dirs }: { dirs: IDir[] }) => {
+  const activeDir = useAppSelector((state) => state.main.activeDir);
+
   return (
-    <>
+    <Box
+      filter={activeDir ? "brightness(0.8)" : "unset"}
+      bgColor="bg.700"
+      minH="10vh"
+      p={{ base: "10px 2px", md: "2", sm: "1" }}
+      borderRadius="xl"
+      w="100%"
+      mt="5"
+    >
       <Text
         fontSize="md"
-        mb="2"
+        mb="4"
+        mt="2"
+        mx="2"
         w="100%"
-        textAlign="center"
         color={useColorModeValue("bg.400", "bg.300")}
       >
-        популярные направления:
+        Популярные направления:
       </Text>
       <Wrap justify="center">
         {dirs.map((dir) => (
@@ -30,7 +41,7 @@ const Dirs = ({ dirs }: { dirs: IDir[] }) => {
           </WrapItem>
         ))}
       </Wrap>
-    </>
+    </Box>
   );
 };
 

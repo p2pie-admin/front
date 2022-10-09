@@ -14,10 +14,6 @@ import { SearchOff } from "@styled-icons/material-outlined/SearchOff";
 const fetcher = initFetcher();
 
 const Carousel = () => {
-  const uniqueRates = useAppSelector(
-    (state) => state.main.dirTops?.uniqueRates
-  ) as { [key: string]: DirRates };
-
   const pendingDirTops = useAppSelector((state) => state.main.pendingDirTops);
 
   const { data, error } = useSWR(TopsQuery, fetcher) as {
@@ -61,7 +57,7 @@ const Carousel = () => {
         secondaryMessage="no rates were found for this direction"
         linkMessage="report"
       >
-        <CarouselSwiper uniqueRates={uniqueRates} data={data} />
+        <CarouselSwiper data={data} />
       </ErrorWrapper>
     </ErrorWrapper>
   );

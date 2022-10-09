@@ -11,7 +11,7 @@ function Item({
   children,
   exIdIndexPair,
   gap,
-}) {
+}: any) {
   const [userDidTab, setUserDidTab] = useState(false);
 
   const handleFocus = () => {
@@ -19,7 +19,7 @@ function Item({
   };
 
   const handleBlur = () => {
-    userDidTab && index + 1 === positions.length && setTrackIsActive(false);
+    userDidTab && setTrackIsActive(false);
     setUserDidTab(false);
   };
 

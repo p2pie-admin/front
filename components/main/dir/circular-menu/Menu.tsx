@@ -15,9 +15,15 @@ import { Box, Button, Flex, Tag, Text } from "@chakra-ui/react";
 import Icon from "../../../shared/Avatar";
 import DirSideContext from "../DirSideContext";
 import { IDirGroup } from "../../../../types/dir";
-import { useAppDispatch } from "../../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { setActiveSide, setPm } from "../../../../redux/mainReducer";
 import { PmType, Side } from "../../../../types/selector";
+import { batch } from "react-redux";
+import {
+  fetchFiatByCurrencyCode,
+  fetchPossiblePairs,
+  fetchDirTops,
+} from "../../../../redux/thunks";
 
 /**
  * Positioning Stuff
@@ -74,7 +80,6 @@ const Circle = styled(motion.div)`
   display: flex;
   justify-content: center;
   align-items: center;
-
   box-shadow: 2px 4px 28px 0px rgba(0, 0, 0, 0.5);
   cursor: pointer;
   transition: box-shadow 0.15s ease-in-out, border 0.15s ease-in-out;
@@ -104,6 +109,30 @@ function MenuItem({
   totalItems: number;
 }) {
   const side = useContext(DirSideContext) as "give" | "get";
+  const activeSide = useAppSelector((state) => state.main.activeSide);
+
+  const [givePm, getPm] = useAppSelector((state) => [
+    state.main.givePm,
+    state.main.getPm,
+  ]);
+
+  const dispatch = useAppDispatch();
+
+  const choosePm = () => {
+    const oppositePm = activeSide === "give" ? getPm : givePm;
+    batch(() => {
+      dispatch(
+        fetchFiatByCurrencyCode({
+          code: pm.currency.code,
+          side,
+        })
+      ); // нужен только код валюты,  reducer сам запишет куда надо
+      dispatch(fetchPossiblePairs({ code: pm.code, side }));
+      oppositePm?.code && dispatch(fetchDirTops());
+      dispatch(setPm({ pm, side }));
+    });
+  };
+
   return (
     <ToggleLayer
       ResizeObserver={ResizeObserver}
@@ -136,9 +165,7 @@ function MenuItem({
 
         return (
           <Circle
-            onClick={(e) => {
-              dispatch(setPm({ pm, side }));
-            }}
+            onClick={choosePm}
             ref={triggerRef}
             initial={{ x: 0, opacity: 0 }}
             animate={{ x: 1, opacity: 1 }}

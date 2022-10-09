@@ -8,57 +8,33 @@ import { useAppSelector } from "../../redux/hooks";
 import Dirs from "./dir";
 
 const Main = () => {
-  const activeDir = useAppSelector((state) => state.main.activeDir);
   const populars = useAppSelector((state) => state.main.populars);
 
   return (
     <>
       <Greeting />
-      <Box
-        p="1px"
-        bgGradient={{
-          base: "transparent",
-          sm: "linear(to-bl, purple.800, bg.800)",
-        }}
+
+      <Flex
+        p={{ base: "5", sm: "5" }}
         borderRadius={{ base: "0", sm: "xl" }}
+        minH={60}
+        maxW={{ base: "100%", sm: "450" }}
+        flexDir="column"
       >
-        <Flex
-          p={{ base: "5", sm: "5" }}
-          boxShadow={{ base: "0", sm: "xl" }}
-          borderRadius={{ base: "0", sm: "xl" }}
-          minH={60}
-          maxW={{ base: "100%", sm: "450" }}
-          bgColor={{
-            base: "transparent",
-            sm: useColorModeValue("bg.100", "bg.700"),
-          }}
-          flexDir="column"
-        >
-          <SideContext.Provider value={"give"}>
-            <Side />
-          </SideContext.Provider>
+        <SideContext.Provider value={"give"}>
+          <Side />
+        </SideContext.Provider>
 
-          <ReverseButton />
+        <ReverseButton />
 
-          <SideContext.Provider value={"get"}>
-            <Side />
-          </SideContext.Provider>
+        <SideContext.Provider value={"get"}>
+          <Side />
+        </SideContext.Provider>
 
-          <Carousel />
+        <Carousel />
 
-          <Box
-            bgColor={useColorModeValue("gray.50", "bg.500")}
-            minH="10vh"
-            p={{ base: "10px 2px", md: "2", sm: "1" }}
-            borderRadius="xl"
-            filter={activeDir ? "brightness(0.3)" : "unset"}
-            w="100%"
-            mt="5"
-          >
-            <Dirs dirs={populars} />
-          </Box>
-        </Flex>
-      </Box>
+        {!!populars.length && <Dirs dirs={populars} />}
+      </Flex>
     </>
   );
 };

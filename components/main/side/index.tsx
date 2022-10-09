@@ -8,13 +8,13 @@ const Side = () => {
       p="2px"
       bgGradient={useColorModeValue(
         "linear(to-b, bg.50, bg.100)",
-        "linear(to-bl, bg.400, bg.600)"
+        "linear(to-bl, bg.600, bg.700)"
       )}
       borderRadius="50"
     >
       <Grid
         templateColumns="auto 1fr"
-        bgColor={useColorModeValue("gray.50", "bg.500")}
+        bgColor={useColorModeValue("gray.50", "bg.700")}
         w="100%"
         h="20"
         px={{ base: "3", sm: "4" }}

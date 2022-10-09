@@ -30,10 +30,6 @@ const Top = ({ top, rate }: { top: ITop; rate: Rate }) => {
       rounded={12}
       flex={1}
       p={5}
-      boxShadow={useColorModeValue(
-        "0px 0px 2px rgb(0 0 0 / 25%), 10px 10px 15px #e3e3e3, -10px 10px 15px #e3e3e3, -15px -15px 15px rgb(255 255 255 / 40%), 15px -15px 15px rgb(255 255 255 / 40%), inset 0px 2px 0px white",
-        "none"
-      )}
     >
       <Wave />
       <VStack mb={6} align="start" w="100%">
@@ -62,19 +58,7 @@ const Top = ({ top, rate }: { top: ITop; rate: Rate }) => {
         </Text>
 
         <HStack alignItems="center">
-          <Box pb="1.5">
-            <StarRatings
-              rating={rate.admin_rating}
-              starRatedColor={"#f5a951"}
-              changeRating={() => {}}
-              starHoverColor={"#ed8b36"}
-              starEmptyColor={"#927d8f"}
-              numberOfStars={5}
-              starDimension="20px"
-              starSpacing="2px"
-              name="rating"
-            />
-          </Box>
+          <Box pb="1.5"></Box>
 
           <Text w="fit-content" fontSize="xs">
             {rate.admin_rating ? `${rate.admin_rating} out of 5` : ""}
