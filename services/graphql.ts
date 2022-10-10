@@ -7,7 +7,7 @@ const initFetcher = (variables = {}) => {
   const env = process.env.NODE_ENV;
   const url =
     env == "production"
-      ? process.env.NEXT_PUBLIC_STRAPI_PROD_BASE_URL
+      ? process.env.NEXT_PUBLIC_STRAPI_PROD_BASE_URL + "/graphql"
       : process.env.NEXT_PUBLIC_STRAPI_DEV_BASE_URL + "/graphql";
 
   const graphQLClient = new GraphQLClient(url || "");
