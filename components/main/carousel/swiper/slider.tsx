@@ -131,7 +131,7 @@ function Slider({
         <SwiperButton isLeft />
 
         <Progress
-          value={percentage(swiperIdVisible, positions.length - constraint) + 5}
+          value={percentage(swiperIdVisible, positions.length - constraint)}
           alignSelf="center"
           borderRadius="2"
           bg={useColorModeValue("bg.100", "bg.700")}
