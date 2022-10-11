@@ -1,4 +1,4 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Box, Center, Flex, Text } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
 import { useAppSelector } from "../../redux/hooks";
 
@@ -9,21 +9,21 @@ const Greeting = () => {
   );
 
   return (
-    <Flex
-      flexDir="column"
+    <Box
       mt="4"
       mb="2"
-      alignItems="center"
       display={{
         base: topsExist ? "none" : "unset",
         md: "unset",
       }}
     >
-      <Text fontSize="4xl">{t("home:title")}</Text>
-      <Text fontSize="2xl" color="bg.300">
+      <Text textAlign="center" fontSize="4xl">
+        {t("home:title")}
+      </Text>
+      <Text textAlign="center" fontSize="xl" color="bg.300">
         {t("home:subtitle")}
       </Text>
-    </Flex>
+    </Box>
   );
 };
 
