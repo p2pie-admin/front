@@ -4,6 +4,7 @@ import {
   InputRightAddon,
   Icon,
   useColorModeValue,
+  Button,
 } from "@chakra-ui/react";
 import { Delete } from "@styled-icons/feather/Delete";
 import React, { useState } from "react";
@@ -20,12 +21,15 @@ const SearchBar = ({ search_bar }: { search_bar: SearchBarType }) => {
 
   const dispatch = useAppDispatch();
 
-  const renderClearButton = (isEmptyInput: boolean) =>
-    isEmptyInput ? (
-      <Icon as={Search} w="6" h="6" />
-    ) : (
-      <Icon as={Delete} w="6" h="6" />
-    );
+  const renderClearButton = (isEmptyInput: boolean) => (
+    <Button size="sm">
+      {isEmptyInput ? (
+        <Icon as={Search} w="6" h="6" />
+      ) : (
+        <Icon as={Delete} w="6" h="6" />
+      )}
+    </Button>
+  );
 
   const placeholder = inputFocused
     ? search_bar.en_get_adornment
@@ -55,7 +59,7 @@ const SearchBar = ({ search_bar }: { search_bar: SearchBarType }) => {
         _placeholder={{ color: inputFocused ? "bg.400" : "bg.200" }}
         _hover={{ borderColor: useColorModeValue("bg.100", "bg.300") }}
       />
-      <InputRightAddon>
+      <InputRightAddon onClick={() => dispatch(setSearchBarInputValue(""))}>
         {renderClearButton(!searchBarInputValue.length)}
       </InputRightAddon>
     </InputGroup>

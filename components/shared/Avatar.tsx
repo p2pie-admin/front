@@ -8,11 +8,7 @@ const Avatar = ({ icon, big = false }: { icon: any; big?: boolean }) => {
       ? process.env.NEXT_PUBLIC_STRAPI_PROD_BASE_URL
       : process.env.NEXT_PUBLIC_STRAPI_DEV_BASE_URL;
 
-  const fallbackSRC =
-    env === "production"
-      ? "https://strapi-latest.herokuapp.com/uploads/no_avatar_f6343c2514.png"
-      : "http://localhost:1337/uploads/no_avatar_7fc5006027.png?width=32&height=32";
-
+  const fallbackSRC = "https://i.ibb.co/WzrRCF9/no-avatar.png";
   return (
     <Box overflow="hidden" borderRadius="50%">
       <Image

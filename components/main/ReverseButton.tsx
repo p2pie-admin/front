@@ -30,23 +30,26 @@ const ReverseButton = () => {
 
   return (
     <Center w="100%" h="2" p="0">
-      {pendingDirTops ? (
-        <Spinner size="sm" color={color} />
-      ) : (
-        <IconButton
-          onClick={handleReverseDir}
-          borderRadius="50%"
-          variant="primary_regular"
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-          color="bg.600"
-          p="2"
-          zIndex="2"
-          aria-label="Search database"
-          icon={hovered ? <ArrowRepeat /> : <ChevronThinDown />}
-        />
-      )}
-      {/* </Button> */}
+      <IconButton
+        onClick={handleReverseDir}
+        borderRadius="50%"
+        variant="primary_regular"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        color="bg.600"
+        p="2"
+        zIndex="2"
+        aria-label="Search database"
+        icon={
+          pendingDirTops ? (
+            <Spinner size="sm" color={color} />
+          ) : hovered ? (
+            <ArrowRepeat />
+          ) : (
+            <ChevronThinDown />
+          )
+        }
+      />
     </Center>
   );
 };

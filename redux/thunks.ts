@@ -44,13 +44,21 @@ export const fetchDirRates = createAsyncThunk(
 
 export const fetchDirTops = createAsyncThunk(
   "rates/fetchDirTops",
-  async (_, thunkAPI) => {
+  async (code: string | null, thunkAPI) => {
     const { main } = thunkAPI.getState() as { main: MainState };
-    const dir = `${main.givePm?.code}_${main.getPm?.code}`;
+    // dir не успевает записаться в redux до вызова fetchDirTops, поэтому нужно передать последний выбранный code
+    const dir = !code
+      ? `${main.givePm?.code}_${main.getPm?.code}`
+      : main.activeSide === "give"
+      ? `${code.toUpperCase()}_${main.getPm?.code}`
+      : main.activeSide === "get"
+      ? `${main.givePm?.code}_${code.toUpperCase()}`
+      : "";
 
     const response = await axios
       .get(`${courseFilterLink}/dir=${dir}/tops=true`)
-      .catch((err) => console.error(err));
+      .catch((err) => console.error("could not fetch, ", err));
+
     return response?.data as DirTops;
   }
 );

@@ -43,7 +43,7 @@ const PmGroup = ({ pm_group }: { pm_group: PmGroupType }) => {
         })
       ); // нужен только код валюты,  reducer сам запишет куда надо
       dispatch(fetchPossiblePairs({ code: selectedPm.code, side: activeSide }));
-      oppositePm?.code && dispatch(fetchDirTops());
+      oppositePm?.code && dispatch(fetchDirTops(selectedPm.code));
       dispatch(setPm({ pm: selectedPm, side: activeSide }));
       dispatch(setActiveSide(null));
     });

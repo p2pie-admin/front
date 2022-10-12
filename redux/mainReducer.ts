@@ -72,6 +72,7 @@ export const ratesSlice = createSlice({
 
     setActiveSide: (state: MainState, action: PayloadAction<Side | null>) => {
       state.activeSide = action.payload;
+      state.searchBarInputValue = "";
     },
     setSwiperIdVisible: (
       state: MainState,

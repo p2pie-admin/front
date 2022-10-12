@@ -1,4 +1,4 @@
-import PmAvatar from "../../../../../shared/Avatar";
+import Avatar from "../../../../../shared/Avatar";
 import { Button, useColorModeValue } from "@chakra-ui/react";
 
 export default function PmButton({
@@ -25,7 +25,7 @@ export default function PmButton({
       justifyContent="start"
       //bgColor={useColorModeValue("bg.50", "bg.600")}
       onClick={handleToggle} // works as choosePm or as open subitems
-      leftIcon={<PmAvatar icon={icon} />}
+      leftIcon={<Avatar icon={icon} />}
       color={"transparent"}
       _hover={{ color: hoveredColor }}
     >

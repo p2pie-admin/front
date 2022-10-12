@@ -120,6 +120,7 @@ function MenuItem({
 
   const choosePm = () => {
     const oppositePm = activeSide === "give" ? getPm : givePm;
+
     batch(() => {
       dispatch(
         fetchFiatByCurrencyCode({
@@ -128,7 +129,7 @@ function MenuItem({
         })
       ); // нужен только код валюты,  reducer сам запишет куда надо
       dispatch(fetchPossiblePairs({ code: pm.code, side }));
-      oppositePm?.code && dispatch(fetchDirTops());
+      oppositePm?.code && dispatch(fetchDirTops(pm.code));
       dispatch(setPm({ pm, side }));
     });
   };
