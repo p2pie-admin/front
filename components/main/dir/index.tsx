@@ -1,10 +1,12 @@
 import { Wrap, WrapItem, useColorModeValue, Text, Box } from "@chakra-ui/react";
+import { useTranslation } from "next-i18next";
 import { useAppSelector } from "../../../redux/hooks";
 import { IDir } from "../../../types/dir";
 import Dir from "./Dir";
 
 const Dirs = ({ dirs }: { dirs: IDir[] }) => {
   const activeDir = useAppSelector((state) => state.main.activeDir);
+  const { t } = useTranslation();
 
   return (
     <Box
@@ -24,7 +26,7 @@ const Dirs = ({ dirs }: { dirs: IDir[] }) => {
         w="100%"
         color={useColorModeValue("bg.400", "bg.300")}
       >
-        Популярные направления:
+        {t("home:popular")}
       </Text>
       <Wrap justify="center">
         {dirs.map((dir) => (

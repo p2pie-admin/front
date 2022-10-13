@@ -21,7 +21,10 @@ import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { selectorQuery } from "./SelectorQuery";
 import initFetcher from "../../../../services/graphql";
 import SectionsList from "./SectionsList";
+
+import { SelectorType } from "../../../../types/selector";
 import ErrorWrapper from "../../../shared/ErrorWrapper";
+import { useTranslation } from "next-i18next";
 
 const fetcher = initFetcher();
 
@@ -29,16 +32,26 @@ const fetcher = initFetcher();
 
 const Selector = () => {
   //const { data, error } = useSWR(selectorQuery, gqlFetcher.fetcher);
-  const { data, error } = useSWR(selectorQuery, fetcher);
+  const { data, error } = useSWR(selectorQuery, fetcher) as {
+    data: { selector: SelectorType };
+    error: any;
+  };
 
   const searchBarInputValue = useAppSelector(
     (state) => state.main.searchBarInputValue
   );
 
+  const { i18n } = useTranslation();
+
+  const activeSide = useAppSelector((state) => state.main.activeSide);
+
   return (
     <ErrorWrapper isError={error} isLoading={!data}>
-      <ModalHeader w="100%" justifyContent="center" display="flex" pb="0">
-        header
+      <ModalHeader w="100%" pb="0">
+        {activeSide &&
+          data?.selector[
+            `${i18n.language as "en" | "ru"}_${activeSide}_header`
+          ]}
       </ModalHeader>
       <ModalCloseButton />
       <ModalBody pb={6} p="0">
@@ -61,12 +74,12 @@ const Selector = () => {
             },
           }}
         >
-          <SearchBar search_bar={data?.selector.search_bar} />
+          <SearchBar search_bar={data?.selector?.search_bar} />
 
           <SectionsList
             sections={filterSections(
               searchBarInputValue,
-              data?.selector.sections
+              data?.selector?.sections
             )}
           />
         </VStack>

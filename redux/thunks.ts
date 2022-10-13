@@ -44,14 +44,14 @@ export const fetchDirRates = createAsyncThunk(
 
 export const fetchDirTops = createAsyncThunk(
   "rates/fetchDirTops",
-  async (code: string | null, thunkAPI) => {
+  async ({ code, side }: { code?: string; side?: Side }, thunkAPI) => {
     const { main } = thunkAPI.getState() as { main: MainState };
     // dir не успевает записаться в redux до вызова fetchDirTops, поэтому нужно передать последний выбранный code
     const dir = !code
       ? `${main.givePm?.code}_${main.getPm?.code}`
-      : main.activeSide === "give"
+      : side === "give"
       ? `${code.toUpperCase()}_${main.getPm?.code}`
-      : main.activeSide === "get"
+      : side === "get"
       ? `${main.givePm?.code}_${code.toUpperCase()}`
       : "";
 

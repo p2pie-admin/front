@@ -24,7 +24,7 @@ const ReverseButton = () => {
   const handleReverseDir = () => {
     batch(() => {
       dispatch(reverseDir());
-      dispatch(fetchDirTops(null));
+      dispatch(fetchDirTops({}));
     });
   };
 

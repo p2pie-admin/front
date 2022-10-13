@@ -21,24 +21,25 @@ const SectionsList = ({ sections }: { sections: SectionType[] }) => {
     <>
       <Box w="100%" borderRadius="lg" maxH="75vh">
         {/* {filterSections(sections).map((section, id) => ( */}
-        {sections.map((section, id) => (
-          <SectionContext.Provider
-            key={section.id}
-            value={{
-              columns: section.columns,
-              currencyVisible:
-                section.en_title.toLowerCase().includes("crypto") ||
-                section.en_title.toLowerCase().includes("cash"),
-            }}
-          >
-            <Section
+        {sections?.length &&
+          sections.map((section, id) => (
+            <SectionContext.Provider
               key={section.id}
-              title={section[`en_title`]}
-              itemsToShow={section.columns * section.rows}
-              pmGroups={section.pm_groups}
-            />
-          </SectionContext.Provider>
-        ))}
+              value={{
+                columns: section.columns,
+                currencyVisible:
+                  section.en_title.toLowerCase().includes("crypto") ||
+                  section.en_title.toLowerCase().includes("cash"),
+              }}
+            >
+              <Section
+                key={section.id}
+                title={section[`en_title`]}
+                itemsToShow={section.columns * section.rows}
+                pmGroups={section.pm_groups}
+              />
+            </SectionContext.Provider>
+          ))}
         <Box w="100%" h="24" />
       </Box>
     </>

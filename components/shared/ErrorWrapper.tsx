@@ -20,8 +20,8 @@ const Error = ({
     flexDir="column"
     my="4"
   >
-    <Icon as={icon} color={`${iconColor}.500`} w={20} h={20} />
-    <Text color={`${mainColor}.200`} fontSize="2xl">
+    <Icon as={icon} color={`${iconColor || "bg"}.500`} w={20} h={20} />
+    <Text color={`${mainColor || "bg"}.200`} fontSize="2xl">
       {primaryMessage}
     </Text>
     <Text color="bg.400" fontSize="sm" mb="1">
@@ -46,8 +46,8 @@ const ErrorWrapper = (props: {
   secondaryMessage?: string;
   linkMessage?: string;
   icon?: any;
-  mainColor: string;
-  iconColor: string;
+  mainColor?: string;
+  iconColor?: string;
 }) => {
   const { isError, isLoading, children } = props;
 

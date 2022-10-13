@@ -7,7 +7,7 @@ import Carousel from "../main/carousel";
 import { useAppSelector } from "../../redux/hooks";
 import Dirs from "./dir";
 
-const Main = () => {
+const MainPageContent = () => {
   const populars = useAppSelector((state) => state.main.populars);
 
   return (
@@ -39,4 +39,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default MainPageContent;

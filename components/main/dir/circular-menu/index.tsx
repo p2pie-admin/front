@@ -3,7 +3,7 @@ import { AnimatePresence } from "framer-motion";
 import { ToggleLayer } from "react-laag";
 
 import Button from "./PmButton";
-import Menu from "./Menu";
+import Petals from "./Petals";
 import { Box } from "@chakra-ui/react";
 import { useAppSelector } from "../../../../redux/hooks";
 import { IDirGroup } from "../../../../types/dir";
@@ -22,7 +22,7 @@ function DirSide({ dirId, group }: { dirId: string; group: IDirGroup }) {
         renderLayer={({ isOpen, layerProps }) => {
           return (
             <AnimatePresence>
-              {isOpen && <Menu {...layerProps} group={group} />}
+              {isOpen && <Petals {...layerProps} group={group} />}
             </AnimatePresence>
           );
         }}

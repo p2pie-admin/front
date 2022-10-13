@@ -9,33 +9,6 @@ export const popularQuery = gql`
           groups {
             ... on ComponentPopularPopularGroup {
               id
-              pms {
-                data {
-                  attributes {
-                    code
-                    en_name
-                    ru_name
-                    subgroup_name
-                    tag
-                    icon {
-                      data {
-                        attributes {
-                          url
-                          alternativeText
-                        }
-                      }
-                    }
-                    currency {
-                      data {
-                        attributes {
-                          code
-                          accuracy
-                        }
-                      }
-                    }
-                  }
-                }
-              }
               icon {
                 data {
                   attributes {
@@ -46,6 +19,59 @@ export const popularQuery = gql`
               }
               en_name
               ru_name
+              pms {
+                data {
+                  id
+                  attributes {
+                    code
+                    pm_group {
+                      data {
+                        id
+                        attributes {
+                          en_name
+                          ru_name
+                          prefix
+                          options {
+                            ... on ComponentSelectorCurrency {
+                              currency {
+                                data {
+                                  id
+                                  attributes {
+                                    code
+                                    accuracy
+                                  }
+                                }
+                              }
+                            }
+                            ... on ComponentSelectorSubgroup {
+                              id
+                              name
+                              code
+                              currency {
+                                data {
+                                  id
+                                  attributes {
+                                    code
+                                    accuracy
+                                  }
+                                }
+                              }
+                            }
+                          }
+                          icon {
+                            data {
+                              attributes {
+                                url
+                                alternativeText
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }

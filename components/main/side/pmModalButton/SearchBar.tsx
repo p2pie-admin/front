@@ -12,12 +12,16 @@ import { Search } from "@styled-icons/bootstrap/Search";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { setSearchBarInputValue } from "../../../../redux/mainReducer";
 import { SearchBarType } from "../../../../types/selector";
+import { useTranslation } from "next-i18next";
 
 const SearchBar = ({ search_bar }: { search_bar: SearchBarType }) => {
   const [inputFocused, setInputFocused] = useState(false);
   const searchBarInputValue = useAppSelector(
     (state) => state.main.searchBarInputValue
   );
+
+  const { i18n } = useTranslation();
+  const activeSide = useAppSelector((state) => state.main.activeSide);
 
   const dispatch = useAppDispatch();
 
@@ -31,9 +35,10 @@ const SearchBar = ({ search_bar }: { search_bar: SearchBarType }) => {
     </Button>
   );
 
-  const placeholder = inputFocused
-    ? search_bar.en_get_adornment
-    : search_bar.en_placeholder;
+  const placeholder =
+    activeSide && inputFocused
+      ? search_bar?.[`${i18n.language as "en" | "ru"}_${activeSide}_adornment`]
+      : search_bar[`${i18n.language as "en" | "ru"}_placeholder`];
 
   return (
     <InputGroup

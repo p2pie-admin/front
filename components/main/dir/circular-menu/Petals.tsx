@@ -11,12 +11,16 @@ import {
 import { ToggleLayer, useHover } from "react-laag";
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useContext, useState } from "react";
-import { Box, Button, Flex, Tag, Text } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Tag, Text } from "@chakra-ui/react";
 import Icon from "../../../shared/Avatar";
 import DirSideContext from "../DirSideContext";
-import { IDirGroup } from "../../../../types/dir";
+import { IDirGroup, IPmPointer } from "../../../../types/dir";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { setActiveSide, setPm } from "../../../../redux/mainReducer";
+import {
+  setActiveDir,
+  setActiveSide,
+  setPm,
+} from "../../../../redux/mainReducer";
 import { PmType, Side } from "../../../../types/selector";
 import { batch } from "react-redux";
 import {
@@ -24,6 +28,7 @@ import {
   fetchPossiblePairs,
   fetchDirTops,
 } from "../../../../redux/thunks";
+import { getPmsFromPmGroup } from "../../side/pmModalButton/section/PmGroup/helper";
 
 /**
  * Positioning Stuff
@@ -99,17 +104,23 @@ const Circle = styled(motion.div)`
   }
 `;
 
-function MenuItem({
+////////////////////////////////
+
+function Petal({
   index,
   totalItems,
-  pm,
+  pmPointer,
 }: {
-  pm: PmType;
+  pmPointer: IPmPointer;
   index: number;
   totalItems: number;
 }) {
   const side = useContext(DirSideContext) as "give" | "get";
-  const activeSide = useAppSelector((state) => state.main.activeSide);
+  const pm = pmPointer.pm_group
+    ? getPmsFromPmGroup(pmPointer.pm_group).find(
+        (pm) => pm.code === pmPointer.code.toUpperCase()
+      )
+    : undefined;
 
   const [givePm, getPm] = useAppSelector((state) => [
     state.main.givePm,
@@ -118,9 +129,11 @@ function MenuItem({
 
   const dispatch = useAppDispatch();
 
-  const choosePm = () => {
-    const oppositePm = activeSide === "give" ? getPm : givePm;
+  if (!pm) return <></>;
 
+  const choosePm = (event: React.FormEvent<EventTarget>) => {
+    const oppositePm = side === "give" ? getPm : givePm;
+    oppositePm && event.stopPropagation(); // работает как закрытие circular menu , если выполняется
     batch(() => {
       dispatch(
         fetchFiatByCurrencyCode({
@@ -129,7 +142,8 @@ function MenuItem({
         })
       ); // нужен только код валюты,  reducer сам запишет куда надо
       dispatch(fetchPossiblePairs({ code: pm.code, side }));
-      oppositePm?.code && dispatch(fetchDirTops(pm.code));
+      oppositePm?.code && dispatch(fetchDirTops({ code: pm.code, side }));
+      oppositePm?.code && dispatch(setActiveDir(undefined));
       dispatch(setPm({ pm, side }));
     });
   };
@@ -211,32 +225,22 @@ function MenuItem({
  * Menu
  */
 
-const MenuBase = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: ${CONTAINER_SIZE}px;
-  height: ${CONTAINER_SIZE}px;
-  pointer-events: none;
-  border-radius: 50%;
-`;
-
-const Menu = React.forwardRef(function Menu(
+const Petals = React.forwardRef(function Menu(
   { style, group }: { group: IDirGroup },
   ref
 ) {
   return (
-    <MenuBase ref={ref} style={style}>
-      {group.pms.map((pm, index) => (
-        <MenuItem
+    <Center style={style} ref={ref} pointerEvents="none" borderRadius="50%">
+      {group.pms.map((pmPointer, index) => (
+        <Petal
           key={index}
-          pm={pm}
+          pmPointer={pmPointer}
           index={index}
           totalItems={group.pms.length}
         />
       ))}
-    </MenuBase>
+    </Center>
   );
 });
 
-export default Menu;
+export default Petals;
