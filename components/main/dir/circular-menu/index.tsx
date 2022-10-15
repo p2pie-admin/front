@@ -2,7 +2,7 @@ import ResizeObserver from "resize-observer-polyfill";
 import { AnimatePresence } from "framer-motion";
 import { ToggleLayer } from "react-laag";
 
-import Button from "./PmButton";
+import PmButton from "./PmButton";
 import Petals from "./Petals";
 import { Box } from "@chakra-ui/react";
 import { useAppSelector } from "../../../../redux/hooks";
@@ -27,7 +27,7 @@ function DirSide({ dirId, group }: { dirId: string; group: IDirGroup }) {
           );
         }}
       >
-        {({ triggerRef }) => <Button ref={triggerRef} group={group} />}
+        {({ triggerRef }) => <PmButton ref={triggerRef} group={group} />}
       </ToggleLayer>
     </Box>
   );

@@ -11,6 +11,7 @@ import {
   VStack,
   useColorModeValue,
   Text,
+  SlideFade,
 } from "@chakra-ui/react";
 
 import Error from "../../../shared/ErrorWrapper";

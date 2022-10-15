@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, VStack, useColorModeValue } from "@chakra-ui/react";
+import { Box, VStack, useColorModeValue, SlideFade } from "@chakra-ui/react";
 import Section from "./section";
 
 // import ListFilter from "../../../ListFilter";
@@ -22,7 +22,7 @@ const SectionsList = ({ sections }: { sections: SectionType[] }) => {
       <Box w="100%" borderRadius="lg" maxH="75vh">
         {/* {filterSections(sections).map((section, id) => ( */}
         {sections?.length &&
-          sections.map((section, id) => (
+          sections.map((section, index) => (
             <SectionContext.Provider
               key={section.id}
               value={{
@@ -32,12 +32,14 @@ const SectionsList = ({ sections }: { sections: SectionType[] }) => {
                   section.en_title.toLowerCase().includes("cash"),
               }}
             >
-              <Section
-                key={section.id}
-                title={section[`en_title`]}
-                itemsToShow={section.columns * section.rows}
-                pmGroups={section.pm_groups}
-              />
+              <SlideFade in delay={index * 0.1}>
+                <Section
+                  key={section.id}
+                  title={section[`en_title`]}
+                  itemsToShow={section.columns * section.rows}
+                  pmGroups={section.pm_groups}
+                />
+              </SlideFade>
             </SectionContext.Provider>
           ))}
         <Box w="100%" h="24" />

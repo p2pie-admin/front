@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Text } from "@chakra-ui/react";
+import { Box, Center, Flex, SlideFade, Text } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
 import { useAppSelector } from "../../redux/hooks";
 
@@ -9,21 +9,23 @@ const Greeting = () => {
   );
 
   return (
-    <Box
-      mt="4"
-      mb="2"
-      display={{
-        base: topsExist ? "none" : "unset",
-        md: "unset",
-      }}
-    >
-      <Text textAlign="center" fontSize="4xl">
-        {t("home:title")}
-      </Text>
-      <Text textAlign="center" fontSize="xl" color="bg.300">
-        {t("home:subtitle")}
-      </Text>
-    </Box>
+    <SlideFade in>
+      <Box
+        mt="4"
+        mb="2"
+        display={{
+          base: topsExist ? "none" : "unset",
+          md: "unset",
+        }}
+      >
+        <Text textAlign="center" fontSize="4xl">
+          {t("home:title")}
+        </Text>
+        <Text textAlign="center" fontSize="xl" color="bg.300">
+          {t("home:subtitle")}
+        </Text>
+      </Box>
+    </SlideFade>
   );
 };
 

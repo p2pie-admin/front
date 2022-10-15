@@ -168,7 +168,7 @@ function Petal({
                 exit={{ opacity: 0 }}
                 {...layerProps}
               >
-                {label}
+                {pm.en_name}
               </TooltipBox>
             )}
           </AnimatePresence>

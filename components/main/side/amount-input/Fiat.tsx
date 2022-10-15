@@ -47,7 +47,7 @@ const Fiat = ({ value }: { value: number }) => {
   return (
     <Flex
       pos="absolute"
-      top="12"
+      top="10"
       right="0"
       fontSize="sm"
       color="bg.700"

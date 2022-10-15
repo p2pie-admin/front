@@ -1,4 +1,10 @@
-import { Button, Icon, Image, useOutsideClick } from "@chakra-ui/react";
+import {
+  Button,
+  Icon,
+  Image,
+  ScaleFade,
+  useOutsideClick,
+} from "@chakra-ui/react";
 import { ArrowRight } from "@styled-icons/heroicons-outline/ArrowRight";
 import CircularMenu from "./circular-menu";
 import { useRef, useState } from "react";
@@ -10,10 +16,12 @@ import { getPmsFromPmGroup } from "../side/pmModalButton/section/PmGroup/helper"
 import { useSelector } from "react-redux";
 
 const Dir = ({
+  index,
   giveGroup,
   getGroup,
   dirId,
 }: {
+  index: number;
   giveGroup: IDirGroup;
   getGroup: IDirGroup;
   dirId: string;
@@ -52,12 +60,16 @@ const Dir = ({
       borderRadius="2rem"
       leftIcon={
         <DirSideContext.Provider value={"give"}>
-          <CircularMenu dirId={dirId} group={giveGroup} />
+          <ScaleFade initialScale={0.7} in delay={0.2 + index * 0.05}>
+            <CircularMenu dirId={dirId} group={giveGroup} />
+          </ScaleFade>
         </DirSideContext.Provider>
       }
       rightIcon={
         <DirSideContext.Provider value={"get"}>
-          <CircularMenu dirId={dirId} group={getGroup} />
+          <ScaleFade initialScale={0.7} in delay={0.25 + index * 0.05}>
+            <CircularMenu dirId={dirId} group={getGroup} />
+          </ScaleFade>
         </DirSideContext.Provider>
       }
     >
