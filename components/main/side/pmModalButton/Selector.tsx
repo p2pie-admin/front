@@ -12,6 +12,8 @@ import {
   useColorModeValue,
   Text,
   SlideFade,
+  Box,
+  Button,
 } from "@chakra-ui/react";
 
 import Error from "../../../shared/ErrorWrapper";
@@ -26,6 +28,8 @@ import SectionsList from "./SectionsList";
 import { SelectorType } from "../../../../types/selector";
 import ErrorWrapper from "../../../shared/ErrorWrapper";
 import { useTranslation } from "next-i18next";
+import LinkButton from "../../../shared/LinkButton";
+import { ScTelegram } from "@styled-icons/evil/ScTelegram";
 
 const fetcher = initFetcher();
 
@@ -47,21 +51,35 @@ const Selector = () => {
   const activeSide = useAppSelector((state) => state.main.activeSide);
 
   return (
-    <ErrorWrapper isError={error} isLoading={!data}>
-      <ModalHeader w="100%" pb="0">
+    <ErrorWrapper
+      isError={error}
+      isLoading={!data}
+      primaryMessage="Connection error!"
+      secondaryMessage="CMS connection is lost!"
+      linkMessage="report"
+    >
+      <ModalHeader w="100%" py="1">
         {activeSide &&
           data?.selector[
             `${i18n.language as "en" | "ru"}_${activeSide}_header`
           ]}
       </ModalHeader>
       <ModalCloseButton />
-      <ModalBody pb={6} p="0">
+      <ModalBody
+        pb={6}
+        p="0"
+        overflowY="scroll"
+        overflowX="hidden"
+        sx={{
+          "&::-webkit-scrollbar": {
+            width: "0",
+          },
+        }}
+      >
         <VStack
           borderRadius="lg"
           p="2"
           justifyContent="center"
-          overflowY="scroll"
-          overflowX="hidden"
           css={{
             "&::-webkit-scrollbar": {
               width: "4px",
@@ -83,6 +101,16 @@ const Selector = () => {
               data?.selector?.sections
             )}
           />
+          <Box h="70"></Box>
+          <Text> Couldn't find what was looking for? </Text>
+          <LinkButton
+            bgColor="bg.500"
+            message="Text me!"
+            href={String(process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT)}
+            CustomIcon={ScTelegram}
+          />
+
+          <Box h="70"></Box>
         </VStack>
       </ModalBody>
     </ErrorWrapper>

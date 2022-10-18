@@ -6,7 +6,14 @@ const SectionGrid = ({ children }: { children: JSX.Element[] }) => {
   const { columns } = useContext(SectionContext);
 
   return (
-    <Grid templateColumns={`repeat(${columns}, 1fr)`} gap="1" pb={2}>
+    <Grid
+      templateColumns={{
+        base: `repeat(${columns - 1}, 1fr)`,
+        sm: `repeat(${columns}, 1fr)`,
+      }}
+      gap="1"
+      pb={2}
+    >
       {children}
     </Grid>
   );

@@ -32,7 +32,7 @@ const SectionsList = ({ sections }: { sections: SectionType[] }) => {
                   section.en_title.toLowerCase().includes("cash"),
               }}
             >
-              <SlideFade in delay={index * 0.1}>
+              <SlideFade in delay={index * 0.05}>
                 <Section
                   key={section.id}
                   title={section[`en_title`]}
@@ -42,7 +42,6 @@ const SectionsList = ({ sections }: { sections: SectionType[] }) => {
               </SlideFade>
             </SectionContext.Provider>
           ))}
-        <Box w="100%" h="24" />
       </Box>
     </>
   );

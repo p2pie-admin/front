@@ -37,6 +37,7 @@ const Section = ({
         w="100%"
         mb="2"
         justifyContent="start"
+        bgColor="bg.500"
         onClick={() =>
           // showSection({ ...foldedSections, [id]: !foldedSections[id] })
           setHidden(!isHidden)
