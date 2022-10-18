@@ -10,7 +10,14 @@ const Layout = ({ children }: { children: ReactChild }) => {
   return (
     <Box w="100%" position="relative">
       <Header />
-      <Flex flexDir="column" alignItems="center" minH="120vh">
+      <Flex
+        flexDir="column"
+        alignItems="center"
+        minH="120vh"
+        sx={{
+          "&::-webkit-overflow-scrolling": "touch",
+        }}
+      >
         {children}
       </Flex>
       <Footer />

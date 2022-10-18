@@ -31,7 +31,10 @@ const SelectorModal = () => {
         color={useColorModeValue("bg.400", "bg.100")}
         position="relative"
         overflow="hidden"
-        h="80vh"
+        h={{
+          base: "68vh",
+          sm: "78vh",
+        }}
       >
         <Selector />
         <Box
