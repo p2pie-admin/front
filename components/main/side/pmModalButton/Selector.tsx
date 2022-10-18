@@ -74,6 +74,7 @@ const Selector = () => {
           "&::-webkit-scrollbar": {
             width: "0",
           },
+          "&::-webkit-overflow-scrolling": "touch",
         }}
       >
         <VStack
