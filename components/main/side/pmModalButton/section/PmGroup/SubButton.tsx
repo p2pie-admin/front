@@ -5,22 +5,22 @@ export const SubButton = ({
   children,
   pm,
   choosePm,
-  disabled,
+  shaded,
 }: {
   children: string;
   pm: PmType;
   choosePm: Function;
-  disabled: boolean;
+  shaded: boolean;
 }) => (
   <Button
     w="100%"
     size="sm"
-    disabled={disabled}
+    filter={shaded ? "opacity(0.5) grayscale(0.8)" : "none"}
     gridColumn={`span ${
       pm.subgroup_name && pm.subgroup_name.length > 5 ? 2 : 1
     }`}
     variant="primary_shaded"
-    onClick={() => choosePm(pm)}
+    onClick={() => choosePm(pm, shaded)}
   >
     {children}
   </Button>

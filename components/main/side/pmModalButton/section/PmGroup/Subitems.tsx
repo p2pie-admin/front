@@ -36,7 +36,7 @@ const Subitems = ({
       <PmButton
         icon={pms[0].icon}
         handleToggle={() => setFolded(!folded)}
-        disabled={allPmsHaveUnmetPairs(pms, possiblePairs)}
+        shaded={allPmsHaveUnmetPairs(pms, possiblePairs)}
       >
         <PmName
           name={pmGroupName}
@@ -60,7 +60,7 @@ const Subitems = ({
                   pm={pm}
                   choosePm={choosePm}
                   key={pm.code}
-                  disabled={singlePmHasUnmetPairs(pm, possiblePairs)}
+                  shaded={singlePmHasUnmetPairs(pm, possiblePairs)}
                 >
                   {pm.subgroup_name || pm.currency.code.toUpperCase()}
                 </SubButton>

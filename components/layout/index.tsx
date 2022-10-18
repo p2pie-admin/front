@@ -14,7 +14,11 @@ const Layout = ({ children }: { children: ReactChild }) => {
         flexDir="column"
         alignItems="center"
         minH="120vh"
+        overflowY="scroll"
         sx={{
+          "&::-webkit-scrollbar": {
+            width: "0",
+          },
           "&::-webkit-overflow-scrolling": "touch",
         }}
       >

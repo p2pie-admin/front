@@ -58,7 +58,7 @@ const Selector = () => {
       secondaryMessage="CMS connection is lost!"
       linkMessage="report"
     >
-      <ModalHeader w="100%" py="1">
+      <ModalHeader w="100%" pt="2" pb="1">
         {activeSide &&
           data?.selector[
             `${i18n.language as "en" | "ru"}_${activeSide}_header`
@@ -103,7 +103,7 @@ const Selector = () => {
             )}
           />
           <Box h="70"></Box>
-          <Text> Couldn't find what was looking for? </Text>
+          <Text color="bg.300"> Haven't found what were looking for? </Text>
           <LinkButton
             bgColor="bg.500"
             message="Text me!"

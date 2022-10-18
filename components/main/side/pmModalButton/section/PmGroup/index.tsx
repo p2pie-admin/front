@@ -15,6 +15,7 @@ import {
   setActiveSide,
   setAmount,
   setPm,
+  updateAmount,
 } from "../../../../../../redux/mainReducer";
 
 const PmGroup = ({ pm_group }: { pm_group: PmGroupType }) => {
@@ -32,7 +33,7 @@ const PmGroup = ({ pm_group }: { pm_group: PmGroupType }) => {
     state.main.getPm,
   ]);
 
-  const choosePm = (selectedPm: PmType) => {
+  const choosePm = (selectedPm: PmType, shaded: boolean) => {
     if (!activeSide) return;
     const oppositePm = activeSide === "give" ? getPm : givePm;
     batch(() => {
@@ -43,10 +44,19 @@ const PmGroup = ({ pm_group }: { pm_group: PmGroupType }) => {
         })
       ); // нужен только код валюты,  reducer сам запишет куда надо
       dispatch(fetchPossiblePairs({ code: selectedPm.code, side: activeSide }));
-      oppositePm?.code &&
-        dispatch(fetchDirTops({ code: selectedPm.code, side: activeSide }));
       dispatch(setPm({ pm: selectedPm, side: activeSide }));
       dispatch(setActiveSide(null));
+      if (oppositePm?.code) {
+        if (shaded) {
+          dispatch(
+            setPm({
+              side: activeSide === "give" ? "get" : "give",
+            })
+          );
+        } else {
+          dispatch(fetchDirTops({ code: selectedPm.code, side: activeSide }));
+        }
+      }
     });
   };
 
@@ -68,12 +78,14 @@ const PmGroup = ({ pm_group }: { pm_group: PmGroupType }) => {
     ); // pm_id from pm_group_short_name + currency or subitem
   }
 
+  const shadedPm = singlePmHasUnmetPairs(pms[0], possiblePairs);
+
   return (
     // pm_id from pm_group_short_name or currency
     <PmButton
       icon={pm_group.icon}
-      handleToggle={() => choosePm(pms[0])}
-      disabled={singlePmHasUnmetPairs(pms[0], possiblePairs)}
+      handleToggle={() => choosePm(pms[0], shadedPm)}
+      shaded={shadedPm}
     >
       <PmName
         name={name}

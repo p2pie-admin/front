@@ -11,7 +11,7 @@ const MainPageContent = () => {
   const populars = useAppSelector((state) => state.main.populars);
 
   return (
-    <>
+    <Box p="2">
       <Greeting />
 
       <Flex
@@ -35,7 +35,7 @@ const MainPageContent = () => {
 
         {!!populars.length && <Dirs dirs={populars} />}
       </Flex>
-    </>
+    </Box>
   );
 };
 

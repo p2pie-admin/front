@@ -5,12 +5,12 @@ export default function PmButton({
   children,
   icon,
   handleToggle,
-  disabled,
+  shaded,
 }: {
   children: JSX.Element | JSX.Element[];
   icon?: any;
   handleToggle: any;
-  disabled: boolean;
+  shaded: boolean;
 }) {
   const hoveredColor = useColorModeValue("black", "white");
 
@@ -20,7 +20,7 @@ export default function PmButton({
       p="0 5px"
       bgColor="transparent"
       boxShadow="none"
-      disabled={disabled}
+      filter={shaded ? "opacity(0.5) grayscale(0.8)" : "none"}
       //filter={!paired ? "grayscale(100%) opacity(30%)" : "none"}
       justifyContent="start"
       //bgColor={useColorModeValue("bg.50", "bg.600")}

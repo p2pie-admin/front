@@ -59,8 +59,14 @@ export const ratesSlice = createSlice({
 
     setPm: (
       state: MainState,
-      action: PayloadAction<{ pm: PmType; side: Side }>
+      action: PayloadAction<{ pm?: PmType; side: Side }>
     ) => {
+      if (!action.payload.pm) {
+        state.amountInput = undefined;
+        state.amountOutputs = initialAmountOutputs;
+        state.dirTops = undefined;
+        state.dirRates = undefined;
+      } // опустошаем пм
       if (action.payload.side === "give") state.givePm = action.payload.pm;
       if (action.payload.side === "get") state.getPm = action.payload.pm;
     },
@@ -89,7 +95,10 @@ export const ratesSlice = createSlice({
       );
     },
     // вводим свои числа
-    setAmount: (state: MainState, action: PayloadAction<AmountInput>) => {
+    setAmount: (
+      state: MainState,
+      action: PayloadAction<AmountInput | undefined>
+    ) => {
       state.amountInput = action.payload;
       state.amountOutputs = setAmountOutputs(state, action.payload);
     },

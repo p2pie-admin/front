@@ -16,7 +16,7 @@ const SelectorModal = () => {
 
   const gradient = useColorModeValue(
     "linear-gradient(0deg, rgba(241,240,251,1) 10%, rgba(241,240,251,0) 100%);",
-    "linear-gradient(0deg, rgba(88,79,98,1) 10%, rgba(88,79,98,0) 100%);"
+    "linear-gradient(0deg, rgba(88,79,98,1) 20%, rgba(88,79,98,0) 100%);"
   );
 
   const dispatch = useAppDispatch();
@@ -45,6 +45,7 @@ const SelectorModal = () => {
           bg={gradient}
           left="0"
           borderRadius="lg"
+          pointerEvents="none"
         />
       </ModalContent>
     </Modal>

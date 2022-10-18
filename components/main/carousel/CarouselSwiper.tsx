@@ -1,5 +1,7 @@
 import { Box } from "@chakra-ui/react";
+
 import { useAppSelector } from "../../../redux/hooks";
+
 import { DirRates, ITop } from "../../../types/rates";
 import Swiper from "./swiper";
 import Top from "./Top";

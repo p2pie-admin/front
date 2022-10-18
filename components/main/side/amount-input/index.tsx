@@ -22,6 +22,7 @@ const AmountInput = () => {
   };
 
   const amountOutputs = useAppSelector((state) => state.main.amountOutputs);
+  const pendingDirTops = useAppSelector((state) => state.main.pendingDirTops);
   const value = amountOutputs[side] || "";
 
   return (
@@ -34,7 +35,7 @@ const AmountInput = () => {
         onChange={onAmountChange}
         minW="10"
         mr="3"
-        value={value.length > 11 ? "..." : value}
+        value={value.length > 11 || pendingDirTops ? "-" : value}
         keepWithinRange={true}
         clampValueOnBlur={true}
         max={9999999}
@@ -57,7 +58,7 @@ const AmountInput = () => {
           w="100%"
         />
 
-        {typeof window !== "undefined" && (
+        {typeof window !== "undefined" && !pendingDirTops && (
           <Fiat value={+value.replaceAll(" ", "")} />
         )}
         {/* <Text color="teal.400">{`step: ${step} / fiatStep: ${fiatStep}`}</Text> */}

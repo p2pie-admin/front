@@ -11,14 +11,12 @@ const Greeting = () => {
   return (
     <SlideFade in>
       <Box
-        mt="4"
-        mb="2"
         display={{
           base: topsExist ? "none" : "unset",
           md: "unset",
         }}
       >
-        <Text textAlign="center" fontSize="4xl">
+        <Text textAlign="center" fontSize="3xl">
           {t("home:title")}
         </Text>
         <Text textAlign="center" fontSize="xl" color="bg.300">

@@ -43,7 +43,7 @@ const Carousel = () => {
       mainColor="red"
       iconColor="yellow"
       primaryMessage="Connection error!"
-      secondaryMessage="Server connection is lost!"
+      secondaryMessage="Rates parser connection is lost!"
       linkMessage="report"
       isError={error}
       isLoading={!data || pendingDirTops}
