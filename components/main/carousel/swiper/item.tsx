@@ -1,27 +1,31 @@
 import { Flex } from "@chakra-ui/react";
-import { useState, useCallback } from "react";
+import { useCallback } from "react";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { updateScrollLock } from "../../../../redux/mainReducer";
 
 function Item({
-  setTrackIsActive,
   handleSwiperIdVisible,
   swiperIdVisible,
   constraint,
   itemWidth,
   positions,
   children,
-  exIdIndexPair,
   gap,
 }: any) {
-  const [userDidTab, setUserDidTab] = useState(false);
+  const isScrollLocked = useAppSelector((state) => state.main.isScrollLocked);
 
-  const handleFocus = () => {
-    setTrackIsActive(true);
-  };
+  const dispatch = useAppDispatch();
 
-  const handleBlur = () => {
-    userDidTab && setTrackIsActive(false);
-    setUserDidTab(false);
-  };
+  // const handleFocus = () => {
+  //   setTrackIsActive(true);
+  //   console.log("handleFocus");
+  // };
+
+  // const handleBlur = () => {
+  //   userDidTab && setTrackIsActive(false);
+  //   setUserDidTab(false);
+  //   console.log("handleBlur");
+  // };
 
   // const handleKeyUp = (event) => {
   //   event.key === "Tab" &&
@@ -35,9 +39,10 @@ function Item({
 
   const handleWheel = useCallback((event) => {
     // event.preventDefault();
-
+    console.log("handleWheel");
     if (swiperIdVisible === 0) {
       // если первый, то ничего не делаем
+
       if (event.deltaY > 0) {
         handleSwiperIdVisible(swiperIdVisible + 1);
       }
@@ -65,9 +70,15 @@ function Item({
 
   return (
     <Flex
-      onFocus={handleFocus}
+      // onFocus={handleFocus}
+      onTouchMove={() => {
+        !isScrollLocked && dispatch(updateScrollLock(true));
+      }}
+      onTouchEndCapture={() => {
+        dispatch(updateScrollLock(false));
+      }}
       onWheel={handleWheel}
-      onBlur={handleBlur}
+      // onBlur={handleBlur}
       // onKeyUp={handleKeyUp}
       // onKeyDown={handleKeyDown}
       w={`${itemWidth}px`}

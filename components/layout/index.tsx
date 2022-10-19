@@ -4,18 +4,22 @@ import LayoutMeta from "./LayoutMeta";
 import { useRouter } from "next/router";
 import Footer from "./footer";
 import { Box, Flex } from "@chakra-ui/react";
+import { useAppSelector } from "../../redux/hooks";
 
 const Layout = ({ children }: { children: ReactChild }) => {
   const router = useRouter();
   const bgGradient =
     "linear-gradient(0deg, rgba(38,34,45,1) 10%, rgba(88,79,98,0) 100%);";
+
+  const isScrollLocked = useAppSelector((state) => state.main.isScrollLocked);
+
   return (
     <>
       <Box
         w="100%"
         pb="0 !important"
         position="relative"
-        overflowY="scroll"
+        overflowY={isScrollLocked ? "hidden" : "scroll"}
         h="100vh"
         sx={{
           "&::-webkit-scrollbar": {

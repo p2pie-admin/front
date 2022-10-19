@@ -34,6 +34,7 @@ export interface MainState {
   swiperIdVisible: number;
   activeDir?: string;
   populars: IDir[];
+  isScrollLocked: boolean;
 }
 
 const initialState: MainState = {
@@ -43,6 +44,7 @@ const initialState: MainState = {
   amountOutputs: initialAmountOutputs,
   swiperIdVisible: 0,
   populars: [],
+  isScrollLocked: false,
 };
 
 export const ratesSlice = createSlice({
@@ -110,6 +112,9 @@ export const ratesSlice = createSlice({
     },
     reverseDir: (state: MainState) => {
       [state.givePm, state.getPm] = [state.getPm, state.givePm];
+    },
+    updateScrollLock: (state: MainState, action: PayloadAction<boolean>) => {
+      state.isScrollLocked = action.payload;
     },
   },
   //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -194,6 +199,7 @@ export const {
   setActiveDir,
   clearPms,
   reverseDir,
+  updateScrollLock,
 } = ratesSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
