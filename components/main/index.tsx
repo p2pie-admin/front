@@ -14,13 +14,7 @@ const MainPageContent = () => {
     <Box p="2">
       <Greeting />
 
-      <Flex
-        p={{ base: "5", sm: "5" }}
-        borderRadius={{ base: "0", sm: "xl" }}
-        minH={60}
-        maxW={{ base: "100%", sm: "450" }}
-        flexDir="column"
-      >
+      <Flex mt="3" maxW={{ base: "96vw", sm: "450" }} flexDir="column">
         <SideContext.Provider value={"give"}>
           <Side />
         </SideContext.Provider>
