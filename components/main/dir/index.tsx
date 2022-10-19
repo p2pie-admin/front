@@ -21,8 +21,8 @@ const Dirs = ({ dirs }: { dirs: IDir[] }) => {
         filter={activeDir ? "brightness(0.8)" : "unset"}
         bgColor="bg.700"
         minH="10vh"
-        p={{ base: "10px 2px", md: "2", sm: "1" }}
         borderRadius="xl"
+        p="2"
         w="100%"
         mt="5"
       >
@@ -36,7 +36,7 @@ const Dirs = ({ dirs }: { dirs: IDir[] }) => {
         >
           {t("home:popular")}
         </Text>
-        <Wrap justify="center">
+        <Wrap justify="center" py="2" px={{ base: "2", md: "5" }}>
           {dirs.map((dir, index) => (
             <WrapItem key={`dir_${dir.id}`}>
               {dir.groups.length > 1 ? (
