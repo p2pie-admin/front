@@ -13,8 +13,10 @@ const Layout = ({ children }: { children: ReactChild }) => {
     <>
       <Box
         w="100%"
+        pb="0 !important"
         position="relative"
         overflowY="scroll"
+        bgColor="gray.800"
         h="100vh"
         sx={{
           "&::-webkit-scrollbar": {
