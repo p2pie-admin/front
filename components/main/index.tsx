@@ -28,6 +28,11 @@ const MainPageContent = () => {
         <Carousel />
 
         {!!populars.length && <Dirs dirs={populars} />}
+        {!!populars.length && <Dirs dirs={populars} />}
+        {!!populars.length && <Dirs dirs={populars} />}
+        {!!populars.length && <Dirs dirs={populars} />}
+        {!!populars.length && <Dirs dirs={populars} />}
+        {!!populars.length && <Dirs dirs={populars} />}
       </Flex>
     </Box>
   );
