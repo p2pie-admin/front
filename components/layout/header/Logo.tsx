@@ -6,14 +6,14 @@ import { useColorModeValue } from "@chakra-ui/react";
 const Logo = () => {
   return (
     <Flex mx="2" flexDir="row" alignItems="center">
-      <Image src={profilePic} width={25} height={25} />
+      <Image src={profilePic} width={30} height={30} />
 
       <Text
         color={useColorModeValue("bg.700", "bg.100")}
-        fontSize="xl"
+        fontSize="2xl"
         fontFamily="Sriracha, sans-serif"
         fontWeight="light"
-        mx="1"
+        mx="2"
       >
         Cotleta
       </Text>

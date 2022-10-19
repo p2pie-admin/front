@@ -7,8 +7,7 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { ArrowRepeat } from "styled-icons/bootstrap";
-import { ChevronThinDown } from "styled-icons/entypo";
+import { BiTransferAlt } from "react-icons/bi";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { reverseDir } from "../../redux/mainReducer";
 import { batch } from "react-redux";
@@ -16,7 +15,6 @@ import { fetchDirTops } from "../../redux/thunks";
 
 const ReverseButton = () => {
   const dispatch = useAppDispatch();
-  const [hovered, setHovered] = useState(false);
 
   const pendingDirTops = useAppSelector((state) => state.main.pendingDirTops);
   const color = useColorModeValue("primary.300", "bg.200");
@@ -34,19 +32,14 @@ const ReverseButton = () => {
         onClick={handleReverseDir}
         borderRadius="50%"
         variant="primary_regular"
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
         color="bg.600"
-        p="2"
         zIndex="2"
-        aria-label="Search database"
+        aria-label="Reverse direction"
         icon={
           pendingDirTops ? (
             <Spinner size="sm" color={color} />
-          ) : hovered ? (
-            <ArrowRepeat />
           ) : (
-            <ChevronThinDown />
+            <BiTransferAlt />
           )
         }
       />

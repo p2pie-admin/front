@@ -14,6 +14,7 @@ import {
   SlideFade,
   Box,
   Button,
+  Fade,
 } from "@chakra-ui/react";
 
 import Error from "../../../shared/ErrorWrapper";
@@ -59,10 +60,11 @@ const Selector = () => {
       linkMessage="report"
     >
       <ModalHeader w="100%" pt="2" pb="1">
-        {activeSide &&
-          data?.selector[
-            `${i18n.language as "en" | "ru"}_${activeSide}_header`
-          ]}
+        {activeSide
+          ? data?.selector[
+              `${i18n.language as "en" | "ru"}_${activeSide}_header`
+            ]
+          : "✓"}
       </ModalHeader>
       <ModalCloseButton />
       <ModalBody
