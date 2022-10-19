@@ -1,7 +1,7 @@
 import { Box, Text } from "@chakra-ui/react";
 
 const Footer = () => {
-  return <></>;
+  return <Box minH="120"></Box>;
 };
 
 export default Footer;
