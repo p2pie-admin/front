@@ -7,7 +7,9 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { BiTransferAlt } from "react-icons/bi";
+import { BiRefresh } from "react-icons/bi";
+import { IoChevronDownOutline } from "react-icons/io5";
+
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { reverseDir } from "../../redux/mainReducer";
 import { batch } from "react-redux";
@@ -17,7 +19,9 @@ const ReverseButton = () => {
   const dispatch = useAppDispatch();
 
   const pendingDirTops = useAppSelector((state) => state.main.pendingDirTops);
-  const color = useColorModeValue("primary.300", "bg.200");
+  const bothPmsSelected = useAppSelector(
+    (state) => state.main.givePm?.code && state.main.getPm?.code
+  );
 
   const handleReverseDir = () => {
     batch(() => {
@@ -34,12 +38,13 @@ const ReverseButton = () => {
         variant="primary_regular"
         color="bg.600"
         zIndex="2"
+        isLoading={pendingDirTops}
         aria-label="Reverse direction"
         icon={
-          pendingDirTops ? (
-            <Spinner size="sm" color={color} />
+          bothPmsSelected ? (
+            <BiRefresh size="2rem" />
           ) : (
-            <BiTransferAlt />
+            <IoChevronDownOutline size="2rem" />
           )
         }
       />

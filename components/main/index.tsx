@@ -34,16 +34,6 @@ const MainPageContent = () => {
         </SideContext.Provider>
 
         <Carousel />
-
-        <IconButton
-          variant="outline"
-          w="fit-content"
-          colorScheme="teal"
-          aria-label="Call Sage"
-          fontSize="20px"
-          icon={<MdPhone />}
-        />
-
         {!!populars.length && <Dirs dirs={populars} />}
       </Flex>
     </Box>

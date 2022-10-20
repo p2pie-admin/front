@@ -58,7 +58,7 @@ const SelectorButton = () => {
           </Box>
         ) : (
           <Text ml="2" fontSize="xl">
-            {capitalize(side)}
+            {capitalize(side === "give" ? "sell" : "buy")}
           </Text>
         )}
       </Button>
