@@ -11,12 +11,20 @@ import {
   Text,
   useColorModeValue,
   useToken,
+  TagLabel,
+  TagRightIcon,
 } from "@chakra-ui/react";
 import StarRatings from "react-star-ratings";
 import { ExternalLink } from "styled-icons/evaicons-solid";
 import { ITop, Rate } from "../../../types/rates";
 import capsFirst from "./utils/capsFirst";
 import Wave from "./Wave";
+import { CgOptions } from "react-icons/cg";
+import { FaRegHandLizard } from "react-icons/fa";
+import { TiStarOutline } from "react-icons/ti";
+import { RiVipCrown2Line } from "react-icons/ri";
+import { BiCheckCircle } from "react-icons/bi";
+import { FiPercent } from "react-icons/fi";
 
 const Top = ({ top, rate }: { top: ITop; rate: Rate }) => {
   const [orange300, orange400, bg500] = useToken("colors", [
@@ -26,6 +34,16 @@ const Top = ({ top, rate }: { top: ITop; rate: Rate }) => {
   ]);
 
   const rating = rate.admin_rating === null ? 0 : rate.admin_rating;
+
+  const icons = {
+    optimal: CgOptions,
+    low_min: FaRegHandLizard,
+    best_course: FiPercent,
+    top_rating: TiStarOutline,
+    top_max: RiVipCrown2Line,
+  } as { [key: string]: any };
+
+  const IconComponent = icons[top.code] || BiCheckCircle;
 
   return (
     <Flex
@@ -59,7 +77,10 @@ const Top = ({ top, rate }: { top: ITop; rate: Rate }) => {
             minW="auto"
             whiteSpace="nowrap"
           >
-            {capsFirst(top.title)}
+            <TagLabel>{capsFirst(top.title)}</TagLabel>
+            <TagRightIcon>
+              <IconComponent size="1.5rem" />
+            </TagRightIcon>
           </Tag>
         </HStack>
         <Text fontSize="sm" color="bg.200">
