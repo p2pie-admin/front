@@ -46,7 +46,7 @@ const AmountInput = () => {
           float="right"
           textAlign="end"
           placeholder="0.00"
-          fontFamily="Noto Sans Mono"
+          fontFamily="Inconsolata, sans-serif"
           fontSize="3xl"
           onClick={(e: any) => e.target.select()}
           // onClick={handleClick}

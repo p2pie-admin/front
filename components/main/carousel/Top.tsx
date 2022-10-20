@@ -10,6 +10,7 @@ import {
   Icon,
   Text,
   useColorModeValue,
+  useToken,
 } from "@chakra-ui/react";
 import StarRatings from "react-star-ratings";
 import { ExternalLink } from "styled-icons/evaicons-solid";
@@ -18,6 +19,14 @@ import capsFirst from "./utils/capsFirst";
 import Wave from "./Wave";
 
 const Top = ({ top, rate }: { top: ITop; rate: Rate }) => {
+  const [orange300, orange400, bg500] = useToken("colors", [
+    "orange.300",
+    "orange.400",
+    "bg.500",
+  ]);
+
+  const rating = rate.admin_rating === null ? 0 : rate.admin_rating;
+
   return (
     <Flex
       pos="relative"
@@ -53,15 +62,27 @@ const Top = ({ top, rate }: { top: ITop; rate: Rate }) => {
             {capsFirst(top.title)}
           </Tag>
         </HStack>
-        <Text fontSize="xs" color="bg.200">
+        <Text fontSize="sm" color="bg.200">
           {top.en_description}
         </Text>
 
         <HStack alignItems="center">
-          <Box pb="1.5"></Box>
-
-          <Text w="fit-content" fontSize="xs">
-            {rate.admin_rating ? `${rate.admin_rating} out of 5` : ""}
+          <Box pb="1.5">
+            <StarRatings
+              rating={0}
+              starRatedColor={orange300}
+              changeRating={() => {}}
+              starHoverColor={orange400}
+              starEmptyColor={bg500}
+              // changeRating={this.changeRating}
+              numberOfStars={5}
+              starDimension="20px"
+              starSpacing="2px"
+              name="rating"
+            />
+          </Box>
+          <Text w="fit-content" fontSize="xs" color="bg.200">
+            {`${rating} out of 5`}
           </Text>
         </HStack>
       </VStack>

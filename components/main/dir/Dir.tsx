@@ -14,6 +14,7 @@ import { IDirGroup } from "../../../types/dir";
 import DirSideContext from "./DirSideContext";
 import { getPmsFromPmGroup } from "../side/pmModalButton/section/PmGroup/helper";
 import { useSelector } from "react-redux";
+import { HiArrowRight } from "react-icons/hi";
 
 const Dir = ({
   index,
@@ -74,7 +75,7 @@ const Dir = ({
         </DirSideContext.Provider>
       }
     >
-      <Icon as={ArrowRight} w="4" h="4" />
+      <Icon color="bg.300" as={HiArrowRight} w="5" h="5" />
     </Button>
   );
 };

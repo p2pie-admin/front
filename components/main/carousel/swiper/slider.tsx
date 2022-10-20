@@ -7,7 +7,7 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { useLayoutEffect } from "react";
-import { ChevronRight } from "@styled-icons/boxicons-regular/ChevronRight";
+import { BiChevronRight } from "react-icons/bi";
 import useBoundingRect from "../hooks/useBoundingRect";
 import percentage from "../utils/percentage";
 
@@ -83,13 +83,13 @@ function Slider({
           ? handleGoToStart
           : handleIncrementClick
       }
-      color="gray.200"
+      color="bg.400"
       p="1"
       borderRadius="50%"
       bgColor="bg.700"
       transform={isLeft ? "rotate(180deg)" : "none"}
     >
-      <ChevronRight boxSize={9} />
+      <BiChevronRight size="2rem" />
     </Button>
   );
 

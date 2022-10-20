@@ -2,7 +2,7 @@ import { Box, Button, HStack, Icon, Tag, Text, VStack } from "@chakra-ui/react";
 import { useContext } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import SideContext from "../../SideContext";
-import { ChevronDown } from "@styled-icons/evaicons-solid/ChevronDown";
+import { BiChevronDown } from "react-icons/bi";
 import PmAvatar from "../../../shared/Avatar";
 import { capitalize } from "./section/PmGroup/helper";
 import { setActiveSide } from "../../../../redux/mainReducer";
@@ -38,7 +38,7 @@ const SelectorButton = () => {
         justifyContent="space-between"
         borderRadius="2rem"
         leftIcon={PmCurrencyName ? <PmAvatar icon={PmIcon} /> : ""}
-        rightIcon={<Icon as={ChevronDown} w="6" h="6" />}
+        rightIcon={<Icon as={BiChevronDown} w="6" h="6" />}
       >
         {PmCurrencyName ? (
           <Box>

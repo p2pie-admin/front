@@ -35,7 +35,7 @@ const Home: NextPage = () => {
           rel="stylesheet"
         />
         <link
-          href="http://fonts.googleapis.com/css?family=Noto+Sans+Mono&text=1234567890,.-+"
+          href="http://fonts.googleapis.com/css?family=Inconsolata&text=1234567890,.-+"
           rel="stylesheet"
         />
       </Head>
