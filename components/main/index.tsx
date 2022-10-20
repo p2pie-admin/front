@@ -1,4 +1,11 @@
-import { Box, Button, Flex, useColorModeValue, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  useColorModeValue,
+  Text,
+  IconButton,
+} from "@chakra-ui/react";
 import Greeting from "./Greeting";
 import Side from "./side";
 import ReverseButton from "./ReverseButton";
@@ -6,6 +13,7 @@ import SideContext from "./SideContext";
 import Carousel from "../main/carousel";
 import { useAppSelector } from "../../redux/hooks";
 import Dirs from "./dir";
+import { MdPhone } from "react-icons/md";
 
 const MainPageContent = () => {
   const populars = useAppSelector((state) => state.main.populars);
@@ -26,6 +34,15 @@ const MainPageContent = () => {
         </SideContext.Provider>
 
         <Carousel />
+
+        <IconButton
+          variant="outline"
+          w="fit-content"
+          colorScheme="teal"
+          aria-label="Call Sage"
+          fontSize="20px"
+          icon={<MdPhone />}
+        />
 
         {!!populars.length && <Dirs dirs={populars} />}
       </Flex>
