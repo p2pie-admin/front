@@ -21,9 +21,22 @@ const AmountInput = () => {
     str.length < 11 && dispatch(setAmount({ side, str, num }));
   };
 
+  const currentDirRate = useAppSelector(
+    (state) =>
+      Object.values(state.main.dirTops?.uniqueRates || {})[
+        state.main.swiperIdVisible
+      ]
+  );
+
+  const { min, max } = currentDirRate
+    ? Object.values(currentDirRate)[0]
+    : { min: undefined, max: undefined };
+
   const amountOutputs = useAppSelector((state) => state.main.amountOutputs);
   const pendingDirTops = useAppSelector((state) => state.main.pendingDirTops);
-  const value = amountOutputs[side] || "";
+  const stringValue = amountOutputs[side] || "";
+  const value = +stringValue.replaceAll(" ", "");
+  const shaded = min && max && (value > max[side] || value < min[side]);
 
   return (
     <Box justifySelf="end">
@@ -35,7 +48,7 @@ const AmountInput = () => {
         onChange={onAmountChange}
         minW="10"
         mr="3"
-        value={value.length > 11 || pendingDirTops ? "-" : value}
+        value={stringValue.length > 11 || pendingDirTops ? "-" : stringValue}
         keepWithinRange={true}
         clampValueOnBlur={true}
         max={9999999}
@@ -48,6 +61,7 @@ const AmountInput = () => {
           placeholder="0.00"
           fontFamily="Inconsolata, sans-serif"
           fontSize="3xl"
+          color={shaded ? "bg.400" : "bg.100"}
           onClick={(e: any) => e.target.select()}
           // onClick={handleClick}
           // color={
@@ -59,7 +73,7 @@ const AmountInput = () => {
         />
 
         {typeof window !== "undefined" && !pendingDirTops && (
-          <Fiat value={+value.replaceAll(" ", "")} />
+          <Fiat value={value} min={min} max={max} />
         )}
         {/* <Text color="teal.400">{`step: ${step} / fiatStep: ${fiatStep}`}</Text> */}
       </NumberInput>

@@ -5,6 +5,7 @@ import {
   Text,
   Box,
   SlideFade,
+  useToken,
 } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
 import { useAppSelector } from "../../../redux/hooks";
@@ -14,25 +15,26 @@ import Dir from "./Dir";
 const Dirs = ({ dirs }: { dirs: IDir[] }) => {
   const activeDir = useAppSelector((state) => state.main.activeDir);
   const { t } = useTranslation();
+  const [bg700] = useToken("colors", ["bg.700"]);
 
   return (
     <SlideFade in>
       <Box
         filter={activeDir ? "brightness(0.8)" : "unset"}
-        bgColor="bg.700"
+        border={`solid 1px ${bg700}`}
         minH="10vh"
         borderRadius="xl"
         p="2"
         w="100%"
-        mt="5"
+        mt="2"
       >
         <Text
           fontSize="md"
-          mb="4"
-          mt="2"
+          mb="2"
+          mt="1"
           mx="2"
           w="100%"
-          color={useColorModeValue("bg.400", "bg.300")}
+          color={useColorModeValue("bg.400", "bg.400")}
         >
           {t("home:popular")}
         </Text>

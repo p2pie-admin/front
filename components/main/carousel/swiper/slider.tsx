@@ -59,6 +59,8 @@ function Slider({
 
   const SwiperButton = ({ isLeft = false }: { isLeft?: boolean }) => (
     <Button
+      size="sm"
+      w="6"
       key={isLeft ? "leftSwiperButton" : "rightSwiperButton"}
       position={{
         base: "relative",
@@ -73,7 +75,7 @@ function Slider({
         md: isLeft ? "auto" : "-14",
       }}
       mx="2"
-      top="42%"
+      top="45%"
       onClick={
         isLeft
           ? !swiperIdVisible
@@ -127,7 +129,7 @@ function Slider({
         {children}
       </Box>
 
-      <Flex w={`${itemWidth}px`} mt={`${gap / 2}px`} mx="auto">
+      <Flex w={`${itemWidth}px`} mx="auto">
         <SwiperButton isLeft />
 
         <Progress

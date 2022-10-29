@@ -1,7 +1,7 @@
 import { Image, Box } from "@chakra-ui/react";
 import React from "react";
 
-const Avatar = ({ icon, big = false }: { icon: any; big?: boolean }) => {
+const Avatar = ({ icon }: { icon: any; big?: boolean }) => {
   const env = process.env.NODE_ENV;
   const SRC =
     env === "production"
@@ -12,8 +12,8 @@ const Avatar = ({ icon, big = false }: { icon: any; big?: boolean }) => {
   return (
     <Box overflow="hidden" borderRadius="50%">
       <Image
-        w={big ? 10 : 8}
-        h={big ? 10 : 8}
+        w={8}
+        h={8}
         fallbackSrc={fallbackSRC}
         src={icon ? SRC + icon.url : ""}
         alt={icon ? icon.alternativeText : ""}

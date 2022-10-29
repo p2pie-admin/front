@@ -13,13 +13,13 @@ import {
 } from "./thunks";
 import { PmType } from "../types/selector";
 import { IDir } from "../types/dir";
+import {
+  initialAmountOutputs,
+  getAmountOutputs,
+  findBestCourseRateByAmountInput,
+} from "./helper";
 
 type Side = "give" | "get";
-
-const initialAmountOutputs = {
-  give: "",
-  get: "",
-};
 
 export interface MainState {
   searchBarInputValue: string;
@@ -90,7 +90,7 @@ export const ratesSlice = createSlice({
     },
     // свайпаем
     updateAmount: (state: MainState, action: PayloadAction<number>) => {
-      state.amountOutputs = setAmountOutputs(
+      state.amountOutputs = getAmountOutputs(
         state,
         state.amountInput,
         action.payload
@@ -102,7 +102,15 @@ export const ratesSlice = createSlice({
       action: PayloadAction<AmountInput | undefined>
     ) => {
       state.amountInput = action.payload;
-      state.amountOutputs = setAmountOutputs(state, action.payload);
+      const bestRates = state.dirTops?.bestRates;
+      const amountInput = action.payload;
+      // injecting best if amount is custom
+      const bestCourseRate = findBestCourseRateByAmountInput(
+        amountInput,
+        bestRates
+      );
+
+      state.amountOutputs = getAmountOutputs(state, action.payload);
     },
     setActiveDir: (
       state: MainState,
@@ -139,7 +147,7 @@ export const ratesSlice = createSlice({
     builder.addCase(fetchDirTops.fulfilled, (state, action) => {
       state.dirTops = action.payload;
       state.amountInput = undefined;
-      state.amountOutputs = setAmountOutputs(state);
+      state.amountOutputs = getAmountOutputs(state);
       state.pendingDirTops = false;
     });
     builder.addCase(fetchFiatByCurrencyCode.fulfilled, (state, action) => {
@@ -156,38 +164,6 @@ export const ratesSlice = createSlice({
     });
   },
 });
-
-const setAmountOutputs = (
-  state: MainState,
-  amount?: AmountInput,
-  swiperIdVisible?: number
-): AmountOutputs => {
-  const uniqueRatesKeys = Object.keys(state.dirTops?.uniqueRates || {});
-  if (!uniqueRatesKeys.length) return initialAmountOutputs;
-  const dir = `${state.givePm?.code.toUpperCase()}_${state.getPm?.code.toUpperCase()}`;
-  const id = // updateAmounts не успевает подхватить swiperIdVisible, поэтому передаем дополнительно
-    swiperIdVisible !== undefined ? swiperIdVisible : state.swiperIdVisible;
-  // const rate =
-  //   state.dirTops?.bestRates[Object.keys(state.dirTops.bestRates)[id]];
-  const activeRateKey = uniqueRatesKeys[id];
-  const rate = Object.values(
-    state.dirTops?.uniqueRates[activeRateKey] || {}
-  )[0];
-
-  if (rate) {
-    const feesCalculator = new FeesCalculator(
-      dir,
-      rate,
-      amount || {
-        num: 1,
-        str: "1",
-        side: rate?.course > 1 ? "get" : "give",
-      }
-    );
-    return feesCalculator.calculateAmountOutputs();
-  }
-  return initialAmountOutputs;
-};
 
 export const {
   setAmount,

@@ -4,6 +4,7 @@ import {
   Image,
   ScaleFade,
   useOutsideClick,
+  useToken,
 } from "@chakra-ui/react";
 import { ArrowRight } from "@styled-icons/heroicons-outline/ArrowRight";
 import CircularMenu from "./circular-menu";
@@ -48,17 +49,19 @@ const Dir = ({
     handler: () => dispatch(setActiveDir(undefined)),
   });
 
+  const [bg600] = useToken("colors", ["bg.600"]);
+
   return (
     <Button
       ref={ref}
       key={dirId}
       onClick={handleDirClick}
       position="relative"
-      variant="primary_shaded"
+      variant="primary_dark"
+      border={`solid 2px ${bg600}`}
       filter={activeDir ? "brightness(0.4) grayscale(0.7)" : "unset"}
       h="100%"
       p="0"
-      mx="1"
       borderRadius="2rem"
       leftIcon={
         <DirSideContext.Provider value={"give"}>

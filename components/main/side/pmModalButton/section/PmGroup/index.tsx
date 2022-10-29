@@ -89,7 +89,7 @@ const PmGroup = ({ pm_group }: { pm_group: PmGroupType }) => {
     >
       <PmName
         name={name}
-        code={pms[0].currency.code} // for crypto
+        code={pms[0].currency?.code} // for crypto
       />
     </PmButton>
   );

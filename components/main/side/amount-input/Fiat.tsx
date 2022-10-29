@@ -6,6 +6,7 @@ import {
 } from "../../../../redux/amountsHelper";
 
 import { useAppSelector } from "../../../../redux/hooks";
+import { Limit } from "../../../../types/rates";
 import SideContext from "../../SideContext";
 
 const symbols = {
@@ -21,7 +22,15 @@ const renderHint = (leftPart: string, currency?: string, hint?: number) => {
   )} ${currency || ""}`;
 };
 
-const Fiat = ({ value }: { value: number }) => {
+const Fiat = ({
+  value,
+  min,
+  max,
+}: {
+  value: number;
+  min?: Limit;
+  max?: Limit;
+}) => {
   const side = useContext(SideContext) as "give" | "get";
   const fiat_courses = useAppSelector((state) => state.main[`${side}Pm`]?.fiat);
   const sideCurrencyCode = useAppSelector((state) =>
@@ -35,14 +44,6 @@ const Fiat = ({ value }: { value: number }) => {
   const fiatCurrencyCode = oppositeSideCurrencyCode?.includes("USD")
     ? "rub"
     : "usd";
-  const swiperIdVisible = useAppSelector((state) => state.main.swiperIdVisible);
-  const currentDirRate = useAppSelector(
-    (state) =>
-      Object.values(state.main.dirTops?.uniqueRates || {})[swiperIdVisible]
-  );
-  const { min, max } = currentDirRate
-    ? Object.values(currentDirRate)[0]
-    : { min: undefined, max: undefined };
 
   return (
     <Flex
@@ -54,11 +55,11 @@ const Fiat = ({ value }: { value: number }) => {
       flexDir="row"
     >
       {min && value < min[side] ? (
-        <Text color="red.200">
+        <Text color="orange.300" filter="opacity(0.7)">
           {renderHint("min: ", sideCurrencyCode, min[side])}
         </Text>
       ) : max && value > max[side] ? (
-        <Text color="red.200">
+        <Text color="orange.300">
           {renderHint("max: ", sideCurrencyCode, max[side])}
         </Text>
       ) : (

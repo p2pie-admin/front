@@ -34,7 +34,8 @@ const MainPageContent = () => {
         </SideContext.Provider>
 
         <Carousel />
-        {!!populars.length && <Dirs dirs={populars} />}
+
+        <Dirs dirs={populars} />
       </Flex>
     </Box>
   );
