@@ -14,7 +14,7 @@ const CarouselSwiper = ({ data }: { data: { tops: ITop[] } }) => {
   const bestRates = useAppSelector((state) => state.main.dirTops?.bestRates);
 
   return (
-    <>
+    <Box minH="240">
       {bestRates && uniqueRates && (
         <Swiper gap={12}>
           {Object.entries(uniqueRates).map(([code, dirRates], index) => {
@@ -26,7 +26,7 @@ const CarouselSwiper = ({ data }: { data: { tops: ITop[] } }) => {
           })}
         </Swiper>
       )}
-    </>
+    </Box>
   );
 };
 

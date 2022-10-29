@@ -62,6 +62,7 @@ const Dir = ({
       filter={activeDir ? "brightness(0.4) grayscale(0.7)" : "unset"}
       h="100%"
       p="0"
+      mx={{ base: "0", sm: "1" }}
       borderRadius="2rem"
       leftIcon={
         <DirSideContext.Provider value={"give"}>

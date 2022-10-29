@@ -98,7 +98,6 @@ function Slider({
   return (
     <Box position="relative">
       <Box
-        mt="3"
         w="100%"
         ref={ref}
         py="2"

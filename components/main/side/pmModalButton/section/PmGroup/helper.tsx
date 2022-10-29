@@ -23,14 +23,14 @@ export const allPmsHaveUnmetPairs = (
   pms: PmType[],
   possiblePairs?: string[]
 ) => {
-  if (!possiblePairs) return false;
+  if (!possiblePairs || !possiblePairs.length) return false;
   if (pms.find((pm) => possiblePairs.find((pair) => pm.code === pair)))
     return false;
   return true;
 };
 
 export const singlePmHasUnmetPairs = (pm: PmType, possiblePairs?: string[]) => {
-  if (!possiblePairs) return false;
+  if (!possiblePairs || !possiblePairs.length) return false;
   if (possiblePairs.find((pair) => pm.code === pair)) return false;
   return true;
 };

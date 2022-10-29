@@ -20,6 +20,7 @@ const Layout = ({ children }: { children: ReactChild }) => {
         pb="0 !important"
         position="relative"
         overflowY={isScrollLocked ? "hidden" : "scroll"}
+        overflowX="hidden"
         h="100vh"
         sx={{
           "&::-webkit-scrollbar": {

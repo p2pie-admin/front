@@ -6,6 +6,7 @@ import {
   Box,
   SlideFade,
   useToken,
+  Flex,
 } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
 import { useAppSelector } from "../../../redux/hooks";
@@ -38,7 +39,7 @@ const Dirs = ({ dirs }: { dirs: IDir[] }) => {
         >
           {t("home:popular")}
         </Text>
-        <Wrap justify="center" py="2" px={{ base: "2", md: "5" }}>
+        <Wrap justify="center" py="2" px={{ base: "2", md: "5" }} w="100%">
           {dirs.map((dir, index) => (
             <WrapItem key={`dir_${dir.id}`}>
               {dir.groups.length > 1 ? (
