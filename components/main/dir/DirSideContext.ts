@@ -1,4 +1,4 @@
 import React from "react";
-type Side = "give" | "get";
+type ISide = "give" | "get";
 const DirSideContext = React.createContext<Side | null>(null);
 export default DirSideContext;

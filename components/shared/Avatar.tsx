@@ -1,7 +1,7 @@
 import { Image, Box } from "@chakra-ui/react";
 import React from "react";
 
-const Avatar = ({ icon }: { icon: any; big?: boolean }) => {
+const Avatar = ({ icon, shaded = false }: { icon: any; shaded?: boolean }) => {
   const env = process.env.NODE_ENV;
   const SRC =
     env === "production"
@@ -14,6 +14,7 @@ const Avatar = ({ icon }: { icon: any; big?: boolean }) => {
       <Image
         w={8}
         h={8}
+        filter={shaded ? "grayscale(0.6) brightness(0.3)" : "none"}
         fallbackSrc={fallbackSRC}
         src={icon ? SRC + icon.url : ""}
         alt={icon ? icon.alternativeText : ""}

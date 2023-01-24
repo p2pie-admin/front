@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { DirRates, DirTops } from "../types/rates";
-import { FiatRates } from "../types/selector";
+import { IDirRates, IDirTops } from "../types/rates";
+import { IFiatRates } from "../types/selector";
 import axios from "axios";
 
 import { popularQuery } from "../services/initialQueries";
@@ -8,7 +8,7 @@ import initFetcher from "../services/graphql";
 import { IDir } from "../types/dir";
 import { MainState } from "./mainReducer";
 
-type Side = "give" | "get";
+type ISide = "give" | "get";
 const env = process.env.NODE_ENV;
 const courseFilterLink =
   env === "production"
@@ -17,7 +17,7 @@ const courseFilterLink =
 
 export const fetchFiatByCurrencyCode = createAsyncThunk(
   "currencies/fetchFiatByCurrencyCode",
-  async ({ code, side }: { code: string; side: Side }) => {
+  async ({ code, side }: { code: string; side: ISide }) => {
     console.log(
       `${process.env.NEXT_PUBLIC_COINGECKO_URL}/${code.toLowerCase()}`
     );
@@ -38,13 +38,13 @@ export const fetchDirRates = createAsyncThunk(
     const response = await axios
       .get(`${courseFilterLink}/dir=${dir}/tops=false`)
       .catch((err) => console.error(err));
-    return response?.data as DirRates;
+    return response?.data as IDirRates;
   }
 );
 
 export const fetchDirTops = createAsyncThunk(
   "rates/fetchDirTops",
-  async ({ code, side }: { code?: string; side?: Side }, thunkAPI) => {
+  async ({ code, side }: { code?: string; side?: ISide }, thunkAPI) => {
     const { main } = thunkAPI.getState() as { main: MainState };
     // dir не успевает записаться в redux до вызова fetchDirTops, поэтому нужно передать последний выбранный code
     const dir = !code
@@ -59,13 +59,13 @@ export const fetchDirTops = createAsyncThunk(
       .get(`${courseFilterLink}/dir=${dir}/tops=true`)
       .catch((err) => console.error("could not fetch, ", err));
 
-    return response?.data as DirTops;
+    return response?.data as IDirTops;
   }
 );
 
 export const fetchPossiblePairs = createAsyncThunk(
   "currencies/fetchPossiblePairs",
-  async ({ code, side }: { code: string; side: Side }) => {
+  async ({ code, side }: { code: string; side: ISide }) => {
     const response = await axios
       .get(`${courseFilterLink}/possible_pairs/code=${code}`)
       .catch((err) => console.error(err));

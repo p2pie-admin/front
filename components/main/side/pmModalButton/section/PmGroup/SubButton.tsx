@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/react";
-import { PmType } from "../../../../../../types/selector";
+import { IPm } from "../../../../../../types/selector";
 
 export const SubButton = ({
   children,
@@ -8,7 +8,7 @@ export const SubButton = ({
   shaded,
 }: {
   children: string;
-  pm: PmType;
+  pm: IPm;
   choosePm: Function;
   shaded: boolean;
 }) => (

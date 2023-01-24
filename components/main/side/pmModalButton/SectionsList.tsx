@@ -8,9 +8,9 @@ import Section from "./section";
 import { useTranslation } from "react-i18next";
 import { useBreakpointValue } from "@chakra-ui/react";
 import { SectionContext } from "./section/SectionContext";
-import { SectionType } from "../../../../types/selector";
+import { ISection } from "../../../../types/selector";
 
-const SectionsList = ({ sections }: { sections: SectionType[] }) => {
+const SectionsList = ({ sections }: { sections: ISection[] }) => {
   //   const list = [];
   //   const { i18n } = useTranslation();
   //const list = listFilter.filterJsonByString(inputFieldValue.value, pmsList);

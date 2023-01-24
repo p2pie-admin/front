@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import StarRatings from "react-star-ratings";
 import { ExternalLink } from "styled-icons/evaicons-solid";
-import { ITop, Rate } from "../../../types/rates";
+import { ITop, IRate } from "../../../types/rates";
 import capsFirst from "./utils/capsFirst";
 import Wave from "./Wave";
 import { CgOptions } from "react-icons/cg";
@@ -26,7 +26,7 @@ import { RiVipCrown2Line } from "react-icons/ri";
 import { BiCheckCircle } from "react-icons/bi";
 import { FiPercent } from "react-icons/fi";
 
-const Top = ({ top, rate }: { top: ITop; rate: Rate }) => {
+const Top = ({ top, rate }: { top: ITop; rate: IRate }) => {
   const [orange300, orange400, bg500] = useToken("colors", [
     "orange.300",
     "orange.400",

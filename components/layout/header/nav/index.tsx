@@ -16,7 +16,7 @@ const Nav = () => {
   };
   return (
     <Box>
-      {/* <NavButton handleClick={() => toggleColorMode()} icon={WeatherSunny} /> */}
+      <NavButton handleClick={() => toggleColorMode()} icon={WeatherSunny} />
       <NavButton
         handleClick={changeLanguageHandler}
         icon={i18n.language === "en" ? "Ru" : "En"}

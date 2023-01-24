@@ -14,7 +14,7 @@ import PmButton from "./PmButton";
 import React from "react";
 import Arrow from "../../../../../shared/Arrow";
 import { SubButton } from "./SubButton";
-import { PmType } from "../../../../../../types/selector";
+import { IPm } from "../../../../../../types/selector";
 import { allPmsHaveUnmetPairs, singlePmHasUnmetPairs } from "./helper";
 
 const Subitems = ({
@@ -24,7 +24,7 @@ const Subitems = ({
   possiblePairs,
 }: {
   pmGroupName: string;
-  pms: PmType[];
+  pms: IPm[];
   choosePm: Function;
   possiblePairs?: string[];
 }) => {
@@ -55,7 +55,7 @@ const Subitems = ({
             my="1"
           >
             <Grid templateColumns="1fr 1fr" gridGap="2" gridAutoFlow="dense">
-              {pms.map((pm: PmType) => (
+              {pms.map((pm: IPm) => (
                 <SubButton
                   pm={pm}
                   choosePm={choosePm}

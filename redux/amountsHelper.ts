@@ -1,16 +1,16 @@
 import { AmountInput, AmountOutputs } from "../types/amount";
-import { Rate } from "../types/rates";
+import { IRate } from "../types/rates";
 
 // customAmount введена в калькуляторе в одно из полей отдаю/получаю
 // ограничить поле ввода до 8 знаков
 
 export class FeesCalculator {
-  rate: Rate;
+  rate: IRate;
   amountInput: AmountInput;
   giveCode: string;
   getCode: string;
 
-  constructor(dir: string, rate: Rate, amountInput: AmountInput) {
+  constructor(dir: string, rate: IRate, amountInput: AmountInput) {
     this.giveCode = dir.split("_")[0];
     this.getCode = dir.split("_")[1];
     this.rate = rate;
@@ -114,7 +114,7 @@ export class FeesCalculator {
   };
 }
 
-export const roundAmount = (amount: number, roundBigNumber = false) => {
+export const roundAmount = (amount: number) => {
   // в логарифм нули не вставляем
   const factor = 3;
   // const roundBigNumberTo =

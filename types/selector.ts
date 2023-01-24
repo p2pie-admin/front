@@ -1,14 +1,14 @@
-interface SelectorType {
+interface ISelector {
   id: string;
   en_give_header: string;
   ru_give_header: string;
   en_get_header: string;
   ru_get_header: string;
-  search_bar: SearchBarType;
-  sections: SectionType[];
+  search_bar: ISearchBar;
+  sections: ISection[];
 }
 
-interface SearchBarType {
+interface ISearchBar {
   en_placeholder: string;
   ru_placeholder: string;
   en_give_adornment: string;
@@ -17,42 +17,42 @@ interface SearchBarType {
   ru_get_adornment: string;
 }
 
-interface SectionType {
+interface ISection {
   id: string;
   rows: number;
   columns: number;
   en_title: string;
   ru_title: string;
-  pm_groups: PmGroupType[];
+  pm_groups: IPmGroup[];
 }
 
-interface PmGroupType {
+interface IPmGroup {
   en_name: string;
   ru_name?: string;
   prefix?: string;
-  icon?: ImageType;
-  options: OptionType[];
+  icon?: IImage;
+  options: IOption[];
 }
 
-interface ImageType {
+interface IImage {
   id: string;
   url: string;
   alternativeText: string;
 }
 
-interface OptionType {
+interface IOption {
   name?: string;
   code?: string;
-  currency: CurrencyType;
+  currency: ICurrency;
 }
 
-interface CurrencyType {
+interface ICurrency {
   id: string;
   code: string;
   accuracy: string;
 }
 
-interface FiatRates {
+interface IFiatRates {
   id: string;
   usd: number;
   rub: number;
@@ -60,29 +60,29 @@ interface FiatRates {
 
 /// дополнительный тип
 
-interface PmType {
+interface IPm {
   code: string; // USDTERC20
-  currency: CurrencyType; // USDT
+  currency: ICurrency; // USDT
   en_name: string; // Tether ERC-20
   ru_name?: string;
   subgroup_name?: string; // ERC-20 отобразить в подгруппе
-  icon?: ImageType;
-  fiat?: FiatRates;
+  icon?: IImage;
+  fiat?: IFiatRates;
   possible_pairs?: string[];
   tag?: string;
 }
 
-type Side = "give" | "get";
+type ISide = "give" | "get";
 
 export type {
-  SelectorType,
-  SearchBarType,
-  SectionType,
-  PmGroupType,
-  CurrencyType,
-  OptionType,
-  PmType,
-  ImageType,
-  FiatRates,
-  Side,
+  ISelector,
+  ISearchBar,
+  ISection,
+  IPmGroup,
+  ICurrency,
+  IOption,
+  IPm,
+  IImage,
+  IFiatRates,
+  ISide,
 };

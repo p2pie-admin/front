@@ -1,5 +1,5 @@
 import { AmountInput, AmountOutputs } from "../types/amount";
-import { DirRates, Rate } from "../types/rates";
+import { IDirRates, IRate } from "../types/rates";
 import { FeesCalculator } from "./amountsHelper";
 import { MainState } from "./mainReducer";
 
@@ -42,8 +42,8 @@ export const getAmountOutputs = (
 
 export const findBestCourseRateByAmountInput = (
   amountInput?: AmountInput,
-  bestRates?: DirRates
-): Rate | undefined => {
+  bestRates?: IDirRates
+): IRate | undefined => {
   if (amountInput?.str && bestRates && Object.keys(bestRates).length) {
     const best = Object.entries(bestRates)
       .filter(([_, rate]) => {

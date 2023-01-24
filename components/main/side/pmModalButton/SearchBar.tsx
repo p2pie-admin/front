@@ -11,10 +11,10 @@ import React, { useState } from "react";
 import { Search } from "@styled-icons/bootstrap/Search";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { setSearchBarInputValue } from "../../../../redux/mainReducer";
-import { SearchBarType } from "../../../../types/selector";
+import { ISearchBar } from "../../../../types/selector";
 import { useTranslation } from "next-i18next";
 
-const SearchBar = ({ search_bar }: { search_bar: SearchBarType }) => {
+const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {
   const [inputFocused, setInputFocused] = useState(false);
   const searchBarInputValue = useAppSelector(
     (state) => state.main.searchBarInputValue

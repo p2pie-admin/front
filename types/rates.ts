@@ -1,22 +1,22 @@
-import { ImageType } from "./selector";
+import { IImage } from "./selector";
 
-export type Sides = "give" | "get";
-export type Limit = { [key in Sides]: number };
+export type ISides = "give" | "get";
+export type ILimit = { [key in ISides]: number };
 
-export interface DirRates {
-  [key: string]: Rate;
+export interface IDirRates {
+  [key: string]: IRate;
 }
 
-export interface Rate {
+export interface IRate {
   name: string;
   admin_rating: number;
   course: number;
   min_fee: string;
   from_fee: string;
   to_fee: string;
-  min: Limit;
-  max: Limit;
-  reserve: Limit;
+  min: ILimit;
+  max: ILimit;
+  reserve: ILimit;
   param: string;
   cities?: { [key: string]: string[] };
 }
@@ -27,11 +27,11 @@ export interface ITop {
   code: string;
   title: string;
   color: string;
-  image: ImageType;
+  image: IImage;
 }
 export type ExchangerId = string;
 
-export interface DirTops {
-  uniqueRates: { [key: string]: DirRates }; // это уникальные свойства
-  bestRates: DirRates; // это задачка с дождем, чтобы в зависимости от суммы выдавался результат
+export interface IDirTops {
+  uniqueRates: { [key: string]: IDirRates }; // это уникальные свойства
+  bestRates: IDirRates; // это задачка с дождем, чтобы в зависимости от суммы выдавался результат
 }

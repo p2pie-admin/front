@@ -1,5 +1,5 @@
 import { useColorModeValue, Grid, Box, Divider } from "@chakra-ui/react";
-import AmountInput from "./amount-input";
+import AmountInput from "./amountInput";
 import PmModalButton from "./pmModalButton";
 
 const Side = () => {

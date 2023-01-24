@@ -12,16 +12,12 @@ import { ToggleLayer, useHover } from "react-laag";
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useContext, useState } from "react";
 import { Box, Button, Center, Flex, Tag, Text } from "@chakra-ui/react";
-import Icon from "../../../shared/Avatar";
+import Avatar from "../../../shared/Avatar";
 import DirSideContext from "../DirSideContext";
 import { IDirGroup, IPmPointer } from "../../../../types/dir";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import {
-  setActiveDir,
-  setActiveSide,
-  setPm,
-} from "../../../../redux/mainReducer";
-import { PmType, Side } from "../../../../types/selector";
+import { setActivePetal } from "../../../../redux/mainReducer";
+import { IPm, ISide } from "../../../../types/selector";
 import { batch } from "react-redux";
 import {
   fetchFiatByCurrencyCode,
@@ -39,7 +35,7 @@ function getTransform(
   radius: number,
   index: number,
   totalItems: number,
-  side: Side
+  side: ISide
 ) {
   const k = side === "give" ? -1 : 1; // переворачивает угол раскрытия веера, чтобы раскрывалось по бокам
   const value = (index / totalItems) * progress;
@@ -107,15 +103,16 @@ const Circle = styled(motion.div)`
 ////////////////////////////////
 
 function Petal({
-  index,
   totalItems,
   pmPointer,
+  index,
 }: {
   pmPointer: IPmPointer;
-  index: number;
   totalItems: number;
+  index: number;
 }) {
   const side = useContext(DirSideContext) as "give" | "get";
+  const activePetal = useAppSelector((state) => state.main.activePetal);
   const pm = pmPointer.pm_group
     ? getPmsFromPmGroup(pmPointer.pm_group).find(
         (pm) => pm.code === pmPointer.code.toUpperCase()
@@ -132,20 +129,22 @@ function Petal({
   if (!pm) return <></>;
 
   const choosePm = (event: React.FormEvent<EventTarget>) => {
-    const oppositePm = side === "give" ? getPm : givePm;
-    oppositePm && event.stopPropagation(); // работает как закрытие circular menu , если выполняется
-    batch(() => {
-      dispatch(
-        fetchFiatByCurrencyCode({
-          code: pm.currency.code,
-          side,
-        })
-      ); // нужен только код валюты,  reducer сам запишет куда надо
-      dispatch(fetchPossiblePairs({ code: pm.code, side }));
-      oppositePm?.code && dispatch(fetchDirTops({ code: pm.code, side }));
-      oppositePm?.code && dispatch(setActiveDir(undefined));
-      dispatch(setPm({ pm, side }));
-    });
+    //const oppositePm = side === "give" ? getPm : givePm;
+    //event.stopPropagation(); // работает как закрытие circular menu , если выполняется
+    dispatch(setActivePetal({ pm, side }));
+
+    // batch(() => {
+    //   dispatch(
+    //     fetchFiatByCurrencyCode({
+    //       code: pm.currency.code,
+    //       side,
+    //     })
+    //   ); // нужен только код валюты,  reducer сам запишет куда надо
+    //   dispatch(fetchPossiblePairs({ code: pm.code, side }));
+    //   oppositePm?.code && dispatch(fetchDirTops({ code: pm.code, side }));
+    //   oppositePm?.code && dispatch(setActiveDir(undefined));
+    //   dispatch(setPm({ pm, side }));
+    // });
   };
 
   return (
@@ -176,8 +175,8 @@ function Petal({
       }}
     >
       {({ triggerRef }) => {
-        const dispatch = useAppDispatch();
-
+        const shaded =
+          activePetal?.side === side && activePetal?.pm.code !== pm.code;
         return (
           <Circle
             onClick={choosePm}
@@ -202,7 +201,7 @@ function Petal({
               mass: 5,
             }}
           >
-            <Icon icon={pm.icon} />
+            <Avatar icon={pm.icon} shaded={shaded} />
             <Flex
               position="absolute"
               w="8"

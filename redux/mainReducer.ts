@@ -1,7 +1,7 @@
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 
 import { AmountOutputs, AmountInput } from "../types/amount";
-import { DirTops, DirRates } from "../types/rates";
+import { IDirTops, IDirRates } from "../types/rates";
 import { FeesCalculator } from "./amountsHelper";
 import { RootState } from "./store";
 import {
@@ -11,30 +11,32 @@ import {
   fetchPopular,
   fetchPossiblePairs,
 } from "./thunks";
-import { PmType } from "../types/selector";
-import { IDir } from "../types/dir";
+import { IPm } from "../types/selector";
+import { IActivePetal, IDir } from "../types/dir";
 import {
   initialAmountOutputs,
   getAmountOutputs,
   findBestCourseRateByAmountInput,
 } from "./helper";
+import Side from "../components/main/side";
 
-type Side = "give" | "get";
+type ISide = "give" | "get";
 
 export interface MainState {
   searchBarInputValue: string;
-  givePm?: PmType;
-  getPm?: PmType;
-  activeSide: Side | null;
-  dirTops?: DirTops;
+  givePm?: IPm;
+  getPm?: IPm;
+  activeSide: ISide | null;
+  dirTops?: IDirTops;
   pendingDirTops: boolean;
-  dirRates?: DirRates;
+  dirRates?: IDirRates;
   amountInput?: AmountInput;
   amountOutputs: AmountOutputs;
   swiperIdVisible: number;
   activeDir?: string;
   populars: IDir[];
   isScrollLocked: boolean;
+  activePetal?: IActivePetal;
 }
 
 const initialState: MainState = {
@@ -61,7 +63,7 @@ export const ratesSlice = createSlice({
 
     setPm: (
       state: MainState,
-      action: PayloadAction<{ pm?: PmType; side: Side }>
+      action: PayloadAction<{ pm?: IPm; side: ISide }>
     ) => {
       if (!action.payload.pm) {
         state.amountInput = undefined;
@@ -78,7 +80,7 @@ export const ratesSlice = createSlice({
       state.givePm = undefined;
     },
 
-    setActiveSide: (state: MainState, action: PayloadAction<Side | null>) => {
+    setActiveSide: (state: MainState, action: PayloadAction<ISide | null>) => {
       state.activeSide = action.payload;
       state.searchBarInputValue = "";
     },
@@ -109,7 +111,6 @@ export const ratesSlice = createSlice({
         amountInput,
         bestRates
       );
-
       state.amountOutputs = getAmountOutputs(state, action.payload);
     },
     setActiveDir: (
@@ -117,12 +118,31 @@ export const ratesSlice = createSlice({
       action: PayloadAction<string | undefined>
     ) => {
       state.activeDir = action.payload;
+      // state.activePetal = undefined;
     },
     reverseDir: (state: MainState) => {
       [state.givePm, state.getPm] = [state.getPm, state.givePm];
     },
     updateScrollLock: (state: MainState, action: PayloadAction<boolean>) => {
       state.isScrollLocked = action.payload;
+    },
+    setActivePetal: (
+      state: MainState,
+      action: PayloadAction<IActivePetal | undefined>
+    ) => {
+      if (
+        state.activePetal?.side &&
+        action.payload?.side &&
+        state.activePetal.side !== action.payload.side
+      ) {
+        const side = state.activePetal.side;
+        state.givePm =
+          side === "give" ? state.activePetal.pm : action.payload?.pm;
+        state.getPm =
+          side === "get" ? state.activePetal.pm : action.payload?.pm;
+        state.activeDir = undefined;
+      }
+      state.activePetal = action.payload;
     },
   },
   //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -176,6 +196,7 @@ export const {
   clearPms,
   reverseDir,
   updateScrollLock,
+  setActivePetal,
 } = ratesSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

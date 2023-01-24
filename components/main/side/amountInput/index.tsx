@@ -36,7 +36,7 @@ const AmountInput = () => {
   const pendingDirTops = useAppSelector((state) => state.main.pendingDirTops);
   const stringValue = amountOutputs[side] || "";
   const value = +stringValue.replaceAll(" ", "");
-  const shaded = min && max && (value > max[side] || value < min[side]);
+  const outRange = min && max && (value > max[side] || value < min[side]);
 
   return (
     <Box justifySelf="end">
@@ -61,7 +61,7 @@ const AmountInput = () => {
           placeholder="0.00"
           fontFamily="Inconsolata, sans-serif"
           fontSize="3xl"
-          color={shaded ? "bg.400" : "bg.100"}
+          color={outRange ? "bg.400" : "bg.100"}
           onClick={(e: any) => e.target.select()}
           // onClick={handleClick}
           // color={

@@ -26,7 +26,7 @@ import { selectorQuery } from "./SelectorQuery";
 import initFetcher from "../../../../services/graphql";
 import SectionsList from "./SectionsList";
 
-import { SelectorType } from "../../../../types/selector";
+import { ISelector } from "../../../../types/selector";
 import ErrorWrapper from "../../../shared/ErrorWrapper";
 import { useTranslation } from "next-i18next";
 import LinkButton from "../../../shared/LinkButton";
@@ -39,7 +39,7 @@ const fetcher = initFetcher();
 const Selector = () => {
   //const { data, error } = useSWR(selectorQuery, gqlFetcher.fetcher);
   const { data, error } = useSWR(selectorQuery, fetcher) as {
-    data: { selector: SelectorType };
+    data: { selector: ISelector };
     error: any;
   };
 

@@ -19,7 +19,10 @@ const Header = () => {
       p={2}
       bgColor={useColorModeValue("bg.50", "bg.800")}
       zIndex="modal"
-      boxShadow="0px 10px 15px 9px rgba(38,34,45,0.56)"
+      boxShadow={useColorModeValue(
+        "bg.50",
+        "0px 10px 15px 9px rgba(38,34,45,0.56)"
+      )}
     >
       <Grid templateColumns={navGrid}>
         {/*  отступы */}

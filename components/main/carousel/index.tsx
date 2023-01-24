@@ -4,7 +4,7 @@ import { useAppSelector } from "../../../redux/hooks";
 import useSWR from "swr";
 import TopsQuery from "./TopsQuery";
 
-import { DirRates, ITop } from "../../../types/rates";
+import { IDirRates, ITop } from "../../../types/rates";
 
 import ErrorWrapper from "../../shared/ErrorWrapper";
 import initFetcher from "../../../services/graphql";

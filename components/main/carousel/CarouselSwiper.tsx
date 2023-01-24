@@ -3,7 +3,7 @@ import { ReadableByteStreamController } from "stream/web";
 
 import { useAppSelector } from "../../../redux/hooks";
 
-import { DirRates, ITop } from "../../../types/rates";
+import { IDirRates, ITop } from "../../../types/rates";
 import Swiper from "./swiper";
 import Top from "./Top";
 

@@ -1,15 +1,11 @@
-import {
-  OptionType,
-  PmGroupType,
-  PmType,
-} from "../../../../../../types/selector";
+import { IOption, IPmGroup, IPm } from "../../../../../../types/selector";
 
 export const capitalize = (s: string | undefined) => {
   if (typeof s !== "string") return "";
   return s.charAt(0).toUpperCase() + s.slice(1);
 };
 
-const getOptionCode = (option: OptionType, prefix?: string): string => {
+const getOptionCode = (option: IOption, prefix?: string): string => {
   return (
     (option?.code && option?.code.toUpperCase()) || // USDTERC
     (prefix &&
@@ -19,23 +15,20 @@ const getOptionCode = (option: OptionType, prefix?: string): string => {
   ); // BTC
 };
 
-export const allPmsHaveUnmetPairs = (
-  pms: PmType[],
-  possiblePairs?: string[]
-) => {
+export const allPmsHaveUnmetPairs = (pms: IPm[], possiblePairs?: string[]) => {
   if (!possiblePairs || !possiblePairs.length) return false;
   if (pms.find((pm) => possiblePairs.find((pair) => pm.code === pair)))
     return false;
   return true;
 };
 
-export const singlePmHasUnmetPairs = (pm: PmType, possiblePairs?: string[]) => {
+export const singlePmHasUnmetPairs = (pm: IPm, possiblePairs?: string[]) => {
   if (!possiblePairs || !possiblePairs.length) return false;
   if (possiblePairs.find((pair) => pm.code === pair)) return false;
   return true;
 };
 
-export const getPmsFromPmGroup = (pm_group: PmGroupType): PmType[] => {
+export const getPmsFromPmGroup = (pm_group: IPmGroup): IPm[] => {
   return pm_group.options.map((option) => {
     const code = getOptionCode(option, pm_group?.prefix);
     const subgroup_name = option.name && option.name.toUpperCase();
@@ -54,7 +47,7 @@ export const getPmsFromPmGroup = (pm_group: PmGroupType): PmType[] => {
   });
 };
 
-// export const parsePm = (pm_group: PmGroupType): PmType | null => {
+// export const parsePm = (pm_group: IPmGroup): IPm | null => {
 //   // если одиночка
 //   try{
 //     // const short_name = pm_group.prefix
@@ -76,7 +69,7 @@ export const getPmsFromPmGroup = (pm_group: PmGroupType): PmType[] => {
 
 // };
 
-// export const parseSubPm = (pm_group: PmGroupType, subitem: OptionType) => ({
+// export const parseSubPm = (pm_group: IPmGroup, subitem: IOption) => ({
 //   en_name: capitalize(pm_group.en_name) + " " + subitem.name,
 //   ru_name: capitalize(pm_group.ru_name)
 //     ? pm_group.ru_name + " " + subitem.name
@@ -86,7 +79,7 @@ export const getPmsFromPmGroup = (pm_group: PmGroupType): PmType[] => {
 //   icon: pm_group.icon,
 // });
 
-// export const parseCurPm = (pm_group: PmGroupType, currency: CurrencyType) => ({
+// export const parseCurPm = (pm_group: IPmGroup, currency: ICurrency) => ({
 //   en_name: capitalize(pm_group.en_name) + " " + currency.name.toUpperCase(),
 //   ru_name: capitalize(pm_group.ru_name)
 //     ? pm_group.ru_name + " " + currency.name.toUpperCase()

@@ -10,7 +10,7 @@ import {
   fetchFiatByCurrencyCode,
   fetchPossiblePairs,
 } from "../../../../../../redux/thunks";
-import { PmGroupType, PmType } from "../../../../../../types/selector";
+import { IPmGroup, IPm } from "../../../../../../types/selector";
 import {
   setActiveSide,
   setAmount,
@@ -18,7 +18,7 @@ import {
   updateAmount,
 } from "../../../../../../redux/mainReducer";
 
-const PmGroup = ({ pm_group }: { pm_group: PmGroupType }) => {
+const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   const dispatch = useAppDispatch();
   const activeSide = useAppSelector((state) => state.main.activeSide);
   const possiblePairs = useAppSelector((state) =>
@@ -33,7 +33,7 @@ const PmGroup = ({ pm_group }: { pm_group: PmGroupType }) => {
     state.main.getPm,
   ]);
 
-  const choosePm = (selectedPm: PmType, shaded: boolean) => {
+  const choosePm = (selectedPm: IPm, shaded: boolean) => {
     if (!activeSide) return;
     const oppositePm = activeSide === "give" ? getPm : givePm;
     batch(() => {

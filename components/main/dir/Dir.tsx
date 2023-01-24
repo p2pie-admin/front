@@ -9,7 +9,12 @@ import {
 import { ArrowRight } from "@styled-icons/heroicons-outline/ArrowRight";
 import CircularMenu from "./circular-menu";
 import { useRef, useState } from "react";
-import { clearPms, setActiveDir, setPm } from "../../../redux/mainReducer";
+import {
+  clearPms,
+  setActiveDir,
+  setActivePetal,
+  setPm,
+} from "../../../redux/mainReducer";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { IDirGroup } from "../../../types/dir";
 import DirSideContext from "./DirSideContext";
@@ -34,19 +39,23 @@ const Dir = ({
   const activeDir = useAppSelector((state) => state.main.activeDir);
 
   const clearSelectedPms = () => {
-    dispatch(clearPms());
+    dispatch(setActivePetal());
   };
 
   const handleDirClick = () => {
-    //clearSelectedPms();
-    if (giveGroup.pms.length > 1 || getGroup.pms.length > 1) {
-      dispatch(setActiveDir(dirId));
-    }
+    activeDir !== dirId && dispatch(setActiveDir(dirId));
+    //activeDir !== dirId && clearSelectedPms();
   };
 
   useOutsideClick({
     ref: ref,
-    handler: () => dispatch(setActiveDir(undefined)),
+    handler: () => {
+      if (dirId === activeDir) {
+        dispatch(setActiveDir(undefined));
+        console.log("outside");
+        //clearSelectedPms();
+      }
+    },
   });
 
   const [bg600] = useToken("colors", ["bg.600"]);
@@ -55,13 +64,13 @@ const Dir = ({
     <Button
       ref={ref}
       key={dirId}
-      onClick={handleDirClick}
       position="relative"
       variant="primary_dark"
       border={`solid 2px ${bg600}`}
       filter={activeDir ? "brightness(0.4) grayscale(0.7)" : "unset"}
       h="100%"
       p="0"
+      onClick={handleDirClick}
       mx={{ base: "0", sm: "1" }}
       borderRadius="2rem"
       leftIcon={

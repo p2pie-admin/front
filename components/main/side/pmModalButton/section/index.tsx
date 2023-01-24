@@ -14,7 +14,7 @@ import Arrow from "../../../../shared/Arrow";
 import SectionGridWrapper from "./SectionGrid";
 import SectionHidden from "./SectionHidden";
 import PmGroup from "./PmGroup";
-import { PmGroupType } from "../../../../../types/selector";
+import { IPmGroup } from "../../../../../types/selector";
 // import SectionHidden from "./SectionHidden";
 
 const Section = ({
@@ -24,7 +24,7 @@ const Section = ({
 }: {
   title: string;
   itemsToShow: number;
-  pmGroups: PmGroupType[];
+  pmGroups: IPmGroup[];
 }) => {
   const [isHidden, setHidden] = useState(false);
   if (!pmGroups.length) return <></>;

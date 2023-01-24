@@ -12,9 +12,9 @@ import {
 import Arrow from "../../../../shared/Arrow";
 import SectionGridWrapper from "./SectionGrid";
 import PmGroup from "./PmGroup";
-import { PmGroupType } from "../../../../../types/selector";
+import { IPmGroup } from "../../../../../types/selector";
 
-const SectionHidden = ({ children }: { children: PmGroupType[] }) => {
+const SectionHidden = ({ children }: { children: IPmGroup[] }) => {
   const dividerColor = useColorModeValue(
     "rgba(0,0,0,0.1)",
     "rgba(225,200,255,0.1)"
