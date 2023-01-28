@@ -4,12 +4,14 @@ import {
   Button,
   useColorModeValue,
   Progress,
-  IconButton,
+  Text,
 } from "@chakra-ui/react";
-import { useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { BiChevronRight } from "react-icons/bi";
 import useBoundingRect from "../hooks/useBoundingRect";
 import percentage from "../utils/percentage";
+import useAnimateNumber from "use-animate-number";
+import SmoothProgress from "./progress";
 
 function Slider({
   setTrackIsActive,
@@ -33,6 +35,10 @@ function Slider({
   gap: number;
 }) {
   const [ref, { width }] = useBoundingRect();
+  const progressValue = percentage(
+    swiperIdVisible,
+    positions.length - constraint
+  );
 
   useLayoutEffect(() => initSliderWidth(Math.round(width)), [
     width,
@@ -131,19 +137,7 @@ function Slider({
       <Flex w={`${itemWidth}px`} mx="auto">
         <SwiperButton isLeft />
 
-        <Progress
-          value={percentage(swiperIdVisible, positions.length - constraint)}
-          alignSelf="center"
-          borderRadius="2"
-          bg={useColorModeValue("bg.100", "bg.700")}
-          flex={1}
-          h="3px"
-          sx={{
-            "> div": {
-              backgroundColor: useColorModeValue("primary.400", "orange.400"),
-            },
-          }}
-        />
+        <SmoothProgress progressValue={progressValue} />
 
         <SwiperButton />
       </Flex>

@@ -3544,6 +3544,11 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
+use-animate-number@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/use-animate-number/-/use-animate-number-1.0.5.tgz#c224fd3ce81d0b563a5215d714aaa98ad8c67470"
+  integrity sha512-zAavKn83Z6V6wlatpEp+fmbAS6vMA3tISudw04eSeyXc0AZG98JDDK1U+gmMxV/oATcub+ijgrENMPqHue+SiA==
+
 use-callback-ref@^1.2.3, use-callback-ref@^1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/use-callback-ref/-/use-callback-ref-1.2.5.tgz#6115ed242cfbaed5915499c0a9842ca2912f38a5"

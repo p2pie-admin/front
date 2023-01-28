@@ -12,7 +12,7 @@ import ReverseButton from "./ReverseButton";
 import SideContext from "./SideContext";
 import Carousel from "../main/carousel";
 import { useAppSelector } from "../../redux/hooks";
-import Dirs from "./dir";
+import Popular from "./popular";
 import { MdPhone } from "react-icons/md";
 
 const MainPageContent = () => {
@@ -35,7 +35,7 @@ const MainPageContent = () => {
 
         <Carousel />
 
-        <Dirs dirs={populars} />
+        {populars.length && <Popular dirs={populars} />}
       </Flex>
     </Box>
   );

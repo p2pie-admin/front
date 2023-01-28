@@ -115,7 +115,7 @@ const Top = ({ top, rate }: { top: ITop; rate: IRate }) => {
           variant="orange_regular"
           fontWeight="bold"
           color="white"
-          size="sm"
+          size="md"
           rightIcon={<Icon as={ExternalLink} w="4" h="4" />}
         >
           Exchange

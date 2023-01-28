@@ -5,6 +5,7 @@ import {
   Icon,
   Spinner,
   IconButton,
+  useToken,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { BiRefresh } from "react-icons/bi";
@@ -30,13 +31,16 @@ const ReverseButton = () => {
     });
   };
 
+  const [bg800] = useToken("colors", ["bg.800"]);
+
   return (
     <Center w="100%" h="2" p="0">
       <IconButton
+        border={`6px solid ${bg800}`}
         onClick={handleReverseDir}
         borderRadius="50%"
-        variant="primary_regular"
-        color="bg.600"
+        bgColor="bg.700"
+        color={bothPmsSelected ? "bg.300" : "bg.600"}
         zIndex="2"
         isLoading={pendingDirTops}
         aria-label="Reverse direction"

@@ -13,7 +13,7 @@ import { useAppSelector } from "../../../redux/hooks";
 import { IDir } from "../../../types/dir";
 import Dir from "./Dir";
 
-const Dirs = ({ dirs }: { dirs: IDir[] }) => {
+const Popular = ({ dirs }: { dirs: IDir[] }) => {
   const activeDir = useAppSelector((state) => state.main.activeDir);
   const { t } = useTranslation();
   const [bg700] = useToken("colors", ["bg.700"]);
@@ -21,13 +21,11 @@ const Dirs = ({ dirs }: { dirs: IDir[] }) => {
   return (
     <SlideFade in>
       <Box
-        filter={activeDir ? "brightness(0.8)" : "unset"}
         border={`solid 1px ${bg700}`}
         minH="10vh"
         borderRadius="xl"
         p="2"
-        w="100%"
-        mt="2"
+        mt={{ base: 2, md: 0 }}
       >
         <Text
           fontSize="md"
@@ -60,4 +58,4 @@ const Dirs = ({ dirs }: { dirs: IDir[] }) => {
   );
 };
 
-export default Dirs;
+export default Popular;
