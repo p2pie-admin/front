@@ -23,7 +23,7 @@ const AmountInput = () => {
 
   const currentDirRate = useAppSelector(
     (state) =>
-      Object.values(state.main.dirTops?.uniqueRates || {})[
+      Object.values(state.main.dirParserResp?.uniqueRates || {})[
         state.main.swiperIdVisible
       ]
   );
@@ -72,9 +72,8 @@ const AmountInput = () => {
           w="100%"
         />
 
-        {typeof window !== "undefined" && !pendingDirTops && (
-          <Fiat value={value} min={min} max={max} />
-        )}
+        <Fiat value={value} min={min} max={max} />
+
         {/* <Text color="teal.400">{`step: ${step} / fiatStep: ${fiatStep}`}</Text> */}
       </NumberInput>
     </Box>

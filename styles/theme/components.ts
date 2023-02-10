@@ -72,6 +72,14 @@ const components = {
       error: () => ({
         bgGradient: "linear(to-br, red.400, red.500)",
       }),
+      main: () => ({
+        border: "1px",
+        borderColor: "bg.700",
+        _hover: {
+          borderColor: "orange.500",
+          bgColor: "bg.700",
+        },
+      }),
     },
   },
 };

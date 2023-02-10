@@ -29,10 +29,19 @@ const SelectorButton = () => {
       <Button
         onClick={() => handleModalOpen()}
         position="relative"
-        bgColor="orange.300"
-        boxShadow="none"
-        py="2"
+        py="1"
         px="2"
+        border="1px"
+        bgColor="bg.700"
+        boxShadow="sm"
+        borderColor="bg.600"
+        _hover={{
+          borderColor: "orange.400",
+          bgColor: "bg.600",
+        }}
+        _active={{
+          bgColor: "bg.500",
+        }}
         h="12"
         display="flex"
         justifyContent="space-between"

@@ -14,7 +14,7 @@ import { useAppSelector } from "../../redux/hooks";
 const Greeting = () => {
   const { t } = useTranslation();
   const topsExist = useAppSelector(
-    (state) => Object.keys(state.main.dirTops?.uniqueRates || {}).length
+    (state) => Object.keys(state.main.dirParserResp?.uniqueRates || {}).length
   );
 
   const collapsed = useBreakpointValue({ base: !topsExist, md: true });

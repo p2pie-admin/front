@@ -13,16 +13,16 @@ export const getAmountOutputs = (
   amount?: AmountInput,
   swiperIdVisible?: number
 ): AmountOutputs => {
-  const uniqueRatesKeys = Object.keys(state.dirTops?.uniqueRates || {});
+  const uniqueRatesKeys = Object.keys(state.dirParserResp?.uniqueRates || {});
   if (!uniqueRatesKeys.length) return initialAmountOutputs;
   const dir = `${state.givePm?.code.toUpperCase()}_${state.getPm?.code.toUpperCase()}`;
   const id = // updateAmounts не успевает подхватить swiperIdVisible, поэтому передаем дополнительно
     swiperIdVisible !== undefined ? swiperIdVisible : state.swiperIdVisible;
   // const rate =
-  //   state.dirTops?.bestRates[Object.keys(state.dirTops.bestRates)[id]];
+  //   state.dirParserResp?.bestRates[Object.keys(state.dirParserResp.bestRates)[id]];
   const activeRateKey = uniqueRatesKeys[id];
   const rate = Object.values(
-    state.dirTops?.uniqueRates[activeRateKey] || {}
+    state.dirParserResp?.uniqueRates[activeRateKey] || {}
   )[0];
 
   if (rate) {

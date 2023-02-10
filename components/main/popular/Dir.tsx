@@ -66,13 +66,19 @@ const Dir = ({
       key={dirId}
       position="relative"
       transition="all .4s ease"
-      filter={activeDir ? "brightness(0.4) grayscale(0.7)" : "unset"}
+      bgColor="transparent"
+      variant="main"
+      boxShadow="none"
+      filter={
+        activeDir && activeDir !== dirId
+          ? "opacity(0.1) grayscale(0.7)"
+          : "unset"
+      }
       //filter={activeDir ? "brightness(0.4) grayscale(0.7)" : "unset"}
       h="100%"
       p="0"
       onClick={handleDirClick}
       mx={{ base: "0", sm: "1" }}
-      borderRadius="2rem"
       leftIcon={
         <DirSideContext.Provider value={"give"}>
           <ScaleFade initialScale={0.7} in delay={0.2 + index * 0.05}>

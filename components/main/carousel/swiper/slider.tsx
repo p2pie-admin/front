@@ -5,6 +5,7 @@ import {
   useColorModeValue,
   Progress,
   Text,
+  Slider,
 } from "@chakra-ui/react";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { BiChevronRight } from "react-icons/bi";
@@ -12,6 +13,7 @@ import useBoundingRect from "../hooks/useBoundingRect";
 import percentage from "../utils/percentage";
 import useAnimateNumber from "use-animate-number";
 import SmoothProgress from "./progress";
+import LimitsRange from "../../limits";
 
 function Slider({
   setTrackIsActive,
@@ -134,7 +136,7 @@ function Slider({
         {children}
       </Box>
 
-      <Flex w={`${itemWidth}px`} mx="auto">
+      <Flex w={`${itemWidth - 50}px`} mx="auto">
         <SwiperButton isLeft />
 
         <SmoothProgress progressValue={progressValue} />

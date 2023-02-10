@@ -14,6 +14,7 @@ import Carousel from "../main/carousel";
 import { useAppSelector } from "../../redux/hooks";
 import Popular from "./popular";
 import { MdPhone } from "react-icons/md";
+import LimitsRange from "./limits";
 
 const MainPageContent = () => {
   const populars = useAppSelector((state) => state.main.populars);
@@ -33,9 +34,11 @@ const MainPageContent = () => {
           <Side />
         </SideContext.Provider>
 
+        {/* <LimitsRange /> */}
+
         <Carousel />
 
-        {populars.length && <Popular dirs={populars} />}
+        {!!populars.length && <Popular dirs={populars} />}
       </Flex>
     </Box>
   );

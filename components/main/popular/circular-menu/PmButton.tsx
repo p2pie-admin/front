@@ -11,7 +11,7 @@ const buttonHover = css`
   }
 `;
 
-const ButtonBase = styled.button`
+const ButtonBase = styled.div`
   width: ${BUTTON_SIZE}px;
   height: ${BUTTON_SIZE}px;
   color: white;
@@ -32,7 +32,7 @@ const PmButton = React.forwardRef(function Button(
 ) {
   return (
     <ButtonBase ref={ref}>
-      <Icon icon={group.icon} big />
+      <Icon icon={group.icon} />
     </ButtonBase>
   );
 });

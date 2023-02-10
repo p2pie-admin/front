@@ -9,10 +9,9 @@ const SmoothProgress = ({ progressValue }: { progressValue: number }) => {
       transition="width 0.3s ease"
       value={smoothProgressValue}
       alignSelf="center"
-      borderRadius="2"
       bg={useColorModeValue("bg.100", "bg.700")}
       flex={1}
-      h="3px"
+      h="1px"
       sx={{
         "> div": {
           backgroundColor: useColorModeValue("primary.400", "orange.400"),

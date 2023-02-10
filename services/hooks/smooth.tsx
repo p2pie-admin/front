@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useSmooth = (value: number) => {
+const useSmooth = (value: number, slow: boolean = false) => {
   const [smoothValue, setProgressSmoothValue] = useState(value);
   const initialDifference = value - smoothValue;
 
@@ -8,7 +8,7 @@ const useSmooth = (value: number) => {
     if (Math.abs(value - smoothValue) > initialDifference * 0.01) {
       setTimeout(
         () => setProgressSmoothValue(smoothValue + (value - smoothValue) / 2),
-        10
+        slow ? 25 : 10
       );
       return;
     }

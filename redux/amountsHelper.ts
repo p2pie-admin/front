@@ -114,9 +114,9 @@ export class FeesCalculator {
   };
 }
 
-export const roundAmount = (amount: number) => {
+export const roundAmount = (amount: number, rude = false) => {
   // в логарифм нули не вставляем
-  const factor = 3;
+  const factor = rude ? 1 : 3;
   // const roundBigNumberTo =
   //   String(amount).length > 4 ? String(amount).length - 5 : 0;
   // if (roundBigNumber && amount > 9999)

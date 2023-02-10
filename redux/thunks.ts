@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { IDirRates, IDirTops } from "../types/rates";
+import { IDirRates, IDirParserResp } from "../types/rates";
 import { IFiatRates } from "../types/selector";
 import axios from "axios";
 
@@ -59,7 +59,7 @@ export const fetchDirTops = createAsyncThunk(
       .get(`${courseFilterLink}/dir=${dir}/tops=true`)
       .catch((err) => console.error("could not fetch, ", err));
 
-    return response?.data as IDirTops;
+    return response?.data as IDirParserResp;
   }
 );
 

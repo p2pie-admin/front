@@ -27,15 +27,15 @@ const Carousel = () => {
     (state) => !!state.main.givePm?.code && !!state.main.getPm?.code
   );
 
-  const dirTopsEmpty = useAppSelector(
-    (state) => !state.main.dirTops?.uniqueRates
+  const dirParserRespEmpty = useAppSelector(
+    (state) => !state.main.dirParserResp?.uniqueRates
   );
 
   if (!bothPmsSelected) {
     return <></>;
   }
 
-  console.log(error, dirTopsEmpty);
+  console.log(error, dirParserRespEmpty);
 
   // вынесен наружу, иначе все внутри ErrorWrapper начинает высчитываться и выдает ошибку
   return (
@@ -51,7 +51,7 @@ const Carousel = () => {
       <ErrorWrapper
         mainColor="bg"
         iconColor="bg"
-        isError={dirTopsEmpty}
+        isError={dirParserRespEmpty}
         icon={SearchOff}
         primaryMessage="No results!"
         secondaryMessage="no rates were found for this direction"

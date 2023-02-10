@@ -1,7 +1,8 @@
+import { IRate } from "./../types/rates";
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 
 import { AmountOutputs, AmountInput } from "../types/amount";
-import { IDirTops, IDirRates } from "../types/rates";
+import { IDirParserResp, IDirRates } from "../types/rates";
 import { FeesCalculator } from "./amountsHelper";
 import { RootState } from "./store";
 import {
@@ -13,11 +14,7 @@ import {
 } from "./thunks";
 import { IPm } from "../types/selector";
 import { IActivePetal, IDir } from "../types/dir";
-import {
-  initialAmountOutputs,
-  getAmountOutputs,
-  findBestCourseRateByAmountInput,
-} from "./helper";
+import { initialAmountOutputs, getAmountOutputs } from "./helper";
 import Side from "../components/main/side";
 
 type ISide = "give" | "get";
@@ -27,9 +24,9 @@ export interface MainState {
   givePm?: IPm;
   getPm?: IPm;
   activeSide: ISide | null;
-  dirTops?: IDirTops;
+  dirParserResp?: IDirParserResp;
+  dirRates?: IDirRates; //  uniqueRates + bestRates
   pendingDirTops: boolean;
-  dirRates?: IDirRates;
   amountInput?: AmountInput;
   amountOutputs: AmountOutputs;
   swiperIdVisible: number;
@@ -68,7 +65,7 @@ export const ratesSlice = createSlice({
       if (!action.payload.pm) {
         state.amountInput = undefined;
         state.amountOutputs = initialAmountOutputs;
-        state.dirTops = undefined;
+        state.dirParserResp = undefined;
         state.dirRates = undefined;
       } // опустошаем пм
       if (action.payload.side === "give") state.givePm = action.payload.pm;
@@ -104,13 +101,6 @@ export const ratesSlice = createSlice({
       action: PayloadAction<AmountInput | undefined>
     ) => {
       state.amountInput = action.payload;
-      const bestRates = state.dirTops?.bestRates;
-      const amountInput = action.payload;
-      // injecting best if amount is custom
-      const bestCourseRate = findBestCourseRateByAmountInput(
-        amountInput,
-        bestRates
-      );
       state.amountOutputs = getAmountOutputs(state, action.payload);
     },
     setActiveDir: (
@@ -165,8 +155,9 @@ export const ratesSlice = createSlice({
       state.pendingDirTops = true;
     });
     builder.addCase(fetchDirTops.fulfilled, (state, action) => {
-      state.dirTops = action.payload;
+      state.dirParserResp = action.payload;
       state.amountInput = undefined;
+      // state.rates = [...action.payload.uniqueRates];
       state.amountOutputs = getAmountOutputs(state);
       state.pendingDirTops = false;
     });

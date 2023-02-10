@@ -25,7 +25,7 @@ const Popular = ({ dirs }: { dirs: IDir[] }) => {
         minH="10vh"
         borderRadius="xl"
         p="2"
-        mt={{ base: 2, md: 0 }}
+        mt="2"
       >
         <Text
           fontSize="md"

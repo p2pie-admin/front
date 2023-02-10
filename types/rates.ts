@@ -9,6 +9,7 @@ export interface IDirRates {
 
 export interface IRate {
   name: string;
+  tags?: string[];
   admin_rating: number;
   course: number;
   min_fee: string;
@@ -27,11 +28,11 @@ export interface ITop {
   code: string;
   title: string;
   color: string;
-  image: IImage;
+  image?: IImage;
 }
 export type ExchangerId = string;
 
-export interface IDirTops {
-  uniqueRates: { [key: string]: IDirRates }; // это уникальные свойства
+export interface IDirParserResp {
+  uniqueRates: IDirRates;
   bestRates: IDirRates; // это задачка с дождем, чтобы в зависимости от суммы выдавался результат
 }
