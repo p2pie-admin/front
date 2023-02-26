@@ -15,15 +15,26 @@ import { useAppSelector } from "../../redux/hooks";
 import Popular from "./popular";
 import { MdPhone } from "react-icons/md";
 import LimitsRange from "./limits";
+import FancyIcon from "../shared/FancyIcon";
+import MenuHeader from "./MenuHeader";
+import MenuFooter from "./MenuFooter";
 
 const MainPageContent = () => {
   const populars = useAppSelector((state) => state.main.populars);
 
   return (
-    <Box p="2">
-      <Greeting />
+    <Box
+      p="4"
+      bgColor="bg.800"
+      boxShadow="lg"
+      mt={{ base: 4, sm: 16 }}
+      borderRadius="2xl"
+      w={{ base: "98%", sm: 432 }}
+    >
+      {/* <Greeting /> */}
+      <MenuHeader />
 
-      <Flex mt="3" maxW={{ base: "96vw", sm: "450" }} flexDir="column">
+      <Flex flexDir="column">
         <SideContext.Provider value={"give"}>
           <Side />
         </SideContext.Provider>
@@ -39,6 +50,8 @@ const MainPageContent = () => {
         <Carousel />
 
         {!!populars.length && <Popular dirs={populars} />}
+
+        <MenuFooter />
       </Flex>
     </Box>
   );

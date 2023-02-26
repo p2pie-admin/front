@@ -1,12 +1,7 @@
 import { AmountInput, AmountOutputs } from "../types/amount";
 import { IDirRates, IRate } from "../types/rates";
-import { FeesCalculator } from "./amountsHelper";
+import { FeesCalculator, initialAmountOutputs } from "./amountsHelper";
 import { MainState } from "./mainReducer";
-
-export const initialAmountOutputs = {
-  give: "",
-  get: "",
-};
 
 export const getAmountOutputs = (
   state: MainState,
@@ -19,7 +14,7 @@ export const getAmountOutputs = (
   const id = // updateAmounts не успевает подхватить swiperIdVisible, поэтому передаем дополнительно
     swiperIdVisible !== undefined ? swiperIdVisible : state.swiperIdVisible;
   // const rate =
-  //   state.dirParserResp?.bestRates[Object.keys(state.dirParserResp.bestRates)[id]];
+  // state.dirParserResp?.bestRates[Object.keys(state.dirParserResp.bestRates)[id]];
   const activeRateKey = uniqueRatesKeys[id];
   const rate = Object.values(
     state.dirParserResp?.uniqueRates[activeRateKey] || {}

@@ -5,10 +5,10 @@ import { useRouter } from "next/router";
 import Footer from "./footer";
 import { Box, Flex, useColorModeValue, useToken } from "@chakra-ui/react";
 import { useAppSelector } from "../../redux/hooks";
+import Shader from "../shared/Shader";
 
 const Layout = ({ children }: { children: ReactChild }) => {
   const router = useRouter();
-  const [bg100, bg800] = useToken("colors", ["bg.100", "bg.800"]);
 
   const isScrollLocked = useAppSelector((state) => state.main.isScrollLocked);
 
@@ -29,24 +29,15 @@ const Layout = ({ children }: { children: ReactChild }) => {
         }}
       >
         <Header />
-        <Flex flexDir="column" alignItems="center">
-          {children}
-        </Flex>
-        <Footer />
-      </Box>
+        <Box position="relative">
+          <Flex flexDir="column" alignItems="center">
+            {children}
+          </Flex>
 
-      <Box
-        position="absolute"
-        bottom="0"
-        w="100%"
-        h="14"
-        bgGradient={useColorModeValue(
-          `linear(to-t, ${bg100}, rgba(0,0,0,0))`,
-          `linear(to-t, ${bg800}, rgba(0,0,0,0))`
-        )}
-        left="0"
-        pointerEvents="none"
-      />
+          <Footer />
+        </Box>
+      </Box>
+      <Shader toTop bgColor="bg.900" />
     </>
   );
 };

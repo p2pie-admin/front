@@ -8,6 +8,7 @@ import { capitalize } from "./section/PmGroup/helper";
 import { setActiveSide } from "../../../../redux/mainReducer";
 import SelectorModal from "./SelectorModal";
 import side from "..";
+import FancyIcon from "../../../shared/FancyIcon";
 
 const SelectorButton = () => {
   const dispatch = useAppDispatch();
@@ -30,24 +31,25 @@ const SelectorButton = () => {
         onClick={() => handleModalOpen()}
         position="relative"
         py="1"
-        px="2"
-        border="1px"
-        bgColor="bg.700"
-        boxShadow="sm"
-        borderColor="bg.600"
-        _hover={{
-          borderColor: "orange.400",
-          bgColor: "bg.600",
-        }}
-        _active={{
-          bgColor: "bg.500",
-        }}
+        px="0"
+        bgColor="transparent"
+        boxShadow="none"
+        variant="default"
+        // boxShadow="sm"
+        // borderColor="bg.600"
+        // _hover={{
+        //   borderColor: "orange.400",
+        //   bgColor: "bg.600",
+        // }}
+        // _active={{
+        //   bgColor: "bg.500",
+        // }}
         h="12"
         display="flex"
         justifyContent="space-between"
-        borderRadius="2rem"
-        leftIcon={PmCurrencyName ? <PmAvatar icon={PmIcon} /> : ""}
+        //leftIcon={PmCurrencyName ? <PmAvatar icon={PmIcon} /> : ""}
         rightIcon={<Icon as={BiChevronDown} w="6" h="6" />}
+        leftIcon={<FancyIcon />}
       >
         {PmCurrencyName ? (
           <Box>
@@ -66,7 +68,7 @@ const SelectorButton = () => {
             )}
           </Box>
         ) : (
-          <Text ml="2" fontSize="xl">
+          <Text fontSize="xl">
             {capitalize(side === "give" ? "sell" : "buy")}
           </Text>
         )}

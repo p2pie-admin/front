@@ -8,6 +8,7 @@ import Item from "./item";
 
 import { useAppSelector, useAppDispatch } from "../../../../redux/hooks";
 import {
+  setExchangerIdVisible,
   setSwiperIdVisible,
   updateAmount,
 } from "../../../../redux/mainReducer";
@@ -20,6 +21,7 @@ export default function Swiper({ children, gap }) {
     batch(() => {
       dispatch(updateAmount(id));
       dispatch(setSwiperIdVisible(id));
+      dispatch(setExchangerIdVisible("test"));
     });
 
   const [trackIsActive, setTrackIsActive] = useState(false);

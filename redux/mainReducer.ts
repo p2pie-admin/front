@@ -30,6 +30,7 @@ export interface MainState {
   amountInput?: AmountInput;
   amountOutputs: AmountOutputs;
   swiperIdVisible: number;
+  exchangerIdVisible?: string;
   activeDir?: string;
   populars: IDir[];
   isScrollLocked: boolean;
@@ -87,13 +88,26 @@ export const ratesSlice = createSlice({
     ) => {
       state.swiperIdVisible = action.payload || 0;
     },
+    setExchangerIdVisible: (
+      state: MainState,
+      action: PayloadAction<string | undefined>
+    ) => {
+      state.exchangerIdVisible = action.payload;
+    },
     // свайпаем
     updateAmount: (state: MainState, action: PayloadAction<number>) => {
-      state.amountOutputs = getAmountOutputs(
-        state,
-        state.amountInput,
-        action.payload
-      );
+      // const swiperIdVisible = action.payload
+      // const currentRate = state.rates[swiperIdVisible]
+      // const feesCalculator = new FeesCalculator(
+      //   dir,
+      //   currentRate,
+      //   amount || {
+      //     num: 1,
+      //     str: "1",
+      //     side: rate?.course > 1 ? "get" : "give",
+      //   }
+      // );
+      // return feesCalculator.calculateAmountOutputs();
     },
     // вводим свои числа
     setAmount: (
@@ -140,12 +154,7 @@ export const ratesSlice = createSlice({
     builder.addCase(fetchPopular.fulfilled, (state, action) => {
       state.populars = action.payload;
     });
-    builder.addCase(fetchDirRates.fulfilled, (state, action) => {
-      state.dirRates = action.payload;
-    });
-    builder.addCase(fetchDirRates.rejected, (error) => {
-      console.error(error);
-    });
+
     //
 
     builder.addCase(fetchDirTops.rejected, (error) => {
@@ -156,8 +165,11 @@ export const ratesSlice = createSlice({
     });
     builder.addCase(fetchDirTops.fulfilled, (state, action) => {
       state.dirParserResp = action.payload;
+      state.dirRates = {
+        ...action.payload.bestRates,
+        ...action.payload.bestRates,
+      };
       state.amountInput = undefined;
-      // state.rates = [...action.payload.uniqueRates];
       state.amountOutputs = getAmountOutputs(state);
       state.pendingDirTops = false;
     });
@@ -183,6 +195,7 @@ export const {
   setPm,
   setSearchBarInputValue,
   setSwiperIdVisible,
+  setExchangerIdVisible,
   setActiveDir,
   clearPms,
   reverseDir,

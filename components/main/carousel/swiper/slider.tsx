@@ -14,6 +14,7 @@ import percentage from "../utils/percentage";
 import useAnimateNumber from "use-animate-number";
 import SmoothProgress from "./progress";
 import LimitsRange from "../../limits";
+import { log } from "console";
 
 function Slider({
   setTrackIsActive,
@@ -50,6 +51,7 @@ function Slider({
   const handleDecrementClick = () => {
     !(swiperIdVisible === positions.length - positions.length) &&
       handleSwiperIdVisible(swiperIdVisible - 1);
+    console.log(children);
   };
 
   const handleIncrementClick = () => {

@@ -21,6 +21,7 @@ import DirSideContext from "./DirSideContext";
 import { getPmsFromPmGroup } from "../side/pmModalButton/section/PmGroup/helper";
 import { useSelector } from "react-redux";
 import { HiArrowRight } from "react-icons/hi";
+import GradientBorder from "../../shared/GradientBorder";
 
 const Dir = ({
   index,

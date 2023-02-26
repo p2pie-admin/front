@@ -52,7 +52,7 @@ const ExchangerCard = ({
       flexDirection="column"
       overflow="hidden"
       color="bg.50"
-      bgColor={"bg.600"}
+      bgColor={"purple.600"}
       rounded={12}
       flex={1}
       p={5}
@@ -97,9 +97,9 @@ const ExchangerCard = ({
         <VStack cursor="help"></VStack>
         <Button
           onClick={() => alert(`Post ${rate.name} clicked`)}
-          variant="orange_regular"
+          bgColor="bg.100"
           fontWeight="bold"
-          color="white"
+          color="bg.800"
           size={size}
           rightIcon={<Icon as={ExternalLink} w="4" h="4" />}
         >

@@ -74,10 +74,19 @@ const components = {
       }),
       main: () => ({
         border: "1px",
-        borderColor: "bg.700",
+        borderRadius: "xl",
+        borderColor: "whiteAlpha.300",
+        bgGradient: "linear(to-br, whiteAlpha.50, whiteAlpha.100)",
         _hover: {
           borderColor: "orange.500",
           bgColor: "bg.700",
+        },
+      }),
+      default: () => ({
+        filter: "none",
+        transition: "0.2s filter ease-in",
+        _hover: {
+          filter: "brightness(1.2)",
         },
       }),
     },
