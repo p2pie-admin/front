@@ -12,9 +12,11 @@ import {
   HStack,
   Center,
   Divider,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
 import { useAppSelector } from "../../../redux/hooks";
+import { Box3D } from "../../../styles/theme/wrappers";
 import { IDir } from "../../../types/dir";
 import Dir from "./Dir";
 
@@ -27,41 +29,38 @@ function sliceIntoChunks(arr: any[], chunkSize: number) {
   return res;
 }
 
-const Popular = ({ dirs }: { dirs: IDir[] }) => {
+const Popular = () => {
   const activeDir = useAppSelector((state) => state.main.activeDir);
+  const populars = useAppSelector((state) => state.main.populars);
   const { t } = useTranslation();
   const [bg700] = useToken("colors", ["bg.700"]);
-  const chunks = sliceIntoChunks(dirs, 2);
+  const chunkLength = useBreakpointValue({ base: 3, sm: 2 }) || 2;
+  const chunks = sliceIntoChunks(populars, chunkLength);
 
   return (
     <SlideFade in>
-      <Grid
-        gridTemplateRows="1fr 5fr"
-        gridGap="4"
-        p="4"
-        bgColor="bg.900"
-        h="36"
-        borderRadius="2xl"
-        mt="4"
-        w="70%"
-      >
-        <Text
-          fontSize="sm"
-          h="4"
-          w="100%"
-          textAlign="center"
-          color={useColorModeValue("bg.400", "bg.400")}
+      <Box3D borderRadius="2xl" bgColor="bg.900" mb="4">
+        <Grid
+          gridTemplateRows="1fr 5fr"
+          gridGap="2"
+          h={{ base: "unset", sm: "36" }}
+          p="4"
+          pt="3"
+          borderRadius="2xl"
         >
-          {t("home:popular")}
-        </Text>
+          <Text
+            fontSize="sm"
+            h="4"
+            w="100%"
+            color={useColorModeValue("bg.400", "bg.400")}
+          >
+            {t("home:popular")}
+          </Text>
 
-        <Box w="100%" h="100%" borderRadius="2xl" bgColor="bg.700"></Box>
-
-        {/* <Center>
-          <HStack w="fit-content">
+          <HStack p="0">
             {chunks.map((dirs, index) => (
-              <>
-                <VStack py="2" px={{ base: "2", md: "5" }} w="100%">
+              <HStack w="100%" key={"chunk_" + index}>
+                <VStack w="100%">
                   {dirs.map((dir, index) => (
                     <Box key={`dir_${dir.id}`}>
                       {dir.groups.length > 1 ? (
@@ -78,13 +77,13 @@ const Popular = ({ dirs }: { dirs: IDir[] }) => {
                   ))}
                 </VStack>
                 {index !== chunks.length - 1 && (
-                  <Divider orientation="vertical" h="20" />
+                  <Box h="16" w="1px" bgColor="bg.800" />
                 )}
-              </>
+              </HStack>
             ))}
           </HStack>
-        </Center> */}
-      </Grid>
+        </Grid>
+      </Box3D>
     </SlideFade>
   );
 };

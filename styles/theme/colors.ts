@@ -1,3 +1,54 @@
+export const colors3D = {
+  shaded: [
+    "bg.700",
+    "bg.600",
+    "bg.600",
+    "bg.800",
+    "whiteAlpha.200",
+    "blackAlpha.200",
+  ],
+  dark: [
+    "bg.800",
+    "bg.700",
+    "bg.700",
+    "bg.900",
+    "whiteAlpha.100",
+    "blackAlpha.100",
+  ],
+  black: [
+    "bg.900",
+    "bg.800",
+    "bg.800",
+    "bg.1000",
+    "whiteAlpha.50",
+    "blackAlpha.50",
+  ],
+  error: [
+    "red.500",
+    "red.400",
+    "red.400",
+    "red.600",
+    "whiteAlpha.300",
+    "blackAlpha.300",
+  ],
+  primary: [
+    "pink.400",
+    "orange.300",
+    "pink.300",
+    "orange.500",
+    "pink.300",
+    "orange.300",
+  ],
+  // primary: [
+  //   "orange.400",
+  //   "orange.300",
+  //   "orange.300",
+  //   "orange.500",
+  //   "whiteAlpha.300",
+  //   "blackAlpha.300",
+  // ],
+};
+
 const colors = {
   // bg: {
   //   50: "#f1f0fb",

@@ -30,7 +30,6 @@ export interface MainState {
   amountInput?: AmountInput;
   amountOutputs: AmountOutputs;
   swiperIdVisible: number;
-  exchangerIdVisible?: string;
   activeDir?: string;
   populars: IDir[];
   isScrollLocked: boolean;
@@ -166,8 +165,7 @@ export const ratesSlice = createSlice({
     builder.addCase(fetchDirTops.fulfilled, (state, action) => {
       state.dirParserResp = action.payload;
       state.dirRates = {
-        ...action.payload.bestRates,
-        ...action.payload.bestRates,
+        ...action.payload?.bestRates,
       };
       state.amountInput = undefined;
       state.amountOutputs = getAmountOutputs(state);

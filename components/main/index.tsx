@@ -5,6 +5,7 @@ import {
   useColorModeValue,
   Text,
   IconButton,
+  Grid,
 } from "@chakra-ui/react";
 import Greeting from "./Greeting";
 import Side from "./side";
@@ -19,22 +20,20 @@ import FancyIcon from "../shared/FancyIcon";
 import MenuHeader from "./MenuHeader";
 import MenuFooter from "./MenuFooter";
 
-const MainPageContent = () => {
-  const populars = useAppSelector((state) => state.main.populars);
+import { noiseURL } from "../../styles/theme/noise";
 
+const MainPageContent = () => {
   return (
     <Box
       p="4"
       bgColor="bg.800"
       boxShadow="lg"
-      mt={{ base: 4, sm: 16 }}
+      mt={{ base: 4, md: 16 }}
       borderRadius="2xl"
       w={{ base: "98%", sm: 432 }}
     >
-      {/* <Greeting /> */}
       <MenuHeader />
-
-      <Flex flexDir="column">
+      <Box mb="4">
         <SideContext.Provider value={"give"}>
           <Side />
         </SideContext.Provider>
@@ -44,15 +43,25 @@ const MainPageContent = () => {
         <SideContext.Provider value={"get"}>
           <Side />
         </SideContext.Provider>
+      </Box>
+      <LimitsRange />
+      <Carousel />
+      <Popular />
 
-        {/* <LimitsRange /> */}
+      {/* <MenuFooter /> */}
+      {/* <LowerPanel /> */}
+      {/* <Greeting /> */}
 
+      {/* <Flex flexDir="column">
+
+    
+      {/* 
         <Carousel />
 
-        {!!populars.length && <Popular dirs={populars} />}
+        <LowerPanel />
 
         <MenuFooter />
-      </Flex>
+      </Flex> */}
     </Box>
   );
 };

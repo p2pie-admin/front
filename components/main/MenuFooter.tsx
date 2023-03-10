@@ -3,16 +3,20 @@ import { FiShare, FiSettings } from "react-icons/fi";
 
 const Menufooter = () => {
   return (
-    <HStack mt="4" w="100%" justifyContent="space-between" h="8">
-      <Button
-        w="100%"
-        m="0"
-        borderRadius="2xl"
-        bgColor="bg.900"
-        variant="default"
-        color="bg.200"
-      ></Button>
-    </HStack>
+    <Grid
+      gridTemplateColumns="1fr 144px"
+      h="144px"
+      p="2"
+      bgColor="red.800"
+      borderRadius="2xl"
+    >
+      <Box w="100%" h="100%" bgColor="red.600">
+        t
+      </Box>
+      <Box w="100%" h="100%" bgColor="red.600">
+        t
+      </Box>
+    </Grid>
   );
 };
 

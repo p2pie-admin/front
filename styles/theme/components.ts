@@ -1,4 +1,30 @@
-import { mode, transparentize } from "@chakra-ui/theme-tools";
+import { lighten, getColor, mode } from "@chakra-ui/theme-tools";
+import { AnyCnameRecord } from "dns";
+import { ITone } from "../../types/shared";
+import { colors3D } from "./colors";
+
+const createGradient = (theme: any, tone: ITone, glowing = false) => {
+  const [bgFrom, bgTo, borderFrom, borderTo, whiteAlpha, shadeTo] = colors3D[
+    tone
+  ];
+  const bgFromHEX = getColor(theme, bgFrom);
+  const bgToHEX = getColor(theme, bgTo);
+  const borderFromHEX = getColor(theme, borderFrom);
+  const borderToHEX = getColor(theme, borderTo);
+  const shadeFromHEX = getColor(theme, whiteAlpha);
+  const shadeToHEX = getColor(theme, shadeTo);
+  const glowingShadow = `-2px -2px 15px -8px ${shadeFromHEX}, 2px 2px 15px -8px ${shadeToHEX}`;
+  const regularShadow = `-2px -2px 5px ${shadeFromHEX}, 2px 2px 5px ${shadeToHEX}`;
+
+  return {
+    color: glowing ? "bg.800" : "bg.100",
+    border: "1px solid",
+    borderColor: "transparent",
+    boxShadow: glowing ? glowingShadow : regularShadow,
+    background: `linear-gradient(150deg, ${bgFromHEX}, ${bgToHEX}) padding-box, 
+    linear-gradient(150deg, ${borderFromHEX}, ${borderToHEX}) border-box`,
+  };
+};
 
 const components = {
   IconButton: {
@@ -20,77 +46,48 @@ const components = {
 
   Button: {
     baseStyle: {
+      // эти стили добавятся ко всем прочим только если будет выбран какой-то вариант
+      filter: "none",
+      minH: "10",
+      borderRadius: "2xl",
+      transition: "0.2s filter ease-in",
       _hover: {
-        filter: "brightness(1.05)",
+        filter: "brightness(1.2)",
       },
       _active: {
         filter: "brightness(0.9)",
       },
-      boxShadow: "md",
-      borderRadius: "lg",
     },
     variants: {
-      primary_bright: (props: any) => ({
-        bgGradient: mode(
-          "linear(to-br, primary.100, primary.200)",
-          "linear(to-br, bg.300, bg.400)"
-        )(props),
-      }),
-      primary_regular: (props: any) => ({
-        bgGradient: mode(
-          "linear(to-br, primary.200, primary.300)",
-          "linear(to-br, bg.400, bg.500)"
-        )(props),
-      }),
-      primary_shaded: (props: any) => ({
-        bgGradient: mode(
-          "linear(to-br, primary.300, primary.400)",
-          "linear(to-br, bg.500, bg.600)"
-        )(props),
-      }),
-      primary_dark: (props: any) => ({
-        bgGradient: mode(
-          "linear(to-br, primary.400, primary.500)",
-          "linear(to-br, bg.600, bg.700)"
-        )(props),
-      }),
-      primary_black: (props: any) => ({
-        bgGradient: mode(
-          "linear(to-br, primary.500, primary.600)",
-          "linear(to-br, bg.700, bg.800)"
-        )(props),
-      }),
-      orange_bright: () => ({
-        bgGradient: "linear(to-br, orange.200, orange.300)",
-      }),
-      orange_regular: () => ({
-        bgGradient: "linear(to-br, orange.300, orange.400)",
-      }),
-      orange_dark: () => ({
-        bgGradient: "linear(to-br, orange.400, orange.500)",
-      }),
-      error: () => ({
-        bgGradient: "linear(to-br, red.400, red.500)",
-      }),
-      main: () => ({
-        border: "1px",
-        borderRadius: "xl",
-        borderColor: "whiteAlpha.300",
-        bgGradient: "linear(to-br, whiteAlpha.50, whiteAlpha.100)",
-        _hover: {
-          borderColor: "orange.500",
-          bgColor: "bg.700",
-        },
-      }),
-      default: () => ({
-        filter: "none",
-        transition: "0.2s filter ease-in",
-        _hover: {
-          filter: "brightness(1.2)",
-        },
-      }),
+      error: ({ theme }: { theme: any }) => {
+        return createGradient(theme, "error", true);
+      },
+
+      primary: ({ theme }: { theme: any }) => {
+        return createGradient(theme, "primary", true);
+      },
+
+      shaded: ({ theme }: { theme: any }) => {
+        return createGradient(theme, "shaded");
+      },
+
+      dark: ({ theme }: { theme: any }) => {
+        return createGradient(theme, "dark");
+      },
+
+      black: ({ theme }: { theme: any }) => {
+        return createGradient(theme, "black");
+      },
+
+      default: () => ({}),
     },
   },
 };
 
 export default components;
+
+// its possible to pass extra parameters like that:
+// const { theme, fromcolor, tocolor } = props
+// const lgFrom = getColor(theme, fromcolor)
+// const lgTo = getColor(theme, tocolor)
+// const bgColor = getColor(theme, mode('white', 'gray.800')(props))

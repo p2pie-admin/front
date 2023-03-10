@@ -33,7 +33,6 @@ const SelectorButton = () => {
         py="1"
         px="0"
         bgColor="transparent"
-        boxShadow="none"
         variant="default"
         // boxShadow="sm"
         // borderColor="bg.600"

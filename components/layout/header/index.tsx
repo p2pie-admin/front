@@ -43,7 +43,9 @@ const Header = () => {
         <Box></Box>
       </Grid>
 
-      <Shader bgColor="bg.900" top={12} />
+      <Box position="absolute" top="12" w="100%">
+        <Shader bgColor="bg.900" />
+      </Box>
     </Box>
   );
 };

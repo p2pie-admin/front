@@ -127,7 +127,7 @@ function Track({
   return (
     <>
       {itemWidth && (
-        <VStack ref={node} spacing={5} alignItems="stretch">
+        <VStack ref={node} spacing={4} alignItems="stretch">
           <MotionFlex
             dragConstraints={node}
             onDragStart={handleDragStart}
@@ -139,6 +139,7 @@ function Track({
             minWidth="min-content"
             flexWrap="nowrap"
             cursor="grab"
+            p="0"
           >
             {children}
           </MotionFlex>

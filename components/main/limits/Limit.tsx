@@ -16,19 +16,23 @@ const Limit = ({
   value,
   pmCurrencyName,
   needMargin,
+  changeSide,
 }: {
   label: string;
   value: number;
   pmCurrencyName: string;
   needMargin?: boolean;
+  changeSide: Function;
 }) => {
   return (
-    <Box borderRadius="lg" mb="-8">
+    <Box borderRadius="lg" mb="-10" onClick={() => changeSide()}>
       <Text
-        bgColor="bg.800"
+        bgColor="bg.600"
+        borderRadius="lg"
+        boxShadow="lg"
         whiteSpace="nowrap"
         fontSize="xs"
-        color="bg.400"
+        color="bg.100"
         ml={needMargin && label == "max" ? 12 : 0}
         mr={needMargin && label == "min" ? 12 : 0}
         px="1"

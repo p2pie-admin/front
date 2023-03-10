@@ -78,11 +78,11 @@ function Slider({
       }}
       left={{
         base: "0",
-        md: isLeft ? "-14" : "auto",
+        md: isLeft ? "-20" : "auto",
       }}
       right={{
         base: "0",
-        md: isLeft ? "auto" : "-14",
+        md: isLeft ? "auto" : "-20",
       }}
       mx="2"
       top="45%"
@@ -106,11 +106,10 @@ function Slider({
   );
 
   return (
-    <Box position="relative">
+    <Box position="relative" mb="4">
       <Box
         w="100%"
         ref={ref}
-        py="2"
         px={`${gap / 2}px`}
         position="relative"
         overflow="hidden"

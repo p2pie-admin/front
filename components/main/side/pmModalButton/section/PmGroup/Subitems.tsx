@@ -47,13 +47,7 @@ const Subitems = ({
       </PmButton>
       <Box w="100% !important" m="0 !important">
         <Collapse in={folded} unmountOnExit animateOpacity>
-          <Box
-            p="2"
-            w="100% !important"
-            bgColor="bg.700"
-            borderRadius="lg"
-            my="1"
-          >
+          <Box p="2" w="100% !important" my="1">
             <Grid templateColumns="1fr 1fr" gridGap="2" gridAutoFlow="dense">
               {pms.map((pm: IPm) => (
                 <SubButton

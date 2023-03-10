@@ -96,7 +96,12 @@ export default function Swiper({ children, gap }) {
       <Track {...trackProps}>
         {children.map((child, index) => {
           return (
-            <Item {...itemProps} exIdIndexPair={[child.key, index]} key={index}>
+            <Item
+              {...itemProps}
+              exIdIndexPair={[child.key, index]}
+              index={index}
+              key={index}
+            >
               {child}
             </Item>
           );

@@ -3,33 +3,23 @@ import { FiShare, FiSettings } from "react-icons/fi";
 
 const MenuHeader = () => {
   return (
-    <HStack mb="4" w="100%" justifyContent="space-between" h="8">
-      <Button
-        p="1"
-        m="0"
-        borderRadius="2xl"
-        bgColor="bg.900"
-        variant="default"
-        color="bg.200"
-      >
+    <Grid
+      gridTemplateColumns="40px 1fr 40px"
+      mb="4"
+      gridGap="4"
+      justifyContent="space-between"
+      h="10"
+    >
+      <Button p="1" m="0" h="10" variant="dark">
         <FiSettings />
       </Button>
-      <Center>
-        <Text fontSize="xl" fontWeight="bold" color="bg.100">
-          Exchange
-        </Text>
-      </Center>
-      <Button
-        p="1"
-        m="0"
-        borderRadius="2xl"
-        bgColor="bg.900"
-        variant="default"
-        color="bg.200"
-      >
+      <Text fontSize="2xl" fontWeight="bold" color="bg.100" textAlign="center">
+        Exchangers Search
+      </Text>
+      <Button p="1" m="0" h="10" variant="dark">
         <FiShare />
       </Button>
-    </HStack>
+    </Grid>
   );
 };
 

@@ -28,9 +28,10 @@ const SelectorModal = () => {
     <Modal size={"lg"} isOpen={isOpen} onClose={handleDialogClose}>
       <ModalOverlay />
       <ModalContent
-        bgColor={useColorModeValue("bg.50", "bg.700")}
+        borderRadius="2xl"
+        p="2"
+        bgColor={useColorModeValue("bg.50", "bg.800")}
         color={useColorModeValue("bg.400", "bg.100")}
-        position="relative"
         overflow="hidden"
         h={{
           base: "68vh",
@@ -38,7 +39,6 @@ const SelectorModal = () => {
         }}
       >
         <Selector />
-        <Shader toTop bgColor="bg.700" />
       </ModalContent>
     </Modal>
   );

@@ -6,6 +6,7 @@ import Footer from "./footer";
 import { Box, Flex, useColorModeValue, useToken } from "@chakra-ui/react";
 import { useAppSelector } from "../../redux/hooks";
 import Shader from "../shared/Shader";
+import { noiseURL } from "../../styles/theme/noise";
 
 const Layout = ({ children }: { children: ReactChild }) => {
   const router = useRouter();
@@ -37,7 +38,9 @@ const Layout = ({ children }: { children: ReactChild }) => {
           <Footer />
         </Box>
       </Box>
-      <Shader toTop bgColor="bg.900" />
+      <Box position="absolute" bottom="0" w="100%">
+        <Shader toTop bgColor="bg.900" />
+      </Box>
     </>
   );
 };

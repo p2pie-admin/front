@@ -11,12 +11,37 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { BiRefresh } from "react-icons/bi";
-import { IoChevronDownOutline } from "react-icons/io5";
-
+import { CgArrowsExchange } from "react-icons/cg";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { reverseDir } from "../../redux/mainReducer";
 import { batch } from "react-redux";
 import { fetchDirTops } from "../../redux/thunks";
+
+const Patch = () => {
+  const [bg900] = useToken("colors", ["bg.900"]);
+  return (
+    <Box position="absolute" zIndex="2">
+      <Box
+        w="30"
+        h="10"
+        background={`radial-gradient(circle at 0 100%, rgba(11, 111, 111, 0) 10px,${bg900} 11px), 
+      radial-gradient(circle at 100% 100%, rgba(111, 0, 0, 0) 10px, ${bg900} 11px)`}
+        backgroundPosition="bottom left, bottom right"
+        backgroundSize=" 50% 50%"
+        backgroundRepeat="no-repeat"
+      ></Box>
+      <Box
+        w="40"
+        h="10"
+        background={`radial-gradient(circle at 100% 0, rgba(1, 111, 0, 0) 10px, ${bg900} 11px), 
+  radial-gradient(circle at 0 0, rgba(204, 111, 0, 0) 10px, ${bg900} 11px)`}
+        backgroundPosition="top right, top left"
+        backgroundSize=" 50% 50%"
+        backgroundRepeat="no-repeat"
+      ></Box>
+    </Box>
+  );
+};
 
 const ReverseButton = () => {
   const dispatch = useAppDispatch();
@@ -46,22 +71,24 @@ const ReverseButton = () => {
 
       <Center position="relative" w="100%">
         <Box position="absolute">
-          <IconButton
+          <Button
+            w="4"
+            p="0"
+            variant="black"
             onClick={handleReverseDir}
-            borderRadius="50%"
-            color={bothPmsSelected ? "bg.300" : "bg.600"}
-            zIndex="2"
+            color={bothPmsSelected ? "bg.300" : "bg.300"}
+            zIndex="3"
             isLoading={pendingDirTops}
             aria-label="Reverse direction"
-            icon={
-              bothPmsSelected ? (
-                <BiRefresh size="2rem" />
-              ) : (
-                <IoChevronDownOutline size="2rem" />
-              )
-            }
-          />
+          >
+            {bothPmsSelected ? (
+              <BiRefresh size="2rem" />
+            ) : (
+              <CgArrowsExchange size="2rem" />
+            )}
+          </Button>
         </Box>
+        <Patch />
       </Center>
 
       <Box borderRadius="xl" bgColor="bg.800"></Box>

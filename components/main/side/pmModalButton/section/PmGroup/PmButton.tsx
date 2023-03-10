@@ -12,22 +12,21 @@ export default function PmButton({
   handleToggle: any;
   shaded: boolean;
 }) {
-  const hoveredColor = useColorModeValue("black", "white");
-
   return (
     <Button
       w="100%"
-      p="0 5px"
-      bgColor="transparent"
-      boxShadow="none"
-      filter={shaded ? "opacity(0.5) grayscale(0.8)" : "none"}
-      //filter={!paired ? "grayscale(100%) opacity(30%)" : "none"}
+      p="0"
+      variant="default"
+      filter={shaded ? "opacity(0.3) grayscale(0.8)" : "none"}
       justifyContent="start"
-      //bgColor={useColorModeValue("bg.50", "bg.600")}
       onClick={handleToggle} // works as choosePm or as open subitems
       leftIcon={<Avatar icon={icon} />}
-      color={"transparent"}
-      _hover={{ color: hoveredColor }}
+      color="transparent"
+      transition="all 0.3s ease"
+      _hover={{
+        color: "bg.300",
+        filter: "brightness(1.2)",
+      }}
     >
       {children}
     </Button>

@@ -31,6 +31,7 @@ import ErrorWrapper from "../../../shared/ErrorWrapper";
 import { useTranslation } from "next-i18next";
 import LinkButton from "../../../shared/LinkButton";
 import { ScTelegram } from "@styled-icons/evil/ScTelegram";
+import Shader from "../../../shared/Shader";
 
 const fetcher = initFetcher();
 
@@ -59,7 +60,7 @@ const Selector = () => {
       secondaryMessage="CMS connection is lost!"
       linkMessage="report"
     >
-      <ModalHeader w="100%" pt="2" pb="1">
+      <ModalHeader w="100%" pt="2" pb="1" position="relative">
         {activeSide
           ? data?.selector[
               `${i18n.language as "en" | "ru"}_${activeSide}_header`

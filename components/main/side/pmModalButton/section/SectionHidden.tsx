@@ -41,12 +41,10 @@ const SectionHidden = ({ children }: { children: IPmGroup[] }) => {
       <Button // see all
         maxH="6"
         w="100%"
-        filter="brightness(0.95)"
-        bgColor={useColorModeValue("bg.50", "bg.600")}
-        _hover={{ filter: "brightness(1.1)" }}
+        variant="default"
         justifyContent="center"
         onClick={() => setHidden(!isHidden)}
-        color="bg.300"
+        color="bg.200"
       >
         <Text fontSize="md" m="0 2px">
           {isHidden ? "see all" : "fold"}

@@ -3,13 +3,11 @@ import { Box, useColorModeValue, useToken } from "@chakra-ui/react";
 const Shader = ({
   bgColor,
   toTop = false,
-  top = 0,
-  bottom = 0,
+  sm = false,
 }: {
   bgColor?: string;
   toTop?: boolean;
-  top?: number;
-  bottom?: number;
+  sm?: boolean;
 }) => {
   const [blackAlpha100, blackAlpha400] = useToken("colors", [
     "blackAlpha.100",
@@ -19,11 +17,8 @@ const Shader = ({
   return (
     <Box
       zIndex="5"
-      position="absolute"
-      bottom={bottom}
-      top={top}
       w="100%"
-      h="14"
+      h={sm ? 4 : 12}
       bgGradient={useColorModeValue(
         `linear(${toTop ? "to-t" : "to-b"}, ${
           bgColor || blackAlpha100
@@ -32,7 +27,6 @@ const Shader = ({
           bgColor || blackAlpha400
         }, rgba(0,0,0,0))`
       )}
-      left="0"
       pointerEvents="none"
     />
   );

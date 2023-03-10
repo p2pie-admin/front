@@ -10,6 +10,7 @@ import ErrorWrapper from "../../shared/ErrorWrapper";
 import initFetcher from "../../../services/graphql";
 import CarouselSwiper from "./CarouselSwiper";
 import { SearchOff } from "@styled-icons/material-outlined/SearchOff";
+import { Box } from "@chakra-ui/react";
 
 const fetcher = initFetcher();
 

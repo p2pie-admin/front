@@ -5,6 +5,7 @@ import {
   Icon,
   useColorModeValue,
   Button,
+  Box,
 } from "@chakra-ui/react";
 import { Delete } from "@styled-icons/feather/Delete";
 import React, { useState } from "react";
@@ -26,7 +27,7 @@ const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {
   const dispatch = useAppDispatch();
 
   const renderClearButton = (isEmptyInput: boolean) => (
-    <Button size="sm">
+    <Button size="sm" variant="default">
       {isEmptyInput ? (
         <Icon as={Search} w="6" h="6" />
       ) : (
@@ -41,33 +42,34 @@ const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {
       : search_bar[`${i18n.language as "en" | "ru"}_placeholder`];
 
   return (
-    <InputGroup
-      size="md"
-      w="100%"
-      transition="width .5s ease-in-out;"
-      m="2"
-      borderRadius="lg"
-      boxShadow="0px 0px 12px 2px rgba(0,0,0,0.05)"
-    >
-      <Input
-        bgColor={useColorModeValue("white", "bg.700")}
-        variant="secondary"
-        _focus={{ borderColor: useColorModeValue("bg.100", "orange.400") }}
-        borderRadius="lg"
-        boxShadow="none !important"
-        placeholder={placeholder}
-        color={useColorModeValue("gray.500", "gray.100")}
-        value={searchBarInputValue}
-        onFocus={() => setInputFocused(true)}
-        onBlur={() => setInputFocused(false)}
-        onChange={(e) => dispatch(setSearchBarInputValue(e.target.value))}
-        _placeholder={{ color: inputFocused ? "bg.400" : "bg.200" }}
-        _hover={{ borderColor: useColorModeValue("bg.100", "bg.300") }}
-      />
-      <InputRightAddon onClick={() => dispatch(setSearchBarInputValue(""))}>
-        {renderClearButton(!searchBarInputValue.length)}
-      </InputRightAddon>
-    </InputGroup>
+    <Box w="100%" mb="2" boxShadow="lg" bgColor="bg.600" borderRadius="2xl">
+      <InputGroup
+        size="md"
+        transition="width .5s ease-in-out;"
+        borderRadius="2xl"
+      >
+        <Input
+          _focus={{ borderColor: useColorModeValue("bg.100", "orange.400") }}
+          borderRadius="2xl"
+          border="none"
+          boxShadow="none !important"
+          placeholder={placeholder}
+          value={searchBarInputValue}
+          onFocus={() => setInputFocused(true)}
+          onBlur={() => setInputFocused(false)}
+          onChange={(e) => dispatch(setSearchBarInputValue(e.target.value))}
+          _placeholder={{ color: inputFocused ? "bg.400" : "bg.200" }}
+          _hover={{ borderColor: useColorModeValue("bg.100", "bg.300") }}
+        />
+        <InputRightAddon
+          bgColor="bg.500"
+          borderRadius="2xl"
+          onClick={() => dispatch(setSearchBarInputValue(""))}
+        >
+          {renderClearButton(!searchBarInputValue.length)}
+        </InputRightAddon>
+      </InputGroup>
+    </Box>
   );
 };
 

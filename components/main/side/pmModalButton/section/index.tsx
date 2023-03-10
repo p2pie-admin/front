@@ -15,6 +15,8 @@ import SectionGridWrapper from "./SectionGrid";
 import SectionHidden from "./SectionHidden";
 import PmGroup from "./PmGroup";
 import { IPmGroup } from "../../../../../types/selector";
+import Shader from "../../../../shared/Shader";
+
 // import SectionHidden from "./SectionHidden";
 
 const Section = ({
@@ -29,15 +31,16 @@ const Section = ({
   const [isHidden, setHidden] = useState(false);
   if (!pmGroups.length) return <></>;
   return (
-    <>
+    <Box mb="4" position="relative">
       <Button
         position="sticky"
-        top="0"
+        top="-0.5"
+        bgColor="bg.1000"
+        borderBottomRadius={isHidden ? "2xl" : "0"}
+        variant="default"
         zIndex="1"
         w="100%"
-        mb="2"
         justifyContent="start"
-        bgColor="bg.500"
         onClick={() =>
           // showSection({ ...foldedSections, [id]: !foldedSections[id] })
           setHidden(!isHidden)
@@ -48,20 +51,27 @@ const Section = ({
         </Text>
         <Spacer />
         <Arrow isUp={!isHidden} />
+        {!isHidden && (
+          <Box position="absolute" w="100%" bottom="-4" left="0">
+            <Shader bgColor="bg.900" sm />
+          </Box>
+        )}
       </Button>
 
       <Collapse in={!isHidden} unmountOnExit>
-        <SectionGridWrapper>
-          {pmGroups.slice(0, itemsToShow).map((pm_group) => {
-            return <PmGroup pm_group={pm_group} key={pm_group.en_name} />;
-          })}
-        </SectionGridWrapper>
+        <Box p="2" pb="1" borderBottomRadius="2xl" bgColor="bg.900">
+          <SectionGridWrapper>
+            {pmGroups.slice(0, itemsToShow).map((pm_group) => {
+              return <PmGroup pm_group={pm_group} key={pm_group.en_name} />;
+            })}
+          </SectionGridWrapper>
 
-        {pmGroups.length > itemsToShow && (
-          <SectionHidden>{pmGroups.slice(itemsToShow)}</SectionHidden>
-        )}
+          {pmGroups.length > itemsToShow && (
+            <SectionHidden>{pmGroups.slice(itemsToShow)}</SectionHidden>
+          )}
+        </Box>
       </Collapse>
-    </>
+    </Box>
   );
 };
 

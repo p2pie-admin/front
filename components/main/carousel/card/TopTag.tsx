@@ -21,8 +21,20 @@ const TopTag = ({ top }: { top: ITop }) => {
         cursor="initial"
         size={size}
         variant="outline"
+        position="relative"
         colorScheme={`${top.color}`}
         minW="auto"
+        _before={{
+          content: "''",
+          bgColor: top.color,
+          filter: "opacity(0.1)",
+          boxShadow: `0 0 15px 2px ${top.color}`,
+          left: "0",
+          position: "absolute",
+          borderRadius: "inherit",
+          w: "100%",
+          h: "100%",
+        }}
         whiteSpace="nowrap"
       >
         <TagLabel>{capsFirst(top.title)}</TagLabel>
