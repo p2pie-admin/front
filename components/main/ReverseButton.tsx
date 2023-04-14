@@ -15,7 +15,7 @@ import { CgArrowsExchange } from "react-icons/cg";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { reverseDir } from "../../redux/mainReducer";
 import { batch } from "react-redux";
-import { fetchDirTops } from "../../redux/thunks";
+import { fetchDirRates } from "../../redux/thunks";
 
 const Patch = () => {
   const [bg900] = useToken("colors", ["bg.900"]);
@@ -46,7 +46,7 @@ const Patch = () => {
 const ReverseButton = () => {
   const dispatch = useAppDispatch();
 
-  const pendingDirTops = useAppSelector((state) => state.main.pendingDirTops);
+  const pendingDirRates = useAppSelector((state) => state.main.pendingDirRates);
   const bothPmsSelected = useAppSelector(
     (state) => state.main.givePm?.code && state.main.getPm?.code
   );
@@ -54,7 +54,7 @@ const ReverseButton = () => {
   const handleReverseDir = () => {
     batch(() => {
       dispatch(reverseDir());
-      dispatch(fetchDirTops({}));
+      dispatch(fetchDirRates({}));
     });
   };
 
@@ -78,7 +78,7 @@ const ReverseButton = () => {
             onClick={handleReverseDir}
             color={bothPmsSelected ? "bg.300" : "bg.300"}
             zIndex="3"
-            isLoading={pendingDirTops}
+            isLoading={pendingDirRates}
             aria-label="Reverse direction"
           >
             {bothPmsSelected ? (
@@ -101,7 +101,7 @@ const ReverseButton = () => {
     //     bgColor="bg.700"
     //     color={bothPmsSelected ? "bg.300" : "bg.600"}
     //     zIndex="2"
-    //     isLoading={pendingDirTops}
+    //     isLoading={pendingDirRates}
     //     aria-label="Reverse direction"
     //     icon={
     //       bothPmsSelected ? (

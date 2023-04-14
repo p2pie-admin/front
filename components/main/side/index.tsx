@@ -12,12 +12,7 @@ import PmModalButton from "./pmModalButton";
 
 const Side = () => {
   return (
-    <Box3D
-    // bgGradient={useColorModeValue(
-    //   "linear(to-b, bg.50, bg.100)",
-    //   "linear(to-bl, bg.600, bg.700)"
-    // )}
-    >
+    <Box3D bgColor="bg.1000">
       <Grid
         templateColumns="auto 1fr"
         gridGap="4"
@@ -32,12 +27,8 @@ const Side = () => {
         // boxShadow="inset -1px 1px 28px rgba(0,0,0,0.1);"
       >
         <PmModalButton />
-        <Flex h="100%" alignItems="center" justifyContent="end">
-          <Text fontSize="4xl" m="0" textAlign="end" color="bg.50">
-            9349.00
-          </Text>
-        </Flex>
-        {/* <AmountInput /> */}
+
+        <AmountInput />
       </Grid>
     </Box3D>
   );

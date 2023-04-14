@@ -2,12 +2,12 @@ import { IRate } from "./../types/rates";
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 
 import { AmountOutputs, AmountInput } from "../types/amount";
-import { IDirParserResp, IDirRates } from "../types/rates";
+
 import { FeesCalculator } from "./amountsHelper";
 import { RootState } from "./store";
 import {
   fetchDirRates,
-  fetchDirTops,
+  fetchAllDirRates,
   fetchFiatByCurrencyCode,
   fetchPopular,
   fetchPossiblePairs,
@@ -24,9 +24,8 @@ export interface MainState {
   givePm?: IPm;
   getPm?: IPm;
   activeSide: ISide | null;
-  dirParserResp?: IDirParserResp;
-  dirRates?: IDirRates; //  uniqueRates + bestRates
-  pendingDirTops: boolean;
+  dirRates?: IRate[]; //  uniqueRates + bestRates
+  pendingDirRates: boolean;
   amountInput?: AmountInput;
   amountOutputs: AmountOutputs;
   swiperIdVisible: number;
@@ -39,7 +38,7 @@ export interface MainState {
 const initialState: MainState = {
   searchBarInputValue: "",
   activeSide: null,
-  pendingDirTops: false,
+  pendingDirRates: false,
   amountOutputs: initialAmountOutputs,
   swiperIdVisible: 0,
   populars: [],
@@ -65,7 +64,6 @@ export const ratesSlice = createSlice({
       if (!action.payload.pm) {
         state.amountInput = undefined;
         state.amountOutputs = initialAmountOutputs;
-        state.dirParserResp = undefined;
         state.dirRates = undefined;
       } // опустошаем пм
       if (action.payload.side === "give") state.givePm = action.payload.pm;
@@ -86,28 +84,20 @@ export const ratesSlice = createSlice({
       action: PayloadAction<number | null>
     ) => {
       state.swiperIdVisible = action.payload || 0;
+      state.amountOutputs = getAmountOutputs(
+        state,
+        state.amountInput,
+        action.payload || 0
+      );
     },
-    setExchangerIdVisible: (
-      state: MainState,
-      action: PayloadAction<string | undefined>
-    ) => {
-      state.exchangerIdVisible = action.payload;
-    },
+    // setExchangerIdVisible: (
+    //   state: MainState,
+    //   action: PayloadAction<string | undefined>
+    // ) => {
+    //   state.exchangerIdVisible = action.payload;
+    // },
     // свайпаем
-    updateAmount: (state: MainState, action: PayloadAction<number>) => {
-      // const swiperIdVisible = action.payload
-      // const currentRate = state.rates[swiperIdVisible]
-      // const feesCalculator = new FeesCalculator(
-      //   dir,
-      //   currentRate,
-      //   amount || {
-      //     num: 1,
-      //     str: "1",
-      //     side: rate?.course > 1 ? "get" : "give",
-      //   }
-      // );
-      // return feesCalculator.calculateAmountOutputs();
-    },
+
     // вводим свои числа
     setAmount: (
       state: MainState,
@@ -125,6 +115,11 @@ export const ratesSlice = createSlice({
     },
     reverseDir: (state: MainState) => {
       [state.givePm, state.getPm] = [state.getPm, state.givePm];
+      state.amountOutputs = getAmountOutputs(
+        state,
+        state.amountInput,
+        state.swiperIdVisible
+      );
     },
     updateScrollLock: (state: MainState, action: PayloadAction<boolean>) => {
       state.isScrollLocked = action.payload;
@@ -156,20 +151,18 @@ export const ratesSlice = createSlice({
 
     //
 
-    builder.addCase(fetchDirTops.rejected, (error) => {
+    builder.addCase(fetchDirRates.rejected, (error) => {
       console.error(error);
     });
-    builder.addCase(fetchDirTops.pending, (state) => {
-      state.pendingDirTops = true;
+    builder.addCase(fetchDirRates.pending, (state) => {
+      state.pendingDirRates = true;
     });
-    builder.addCase(fetchDirTops.fulfilled, (state, action) => {
-      state.dirParserResp = action.payload;
-      state.dirRates = {
-        ...action.payload?.bestRates,
-      };
+    builder.addCase(fetchDirRates.fulfilled, (state, action) => {
+      state.dirRates = action.payload;
       state.amountInput = undefined;
       state.amountOutputs = getAmountOutputs(state);
-      state.pendingDirTops = false;
+      state.pendingDirRates = false;
+      state.swiperIdVisible = 0;
     });
     builder.addCase(fetchFiatByCurrencyCode.fulfilled, (state, action) => {
       const key = (action.payload.side + "Pm") as "givePm" | "getPm";
@@ -193,7 +186,6 @@ export const {
   setPm,
   setSearchBarInputValue,
   setSwiperIdVisible,
-  setExchangerIdVisible,
   setActiveDir,
   clearPms,
   reverseDir,

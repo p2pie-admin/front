@@ -1,9 +1,13 @@
 import { Progress, useColorModeValue } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
+import { useAppSelector } from "../../../../redux/hooks";
 import useSmooth from "../../../../services/hooks/smooth";
 
-const SmoothProgress = ({ progressValue }: { progressValue: number }) => {
-  const smoothProgressValue = useSmooth(progressValue);
+const SmoothProgress = () => {
+  const swiperIdVisible = useAppSelector((state) => state.main.swiperIdVisible);
+  const ratesLength =
+    useAppSelector((state) => state.main.dirRates?.length) || 1;
+  const smoothProgressValue = useSmooth((100 * swiperIdVisible) / ratesLength);
   return (
     <Progress
       transition="width 0.3s ease"

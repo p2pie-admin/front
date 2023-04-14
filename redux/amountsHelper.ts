@@ -114,14 +114,24 @@ export class FeesCalculator {
   };
 }
 
+export const kFormatter = (num: number) => {
+  return Math.abs(num) > 999999999
+    ? "-"
+    : Math.abs(num) > 999999
+    ? Math.sign(num) * +(Math.abs(num) / 1000000).toFixed(1) + "m"
+    : Math.abs(num) > 999
+    ? Math.sign(num) * +(Math.abs(num) / 1000).toFixed(1) + "k"
+    : Math.sign(num) * Math.abs(num);
+};
+
 export const roundAmount = (amount: number, rude = false) => {
   // в логарифм нули не вставляем
   const factor = rude ? 1 : 3;
-  // const roundBigNumberTo =
-  //   String(amount).length > 4 ? String(amount).length - 5 : 0;
-  // if (roundBigNumber && amount > 9999)
+
+  // if (amount > 99)
   //   return (
-  //     +(amount / 10 ** roundBigNumberTo).toFixed(0) * 10 ** roundBigNumberTo
+  //     +(amount / 10 ** String(amount).length).toFixed(1) *
+  //     10 ** String(amount).length
   //   );
   if (amount === 0) return 0;
   // нахожу минимальный значимый порядок числа

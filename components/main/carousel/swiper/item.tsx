@@ -3,20 +3,11 @@ import { useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { updateScrollLock } from "../../../../redux/mainReducer";
 
-function Item({
-  handleSwiperIdVisible,
-  swiperIdVisible,
-  constraint,
-  itemWidth,
-  positions,
-  children,
-  index,
-  gap,
-}: any) {
+function Item({ constraint, itemWidth, positions, children, index, gap }: any) {
   const isScrollLocked = useAppSelector((state) => state.main.isScrollLocked);
 
   const dispatch = useAppDispatch();
-
+  const swiperIdVisible = useAppSelector((state) => state.main.swiperIdVisible);
   // const handleFocus = () => {
   //   setTrackIsActive(true);
   //   console.log("handleFocus");
@@ -38,37 +29,6 @@ function Item({
   //   event.key === "Tab" && setUserDidTab(true);
   // };
 
-  const handleWheel = useCallback((event) => {
-    // event.preventDefault();
-    console.log("handleWheel");
-    if (swiperIdVisible === 0) {
-      // если первый, то ничего не делаем
-
-      if (event.deltaY > 0) {
-        handleSwiperIdVisible(swiperIdVisible + 1);
-      }
-      return;
-    }
-
-    if (swiperIdVisible < positions.length - constraint) {
-      if (event.deltaY > 0) {
-        handleSwiperIdVisible(swiperIdVisible + 1);
-      }
-      if (event.deltaY < 0) {
-        handleSwiperIdVisible(swiperIdVisible - 1);
-      }
-    }
-    if (swiperIdVisible > positions.length - constraint && event.deltaY > 0) {
-      // if (event.deltaY > 0) {
-      //   // если последний, то идем в начало
-      //   handleSwiperIdVisible(0);
-      // }
-      if (event.deltaY < 0) {
-        handleSwiperIdVisible(swiperIdVisible - 1);
-      }
-    }
-  }, []);
-
   return (
     <Flex
       // onFocus={handleFocus}
@@ -83,7 +43,6 @@ function Item({
       transform={
         swiperIdVisible === index ? "scale(1)" : "scale(0.9) skew(2deg, 1deg)"
       }
-      onWheel={handleWheel}
       // onBlur={handleBlur}
       // onKeyUp={handleKeyUp}
       // onKeyDown={handleKeyDown}

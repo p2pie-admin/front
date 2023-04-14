@@ -9,6 +9,7 @@ export const popularQuery = gql`
           groups {
             ... on ComponentPopularPopularGroup {
               id
+              color
               icon {
                 data {
                   attributes {
@@ -31,6 +32,7 @@ export const popularQuery = gql`
                           en_name
                           ru_name
                           prefix
+                          color
                           options {
                             ... on ComponentSelectorCurrency {
                               currency {

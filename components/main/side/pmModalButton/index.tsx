@@ -1,4 +1,13 @@
-import { Box, Button, HStack, Icon, Tag, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  HStack,
+  Icon,
+  Tag,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { useContext } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import SideContext from "../../SideContext";
@@ -9,6 +18,8 @@ import { setActiveSide } from "../../../../redux/mainReducer";
 import SelectorModal from "./SelectorModal";
 import side from "..";
 import FancyIcon from "../../../shared/FancyIcon";
+import { IoAddSharp } from "react-icons/io5";
+import Arrow from "../../../shared/Arrow";
 
 const SelectorButton = () => {
   const dispatch = useAppDispatch();
@@ -21,6 +32,7 @@ const SelectorButton = () => {
   const tag = useAppSelector((state) => state.main[`${side}Pm`]?.subgroup_name);
 
   const PmIcon = useAppSelector((state) => state.main[`${side}Pm`]?.icon);
+  const PmColor = useAppSelector((state) => state.main[`${side}Pm`]?.color);
 
   const handleModalOpen = () => dispatch(setActiveSide(side));
 
@@ -34,6 +46,7 @@ const SelectorButton = () => {
         px="0"
         bgColor="transparent"
         variant="default"
+        color="bg.100"
         // boxShadow="sm"
         // borderColor="bg.600"
         // _hover={{
@@ -47,8 +60,22 @@ const SelectorButton = () => {
         display="flex"
         justifyContent="space-between"
         //leftIcon={PmCurrencyName ? <PmAvatar icon={PmIcon} /> : ""}
-        rightIcon={<Icon as={BiChevronDown} w="6" h="6" />}
-        leftIcon={<FancyIcon />}
+        rightIcon={<Arrow isUp={false} />}
+        leftIcon={
+          PmCurrencyName ? (
+            <FancyIcon icon={PmIcon} color={PmColor || "gray"} />
+          ) : (
+            <Center
+              p="1"
+              ml="0.5"
+              borderRadius="50%"
+              border="2px dashed"
+              borderColor="bg.600"
+            >
+              <IoAddSharp size="1.5rem" />
+            </Center>
+          )
+        }
       >
         {PmCurrencyName ? (
           <Box>

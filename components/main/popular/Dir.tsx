@@ -63,8 +63,14 @@ const Dir = ({
       filter={
         activeDir && activeDir !== dirId
           ? "opacity(0.1) grayscale(0.7)"
-          : "unset"
+          : "brightness(1) grayscale(1) sepia(0.3)"
       }
+      _hover={{
+        filter:
+          activeDir && activeDir !== dirId
+            ? "opacity(0.1) grayscale(0.7)"
+            : "brightness(1.2) grayscale(0)",
+      }}
       //filter={activeDir ? "brightness(0.4) grayscale(0.7)" : "unset"}
       h="100%"
       p="0"
@@ -84,7 +90,7 @@ const Dir = ({
         </DirSideContext.Provider>
       }
     >
-      <Icon color="bg.100" as={HiArrowNarrowRight} w="5" h="5" />
+      <Icon color="bg.500" as={HiArrowNarrowRight} w="5" h="5" />
     </Button>
   );
 };

@@ -31,6 +31,7 @@ interface IPmGroup {
   ru_name?: string;
   prefix?: string;
   icon?: IImage;
+  color: string;
   options: IOption[];
 }
 
@@ -70,6 +71,7 @@ interface IPm {
   fiat?: IFiatRates;
   possible_pairs?: string[];
   tag?: string;
+  color: string;
 }
 
 type ISide = "give" | "get";

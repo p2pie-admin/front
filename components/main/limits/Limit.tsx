@@ -1,15 +1,6 @@
-import { Box, Text } from "@chakra-ui/react";
-import { roundAmount } from "../../../redux/amountsHelper";
-
-const kFormatter = (num: number) => {
-  return Math.abs(num) > 999999999
-    ? "-"
-    : Math.abs(num) > 999999
-    ? Math.sign(num) * +(Math.abs(num) / 1000000).toFixed(1) + "m"
-    : Math.abs(num) > 999
-    ? Math.sign(num) * +(Math.abs(num) / 1000).toFixed(1) + "k"
-    : Math.sign(num) * Math.abs(num);
-};
+import { Box, HStack, Text } from "@chakra-ui/react";
+import { kFormatter, roundAmount } from "../../../redux/amountsHelper";
+import { CgSync } from "react-icons/cg";
 
 const Limit = ({
   label,
@@ -18,28 +9,43 @@ const Limit = ({
   needMargin,
   changeSide,
 }: {
-  label: string;
+  label: "min" | "max";
   value: number;
   pmCurrencyName: string;
   needMargin?: boolean;
   changeSide: Function;
 }) => {
+  const ml = needMargin
+    ? label === "max"
+      ? "20"
+      : "-20"
+    : label === "max"
+    ? "-10"
+    : "10";
+
   return (
-    <Box borderRadius="lg" mb="-10" onClick={() => changeSide()}>
+    <HStack
+      mb="-10"
+      onClick={() => changeSide()}
+      bgColor={"bg.800"}
+      borderRadius="lg"
+      ml={ml}
+      fontSize="xs"
+      px="1"
+    >
       <Text
-        bgColor="bg.600"
-        borderRadius="lg"
-        boxShadow="lg"
         whiteSpace="nowrap"
-        fontSize="xs"
-        color="bg.100"
-        ml={needMargin && label == "max" ? 12 : 0}
-        mr={needMargin && label == "min" ? 12 : 0}
-        px="1"
+        color={"bg.100"}
       >{`${label.toUpperCase()}: ${kFormatter(
         roundAmount(value, true)
-      )} ${pmCurrencyName}`}</Text>
-    </Box>
+      )}`}</Text>
+      <Text mx="2px !important" color="orange.300">
+        {pmCurrencyName}
+      </Text>
+      <Box mx="0 !important" color="orange.300">
+        <CgSync size="0.8rem" />
+      </Box>
+    </HStack>
   );
 };
 

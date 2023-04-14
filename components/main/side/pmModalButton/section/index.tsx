@@ -1,23 +1,13 @@
-import React, { ReactChildren, useState } from "react";
+import React, { ReactChildren, useEffect, useState } from "react";
 // import PmGroup from "../PmGroup";
 // import SectionGridWrapper from "./SectionGridWrapper";
 
-import {
-  Button,
-  Text,
-  Spacer,
-  Collapse,
-  useColorModeValue,
-  Box,
-} from "@chakra-ui/react";
+import { Button, Text, Spacer, Collapse, Box } from "@chakra-ui/react";
 import Arrow from "../../../../shared/Arrow";
 import SectionGridWrapper from "./SectionGrid";
 import SectionHidden from "./SectionHidden";
 import PmGroup from "./PmGroup";
 import { IPmGroup } from "../../../../../types/selector";
-import Shader from "../../../../shared/Shader";
-
-// import SectionHidden from "./SectionHidden";
 
 const Section = ({
   title,
@@ -29,6 +19,11 @@ const Section = ({
   pmGroups: IPmGroup[];
 }) => {
   const [isHidden, setHidden] = useState(false);
+
+  // useEffect(() => {
+  //   setTimeout(() => setHidden(false), 10);
+  // }, []);
+
   if (!pmGroups.length) return <></>;
   return (
     <Box mb="4" position="relative">
@@ -36,6 +31,7 @@ const Section = ({
         position="sticky"
         top="-0.5"
         bgColor="bg.1000"
+        boxShadow="0 10px 15px -6px rgba(0,0,0,0.75)"
         borderBottomRadius={isHidden ? "2xl" : "0"}
         variant="default"
         zIndex="1"
@@ -51,11 +47,6 @@ const Section = ({
         </Text>
         <Spacer />
         <Arrow isUp={!isHidden} />
-        {!isHidden && (
-          <Box position="absolute" w="100%" bottom="-4" left="0">
-            <Shader bgColor="bg.900" sm />
-          </Box>
-        )}
       </Button>
 
       <Collapse in={!isHidden} unmountOnExit>

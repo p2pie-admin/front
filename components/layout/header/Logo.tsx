@@ -1,6 +1,6 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
-import profilePic from "../../../public/logo.svg";
+import profilePic from "../../../public/cake.svg";
 import { useColorModeValue } from "@chakra-ui/react";
 
 const Logo = () => {
@@ -9,13 +9,13 @@ const Logo = () => {
       <Image src={profilePic} width={30} height={30} />
 
       <Text
-        color={useColorModeValue("bg.700", "bg.100")}
+        color={useColorModeValue("bg.700", "orange.100")}
         fontSize="2xl"
         fontFamily="Sriracha, sans-serif"
         fontWeight="light"
         mx="2"
       >
-        Cotleta
+        p2pie
       </Text>
     </Flex>
   );

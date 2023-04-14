@@ -1,13 +1,16 @@
 import Avatar from "../../../../../shared/Avatar";
 import { Button, useColorModeValue } from "@chakra-ui/react";
+import FancyIcon from "../../../../../shared/FancyIcon";
 
 export default function PmButton({
   children,
+  color,
   icon,
   handleToggle,
   shaded,
 }: {
   children: JSX.Element | JSX.Element[];
+  color: string;
   icon?: any;
   handleToggle: any;
   shaded: boolean;
@@ -20,12 +23,12 @@ export default function PmButton({
       filter={shaded ? "opacity(0.3) grayscale(0.8)" : "none"}
       justifyContent="start"
       onClick={handleToggle} // works as choosePm or as open subitems
-      leftIcon={<Avatar icon={icon} />}
+      leftIcon={<FancyIcon icon={icon} color={color} />}
       color="transparent"
       transition="all 0.3s ease"
       _hover={{
         color: "bg.300",
-        filter: "brightness(1.2)",
+        filter: shaded ? "opacity(0.1) grayscale(1)" : "brightness(1.2)",
       }}
     >
       {children}

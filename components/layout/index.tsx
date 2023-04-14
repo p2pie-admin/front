@@ -38,9 +38,6 @@ const Layout = ({ children }: { children: ReactChild }) => {
           <Footer />
         </Box>
       </Box>
-      <Box position="absolute" bottom="0" w="100%">
-        <Shader toTop bgColor="bg.900" />
-      </Box>
     </>
   );
 };

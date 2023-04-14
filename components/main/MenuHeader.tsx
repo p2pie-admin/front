@@ -10,13 +10,13 @@ const MenuHeader = () => {
       justifyContent="space-between"
       h="10"
     >
-      <Button p="1" m="0" h="10" variant="dark">
+      <Button variant="dark" p="1">
         <FiSettings />
       </Button>
       <Text fontSize="2xl" fontWeight="bold" color="bg.100" textAlign="center">
         Exchangers Search
       </Text>
-      <Button p="1" m="0" h="10" variant="dark">
+      <Button variant="dark" p="1">
         <FiShare />
       </Button>
     </Grid>

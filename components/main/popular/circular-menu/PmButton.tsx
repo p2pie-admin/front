@@ -4,6 +4,7 @@ import { IDirGroup } from "../../../../types/dir";
 import { PRIMARY, PRIMARY_2, BUTTON_SIZE } from "./constants";
 import Icon from "../../../shared/Avatar";
 import { ScaleFade } from "@chakra-ui/react";
+import FancyIcon from "../../../shared/FancyIcon";
 
 const buttonHover = css`
   &:hover {
@@ -32,7 +33,7 @@ const PmButton = React.forwardRef(function Button(
 ) {
   return (
     <ButtonBase ref={ref}>
-      <Icon icon={group.icon} />
+      <FancyIcon icon={group.icon} color={group.color} />
     </ButtonBase>
   );
 });

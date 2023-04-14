@@ -6,6 +6,7 @@ import {
   Text,
   IconButton,
   Grid,
+  HStack,
 } from "@chakra-ui/react";
 import Greeting from "./Greeting";
 import Side from "./side";
@@ -19,6 +20,7 @@ import LimitsRange from "./limits";
 import FancyIcon from "../shared/FancyIcon";
 import MenuHeader from "./MenuHeader";
 import MenuFooter from "./MenuFooter";
+import { tagIcons } from "./carousel/card/icons";
 
 import { noiseURL } from "../../styles/theme/noise";
 
@@ -28,7 +30,7 @@ const MainPageContent = () => {
       p="4"
       bgColor="bg.800"
       boxShadow="lg"
-      mt={{ base: 4, md: 16 }}
+      mt={{ base: 6, md: 16 }}
       borderRadius="2xl"
       w={{ base: "98%", sm: 432 }}
     >
@@ -47,7 +49,13 @@ const MainPageContent = () => {
       <LimitsRange />
       <Carousel />
       <Popular />
-
+      {/* {Object.entries(tagIcons).map(([name, Icon]) => (
+        <HStack w="100%">
+          <Box>
+            {name} <Icon />
+          </Box>
+        </HStack>
+      ))} */}
       {/* <MenuFooter /> */}
       {/* <LowerPanel /> */}
       {/* <Greeting /> */}

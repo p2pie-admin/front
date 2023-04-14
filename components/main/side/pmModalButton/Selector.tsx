@@ -60,7 +60,14 @@ const Selector = () => {
       secondaryMessage="CMS connection is lost!"
       linkMessage="report"
     >
-      <ModalHeader w="100%" pt="2" pb="1" position="relative">
+      <ModalHeader
+        w="100%"
+        pt="2"
+        pb="1"
+        position="relative"
+        display="flex"
+        justifyContent="center"
+      >
         {activeSide
           ? data?.selector[
               `${i18n.language as "en" | "ru"}_${activeSide}_header`
@@ -105,16 +112,17 @@ const Selector = () => {
               data?.selector?.sections
             )}
           />
-          <Box h="70"></Box>
-          <Text color="bg.300"> Haven't found what were looking for? </Text>
+
+          <Text mt="5" color="bg.300">
+            {" "}
+            Haven't found what were looking for?{" "}
+          </Text>
           <LinkButton
             bgColor="bg.500"
-            message="Text me!"
+            message="Contact Support"
             href={String(process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT)}
             CustomIcon={ScTelegram}
           />
-
-          <Box h="70"></Box>
         </VStack>
       </ModalBody>
     </ErrorWrapper>

@@ -1,6 +1,9 @@
 import { Flex, VStack } from "@chakra-ui/react";
 import { motion, useAnimation, useMotionValue } from "framer-motion";
 import { useState, useRef, useCallback, useEffect } from "react";
+import { batch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { setSwiperIdVisible } from "../../../../redux/mainReducer";
 
 const MotionFlex = motion(Flex);
 
@@ -11,17 +14,20 @@ const transitionProps = {
   mass: 3,
 };
 
-function Track({
+function SlidingLayout({
   setTrackIsActive,
   trackIsActive,
-  handleSwiperIdVisible,
-  swiperIdVisible,
   constraint,
   multiplier,
   itemWidth,
   positions,
   children,
 }) {
+  const dispatch = useAppDispatch();
+  const swiperIdVisible = useAppSelector((state) => state.main.swiperIdVisible);
+  const handleSwiperIdVisible = (id: number) =>
+    dispatch(setSwiperIdVisible(id));
+
   const [dragStartPosition, setDragStartPosition] = useState(0);
   const controls = useAnimation();
   const x = useMotionValue(0);
@@ -104,14 +110,39 @@ function Track({
         }
       }
     },
-    [
-      trackIsActive,
-      handleSwiperIdVisible,
-      swiperIdVisible,
-      constraint,
-      positions.length,
-    ]
+    [trackIsActive, constraint, positions.length]
   );
+
+  const handleWheel = useCallback((event) => {
+    // event.preventDefault();
+    console.log("handleWheel");
+    if (swiperIdVisible === 0) {
+      // если первый, то ничего не делаем
+
+      if (event.deltaY > 0) {
+        handleSwiperIdVisible(swiperIdVisible + 1);
+      }
+      return;
+    }
+
+    if (swiperIdVisible < positions.length - constraint) {
+      if (event.deltaY > 0) {
+        handleSwiperIdVisible(swiperIdVisible + 1);
+      }
+      if (event.deltaY < 0) {
+        handleSwiperIdVisible(swiperIdVisible - 1);
+      }
+    }
+    if (swiperIdVisible > positions.length - constraint && event.deltaY > 0) {
+      // if (event.deltaY > 0) {
+      //   // если последний, то идем в начало
+      //   handleSwiperIdVisible(0);
+      // }
+      if (event.deltaY < 0) {
+        handleSwiperIdVisible(swiperIdVisible - 1);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     handleResize();
@@ -127,7 +158,12 @@ function Track({
   return (
     <>
       {itemWidth && (
-        <VStack ref={node} spacing={4} alignItems="stretch">
+        <VStack
+          ref={node}
+          spacing={4}
+          alignItems="stretch"
+          // onWheel={handleWheel}
+        >
           <MotionFlex
             dragConstraints={node}
             onDragStart={handleDragStart}
@@ -139,7 +175,6 @@ function Track({
             minWidth="min-content"
             flexWrap="nowrap"
             cursor="grab"
-            p="0"
           >
             {children}
           </MotionFlex>
@@ -149,4 +184,4 @@ function Track({
   );
 }
 
-export default Track;
+export default SlidingLayout;

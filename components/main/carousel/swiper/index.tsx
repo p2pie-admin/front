@@ -2,28 +2,11 @@ import React, { useCallback, useEffect, useState, useMemo } from "react";
 
 import { useMediaQuery, useTheme, Flex } from "@chakra-ui/react";
 
-import Slider from "./slider";
-import Track from "./track";
 import Item from "./item";
-
-import { useAppSelector, useAppDispatch } from "../../../../redux/hooks";
-import {
-  setExchangerIdVisible,
-  setSwiperIdVisible,
-  updateAmount,
-} from "../../../../redux/mainReducer";
-import { batch } from "react-redux";
+import Carcas from "./Carcas";
+import SlidingLayout from "./SlidingLayout";
 
 export default function Swiper({ children, gap }) {
-  const dispatch = useAppDispatch();
-  const swiperIdVisible = useAppSelector((state) => state.main.swiperIdVisible);
-  const handleSwiperIdVisible = (id: number) =>
-    batch(() => {
-      dispatch(updateAmount(id));
-      dispatch(setSwiperIdVisible(id));
-      dispatch(setExchangerIdVisible("test"));
-    });
-
   const [trackIsActive, setTrackIsActive] = useState(false);
   const [multiplier, setMultiplier] = useState(0.35);
   const [sliderWidth, setSliderWidth] = useState(0);
@@ -38,41 +21,25 @@ export default function Swiper({ children, gap }) {
     [children, itemWidth, gap]
   );
 
-  const { breakpoints } = useTheme();
-
-  const [isBetweenBaseAndMd] = useMediaQuery(
-    `(min-width: ${breakpoints.base}) and (max-width: ${breakpoints.md})`
-  );
-
-  const [isBetweenMdAndXl] = useMediaQuery(
-    `(min-width: ${breakpoints.md}) and (max-width: ${breakpoints.xl})`
-  );
-
-  const [isGreaterThanXL] = useMediaQuery(`(min-width: ${breakpoints.xl})`);
-
   useEffect(() => {
     setItemWidth(sliderWidth - gap);
     setMultiplier(0.65);
     setConstraint(1);
   }, [sliderWidth, gap]);
 
-  const sliderProps = {
+  const carcasProps = {
     setTrackIsActive,
     initSliderWidth,
-    handleSwiperIdVisible,
-    swiperIdVisible,
     constraint,
     itemWidth,
     positions,
     gap,
   };
 
-  const trackProps = {
+  const slidingLayoutProps = {
     setTrackIsActive,
     trackIsActive,
-    handleSwiperIdVisible,
     sliderWidth,
-    swiperIdVisible,
     constraint,
     multiplier,
     itemWidth,
@@ -83,8 +50,6 @@ export default function Swiper({ children, gap }) {
   const itemProps = {
     setTrackIsActive,
     trackIsActive,
-    handleSwiperIdVisible,
-    swiperIdVisible,
     constraint,
     itemWidth,
     positions,
@@ -92,8 +57,8 @@ export default function Swiper({ children, gap }) {
   };
 
   return (
-    <Slider {...sliderProps}>
-      <Track {...trackProps}>
+    <Carcas {...carcasProps}>
+      <SlidingLayout {...slidingLayoutProps}>
         {children.map((child, index) => {
           return (
             <Item
@@ -106,7 +71,7 @@ export default function Swiper({ children, gap }) {
             </Item>
           );
         })}
-      </Track>
-    </Slider>
+      </SlidingLayout>
+    </Carcas>
   );
 }

@@ -61,7 +61,7 @@ const ErrorWrapper = (props: {
         justifyContent="center"
         alignItems="center"
         minW="200"
-        minH="200"
+        minH="240"
       >
         <Spinner size="xl" color="bg.200" />
       </Center>

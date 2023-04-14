@@ -10,6 +10,7 @@ export interface IDirGroup {
   id: string;
   pms: IPmPointer[];
   icon: IImage;
+  color: string;
   en_name: string;
   ru_name: string;
 }

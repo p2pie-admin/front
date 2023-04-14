@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../../../../../redux/hooks";
 import { batch } from "react-redux";
 import {
   fetchDirRates,
-  fetchDirTops,
+  fetchAllDirRates,
   fetchFiatByCurrencyCode,
   fetchPossiblePairs,
 } from "../../../../../../redux/thunks";
@@ -54,7 +54,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
             })
           );
         } else {
-          dispatch(fetchDirTops({ code: selectedPm.code, side: activeSide }));
+          dispatch(fetchDirRates({ code: selectedPm.code, side: activeSide }));
         }
       }
     });
@@ -72,6 +72,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
       <Subitems
         pmGroupName={name}
         pms={pms}
+        color={pm_group.color}
         choosePm={choosePm}
         possiblePairs={possiblePairs}
       />
@@ -83,6 +84,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   return (
     // pm_id from pm_group_short_name or currency
     <PmButton
+      color={pm_group.color}
       icon={pm_group.icon}
       handleToggle={() => choosePm(pms[0], shadedPm)}
       shaded={shadedPm}

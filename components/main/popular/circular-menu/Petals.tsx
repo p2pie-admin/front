@@ -18,13 +18,8 @@ import { IDirGroup, IPmPointer } from "../../../../types/dir";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { setActivePetal } from "../../../../redux/mainReducer";
 import { IPm, ISide } from "../../../../types/selector";
-import { batch } from "react-redux";
-import {
-  fetchFiatByCurrencyCode,
-  fetchPossiblePairs,
-  fetchDirTops,
-} from "../../../../redux/thunks";
 import { getPmsFromPmGroup } from "../../side/pmModalButton/section/PmGroup/helper";
+import FancyIcon from "../../../shared/FancyIcon";
 
 /**
  * Positioning Stuff
@@ -141,7 +136,7 @@ function Petal({
     //     })
     //   ); // нужен только код валюты,  reducer сам запишет куда надо
     //   dispatch(fetchPossiblePairs({ code: pm.code, side }));
-    //   oppositePm?.code && dispatch(fetchDirTops({ code: pm.code, side }));
+    //   oppositePm?.code && dispatch(fetchDirRates({ code: pm.code, side }));
     //   oppositePm?.code && dispatch(setActiveDir(undefined));
     //   dispatch(setPm({ pm, side }));
     // });
@@ -201,16 +196,21 @@ function Petal({
               mass: 5,
             }}
           >
-            <Avatar icon={pm.icon} shaded={shaded} />
+            <FancyIcon icon={pm.icon} color={pm.color} />
             <Flex
               position="absolute"
               w="8"
-              right="-4"
+              right="-2"
               bottom="-1"
               justifyContent="center"
             >
-              <Box bgColor="bg.700" borderRadius="lg" px="1">
-                <Text fontSize="11px">{pm.tag}</Text>
+              <Box bgColor="bg.900" borderRadius="lg" px="0.5">
+                <Text
+                  fontSize="9px"
+                  color={`${pm.color.split("_")[1] || pm.color}.200`}
+                >
+                  {pm.tag}
+                </Text>
               </Box>
             </Flex>
           </Circle>

@@ -1,39 +1,28 @@
 import {
-  Flex,
   VStack,
   HStack,
   Heading,
-  Divider,
   Box,
-  Button,
-  Icon,
   Text,
-  useColorModeValue,
   useToken,
-  TagLabel,
-  TagRightIcon,
   Wrap,
-  Grid,
   useBreakpointValue,
+  Fade,
 } from "@chakra-ui/react";
 import StarRatings from "react-star-ratings";
-import { ExternalLink } from "styled-icons/evaicons-solid";
-
-import { IRate, ITop } from "../../../../types/rates";
+import { IParam, IRate } from "../../../../types/rates";
 import capsFirst from "../utils/capsFirst";
 import Wave from "../Wave";
 import { uniqueTop } from "./icons";
-import TopTag from "./TopTag";
+import ExchTag from "./ExchTag";
 
 //const ExchangerCard = ({ top, rate }: { top: ITop; rate: IRate }) => {
 const ExchangerCard = ({
-  rate,
-  exchangerId,
-  tops,
+  dirRate,
+  parameters,
 }: {
-  rate: IRate;
-  exchangerId: string;
-  tops: ITop[];
+  dirRate: IRate;
+  parameters: IParam[];
 }) => {
   const [orange300, orange400, bg500] = useToken("colors", [
     "orange.300",
@@ -41,29 +30,32 @@ const ExchangerCard = ({
     "bg.500",
   ]);
 
-  const rating = rate.admin_rating === null ? 0 : rate.admin_rating;
+  const rating = dirRate.admin_rating === null ? 0 : dirRate.admin_rating;
   const size = useBreakpointValue({ base: "sm", md: "md" });
+  const shift1 = +Math.floor(Math.random() * 20 + 10) / 10;
+  const shift2 = +Math.floor(Math.random() * 20 + 10) / 10;
 
   return (
     <Box
       bgColor="bg.900"
       borderRadius="2xl"
       pos="relative"
-      key={exchangerId}
+      key={dirRate.exchangerId}
       w="100%"
       p={4}
-      minH="200"
+      overflow="hidden"
     >
       <VStack align="start" w="100%">
         <Heading
           fontSize={{ base: "xl", md: "2xl" }}
           textAlign="left"
           w="full"
+          mb="-3"
           whiteSpace="nowrap"
         >
-          {capsFirst(rate.name)}
+          {capsFirst(dirRate.name)}
         </Heading>
-        <HStack w="100%" alignItems="start">
+        <HStack w="100%">
           <StarRatings
             rating={0}
             starRatedColor={orange300}
@@ -72,22 +64,25 @@ const ExchangerCard = ({
             starEmptyColor={bg500}
             // changeRating={this.changeRating}
             numberOfStars={5}
-            starDimension="12px"
+            starDimension="14px"
             starSpacing="2px"
             name="rating"
           />
-          <Text fontSize="md">4.5</Text>
+          <Text fontSize="sm">4.5</Text>
         </HStack>
-
-        <Wrap>
-          {tops.length > 2 ? (
-            <TopTag top={uniqueTop} key={uniqueTop.code} />
-          ) : (
-            tops.map((top) => <TopTag top={top} key={top.code} />)
-          )}
-        </Wrap>
       </VStack>
-      <Wave />
+      <HStack mt="20" justifyContent="end">
+        <Wrap>
+          {parameters.map((parameter) => (
+            <ExchTag parameter={parameter} />
+          ))}
+        </Wrap>
+      </HStack>
+
+      <Fade in={true}>
+        <Wave shift={shift1} />
+        <Wave shift={shift2} />
+      </Fade>
     </Box>
   );
 };

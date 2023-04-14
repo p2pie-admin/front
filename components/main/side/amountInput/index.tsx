@@ -21,19 +21,14 @@ const AmountInput = () => {
     str.length < 11 && dispatch(setAmount({ side, str, num }));
   };
 
-  const currentDirRate = useAppSelector(
-    (state) =>
-      Object.values(state.main.dirParserResp?.uniqueRates || {})[
-        state.main.swiperIdVisible
-      ]
-  );
-
-  const { min, max } = currentDirRate
-    ? Object.values(currentDirRate)[0]
-    : { min: undefined, max: undefined };
-
   const amountOutputs = useAppSelector((state) => state.main.amountOutputs);
-  const pendingDirTops = useAppSelector((state) => state.main.pendingDirTops);
+  const pendingDirRates = useAppSelector((state) => state.main.pendingDirRates);
+  const currentRate = useAppSelector(
+    (state) => state.main?.dirRates?.[state.main.swiperIdVisible]
+  );
+  const [min, max] = currentRate
+    ? [currentRate.min, currentRate.max]
+    : [undefined, undefined];
   const stringValue = amountOutputs[side] || "";
   const value = +stringValue.replaceAll(" ", "");
   const outRange = min && max && (value > max[side] || value < min[side]);
@@ -48,7 +43,8 @@ const AmountInput = () => {
         onChange={onAmountChange}
         minW="10"
         mr="3"
-        value={stringValue.length > 11 || pendingDirTops ? "-" : stringValue}
+        zIndex="3"
+        value={stringValue.length > 11 || pendingDirRates ? "-" : stringValue}
         keepWithinRange={true}
         clampValueOnBlur={true}
         max={9999999}
@@ -61,7 +57,7 @@ const AmountInput = () => {
           placeholder="0.00"
           fontFamily="Inconsolata, sans-serif"
           fontSize="3xl"
-          color={outRange ? "bg.400" : "bg.100"}
+          color={outRange ? "bg.200" : "orange.100"}
           onClick={(e: any) => e.target.select()}
           // onClick={handleClick}
           // color={

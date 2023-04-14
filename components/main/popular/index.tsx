@@ -52,7 +52,10 @@ const Popular = () => {
             fontSize="sm"
             h="4"
             w="100%"
-            color={useColorModeValue("bg.400", "bg.400")}
+            transition="all .4s ease"
+            color={
+              activeDir ? "transparent" : useColorModeValue("bg.400", "bg.400")
+            }
           >
             {t("home:popular")}
           </Text>

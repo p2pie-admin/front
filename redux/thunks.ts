@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { IDirRates, IDirParserResp } from "../types/rates";
+import { IRate } from "../types/rates";
 import { IFiatRates } from "../types/selector";
 import axios from "axios";
 
@@ -32,21 +32,21 @@ export const fetchFiatByCurrencyCode = createAsyncThunk(
   }
 );
 
-export const fetchDirRates = createAsyncThunk(
-  "rates/fetchDirRates",
+export const fetchAllDirRates = createAsyncThunk(
+  "rates/fetchAllDirRates",
   async (dir: string) => {
     const response = await axios
       .get(`${courseFilterLink}/dir=${dir}/tops=false`)
       .catch((err) => console.error(err));
-    return response?.data as IDirRates;
+    return response?.data as IRate[];
   }
 );
 
-export const fetchDirTops = createAsyncThunk(
-  "rates/fetchDirTops",
+export const fetchDirRates = createAsyncThunk(
+  "rates/fetchDirRates",
   async ({ code, side }: { code?: string; side?: ISide }, thunkAPI) => {
     const { main } = thunkAPI.getState() as { main: MainState };
-    // dir не успевает записаться в redux до вызова fetchDirTops, поэтому нужно передать последний выбранный code
+    // dir не успевает записаться в redux до вызова fetchDirRates, поэтому нужно передать последний выбранный code
     const dir = !code
       ? `${main.givePm?.code}_${main.getPm?.code}`
       : side === "give"
@@ -59,7 +59,7 @@ export const fetchDirTops = createAsyncThunk(
       .get(`${courseFilterLink}/dir=${dir}/tops=true`)
       .catch((err) => console.error("could not fetch, ", err));
 
-    return response?.data as IDirParserResp;
+    return response?.data as IRate[];
   }
 );
 

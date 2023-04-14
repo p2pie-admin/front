@@ -3,13 +3,10 @@ import { IImage } from "./selector";
 export type ISides = "give" | "get";
 export type ILimit = { [key in ISides]: number };
 
-export interface IDirRates {
-  [key: string]: IRate;
-}
-
 export interface IRate {
+  exchangerId: string;
   name: string;
-  tags?: string[];
+  tag?: string; // pro , p2p, new ...
   admin_rating: number;
   course: number;
   min_fee: string;
@@ -18,21 +15,18 @@ export interface IRate {
   min: ILimit;
   max: ILimit;
   reserve: ILimit;
-  param: string;
+  parameterCodes: string[];
   cities?: { [key: string]: string[] };
 }
 
-export interface ITop {
-  ru_description: string;
-  en_description: string;
+export interface IParam {
+  id: string;
+  ru_description?: string;
+  en_description?: string;
   code: string;
-  title: string;
+  en_name?: string;
+  ru_name?: string;
+  icon: IImage;
   color: string;
-  image?: IImage;
 }
 export type ExchangerId = string;
-
-export interface IDirParserResp {
-  uniqueRates: IDirRates;
-  bestRates: IDirRates; // это задачка с дождем, чтобы в зависимости от суммы выдавался результат
-}

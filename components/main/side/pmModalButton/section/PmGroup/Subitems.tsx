@@ -22,11 +22,13 @@ const Subitems = ({
   pms,
   choosePm,
   possiblePairs,
+  color,
 }: {
   pmGroupName: string;
   pms: IPm[];
   choosePm: Function;
   possiblePairs?: string[];
+  color: string;
 }) => {
   const [folded, setFolded] = React.useState(false);
 
@@ -34,6 +36,7 @@ const Subitems = ({
     // сама обложка раскрывалки
     <VStack>
       <PmButton
+        color={color}
         icon={pms[0].icon}
         handleToggle={() => setFolded(!folded)}
         shaded={allPmsHaveUnmetPairs(pms, possiblePairs)}

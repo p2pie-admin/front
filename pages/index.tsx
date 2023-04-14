@@ -31,7 +31,7 @@ const Home: NextPage = () => {
         <meta name="description" content="Monitoring Tool" />
         <link rel="icon" href="/avatar.ico" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Sriracha&text=Cotleta"
+          href="https://fonts.googleapis.com/css2?family=Sriracha&text=p2ie"
           rel="stylesheet"
         />
         <link

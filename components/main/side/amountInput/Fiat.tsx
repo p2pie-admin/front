@@ -48,7 +48,7 @@ const Fiat = ({
   const roundedMin = roundAmount(min?.[side] || 0);
   const roundedMax = roundAmount(max?.[side] || 0);
   return (
-    <HStack pos="absolute" top="10" right="0" fontSize="sm" color="bg.700">
+    <HStack pos="absolute" top="9" right="0" fontSize="sm" color="bg.700">
       {roundedMin > 0 && value < roundedMin ? (
         <Text color="bg.400">
           {renderHint("min: ", sideCurrencyCode, roundedMin)}
