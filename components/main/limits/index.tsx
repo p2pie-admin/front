@@ -20,7 +20,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import useSmooth from "../../../services/hooks/smooth";
 import { Box3D } from "../../../styles/theme/wrappers";
 import Limit from "./Limit";
-import { kFormatter, roundAmount } from "../../../redux/amountsHelper";
+import { isClose, kFormatter, roundAmount } from "../../../redux/amountsHelper";
 import { setAmount } from "../../../redux/mainReducer";
 
 const CustomRangeSlider = ({
@@ -59,8 +59,8 @@ const LimitsRange = () => {
   const [highestMin, highestMax, lowestMin, lowestMax] = useAppSelector(
     (state) => {
       const dirRates = state.main.dirRates || [];
-      const allMins = dirRates.map((r) => r.min[side]);
-      const allMaxes = dirRates.map((r) => r.max[side]);
+      const allMins = dirRates.map((r) => roundAmount(r.min?.[side], true));
+      const allMaxes = dirRates.map((r) => roundAmount(r.max?.[side], true));
 
       return [
         Math.max(...allMins),
@@ -82,23 +82,26 @@ const LimitsRange = () => {
 
   const stringValue = (amountOutputs && amountOutputs[side]) || "";
   const value = +stringValue.replaceAll(" ", "");
-  // const outRange = min && max && (value > max[side] || value < min[side]);
+  // const outRange = min && max && (value > MAX || value < MAX);
 
   //Формула для логарифмической шкалы
 
   // рисуем точки на шкале 0-65% для min и 65-100% для max
   // на 65% случается надлом производной и функция начинает расти существенно
   // const lowLimit = lowestMax > highestMin ? highestMin : lowestMax;
-  // const resMin = 65 - 65 ** (1 - min?.[side] / lowLimit);
+  // const resMin = 65 - 65 ** (1 - MIN / lowLimit);
 
   // если максималка очень маленькая, то переносим ее на левую шкалу для минималок
-  // const resMax = 100 - 35 ** (1 - max?.[side] / highestMax);
+  // const resMax = 100 - 35 ** (1 - MAX / highestMax);
 
   const [showTooltip, setShowTooltip] = useState(false);
-
+  const [MIN, MAX] =
+    min?.[side] && max?.[side]
+      ? [roundAmount(min[side], true), roundAmount(max[side], true)]
+      : [0, 0];
   // needMargin если min близок к highestMin && max далек от highestMax
-  const needMarginMin = min[side] / lowestMin > 8; //&& max[side] / lowestMax < 10;
-  const needMarginMax = highestMax / max[side] > 8;
+  const needMarginMin = MIN / lowestMin > 8; //&& MAX / lowestMax < 10;
+  const needMarginMax = highestMax / MAX > 8;
 
   // const f = (x: number, breakpoint: number) =>
   //   x > breakpoint
@@ -106,18 +109,26 @@ const LimitsRange = () => {
   //     : 51 - 51 ** (1 - x / breakpoint);
   const log = (base: number, n: number) => Math.log(n) / Math.log(base);
   const curvingStrength = 100 / (1 - log(highestMax, lowestMin));
-  const F = (x: number) => highestMax ** (1 + (x - 100) / curvingStrength);
+  const F = (x: number) =>
+    roundAmount(highestMax ** (1 + (x - 100) / curvingStrength), true);
 
   const unF = (x?: number) => {
     if (!x) return 0;
     return 100 + curvingStrength * (log(highestMax, x) - 1);
   };
-  const [resMin, resMax] = [unF(min?.[side]), unF(max?.[side])];
+  const [resMin, resMax] = [unF(MIN), unF(MAX)];
   const [a, setA] = useState(0);
   const dispatch = useAppDispatch();
-  const amountInput = useAppSelector((state) => state.main.amountInput?.num);
-  const color = F(a) > min?.[side] && F(a) < max?.[side] ? "bg.50" : "bg.500";
-  if (!min?.[side] || !max?.[side]) return <></>;
+  //const amountInputNum = useAppSelector((state) => state.main.amountInput?.num) || 0;
+
+  const amount = F(a);
+  const stickyAmount = isClose(MIN, amount)
+    ? MIN
+    : isClose(MAX, amount)
+    ? MAX
+    : amount;
+  const color = stickyAmount >= MIN && stickyAmount <= MAX ? "bg.50" : "bg.500";
+  if (!min || !max) return <></>;
   return (
     <Box3D bgColor="bg.900" h="14" mb="4" cursor="pointer">
       {/* <Text>highestMax: {highestMax}</Text>
@@ -127,17 +138,18 @@ const LimitsRange = () => {
         <Box w="90%" position="absolute" top="6px">
           <Slider
             aria-label="slider-ex-1"
-            defaultValue={30}
-            onChange={
-              (x) => setA(x)
-              // dispatch(
-              //   setAmount({
-              //     side,
-              //     num: roundAmount(F(x), true),
-              //     str: String(roundAmount(F(x), true)),
-              //   })
-              // )
-            }
+            defaultValue={10}
+            step={50}
+            onChange={(x) => {
+              setA(x);
+              dispatch(
+                setAmount({
+                  side,
+                  num: F(x),
+                  str: String(F(x)),
+                })
+              );
+            }}
             onMouseEnter={() => setShowTooltip(true)}
             onMouseLeave={() => setShowTooltip(false)}
           >
@@ -148,7 +160,7 @@ const LimitsRange = () => {
               color={color}
               placement="top"
               isOpen={showTooltip}
-              label={`${kFormatter(roundAmount(F(a), true))} ${pmCurrencyName}`}
+              label={`${kFormatter(stickyAmount)} ${pmCurrencyName}`}
             >
               <SliderThumb zIndex="3" boxSize={4} bgColor={color}>
                 <Box w="1.5" h="1.5" bgColor="orange.300" borderRadius="50%" />
@@ -166,7 +178,7 @@ const LimitsRange = () => {
             <RangeSliderThumb boxSize={1} index={0} zIndex="2">
               <Limit
                 label="min"
-                value={min[side]}
+                value={MIN}
                 needMargin={needMarginMin}
                 pmCurrencyName={pmCurrencyName}
                 changeSide={changeSide}
@@ -175,7 +187,7 @@ const LimitsRange = () => {
             <RangeSliderThumb boxSize={1} index={1} zIndex="1">
               <Limit
                 label="max"
-                value={max[side]}
+                value={MAX}
                 needMargin={needMarginMax}
                 pmCurrencyName={pmCurrencyName}
                 changeSide={changeSide}
