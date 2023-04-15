@@ -43,6 +43,7 @@ const ExchangerCard = ({
       key={dirRate.exchangerId}
       w="100%"
       p={4}
+      pb="6"
       overflow="hidden"
     >
       <VStack align="start" w="100%">
@@ -71,7 +72,7 @@ const ExchangerCard = ({
           <Text fontSize="sm">4.5</Text>
         </HStack>
       </VStack>
-      <HStack mt="20" justifyContent="end">
+      <HStack mt="10" justifyContent="end">
         <Wrap>
           {parameters.map((parameter) => (
             <ExchTag parameter={parameter} />

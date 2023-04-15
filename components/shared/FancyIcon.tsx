@@ -87,7 +87,7 @@ const FancyIcon = ({
   const size = small ? "5" : "7";
   return (
     <Center w={size} h={size}>
-      <Box
+      <Center
         borderRadius="50%"
         boxShadow={`0px 0px 12px -5px ${colorHEX}`}
         bg={`radial-gradient(circle, ${colorHEX} 60%, rgba(0,0,0,0) 70%)`}
@@ -100,7 +100,7 @@ const FancyIcon = ({
           src={icon ? SRC + icon.url : ""}
           alt={icon ? icon.alternativeText : ""}
         />
-      </Box>
+      </Center>
       <Box
         position="absolute"
         w="10"

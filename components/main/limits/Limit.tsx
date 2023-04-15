@@ -39,10 +39,10 @@ const Limit = ({
       >{`${label.toUpperCase()}: ${kFormatter(
         roundAmount(value, true)
       )}`}</Text>
-      <Text mx="2px !important" color="orange.300">
+      <Text mx="2px !important" color="orange.200">
         {pmCurrencyName}
       </Text>
-      <Box mx="0 !important" color="orange.300">
+      <Box mx="0 !important" color="orange.200">
         <CgSync size="0.8rem" />
       </Box>
     </HStack>

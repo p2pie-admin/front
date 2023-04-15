@@ -23,6 +23,7 @@ const Header = () => {
       p={2}
       zIndex="modal"
       h="12"
+      boxShadow={`0 15px 15px -6px ${bg900}`}
       // bgGradient={useColorModeValue(
       //   `linear(to-t, ${bg100}, rgba(0,0,0,0))`,
       //   `linear(to-t, ${bg900}, rgba(0,0,0,0))`
@@ -42,10 +43,6 @@ const Header = () => {
         </Box>
         <Box></Box>
       </Grid>
-
-      <Box position="absolute" top="12" w="100%">
-        <Shader bgColor="bg.900" />
-      </Box>
     </Box>
   );
 };

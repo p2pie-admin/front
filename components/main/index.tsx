@@ -30,7 +30,7 @@ const MainPageContent = () => {
       p="4"
       bgColor="bg.800"
       boxShadow="lg"
-      mt={{ base: 6, md: 16 }}
+      mt="4"
       borderRadius="2xl"
       w={{ base: "98%", sm: 432 }}
     >

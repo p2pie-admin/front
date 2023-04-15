@@ -127,8 +127,9 @@ const LimitsRange = () => {
     : isClose(MAX, amount)
     ? MAX
     : amount;
-  const color = stickyAmount >= MIN && stickyAmount <= MAX ? "bg.50" : "bg.500";
-  if (!min || !max) return <></>;
+  const color =
+    stickyAmount >= MIN && stickyAmount <= MAX ? "orange.200" : "bg.500";
+  if (!MIN || !MAX) return <></>;
   return (
     <Box3D bgColor="bg.900" h="14" mb="4" cursor="pointer">
       {/* <Text>highestMax: {highestMax}</Text>
@@ -139,7 +140,7 @@ const LimitsRange = () => {
           <Slider
             aria-label="slider-ex-1"
             defaultValue={10}
-            step={50}
+            step={0.5}
             onChange={(x) => {
               setA(x);
               dispatch(
@@ -163,7 +164,7 @@ const LimitsRange = () => {
               label={`${kFormatter(stickyAmount)} ${pmCurrencyName}`}
             >
               <SliderThumb zIndex="3" boxSize={4} bgColor={color}>
-                <Box w="1.5" h="1.5" bgColor="orange.300" borderRadius="50%" />
+                <Box w="1.5" h="1.5" bgColor="bg.600" borderRadius="50%" />
               </SliderThumb>
             </Tooltip>
             <SliderTrack bgColor="transparent"></SliderTrack>
@@ -173,7 +174,7 @@ const LimitsRange = () => {
         <Box w="90%">
           <CustomRangeSlider resMin={resMin} resMax={resMax}>
             <RangeSliderTrack>
-              <RangeSliderFilledTrack bgColor="orange.300" />
+              <RangeSliderFilledTrack bgColor="orange.200" />
             </RangeSliderTrack>
             <RangeSliderThumb boxSize={1} index={0} zIndex="2">
               <Limit

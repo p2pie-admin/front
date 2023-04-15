@@ -181,7 +181,6 @@ export const ratesSlice = createSlice({
 
 export const {
   setAmount,
-  updateAmount,
   setActiveSide,
   setPm,
   setSearchBarInputValue,

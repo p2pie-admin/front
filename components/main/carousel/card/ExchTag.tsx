@@ -1,4 +1,4 @@
-import { Text, Tooltip, HStack, Avatar } from "@chakra-ui/react";
+import { Text, Tooltip, HStack, Image } from "@chakra-ui/react";
 
 import { IoInformation } from "react-icons/io5";
 import { IParam } from "../../../../types/rates";
@@ -19,14 +19,28 @@ const ExchTag = ({ parameter }: { parameter: IParam }) => {
   } = parameter;
   const parameterColor = color || "gray";
 
+  const env = process.env.NODE_ENV;
+  const SRC =
+    env === "production"
+      ? process.env.NEXT_PUBLIC_STRAPI_PROD_BASE_URL
+      : process.env.NEXT_PUBLIC_STRAPI_DEV_BASE_URL;
+
+  // function generateRandomInteger(min: number, max: number) {
+  //   return Math.floor(min + Math.random() * (max - min + 1));
+  // }
+  const rotationColor = 50 * (+icon.id || 0);
+
   return (
     <Tooltip
       hasArrow
       label={parameter?.en_description || ""}
-      bg="bg.200"
+      bg="bg.800"
+      borderRadius="2xl"
+      color="orange.100"
       openDelay={500}
     >
       <HStack
+        filter={`invert(60%) sepia(97%) saturate(200%) hue-rotate(${rotationColor}deg)`}
         zIndex="4"
         position="relative"
         px={parameter?.en_name ? "2" : "1"}
@@ -50,11 +64,17 @@ const ExchTag = ({ parameter }: { parameter: IParam }) => {
         }}
       >
         {parameter.icon?.url ? (
-          <FancyIcon icon={icon} color={parameterColor} small />
+          <Image
+            w="5"
+            h="5"
+            // filter={shaded ? "grayscale(0.6) brightness(0.3)" : "none"}
+            // fallbackSrc={fallbackSRC}
+            src={SRC + parameter.icon?.url}
+          />
         ) : (
-          <IoInformation size="1.2rem" />
+          <IoInformation size="1rem" />
         )}
-        {en_name && <Text>{capsFirst(en_name)}</Text>}
+        {en_name && <Text fontSize="sm">{capsFirst(en_name)}</Text>}
       </HStack>
     </Tooltip>
   );
