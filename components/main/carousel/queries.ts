@@ -11,7 +11,6 @@ export const TopParametersQuery = gql`
             id
             en_description
             ru_description
-            color
             icon {
               data {
                 id
@@ -41,7 +40,6 @@ export const ExchangerParametersQuery = gql`
             id
             en_description
             ru_description
-            color
             icon {
               data {
                 id
@@ -69,7 +67,6 @@ export const DirectionParametersQuery = gql`
             id
             en_description
             ru_description
-            color
             icon {
               data {
                 id

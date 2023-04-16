@@ -17,7 +17,6 @@ const ExchTag = ({ parameter }: { parameter: IParam }) => {
     ru_description,
     icon,
   } = parameter;
-  const parameterColor = color || "gray";
 
   const env = process.env.NODE_ENV;
   const SRC =
@@ -28,7 +27,7 @@ const ExchTag = ({ parameter }: { parameter: IParam }) => {
   // function generateRandomInteger(min: number, max: number) {
   //   return Math.floor(min + Math.random() * (max - min + 1));
   // }
-  const rotationColor = 50 * (+icon.id || 0);
+  const rotationColor = 50 * (+icon?.id || 0);
 
   return (
     <Tooltip
@@ -48,14 +47,14 @@ const ExchTag = ({ parameter }: { parameter: IParam }) => {
         justifyContent="center"
         cursor="initial"
         borderRadius="lg"
-        color={`${parameterColor}.300`}
+        color={`white`}
         border="1px solid"
-        borderColor={`${parameterColor}.300`}
+        borderColor={`white`}
         _before={{
           content: "''",
-          bgColor: `${parameterColor}.600`,
+          bgColor: `white`,
           filter: "opacity(0.1)",
-          boxShadow: `0 0 15px 2px ${parameterColor}`,
+          boxShadow: `0 0 10px 5px white`,
           left: "0",
           position: "absolute",
           borderRadius: "inherit",
@@ -69,7 +68,7 @@ const ExchTag = ({ parameter }: { parameter: IParam }) => {
             h="5"
             // filter={shaded ? "grayscale(0.6) brightness(0.3)" : "none"}
             // fallbackSrc={fallbackSRC}
-            src={SRC + parameter.icon?.url}
+            src={SRC + parameter?.icon?.url}
           />
         ) : (
           <IoInformation size="1rem" />

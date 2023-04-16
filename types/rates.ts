@@ -27,6 +27,5 @@ export interface IParam {
   en_name?: string;
   ru_name?: string;
   icon: IImage;
-  color: string;
 }
 export type ExchangerId = string;
