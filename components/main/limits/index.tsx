@@ -101,8 +101,9 @@ const LimitsRange = () => {
 
   const dispatch = useAppDispatch();
   const amount =
-    useAppSelector((state) => +state.main.amountOutputs[side].split(" ")[0]) ||
-    0;
+    useAppSelector(
+      (state) => +state.main.amountOutputs[side].replaceAll(" ", "")
+    ) || 0;
 
   const stick = (a: number) =>
     isClose(MIN, a) ? MIN : isClose(MAX, a) ? MAX : a;

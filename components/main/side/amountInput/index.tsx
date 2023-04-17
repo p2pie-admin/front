@@ -8,6 +8,7 @@ import {
 import { useContext } from "react";
 
 import { batchActions } from "redux-batched-actions";
+import { roundAmount } from "../../../../redux/amountsHelper";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { setAmount } from "../../../../redux/mainReducer";
 import SideContext from "../../SideContext";
@@ -36,8 +37,16 @@ const AmountInput = () => {
   return (
     <Box justifySelf="end">
       <NumberInput
-        //step={+(+value.replaceAll(" ", "") / 100).toFixed(4)}
+        step={roundAmount(value / 100)}
         allowMouseWheel
+        _selection={{
+          bg: "red.500",
+          color: "red.500",
+        }}
+        _selected={{
+          bg: "red.500",
+          color: "red.500",
+        }}
         variant="unstyled"
         position="relative"
         onChange={onAmountChange}
