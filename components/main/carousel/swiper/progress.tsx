@@ -4,6 +4,7 @@ import {
   HStack,
   Progress,
   useColorModeValue,
+  VStack,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
@@ -19,14 +20,26 @@ const Dot = ({
   h: number;
   handleClickDot: Function;
 }) => (
-  <Center cursor="pointer" px="0.5" onClick={() => handleClickDot()}>
+  <VStack cursor="pointer" onClick={() => handleClickDot()}>
     <Box
-      w={1}
-      h={h + "px"}
+      position="relative"
+      w={2}
+      h={3}
+      mx="0.5"
+      mt="0 !important"
       borderRadius="sm"
-      bgColor={selected ? "orange.200" : "bg.800"}
-    />
-  </Center>
+      bgColor={"bg.700"}
+    >
+      <Box
+        position="absolute"
+        bottom="0"
+        w={2}
+        h={4 + h + "px"}
+        borderRadius="sm"
+        bgColor={selected ? "primary.200" : "bg.500"}
+      />
+    </Box>
+  </VStack>
 );
 const SmoothProgress = () => {
   const dispatch = useAppDispatch();
@@ -39,32 +52,30 @@ const SmoothProgress = () => {
     Math.min(...ratesCourses),
     Math.max(...ratesCourses),
   ];
-  const step = (maxCourse - minCourse) / 5;
-
-  console.log("step", step);
-  console.log("minCourse", minCourse);
-  console.log("maxCourse", maxCourse);
-  console.log("formula", +(maxCourse / step).toFixed(0));
+  const step = (maxCourse - minCourse) / 8;
 
   const handleClickDot = (index: number) => dispatch(setSwiperIdVisible(index));
 
   return (
     <HStack
       justifyContent="center"
+      alignItems="end"
       position="absolute"
       left="0"
-      bottom="2"
+      bottom="-1"
       w="100%"
       h="2"
       zIndex="3"
     >
-      {ratesCourses.map((course, index) => (
-        <Dot
-          h={8 + +((maxCourse - course) / step).toFixed(0)}
-          selected={index === swiperIdVisible}
-          handleClickDot={() => handleClickDot(index)}
-        />
-      ))}
+      <HStack bgColor="bg.1000" p="1" borderRadius="md">
+        {ratesCourses.map((course, index) => (
+          <Dot
+            h={+((maxCourse - course) / step).toFixed(0)}
+            selected={index === swiperIdVisible}
+            handleClickDot={() => handleClickDot(index)}
+          />
+        ))}
+      </HStack>
     </HStack>
     // <Progress
     //   transition="width 0.3s ease"
@@ -75,7 +86,7 @@ const SmoothProgress = () => {
     //   h="1px"
     //   sx={{
     //     "> div": {
-    //       backgroundColor: useColorModeValue("primary.400", "orange.400"),
+    //       backgroundColor: useColorModeValue("primary.400", "pink00"),
     //     },
     //   }}
     // />

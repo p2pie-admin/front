@@ -17,7 +17,7 @@ import { capitalize } from "./section/PmGroup/helper";
 import { setActiveSide } from "../../../../redux/mainReducer";
 import SelectorModal from "./SelectorModal";
 import side from "..";
-import FancyIcon from "../../../shared/FancyIcon";
+import CircularIcon from "../../../shared/CircularIcon";
 import { IoAddSharp } from "react-icons/io5";
 import Arrow from "../../../shared/Arrow";
 
@@ -50,7 +50,7 @@ const SelectorButton = () => {
         // boxShadow="sm"
         // borderColor="bg.600"
         // _hover={{
-        //   borderColor: "orange.400",
+        //   borderColor: "pink.400",
         //   bgColor: "bg.600",
         // }}
         // _active={{
@@ -63,7 +63,7 @@ const SelectorButton = () => {
         rightIcon={<Arrow isUp={false} />}
         leftIcon={
           PmCurrencyName ? (
-            <FancyIcon icon={PmIcon} color={PmColor || "gray"} />
+            <CircularIcon icon={PmIcon} color={PmColor || "gray"} />
           ) : (
             <Center
               p="1"
@@ -71,6 +71,7 @@ const SelectorButton = () => {
               borderRadius="50%"
               border="2px dashed"
               borderColor="bg.600"
+              color="bg.200"
             >
               <IoAddSharp size="1.5rem" />
             </Center>

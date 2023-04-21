@@ -8,12 +8,13 @@ import {
   Wrap,
   useBreakpointValue,
   Fade,
+  Grid,
 } from "@chakra-ui/react";
 import StarRatings from "react-star-ratings";
 import { IParam, IRate } from "../../../../types/rates";
 import capsFirst from "../utils/capsFirst";
 import Wave from "../Wave";
-import { uniqueTop } from "./icons";
+
 import ExchTag from "./ExchTag";
 
 //const ExchangerCard = ({ top, rate }: { top: ITop; rate: IRate }) => {
@@ -24,10 +25,10 @@ const ExchangerCard = ({
   dirRate: IRate;
   parameters: IParam[];
 }) => {
-  const [orange300, orange400, bg500] = useToken("colors", [
-    "orange.300",
-    "orange.400",
-    "bg.500",
+  const [primary200, primary300, bg600] = useToken("colors", [
+    "primary.200",
+    "primary.300",
+    "bg.600",
   ]);
 
   const rating = dirRate.admin_rating === null ? 0 : dirRate.admin_rating;
@@ -42,35 +43,38 @@ const ExchangerCard = ({
       pos="relative"
       key={dirRate.exchangerId}
       w="100%"
-      p={4}
+      px="4"
       pb="6"
+      pt="2"
       overflow="hidden"
     >
       <VStack align="start" w="100%">
-        <Heading
-          fontSize={{ base: "xl", md: "2xl" }}
+        <Text
+          fontSize="xl"
           textAlign="left"
           w="full"
           mb="-3"
           whiteSpace="nowrap"
         >
           {capsFirst(dirRate.name)}
-        </Heading>
-        <HStack w="100%">
+        </Text>
+        <Grid w="fit-content" gridGap="1" templateColumns="1fr 50px">
           <StarRatings
-            rating={0}
-            starRatedColor={orange300}
+            rating={4.6}
+            starRatedColor={primary200}
             changeRating={() => {}}
-            starHoverColor={orange400}
-            starEmptyColor={bg500}
+            starHoverColor={primary300}
+            starEmptyColor={bg600}
             // changeRating={this.changeRating}
             numberOfStars={5}
-            starDimension="14px"
+            starDimension="16px"
             starSpacing="2px"
             name="rating"
           />
-          <Text fontSize="sm">4.5</Text>
-        </HStack>
+          <Text flexWrap="nowrap" fontSize="sm" mt="1" color="bg.400">
+            4.6/5
+          </Text>
+        </Grid>
       </VStack>
       <HStack mt="10" justifyContent="end">
         <Wrap>

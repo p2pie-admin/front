@@ -18,7 +18,7 @@ const Side = () => {
         gridGap="4"
         py="0"
         px="4"
-        bgColor={useColorModeValue("pink.50", "bg.900")}
+        bgColor={useColorModeValue("orange.50", "bg.900")}
         w="100%"
         h="20"
         borderRadius="2xl"

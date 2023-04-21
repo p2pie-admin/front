@@ -81,7 +81,7 @@ const Carousel = () => {
   // вынесен наружу, иначе все внутри ErrorWrapper начинает высчитываться и выдает ошибку
   return (
     <Collapse in={dirRates && !!dirRates.length}>
-      <Box minH="240">
+      <Box>
         {dirRates && (
           <Swiper gap={12}>
             {dirRates.map((dirRate, index) => {

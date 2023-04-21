@@ -27,36 +27,27 @@ const BottomPanel = ({ length }: { length: number }) => {
     handleSwiperIdVisible(swiperIdVisible + 1);
   };
 
-  const [pink300, pink400, orange300, orange400] = useToken("colors", [
-    "pink.400",
-    "pink.400",
-    "orange.300",
-    "orange.400",
-  ]);
+  // const [orange300, orange400, pink300, pink400] = useToken("colors", [
+  //   "orange.300",
+  //   "orange.400",
+  //   "pink.300",
+  //   "pink.400",
+  // ]);
 
   return (
     <Grid
       gridTemplateColumns="40px 1fr 40px"
       mb="4"
+      mx="2"
       gridGap="4"
       justifyContent="space-between"
       h="10"
     >
-      <Button
-        p="1"
-        variant="primary"
-        bgGradient={`linear(to-tl, ${pink300}, ${pink400})`}
-        onClick={handleDecrementClick}
-      >
+      <Button p="1" variant="primary" onClick={handleDecrementClick}>
         <IoIosArrowBack size="1.2rem" />
       </Button>
       <Button variant="primary">EXCHANGE</Button>
-      <Button
-        p="1"
-        variant="primary"
-        bgGradient={`linear(to-br, ${orange300}, ${orange400})`}
-        onClick={handleIncrementClick}
-      >
+      <Button p="1" variant="primary" onClick={handleIncrementClick}>
         <IoIosArrowForward size="1.2rem" />
       </Button>
     </Grid>

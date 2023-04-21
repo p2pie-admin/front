@@ -1,5 +1,8 @@
 import {
+  Box,
   Button,
+  Grid,
+  HStack,
   Icon,
   Image,
   ScaleFade,
@@ -15,7 +18,7 @@ import { IDirGroup } from "../../../types/dir";
 import DirSideContext from "./DirSideContext";
 import { getPmsFromPmGroup } from "../side/pmModalButton/section/PmGroup/helper";
 import { useSelector } from "react-redux";
-import { HiArrowNarrowRight } from "react-icons/hi";
+import { FaExchangeAlt } from "react-icons/fa";
 
 const Dir = ({
   index,
@@ -60,10 +63,11 @@ const Dir = ({
       position="relative"
       transition="all .4s ease"
       variant="black"
+      color="bg.400"
       filter={
         activeDir && activeDir !== dirId
           ? "opacity(0.1) grayscale(0.7)"
-          : "brightness(1) grayscale(1) sepia(0.3)"
+          : "brightness(1)"
       }
       _hover={{
         filter:
@@ -90,7 +94,7 @@ const Dir = ({
         </DirSideContext.Provider>
       }
     >
-      <Icon color="bg.500" as={HiArrowNarrowRight} w="5" h="5" />
+      <FaExchangeAlt />
     </Button>
   );
 };

@@ -17,17 +17,16 @@ export default function PmName({
     <>
       {currencyVisible ? (
         <VStack spacing={0} align="start">
-          <Text fontSize="sm" variant="primary" color="bg.100">
+          <Text fontSize="sm" color="bg.100">
             {code?.toUpperCase()}
           </Text>
-          <Text fontSize="xs" variant="shaded" color="bg.200">
+          <Text fontSize="xs" color="bg.300">
             {!nameSameAsCurrency && capitalize(name)}
           </Text>
         </VStack>
       ) : (
         <Text
           fontSize={name.length > 8 ? "sm" : "md"}
-          variant="primary"
           color="bg.100" // цвет нужен
         >
           {capitalize(name)}

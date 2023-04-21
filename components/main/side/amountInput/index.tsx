@@ -66,7 +66,7 @@ const AmountInput = () => {
           placeholder="0.00"
           fontFamily="Inconsolata, sans-serif"
           fontSize="3xl"
-          color={outRange ? "bg.200" : "orange.100"}
+          color={outRange ? "bg.400" : "bg.100"}
           onClick={(e: any) => e.target.select()}
           // onClick={handleClick}
           // color={

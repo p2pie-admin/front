@@ -1,6 +1,6 @@
 import Avatar from "../../../../../shared/Avatar";
 import { Button, useColorModeValue } from "@chakra-ui/react";
-import FancyIcon from "../../../../../shared/FancyIcon";
+import CircularIcon from "../../../../../shared/CircularIcon";
 
 export default function PmButton({
   children,
@@ -23,7 +23,7 @@ export default function PmButton({
       filter={shaded ? "opacity(0.3) grayscale(0.8)" : "none"}
       justifyContent="start"
       onClick={handleToggle} // works as choosePm or as open subitems
-      leftIcon={<FancyIcon icon={icon} color={color} />}
+      leftIcon={<CircularIcon icon={icon} color={color} />}
       color="transparent"
       transition="all 0.3s ease"
       _hover={{

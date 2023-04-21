@@ -17,7 +17,7 @@ import { useAppSelector } from "../../redux/hooks";
 import Popular from "./popular";
 import { MdPhone } from "react-icons/md";
 import LimitsRange from "./limits";
-import FancyIcon from "../shared/FancyIcon";
+import CircularIcon from "../shared/CircularIcon";
 import MenuHeader from "./MenuHeader";
 import MenuFooter from "./MenuFooter";
 import { tagIcons } from "./carousel/card/icons";

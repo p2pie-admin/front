@@ -110,7 +110,7 @@ const LimitsRange = () => {
   const stickyAmount = stick(amount);
 
   const color =
-    stickyAmount >= MIN && stickyAmount <= MAX ? "orange.200" : "bg.500";
+    stickyAmount >= MIN && stickyAmount <= MAX ? "primary.200" : "bg.500";
   if (!MIN || !MAX) return <></>;
   return (
     <Box3D bgColor="bg.900" h="14" mb="4" cursor="pointer">
@@ -155,7 +155,7 @@ const LimitsRange = () => {
         <Box w="90%">
           <CustomRangeSlider resMin={percMin} resMax={percMax}>
             <RangeSliderTrack>
-              <RangeSliderFilledTrack bgColor="orange.200" />
+              <RangeSliderFilledTrack bgColor="primary.200" />
             </RangeSliderTrack>
             <RangeSliderThumb boxSize={1} index={0} zIndex="2">
               <Limit

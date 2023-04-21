@@ -76,7 +76,7 @@ const ReverseButton = () => {
             p="0"
             variant="black"
             onClick={handleReverseDir}
-            color={bothPmsSelected ? "bg.300" : "bg.300"}
+            color={bothPmsSelected ? "bg.200" : "bg.500"}
             zIndex="3"
             isLoading={pendingDirRates}
             aria-label="Reverse direction"

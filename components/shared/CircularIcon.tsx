@@ -1,7 +1,7 @@
 import { Image, Box, Center, useToken } from "@chakra-ui/react";
 import { IImage } from "../../types/selector";
 
-const FancyIcon = ({
+const CircularIcon = ({
   icon,
   color,
   small,
@@ -114,4 +114,4 @@ const FancyIcon = ({
   );
 };
 
-export default FancyIcon;
+export default CircularIcon;

@@ -2,14 +2,13 @@ import { Text, Tooltip, HStack, Image } from "@chakra-ui/react";
 
 import { IoInformation } from "react-icons/io5";
 import { IParam } from "../../../../types/rates";
-import FancyIcon from "../../../shared/FancyIcon";
+import CircularIcon from "../../../shared/CircularIcon";
 import capsFirst from "../utils/capsFirst";
 
 const ExchTag = ({ parameter }: { parameter: IParam }) => {
   // const IconComponent = parameterIcons?.[parameter.code] || IoInformation;
 
   const {
-    color,
     code,
     en_name,
     ru_name,
@@ -35,11 +34,11 @@ const ExchTag = ({ parameter }: { parameter: IParam }) => {
       label={parameter?.en_description || ""}
       bg="bg.800"
       borderRadius="2xl"
-      color="orange.100"
+      color="pink.100"
       openDelay={500}
     >
       <HStack
-        filter={`invert(60%) sepia(97%) saturate(200%) hue-rotate(${rotationColor}deg)`}
+        filter={`invert(60%) sepia(97%) saturate(150%) hue-rotate(${rotationColor}deg)`}
         zIndex="4"
         position="relative"
         px={parameter?.en_name ? "2" : "1"}
@@ -47,9 +46,9 @@ const ExchTag = ({ parameter }: { parameter: IParam }) => {
         justifyContent="center"
         cursor="initial"
         borderRadius="lg"
-        color={`white`}
         border="1px solid"
         borderColor={`white`}
+        color={`white`}
         _before={{
           content: "''",
           bgColor: `white`,

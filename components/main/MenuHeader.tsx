@@ -13,9 +13,14 @@ const MenuHeader = () => {
       <Button variant="dark" p="1">
         <FiSettings />
       </Button>
-      <Text fontSize="2xl" fontWeight="bold" color="bg.100" textAlign="center">
-        Exchangers Search
-      </Text>
+      <HStack justifyContent="center" fontWeight="bold" alignItems="center">
+        <Text whiteSpace="nowrap" color={"bg.100"} fontSize="xl">
+          Search Exchangers
+        </Text>
+        <Text mx="1" color="bg.400" fontSize="md">
+          [456]
+        </Text>
+      </HStack>
       <Button variant="dark" p="1">
         <FiShare />
       </Button>

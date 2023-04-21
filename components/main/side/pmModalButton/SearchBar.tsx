@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { setSearchBarInputValue } from "../../../../redux/mainReducer";
 import { ISearchBar } from "../../../../types/selector";
 import { useTranslation } from "next-i18next";
+import { Box3D } from "../../../../styles/theme/wrappers";
 
 const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {
   const [inputFocused, setInputFocused] = useState(false);
@@ -42,14 +43,14 @@ const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {
       : search_bar[`${i18n.language as "en" | "ru"}_placeholder`];
 
   return (
-    <Box w="100%" mb="2" boxShadow="lg" bgColor="bg.600" borderRadius="2xl">
+    <Box3D w="100%" mb="2" boxShadow="lg" borderRadius="2xl">
       <InputGroup
         size="md"
         transition="width .5s ease-in-out;"
         borderRadius="2xl"
       >
         <Input
-          _focus={{ borderColor: useColorModeValue("bg.100", "orange.400") }}
+          _focus={{ borderColor: useColorModeValue("bg.100", "pink.400") }}
           borderRadius="2xl"
           border="none"
           boxShadow="none !important"
@@ -62,14 +63,14 @@ const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {
           _hover={{ borderColor: useColorModeValue("bg.100", "bg.300") }}
         />
         <InputRightAddon
-          bgColor="bg.500"
+          bgColor="bg.600"
           borderRadius="2xl"
           onClick={() => dispatch(setSearchBarInputValue(""))}
         >
           {renderClearButton(!searchBarInputValue.length)}
         </InputRightAddon>
       </InputGroup>
-    </Box>
+    </Box3D>
   );
 };
 

@@ -30,7 +30,7 @@
 
 // export const uniqueTop = {
 //   code: "unique",
-//   color: "orange",
+//   color: "pink",
 //   en_title: "Unique",
 //   ru_title: "Уникальный",
 //   en_description: "The unique exchanger for current direction",

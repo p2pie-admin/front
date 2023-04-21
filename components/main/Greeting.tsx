@@ -18,7 +18,7 @@ const Greeting = () => {
   );
 
   const collapsed = useBreakpointValue({ base: !topsExist, md: true });
-  const [bg100, bg50] = useToken("colors", ["bg.200", "pink.200"]);
+  const [bg100, bg50] = useToken("colors", ["bg.200", "orange.200"]);
 
   return (
     <SlideFade in>

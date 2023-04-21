@@ -9,7 +9,7 @@ export const popularQuery = gql`
           groups {
             ... on ComponentPopularPopularGroup {
               id
-              color
+
               icon {
                 data {
                   attributes {

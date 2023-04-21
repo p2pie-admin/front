@@ -173,12 +173,16 @@ function Petal({
         const shaded =
           activePetal?.side === side && activePetal?.pm.code !== pm.code;
         return (
-          <Circle
+          <Box
+            as={motion.div}
             onClick={choosePm}
             ref={triggerRef}
             initial={{ x: 0, opacity: 0 }}
             animate={{ x: 1, opacity: 1 }}
             exit={{ x: 0, opacity: 0 }}
+            position="absolute"
+            width={`${ITEM_SIZE}px`}
+            height={`${ITEM_SIZE}px`}
             transformTemplate={({ x }) => {
               const value =
                 typeof x === "number"
@@ -188,13 +192,14 @@ function Petal({
                   : parseFloat(x.replace("px", ""));
               return getTransform(value, RADIUS, index, totalItems, side);
             }}
-            transition={{
-              delay: index * 0.025,
-              type: "spring",
-              stiffness: 600,
-              damping: 50,
-              mass: 5,
-            }}
+
+            // transition={{
+            //   delay: index * 0.025,
+            //   type: "spring",
+            //   stiffness: 600,
+            //   damping: 50,
+            //   mass: 5,
+            // }}
           >
             <CircularIcon icon={pm.icon} color={pm.color} />
             <Flex
@@ -213,7 +218,7 @@ function Petal({
                 </Text>
               </Box>
             </Flex>
-          </Circle>
+          </Box>
         );
       }}
     </ToggleLayer>

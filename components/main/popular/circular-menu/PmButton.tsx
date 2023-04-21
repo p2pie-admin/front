@@ -4,7 +4,8 @@ import { IDirGroup } from "../../../../types/dir";
 import { PRIMARY, PRIMARY_2, BUTTON_SIZE } from "./constants";
 import Icon from "../../../shared/Avatar";
 import { ScaleFade } from "@chakra-ui/react";
-import FancyIcon from "../../../shared/FancyIcon";
+import CircularIcon from "../../../shared/CircularIcon";
+import RegularIcon from "../../../shared/RegularIcon";
 
 const buttonHover = css`
   &:hover {
@@ -33,7 +34,7 @@ const PmButton = React.forwardRef(function Button(
 ) {
   return (
     <ButtonBase ref={ref}>
-      <FancyIcon icon={group.icon} color={group.color} />
+      <RegularIcon url={group?.icon?.url} />
     </ButtonBase>
   );
 });
