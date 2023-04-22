@@ -6,10 +6,12 @@ const SRC =
     ? process.env.NEXT_PUBLIC_STRAPI_PROD_BASE_URL
     : process.env.NEXT_PUBLIC_STRAPI_DEV_BASE_URL;
 
-const CustomImage = ({ url }: { url: string }) => {
+const CustomImage = ({ url, index }: { url: string; index: number }) => {
   return (
     <Center
-      filter={`invert(60%) sepia(97%) saturate(150%) hue-rotate(${99}deg)`}
+      filter={`invert(60%) sepia(97%) saturate(150%) hue-rotate(${
+        index * 50
+      }deg)`}
       zIndex="4"
       position="relative"
       justifyContent="center"

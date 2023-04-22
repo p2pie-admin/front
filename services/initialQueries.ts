@@ -9,9 +9,9 @@ export const popularQuery = gql`
           groups {
             ... on ComponentPopularPopularGroup {
               id
-
               icon {
                 data {
+                  id
                   attributes {
                     url
                     alternativeText
@@ -62,6 +62,7 @@ export const popularQuery = gql`
                           }
                           icon {
                             data {
+                              id
                               attributes {
                                 url
                                 alternativeText

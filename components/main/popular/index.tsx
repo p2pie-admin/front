@@ -30,12 +30,8 @@ function sliceIntoChunks(arr: any[], chunkSize: number) {
 }
 
 const Popular = () => {
-  const activeDir = useAppSelector((state) => state.main.activeDir);
   const populars = useAppSelector((state) => state.main.populars);
   const { t } = useTranslation();
-  const [bg700] = useToken("colors", ["bg.700"]);
-  const chunkLength = useBreakpointValue({ base: 3, sm: 2 }) || 2;
-  const chunks = sliceIntoChunks(populars, chunkLength);
 
   return (
     <SlideFade in>
@@ -53,36 +49,27 @@ const Popular = () => {
             h="4"
             w="100%"
             transition="all .4s ease"
-            color={
-              activeDir ? "transparent" : useColorModeValue("bg.400", "bg.400")
-            }
+            // color={
+            //   activeDir ? "transparent" : useColorModeValue("bg.400", "bg.400")
+            // }
           >
             {t("home:popular")}
           </Text>
 
           <HStack p="0">
-            {chunks.map((dirs, index) => (
-              <HStack w="100%" key={"chunk_" + index}>
-                <VStack w="100%">
-                  {dirs.map((dir, index) => (
-                    <Box key={`dir_${dir.id}`}>
-                      {dir.groups.length > 1 ? (
-                        <Dir
-                          index={index}
-                          dirId={dir.id}
-                          giveGroup={dir.groups[0]}
-                          getGroup={dir.groups[1]}
-                        />
-                      ) : (
-                        <></>
-                      )}
-                    </Box>
-                  ))}
-                </VStack>
-                {index !== chunks.length - 1 && (
-                  <Box h="16" w="1px" bgColor="bg.800" />
+            {populars.map((dir, index) => (
+              <Box key={`dir_${dir.id}`}>
+                {dir.groups.length > 1 ? (
+                  <Dir
+                    index={index}
+                    dirId={dir.id}
+                    giveGroup={dir.groups[0]}
+                    getGroup={dir.groups[1]}
+                  />
+                ) : (
+                  <></>
                 )}
-              </HStack>
+              </Box>
             ))}
           </HStack>
         </Grid>

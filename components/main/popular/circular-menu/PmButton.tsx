@@ -1,41 +1,20 @@
 import * as React from "react";
-import styled, { css } from "styled-components";
 import { IDirGroup } from "../../../../types/dir";
 import { PRIMARY, PRIMARY_2, BUTTON_SIZE } from "./constants";
 import Icon from "../../../shared/Avatar";
 import { ScaleFade } from "@chakra-ui/react";
 import CircularIcon from "../../../shared/CircularIcon";
 import RegularIcon from "../../../shared/RegularIcon";
+import { Box } from "@chakra-ui/react";
 
-const buttonHover = css`
-  &:hover {
-    transform: scale(1.05);
-  }
-`;
-
-const ButtonBase = styled.div`
-  width: ${BUTTON_SIZE}px;
-  height: ${BUTTON_SIZE}px;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  outline: 0;
-  cursor: pointer;
-  transition: 0.2s ease-in-out;
-  transform: scale(1);
-`;
-
-const PmButton = React.forwardRef(function Button(
+const PmButton = React.forwardRef(function MyButton(
   { group }: { group: IDirGroup },
   ref
 ) {
   return (
-    <ButtonBase ref={ref}>
-      <RegularIcon url={group?.icon?.url} />
-    </ButtonBase>
+    <Box ref={ref}>
+      <RegularIcon url={group?.icon?.url} index={+group.icon.id} />
+    </Box>
   );
 });
 

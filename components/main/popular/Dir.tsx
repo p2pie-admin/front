@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Center,
   Grid,
   HStack,
   Icon,
@@ -19,6 +20,8 @@ import DirSideContext from "./DirSideContext";
 import { getPmsFromPmGroup } from "../side/pmModalButton/section/PmGroup/helper";
 import { useSelector } from "react-redux";
 import { FaExchangeAlt } from "react-icons/fa";
+import { Box3D } from "../../../styles/theme/wrappers";
+import { BsArrow90DegRight, BsArrow90DegUp } from "react-icons/bs";
 
 const Dir = ({
   index,
@@ -57,45 +60,65 @@ const Dir = ({
   });
 
   return (
-    <Button
+    <Box3D
       ref={ref}
       key={dirId}
-      position="relative"
+      bgColor="bg.800"
+      // position="relative"
       transition="all .4s ease"
-      variant="black"
-      color="bg.400"
-      filter={
-        activeDir && activeDir !== dirId
-          ? "opacity(0.1) grayscale(0.7)"
-          : "brightness(1)"
-      }
-      _hover={{
-        filter:
-          activeDir && activeDir !== dirId
-            ? "opacity(0.1) grayscale(0.7)"
-            : "brightness(1.2) grayscale(0)",
-      }}
+      // variant="black"
+      // color="bg.300"
+      // filter={
+      //   activeDir && activeDir !== dirId
+      //     ? "opacity(0.1) grayscale(0.7)"
+      //     : "brightness(1)"
+      // }
+      // _hover={{
+      //   filter:
+      //     activeDir && activeDir !== dirId
+      //       ? "opacity(0.1) grayscale(0.7)"
+      //       : "brightness(1.2) grayscale(0)",
+      // }}
       //filter={activeDir ? "brightness(0.4) grayscale(0.7)" : "unset"}
-      h="100%"
-      p="0"
+
       onClick={handleDirClick}
-      leftIcon={
-        <DirSideContext.Provider value={"give"}>
-          <ScaleFade initialScale={0.7} in delay={0.2 + index * 0.05}>
-            <CircularMenu dirId={dirId} group={giveGroup} />
-          </ScaleFade>
-        </DirSideContext.Provider>
-      }
-      rightIcon={
-        <DirSideContext.Provider value={"get"}>
-          <ScaleFade initialScale={0.7} in delay={0.25 + index * 0.05}>
-            <CircularMenu dirId={dirId} group={getGroup} />
-          </ScaleFade>
-        </DirSideContext.Provider>
-      }
+      // leftIcon={
+      //   <DirSideContext.Provider value={"give"}>
+      //     <ScaleFade initialScale={0.7} in delay={0.2 + index * 0.05}>
+      //       <CircularMenu dirId={dirId} group={giveGroup} />
+      //     </ScaleFade>
+      //   </DirSideContext.Provider>
+      // }
+      // rightIcon={
+      //   <DirSideContext.Provider value={"get"}>
+      //     <ScaleFade initialScale={0.7} in delay={0.25 + index * 0.05}>
+      //       <CircularMenu dirId={dirId} group={getGroup} />
+      //     </ScaleFade>
+      //   </DirSideContext.Provider>
+      // }
     >
-      <FaExchangeAlt />
-    </Button>
+      <Grid
+        gridTemplateColumns="1fr 1fr"
+        gridTemplateRows="1fr 1fr"
+        color="bg.400"
+      >
+        <DirSideContext.Provider value={"get"}>
+          <CircularMenu dirId={dirId} group={giveGroup} />
+        </DirSideContext.Provider>
+
+        <Center transform="rotate(90deg)" mt="3" mr="3">
+          <BsArrow90DegRight />
+        </Center>
+
+        <Center mb="3" ml="3">
+          <BsArrow90DegUp />
+        </Center>
+
+        <DirSideContext.Provider value={"give"}>
+          <CircularMenu dirId={dirId} group={getGroup} />
+        </DirSideContext.Provider>
+      </Grid>
+    </Box3D>
   );
 };
 
