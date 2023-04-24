@@ -11,7 +11,7 @@ import {
   useToken,
 } from "@chakra-ui/react";
 import { ArrowRight } from "@styled-icons/heroicons-outline/ArrowRight";
-import CircularMenu from "./circular-menu";
+import DirSide from "./dir-side";
 import { useRef, useState } from "react";
 import { setActiveDir, setActivePetal } from "../../../redux/mainReducer";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
@@ -22,6 +22,8 @@ import { useSelector } from "react-redux";
 import { FaExchangeAlt } from "react-icons/fa";
 import { Box3D } from "../../../styles/theme/wrappers";
 import { BsArrow90DegRight, BsArrow90DegUp } from "react-icons/bs";
+import CircularIcon from "../../shared/CircularIcon";
+import RegularIcon from "../../shared/RegularIcon";
 
 const Dir = ({
   index,
@@ -64,7 +66,7 @@ const Dir = ({
       ref={ref}
       key={dirId}
       bgColor="bg.800"
-      // position="relative"
+      position="relative"
       transition="all .4s ease"
       // variant="black"
       // color="bg.300"
@@ -102,9 +104,9 @@ const Dir = ({
         gridTemplateRows="1fr 1fr"
         color="bg.400"
       >
-        <DirSideContext.Provider value={"get"}>
-          <CircularMenu dirId={dirId} group={giveGroup} />
-        </DirSideContext.Provider>
+        <Box>
+          <RegularIcon url={giveGroup?.icon?.url} index={+giveGroup.icon.id} />
+        </Box>
 
         <Center transform="rotate(90deg)" mt="3" mr="3">
           <BsArrow90DegRight />
@@ -114,10 +116,13 @@ const Dir = ({
           <BsArrow90DegUp />
         </Center>
 
-        <DirSideContext.Provider value={"give"}>
-          <CircularMenu dirId={dirId} group={getGroup} />
-        </DirSideContext.Provider>
+        <Box>
+          <RegularIcon url={getGroup?.icon?.url} index={+getGroup.icon.id} />
+        </Box>
       </Grid>
+      <Box position="absolute" top="35%" left="50%">
+        <DirSide dirId={dirId} group={getGroup} />
+      </Box>
     </Box3D>
   );
 };

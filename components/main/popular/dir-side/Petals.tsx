@@ -46,9 +46,9 @@ function getTransform(
     0.438,
     0.444,
   ];
-  const r = totalItems < 2 ? 0 : radius + totalItems ** 1.6;
-  const x = k * r * Math.cos(Math.PI * (value - angleCorrections[totalItems]));
-  const y = k * r * Math.sin(Math.PI * (value - angleCorrections[totalItems]));
+  const r = totalItems < 2 ? 0 : radius + totalItems ** 2;
+  const x = k * r * Math.cos(2 * Math.PI * value);
+  const y = k * r * Math.sin(2 * Math.PI * value);
 
   const scale = progress / 2 + 0.5;
 
@@ -66,33 +66,6 @@ const TooltipBox = styled(motion.div)`
   padding: 4px 8px;
   line-height: 1.15;
   border-radius: 3px;
-`;
-
-const Circle = styled(motion.div)`
-  position: absolute;
-  width: ${ITEM_SIZE}px;
-  height: ${ITEM_SIZE}px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 2px 4px 28px 0px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
-  transition: box-shadow 0.15s ease-in-out, border 0.15s ease-in-out;
-  pointer-events: all;
-  will-change: transform;
-
-  & svg {
-    transition: 0.15s ease-in-out;
-  }
-
-  &:hover {
-    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.15);
-    color: ${PRIMARY};
-    & svg {
-      transform: scale(1.15);
-    }
-  }
 `;
 
 ////////////////////////////////
@@ -174,6 +147,7 @@ function Petal({
           activePetal?.side === side && activePetal?.pm.code !== pm.code;
         return (
           <Box
+            zIndex="4"
             as={motion.div}
             onClick={choosePm}
             ref={triggerRef}

@@ -11,8 +11,8 @@ const PmButton = React.forwardRef(function MyButton(
   ref
 ) {
   return (
-    <Box ref={ref}>
-      <CircularIcon icon={group.icon} color={group.color} />
+    <Box ref={ref} color="transparent">
+      .
     </Box>
   );
 });
