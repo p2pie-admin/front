@@ -9,13 +9,13 @@ const SRC =
 const CustomImage = ({ url, index }: { url: string; index: number }) => {
   return (
     <Center
-      filter={`invert(60%) sepia(97%) saturate(150%) hue-rotate(${
-        index * 55
-      }deg)`}
+      // filter={`invert(60%) sepia(97%) saturate(150%) hue-rotate(${
+      //   index * 55
+      // }deg)`}
       zIndex="4"
       position="relative"
       justifyContent="center"
-      color={`white`}
+      filter="sepia(95%) brightness(0.7)"
       _before={{
         content: "''",
         filter: "opacity(0.4) blur(8px)",

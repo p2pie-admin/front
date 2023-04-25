@@ -31,6 +31,7 @@ function sliceIntoChunks(arr: any[], chunkSize: number) {
 
 const Popular = () => {
   const populars = useAppSelector((state) => state.main.populars);
+  const activeDir = useAppSelector((state) => state.main.activeDir);
   const { t } = useTranslation();
 
   return (
@@ -49,16 +50,14 @@ const Popular = () => {
             h="4"
             w="100%"
             transition="all .4s ease"
-            // color={
-            //   activeDir ? "transparent" : useColorModeValue("bg.400", "bg.400")
-            // }
+            color={useColorModeValue("bg.400", "bg.400")}
           >
             {t("home:popular")}
           </Text>
 
           <HStack p="0">
             {populars.map((dir, index) => (
-              <Box key={`dir_${dir.id}`}>
+              <Box key={`dir_${dir.id}`} zIndex={dir.id === activeDir ? 2 : 1}>
                 {dir.groups.length > 1 ? (
                   <Dir
                     index={index}

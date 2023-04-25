@@ -10,13 +10,21 @@ import {
 } from "./constants";
 import { ToggleLayer, useHover } from "react-laag";
 import { motion, AnimatePresence } from "framer-motion";
-import React, { useContext, useState } from "react";
-import { Box, Button, Center, Flex, Tag, Text } from "@chakra-ui/react";
+import React, { useContext, useRef, useState } from "react";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  Tag,
+  Text,
+  useOutsideClick,
+} from "@chakra-ui/react";
 import Avatar from "../../../shared/Avatar";
 import DirSideContext from "../DirSideContext";
 import { IDirGroup, IPmPointer } from "../../../../types/dir";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { setActivePetal } from "../../../../redux/mainReducer";
+import { setActiveDir, setActivePetal } from "../../../../redux/mainReducer";
 import { IPm, ISide } from "../../../../types/selector";
 import { getPmsFromPmGroup } from "../../side/pmModalButton/section/PmGroup/helper";
 import CircularIcon from "../../../shared/CircularIcon";
@@ -46,7 +54,7 @@ function getTransform(
     0.438,
     0.444,
   ];
-  const r = totalItems < 2 ? 0 : radius + totalItems ** 2;
+  const r = totalItems < 2 ? 0 : radius * 1.5;
   const x = k * r * Math.cos(2 * Math.PI * value);
   const y = k * r * Math.sin(2 * Math.PI * value);
 
@@ -98,7 +106,7 @@ function Petal({
 
   const choosePm = (event: React.FormEvent<EventTarget>) => {
     //const oppositePm = side === "give" ? getPm : givePm;
-    //event.stopPropagation(); // работает как закрытие circular menu , если выполняется
+    event.stopPropagation(); // работает как закрытие circular menu , если выполняется
     dispatch(setActivePetal({ pm, side }));
 
     // batch(() => {
@@ -143,8 +151,6 @@ function Petal({
       }}
     >
       {({ triggerRef }) => {
-        const shaded =
-          activePetal?.side === side && activePetal?.pm.code !== pm.code;
         return (
           <Box
             zIndex="4"
@@ -209,12 +215,12 @@ const Petals = React.forwardRef(function Menu(
 ) {
   return (
     <Center style={style} ref={ref} pointerEvents="none" borderRadius="50%">
-      {group.pms.map((pmPointer, index) => (
+      {[...group.pms, ...group.pms].map((pmPointer, index) => (
         <Petal
           key={index}
           pmPointer={pmPointer}
           index={index}
-          totalItems={group.pms.length}
+          totalItems={[...group.pms, ...group.pms].length}
         />
       ))}
     </Center>

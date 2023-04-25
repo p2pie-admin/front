@@ -128,18 +128,18 @@ export const ratesSlice = createSlice({
       state: MainState,
       action: PayloadAction<IActivePetal | undefined>
     ) => {
-      if (
-        state.activePetal?.side &&
-        action.payload?.side &&
-        state.activePetal.side !== action.payload.side
-      ) {
-        const side = state.activePetal.side;
-        state.givePm =
-          side === "give" ? state.activePetal.pm : action.payload?.pm;
-        state.getPm =
-          side === "get" ? state.activePetal.pm : action.payload?.pm;
-        state.activeDir = undefined;
-      }
+      // if (
+      //   state.activePetal?.side &&
+      //   action.payload?.side &&
+      //   state.activePetal.side !== action.payload.side
+      // ) {
+      //   const side = state.activePetal.side;
+      //   state.givePm =
+      //     side === "give" ? state.activePetal.pm : action.payload?.pm;
+      //   state.getPm =
+      //     side === "get" ? state.activePetal.pm : action.payload?.pm;
+      //   state.activeDir = undefined;
+      // }
       state.activePetal = action.payload;
     },
   },

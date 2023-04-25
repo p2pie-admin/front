@@ -6,9 +6,9 @@ import {
   HStack,
   Icon,
   Image,
-  ScaleFade,
+  Flex,
   useOutsideClick,
-  useToken,
+  Text,
 } from "@chakra-ui/react";
 import { ArrowRight } from "@styled-icons/heroicons-outline/ArrowRight";
 import DirSide from "./dir-side";
@@ -24,6 +24,7 @@ import { Box3D } from "../../../styles/theme/wrappers";
 import { BsArrow90DegRight, BsArrow90DegUp } from "react-icons/bs";
 import CircularIcon from "../../shared/CircularIcon";
 import RegularIcon from "../../shared/RegularIcon";
+import InsideDirArea from "./InsideDirArea";
 
 const Dir = ({
   index,
@@ -36,10 +37,12 @@ const Dir = ({
   getGroup: IDirGroup;
   dirId: string;
 }) => {
-  const ref = useRef();
-
   const dispatch = useAppDispatch();
   const activeDir = useAppSelector((state) => state.main.activeDir);
+  const [giveSelected, getSelected] = useAppSelector((state) => [
+    !!state.main.givePm?.code,
+    !!state.main.getPm?.code,
+  ]);
 
   const clearSelectedPms = () => {
     dispatch(setActivePetal());
@@ -50,37 +53,31 @@ const Dir = ({
     //activeDir !== dirId && clearSelectedPms();
   };
 
-  useOutsideClick({
-    ref: ref,
-    handler: () => {
-      if (dirId === activeDir) {
-        dispatch(setActiveDir(undefined));
-        console.log("outside");
-        //clearSelectedPms();
-      }
-    },
-  });
+  const activeSide =
+    (!getSelected && !giveSelected) || getSelected ? "give" : "get";
 
   return (
     <Box3D
-      ref={ref}
       key={dirId}
       bgColor="bg.800"
       position="relative"
       transition="all .4s ease"
+      w="70px"
+      h="70px"
+      p="1"
       // variant="black"
       // color="bg.300"
-      // filter={
-      //   activeDir && activeDir !== dirId
-      //     ? "opacity(0.1) grayscale(0.7)"
-      //     : "brightness(1)"
-      // }
-      // _hover={{
-      //   filter:
-      //     activeDir && activeDir !== dirId
-      //       ? "opacity(0.1) grayscale(0.7)"
-      //       : "brightness(1.2) grayscale(0)",
-      // }}
+      filter={
+        activeDir && activeDir !== dirId
+          ? "opacity(0.1) grayscale(0.7)"
+          : "brightness(1)"
+      }
+      _hover={{
+        filter:
+          activeDir && activeDir !== dirId
+            ? "opacity(0.1) grayscale(0.7)"
+            : "brightness(1.2) grayscale(0)",
+      }}
       //filter={activeDir ? "brightness(0.4) grayscale(0.7)" : "unset"}
 
       onClick={handleDirClick}
@@ -99,30 +96,44 @@ const Dir = ({
       //   </DirSideContext.Provider>
       // }
     >
-      <Grid
-        gridTemplateColumns="1fr 1fr"
-        gridTemplateRows="1fr 1fr"
-        color="bg.400"
-      >
-        <Box>
-          <RegularIcon url={giveGroup?.icon?.url} index={+giveGroup.icon.id} />
-        </Box>
-
-        <Center transform="rotate(90deg)" mt="3" mr="3">
-          <BsArrow90DegRight />
+      {activeDir && activeDir === dirId ? (
+        <Center h="100%">
+          <Text fontSize="sm" color="bg.200" textAlign="center">
+            YOU {activeSide === "give" ? "SELL" : "BUY"}
+          </Text>
         </Center>
+      ) : (
+        <Grid
+          gridTemplateColumns="1fr 1fr"
+          gridTemplateRows="1fr 1fr"
+          color="bg.400"
+        >
+          <Box>
+            <RegularIcon
+              url={giveGroup?.icon?.url}
+              index={+giveGroup.icon.id}
+            />
+          </Box>
 
-        <Center mb="3" ml="3">
-          <BsArrow90DegUp />
-        </Center>
+          <Center transform="rotate(90deg)" mt="3" mr="3">
+            <BsArrow90DegRight />
+          </Center>
 
-        <Box>
-          <RegularIcon url={getGroup?.icon?.url} index={+getGroup.icon.id} />
-        </Box>
-      </Grid>
+          <Center mb="3" ml="3">
+            <BsArrow90DegUp />
+          </Center>
+
+          <Box>
+            <RegularIcon url={getGroup?.icon?.url} index={+getGroup.icon.id} />
+          </Box>
+        </Grid>
+      )}
+
       <Box position="absolute" top="35%" left="50%">
         <DirSide dirId={dirId} group={getGroup} />
       </Box>
+
+      <InsideDirArea active={activeDir === dirId} />
     </Box3D>
   );
 };
