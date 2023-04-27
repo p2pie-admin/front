@@ -65,16 +65,7 @@ const SelectorButton = () => {
           PmCurrencyName ? (
             <CircularIcon icon={PmIcon} color={PmColor || "gray"} />
           ) : (
-            <Center
-              p="1"
-              ml="0.5"
-              borderRadius="50%"
-              border="2px dashed"
-              borderColor="bg.600"
-              color="bg.200"
-            >
-              <IoAddSharp size="1.5rem" />
-            </Center>
+            <></>
           )
         }
       >

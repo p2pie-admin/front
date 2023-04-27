@@ -19,10 +19,11 @@ import { MdPhone } from "react-icons/md";
 import LimitsRange from "./limits";
 import CircularIcon from "../shared/CircularIcon";
 import MenuHeader from "./MenuHeader";
-import MenuFooter from "./MenuFooter";
+
 import { tagIcons } from "./carousel/card/icons";
 
 import { noiseURL } from "../../styles/theme/noise";
+import MenuFooter from "./menu-footer";
 
 const MainPageContent = () => {
   return (
@@ -48,7 +49,9 @@ const MainPageContent = () => {
       </Box>
       <LimitsRange />
       <Carousel />
-      <Popular />
+
+      <MenuFooter />
+      {/* <Popular /> */}
       {/* {Object.entries(tagIcons).map(([name, Icon]) => (
         <HStack w="100%">
           <Box>

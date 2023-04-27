@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { useAppDispatch } from "../../../redux/hooks";
 import { setActiveDir } from "../../../redux/mainReducer";
 
-const InsideDirAre = ({ active }: { active: boolean }) => {
+const InsideDirArea = ({ active }: { active: boolean }) => {
   const dispatch = useAppDispatch();
   const ref = useRef();
   useOutsideClick({
@@ -25,4 +25,4 @@ const InsideDirAre = ({ active }: { active: boolean }) => {
   );
 };
 
-export default InsideDirAre;
+export default InsideDirArea;
