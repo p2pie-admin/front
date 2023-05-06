@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { useContext } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import SideContext from "../../SideContext";
+import SideContext from "../../../shared/SideContext";
 import { BiChevronDown } from "react-icons/bi";
 import PmAvatar from "../../../shared/Avatar";
 import { capitalize } from "./section/PmGroup/helper";

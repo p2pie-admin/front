@@ -7,6 +7,7 @@ import { popularQuery } from "../services/initialQueries";
 import initFetcher from "../services/graphql";
 import { IDir } from "../types/dir";
 import { MainState } from "./mainReducer";
+import { IPopular } from "../types/popular";
 
 type ISide = "give" | "get";
 const env = process.env.NODE_ENV;
@@ -82,7 +83,7 @@ export const fetchPopular = createAsyncThunk(
   async () => {
     const fetcher = initFetcher();
     const response = await fetcher(popularQuery);
-    return response?.popularDirs as IDir[];
+    return response?.populars as IPopular[];
   }
 );
 

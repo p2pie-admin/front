@@ -7,7 +7,7 @@ import {
 
 import { useAppSelector } from "../../../../redux/hooks";
 import { ILimit } from "../../../../types/rates";
-import SideContext from "../../SideContext";
+import SideContext from "../../../shared/SideContext";
 
 const symbols = {
   usd: "$",

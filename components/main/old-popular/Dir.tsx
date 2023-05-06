@@ -11,12 +11,12 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { ArrowRight } from "@styled-icons/heroicons-outline/ArrowRight";
-import DirSide from "./dir-side";
+import DirSide from "../menu-footer/popular/popular-side";
 import { useRef, useState } from "react";
 import { setActiveDir, setActivePetal } from "../../../redux/mainReducer";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { IDirGroup } from "../../../types/dir";
-import DirSideContext from "./DirSideContext";
+
 import { getPmsFromPmGroup } from "../side/pmModalButton/section/PmGroup/helper";
 import { useSelector } from "react-redux";
 import { FaExchangeAlt } from "react-icons/fa";

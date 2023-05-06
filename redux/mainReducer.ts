@@ -3,7 +3,6 @@ import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 
 import { AmountOutputs, AmountInput } from "../types/amount";
 
-import { FeesCalculator } from "./amountsHelper";
 import { RootState } from "./store";
 import {
   fetchDirRates,
@@ -16,6 +15,8 @@ import { IPm } from "../types/selector";
 import { IActivePetal, IDir } from "../types/dir";
 import { initialAmountOutputs, getAmountOutputs } from "./helper";
 import Side from "../components/main/side";
+import { IPopular } from "../types/popular";
+import { getPmByCode } from "../components/main/side/pmModalButton/section/PmGroup/helper";
 
 type ISide = "give" | "get";
 
@@ -29,8 +30,9 @@ export interface MainState {
   amountInput?: AmountInput;
   amountOutputs: AmountOutputs;
   swiperIdVisible: number;
-  activeDir?: string;
-  populars: IDir[];
+  activePopularSide?: string;
+  selectedPopular?: IPm;
+  popularPms: IPm[];
   isScrollLocked: boolean;
   activePetal?: IActivePetal;
 }
@@ -41,7 +43,7 @@ const initialState: MainState = {
   pendingDirRates: false,
   amountOutputs: initialAmountOutputs,
   swiperIdVisible: 0,
-  populars: [],
+  popularPms: [],
   isScrollLocked: false,
 };
 
@@ -106,11 +108,11 @@ export const ratesSlice = createSlice({
       state.amountInput = action.payload;
       state.amountOutputs = getAmountOutputs(state, action.payload);
     },
-    setActiveDir: (
+    setActivePopularSide: (
       state: MainState,
       action: PayloadAction<string | undefined>
     ) => {
-      state.activeDir = action.payload;
+      state.activePopularSide = action.payload;
       // state.activePetal = undefined;
     },
     reverseDir: (state: MainState) => {
@@ -146,7 +148,10 @@ export const ratesSlice = createSlice({
   //////////////////////////////////////////////////////////////////////////////////////////////////////
   extraReducers: (builder) => {
     builder.addCase(fetchPopular.fulfilled, (state, action) => {
-      state.populars = action.payload;
+      state.popularPms = action.payload.reduce((popularPms: IPm[], popular) => {
+        const pm = getPmByCode(popular);
+        return pm ? [...popularPms, pm] : popularPms;
+      }, []);
     });
 
     //

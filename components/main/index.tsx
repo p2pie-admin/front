@@ -11,16 +11,14 @@ import {
 import Greeting from "./Greeting";
 import Side from "./side";
 import ReverseButton from "./ReverseButton";
-import SideContext from "./SideContext";
+import SideContext from "../shared/SideContext";
 import Carousel from "../main/carousel";
 import { useAppSelector } from "../../redux/hooks";
-import Popular from "./popular";
+import Popular from "./old-popular";
 import { MdPhone } from "react-icons/md";
 import LimitsRange from "./limits";
 import CircularIcon from "../shared/CircularIcon";
 import MenuHeader from "./MenuHeader";
-
-import { tagIcons } from "./carousel/card/icons";
 
 import { noiseURL } from "../../styles/theme/noise";
 import MenuFooter from "./menu-footer";

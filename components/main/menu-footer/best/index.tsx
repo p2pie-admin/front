@@ -1,0 +1,108 @@
+import {
+  Box,
+  Center,
+  Grid,
+  HStack,
+  Text,
+  useToken,
+  VStack,
+} from "@chakra-ui/react";
+// import { curveNatural } from "@visx/curve";
+// import { LinearGradient } from "@visx/gradient";
+// import { scaleLinear } from "@visx/scale";
+// import { LinePath } from "@visx/shape";
+import { RiArrowDropUpFill, RiArrowDropDownFill } from "react-icons/ri";
+import Wrapper from "../Wrapper";
+
+export default function Plot() {
+  //   const height = 50;
+  //   const width = 180;
+  //   const padding = 8;
+
+  //   const [primary200, primary500, bg700, bg900] = useToken("colors", [
+  //     "primary.200",
+  //     "primary.500",
+  //     "bg.700",
+  //     "bg.900",
+  //   ]);
+
+  //   const xScale = scaleLinear({
+  //     domain: [1, 10],
+  //     range: [0 + padding, width - padding],
+  //   });
+
+  //   const yScale = scaleLinear({
+  //     domain: [0, 50],
+  //     range: [height - padding, padding * 2],
+  //   });
+
+  //   const data1 = [
+  //     [1, 0],
+  //     [2, 10],
+  //     [3, 30],
+  //     [4, 19],
+  //     [5, 16],
+  //     [6, 23],
+  //     [7, 48],
+  //     [8, 43],
+  //     [9, 38],
+  //     [10, 0],
+  //   ];
+
+  const rates = [
+    ["USDT", 3800],
+    ["ETH", 4268.2],
+    ["BTC", 540023.8],
+  ];
+  const [bg900] = useToken("colors", ["bg.900"]);
+
+  return (
+    <Wrapper title="Best Rates">
+      <VStack
+        alignItems="center"
+        position="relative"
+        w="70%"
+        cursor="pointer"
+        transition="all .3s ease"
+        bgColor="rgba(200,200,200,0.05)"
+        _hover={{
+          bgColor: "transparent",
+        }}
+        borderRadius="30%"
+        p="2"
+      >
+        {rates.map((ratePair, index) => (
+          <Grid
+            zIndex="3"
+            gridTemplateColumns="1fr 2fr 12px"
+            w={index % 2 ? "100%" : "95%"}
+            m="0 !important"
+            gridGap="0.5"
+            color={index % 2 ? "green.300" : "red.300"}
+            fontSize={index % 2 ? "sm" : "xs"}
+          >
+            <Text color="primary.200">{ratePair[0]}</Text>
+
+            <Text color="bg.200" justifySelf="end">
+              ${ratePair[1]}
+            </Text>
+            {index % 2 ? (
+              <RiArrowDropUpFill size="1rem" />
+            ) : (
+              <RiArrowDropDownFill size="1rem" />
+            )}
+          </Grid>
+        ))}
+        <Box
+          w="100%"
+          h="100%"
+          position="absolute"
+          zIndex="4"
+          bottom="0"
+          borderRadius="xl"
+          bgGradient={`linear(to-b, ${bg900} 10%, transparent  50%, ${bg900} 90%)`}
+        ></Box>
+      </VStack>
+    </Wrapper>
+  );
+}
