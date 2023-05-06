@@ -104,6 +104,7 @@ function Petal({
       //   cursor: "pointer",
       // }}
       onClick={choosePm}
+      pointerEvents="all"
       initial={{ x: 0, opacity: 0 }}
       animate={{ x: 1, opacity: 1 }}
       exit={{ x: 0, opacity: 0 }}

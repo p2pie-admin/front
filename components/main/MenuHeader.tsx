@@ -17,7 +17,7 @@ const MenuHeader = () => {
         <Text whiteSpace="nowrap" color={"bg.100"} fontSize="xl">
           Search Exchangers
         </Text>
-        <Text mx="1" color="bg.400" fontSize="md">
+        <Text mx="1" color="bg.400" fontSize="xl">
           [456]
         </Text>
       </HStack>
