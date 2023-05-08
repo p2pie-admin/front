@@ -28,15 +28,25 @@ const Dot = ({
       mx="0.5"
       mt="0 !important"
       borderRadius="sm"
-      bgColor={"bg.700"}
+      bgColor={useColorModeValue("bg.100", "bg.800")}
+      // outline="1px solid"
+      // outlineColor={
+      //   selected
+      //     ? useColorModeValue("secondary.600", "primary.200")
+      //     : useColorModeValue("bg.200", "bg.600")
+      // }
     >
       <Box
         position="absolute"
         bottom="0"
         w={2}
-        h={4 + h + "px"}
+        h={2 + h + "px"}
         borderRadius="sm"
-        bgColor={selected ? "primary.200" : "bg.500"}
+        bgColor={
+          selected
+            ? useColorModeValue("secondary.600", "primary.200")
+            : useColorModeValue("bg.300", "bg.400")
+        }
       />
     </Box>
   </VStack>
@@ -67,7 +77,11 @@ const SmoothProgress = () => {
       h="2"
       zIndex="3"
     >
-      <HStack bgColor="bg.1000" p="1" borderRadius="md">
+      <HStack
+        bgColor={useColorModeValue("bg.10", "bg.1000")}
+        p="1"
+        borderRadius="md"
+      >
         {ratesCourses.map((course, index) => (
           <Dot
             h={+((maxCourse - course) / step).toFixed(0)}

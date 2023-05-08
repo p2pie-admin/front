@@ -1,4 +1,4 @@
-import { Box, HStack, Text } from "@chakra-ui/react";
+import { Box, HStack, Text, useColorModeValue } from "@chakra-ui/react";
 import { kFormatter, roundAmount } from "../../../redux/amountsHelper";
 import { CgSync } from "react-icons/cg";
 
@@ -25,9 +25,10 @@ const Limit = ({
 
   return (
     <HStack
-      mb="-10"
+      pointerEvents="all"
+      mb="-12"
       onClick={() => changeSide()}
-      bgColor={"bg.800"}
+      bgColor={useColorModeValue("bg.100", "bg.800")}
       borderRadius="lg"
       ml={ml}
       fontSize="xs"
@@ -35,14 +36,20 @@ const Limit = ({
     >
       <Text
         whiteSpace="nowrap"
-        color={"bg.100"}
+        color={useColorModeValue("bg.800", "bg.100")}
       >{`${label.toUpperCase()}: ${kFormatter(
         roundAmount(value, true)
       )}`}</Text>
-      <Text mx="2px !important" color="primary.200">
+      <Text
+        mx="2px !important"
+        color={useColorModeValue("secondary.600", "primary.200")}
+      >
         {pmCurrencyName}
       </Text>
-      <Box mx="0 !important" color="primary.200">
+      <Box
+        mx="0 !important"
+        color={useColorModeValue("secondary.600", "primary.200")}
+      >
         <CgSync size="0.8rem" />
       </Box>
     </HStack>

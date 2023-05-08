@@ -9,7 +9,7 @@ const Logo = () => {
       <Image src={profilePic} width={30} height={30} />
 
       <Text
-        color={useColorModeValue("bg.700", "pink.100")}
+        color={useColorModeValue("bg.700", "primary.100")}
         fontSize="2xl"
         fontFamily="Sriracha, sans-serif"
         fontWeight="light"

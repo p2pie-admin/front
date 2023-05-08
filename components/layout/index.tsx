@@ -15,7 +15,9 @@ const Layout = ({ children }: { children: ReactChild }) => {
 
   return (
     <>
-      <Box
+      <Flex // careful! populars may stop working!
+        flexDir="column"
+        justifyContent="space-between"
         w="100%"
         pb="0 !important"
         position="relative"
@@ -34,10 +36,9 @@ const Layout = ({ children }: { children: ReactChild }) => {
           <Flex flexDir="column" alignItems="center">
             {children}
           </Flex>
-
-          <Footer />
         </Box>
-      </Box>
+        <Footer />
+      </Flex>
     </>
   );
 };

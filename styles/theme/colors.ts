@@ -39,6 +39,38 @@ export const colors3D = {
     "pink.400",
     "orange.400",
   ],
+  secondary: [
+    "purple.300",
+    "blue.400",
+    "blue.500",
+    "purple.400",
+    "purple.500",
+    "blue.600",
+  ],
+  gray: [
+    "bg.200",
+    "bg.100",
+    "bg.100",
+    "bg.300",
+    "whiteAlpha.200",
+    "blackAlpha.200",
+  ],
+  light: [
+    "bg.100",
+    "bg.50",
+    "bg.50",
+    "bg.200",
+    "whiteAlpha.200",
+    "blackAlpha.200",
+  ],
+  white: [
+    "bg.50",
+    "bg.10",
+    "bg.10",
+    "bg.100",
+    "whiteAlpha.200",
+    "blackAlpha.200",
+  ],
   // primary: [
   //   "orange.400",
   //   "orange.300",
@@ -63,6 +95,7 @@ const colors = {
   //   900: "#0f0913",
   // },
   bg: {
+    "10": "#f0e1e1",
     "50": "#e7d0d0",
     "100": "#cfbebe",
     "200": "#a89999",
@@ -87,7 +120,18 @@ const colors = {
     "800": "#7b300f",
     "900": "#59230b",
   },
-  secondary: {},
+  secondary: {
+    "50": "#f7f7fd",
+    "100": "#e0ddf8",
+    "200": "#c6c0f2",
+    "300": "#a59deb",
+    "400": "#9388e7",
+    "500": "#7a6de1",
+    "600": "#6354dc",
+    "700": "#4c3cc8",
+    "800": "#4033a9",
+    "900": "#2f257b",
+  },
 };
 
 export default colors;

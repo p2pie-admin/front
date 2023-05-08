@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Button, useColorModeValue } from "@chakra-ui/react";
 import { IPm } from "../../../../../../types/selector";
 
 export const SubButton = ({
@@ -19,7 +19,7 @@ export const SubButton = ({
     gridColumn={`span ${
       pm.subgroup_name && pm.subgroup_name.length > 5 ? 2 : 1
     }`}
-    variant="black"
+    variant={useColorModeValue("white", "black")}
     onClick={() => choosePm(pm, shaded)}
   >
     {children}

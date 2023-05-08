@@ -1,4 +1,4 @@
-import { Flex, Box, Text, Center } from "@chakra-ui/react";
+import { Flex, Box, Text, Center, useColorModeValue } from "@chakra-ui/react";
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { ReactChildren } from "react";
 import { Box3D } from "../../../styles/theme/wrappers";
@@ -11,11 +11,9 @@ const Wrapper = ({
   children: ReactJSXElement;
 }) => {
   return (
-    <Box3D w="100%" bgColor="bg.900">
+    <Box3D w="100%" bgColor={useColorModeValue("bg.10", "bg.900")}>
       <Flex justifyContent="center" alignItems="end" h="25%">
-        <Text fontSize="sm" color="bg.400">
-          {title}
-        </Text>
+        <Text color="bg.500">{title}</Text>
       </Flex>
       <Center h="75%">{children}</Center>
     </Box3D>

@@ -17,7 +17,7 @@ export default function PmName({
     <>
       {currencyVisible ? (
         <VStack spacing={0} align="start">
-          <Text fontSize="sm" color="bg.100">
+          <Text fontSize="sm" color={useColorModeValue("bg.800", "bg.100")}>
             {code?.toUpperCase()}
           </Text>
           <Text fontSize="xs" color="bg.300">
@@ -27,7 +27,7 @@ export default function PmName({
       ) : (
         <Text
           fontSize={name.length > 8 ? "sm" : "md"}
-          color="bg.100" // цвет нужен
+          color={useColorModeValue("bg.800", "bg.100")} // цвет нужен
         >
           {capitalize(name)}
         </Text>

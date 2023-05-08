@@ -58,6 +58,22 @@ export const ratesSlice = createSlice({
     ) => {
       state.searchBarInputValue = action.payload;
     },
+    // selectPm: (
+    //   state: MainState,
+    //   action: PayloadAction<{ pm: IPm; side: ISide; shaded?: boolean; }>
+    // ) => {
+    //   const {pm , side, shaded} = action.payload
+    //   const oppositePm = side === "give" ? "get" : "give";
+    //   if (shaded) {
+    //     state.amountInput = undefined;
+    //     state.amountOutputs = initialAmountOutputs;
+    //     state.dirRates = undefined;
+    //     state[`${oppositePm}Pm`] = undefined
+    //   } // опустошаем противоположный pm
+    //   if (side === "give") state.givePm = pm;
+    //   if (side === "get") state.getPm = pm;
+
+    // },
 
     setPm: (
       state: MainState,

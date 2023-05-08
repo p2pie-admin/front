@@ -13,6 +13,8 @@ import {
   SliderThumb,
   SliderTrack,
   Tooltip,
+  keyframes,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { useState } from "react";
@@ -22,6 +24,8 @@ import { Box3D } from "../../../styles/theme/wrappers";
 import Limit from "./Limit";
 import { isClose, kFormatter, roundAmount } from "../../../redux/amountsHelper";
 import { setAmount } from "../../../redux/mainReducer";
+import { RxDragHandleDots2 } from "react-icons/rx";
+import { BsArrowLeftShort, BsArrowRightShort } from "react-icons/bs";
 
 const CustomRangeSlider = ({
   resMin,
@@ -71,6 +75,12 @@ const LimitsRange = () => {
     }
   );
 
+  const shake = keyframes`
+  from {transform: translateX(-5px)}
+  to {transform: translateX(0)}
+`;
+  const shakeAnimation = `${shake} infinite 1s ease-in-out alternate`;
+
   const { min, max } = currentDirRate
     ? currentDirRate
     : { min: { give: 0, get: 0 }, max: { give: 0, get: 0 } };
@@ -110,15 +120,23 @@ const LimitsRange = () => {
   const stickyAmount = stick(amount);
 
   const color =
-    stickyAmount >= MIN && stickyAmount <= MAX ? "primary.200" : "bg.500";
+    stickyAmount >= MIN && stickyAmount <= MAX
+      ? useColorModeValue("secondary.600", "primary.200")
+      : "bg.500";
   if (!MIN || !MAX) return <></>;
   return (
-    <Box3D bgColor="bg.900" h="14" mb="4" cursor="pointer">
+    <Box3D
+      bgColor={useColorModeValue("bg.10", "bg.900")}
+      h="16"
+      py="1"
+      mb="4"
+      cursor="pointer"
+    >
       {/* <Text>highestMax: {highestMax}</Text> */}
       <Center position="relative">
-        <Box w="90%" position="absolute" top="6px">
+        <Box w="90%" position="absolute" top="0" zIndex="3">
           <Slider
-            aria-label="slider-ex-1"
+            aria-label="limits"
             focusThumbOnChange={false}
             value={amountToPerc(stickyAmount)}
             step={0.5}
@@ -137,25 +155,53 @@ const LimitsRange = () => {
           >
             <Tooltip
               hasArrow
-              bg="bg.700"
+              bg={useColorModeValue("bg.10", "bg.900")}
               borderRadius="2xl"
               color={color}
               placement="top"
               isOpen={showTooltip}
               label={`${kFormatter(stickyAmount)} ${pmCurrencyName}`}
             >
-              <SliderThumb zIndex="3" boxSize={4} bgColor={color}>
-                <Box w="1.5" h="1.5" bgColor="bg.600" borderRadius="50%" />
+              <SliderThumb
+                boxSize={8}
+                bgColor="transparent"
+                position="relative"
+                boxShadow="none"
+              >
+                <Box
+                  w="6"
+                  h="4"
+                  borderRadius="md"
+                  boxShadow="md"
+                  bgColor={useColorModeValue("secondary.500", "primary.200")}
+                  color={useColorModeValue("bg.100", "bg.800")}
+                  as={RxDragHandleDots2}
+                />
+                <Box
+                  position="absolute"
+                  color={useColorModeValue("secondary.500", "primary.200")}
+                  right={stickyAmount <= MAX ? "-5" : "6"}
+                  zIndex="5"
+                  animation={shakeAnimation}
+                >
+                  {stickyAmount >= MIN && stickyAmount <= MAX ? (
+                    <></>
+                  ) : stickyAmount <= MAX ? (
+                    <BsArrowRightShort size="1.5rem" />
+                  ) : (
+                    <BsArrowLeftShort size="1.5rem" />
+                  )}
+                </Box>
               </SliderThumb>
             </Tooltip>
             <SliderTrack bgColor="transparent"></SliderTrack>
           </Slider>
         </Box>
 
-        <Box w="90%">
+        <Box w="90%" pointerEvents="none">
           <CustomRangeSlider resMin={percMin} resMax={percMax}>
-            <RangeSliderTrack>
-              <RangeSliderFilledTrack bgColor="primary.200" />
+            <RangeSliderTrack bgColor={useColorModeValue("bg.200", "bg.700")}>
+              <RangeSliderFilledTrack bgColor={color} />
             </RangeSliderTrack>
             <RangeSliderThumb boxSize={1} index={0} zIndex="2">
               <Limit

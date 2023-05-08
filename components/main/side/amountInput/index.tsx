@@ -39,14 +39,6 @@ const AmountInput = () => {
       <NumberInput
         step={roundAmount(value / 100)}
         allowMouseWheel
-        _selection={{
-          bg: "red.500",
-          color: "red.500",
-        }}
-        _selected={{
-          bg: "red.500",
-          color: "red.500",
-        }}
         variant="unstyled"
         position="relative"
         onChange={onAmountChange}
@@ -66,7 +58,7 @@ const AmountInput = () => {
           placeholder="0.00"
           fontFamily="Inconsolata, sans-serif"
           fontSize="3xl"
-          color={outRange ? "bg.400" : "bg.100"}
+          color={outRange ? "bg.500" : useColorModeValue("bg.800", "bg.100")}
           onClick={(e: any) => e.target.select()}
           // onClick={handleClick}
           // color={

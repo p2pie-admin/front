@@ -1,33 +1,18 @@
-import {
-  Box,
-  Button,
-  Flex,
-  useColorModeValue,
-  Text,
-  IconButton,
-  Grid,
-  HStack,
-} from "@chakra-ui/react";
-import Greeting from "./Greeting";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 import Side from "./side";
 import ReverseButton from "./ReverseButton";
 import SideContext from "../shared/SideContext";
 import Carousel from "../main/carousel";
-import { useAppSelector } from "../../redux/hooks";
-import Popular from "./old-popular";
-import { MdPhone } from "react-icons/md";
 import LimitsRange from "./limits";
-import CircularIcon from "../shared/CircularIcon";
 import MenuHeader from "./MenuHeader";
 
-import { noiseURL } from "../../styles/theme/noise";
 import MenuFooter from "./menu-footer";
 
 const MainPageContent = () => {
   return (
     <Box
       p="4"
-      bgColor="bg.800"
+      bgColor={useColorModeValue("bg.100", "bg.800")}
       boxShadow="lg"
       mt="4"
       borderRadius="2xl"

@@ -11,12 +11,7 @@ import {
   fetchPossiblePairs,
 } from "../../../../../../redux/thunks";
 import { IPmGroup, IPm } from "../../../../../../types/selector";
-import {
-  setActiveSide,
-  setAmount,
-  setPm,
-  updateAmount,
-} from "../../../../../../redux/mainReducer";
+import { setActiveSide, setPm } from "../../../../../../redux/mainReducer";
 
 const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   const dispatch = useAppDispatch();
@@ -48,6 +43,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
       dispatch(setActiveSide(null));
       if (oppositePm?.code) {
         if (shaded) {
+          // clear opposite Pm is no pair possible anyway
           dispatch(
             setPm({
               side: activeSide === "give" ? "get" : "give",

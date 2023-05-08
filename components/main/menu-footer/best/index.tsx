@@ -4,6 +4,7 @@ import {
   Grid,
   HStack,
   Text,
+  useColorModeValue,
   useToken,
   VStack,
 } from "@chakra-ui/react";
@@ -54,7 +55,8 @@ export default function Plot() {
     ["ETH", 4268.2],
     ["BTC", 540023.8],
   ];
-  const [bg900] = useToken("colors", ["bg.900"]);
+  const [bg50, bg900] = useToken("colors", ["bg.10", "bg.900"]);
+  const bg = useColorModeValue(bg50, bg900);
 
   return (
     <Wrapper title="Best Rates">
@@ -64,7 +66,7 @@ export default function Plot() {
         w="70%"
         cursor="pointer"
         transition="all .3s ease"
-        bgColor="rgba(200,200,200,0.05)"
+        bgColor={useColorModeValue("rgba(2,2,2,0.1)", "rgba(200,200,200,0.05)")}
         _hover={{
           bgColor: "transparent",
         }}
@@ -78,12 +80,17 @@ export default function Plot() {
             w={index % 2 ? "100%" : "95%"}
             m="0 !important"
             gridGap="0.5"
-            color={index % 2 ? "green.300" : "red.300"}
+            color={index % 2 ? "green.500" : "red.500"}
             fontSize={index % 2 ? "sm" : "xs"}
           >
-            <Text color="primary.200">{ratePair[0]}</Text>
+            <Text color={useColorModeValue("secondary.600", "primary.200")}>
+              {ratePair[0]}
+            </Text>
 
-            <Text color="bg.200" justifySelf="end">
+            <Text
+              color={useColorModeValue("bg.700", "bg.200")}
+              justifySelf="end"
+            >
               ${ratePair[1]}
             </Text>
             {index % 2 ? (
@@ -100,7 +107,7 @@ export default function Plot() {
           zIndex="4"
           bottom="0"
           borderRadius="xl"
-          bgGradient={`linear(to-b, ${bg900} 10%, transparent  50%, ${bg900} 90%)`}
+          bgGradient={`linear(to-b, ${bg} 10%, transparent  50%, ${bg} 90%)`}
         ></Box>
       </VStack>
     </Wrapper>

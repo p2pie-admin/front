@@ -1,4 +1,11 @@
-import { Box, Button, useColorMode, Text, Flex } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  useColorMode,
+  Text,
+  Flex,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import NavButton from "./NavButton";
 import { WeatherSunny } from "@styled-icons/fluentui-system-filled/WeatherSunny";
 import { i18n, useTranslation } from "next-i18next";
@@ -17,10 +24,18 @@ const Nav = () => {
   };
   return (
     <Flex w="24" justifyContent="space-between">
-      <Button variant="black" p="1">
+      <Button
+        variant={useColorModeValue("gray", "black")}
+        p="1"
+        onClick={toggleColorMode}
+      >
         <FiSun />
       </Button>
-      <Button variant="black" p="1">
+      <Button
+        variant={useColorModeValue("gray", "black")}
+        p="1"
+        onClick={changeLanguageHandler}
+      >
         <Text>{i18n.language === "en" ? "Ru" : "En"}</Text>
       </Button>
 

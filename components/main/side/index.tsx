@@ -12,13 +12,12 @@ import PmModalButton from "./pmModalButton";
 
 const Side = () => {
   return (
-    <Box3D bgColor="bg.1000">
+    <Box3D bgColor={useColorModeValue("bg.10", "bg.900")}>
       <Grid
         templateColumns="auto 1fr"
         gridGap="4"
         py="0"
         px="4"
-        bgColor={useColorModeValue("orange.50", "bg.900")}
         w="100%"
         h="20"
         borderRadius="2xl"

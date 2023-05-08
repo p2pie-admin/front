@@ -18,14 +18,15 @@ import { batch } from "react-redux";
 import { fetchDirRates } from "../../redux/thunks";
 
 const Patch = () => {
-  const [bg900] = useToken("colors", ["bg.900"]);
+  const [bg10, bg900] = useToken("colors", ["bg.10", "bg.900"]);
+  const bg = useColorModeValue(bg10, bg900);
   return (
     <Box position="absolute" zIndex="2">
       <Box
         w="30"
         h="10"
-        background={`radial-gradient(circle at 0 100%, rgba(11, 111, 111, 0) 10px,${bg900} 11px), 
-      radial-gradient(circle at 100% 100%, rgba(111, 0, 0, 0) 10px, ${bg900} 11px)`}
+        background={`radial-gradient(circle at 0 100%, rgba(11, 111, 111, 0) 10px,${bg} 11px), 
+      radial-gradient(circle at 100% 100%, rgba(111, 0, 0, 0) 10px, ${bg} 11px)`}
         backgroundPosition="bottom left, bottom right"
         backgroundSize=" 50% 50%"
         backgroundRepeat="no-repeat"
@@ -33,8 +34,8 @@ const Patch = () => {
       <Box
         w="40"
         h="10"
-        background={`radial-gradient(circle at 100% 0, rgba(1, 111, 0, 0) 10px, ${bg900} 11px), 
-  radial-gradient(circle at 0 0, rgba(204, 111, 0, 0) 10px, ${bg900} 11px)`}
+        background={`radial-gradient(circle at 100% 0, rgba(1, 111, 0, 0) 10px, ${bg} 11px), 
+  radial-gradient(circle at 0 0, rgba(204, 111, 0, 0) 10px, ${bg} 11px)`}
         backgroundPosition="top right, top left"
         backgroundSize=" 50% 50%"
         backgroundRepeat="no-repeat"
@@ -58,25 +59,23 @@ const ReverseButton = () => {
     });
   };
 
-  const [bg800] = useToken("colors", ["bg.800"]);
-
   return (
-    <Grid
-      gridTemplateColumns="1fr 80px 1fr"
-      h="4"
-      bgColor="bg.900"
-      borderRadius="3xl"
-    >
-      <Box borderRadius="xl" bgColor="bg.800"></Box>
+    <Grid gridTemplateColumns="1fr 80px 1fr" h="4" borderRadius="3xl">
+      <Box
+        borderRadius="xl"
+        bgColor={useColorModeValue("bg.100", "bg.800")}
+      ></Box>
 
       <Center position="relative" w="100%">
         <Box position="absolute">
           <Button
             w="4"
             p="0"
-            variant="black"
+            variant={useColorModeValue("white", "black")}
             onClick={handleReverseDir}
-            color={bothPmsSelected ? "bg.200" : "bg.500"}
+            color={
+              bothPmsSelected ? useColorModeValue("bg.700", "bg.200") : "bg.500"
+            }
             zIndex="3"
             isLoading={pendingDirRates}
             aria-label="Reverse direction"
@@ -91,7 +90,10 @@ const ReverseButton = () => {
         <Patch />
       </Center>
 
-      <Box borderRadius="xl" bgColor="bg.800"></Box>
+      <Box
+        borderRadius="xl"
+        bgColor={useColorModeValue("bg.100", "bg.800")}
+      ></Box>
     </Grid>
     // <Center w="100%" h="2" p="0">
     //   <IconButton

@@ -8,13 +8,7 @@ const Petals = React.forwardRef(function Menu(
   ref
 ) {
   return (
-    <Center
-      style={style}
-      ref={ref}
-      pointerEvents="none"
-      borderRadius="50%"
-      cursor="pointer"
-    >
+    <Center style={style} ref={ref} pointerEvents="none" borderRadius="50%">
       {popularPms.map((pm, index) => (
         <Petal
           key={index}

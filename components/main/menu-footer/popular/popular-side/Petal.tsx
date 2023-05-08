@@ -10,19 +10,31 @@ import {
   IconButton,
   Tag,
   Text,
+  useColorModeValue,
   useOutsideClick,
 } from "@chakra-ui/react";
 import Avatar from "../../../../shared/Avatar";
 
 import { IDirGroup, IPmPointer } from "../../../../../types/dir";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
-import { setActiveDir, setActivePetal } from "../../../../../redux/mainReducer";
+import {
+  setActiveDir,
+  setActivePetal,
+  setActiveSide,
+  setPm,
+} from "../../../../../redux/mainReducer";
 import { IPm, ISide } from "../../../../../types/selector";
 import { getPmsFromPmGroup } from "../../../side/pmModalButton/section/PmGroup/helper";
 import CircularIcon from "../../../../shared/CircularIcon";
 import { group, log } from "console";
 import SideContext from "../../../../shared/SideContext";
 import { FiMoreHorizontal } from "react-icons/fi";
+import { batch } from "react-redux";
+import {
+  fetchFiatByCurrencyCode,
+  fetchPossiblePairs,
+  fetchDirRates,
+} from "../../../../../redux/thunks";
 
 /**
  * Positioning Stuff
@@ -48,7 +60,7 @@ function getTransform(
   //   0.438,
   //   0.444,
   // ];
-  const r = totalItems < 2 ? 0 : radius * 1.5;
+  const r = totalItems < 2 ? 0 : (radius * totalItems) / 5;
   const x = -1 * r * Math.cos(2 * Math.PI * value);
   const y = -1 * r * Math.sin(2 * Math.PI * value);
 
@@ -82,28 +94,33 @@ function Petal({
 
   const dispatch = useAppDispatch();
 
-  const choosePm = (event: React.FormEvent<EventTarget>) => {
-    console.log(pm?.code);
-    // const oppositePm = side === "give" ? getPm : givePm;
-    // event.stopPropagation(); // работает как закрытие circular menu , если выполняется
-    // dispatch(setActivePetal({ pm, side }));
+  const choosePm = (selectedPm: IPm) => {
+    if (!side) return;
+    const oppositePm = side === "give" ? getPm : givePm;
+    batch(() => {
+      dispatch(
+        fetchFiatByCurrencyCode({
+          code: selectedPm.currency.code,
+          side,
+        })
+      ); // нужен только код валюты,  reducer сам запишет куда надо
+      dispatch(fetchPossiblePairs({ code: selectedPm.code, side: side }));
+      dispatch(setPm({ pm: selectedPm, side }));
+      dispatch(setActiveSide(null));
+      if (oppositePm?.code) {
+        dispatch(fetchDirRates({ code: selectedPm.code, side: side }));
+      }
+    });
+  };
+
+  const openPmModal = () => {
+    dispatch(setActiveSide(side));
   };
 
   return (
     <Center
+      key={side + pm?.code}
       as={motion.div}
-      // _after={{
-      //   content: "''",
-      //   bgColor: "red.500",
-      //   left: "0",
-      //   position: "absolute",
-      //   borderRadius: "inherit",
-      //   w: "100%",
-      //   h: "100%",
-      //   zIndex: "23",
-      //   cursor: "pointer",
-      // }}
-      onClick={choosePm}
       pointerEvents="all"
       initial={{ x: 0, opacity: 0 }}
       animate={{ x: 1, opacity: 1 }}
@@ -111,7 +128,7 @@ function Petal({
       position="absolute"
       width={`${ITEM_SIZE}px`}
       height={`${ITEM_SIZE}px`}
-      transformTemplate={({ x }) => {
+      transformTemplate={({ x }: { x: number | string }) => {
         const value =
           typeof x === "number" ? x : !x ? 0 : parseFloat(x.replace("px", ""));
         return getTransform(value, RADIUS, index, totalItems, side);
@@ -119,17 +136,20 @@ function Petal({
     >
       {!pm ? (
         <Box
-          bgColor="bg.700"
+          bgColor={useColorModeValue("bg.200", "bg.700")}
+          onClick={() => openPmModal()}
           p="1"
           borderRadius="50%"
-          color="primary.200"
+          color={useColorModeValue("secondary.600", "primary.200")}
           border="1px solid"
-          borderColor="primary.200"
+          borderColor={useColorModeValue("secondary.600", "primary.200")}
         >
           <FiMoreHorizontal size="1rem" />
         </Box>
       ) : (
-        <CircularIcon icon={pm.icon} color={pm.color} />
+        <Box onClick={() => choosePm(pm)}>
+          <CircularIcon icon={pm.icon} color={pm.color} />
+        </Box>
       )}
       {pm?.tag && (
         <Flex

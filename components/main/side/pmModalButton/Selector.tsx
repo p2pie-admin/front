@@ -114,12 +114,11 @@ const Selector = () => {
           />
 
           <Text mt="5" color="bg.300">
-            {" "}
-            Haven't found what were looking for?{" "}
+            Haven't found what were looking for?
           </Text>
           <LinkButton
             bgColor="bg.500"
-            message="Contact Support"
+            message="CONTACT SUPPORT"
             href={String(process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT)}
             CustomIcon={ScTelegram}
           />

@@ -15,6 +15,7 @@ const LinkButton = ({
   return (
     <NextLink href={href || ""}>
       <Button
+        variant="shaded"
         size="sm"
         bgColor={bgColor}
         my="1"

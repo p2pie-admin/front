@@ -28,7 +28,7 @@ const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {
   const dispatch = useAppDispatch();
 
   const renderClearButton = (isEmptyInput: boolean) => (
-    <Button size="sm" variant="default">
+    <Button size="sm" variant="default" color="bg.500">
       {isEmptyInput ? (
         <Icon as={Search} w="6" h="6" />
       ) : (
@@ -43,15 +43,20 @@ const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {
       : search_bar[`${i18n.language as "en" | "ru"}_placeholder`];
 
   return (
-    <Box3D w="100%" mb="2" boxShadow="lg" borderRadius="2xl">
+    <Box3D
+      w="100%"
+      mb="2"
+      boxShadow="lg"
+      borderRadius="2xl"
+      bgColor={useColorModeValue("bg.200", "bg.700")}
+    >
       <InputGroup
         size="md"
         transition="width .5s ease-in-out;"
         borderRadius="2xl"
       >
         <Input
-          _focus={{ borderColor: useColorModeValue("bg.100", "pink.400") }}
-          borderRadius="2xl"
+          color={useColorModeValue("secondary.600", "primary.200")}
           border="none"
           boxShadow="none !important"
           placeholder={placeholder}
@@ -59,12 +64,13 @@ const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {
           onFocus={() => setInputFocused(true)}
           onBlur={() => setInputFocused(false)}
           onChange={(e) => dispatch(setSearchBarInputValue(e.target.value))}
-          _placeholder={{ color: inputFocused ? "bg.400" : "bg.200" }}
-          _hover={{ borderColor: useColorModeValue("bg.100", "bg.300") }}
+          _placeholder={{ color: "bg.500" }}
         />
         <InputRightAddon
-          bgColor="bg.600"
+          bgColor={useColorModeValue("bg.50", "bg.900")}
           borderRadius="2xl"
+          border="none"
+          boxShadow="lg"
           onClick={() => dispatch(setSearchBarInputValue(""))}
         >
           {renderClearButton(!searchBarInputValue.length)}

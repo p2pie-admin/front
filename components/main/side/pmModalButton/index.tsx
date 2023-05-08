@@ -6,6 +6,7 @@ import {
   Icon,
   Tag,
   Text,
+  useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
 import { useContext } from "react";
@@ -46,7 +47,7 @@ const SelectorButton = () => {
         px="0"
         bgColor="transparent"
         variant="default"
-        color="bg.100"
+        color={useColorModeValue("secondary.600", "primary.200")}
         // boxShadow="sm"
         // borderColor="bg.600"
         // _hover={{

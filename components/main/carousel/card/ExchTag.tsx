@@ -1,4 +1,10 @@
-import { Text, Tooltip, HStack, Image } from "@chakra-ui/react";
+import {
+  Text,
+  Tooltip,
+  HStack,
+  Image,
+  useColorModeValue,
+} from "@chakra-ui/react";
 
 import { IoInformation } from "react-icons/io5";
 import { IParam } from "../../../../types/rates";
@@ -38,7 +44,10 @@ const ExchTag = ({ parameter }: { parameter: IParam }) => {
       openDelay={500}
     >
       <HStack
-        filter={`invert(60%) sepia(97%) saturate(150%) hue-rotate(${rotationColor}deg)`}
+        filter={`invert(60%) sepia(97%) ${useColorModeValue(
+          "saturate(550%)",
+          "saturate(150%)"
+        )} hue-rotate(${rotationColor}deg)`}
         zIndex="4"
         position="relative"
         px={parameter?.en_name ? "2" : "1"}

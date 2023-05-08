@@ -26,11 +26,11 @@ const fonts = {
 const styles = {
   global: (props: any) => ({
     body: {
-      bg: mode("bg.50", "bg.900")(props),
-      color: "white",
+      bg: mode("bg.300", "bg.900")(props),
+      color: "bg.100",
     },
     a: {
-      color: "teal.500",
+      color: "pink.400",
       _hover: {
         textDecoration: "underline",
       },

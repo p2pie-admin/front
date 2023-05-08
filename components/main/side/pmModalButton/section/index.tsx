@@ -2,7 +2,14 @@ import React, { ReactChildren, useEffect, useState } from "react";
 // import PmGroup from "../PmGroup";
 // import SectionGridWrapper from "./SectionGridWrapper";
 
-import { Button, Text, Spacer, Collapse, Box } from "@chakra-ui/react";
+import {
+  Button,
+  Text,
+  Spacer,
+  Collapse,
+  Box,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import Arrow from "../../../../shared/Arrow";
 import SectionGridWrapper from "./SectionGrid";
 import SectionHidden from "./SectionHidden";
@@ -27,13 +34,17 @@ const Section = ({
 
   if (!pmGroups.length) return <></>;
   return (
-    <Box3D mb="4" position="relative" bgColor="bg.900">
+    <Box3D
+      mb="4"
+      position="relative"
+      bgColor={useColorModeValue("bg.10", "bg.900")}
+    >
       <Button
         position="sticky"
         top="-0.5"
         boxShadow="0 10px 15px -6px rgba(0,0,0,0.45)"
         borderBottomRadius={isHidden ? "2xl" : "0"}
-        variant="black"
+        variant={useColorModeValue("white", "black")}
         zIndex="1"
         w="100%"
         justifyContent="start"
@@ -42,7 +53,7 @@ const Section = ({
           setHidden(!isHidden)
         }
       >
-        <Text fontSize="lg" color="bg.200">
+        <Text fontSize="lg" color="bg.500">
           {title.toUpperCase()}
         </Text>
         <Spacer />

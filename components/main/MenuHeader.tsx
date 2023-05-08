@@ -1,4 +1,12 @@
-import { Box, Button, Center, Grid, HStack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Grid,
+  HStack,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { FiShare, FiSettings } from "react-icons/fi";
 
 const MenuHeader = () => {
@@ -10,18 +18,20 @@ const MenuHeader = () => {
       justifyContent="space-between"
       h="10"
     >
-      <Button variant="dark" p="1">
+      <Button variant={useColorModeValue("white", "black")} p="1">
         <FiSettings />
       </Button>
-      <HStack justifyContent="center" fontWeight="bold" alignItems="center">
-        <Text whiteSpace="nowrap" color={"bg.100"} fontSize="xl">
+      <HStack
+        justifyContent="center"
+        fontWeight="bold"
+        alignItems="center"
+        color="bg.500"
+      >
+        <Text whiteSpace="nowrap" fontSize="2xl">
           Search Exchangers
         </Text>
-        <Text mx="1" color="bg.400" fontSize="xl">
-          [456]
-        </Text>
       </HStack>
-      <Button variant="dark" p="1">
+      <Button variant={useColorModeValue("white", "black")} p="1">
         <FiShare />
       </Button>
     </Grid>

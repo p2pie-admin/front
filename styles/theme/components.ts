@@ -67,6 +67,10 @@ const components = {
         return createGradient(theme, "primary", true);
       },
 
+      secondary: ({ theme }: { theme: any }) => {
+        return createGradient(theme, "secondary", true);
+      },
+
       shaded: ({ theme }: { theme: any }) => {
         return createGradient(theme, "shaded");
       },
@@ -77,6 +81,15 @@ const components = {
 
       black: ({ theme }: { theme: any }) => {
         return createGradient(theme, "black");
+      },
+      gray: ({ theme }: { theme: any }) => {
+        return createGradient(theme, "gray", true);
+      },
+      light: ({ theme }: { theme: any }) => {
+        return createGradient(theme, "light", true);
+      },
+      white: ({ theme }: { theme: any }) => {
+        return createGradient(theme, "white", true);
       },
 
       default: () => ({}),

@@ -44,7 +44,7 @@ const SectionHidden = ({ children }: { children: IPmGroup[] }) => {
         variant="default"
         justifyContent="center"
         onClick={() => setHidden(!isHidden)}
-        color="bg.200"
+        color="bg.500"
       >
         <Text fontSize="md" m="0 2px">
           {isHidden ? "see all" : "fold"}

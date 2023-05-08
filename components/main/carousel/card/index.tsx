@@ -9,6 +9,7 @@ import {
   useBreakpointValue,
   Fade,
   Grid,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import StarRatings from "react-star-ratings";
 import { IParam, IRate } from "../../../../types/rates";
@@ -25,10 +26,20 @@ const ExchangerCard = ({
   dirRate: IRate;
   parameters: IParam[];
 }) => {
-  const [primary200, primary300, bg600] = useToken("colors", [
+  const [
+    primary200,
+    primary300,
+    secondary600,
+    secondary500,
+    blackAlpha300,
+    whiteAlpha300,
+  ] = useToken("colors", [
     "primary.200",
     "primary.300",
-    "bg.600",
+    "secondary.600",
+    "secondary.500",
+    "blackAlpha.300",
+    "whiteAlpha.300",
   ]);
 
   const rating = dirRate.admin_rating === null ? 0 : dirRate.admin_rating;
@@ -38,7 +49,7 @@ const ExchangerCard = ({
 
   return (
     <Box
-      bgColor="bg.900"
+      bgColor={useColorModeValue("bg.50", "bg.900")}
       borderRadius="2xl"
       pos="relative"
       key={dirRate.exchangerId}
@@ -50,8 +61,10 @@ const ExchangerCard = ({
     >
       <VStack align="start" w="100%">
         <Text
-          fontSize="xl"
+          fontSize="2xl"
           textAlign="left"
+          color={useColorModeValue("bg.600", "bg.100")}
+          fontWeight="bold"
           w="full"
           mb="-3"
           whiteSpace="nowrap"
@@ -61,10 +74,10 @@ const ExchangerCard = ({
         <Grid w="fit-content" gridGap="1" templateColumns="1fr 50px">
           <StarRatings
             rating={4.6}
-            starRatedColor={primary200}
+            starRatedColor={useColorModeValue(secondary600, primary200)}
             changeRating={() => {}}
-            starHoverColor={primary300}
-            starEmptyColor={bg600}
+            starHoverColor={useColorModeValue(secondary500, primary300)}
+            starEmptyColor={useColorModeValue(blackAlpha300, whiteAlpha300)}
             // changeRating={this.changeRating}
             numberOfStars={5}
             starDimension="16px"

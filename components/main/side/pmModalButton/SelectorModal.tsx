@@ -9,7 +9,6 @@ import { useContext } from "react";
 import { batch } from "react-redux";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { setActiveSide } from "../../../../redux/mainReducer";
-import Shader from "../../../shared/Shader";
 import Selector from "./Selector";
 
 const SelectorModal = () => {
@@ -30,7 +29,7 @@ const SelectorModal = () => {
       <ModalContent
         borderRadius="2xl"
         p="2"
-        bgColor={useColorModeValue("bg.50", "bg.800")}
+        bgColor={useColorModeValue("bg.100", "bg.800")}
         color={useColorModeValue("bg.400", "bg.100")}
         overflow="hidden"
         h="78vh"

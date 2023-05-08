@@ -1,4 +1,4 @@
-import { Box, useToken } from "@chakra-ui/react";
+import { Box, useColorModeValue, useToken } from "@chakra-ui/react";
 
 const Wave = ({ shift }: { shift: number }) => {
   return (
@@ -9,6 +9,7 @@ const Wave = ({ shift }: { shift: number }) => {
       width={`${100 * shift}%`}
       lineHeight="0"
       borderRadius="2xl"
+      filter={useColorModeValue("invert(1)", "none")}
     >
       <svg
         data-name="Layer 1"

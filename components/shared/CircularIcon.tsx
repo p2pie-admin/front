@@ -94,7 +94,7 @@ const CircularIcon = ({
         position="relative"
       >
         <Image
-          filter="hue-rotate(-140deg) grayscale(0.9) brightness(0.1)"
+          filter="hue-rotate(-140deg) brightness(0.1)"
           // filter={shaded ? "grayscale(0.6) brightness(0.3)" : "none"}
           // fallbackSrc={fallbackSRC}
           src={icon ? SRC + icon.url : ""}

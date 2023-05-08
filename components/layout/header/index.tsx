@@ -12,18 +12,18 @@ import Nav from "./nav";
 
 const Header = () => {
   const navGrid = useBreakpointValue({ base: "1fr", lg: "1fr 6fr 1fr" });
-  const [bg100, bg900] = useToken("colors", ["bg.100", "bg.900"]);
+  const [bg300, bg900] = useToken("colors", ["bg.300", "bg.900"]);
 
   return (
     <Box
       position="sticky"
       top="0"
-      bgColor="bg.900"
+      bgColor={useColorModeValue("bg.300", "bg.900")}
       w="100%"
       p={2}
       zIndex="modal"
       h="12"
-      boxShadow={`0 15px 15px -6px ${bg900}`}
+      boxShadow={`0 15px 15px -6px ${useColorModeValue(bg300, bg900)}`}
       // bgGradient={useColorModeValue(
       //   `linear(to-t, ${bg100}, rgba(0,0,0,0))`,
       //   `linear(to-t, ${bg900}, rgba(0,0,0,0))`
