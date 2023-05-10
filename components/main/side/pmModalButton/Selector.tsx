@@ -28,103 +28,54 @@ import SectionsList from "./SectionsList";
 
 import { ISelector } from "../../../../types/selector";
 import ErrorWrapper from "../../../shared/ErrorWrapper";
-import { useTranslation } from "next-i18next";
+import { i18n, useTranslation } from "next-i18next";
 import LinkButton from "../../../shared/LinkButton";
 import { ScTelegram } from "@styled-icons/evil/ScTelegram";
-import Shader from "../../../shared/Shader";
-
-const fetcher = initFetcher();
+import error from "next/error";
 
 //const gqlFetcher = new GraphQLFetcher(); // may pass variables here
 
-const Selector = () => {
+const Selector = ({ data }: { data: { selector: ISelector } }) => {
   //const { data, error } = useSWR(selectorQuery, gqlFetcher.fetcher);
-  const { data, error } = useSWR(selectorQuery, fetcher) as {
-    data: { selector: ISelector };
-    error: any;
-  };
 
   const searchBarInputValue = useAppSelector(
     (state) => state.main.searchBarInputValue
   );
 
-  const { i18n } = useTranslation();
-
-  const activeSide = useAppSelector((state) => state.main.activeSide);
-
   return (
-    <ErrorWrapper
-      isError={error}
-      isLoading={!data}
-      primaryMessage="Connection error!"
-      secondaryMessage="CMS connection is lost!"
-      linkMessage="report"
+    <VStack
+      borderRadius="lg"
+      p="2"
+      justifyContent="center"
+      css={{
+        "&::-webkit-scrollbar": {
+          width: "4px",
+        },
+        "&::-webkit-scrollbar-track": {
+          width: "6px",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          background: "",
+          borderRadius: "24px",
+        },
+      }}
     >
-      <ModalHeader
-        w="100%"
-        pt="2"
-        pb="1"
-        position="relative"
-        display="flex"
-        justifyContent="center"
-      >
-        {activeSide
-          ? data?.selector[
-              `${i18n.language as "en" | "ru"}_${activeSide}_header`
-            ]
-          : "✓"}
-      </ModalHeader>
-      <ModalCloseButton />
-      <ModalBody
-        pb={6}
-        p="0"
-        overflowY="scroll"
-        overflowX="hidden"
-        sx={{
-          "&::-webkit-scrollbar": {
-            width: "0",
-          },
-          //  "&::-webkit-overflow-scrolling": "touch",
-        }}
-      >
-        <VStack
-          borderRadius="lg"
-          p="2"
-          justifyContent="center"
-          css={{
-            "&::-webkit-scrollbar": {
-              width: "4px",
-            },
-            "&::-webkit-scrollbar-track": {
-              width: "6px",
-            },
-            "&::-webkit-scrollbar-thumb": {
-              background: "",
-              borderRadius: "24px",
-            },
-          }}
-        >
-          <SearchBar search_bar={data?.selector?.search_bar} />
+      <SearchBar search_bar={data?.selector?.search_bar} />
 
-          <SectionsList
-            sections={filterSections(
-              searchBarInputValue,
-              data?.selector?.sections
-            )}
-          />
+      <SectionsList
+        sections={filterSections(searchBarInputValue, data?.selector?.sections)}
+      />
 
-          <Text mt="5" color="bg.300">
-            Haven't found what were looking for?
-          </Text>
-          <LinkButton
-            bgColor="bg.500"
-            message="CONTACT SUPPORT"
-            href={String(process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT)}
-            CustomIcon={ScTelegram}
-          />
-        </VStack>
-      </ModalBody>
-    </ErrorWrapper>
+      <Text mt="5" color="bg.300">
+        Haven't found what were looking for?
+      </Text>
+      <LinkButton
+        bgColor="bg.500"
+        message="CONTACT SUPPORT"
+        href={String(process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT)}
+        CustomIcon={ScTelegram}
+      />
+    </VStack>
   );
 };
 

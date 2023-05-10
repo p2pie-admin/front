@@ -14,10 +14,10 @@ const symbols = {
   rub: "₽",
 };
 
-const renderHint = (leftPart: string, currency?: string, hint?: number) => {
-  if (!hint) return;
+const renderHint = (leftPart: string, amount?: number, currency?: string) => {
+  if (!amount) return;
   //const a =  showUSD ? fiat_courses.usd * value : fiat_courses.rub * value,
-  return `${leftPart || ""} ${formatNumberInput(String(roundAmount(hint)))} ${
+  return `${leftPart || ""} ${formatNumberInput(String(roundAmount(amount)))} ${
     currency || ""
   }`;
 };
@@ -41,24 +41,25 @@ const Fiat = ({
       `${side === "give" ? "get" : "give"}Pm`
     ]?.currency.code.toUpperCase()
   );
-  const fiatCurrencyCode = oppositeSideCurrencyCode?.includes("RUB")
-    ? "usd"
-    : "rub";
+  const fiatCurrencyCode = oppositeSideCurrencyCode?.includes("USD")
+    ? "rub"
+    : "usd";
 
   const roundedMin = roundAmount(min?.[side] || 0);
   const roundedMax = roundAmount(max?.[side] || 0);
+
   return (
     <HStack pos="absolute" top="9" right="0" fontSize="sm" color="bg.500">
       {roundedMin > 0 && value < roundedMin ? (
-        <Text>{renderHint("min: ", sideCurrencyCode, roundedMin)}</Text>
+        <Text>{renderHint("min: ", roundedMin, sideCurrencyCode)}</Text>
       ) : roundedMax > 0 && value > roundedMax ? (
-        <Text>{renderHint("max: ", sideCurrencyCode, roundedMax)}</Text>
+        <Text>{renderHint("max: ", roundedMax, sideCurrencyCode)}</Text>
       ) : (
         <Text>
           {renderHint(
             "~",
-            symbols[fiatCurrencyCode],
-            fiat_courses && fiat_courses[fiatCurrencyCode] * value
+            fiat_courses && fiat_courses[fiatCurrencyCode] * value,
+            symbols[fiatCurrencyCode]
           )}
         </Text>
       )}

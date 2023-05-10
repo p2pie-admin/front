@@ -31,14 +31,14 @@ const AmountInput = () => {
     ? [currentRate.min, currentRate.max]
     : [undefined, undefined];
   const stringValue = amountOutputs[side] || "";
-  const value = +stringValue.replaceAll(" ", "");
+  const value = roundAmount(+stringValue.replaceAll(" ", ""));
   const outRange = min && max && (value > max[side] || value < min[side]);
 
   return (
     <Box justifySelf="end">
       <NumberInput
-        step={roundAmount(value / 100)}
-        allowMouseWheel
+        // step={roundAmount(value / 100)}
+        // allowMouseWheel
         variant="unstyled"
         position="relative"
         onChange={onAmountChange}
@@ -60,6 +60,7 @@ const AmountInput = () => {
           fontSize="3xl"
           color={outRange ? "bg.500" : useColorModeValue("bg.800", "bg.100")}
           onClick={(e: any) => e.target.select()}
+          _placeholder={{ color: "bg.500" }}
           // onClick={handleClick}
           // color={
           //   tooBig && amount > tooBig

@@ -22,6 +22,7 @@ import {
   setActivePetal,
   setActiveSide,
   setPm,
+  setPopularCompleted,
 } from "../../../../../redux/mainReducer";
 import { IPm, ISide } from "../../../../../types/selector";
 import { getPmsFromPmGroup } from "../../../side/pmModalButton/section/PmGroup/helper";
@@ -109,7 +110,10 @@ function Petal({
       dispatch(setActiveSide(null));
       if (oppositePm?.code) {
         dispatch(fetchDirRates({ code: selectedPm.code, side: side }));
+        dispatch(setPopularCompleted(undefined));
+        return;
       }
+      dispatch(setPopularCompleted(side));
     });
   };
 
@@ -119,9 +123,10 @@ function Petal({
 
   return (
     <Center
+      pointerEvents="all"
+      cursor="pointer"
       key={side + pm?.code}
       as={motion.div}
-      pointerEvents="all"
       initial={{ x: 0, opacity: 0 }}
       animate={{ x: 1, opacity: 1 }}
       exit={{ x: 0, opacity: 0 }}

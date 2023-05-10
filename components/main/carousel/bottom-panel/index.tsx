@@ -7,9 +7,12 @@ import {
   useToken,
 } from "@chakra-ui/react";
 import { batch } from "react-redux";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { setSwiperIdVisible } from "../../../redux/mainReducer";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { setSwiperIdVisible } from "../../../../redux/mainReducer";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { Box3D } from "../../../../styles/theme/wrappers";
+import ExchangeInfo from "./ExchangeInfo";
+import { BiLinkExternal } from "react-icons/bi";
 
 const BottomPanel = ({ length }: { length: number }) => {
   const dispatch = useAppDispatch();
@@ -41,22 +44,24 @@ const BottomPanel = ({ length }: { length: number }) => {
   //   "pink.400",
   // ]);
 
-  const variant = useColorModeValue("secondary", "primary");
+  const mainVariant = useColorModeValue("secondary", "primary");
+  const buttonVariant = useColorModeValue("light", "shaded");
 
   return (
     <Grid
-      gridTemplateColumns="40px 1fr 40px"
-      mb="4"
-      mx="2"
+      gridTemplateColumns="40px 2fr 4fr 40px"
       gridGap="4"
       justifyContent="space-between"
       h="10"
     >
-      <Button p="1" variant={variant} onClick={handleDecrementClick}>
+      <Button p="1" variant={buttonVariant} onClick={handleDecrementClick}>
         <IoIosArrowBack size="1.2rem" />
       </Button>
-      <Button variant={variant}>EXCHANGE</Button>
-      <Button p="1" variant={variant} onClick={handleIncrementClick}>
+      <ExchangeInfo />
+      <Button variant={mainVariant} rightIcon={<BiLinkExternal size="1rem" />}>
+        EXCHANGE
+      </Button>
+      <Button p="1" variant={buttonVariant} onClick={handleIncrementClick}>
         <IoIosArrowForward size="1.2rem" />
       </Button>
     </Grid>

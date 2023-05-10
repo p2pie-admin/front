@@ -1,11 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IRate } from "../types/rates";
-import { IFiatRates } from "../types/selector";
 import axios from "axios";
 
 import { popularQuery } from "../services/initialQueries";
 import initFetcher from "../services/graphql";
-import { IDir } from "../types/dir";
 import { MainState } from "./mainReducer";
 import { IPopular } from "../types/popular";
 

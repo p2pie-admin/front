@@ -107,8 +107,8 @@ function Carcas({
         overflow="hidden"
         _before={{
           bgGradient: `linear(to-r, ${useColorModeValue(
-            "bg.100",
-            "bg.800"
+            "bg.10",
+            "bg.900"
           )}, transparent)`,
           position: "absolute",
           w: `${gap}px`,
@@ -120,8 +120,8 @@ function Carcas({
         }}
         _after={{
           bgGradient: `linear(to-l, ${useColorModeValue(
-            "bg.100",
-            "bg.800"
+            "bg.10",
+            "bg.900"
           )}, transparent)`,
           position: "absolute",
           w: `${gap}px`,

@@ -11,16 +11,19 @@ import {
   useOutsideClick,
 } from "@chakra-ui/react";
 import { useAppSelector } from "../../../../../redux/hooks";
-import { IDirGroup } from "../../../../../types/dir";
-import { group } from "console";
-import { IPm } from "../../../../../types/selector";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 
 import { IoAddSharp } from "react-icons/io5";
+import { BsCheckLg } from "react-icons/bs";
+import SideContext from "../../../../shared/SideContext";
 
 function PopularSide() {
   //const activeSide = useAppSelector((state) => state.main.activeSide);
+  const side = useContext(SideContext) as "give" | "get";
   const popularPms = useAppSelector((state) => state.main.popularPms);
+  const completed = useAppSelector(
+    (state) => state.main.popularCompleted === side
+  );
 
   const [isOpen, setOpen] = useState(false);
 
@@ -66,7 +69,11 @@ function PopularSide() {
             border="2px dashed"
             borderColor="bg.500"
           >
-            <IoAddSharp size="1.5rem" />
+            {completed ? (
+              <BsCheckLg size="1.5rem" />
+            ) : (
+              <IoAddSharp size="1.5rem" />
+            )}
           </Center>
         )}
       </ToggleLayer>

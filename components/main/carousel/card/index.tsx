@@ -49,7 +49,9 @@ const ExchangerCard = ({
 
   return (
     <Box
-      bgColor={useColorModeValue("bg.50", "bg.900")}
+      bgColor={useColorModeValue("bg.50", "bg.700")}
+      border="2px dashed"
+      borderColor="bg.500"
       borderRadius="2xl"
       pos="relative"
       key={dirRate.exchangerId}

@@ -13,10 +13,16 @@ import { IParam } from "../../../types/rates";
 import ErrorWrapper from "../../shared/ErrorWrapper";
 import initFetcher from "../../../services/graphql";
 import { SearchOff } from "@styled-icons/material-outlined/SearchOff";
-import { Box, Collapse } from "@chakra-ui/react";
-import BottomPanel from "./BottomPanel";
+import {
+  Box,
+  Collapse,
+  useColorMode,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import BottomPanel from "./bottom-panel";
 import ExchangerCard from "./card";
 import Swiper from "./swiper";
+import { Box3D } from "../../../styles/theme/wrappers";
 
 const fetcher = initFetcher();
 
@@ -80,8 +86,8 @@ const Carousel = () => {
   console.log("allParameters", allParameters);
   // вынесен наружу, иначе все внутри ErrorWrapper начинает высчитываться и выдает ошибку
   return (
-    <Collapse in={dirRates && !!dirRates.length}>
-      <Box>
+    <Box3D bgColor={useColorModeValue("bg.10", "bg.900")} mb="4" px="2" py="4">
+      <Collapse in={dirRates && !!dirRates.length}>
         {dirRates && (
           <Swiper gap={12}>
             {dirRates.map((dirRate, index) => {
@@ -116,8 +122,8 @@ const Carousel = () => {
         )}
 
         <BottomPanel length={dirRates?.length || 0} />
-      </Box>
-    </Collapse>
+      </Collapse>
+    </Box3D>
   );
 };
 

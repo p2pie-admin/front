@@ -11,7 +11,7 @@ import {
   fetchPopular,
   fetchPossiblePairs,
 } from "./thunks";
-import { IPm } from "../types/selector";
+import { IImage, IPm } from "../types/selector";
 import { IActivePetal, IDir } from "../types/dir";
 import { initialAmountOutputs, getAmountOutputs } from "./helper";
 import Side from "../components/main/side";
@@ -33,8 +33,10 @@ export interface MainState {
   activePopularSide?: string;
   selectedPopular?: IPm;
   popularPms: IPm[];
+  popularCompleted?: ISide;
   isScrollLocked: boolean;
   activePetal?: IActivePetal;
+  infoModalOpened: boolean;
 }
 
 const initialState: MainState = {
@@ -45,6 +47,7 @@ const initialState: MainState = {
   swiperIdVisible: 0,
   popularPms: [],
   isScrollLocked: false,
+  infoModalOpened: false,
 };
 
 export const ratesSlice = createSlice({
@@ -74,6 +77,13 @@ export const ratesSlice = createSlice({
     //   if (side === "get") state.getPm = pm;
 
     // },
+
+    setPopularCompleted: (
+      state: MainState,
+      action: PayloadAction<ISide | undefined>
+    ) => {
+      state.popularCompleted = action.payload;
+    },
 
     setPm: (
       state: MainState,
@@ -142,6 +152,10 @@ export const ratesSlice = createSlice({
     updateScrollLock: (state: MainState, action: PayloadAction<boolean>) => {
       state.isScrollLocked = action.payload;
     },
+
+    triggerInfoModal: (state: MainState) => {
+      state.infoModalOpened = !state.infoModalOpened;
+    },
     setActivePetal: (
       state: MainState,
       action: PayloadAction<IActivePetal | undefined>
@@ -206,11 +220,12 @@ export const {
   setPm,
   setSearchBarInputValue,
   setSwiperIdVisible,
-  setActiveDir,
   clearPms,
   reverseDir,
   updateScrollLock,
   setActivePetal,
+  setPopularCompleted,
+  triggerInfoModal,
 } = ratesSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

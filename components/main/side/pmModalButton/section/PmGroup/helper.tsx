@@ -3,7 +3,15 @@ import { IOption, IPmGroup, IPm } from "../../../../../../types/selector";
 
 export const capitalize = (s: string | undefined) => {
   if (typeof s !== "string") return "";
-  return s.charAt(0).toUpperCase() + s.slice(1);
+  const words = s.split(" ");
+  const res = words
+    .map((w, index) =>
+      index > 0 && w.length < 5
+        ? w.toUpperCase()
+        : w.charAt(0).toUpperCase() + w.slice(1)
+    )
+    .join(" ");
+  return res;
 };
 
 const getOptionCode = (option: IOption, prefix?: string): string => {
@@ -59,7 +67,7 @@ export const getPmByCode = (popular: IPopular): IPm | undefined => {
   if (!pm_group?.options) return;
   const pms = getPmsFromPmGroup(pm_group);
   if (!code) return pms[0];
-  return pms.find((pm) => pm.code == code);
+  return pms.find((pm) => pm.code.toLowerCase() == code.toLowerCase());
 };
 
 // export const parsePm = (pm_group: IPmGroup): IPm | null => {
