@@ -7,15 +7,17 @@ import {
   Text,
   HStack,
   Box,
+  Grid,
 } from "@chakra-ui/react";
 import { useAppSelector, useAppDispatch } from "../../../../redux/hooks";
 import { triggerInfoModal } from "../../../../redux/mainReducer";
 import CustomModal from "../../../shared/CustomModal";
 import { capitalize } from "../../side/pmModalButton/section/PmGroup/helper";
-import { BsArrowRight, BsInfoCircle } from "react-icons/bs";
+import { BsArrowRight, BsInfoCircle, BsQuestionCircle } from "react-icons/bs";
 import { RxInfoCircled } from "react-icons/rx";
-import { ImInfo } from "react-icons/im";
-import ExchangerDescription from "../../../shared/ExchangerDescription";
+
+import ExchangerDetails from "../../../shared/ExchangerDetails";
+import RateDetails from "../../../shared/RateDetails";
 
 const ExchangeInfo = () => {
   const isOpen = useAppSelector((state) => state.main.infoModalOpened);
@@ -36,11 +38,6 @@ const ExchangeInfo = () => {
     </HStack>
   );
 
-  const swiperIdVisible = useAppSelector((state) => state.main.swiperIdVisible);
-  const rate = useAppSelector(
-    (state) => state.main.dirRates?.[swiperIdVisible]
-  );
-
   return (
     <>
       <CustomModal
@@ -50,12 +47,15 @@ const ExchangeInfo = () => {
         isLoading={false}
         isError={false}
       >
-        <ExchangerDescription exchangerId={rate?.exchangerId} />
+        <Box p="2" minH="200">
+          <ExchangerDetails />
+          <RateDetails />
+        </Box>
       </CustomModal>
       <Button
         variant={buttonVariant}
         onClick={() => triggerModal()}
-        rightIcon={<ImInfo size="1rem" />}
+        rightIcon={<BsQuestionCircle size="1rem" />}
       >
         Info
       </Button>

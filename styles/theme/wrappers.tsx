@@ -1,8 +1,27 @@
-import { background, Box, theme, useToken } from "@chakra-ui/react";
+import {
+  background,
+  Box,
+  theme,
+  useColorModeValue,
+  useToken,
+} from "@chakra-ui/react";
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { ITone } from "../../types/shared";
 import { colors3D } from "./colors";
 
+export const CustomBox3D = (props: any) => {
+  const { children, ...chakraProps }: { children: ReactJSXElement } = props;
+  return (
+    <Box3D
+      {...chakraProps}
+      w="100%"
+      bgColor={useColorModeValue("bg.10", "bg.900")}
+      p="4"
+    >
+      {props.children}
+    </Box3D>
+  );
+};
 export const Box3D = (props: any) => {
   const { children, ...chakraProps }: { children: ReactJSXElement } = props;
   return (

@@ -62,6 +62,9 @@ const SmoothProgress = () => {
     Math.min(...ratesCourses),
     Math.max(...ratesCourses),
   ];
+  const color1 = useColorModeValue("secondary.600", "primary.200");
+  const color2 = useColorModeValue("bg.100", "bg.1000");
+  const color3 = useColorModeValue("bg.10", "bg.800");
   const step = (maxCourse - minCourse) / 8;
 
   const handleClickDot = (index: number) => dispatch(setSwiperIdVisible(index));
@@ -72,22 +75,21 @@ const SmoothProgress = () => {
       alignItems="end"
       position="absolute"
       left="0"
-      bottom="-1"
+      bottom="2"
       w="100%"
       h="2"
       zIndex="3"
     >
-      <HStack
-        bgColor={useColorModeValue("bg.10", "bg.1000")}
-        p="1"
-        borderRadius="md"
-      >
+      <HStack bgColor={color2} p="1" borderRadius="md">
         {ratesCourses.map((course, index) => (
-          <Dot
+          <Box
             key={index}
-            h={+((maxCourse - course) / step).toFixed(0)}
-            selected={index === swiperIdVisible}
-            handleClickDot={() => handleClickDot(index)}
+            h="2"
+            w="3"
+            cursor="pointer"
+            borderRadius="2px"
+            bgColor={swiperIdVisible === index ? color1 : color3}
+            onClick={() => handleClickDot(index)}
           />
         ))}
       </HStack>

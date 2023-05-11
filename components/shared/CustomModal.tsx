@@ -19,7 +19,7 @@ const CustomModal = ({
   isLoading,
   isError,
 }: {
-  children: ReactJSXElement[];
+  children: ReactJSXElement;
   isOpen: boolean;
   handleDialogClose: Function;
   header: string | ReactJSXElement;

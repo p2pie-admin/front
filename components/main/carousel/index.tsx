@@ -22,7 +22,7 @@ import {
 import BottomPanel from "./bottom-panel";
 import ExchangerCard from "./card";
 import Swiper from "./swiper";
-import { Box3D } from "../../../styles/theme/wrappers";
+import { Box3D, CustomBox3D } from "../../../styles/theme/wrappers";
 
 const fetcher = initFetcher();
 
@@ -86,7 +86,7 @@ const Carousel = () => {
 
   // вынесен наружу, иначе все внутри ErrorWrapper начинает высчитываться и выдает ошибку
   return (
-    <Box3D bgColor={color1} mb="4" px="2" py="4">
+    <CustomBox3D mb="4">
       <Collapse in={dirRates && !!dirRates.length}>
         {dirRates && (
           <Swiper gap={12}>
@@ -123,7 +123,7 @@ const Carousel = () => {
 
         <BottomPanel length={dirRates?.length || 0} />
       </Collapse>
-    </Box3D>
+    </CustomBox3D>
   );
 };
 

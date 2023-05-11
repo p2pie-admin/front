@@ -8,8 +8,7 @@ import {
 
 import { IoInformation } from "react-icons/io5";
 import { IParam } from "../../../../types/rates";
-import CircularIcon from "../../../shared/CircularIcon";
-import capsFirst from "../utils/capsFirst";
+import { capitalize } from "../../side/pmModalButton/section/PmGroup/helper";
 
 const ExchTag = ({ parameter }: { parameter: IParam }) => {
   // const IconComponent = parameterIcons?.[parameter.code] || IoInformation;
@@ -81,7 +80,7 @@ const ExchTag = ({ parameter }: { parameter: IParam }) => {
         ) : (
           <IoInformation size="1rem" />
         )}
-        {en_name && <Text fontSize="sm">{capsFirst(en_name)}</Text>}
+        {en_name && <Text fontSize="sm">{en_name}</Text>}
       </HStack>
     </Tooltip>
   );
@@ -99,8 +98,7 @@ export default ExchTag;
 
 // import { BiCheckCircle } from "react-icons/bi";
 // import { IParam, ITop } from "../../../../types/rates";
-// import capsFirst from "../utils/capsFirst";
-// import { topIcons } from "./icons";
+// import capsFirst from "../utils/capsFirst";// import { topIcons } from "./icons";
 
 // const ExchTag = ({ parameter }: { parameter: ITop | IParam }) => {
 //   const IconComponent = topIcons?.[parameter.code] || BiCheckCircle;
@@ -142,7 +140,7 @@ export default ExchTag;
 //         }}
 //         whiteSpace="nowrap"
 //       >
-//         <TagLabel>{capsFirst(parameter?.en_name)}</TagLabel>
+//         <TagLabel>{capitalize(parameter?.en_name)}</TagLabel>
 //         <TagRightIcon>{<IconComponent size="1.5rem" />}</TagRightIcon>
 //       </Tag>
 //     </Tooltip>

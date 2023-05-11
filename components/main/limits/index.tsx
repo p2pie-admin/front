@@ -86,8 +86,8 @@ const LimitsRange = () => {
       ? [roundAmount(min[side], true), roundAmount(max[side], true)]
       : [0, 0];
   // needMargin если min близок к highestMin && max далек от highestMax
-  const needMarginMin = MIN / lowestMin > 8; //&& MAX / lowestMax < 10;
-  const needMarginMax = highestMax / MAX > 8;
+  const needMarginMin = MIN / lowestMin > 5; //&& MAX / lowestMax < 10;
+  const needMarginMax = highestMax / MAX > 5;
 
   const log = (base: number, n: number) => Math.log(n) / Math.log(base);
   const curvingStrength = 100 / (1 - log(highestMax, lowestMin));
@@ -118,9 +118,9 @@ const LimitsRange = () => {
 
   if (!MIN || !MAX) return <></>;
   return (
-    <Box3D bgColor={color2} h="16" py="1" mb="4" cursor="pointer">
+    <Box3D bgColor={color2} py="2" mb="4" cursor="pointer">
       {/* <Text>highestMax: {highestMax}</Text> */}
-      <Center position="relative">
+      <Center position="relative" mb="2">
         <Box w="90%" position="absolute" top="0" zIndex="3">
           <Slider
             aria-label="limits"
