@@ -15,7 +15,7 @@ import {
 import { RiArrowDropUpFill, RiArrowDropDownFill } from "react-icons/ri";
 import Wrapper from "../Wrapper";
 
-export default function Plot() {
+export default function BestRates() {
   //   const height = 50;
   //   const width = 180;
   //   const padding = 8;
@@ -75,6 +75,7 @@ export default function Plot() {
       >
         {rates.map((ratePair, index) => (
           <Grid
+            key={String(ratePair)}
             zIndex="3"
             gridTemplateColumns="1fr 2fr 12px"
             w={index % 2 ? "100%" : "95%"}

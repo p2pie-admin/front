@@ -94,7 +94,7 @@ const ExchangerCard = ({
       <HStack mt="10" justifyContent="end">
         <Wrap>
           {parameters.map((parameter) => (
-            <ExchTag parameter={parameter} />
+            <ExchTag parameter={parameter} key={parameter.id} />
           ))}
         </Wrap>
       </HStack>

@@ -36,6 +36,7 @@ interface IParamData {
 
 const Carousel = () => {
   //const pendingDirRates = useAppSelector((state) => state.main.pendingDirRates);
+  const color1 = useColorModeValue("bg.10", "bg.900");
 
   const { data: topParametersData, error: topParameterError } = useSWR(
     TopParametersQuery,
@@ -83,10 +84,9 @@ const Carousel = () => {
     ...(exchangerParametersData?.exchangerParameters || []),
   ];
 
-  console.log("allParameters", allParameters);
   // вынесен наружу, иначе все внутри ErrorWrapper начинает высчитываться и выдает ошибку
   return (
-    <Box3D bgColor={useColorModeValue("bg.10", "bg.900")} mb="4" px="2" py="4">
+    <Box3D bgColor={color1} mb="4" px="2" py="4">
       <Collapse in={dirRates && !!dirRates.length}>
         {dirRates && (
           <Swiper gap={12}>

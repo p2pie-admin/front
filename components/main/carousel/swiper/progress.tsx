@@ -84,6 +84,7 @@ const SmoothProgress = () => {
       >
         {ratesCourses.map((course, index) => (
           <Dot
+            key={index}
             h={+((maxCourse - course) / step).toFixed(0)}
             selected={index === swiperIdVisible}
             handleClickDot={() => handleClickDot(index)}

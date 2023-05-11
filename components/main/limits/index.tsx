@@ -30,12 +30,10 @@ import { BsArrowLeftShort, BsArrowRightShort } from "react-icons/bs";
 const CustomRangeSlider = ({
   resMin,
   resMax,
-
   children,
 }: {
   resMin: number;
   resMax: number;
-
   children: ReactJSXElement[];
 }) => {
   const smoothResMin = useSmooth(resMin);
@@ -51,45 +49,38 @@ const CustomRangeSlider = ({
 };
 
 const LimitsRange = () => {
-  const currentDirRate = useAppSelector(
-    (state) => state.main?.dirRates?.[state.main.swiperIdVisible]
-  );
-
+  const dispatch = useAppDispatch();
+  const [showTooltip, setShowTooltip] = useState(false);
   const [side, setSide]: [side: "give" | "get", setSide: Function] = useState(
     "get"
   );
-  const changeSide = () => setSide(side === "get" ? "give" : "get");
 
-  const [highestMin, highestMax, lowestMin, lowestMax] = useAppSelector(
-    (state) => {
-      const dirRates = state.main.dirRates || [];
-      const allMins = dirRates.map((r) => roundAmount(r.min?.[side], true));
-      const allMaxes = dirRates.map((r) => roundAmount(r.max?.[side], true));
-
-      return [
-        Math.max(...allMins),
-        Math.max(...allMaxes),
-        Math.min(...allMins),
-        Math.min(...allMaxes),
-      ];
-    }
+  const currentDirRate = useAppSelector(
+    (state) => state.main?.dirRates?.[state.main.swiperIdVisible]
   );
-
-  const shake = keyframes`
-  from {transform: translateX(-5px)}
-  to {transform: translateX(0)}
-`;
-  const shakeAnimation = `${shake} infinite 1s ease-in-out alternate`;
-
-  const { min, max } = currentDirRate
-    ? currentDirRate
-    : { min: { give: 0, get: 0 }, max: { give: 0, get: 0 } };
 
   const pmCurrencyName = useAppSelector(
     (state) => state.main[`${side}Pm`]?.currency.code.toUpperCase() || ""
   );
 
-  const [showTooltip, setShowTooltip] = useState(false);
+  const [highestMax, lowestMin] = useAppSelector((state) => {
+    const dirRates = state.main.dirRates || [];
+    const allMins = dirRates.map((r) => roundAmount(r.min?.[side], true));
+    const allMaxes = dirRates.map((r) => roundAmount(r.max?.[side], true));
+    return [Math.max(...allMaxes), Math.min(...allMins)];
+  });
+
+  const amount =
+    useAppSelector(
+      (state) => +state.main.amountOutputs[side].replaceAll(" ", "")
+    ) || 0;
+
+  const changeSide = () => setSide(side === "get" ? "give" : "get");
+
+  const { min, max } = currentDirRate
+    ? currentDirRate
+    : { min: { give: 0, get: 0 }, max: { give: 0, get: 0 } };
+
   const [MIN, MAX] =
     min?.[side] && max?.[side]
       ? [roundAmount(min[side], true), roundAmount(max[side], true)]
@@ -109,29 +100,25 @@ const LimitsRange = () => {
   };
   const [percMin, percMax] = [amountToPerc(MIN), amountToPerc(MAX)];
 
-  const dispatch = useAppDispatch();
-  const amount =
-    useAppSelector(
-      (state) => +state.main.amountOutputs[side].replaceAll(" ", "")
-    ) || 0;
-
   const stick = (a: number) =>
     isClose(MIN, a) ? MIN : isClose(MAX, a) ? MAX : a;
   const stickyAmount = stick(amount);
 
-  const color =
-    stickyAmount >= MIN && stickyAmount <= MAX
-      ? useColorModeValue("secondary.600", "primary.200")
-      : "bg.500";
+  const mainColor = useColorModeValue("secondary.600", "primary.200");
+  const color1 = useColorModeValue("bg.200", "bg.700");
+  const color2 = useColorModeValue("bg.10", "bg.900");
+  const color3 = useColorModeValue("bg.100", "bg.800");
+  const color4 =
+    stickyAmount >= MIN && stickyAmount <= MAX ? mainColor : "bg.500";
+  const shake = keyframes`
+  from {transform: translateX(-5px)}
+  to {transform: translateX(0)}
+  `;
+  const shakeAnimation = `${shake} infinite 1s ease-in-out alternate`;
+
   if (!MIN || !MAX) return <></>;
   return (
-    <Box3D
-      bgColor={useColorModeValue("bg.10", "bg.900")}
-      h="16"
-      py="1"
-      mb="4"
-      cursor="pointer"
-    >
+    <Box3D bgColor={color2} h="16" py="1" mb="4" cursor="pointer">
       {/* <Text>highestMax: {highestMax}</Text> */}
       <Center position="relative">
         <Box w="90%" position="absolute" top="0" zIndex="3">
@@ -155,9 +142,9 @@ const LimitsRange = () => {
           >
             <Tooltip
               hasArrow
-              bg={useColorModeValue("bg.10", "bg.900")}
+              bg={color2}
               borderRadius="2xl"
-              color={color}
+              color={color4}
               placement="top"
               isOpen={showTooltip}
               label={`${kFormatter(stickyAmount)} ${pmCurrencyName}`}
@@ -173,13 +160,13 @@ const LimitsRange = () => {
                   h="4"
                   borderRadius="md"
                   boxShadow="md"
-                  bgColor={useColorModeValue("secondary.500", "primary.200")}
-                  color={useColorModeValue("bg.100", "bg.800")}
+                  bgColor={mainColor}
+                  color={color3}
                   as={RxDragHandleDots2}
                 />
                 <Box
                   position="absolute"
-                  color={useColorModeValue("secondary.500", "primary.200")}
+                  color={mainColor}
                   right={stickyAmount <= MAX ? "-5" : "6"}
                   zIndex="5"
                   animation={shakeAnimation}
@@ -200,8 +187,8 @@ const LimitsRange = () => {
 
         <Box w="90%" pointerEvents="none">
           <CustomRangeSlider resMin={percMin} resMax={percMax}>
-            <RangeSliderTrack bgColor={useColorModeValue("bg.200", "bg.700")}>
-              <RangeSliderFilledTrack bgColor={color} />
+            <RangeSliderTrack bgColor={color1}>
+              <RangeSliderFilledTrack bgColor={color4} />
             </RangeSliderTrack>
             <RangeSliderThumb boxSize={1} index={0} zIndex="2">
               <Limit
