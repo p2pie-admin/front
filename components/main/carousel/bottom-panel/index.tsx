@@ -49,7 +49,7 @@ const BottomPanel = ({ length }: { length: number }) => {
 
   return (
     <Grid
-      gridTemplateColumns="40px 2fr 4fr 40px"
+      gridTemplateColumns="40px 3fr 5fr 40px"
       gridGap="4"
       justifyContent="space-between"
       h="10"
@@ -59,7 +59,7 @@ const BottomPanel = ({ length }: { length: number }) => {
       </Button>
       <ExchangeInfo />
       <Button variant={mainVariant} rightIcon={<BiLinkExternal size="1rem" />}>
-        EXCHANGE
+        Exchange
       </Button>
       <Button p="1" variant={buttonVariant} onClick={handleIncrementClick}>
         <IoIosArrowForward size="1.2rem" />

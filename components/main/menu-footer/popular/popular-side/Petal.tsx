@@ -168,8 +168,9 @@ function Petal({
             <Text
               fontSize="9px"
               color={`${pm.color.split("_")[1] || pm.color}.200`}
+              whiteSpace="nowrap"
             >
-              {pm.tag}
+              {pm.subgroup_name}
             </Text>
           </Box>
         </Flex>

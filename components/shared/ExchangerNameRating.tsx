@@ -4,6 +4,7 @@ import {
   Grid,
   Text,
   useToken,
+  Button,
 } from "@chakra-ui/react";
 import StarRatings from "react-star-ratings";
 
@@ -43,7 +44,7 @@ const ExchangerNameRating = ({
       >
         {exchangerName}
       </Text>
-      <Grid w="fit-content" gridGap="1" templateColumns="1fr 50px">
+      <Grid w="fit-content" gridGap="2" templateColumns="1fr 40px 40px">
         <StarRatings
           rating={rating}
           starRatedColor={useColorModeValue(secondary600, primary200)}

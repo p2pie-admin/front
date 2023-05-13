@@ -65,7 +65,7 @@ const ExchangerDetails = () => {
   return (
     <CustomBox3D>
       <Text color={mainColor} mb="2">
-        Exchanger Info
+        Exchanger info
       </Text>
       <Grid gridTemplateColumns="1fr 1fr" gridGap="4">
         <ExchangerNameRating exchangerName={name} rating={rating} />
