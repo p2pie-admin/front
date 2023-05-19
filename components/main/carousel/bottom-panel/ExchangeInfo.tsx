@@ -39,27 +39,18 @@ const ExchangeInfo = () => {
   );
 
   return (
-    <>
-      <CustomModal
-        isOpen={isOpen}
-        handleDialogClose={triggerModal}
-        header={<Header />}
-        isLoading={false}
-        isError={false}
-      >
-        <Box p="2" minH="200">
-          <ExchangerDetails />
-          <RateDetails />
-        </Box>
-      </CustomModal>
-      <Button
-        variant={buttonVariant}
-        onClick={() => triggerModal()}
-        rightIcon={<BsQuestionCircle size="1rem" />}
-      >
-        Info
-      </Button>
-    </>
+    <CustomModal
+      isOpen={isOpen}
+      handleDialogClose={triggerModal}
+      header={<Header />}
+      isLoading={false}
+      isError={false}
+    >
+      <Box p="2" minH="200">
+        <ExchangerDetails />
+        <RateDetails />
+      </Box>
+    </CustomModal>
   );
 };
 

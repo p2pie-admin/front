@@ -10,14 +10,18 @@ import {
   Fade,
   Grid,
   useColorModeValue,
+  Button,
 } from "@chakra-ui/react";
+import { BsFullscreen, BsQuestionCircle } from "react-icons/bs";
 import StarRatings from "react-star-ratings";
+import { useAppDispatch } from "../../../../redux/hooks";
 import { IParam, IRate } from "../../../../types/rates";
 import ExchangerNameRating from "../../../shared/ExchangerNameRating";
 import { capitalize } from "../../side/pmModalButton/section/PmGroup/helper";
 import Wave from "../Wave";
-
+import { triggerInfoModal } from "../../../../redux/mainReducer";
 import ExchTag from "./ExchTag";
+import { MdQueryStats } from "react-icons/md";
 
 //const ExchangerCard = ({ top, rate }: { top: ITop; rate: IRate }) => {
 const ExchangerCard = ({
@@ -27,12 +31,16 @@ const ExchangerCard = ({
   dirRate: IRate;
   parameters: IParam[];
 }) => {
+  const dispatch = useAppDispatch();
+  const triggerModal = () => dispatch(triggerInfoModal());
   const rating = dirRate.admin_rating === null ? 3 : dirRate.admin_rating;
 
   const shift1 = +Math.floor(Math.random() * 20 + 10) / 10;
   const shift2 = +Math.floor(Math.random() * 20 + 10) / 10;
   const color1 = useColorModeValue("bg.50", "bg.700");
   const color2 = useColorModeValue("bg.300", "bg.600");
+
+  const buttonVariant = useColorModeValue("light", "dark");
 
   return (
     <Box
@@ -48,10 +56,16 @@ const ExchangerCard = ({
       pt="2"
       overflow="hidden"
     >
-      <ExchangerNameRating
-        exchangerName={capitalize(dirRate.name)}
-        rating={rating}
-      />
+      <HStack>
+        <ExchangerNameRating
+          exchangerName={capitalize(dirRate.name)}
+          rating={rating}
+        />
+        <Button p="1" variant={buttonVariant} onClick={() => triggerModal()}>
+          <MdQueryStats size="1.5rem" />
+        </Button>
+      </HStack>
+
       <HStack mt="4" justifyContent="end">
         <Wrap>
           {parameters.map((parameter) => (

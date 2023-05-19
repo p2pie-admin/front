@@ -11,6 +11,8 @@ import {
 } from "@chakra-ui/react";
 import { formatNumberInput, roundAmount } from "../../redux/amountsHelper";
 import { useAppSelector } from "../../redux/hooks";
+import { IoWarningOutline } from "react-icons/io5";
+import { MdOutlineNotifications } from "react-icons/md";
 
 const Layer = ({ title, value }: { title: string; value: string }) => (
   <HStack justifyContent="space-between">
@@ -65,10 +67,15 @@ const RateDetails = () => {
           />
         </Box>
         <VStack spacing="2">
-          <Button w="100%" disabled variant="shaded">
+          <Button
+            w="100%"
+            disabled
+            variant="shaded"
+            rightIcon={<MdOutlineNotifications />}
+          >
             Notify Change
           </Button>
-          <Button w="100%" variant="error">
+          <Button w="100%" variant="error" rightIcon={<IoWarningOutline />}>
             Report Rate
           </Button>
         </VStack>

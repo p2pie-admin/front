@@ -49,7 +49,7 @@ const BottomPanel = ({ length }: { length: number }) => {
 
   return (
     <Grid
-      gridTemplateColumns="40px 3fr 5fr 40px"
+      gridTemplateColumns="40px 1fr 40px"
       gridGap="4"
       justifyContent="space-between"
       h="10"
