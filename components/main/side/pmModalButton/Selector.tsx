@@ -1,6 +1,6 @@
 //import { setSections } from "../redux/actions";
 // import SearchBar from "./SearchBar";
-import useSWR from "swr";
+
 // import PmsListBody from "./PmsListBody";
 import {
   ModalBody,
@@ -23,7 +23,6 @@ import SearchBar from "./SearchBar";
 import { filterSections } from "./helper";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { selectorQuery } from "./SelectorQuery";
-import initFetcher from "../../../../services/graphql";
 import SectionsList from "./SectionsList";
 
 import { ISelector } from "../../../../types/selector";
@@ -70,7 +69,6 @@ const Selector = ({ data }: { data: { selector: ISelector } }) => {
         Haven't found what were looking for?
       </Text>
       <LinkButton
-        bgColor="bg.500"
         message="CONTACT SUPPORT"
         href={String(process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT)}
         CustomIcon={ScTelegram}

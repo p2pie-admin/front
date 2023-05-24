@@ -61,6 +61,12 @@ interface IFiatRates {
 
 /// дополнительный тип
 
+export interface IPmPointer {
+  id: string;
+  code: string;
+  pm_group: IPmGroup;
+}
+
 interface IPm {
   code: string; // USDTERC20
   currency: ICurrency; // USDT

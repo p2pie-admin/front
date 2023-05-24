@@ -12,14 +12,11 @@ import { selectorQuery } from "./SelectorQuery";
 const fetcher = initFetcher();
 
 const SelectorModal = () => {
-  const isOpen = useAppSelector((state) => state.main.activeSide !== null);
   // const gradient = useColorModeValue(
   //   "linear-gradient(0deg, rgba(241,240,251,1) 10%, rgba(241,240,251,0) 100%);",
   //   "linear-gradient(0deg, rgba(88,79,98,1) 20%, rgba(88,79,98,0) 100%);"
   // );
-  const dispatch = useAppDispatch();
 
-  const handleDialogClose = () => dispatch(setActiveSide(null));
   const { data, error } = useSWR(selectorQuery, fetcher) as {
     data: { selector: ISelector };
     error: any;
@@ -34,8 +31,7 @@ const SelectorModal = () => {
 
   return (
     <CustomModal
-      isOpen={isOpen}
-      handleDialogClose={handleDialogClose}
+      id={String(activeSide)}
       header={header}
       isLoading={!data}
       isError={!!error}

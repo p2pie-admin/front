@@ -29,3 +29,10 @@ export interface IParam {
   icon: IImage;
 }
 export type ExchangerId = string;
+
+export interface IPopularDirRates {
+  [key: string]: {
+    buy: { [key: string]: number };
+    sell: { [key: string]: number };
+  };
+}

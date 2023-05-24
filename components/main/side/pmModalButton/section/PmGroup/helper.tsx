@@ -1,5 +1,9 @@
-import { IPopular } from "../../../../../../types/popular";
-import { IOption, IPmGroup, IPm } from "../../../../../../types/selector";
+import {
+  IOption,
+  IPmGroup,
+  IPm,
+  IPmPointer,
+} from "../../../../../../types/selector";
 
 export const capitalize = (s: string | undefined) => {
   if (typeof s !== "string") return "";
@@ -62,7 +66,7 @@ export const getPmsFromPmGroup = (pm_group: IPmGroup): IPm[] => {
   });
 };
 
-export const getPmByCode = (popular: IPopular): IPm | undefined => {
+export const getPmByCode = (popular: IPmPointer): IPm | undefined => {
   const { code, pm_group } = popular;
   if (!pm_group?.options) return;
   const pms = getPmsFromPmGroup(pm_group);

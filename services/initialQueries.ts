@@ -2,7 +2,7 @@ import { gql } from "graphql-request";
 
 export const popularQuery = gql`
   {
-    populars {
+    pms(filters: { popular_as: { ne: "none" } }) {
       data {
         id
         attributes {

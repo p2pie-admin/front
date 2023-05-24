@@ -1,57 +1,65 @@
-import { Error as Err } from "@styled-icons/boxicons-solid/Error";
-import { Flex, Icon, Text, Button, Spinner, Center } from "@chakra-ui/react";
-import NextLink from "next/link";
-import { ScTelegram } from "@styled-icons/evil/ScTelegram";
+import {
+  Flex,
+  Icon,
+  Text,
+  Button,
+  Spinner,
+  Center,
+  color,
+  useColorModeValue,
+  Box,
+} from "@chakra-ui/react";
+
 import LinkButton from "./LinkButton";
+import { FaTelegramPlane } from "react-icons/fa";
+import { IoWarningOutline } from "react-icons/io5";
 
 const Error = ({
   primaryMessage = "",
   secondaryMessage = "",
   linkMessage = "",
-  icon = Err,
-  mainColor = "bg",
-  iconColor = "bg",
-}) => (
-  <Flex
-    w="100%"
-    h="100%"
-    justifyContent="center"
-    alignItems="center"
-    flexDir="column"
-    my="4"
-  >
-    <Icon as={icon} color={`${iconColor || "bg"}.500`} w={20} h={20} />
-    <Text color={`${mainColor || "bg"}.200`} fontSize="2xl">
-      {primaryMessage}
-    </Text>
-    <Text color="bg.400" fontSize="sm" mb="1">
-      {secondaryMessage}
-    </Text>
-    {linkMessage && (
-      <LinkButton
-        href={String(process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT)}
-        bgColor={`${mainColor}.500`}
-        message={linkMessage}
-        CustomIcon={ScTelegram}
-      />
-    )}
-  </Flex>
-);
+}) => {
+  const iconColor = useColorModeValue("orange.400", "yellow.200");
+  const mainColor = useColorModeValue("bg.700", "bg.300");
+  return (
+    <Flex
+      w="100%"
+      h="100%"
+      justifyContent="center"
+      alignItems="center"
+      flexDir="column"
+      my="4"
+    >
+      <Box color={iconColor}>
+        <IoWarningOutline size="5rem" />
+      </Box>
+
+      <Text color={`${mainColor || "bg"}`} fontSize="2xl">
+        {primaryMessage}
+      </Text>
+      <Text color="bg.400" fontSize="sm" mb="1">
+        {secondaryMessage}
+      </Text>
+      {linkMessage && (
+        <LinkButton
+          href={String(process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT)}
+          message={linkMessage}
+          CustomIcon={FaTelegramPlane}
+        />
+      )}
+    </Flex>
+  );
+};
 
 const ErrorWrapper = (props: {
   children: JSX.Element | JSX.Element[];
-  isError: boolean;
+  isError?: boolean;
   isLoading?: boolean;
   primaryMessage?: string;
   secondaryMessage?: string;
   linkMessage?: string;
-  icon?: any;
-  mainColor?: string;
-  iconColor?: string;
 }) => {
   const { isError, isLoading, children } = props;
-
-  if (isError) return <Error {...props} />;
 
   if (isLoading)
     return (
@@ -60,13 +68,13 @@ const ErrorWrapper = (props: {
         h="100%"
         justifyContent="center"
         alignItems="center"
-        minW="200"
-        minH="240"
+        minW="100"
+        minH="100"
       >
-        <Spinner size="xl" color="bg.200" />
+        <Spinner size="xl" color="bg.500" />
       </Center>
     );
-
+  if (isError) return <Error {...props} />;
   return <>{children}</>;
 };
 

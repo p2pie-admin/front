@@ -155,3 +155,6 @@ export const formatNumberInput = (x: string) => {
 
 export const isClose = (a: number, b: number): boolean =>
   Math.abs(a - b) / a < 0.1;
+
+export const beautifyAmount = (number: number, currency: string) =>
+  formatNumberInput(roundAmount(number) + " " + currency);

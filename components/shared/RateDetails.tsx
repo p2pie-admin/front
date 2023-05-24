@@ -9,7 +9,11 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import { formatNumberInput, roundAmount } from "../../redux/amountsHelper";
+import {
+  beautifyAmount,
+  formatNumberInput,
+  roundAmount,
+} from "../../redux/amountsHelper";
 import { useAppSelector } from "../../redux/hooks";
 import { IoWarningOutline } from "react-icons/io5";
 import { MdOutlineNotifications } from "react-icons/md";
@@ -32,8 +36,7 @@ const RateDetails = () => {
   const course = rate?.course;
   const amounts = !course ? [0, 0] : course < 1 ? [1, 1 / course] : [course, 1];
   const mainColor = useColorModeValue("secondary.600", "primary.200");
-  const beautifyAmount = (number: number, currency: string) =>
-    formatNumberInput(roundAmount(number) + " " + currency);
+
   //   const renderCourse = () =>  <Text>{`1 ${giveCurrency} = ${} ${getCurrency}`}</Text>
   if (!rate || !giveCurrency || !getCurrency) return <></>;
 

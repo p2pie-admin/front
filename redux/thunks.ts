@@ -1,11 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { IRate } from "../types/rates";
+import { IPopularDirRates, IRate } from "../types/rates";
 import axios from "axios";
 
 import { popularQuery } from "../services/initialQueries";
 import initFetcher from "../services/graphql";
 import { MainState } from "./mainReducer";
-import { IPopular } from "../types/popular";
+import { IPmPointer } from "../types/selector";
+import side from "../components/main/side";
 
 type ISide = "give" | "get";
 const env = process.env.NODE_ENV;
@@ -14,12 +15,19 @@ const courseFilterLink =
     ? process.env.NEXT_PUBLIC_COURSE_FILTER_PROD_URL
     : process.env.NEXT_PUBLIC_COURSE_FILTER_DEV_URL;
 
+export const fetchFiat = createAsyncThunk("initial/fetchFiat", async () => {
+  const response = await axios
+    .get(`${process.env.NEXT_PUBLIC_COINGECKO_URL}/`)
+    .catch((err) => console.error("ERROR: ", err));
+  const fiatRates = response?.data;
+  return {
+    fiatRates,
+  };
+});
+
 export const fetchFiatByCurrencyCode = createAsyncThunk(
   "currencies/fetchFiatByCurrencyCode",
   async ({ code, side }: { code: string; side: ISide }) => {
-    console.log(
-      `${process.env.NEXT_PUBLIC_COINGECKO_URL}/${code.toLowerCase()}`
-    );
     const response = await axios
       .get(`${process.env.NEXT_PUBLIC_COINGECKO_URL}/${code.toLowerCase()}`)
       .catch((err) => console.error("ERROR: ", err));
@@ -81,10 +89,19 @@ export const fetchPopular = createAsyncThunk(
   async () => {
     const fetcher = initFetcher();
     const response = await fetcher(popularQuery);
-    return response?.populars as IPopular[];
+    return response?.pms as IPmPointer[];
   }
 );
 
+export const fetchPopularRates = createAsyncThunk(
+  "rates/fetchPopularRates",
+  async () => {
+    const response = await axios
+      .get(`${courseFilterLink}/popular_rates`)
+      .catch((err) => console.error(err));
+    return response?.data as IPopularDirRates;
+  }
+);
 // export const reverseDir = createAsyncThunk(
 //   "rates/reverseDir",
 //   async (r: string, thunkAPI) => {

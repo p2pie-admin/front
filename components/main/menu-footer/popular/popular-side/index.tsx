@@ -21,9 +21,9 @@ function PopularSide() {
   //const activeSide = useAppSelector((state) => state.main.activeSide);
   const side = useContext(SideContext) as "give" | "get";
   const popularPms = useAppSelector((state) => state.main.popularPms);
-  const completed = useAppSelector(
-    (state) => state.main.popularCompleted === side
-  );
+  // const completed = useAppSelector(
+  //   (state) => state.main.popularCompleted === side
+  // );
 
   const [isOpen, setOpen] = useState(false);
 
@@ -69,11 +69,7 @@ function PopularSide() {
             border="2px dashed"
             borderColor="bg.500"
           >
-            {completed ? (
-              <BsCheckLg size="1.5rem" />
-            ) : (
-              <IoAddSharp size="1.5rem" />
-            )}
+            <IoAddSharp size="1.5rem" />
           </Center>
         )}
       </ToggleLayer>

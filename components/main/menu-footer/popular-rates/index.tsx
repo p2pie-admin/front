@@ -8,12 +8,22 @@ import {
   useToken,
   VStack,
 } from "@chakra-ui/react";
+import { useState } from "react";
 // import { curveNatural } from "@visx/curve";
 // import { LinearGradient } from "@visx/gradient";
 // import { scaleLinear } from "@visx/scale";
 // import { LinePath } from "@visx/shape";
 import { RiArrowDropUpFill, RiArrowDropDownFill } from "react-icons/ri";
+import { batch } from "react-redux";
+import {
+  beautifyAmount,
+  formatNumberInput,
+} from "../../../../redux/amountsHelper";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { triggerModal } from "../../../../redux/mainReducer";
+import { fetchPopularRates } from "../../../../redux/thunks";
 import Wrapper from "../Wrapper";
+import PopularRates from "./PopularRates";
 
 export default function BestRates() {
   //   const height = 50;
@@ -49,22 +59,40 @@ export default function BestRates() {
   //     [9, 38],
   //     [10, 0],
   //   ];
+  const bestRatesPreview = useAppSelector(
+    (state) => state.main.bestRatesPreview
+  );
 
-  const rates = [
-    ["USDT", 3800],
-    ["ETH", 4268.2],
-    ["BTC", 540023.8],
-  ];
+  const ratePairs =
+    bestRatesPreview && Object.keys(bestRatesPreview).length
+      ? Object.entries(bestRatesPreview).map(([currency, rate]) => [
+          currency,
+          formatNumberInput(rate),
+        ])
+      : [
+          ["ETH", "$ --- "],
+          ["BTC", "$ --- "],
+          ["USDT", "₽ --- "],
+        ];
+
   const [bg50, bg900] = useToken("colors", ["bg.10", "bg.900"]);
   const bg = useColorModeValue(bg50, bg900);
+  const dispatch = useAppDispatch();
+  const handleClick = () => {
+    batch(() => {
+      dispatch(triggerModal("popular-rates"));
+      dispatch(fetchPopularRates());
+    });
+  };
 
   return (
     <Wrapper title="Best Rates">
       <VStack
         alignItems="center"
         position="relative"
-        w="70%"
+        w="85%"
         cursor="pointer"
+        onClick={() => handleClick()}
         transition="all .3s ease"
         bgColor={useColorModeValue("rgba(2,2,2,0.1)", "rgba(200,200,200,0.05)")}
         _hover={{
@@ -73,7 +101,8 @@ export default function BestRates() {
         borderRadius="30%"
         p="2"
       >
-        {rates.map((ratePair, index) => (
+        <PopularRates />
+        {ratePairs.map((ratePair, index) => (
           <Grid
             key={String(ratePair)}
             zIndex="3"
@@ -85,14 +114,14 @@ export default function BestRates() {
             fontSize={index % 2 ? "sm" : "xs"}
           >
             <Text color={useColorModeValue("secondary.600", "primary.200")}>
-              {ratePair[0]}
+              {ratePair[0].toUpperCase()}
             </Text>
 
             <Text
               color={useColorModeValue("bg.700", "bg.200")}
               justifySelf="end"
             >
-              ${ratePair[1]}
+              {ratePair[1]}
             </Text>
             {index % 2 ? (
               <RiArrowDropUpFill size="1rem" />

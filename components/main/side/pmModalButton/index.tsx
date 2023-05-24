@@ -15,12 +15,13 @@ import SideContext from "../../../shared/SideContext";
 import { BiChevronDown } from "react-icons/bi";
 import PmAvatar from "../../../shared/Avatar";
 import { capitalize } from "./section/PmGroup/helper";
-import { setActiveSide } from "../../../../redux/mainReducer";
+import { setActiveSide, triggerModal } from "../../../../redux/mainReducer";
 import SelectorModal from "./SelectorModal";
 import side from "..";
 import CircularIcon from "../../../shared/CircularIcon";
 import { IoAddSharp } from "react-icons/io5";
 import Arrow from "../../../shared/Arrow";
+import { batch } from "react-redux";
 
 const SelectorButton = () => {
   const dispatch = useAppDispatch();
@@ -35,7 +36,12 @@ const SelectorButton = () => {
   const PmIcon = useAppSelector((state) => state.main[`${side}Pm`]?.icon);
   const PmColor = useAppSelector((state) => state.main[`${side}Pm`]?.color);
 
-  const handleModalOpen = () => dispatch(setActiveSide(side));
+  const handleModalOpen = () => {
+    batch(() => {
+      dispatch(setActiveSide(side));
+      dispatch(triggerModal(side));
+    });
+  };
 
   return (
     <>
@@ -74,13 +80,14 @@ const SelectorButton = () => {
           <Box>
             <Text fontSize="lg">{PmCurrencyName}</Text>
             {tag && (
-              <Box position="absolute" w="fit-content" right={-3} bottom={-2.5}>
-                <Tag
-                  size="sm"
-                  bgColor="bg.600"
-                  borderRadius="2xl"
-                  color="bg.200"
-                >
+              <Box
+                position="absolute"
+                zIndex="4"
+                w="fit-content"
+                right={-3}
+                bottom={-2.5}
+              >
+                <Tag size="sm" borderRadius="2xl" color="bg.200">
                   {tag}
                 </Tag>
               </Box>

@@ -8,26 +8,31 @@ import {
   ModalBody,
 } from "@chakra-ui/react";
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
-import header from "../layout/header";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { triggerModal } from "../../redux/mainReducer";
 import ErrorWrapper from "./ErrorWrapper";
 
 const CustomModal = ({
   children,
-  isOpen,
-  handleDialogClose,
+  id,
   header,
   isLoading,
   isError,
 }: {
   children: ReactJSXElement;
-  isOpen: boolean;
-  handleDialogClose: Function;
+  id: string;
   header: string | ReactJSXElement;
-  isLoading: boolean;
-  isError: boolean;
+  isLoading?: boolean;
+  isError?: boolean;
 }) => {
+  const dispatch = useAppDispatch();
+  const isOpen = useAppSelector((state) => state.main.modals[id]);
   return (
-    <Modal size={"lg"} isOpen={isOpen} onClose={() => handleDialogClose()}>
+    <Modal
+      size={"lg"}
+      isOpen={isOpen}
+      onClose={() => dispatch(triggerModal(id))}
+    >
       <ModalOverlay />
       <ModalContent
         borderRadius="2xl"

@@ -6,7 +6,8 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { fetchPopular } from "../redux/thunks";
+import { fetchFiat, fetchPopular } from "../redux/thunks";
+import { batch } from "react-redux";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   // must be async
@@ -21,7 +22,10 @@ const Home: NextPage = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchPopular());
+    batch(() => {
+      dispatch(fetchPopular());
+      dispatch(fetchFiat());
+    });
   }, []);
 
   return (

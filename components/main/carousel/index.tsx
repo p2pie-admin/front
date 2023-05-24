@@ -16,6 +16,7 @@ import { SearchOff } from "@styled-icons/material-outlined/SearchOff";
 import {
   Box,
   Collapse,
+  Text,
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -73,6 +74,7 @@ const Carousel = () => {
   );
 
   const dirRates = useAppSelector((state) => state.main.dirRates);
+  const pendingDirRates = useAppSelector((state) => state.main.pendingDirRates);
 
   if (!bothPmsSelected) {
     return <></>;
@@ -85,12 +87,19 @@ const Carousel = () => {
   ];
 
   // вынесен наружу, иначе все внутри ErrorWrapper начинает высчитываться и выдает ошибку
+
   return (
     <CustomBox3D mb="4">
-      <Collapse in={dirRates && !!dirRates.length}>
-        {dirRates && (
-          <Swiper gap={12}>
-            {dirRates.map((dirRate, index) => {
+      <ErrorWrapper
+        isError={!dirRates || !dirRates.length}
+        isLoading={pendingDirRates}
+        primaryMessage="No rates available!"
+        secondaryMessage="check your network connection"
+        linkMessage="Report a problem"
+      >
+        <Swiper gap={12}>
+          {dirRates &&
+            dirRates.map((dirRate, index) => {
               // topsData?.tops.filter((t) =>
               //   dirRate?.tags?.find((tag) => tag === t.code)
               // ) || [];
@@ -118,11 +127,10 @@ const Carousel = () => {
                 />
               );
             })}
-          </Swiper>
-        )}
+        </Swiper>
 
         <BottomPanel length={dirRates?.length || 0} />
-      </Collapse>
+      </ErrorWrapper>
     </CustomBox3D>
   );
 };

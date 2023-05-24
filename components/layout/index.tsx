@@ -5,8 +5,6 @@ import { useRouter } from "next/router";
 import Footer from "./footer";
 import { Box, Flex, useColorModeValue, useToken } from "@chakra-ui/react";
 import { useAppSelector } from "../../redux/hooks";
-import Shader from "../shared/Shader";
-import { noiseURL } from "../../styles/theme/noise";
 
 const Layout = ({ children }: { children: ReactChild }) => {
   const router = useRouter();

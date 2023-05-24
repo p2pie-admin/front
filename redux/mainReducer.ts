@@ -1,4 +1,4 @@
-import { IRate } from "./../types/rates";
+import { IPopularDirRates, IRate } from "./../types/rates";
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 
 import { AmountOutputs, AmountInput } from "../types/amount";
@@ -10,12 +10,14 @@ import {
   fetchFiatByCurrencyCode,
   fetchPopular,
   fetchPossiblePairs,
+  fetchFiat,
+  fetchPopularRates,
 } from "./thunks";
-import { IImage, IPm } from "../types/selector";
+import { IFiatRates, IImage, IPm } from "../types/selector";
 import { IActivePetal, IDir } from "../types/dir";
 import { initialAmountOutputs, getAmountOutputs } from "./helper";
 import Side from "../components/main/side";
-import { IPopular } from "../types/popular";
+
 import { getPmByCode } from "../components/main/side/pmModalButton/section/PmGroup/helper";
 
 type ISide = "give" | "get";
@@ -36,7 +38,10 @@ export interface MainState {
   popularCompleted?: ISide;
   isScrollLocked: boolean;
   activePetal?: IActivePetal;
-  infoModalOpened: boolean;
+  bestRatesPreview: { [key: string]: string };
+  pendingPopularRates: boolean;
+  popularRates?: IPopularDirRates;
+  modals: { [key: string]: boolean };
 }
 
 const initialState: MainState = {
@@ -47,7 +52,9 @@ const initialState: MainState = {
   swiperIdVisible: 0,
   popularPms: [],
   isScrollLocked: false,
-  infoModalOpened: false,
+  bestRatesPreview: {},
+  pendingPopularRates: false,
+  modals: {},
 };
 
 export const ratesSlice = createSlice({
@@ -153,8 +160,8 @@ export const ratesSlice = createSlice({
       state.isScrollLocked = action.payload;
     },
 
-    triggerInfoModal: (state: MainState) => {
-      state.infoModalOpened = !state.infoModalOpened;
+    triggerModal: (state: MainState, action: PayloadAction<string>) => {
+      state.modals[action.payload] = !state.modals[action.payload];
     },
     setActivePetal: (
       state: MainState,
@@ -185,10 +192,6 @@ export const ratesSlice = createSlice({
     });
 
     //
-
-    builder.addCase(fetchDirRates.rejected, (error) => {
-      console.error(error);
-    });
     builder.addCase(fetchDirRates.pending, (state) => {
       state.pendingDirRates = true;
     });
@@ -205,11 +208,22 @@ export const ratesSlice = createSlice({
         state[key]!.fiat = action.payload.fiatRates;
       }
     });
+    builder.addCase(fetchFiat.fulfilled, (state, action) => {
+      state.bestRatesPreview = action.payload.fiatRates;
+    });
     builder.addCase(fetchPossiblePairs.fulfilled, (state, action) => {
       if (action.payload.side === "give" && state.givePm)
         state.givePm.possible_pairs = action.payload.possiblePairs;
       if (action.payload.side === "get" && state.getPm)
         state.getPm.possible_pairs = action.payload.possiblePairs;
+    });
+    // popular rates
+    builder.addCase(fetchPopularRates.pending, (state) => {
+      state.pendingPopularRates = true;
+    });
+    builder.addCase(fetchPopularRates.fulfilled, (state, action) => {
+      state.pendingPopularRates = false;
+      state.popularRates = action.payload;
     });
   },
 });
@@ -225,7 +239,7 @@ export const {
   updateScrollLock,
   setActivePetal,
   setPopularCompleted,
-  triggerInfoModal,
+  triggerModal,
 } = ratesSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

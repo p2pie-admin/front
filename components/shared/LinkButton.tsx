@@ -1,25 +1,23 @@
-import { Button, Icon } from "@chakra-ui/react";
+import { Button, Icon, useColorModeValue } from "@chakra-ui/react";
 import NextLink from "next/link";
 
 const LinkButton = ({
   href,
   message,
-  bgColor = "bg.500",
   CustomIcon,
 }: {
   href: string;
   message: string;
-  bgColor?: string;
   CustomIcon?: any;
 }) => {
+  const variant = useColorModeValue("light", "shaded");
   return (
     <NextLink href={href || ""}>
       <Button
-        variant="shaded"
+        variant={variant}
         size="sm"
-        bgColor={bgColor}
         my="1"
-        rightIcon={<Icon as={CustomIcon} w="8" h="8" />}
+        rightIcon={<CustomIcon size="1rem" />}
       >
         {message}
       </Button>

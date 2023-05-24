@@ -53,6 +53,7 @@ const BottomPanel = ({ length }: { length: number }) => {
       gridGap="4"
       justifyContent="space-between"
       h="10"
+      px="1"
     >
       <Button p="1" variant={buttonVariant} onClick={handleDecrementClick}>
         <IoIosArrowBack size="1.2rem" />

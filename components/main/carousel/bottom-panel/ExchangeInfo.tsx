@@ -10,7 +10,7 @@ import {
   Grid,
 } from "@chakra-ui/react";
 import { useAppSelector, useAppDispatch } from "../../../../redux/hooks";
-import { triggerInfoModal } from "../../../../redux/mainReducer";
+import { triggerModal } from "../../../../redux/mainReducer";
 import CustomModal from "../../../shared/CustomModal";
 import { capitalize } from "../../side/pmModalButton/section/PmGroup/helper";
 import { BsArrowRight, BsInfoCircle, BsQuestionCircle } from "react-icons/bs";
@@ -20,16 +20,11 @@ import ExchangerDetails from "../../../shared/ExchangerDetails";
 import RateDetails from "../../../shared/RateDetails";
 
 const ExchangeInfo = () => {
-  const isOpen = useAppSelector((state) => state.main.infoModalOpened);
   const [giveName, getName] = useAppSelector((state) => [
     state.main.givePm?.en_name,
     state.main.getPm?.en_name,
   ]);
 
-  const dispatch = useAppDispatch();
-  const buttonVariant = useColorModeValue("light", "shaded");
-
-  const triggerModal = () => dispatch(triggerInfoModal());
   const Header = () => (
     <HStack justifyContent="center">
       <Text>{capitalize(giveName)}</Text>
@@ -40,8 +35,7 @@ const ExchangeInfo = () => {
 
   return (
     <CustomModal
-      isOpen={isOpen}
-      handleDialogClose={triggerModal}
+      id="exchange-info"
       header={<Header />}
       isLoading={false}
       isError={false}

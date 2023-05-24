@@ -13,21 +13,14 @@ import {
   useColorModeValue,
   useOutsideClick,
 } from "@chakra-ui/react";
-import Avatar from "../../../../shared/Avatar";
-
-import { IDirGroup, IPmPointer } from "../../../../../types/dir";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
 import {
-  setActiveDir,
-  setActivePetal,
   setActiveSide,
   setPm,
   setPopularCompleted,
 } from "../../../../../redux/mainReducer";
 import { IPm, ISide } from "../../../../../types/selector";
-import { getPmsFromPmGroup } from "../../../side/pmModalButton/section/PmGroup/helper";
 import CircularIcon from "../../../../shared/CircularIcon";
-import { group, log } from "console";
 import SideContext from "../../../../shared/SideContext";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { batch } from "react-redux";
