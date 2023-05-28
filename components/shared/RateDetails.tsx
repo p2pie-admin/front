@@ -19,7 +19,7 @@ import { IoWarningOutline } from "react-icons/io5";
 import { MdOutlineNotifications } from "react-icons/md";
 
 const Layer = ({ title, value }: { title: string; value: string }) => (
-  <HStack justifyContent="space-between">
+  <HStack justifyContent="space-between" fontSize="sm">
     <Text>{title}</Text>
     <Text>{value}</Text>
   </HStack>
@@ -67,6 +67,13 @@ const RateDetails = () => {
               rate.max.give,
               giveCurrency
             )} (${beautifyAmount(rate.max.get, getCurrency)})`}
+          />
+          <Layer
+            title={"Reserve:"}
+            value={`${beautifyAmount(
+              rate.reserve.give,
+              giveCurrency
+            )} (${beautifyAmount(rate.reserve.get, getCurrency)})`}
           />
         </Box>
         <VStack spacing="2">

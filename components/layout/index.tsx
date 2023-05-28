@@ -4,7 +4,8 @@ import LayoutMeta from "./LayoutMeta";
 import { useRouter } from "next/router";
 import Footer from "./footer";
 import { Box, Flex, useColorModeValue, useToken } from "@chakra-ui/react";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { decrementSwiper, incrementSwiper } from "../../redux/mainReducer";
 
 const Layout = ({ children }: { children: ReactChild }) => {
   const router = useRouter();

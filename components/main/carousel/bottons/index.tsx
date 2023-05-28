@@ -8,34 +8,19 @@ import {
 } from "@chakra-ui/react";
 import { batch } from "react-redux";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { setSwiperIdVisible } from "../../../../redux/mainReducer";
+import {
+  decrementSwiper,
+  incrementSwiper,
+  setSwiperIdVisible,
+} from "../../../../redux/mainReducer";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { Box3D } from "../../../../styles/theme/wrappers";
-import ExchangeInfo from "./ExchangeInfo";
+
 import { BiLinkExternal } from "react-icons/bi";
+import ExchangeInfo from "../card/ExchangeInfo";
 
-const BottomPanel = ({ length }: { length: number }) => {
+const SwiperButtons = () => {
   const dispatch = useAppDispatch();
-  const swiperIdVisible = useAppSelector((state) => state.main.swiperIdVisible);
-
-  const handleSwiperIdVisible = (id: number) =>
-    dispatch(setSwiperIdVisible(id));
-
-  const handleDecrementClick = () => {
-    if (swiperIdVisible == 0) {
-      handleSwiperIdVisible(length - 1);
-      return;
-    }
-    handleSwiperIdVisible(swiperIdVisible - 1);
-  };
-
-  const handleIncrementClick = () => {
-    if (swiperIdVisible == length - 1) {
-      handleSwiperIdVisible(0);
-      return;
-    }
-    handleSwiperIdVisible(swiperIdVisible + 1);
-  };
 
   // const [orange300, orange400, pink300, pink400] = useToken("colors", [
   //   "orange.300",
@@ -55,18 +40,26 @@ const BottomPanel = ({ length }: { length: number }) => {
       h="10"
       px="1"
     >
-      <Button p="1" variant={buttonVariant} onClick={handleDecrementClick}>
+      <Button
+        p="1"
+        variant={buttonVariant}
+        onClick={() => dispatch(decrementSwiper())}
+      >
         <IoIosArrowBack size="1.2rem" />
       </Button>
       <ExchangeInfo />
       <Button variant={mainVariant} rightIcon={<BiLinkExternal size="1rem" />}>
         Exchange
       </Button>
-      <Button p="1" variant={buttonVariant} onClick={handleIncrementClick}>
+      <Button
+        p="1"
+        variant={buttonVariant}
+        onClick={() => dispatch(incrementSwiper())}
+      >
         <IoIosArrowForward size="1.2rem" />
       </Button>
     </Grid>
   );
 };
 
-export default BottomPanel;
+export default SwiperButtons;

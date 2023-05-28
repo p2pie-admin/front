@@ -4,7 +4,9 @@ import {
   HStack,
   Progress,
   useColorModeValue,
+  useToken,
   VStack,
+  Text,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
@@ -54,18 +56,25 @@ const Dot = ({
 const SmoothProgress = () => {
   const dispatch = useAppDispatch();
   const swiperIdVisible = useAppSelector((state) => state.main.swiperIdVisible);
-  const ratesCourses =
-    useAppSelector((state) => state.main.dirRates?.map((r) => r.course)) || [];
+  const ratesLimits =
+    useAppSelector((state) =>
+      state.main.dirRates?.map((r) => [r.min.give, r.max.give])
+    ) || [];
+  const amount = +useAppSelector((state) =>
+    state.main.amountOutputs.give.replaceAll(" ", "")
+  );
   //const smoothProgressValue = useSmooth((100 * swiperIdVisible) / ratesLength);
-  const ratesLength = ratesCourses.length;
-  const [minCourse, maxCourse] = [
-    Math.min(...ratesCourses),
-    Math.max(...ratesCourses),
-  ];
+
+  const color_bg = useColorModeValue("bg.100", "bg.1000");
   const color1 = useColorModeValue("secondary.600", "primary.200");
-  const color2 = useColorModeValue("bg.100", "bg.1000");
-  const color3 = useColorModeValue("bg.10", "bg.800");
-  const step = (maxCourse - minCourse) / 8;
+  const color2 = useColorModeValue("bg.10", "bg.500");
+  const color3 = useColorModeValue("bg.100", "bg.800");
+  const [primary300, secondary600] = useToken("colors", [
+    "primary.300",
+    "secondary.600",
+  ]);
+  const colorKey = useColorModeValue(secondary600, primary300);
+  const length = ratesLimits.length;
 
   const handleClickDot = (index: number) => dispatch(setSwiperIdVisible(index));
 
@@ -80,15 +89,25 @@ const SmoothProgress = () => {
       h="2"
       zIndex="3"
     >
-      <HStack bgColor={color2} p="1" borderRadius="md">
-        {ratesCourses.map((course, index) => (
+      <HStack bgColor={color_bg} p="1" borderRadius="md">
+        {ratesLimits.map(([min, max], index) => (
           <Box
             key={index}
             h="2"
-            w="3"
+            transform={swiperIdVisible === index ? "scale(1.2)" : "none"}
+            boxShadow={
+              swiperIdVisible === index ? `0 0 10px -1px ${colorKey}` : "none"
+            }
+            w={length > 18 ? 1.5 : length > 9 ? 2 : 3}
             cursor="pointer"
             borderRadius="2px"
-            bgColor={swiperIdVisible === index ? color1 : color3}
+            bgColor={
+              swiperIdVisible === index
+                ? color1
+                : amount < min || amount > max
+                ? color3
+                : color2
+            }
             onClick={() => handleClickDot(index)}
           />
         ))}

@@ -37,8 +37,8 @@ const AmountInput = () => {
   return (
     <Box justifySelf="end">
       <NumberInput
-        // step={roundAmount(value / 100)}
-        // allowMouseWheel
+        step={roundAmount(value / 100)}
+        //allowMouseWheel
         variant="unstyled"
         position="relative"
         onChange={onAmountChange}

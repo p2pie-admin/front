@@ -20,7 +20,7 @@ import {
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
-import BottomPanel from "./bottom-panel";
+import SwiperButtons from "./bottons";
 import ExchangerCard from "./card";
 import Swiper from "./swiper";
 import { Box3D, CustomBox3D } from "../../../styles/theme/wrappers";
@@ -129,7 +129,7 @@ const Carousel = () => {
             })}
         </Swiper>
 
-        <BottomPanel length={dirRates?.length || 0} />
+        <SwiperButtons />
       </ErrorWrapper>
     </CustomBox3D>
   );

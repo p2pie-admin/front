@@ -93,67 +93,9 @@ function SlidingLayout({
     [setTrackIsActive]
   );
 
-  const handleKeyDown = useCallback(
-    (event) => {
-      if (trackIsActive) {
-        if (swiperIdVisible < positions.length - constraint) {
-          if (event.key === "ArrowRight" || event.key === "ArrowUp") {
-            event.preventDefault();
-            handleSwiperIdVisible(swiperIdVisible + 1);
-          }
-        }
-        if (swiperIdVisible > positions.length - positions.length) {
-          if (event.key === "ArrowLeft" || event.key === "ArrowDown") {
-            event.preventDefault();
-            handleSwiperIdVisible(swiperIdVisible - 1);
-          }
-        }
-      }
-    },
-    [trackIsActive, constraint, positions.length]
-  );
-
-  const handleWheel = useCallback((event) => {
-    // event.preventDefault();
-    console.log("handleWheel");
-    if (swiperIdVisible === 0) {
-      // если первый, то ничего не делаем
-
-      if (event.deltaY > 0) {
-        handleSwiperIdVisible(swiperIdVisible + 1);
-      }
-      return;
-    }
-
-    if (swiperIdVisible < positions.length - constraint) {
-      if (event.deltaY > 0) {
-        handleSwiperIdVisible(swiperIdVisible + 1);
-      }
-      if (event.deltaY < 0) {
-        handleSwiperIdVisible(swiperIdVisible - 1);
-      }
-    }
-    if (swiperIdVisible > positions.length - constraint && event.deltaY > 0) {
-      // if (event.deltaY > 0) {
-      //   // если последний, то идем в начало
-      //   handleSwiperIdVisible(0);
-      // }
-      if (event.deltaY < 0) {
-        handleSwiperIdVisible(swiperIdVisible - 1);
-      }
-    }
-  }, []);
-
   useEffect(() => {
     handleResize();
-
-    document.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("mousedown", handleClick);
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("mousedown", handleClick);
-    };
-  }, [handleClick, handleResize, handleKeyDown, positions]);
+  }, [handleClick, handleResize, positions]);
 
   return (
     <>

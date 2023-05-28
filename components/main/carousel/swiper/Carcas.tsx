@@ -14,6 +14,12 @@ import percentage from "../utils/percentage";
 import useAnimateNumber from "use-animate-number";
 import SmoothProgress from "./Progress";
 import LimitsRange from "../../limits";
+import {
+  decrementSwiper,
+  incrementSwiper,
+} from "../../../../redux/mainReducer";
+import { useAppDispatch } from "../../../../redux/hooks";
+import e from "cors";
 
 function Carcas({
   setTrackIsActive,
@@ -39,63 +45,6 @@ function Carcas({
     width,
     initSliderWidth,
   ]);
-
-  // const handleDecrementClick = () => {
-  //   !(swiperIdVisible === positions.length - positions.length) &&
-  //     handleSwiperIdVisible(swiperIdVisible - 1);
-  //   console.log(children);
-  // };
-
-  // const handleIncrementClick = () => {
-  //   !(swiperIdVisible === positions.length - constraint) &&
-  //     handleSwiperIdVisible(swiperIdVisible + 1);
-  // };
-
-  // const handleGoToEnd = () => {
-  //   handleSwiperIdVisible(positions.length - 1);
-  // };
-
-  // const handleGoToStart = () => {
-  //   handleSwiperIdVisible(0);
-  // };
-
-  // const SwiperButton = ({ isLeft = false }: { isLeft?: boolean }) => (
-  //   <Button
-  //     size="sm"
-  //     w="6"
-  //     key={isLeft ? "leftSwiperButton" : "rightSwiperButton"}
-  //     position={{
-  //       base: "relative",
-  //       md: "absolute",
-  //     }}
-  //     left={{
-  //       base: "0",
-  //       md: isLeft ? "-20" : "auto",
-  //     }}
-  //     right={{
-  //       base: "0",
-  //       md: isLeft ? "auto" : "-20",
-  //     }}
-  //     mx="2"
-  //     top="45%"
-  //     // onClick={
-  //     //   isLeft
-  //     //     ? !swiperIdVisible
-  //     //       ? handleGoToEnd
-  //     //       : handleDecrementClick
-  //     //     : swiperIdVisible === positions.length - 1
-  //     //     ? handleGoToStart
-  //     //     : handleIncrementClick
-  //     // }
-  //     color="bg.400"
-  //     p="1"
-  //     borderRadius="50%"
-  //     bgColor="bg.700"
-  //     transform={isLeft ? "rotate(180deg)" : "none"}
-  //   >
-  //     <BiChevronRight size="2rem" />
-  //   </Button>
-  // );
 
   return (
     <Box position="relative" mb="4">

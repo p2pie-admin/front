@@ -22,6 +22,7 @@ import Wave from "../Wave";
 import { triggerModal } from "../../../../redux/mainReducer";
 import ExchTag from "./ExchTag";
 import { MdQueryStats } from "react-icons/md";
+import { BiDotsVerticalRounded } from "react-icons/bi";
 
 //const ExchangerCard = ({ top, rate }: { top: ITop; rate: IRate }) => {
 const ExchangerCard = ({
@@ -79,6 +80,13 @@ const ExchangerCard = ({
           onClick={() => dispatch(triggerModal("exchange-info"))}
         >
           <MdQueryStats size="1.5rem" />
+        </Button>
+        <Button
+          p="1"
+          variant={buttonVariant}
+          onClick={() => dispatch(triggerModal("exchange-info"))}
+        >
+          <BiDotsVerticalRounded size="1.5rem" />
         </Button>
       </HStack>
 

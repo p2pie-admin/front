@@ -38,7 +38,7 @@ export interface MainState {
   popularCompleted?: ISide;
   isScrollLocked: boolean;
   activePetal?: IActivePetal;
-  bestRatesPreview: { [key: string]: string };
+  bestRatesPreview: { [key: string]: string }; // from coingecko
   pendingPopularRates: boolean;
   popularRates?: IPopularDirRates;
   modals: { [key: string]: boolean };
@@ -55,6 +55,10 @@ const initialState: MainState = {
   bestRatesPreview: {},
   pendingPopularRates: false,
   modals: {},
+};
+
+const getUpdatedAmount = (state: MainState, newSwiperId: number) => {
+  return getAmountOutputs(state, state.amountInput, newSwiperId || 0);
 };
 
 export const ratesSlice = createSlice({
@@ -114,16 +118,9 @@ export const ratesSlice = createSlice({
       state.activeSide = action.payload;
       state.searchBarInputValue = "";
     },
-    setSwiperIdVisible: (
-      state: MainState,
-      action: PayloadAction<number | null>
-    ) => {
-      state.swiperIdVisible = action.payload || 0;
-      state.amountOutputs = getAmountOutputs(
-        state,
-        state.amountInput,
-        action.payload || 0
-      );
+    setSwiperIdVisible: (state: MainState, action: PayloadAction<number>) => {
+      state.swiperIdVisible = action.payload;
+      state.amountOutputs = getUpdatedAmount(state, action.payload);
     },
     // setExchangerIdVisible: (
     //   state: MainState,
@@ -150,11 +147,7 @@ export const ratesSlice = createSlice({
     },
     reverseDir: (state: MainState) => {
       [state.givePm, state.getPm] = [state.getPm, state.givePm];
-      state.amountOutputs = getAmountOutputs(
-        state,
-        state.amountInput,
-        state.swiperIdVisible
-      );
+      state.amountOutputs = getUpdatedAmount(state, state.swiperIdVisible);
     },
     updateScrollLock: (state: MainState, action: PayloadAction<boolean>) => {
       state.isScrollLocked = action.payload;
@@ -167,19 +160,34 @@ export const ratesSlice = createSlice({
       state: MainState,
       action: PayloadAction<IActivePetal | undefined>
     ) => {
-      // if (
-      //   state.activePetal?.side &&
-      //   action.payload?.side &&
-      //   state.activePetal.side !== action.payload.side
-      // ) {
-      //   const side = state.activePetal.side;
-      //   state.givePm =
-      //     side === "give" ? state.activePetal.pm : action.payload?.pm;
-      //   state.getPm =
-      //     side === "get" ? state.activePetal.pm : action.payload?.pm;
-      //   state.activeDir = undefined;
-      // }
       state.activePetal = action.payload;
+    },
+    incrementSwiper: (state: MainState) => {
+      const length = state.dirRates?.length || 0;
+      if (!length) return;
+      if (state.swiperIdVisible == length - 1) {
+        const newSwiperId = 0;
+        state.swiperIdVisible = newSwiperId;
+        state.amountOutputs = getUpdatedAmount(state, newSwiperId);
+        return;
+      }
+      const newSwiperId = state.swiperIdVisible + 1;
+      state.swiperIdVisible = newSwiperId;
+      state.amountOutputs = getUpdatedAmount(state, newSwiperId);
+    },
+
+    decrementSwiper: (state: MainState) => {
+      const length = state.dirRates?.length || 0;
+      if (!length) return;
+      if (state.swiperIdVisible == 0) {
+        const newSwiperId = length - 1;
+        state.swiperIdVisible = newSwiperId;
+        state.amountOutputs = getUpdatedAmount(state, newSwiperId);
+        return;
+      }
+      const newSwiperId = state.swiperIdVisible - 1;
+      state.swiperIdVisible = newSwiperId;
+      state.amountOutputs = getUpdatedAmount(state, newSwiperId);
     },
   },
   //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -240,6 +248,8 @@ export const {
   setActivePetal,
   setPopularCompleted,
   triggerModal,
+  incrementSwiper,
+  decrementSwiper,
 } = ratesSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

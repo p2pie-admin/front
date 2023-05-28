@@ -105,6 +105,11 @@ const LimitsRange = () => {
   const stickyAmount = stick(amount);
 
   const mainColor = useColorModeValue("secondary.600", "primary.200");
+  const [primary300, secondary600] = useToken("colors", [
+    "primary.300",
+    "secondary.600",
+  ]);
+  const colorKey = useColorModeValue(secondary600, primary300);
   const color1 = useColorModeValue("bg.200", "bg.700");
   const color2 = useColorModeValue("bg.10", "bg.900");
   const color3 = useColorModeValue("bg.100", "bg.800");
@@ -159,8 +164,8 @@ const LimitsRange = () => {
                   w="6"
                   h="4"
                   borderRadius="md"
-                  boxShadow="md"
                   bgColor={mainColor}
+                  boxShadow={`0 0 10px -2px ${colorKey}`}
                   color={color3}
                   as={RxDragHandleDots2}
                 />
