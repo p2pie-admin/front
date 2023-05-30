@@ -5,7 +5,15 @@ import {
   Button,
   Grid,
   HStack,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
   Text,
+  Tfoot,
+  Th,
+  Thead,
+  Tr,
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
@@ -39,57 +47,74 @@ const RateDetails = () => {
 
   //   const renderCourse = () =>  <Text>{`1 ${giveCurrency} = ${} ${getCurrency}`}</Text>
   if (!rate || !giveCurrency || !getCurrency) return <></>;
-
+  const rateProps = [
+    {
+      name: "Exchange Rate:",
+      give: amounts[0],
+      get: amounts[1],
+    },
+    {
+      name: "Amount MIN:",
+      give: rate.min.give,
+      get: rate.min.get,
+    },
+    {
+      name: "Amount MAX:",
+      give: rate.max.give,
+      get: rate.max.get,
+    },
+    {
+      name: "Total Reserve:",
+      give: rate.reserve.give,
+      get: rate.reserve.get,
+    },
+  ];
   return (
     <CustomBox3D>
-      <Text color={mainColor} mb="2">
+      <Text color="bg.500" mb="2">
         Exchange details
       </Text>
-      <Grid gridTemplateColumns="2fr 1fr" gridGap="4">
-        <Box>
-          <Layer
-            title={"Rate:"}
-            value={`${beautifyAmount(
-              amounts[0],
-              giveCurrency
-            )}  = ${beautifyAmount(amounts[1], getCurrency)}`}
-          />
-          <Layer
-            title={"Min:"}
-            value={`${beautifyAmount(
-              rate.min.give,
-              giveCurrency
-            )} (${beautifyAmount(rate.min.get, getCurrency)})`}
-          />
-          <Layer
-            title={"Max:"}
-            value={`${beautifyAmount(
-              rate.max.give,
-              giveCurrency
-            )} (${beautifyAmount(rate.max.get, getCurrency)})`}
-          />
-          <Layer
-            title={"Reserve:"}
-            value={`${beautifyAmount(
-              rate.reserve.give,
-              giveCurrency
-            )} (${beautifyAmount(rate.reserve.get, getCurrency)})`}
-          />
-        </Box>
-        <VStack spacing="2">
-          <Button
-            w="100%"
-            disabled
-            variant="shaded"
-            rightIcon={<MdOutlineNotifications />}
-          >
-            Notify Change
-          </Button>
-          <Button w="100%" variant="error" rightIcon={<IoWarningOutline />}>
-            Report Rate
-          </Button>
-        </VStack>
-      </Grid>
+
+      <TableContainer>
+        <Table size="sm" colorScheme="bg">
+          <Thead>
+            <Tr>
+              <Th color={mainColor}></Th>
+              <Th color={mainColor} isNumeric>
+                {giveCurrency}
+              </Th>
+              <Th color={mainColor} isNumeric>
+                {getCurrency}
+              </Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {rateProps.map((rateProp, index) => (
+              <Tr key={index}>
+                <Td>{rateProp.name}</Td>
+                <Td isNumeric>
+                  {formatNumberInput(roundAmount(rateProp.give))}
+                </Td>
+                <Td isNumeric>
+                  {formatNumberInput(roundAmount(rateProp.get))}
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      </TableContainer>
+      <HStack spacing="2" mt="4" justifyContent="end">
+        <Button
+          disabled
+          variant="shaded"
+          rightIcon={<MdOutlineNotifications />}
+        >
+          Notify Change
+        </Button>
+        <Button variant="error" rightIcon={<IoWarningOutline />}>
+          Report Rate
+        </Button>
+      </HStack>
     </CustomBox3D>
   );
 };

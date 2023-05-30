@@ -49,13 +49,11 @@ export const getPmsFromPmGroup = (pm_group: IPmGroup): IPm[] => {
       pm_group.options.length > 1
         ? option.code?.toLocaleUpperCase() || option.currency.code.toUpperCase()
         : undefined;
-    const en_name = pm_group.en_name + " " + option?.currency?.code;
-    const ru_name = pm_group.ru_name
-      ? pm_group.ru_name + " " + option?.currency?.code
-      : "";
+    const en_name = pm_group.en_name;
+    const ru_name = pm_group.ru_name;
     return {
       code, // USDTERC20
-      en_name, // Tether ERC-20
+      en_name, // Tether
       ru_name,
       subgroup_name, // ERC-20
       currency: option?.currency, // USDT

@@ -23,7 +23,7 @@ import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { triggerModal } from "../../../../redux/mainReducer";
 import { fetchPopularRates } from "../../../../redux/thunks";
 import Wrapper from "../Wrapper";
-import PopularRates from "./PopularRates";
+import PopularRates from "./modal-data";
 
 export default function BestRates() {
   //   const height = 50;

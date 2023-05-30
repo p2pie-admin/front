@@ -32,7 +32,13 @@ export type ExchangerId = string;
 
 export interface IPopularDirRates {
   [key: string]: {
-    buy: { [key: string]: number };
-    sell: { [key: string]: number };
+    buy: IPopularRate;
+    sell: IPopularRate;
   };
+}
+
+export interface IPopularRate {
+  exchangerId: string;
+  course: number;
+  fiat: string;
 }

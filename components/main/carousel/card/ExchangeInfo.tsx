@@ -13,23 +13,26 @@ import { useAppSelector, useAppDispatch } from "../../../../redux/hooks";
 import { triggerModal } from "../../../../redux/mainReducer";
 import CustomModal from "../../../shared/CustomModal";
 import { capitalize } from "../../side/pmModalButton/section/PmGroup/helper";
-import { BsArrowRight, BsInfoCircle, BsQuestionCircle } from "react-icons/bs";
+import { BsArrowRight } from "react-icons/bs";
 import { RxInfoCircled } from "react-icons/rx";
 
 import ExchangerDetails from "../../../shared/ExchangerDetails";
 import RateDetails from "../../../shared/RateDetails";
+import PmFullName from "../../../shared/PmFullName";
 
 const ExchangeInfo = () => {
-  const [giveName, getName] = useAppSelector((state) => [
-    state.main.givePm?.en_name,
-    state.main.getPm?.en_name,
+  const [givePm, getPm] = useAppSelector((state) => [
+    state.main.givePm,
+    state.main.getPm,
   ]);
 
+  if (!givePm || !getPm) return <></>;
+
   const Header = () => (
-    <HStack justifyContent="center">
-      <Text>{capitalize(giveName)}</Text>
-      <BsArrowRight />
-      <Text>{capitalize(getName)}</Text>
+    <HStack>
+      <PmFullName pm={givePm} />
+      <BsArrowRight size="1.5rem" />
+      <PmFullName pm={getPm} />
     </HStack>
   );
 

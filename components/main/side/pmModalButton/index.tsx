@@ -82,12 +82,12 @@ const SelectorButton = () => {
             {tag && (
               <Box
                 position="absolute"
-                zIndex="4"
+                zIndex="5"
                 w="fit-content"
                 right={-3}
                 bottom={-2.5}
               >
-                <Tag size="sm" borderRadius="2xl" color="bg.200">
+                <Tag size="sm" colorScheme="bg">
                   {tag}
                 </Tag>
               </Box>

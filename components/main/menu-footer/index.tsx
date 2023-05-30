@@ -1,7 +1,7 @@
 import { Grid } from "@chakra-ui/react";
 import PopularRates from "./popular-rates";
 
-import QuickChange from "./popular";
+import QuickChange from "./popular-pms";
 
 const MenuFooter = () => {
   return (

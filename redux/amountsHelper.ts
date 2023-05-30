@@ -146,9 +146,10 @@ export const roundAmount = (amount: number, rude = false): number => {
   return +amount.toFixed(orderOfMagnitude < 0 ? 0 : orderOfMagnitude);
 };
 
-export const formatNumberInput = (x: string) => {
+export const formatNumberInput = (x: string | number) => {
   if (!x) return x;
-  let parts = x.split(".");
+  const s = String(x);
+  let parts = s.split(".");
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   return parts.join(".");
 };
