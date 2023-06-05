@@ -32,6 +32,10 @@ const ExchTag = ({ parameter }: { parameter: IParam }) => {
   //   return Math.floor(min + Math.random() * (max - min + 1));
   // }
   const rotationColor = 50 * (+icon?.id || 0);
+  const filter = `invert(60%) sepia(97%) ${useColorModeValue(
+    "saturate(550%)",
+    "saturate(150%)"
+  )} hue-rotate(${rotationColor}deg)`;
 
   return (
     <Tooltip
@@ -43,20 +47,18 @@ const ExchTag = ({ parameter }: { parameter: IParam }) => {
       openDelay={500}
     >
       <HStack
-        filter={`invert(60%) sepia(97%) ${useColorModeValue(
-          "saturate(550%)",
-          "saturate(150%)"
-        )} hue-rotate(${rotationColor}deg)`}
+        filter={filter}
         zIndex="4"
         position="relative"
         px={parameter?.en_name ? "2" : "1"}
         py="0.5"
         justifyContent="center"
-        cursor="initial"
+        cursor="pointer"
         borderRadius="lg"
         border="1px solid"
         borderColor={`white`}
         color={`white`}
+        _hover={{ filter: filter + " brightness(1.1)" }}
         _before={{
           content: "''",
           bgColor: `white`,

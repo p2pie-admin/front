@@ -84,12 +84,16 @@ const CircularIcon = ({
       ? process.env.NEXT_PUBLIC_STRAPI_PROD_BASE_URL
       : process.env.NEXT_PUBLIC_STRAPI_DEV_BASE_URL;
 
-  const size = small ? "5" : "7";
+  const size = small ? "6" : "7";
   return (
     <Center w={size} h={size}>
       <Center
         borderRadius="50%"
-        boxShadow={`0px 0px 12px -5px ${colorHEX}`}
+        boxShadow={
+          small
+            ? `0px 0px 10px -10px ${colorHEX}`
+            : `0px 0px 14px -7px ${colorHEX}`
+        }
         bg={`radial-gradient(circle, ${colorHEX} 60%, rgba(0,0,0,0) 70%)`}
         position="relative"
       >

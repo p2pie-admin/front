@@ -23,7 +23,7 @@ const TabSide = () => {
       {popularRatePairs.map((ratePair) => (
         <RateLayer
           code={ratePair[0] as string}
-          rate={ratePair[1] as IPopularRate}
+          rates={ratePair[1] as IPopularRate[]}
         />
       ))}
     </Box>

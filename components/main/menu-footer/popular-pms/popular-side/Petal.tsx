@@ -18,6 +18,7 @@ import {
   setActiveSide,
   setPm,
   setPopularCompleted,
+  triggerModal,
 } from "../../../../../redux/mainReducer";
 import { IPm, ISide } from "../../../../../types/selector";
 import CircularIcon from "../../../../shared/CircularIcon";
@@ -111,7 +112,10 @@ function Petal({
   };
 
   const openPmModal = () => {
-    dispatch(setActiveSide(side));
+    batch(() => {
+      dispatch(setActiveSide(side));
+      dispatch(triggerModal(side));
+    });
   };
 
   return (
@@ -154,12 +158,12 @@ function Petal({
           position="absolute"
           w="8"
           right="-2"
-          bottom="-1"
+          bottom="0.5"
           justifyContent="center"
         >
           <Box bgColor="bg.900" borderRadius="lg" px="0.5">
             <Text
-              fontSize="9px"
+              fontSize="8"
               color={`${pm.color.split("_")[1] || pm.color}.200`}
               whiteSpace="nowrap"
             >

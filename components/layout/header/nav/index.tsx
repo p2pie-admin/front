@@ -7,6 +7,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import NavButton from "./NavButton";
+import Link from "next/link";
 import { WeatherSunny } from "@styled-icons/fluentui-system-filled/WeatherSunny";
 import { i18n, useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
@@ -31,6 +32,7 @@ const Nav = () => {
       >
         <FiSun />
       </Button>
+
       <Button
         variant={useColorModeValue("gray", "black")}
         p="1"

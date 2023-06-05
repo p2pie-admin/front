@@ -32,8 +32,8 @@ export type ExchangerId = string;
 
 export interface IPopularDirRates {
   [key: string]: {
-    buy: IPopularRate;
-    sell: IPopularRate;
+    buy: IPopularRate[];
+    sell: IPopularRate[];
   };
 }
 

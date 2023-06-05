@@ -4,6 +4,23 @@ import { IRate } from "../types/rates";
 // customAmount введена в калькуляторе в одно из полей отдаю/получаю
 // ограничить поле ввода до 8 знаков
 
+const symbols = {
+  usd: "$",
+  rub: "₽",
+  uah: "₴",
+  eur: "Є",
+  gbp: "£",
+  gel: "₾",
+  try: "₺",
+  thb: "฿",
+  inr: "₹",
+  jpy: "¥",
+  cny: "¥",
+};
+
+export const codeToSymbol = (code: string) =>
+  symbols[code.toLowerCase() as keyof typeof symbols] || "";
+
 export class FeesCalculator {
   rate: IRate;
   amountInput: AmountInput;

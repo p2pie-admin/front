@@ -16,16 +16,16 @@ const TabsWrapper = () => {
   return (
     <Tabs isFitted variant="solid-rounded" w="100%">
       <Flex justifyContent="center">
-        <Box3D minW="300">
-          <TabList mb="1em" bgColor="transparent" m="0 !important">
+        <Box3D w="calc(100% - 32px)">
+          <TabList mb="2" bgColor="transparent" m="0 !important">
             <Tab
-              _selected={{ bgColor: "green.300", color: "green.800" }}
+              _selected={{ bgColor: "green.200", color: "green.800" }}
               borderRadius="2xl"
             >
               Buy
             </Tab>
             <Tab
-              _selected={{ bgColor: "pink.300", color: "pink.800" }}
+              _selected={{ bgColor: "pink.200", color: "pink.800" }}
               borderRadius="2xl"
             >
               Sell

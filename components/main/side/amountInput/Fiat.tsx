@@ -1,6 +1,7 @@
 import { Fade, Box, Text, HStack } from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import {
+  codeToSymbol,
   formatNumberInput,
   roundAmount,
 } from "../../../../redux/amountsHelper";
@@ -8,11 +9,6 @@ import {
 import { useAppSelector } from "../../../../redux/hooks";
 import { ILimit } from "../../../../types/rates";
 import SideContext from "../../../shared/SideContext";
-
-const symbols = {
-  usd: "$",
-  rub: "₽",
-};
 
 const renderHint = (leftPart: string, amount?: number, currency?: string) => {
   if (!amount) return;
@@ -59,7 +55,7 @@ const Fiat = ({
           {renderHint(
             "~",
             fiat_courses && fiat_courses[fiatCurrencyCode] * value,
-            symbols[fiatCurrencyCode]
+            codeToSymbol(fiatCurrencyCode)
           )}
         </Text>
       )}

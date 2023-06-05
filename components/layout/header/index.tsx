@@ -6,7 +6,6 @@ import {
   useColorModeValue,
   useToken,
 } from "@chakra-ui/react";
-import Shader from "../../shared/Shader";
 import Logo from "./Logo";
 import Nav from "./nav";
 

@@ -114,7 +114,7 @@ export default function BestRates() {
             fontSize={index % 2 ? "sm" : "xs"}
           >
             <Text color={useColorModeValue("secondary.600", "primary.200")}>
-              {ratePair[0].toUpperCase()}
+              {String(ratePair[0]).toUpperCase()}
             </Text>
 
             <Text
