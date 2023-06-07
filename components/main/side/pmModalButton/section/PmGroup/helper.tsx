@@ -52,6 +52,7 @@ export const getPmsFromPmGroup = (pm_group: IPmGroup): IPm[] => {
     const en_name = pm_group.en_name;
     const ru_name = pm_group.ru_name;
     return {
+      pm_group_id: pm_group.id,
       code, // USDTERC20
       en_name, // Tether
       ru_name,

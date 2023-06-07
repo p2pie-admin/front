@@ -61,6 +61,59 @@ export const popularQuery = gql`
     }
   }
 `;
+
+export const pmGroupQuery = gql`
+  query getPmGroup($id: ID) {
+    pmGroup(id: $id) {
+      data {
+        id
+        attributes {
+          en_name
+          ru_name
+          prefix
+          color
+          options {
+            ... on ComponentSelectorCurrency {
+              id
+              currency {
+                data {
+                  id
+                  attributes {
+                    code
+                    accuracy
+                  }
+                }
+              }
+            }
+            ... on ComponentSelectorSubgroup {
+              id
+              name
+              code
+              currency {
+                data {
+                  id
+                  attributes {
+                    code
+                    accuracy
+                  }
+                }
+              }
+            }
+          }
+          icon {
+            data {
+              id
+              attributes {
+                url
+                alternativeText
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 // export const popularQuery = gql`
 //   {
 //     popularDirs {

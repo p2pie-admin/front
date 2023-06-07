@@ -10,6 +10,9 @@ import MenuFooter from "./menu-footer";
 import { useEffect } from "react";
 import { useAppDispatch } from "../../redux/hooks";
 import { decrementSwiper, incrementSwiper } from "../../redux/mainReducer";
+import { useRouter } from "next/router";
+import { batch } from "react-redux";
+import { fetchDirRates, restorePmsFromSlug } from "../../redux/thunks";
 
 const MainPageContent = () => {
   useEffect(() => {
@@ -17,6 +20,14 @@ const MainPageContent = () => {
   }, []);
 
   const dispatch = useAppDispatch();
+  const router = useRouter();
+  const { dir, pm_groups } = router.query;
+  if (typeof dir === "string" && typeof pm_groups === "string") {
+    batch(() => {
+      dispatch(restorePmsFromSlug({ dir, pm_groups }));
+      dispatch(fetchDirRates({ dir }));
+    });
+  }
 
   const handleKeyDown = (e: any) => {
     if (e.keyCode === 37) dispatch(decrementSwiper());
@@ -45,7 +56,9 @@ const MainPageContent = () => {
           <Side />
         </SideContext.Provider>
       </Box>
+
       <LimitsRange />
+
       <Carousel />
 
       <MenuFooter />

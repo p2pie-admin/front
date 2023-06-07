@@ -12,8 +12,9 @@ import {
   fetchPossiblePairs,
   fetchFiat,
   fetchPopularRates,
+  restorePmsFromSlug,
 } from "./thunks";
-import { IFiatRates, IImage, IPm } from "../types/selector";
+import { IFiatRates, IImage, IPm, IPmGroup } from "../types/selector";
 import { IActivePetal, IDir } from "../types/dir";
 import { initialAmountOutputs, getAmountOutputs } from "./helper";
 import Side from "../components/main/side";
@@ -42,6 +43,7 @@ export interface MainState {
   pendingPopularRates: boolean;
   popularRates?: IPopularDirRates;
   modals: { [key: string]: boolean };
+  trash?: any;
 }
 
 const initialState: MainState = {
@@ -232,6 +234,26 @@ export const ratesSlice = createSlice({
     builder.addCase(fetchPopularRates.fulfilled, (state, action) => {
       state.pendingPopularRates = false;
       state.popularRates = action.payload;
+    });
+    builder.addCase(restorePmsFromSlug.fulfilled, (state, action) => {
+      const { givePmGroup, getPmGroup, dir } = action.payload as {
+        givePmGroup?: IPmGroup;
+        getPmGroup?: IPmGroup;
+        dir: string;
+      };
+      const [giveCode, getCode] = dir.split("_");
+      if (giveCode && getCode && givePmGroup && getPmGroup) {
+        state.givePm = getPmByCode({
+          id: "",
+          code: giveCode,
+          pm_group: givePmGroup,
+        });
+        state.getPm = getPmByCode({
+          id: "",
+          code: getCode,
+          pm_group: getPmGroup,
+        });
+      }
     });
   },
 });

@@ -10,10 +10,10 @@ export interface IArticle {
 
 export interface IChapter {
   id: string;
-  title: string;
+  title?: string;
   text: string;
   link?: ILink[];
-  disclaimer: IDisclaimer;
+  disclaimer?: IDisclaimer;
 }
 
 export interface ILink {
@@ -28,5 +28,5 @@ export interface IDisclaimer {
   id: string;
   title: string;
   text: string;
-  color: string;
+  color: "green" | "yellow" | "red";
 }

@@ -27,6 +27,7 @@ interface ISection {
 }
 
 interface IPmGroup {
+  id: string;
   en_name: string;
   ru_name?: string;
   prefix?: string;
@@ -68,6 +69,7 @@ export interface IPmPointer {
 }
 
 interface IPm {
+  pm_group_id: string;
   code: string; // USDTERC20
   currency: ICurrency; // USDT
   en_name: string; // Tether ERC-20

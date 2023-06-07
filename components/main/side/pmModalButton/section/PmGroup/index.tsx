@@ -12,6 +12,7 @@ import {
 } from "../../../../../../redux/thunks";
 import { IPmGroup, IPm } from "../../../../../../types/selector";
 import { setActiveSide, setPm } from "../../../../../../redux/mainReducer";
+import { useRouter } from "next/router";
 
 const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   const dispatch = useAppDispatch();
@@ -22,6 +23,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
           ?.possible_pairs
       : undefined
   );
+  const router = useRouter();
 
   const [givePm, getPm] = useAppSelector((state) => [
     state.main.givePm,
@@ -50,6 +52,17 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
             })
           );
         } else {
+          const dir =
+            activeSide === "get"
+              ? `${oppositePm.code}_${selectedPm.code}`
+              : `${selectedPm.code}_${oppositePm.code}`;
+          const pmGroups =
+            activeSide === "get"
+              ? `${oppositePm.pm_group_id}_${selectedPm.pm_group_id}`
+              : `${selectedPm.pm_group_id}_${oppositePm.pm_group_id}`;
+          router.push(`/?dir=${dir}&pm_groups=${pmGroups}`, undefined, {
+            shallow: true,
+          });
           dispatch(fetchDirRates({ code: selectedPm.code, side: activeSide }));
         }
       }

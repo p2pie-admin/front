@@ -1,6 +1,8 @@
 import {
   Box,
+  Flex,
   Grid,
+  HStack,
   Text,
   useBreakpointValue,
   useColorModeValue,
@@ -10,11 +12,11 @@ import Logo from "./Logo";
 import Nav from "./nav";
 
 const Header = () => {
-  const navGrid = useBreakpointValue({ base: "1fr", lg: "1fr 6fr 1fr" });
+  const maxW = useBreakpointValue({ base: "100%", lg: "980" });
   const [bg300, bg900] = useToken("colors", ["bg.300", "bg.900"]);
 
   return (
-    <Box
+    <Flex
       position="sticky"
       top="0"
       bgColor={useColorModeValue("bg.300", "bg.900")}
@@ -22,27 +24,23 @@ const Header = () => {
       p={2}
       zIndex="modal"
       h="12"
+      justifyContent="center"
       boxShadow={`0 15px 15px -6px ${useColorModeValue(bg300, bg900)}`}
       // bgGradient={useColorModeValue(
       //   `linear(to-t, ${bg100}, rgba(0,0,0,0))`,
       //   `linear(to-t, ${bg900}, rgba(0,0,0,0))`
       // )}
     >
-      <Grid templateColumns={navGrid}>
-        {/*  отступы */}
-        <Box></Box>
-        <Box
-          display="flex"
-          flexDir="row"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Logo />
-          <Nav />
-        </Box>
-        <Box></Box>
-      </Grid>
-    </Box>
+      <HStack
+        justifyContent="space-between"
+        alignItems="center"
+        maxW={maxW}
+        minW={maxW}
+      >
+        <Logo />
+        <Nav />
+      </HStack>
+    </Flex>
   );
 };
 
