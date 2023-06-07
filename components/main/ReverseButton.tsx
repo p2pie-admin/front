@@ -16,6 +16,7 @@ import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { reverseDir } from "../../redux/mainReducer";
 import { batch } from "react-redux";
 import { fetchDirRates } from "../../redux/thunks";
+import { useRouter } from "next/router";
 
 const Patch = () => {
   const [bg10, bg900] = useToken("colors", ["bg.10", "bg.900"]);
@@ -53,8 +54,26 @@ const ReverseButton = () => {
   const bothPmsSelected = useAppSelector(
     (state) => state.main.givePm?.code && state.main.getPm?.code
   );
+  const router = useRouter();
+  const { dir, pm_groups } = router.query;
+  let reverseSlug = () => {};
+  if (typeof dir === "string" && typeof pm_groups === "string") {
+    const reversedDir = `${dir.split("_")[1]}_${dir.split("_")[0]}`;
+    const reversedPmGroups = `${pm_groups.split("_")[1]}_${
+      pm_groups.split("_")[0]
+    }`;
+    reverseSlug = () =>
+      router.push(
+        `/?dir=${reversedDir}&pm_groups=${reversedPmGroups}`,
+        undefined,
+        {
+          shallow: true,
+        }
+      );
+  }
 
   const handleReverseDir = () => {
+    reverseSlug();
     batch(() => {
       dispatch(reverseDir());
       dispatch(fetchDirRates({}));
