@@ -17,7 +17,6 @@ import ReactMarkdown from "react-markdown";
 import { useRef } from "react";
 
 const Article = ({ article }: { article: IArticle }) => {
-  const maxW = useBreakpointValue({ base: "100%", lg: "980" });
   const timestampToDate = (ts?: string) => {
     const [y, m, d] = ts ? ts?.split("T")[0]?.split("-") : ["-", "-", "-"];
     return `${d}.${m}.${y}`;
@@ -32,16 +31,7 @@ const Article = ({ article }: { article: IArticle }) => {
     ref.current.scrollIntoView({ behavior: "smooth", block: "center" });
   //https://dev.to/
   return (
-    <Box
-      // p="4"
-      // bgColor={useColorModeValue("bg.100", "bg.800")}
-      // boxShadow="lg"
-      mt="4"
-      // borderRadius="2xl"
-      minH="50vh"
-      maxW={maxW}
-      p="4"
-    >
+    <Box>
       <Text fontSize={{ base: "3xl", md: "5xl" }} fontWeight="bold">
         {article.header}
       </Text>
@@ -58,11 +48,15 @@ const Article = ({ article }: { article: IArticle }) => {
 
         {refChapters.map((chapter) => (
           <Text
+            cursor="pointer"
             fontWeight="bold"
             color="primary.200"
+            _hover={{
+              color: "primary.50",
+            }}
             onClick={() => executeScroll(chapter.ref)}
           >
-            {`- ${chapter.title}`}
+            {`• ${chapter.title}`}
           </Text>
         ))}
       </Box>
@@ -71,10 +65,15 @@ const Article = ({ article }: { article: IArticle }) => {
         {refChapters.map((chapter) => {
           return (
             <>
-              <Text fontSize="lg" fontWeight="bold" mt="4" ref={chapter.ref}>
-                {chapter.title || ""}
-              </Text>
-              <ReactMarkdown>{chapter.text}</ReactMarkdown>
+              <HStack fontSize="lg" fontWeight="bold">
+                <Text color="primary.200">#</Text>
+                <Text mt="4" ref={chapter.ref}>
+                  {chapter.title || ""}
+                </Text>
+              </HStack>
+              <Box py="1" color="bg.300">
+                <ReactMarkdown>{chapter.text}</ReactMarkdown>
+              </Box>
               {chapter.disclaimer && (
                 <Disclaimer disclaimer={chapter.disclaimer} />
               )}

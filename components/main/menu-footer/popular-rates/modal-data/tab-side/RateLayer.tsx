@@ -1,4 +1,4 @@
-import { useAppSelector } from "../../../../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../../../redux/hooks";
 import { Box3D } from "../../../../../../styles/theme/wrappers";
 import { IPopularRate } from "../../../../../../types/rates";
 import {
@@ -28,6 +28,8 @@ import { capitalize } from "../../../../side/pmModalButton/section/PmGroup/helpe
 import { useContext } from "react";
 import SideContext from "../../../../../shared/SideContext";
 import CircularIcon from "../../../../../shared/CircularIcon";
+import { useRouter } from "next/router";
+import { triggerModal } from "../../../../../../redux/mainReducer";
 
 const RateLayer = ({
   code,
@@ -36,6 +38,8 @@ const RateLayer = ({
   code: string;
   rates: IPopularRate[];
 }) => {
+  const dispatch = useAppDispatch();
+  const router = useRouter();
   const pms = useAppSelector((state) => state.main.popularPms);
   const findPmByCode = (c: string) =>
     pms.find((pm) => pm.code.toUpperCase() === c);
@@ -67,6 +71,10 @@ const RateLayer = ({
               const course = `~ ${codeToSymbol(
                 pm.currency.code
               )} ${formatNumberInput(roundAmount(rate.course))}`;
+              const slug =
+                side === "buy"
+                  ? `/?dir=${cryptoPm.code}_${pm.code}&pm_groups=${cryptoPm.pm_group_id}_${pm.pm_group_id}`
+                  : `/?dir=${pm.code}_${cryptoPm.code}&pm_groups=${pm.pm_group_id}_${cryptoPm.pm_group_id}`;
               return (
                 <Tr>
                   <Td>
@@ -84,6 +92,10 @@ const RateLayer = ({
                       mt="1"
                       minH="6"
                       borderRadius="lg"
+                      onClick={() => {
+                        router.push(slug);
+                        dispatch(triggerModal("popular-rates"));
+                      }}
                     >
                       {`${capitalize(
                         side

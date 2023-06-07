@@ -3,19 +3,24 @@ import Header from "./header";
 import LayoutMeta from "./LayoutMeta";
 import { useRouter } from "next/router";
 import Footer from "./footer";
-import { Box, Flex, useColorModeValue, useToken } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  useBreakpointValue,
+  useColorModeValue,
+  useToken,
+  VStack,
+} from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { decrementSwiper, incrementSwiper } from "../../redux/mainReducer";
 
 const Layout = ({ children }: { children: ReactChild }) => {
-  const router = useRouter();
-
+  const maxW = useBreakpointValue({ base: "100%", lg: "980" });
   const isScrollLocked = useAppSelector((state) => state.main.isScrollLocked);
 
   return (
     <>
-      <Flex // careful! populars may stop working!
-        flexDir="column"
+      <VStack // careful! populars may stop working!
         justifyContent="space-between"
         w="100%"
         pb="0 !important"
@@ -31,13 +36,12 @@ const Layout = ({ children }: { children: ReactChild }) => {
         }}
       >
         <Header />
-        <Box position="relative">
-          <Flex flexDir="column" alignItems="center">
-            {children}
-          </Flex>
-        </Box>
+
+        <VStack alignItems="center" mt="4" w="100%" maxW={maxW} p="4">
+          {children}
+        </VStack>
         <Footer />
-      </Flex>
+      </VStack>
     </>
   );
 };

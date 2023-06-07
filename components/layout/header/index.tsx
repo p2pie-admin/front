@@ -21,9 +21,9 @@ const Header = () => {
       top="0"
       bgColor={useColorModeValue("bg.300", "bg.900")}
       w="100%"
-      p={2}
+      px="4"
+      pt="2"
       zIndex="modal"
-      h="12"
       justifyContent="center"
       boxShadow={`0 15px 15px -6px ${useColorModeValue(bg300, bg900)}`}
       // bgGradient={useColorModeValue(
