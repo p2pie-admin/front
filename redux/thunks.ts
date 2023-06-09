@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IPopularDirRates, IRate } from "../types/rates";
 import axios from "axios";
 
-import { pmGroupQuery, popularQuery } from "../services/initialQueries";
+import { pmGroupQuery, pmsQuery } from "../services/initialQueries";
 import initFetcher from "../services/graphql";
 import { MainState } from "./mainReducer";
 import { IPmPointer } from "../types/selector";
@@ -105,20 +105,17 @@ export const fetchPossiblePairs = createAsyncThunk(
   }
 );
 
-export const fetchPopular = createAsyncThunk(
-  "initial/fetchPopular",
-  async () => {
-    const fetcher = initFetcher();
-    const response = await fetcher(popularQuery);
-    return response?.pms as IPmPointer[];
-  }
-);
-
-export const fetchPms = createAsyncThunk("initial/fetchPopular", async () => {
+export const fetchPms = createAsyncThunk("initial/fetchPms", async () => {
   const fetcher = initFetcher();
-  const response = await fetcher(popularQuery);
+  const response = await fetcher(pmsQuery);
   return response?.pms as IPmPointer[];
 });
+
+// export const fetchPms = createAsyncThunk("initial/fetchPms", async () => {
+//   const fetcher = initFetcher();
+//   const response = await fetcher(pmsQuery);
+//   return response?.pms as IPmPointer[];
+// });
 
 export const fetchPopularRates = createAsyncThunk(
   "rates/fetchPopularRates",

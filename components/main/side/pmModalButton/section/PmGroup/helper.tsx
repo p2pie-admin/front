@@ -65,8 +65,8 @@ export const getPmsFromPmGroup = (pm_group: IPmGroup): IPm[] => {
   });
 };
 
-export const getPmByCode = (popular: IPmPointer): IPm | undefined => {
-  const { code, pm_group } = popular;
+export const getPmByCode = (pmPointer: IPmPointer): IPm | undefined => {
+  const { code, pm_group } = pmPointer;
   if (!pm_group?.options) return;
   const pms = getPmsFromPmGroup(pm_group);
   if (!code) return pms[0];

@@ -1,22 +1,23 @@
-import React, { ReactChild } from "react";
+import React, { ReactChild, useEffect } from "react";
 import Header from "./header";
-import LayoutMeta from "./LayoutMeta";
-import { useRouter } from "next/router";
 import Footer from "./footer";
-import {
-  Box,
-  Flex,
-  useBreakpointValue,
-  useColorModeValue,
-  useToken,
-  VStack,
-} from "@chakra-ui/react";
+import { useBreakpointValue, VStack } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { decrementSwiper, incrementSwiper } from "../../redux/mainReducer";
+import { batch } from "react-redux";
+import { fetchPms, fetchFiat } from "../../redux/thunks";
 
 const Layout = ({ children }: { children: ReactChild }) => {
   const maxW = useBreakpointValue({ base: "100%", lg: "980" });
   const isScrollLocked = useAppSelector((state) => state.main.isScrollLocked);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    batch(() => {
+      dispatch(fetchPms());
+      dispatch(fetchFiat());
+    });
+  }, []);
 
   return (
     <>
@@ -37,7 +38,7 @@ const Layout = ({ children }: { children: ReactChild }) => {
       >
         <Header />
 
-        <VStack alignItems="center" mt="4" w="100%" maxW={maxW} p="4">
+        <VStack alignItems="center" mt="4" w="100%" maxW={maxW}>
           {children}
         </VStack>
         <Footer />

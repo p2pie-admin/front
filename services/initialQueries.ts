@@ -1,8 +1,8 @@
 import { gql } from "graphql-request";
 
-export const popularQuery = gql`
+export const pmsQuery = gql`
   {
-    pms(filters: { popular_as: { ne: "none" } }) {
+    pms {
       data {
         id
         attributes {
@@ -114,7 +114,7 @@ export const pmGroupQuery = gql`
     }
   }
 `;
-// export const popularQuery = gql`
+// export const pmsQuery = gql`
 //   {
 //     popularDirs {
 //       data {

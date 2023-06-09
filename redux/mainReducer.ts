@@ -8,7 +8,7 @@ import {
   fetchDirRates,
   fetchAllDirRates,
   fetchFiatByCurrencyCode,
-  fetchPopular,
+  fetchPms,
   fetchPossiblePairs,
   fetchFiat,
   fetchPopularRates,
@@ -194,7 +194,7 @@ export const ratesSlice = createSlice({
   },
   //////////////////////////////////////////////////////////////////////////////////////////////////////
   extraReducers: (builder) => {
-    builder.addCase(fetchPopular.fulfilled, (state, action) => {
+    builder.addCase(fetchPms.fulfilled, (state, action) => {
       state.popularPms = action.payload.reduce((popularPms: IPm[], popular) => {
         const pm = getPmByCode(popular);
         return pm ? [...popularPms, pm] : popularPms;

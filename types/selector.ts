@@ -65,6 +65,7 @@ interface IFiatRates {
 export interface IPmPointer {
   id: string;
   code: string;
+  popular_as?: "crypto" | "fiat" | "none";
   pm_group: IPmGroup;
 }
 
