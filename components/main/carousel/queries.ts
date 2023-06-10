@@ -2,7 +2,7 @@ import { gql } from "graphql-request";
 
 export const TopParametersQuery = gql`
   {
-    topParameters {
+    topParameters(pagination: { start: 0, limit: 100 }) {
       data {
         id
         attributes {
@@ -31,7 +31,7 @@ export const TopParametersQuery = gql`
 
 export const ExchangerParametersQuery = gql`
   {
-    exchangerParameters {
+    exchangerParameters(pagination: { start: 0, limit: 100 }) {
       data {
         id
         attributes {
@@ -58,7 +58,7 @@ export const ExchangerParametersQuery = gql`
 
 export const DirectionParametersQuery = gql`
   {
-    directionParameters {
+    directionParameters(pagination: { start: 0, limit: 100 }) {
       data {
         id
         attributes {

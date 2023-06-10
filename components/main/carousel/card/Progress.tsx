@@ -84,7 +84,7 @@ const SmoothProgress = () => {
       alignItems="end"
       position="absolute"
       left="0"
-      bottom="2"
+      bottom="2.5"
       w="100%"
       h="2"
       zIndex="3"
@@ -113,19 +113,6 @@ const SmoothProgress = () => {
         ))}
       </HStack>
     </HStack>
-    // <Progress
-    //   transition="width 0.3s ease"
-    //   value={smoothProgressValue}
-    //   alignSelf="center"
-    //   bg={useColorModeValue("bg.100", "bg.700")}
-    //   flex={1}
-    //   h="1px"
-    //   sx={{
-    //     "> div": {
-    //       backgroundColor: useColorModeValue("primary.400", "pink00"),
-    //     },
-    //   }}
-    // />
   );
 };
 

@@ -5,6 +5,8 @@ import {
   Text,
   useToken,
   Button,
+  Box,
+  HStack,
 } from "@chakra-ui/react";
 import StarRatings from "react-star-ratings";
 
@@ -32,19 +34,19 @@ const ExchangerNameRating = ({
   ]);
 
   return (
-    <VStack align="start" w="100%">
+    <HStack h="40px" px="2" position="relative">
       <Text
-        fontSize="2xl"
+        fontSize={exchangerName.length > 12 ? "xl" : "2xl"}
         textAlign="left"
         color={useColorModeValue("bg.600", "bg.100")}
         fontWeight="bold"
         w="full"
-        mb="-3"
         whiteSpace="nowrap"
       >
         {exchangerName}
       </Text>
-      <Grid w="fit-content" gridGap="2" templateColumns="1fr 40px 40px">
+      {/* <Text>TAG</Text> */}
+      <HStack position="absolute" top="10" minW="180">
         <StarRatings
           rating={rating}
           starRatedColor={useColorModeValue(secondary600, primary200)}
@@ -60,8 +62,8 @@ const ExchangerNameRating = ({
         <Text flexWrap="nowrap" fontSize="sm" mt="1" color="bg.400">
           {`${rating}/5`}
         </Text>
-      </Grid>
-    </VStack>
+      </HStack>
+    </HStack>
   );
 };
 

@@ -11,6 +11,7 @@ import {
   Grid,
   useColorModeValue,
   Button,
+  Flex,
 } from "@chakra-ui/react";
 import { BsFullscreen, BsQuestionCircle } from "react-icons/bs";
 import StarRatings from "react-star-ratings";
@@ -23,6 +24,7 @@ import { triggerModal } from "../../../../redux/mainReducer";
 import ExchTag from "./ExchTag";
 import { MdQueryStats } from "react-icons/md";
 import { BiDotsVerticalRounded } from "react-icons/bi";
+import SmoothProgress from "./Progress";
 
 //const ExchangerCard = ({ top, rate }: { top: ITop; rate: IRate }) => {
 const ExchangerCard = ({
@@ -44,7 +46,8 @@ const ExchangerCard = ({
   const buttonVariant = useColorModeValue("light", "dark");
 
   return (
-    <Box
+    <VStack
+      spacing="2"
       bgColor={color1}
       border="2px dashed"
       borderColor={color2}
@@ -52,9 +55,8 @@ const ExchangerCard = ({
       pos="relative"
       key={dirRate.exchangerId}
       w="100%"
-      px="4"
-      pb="10"
-      pt="2"
+      p="2"
+      pb="24px"
       overflow="hidden"
       _before={{
         content: '""',
@@ -69,40 +71,53 @@ const ExchangerCard = ({
         opacity: "0.15",
       }}
     >
-      <HStack>
+      <HStack justifyContent="space-between" w="100%">
         <ExchangerNameRating
           exchangerName={capitalize(dirRate.name)}
           rating={rating}
         />
-        <Button
-          p="1"
-          variant={buttonVariant}
-          onClick={() => dispatch(triggerModal("exchange-info"))}
-        >
-          <MdQueryStats size="1.5rem" />
-        </Button>
-        <Button
-          p="1"
-          variant={buttonVariant}
-          onClick={() => dispatch(triggerModal("exchange-info"))}
-        >
-          <BiDotsVerticalRounded size="1.5rem" />
-        </Button>
+        <HStack spacing="2">
+          <Button
+            p="1"
+            zIndex="3"
+            variant={buttonVariant}
+            onClick={() => dispatch(triggerModal("exchange-info"))}
+          >
+            <MdQueryStats size="1.5rem" />
+          </Button>
+          <Button
+            p="1"
+            zIndex="3"
+            variant={buttonVariant}
+            onClick={() => dispatch(triggerModal("exchange-info"))}
+          >
+            <BiDotsVerticalRounded size="1.5rem" />
+          </Button>
+        </HStack>
       </HStack>
 
-      <HStack mt="4" justifyContent="end">
-        <Wrap>
-          {parameters.map((parameter) => (
-            <ExchTag parameter={parameter} key={parameter.id} />
-          ))}
-        </Wrap>
+      <HStack
+        spacing="2"
+        flexWrap="wrap-reverse"
+        justifyContent="end"
+        alignItems="end"
+        w="100%"
+        h="58px"
+      >
+        {parameters.map((parameter) => (
+          <ExchTag parameter={parameter} key={parameter.id} />
+        ))}
       </HStack>
+
+      <Flex mx="auto">
+        <SmoothProgress />
+      </Flex>
 
       <Fade in={true}>
         <Wave shift={shift1} />
         <Wave shift={shift2} />
       </Fade>
-    </Box>
+    </VStack>
   );
 };
 export default ExchangerCard;

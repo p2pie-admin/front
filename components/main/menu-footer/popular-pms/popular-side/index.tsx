@@ -19,8 +19,9 @@ import SideContext from "../../../../shared/SideContext";
 
 function PopularSide() {
   //const activeSide = useAppSelector((state) => state.main.activeSide);
-  const side = useContext(SideContext) as "give" | "get";
-  const popularPms = useAppSelector((state) => state.main.popularPms);
+  const pms = useAppSelector((state) =>
+    state.main.pms.filter((pm) => pm.popular_as && pm.popular_as !== "none")
+  );
   // const completed = useAppSelector(
   //   (state) => state.main.popularCompleted === side
   // );
@@ -44,7 +45,7 @@ function PopularSide() {
         renderLayer={({ isOpen, layerProps }) => {
           return (
             <AnimatePresence>
-              {isOpen && <Petals {...layerProps} popularPms={popularPms} />}
+              {isOpen && <Petals {...layerProps} pms={pms} />}
             </AnimatePresence>
           );
         }}
@@ -84,7 +85,7 @@ function PopularSide() {
     //     renderLayer={({ isOpen, layerProps }) => {
     //       return (
     //         <AnimatePresence>
-    //           {isOpen && <Petals {...layerProps} popularPms={popularPms} />}
+    //           {isOpen && <Petals {...layerProps} pms={pms} />}
     //         </AnimatePresence>
     //       );
     //     }}

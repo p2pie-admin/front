@@ -74,6 +74,7 @@ const ReverseButton = () => {
 
   const handleReverseDir = () => {
     reverseSlug();
+    //router.push("/?dir=", undefined, { shallow: true });
     batch(() => {
       dispatch(reverseDir());
       dispatch(fetchDirRates({}));

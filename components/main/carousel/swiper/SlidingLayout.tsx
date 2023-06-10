@@ -1,4 +1,4 @@
-import { Flex, VStack } from "@chakra-ui/react";
+import { Box, Flex, VStack } from "@chakra-ui/react";
 import { motion, useAnimation, useMotionValue } from "framer-motion";
 import { useState, useRef, useCallback, useEffect } from "react";
 import { batch } from "react-redux";
@@ -99,7 +99,7 @@ function SlidingLayout({
 
   return (
     <>
-      {itemWidth && (
+      {!!itemWidth && (
         <VStack
           ref={node}
           spacing={4}

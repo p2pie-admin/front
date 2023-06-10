@@ -35,6 +35,27 @@ interface IParamData {
   ru_name?: string;
 }
 
+const a = {
+  exchangerId: "987",
+  name: "BroExchange",
+  admin_rating: null,
+  tag: null,
+  logo: null,
+  course: 4.475853011295575e-7,
+  min: {
+    give: 0.04,
+    get: 89368.43971205759,
+  },
+  max: {
+    give: 1.3427559,
+    get: 2999999.9924289905,
+  },
+  reserve: {
+    give: 1.9425202069022796,
+    get: 4340000,
+  },
+  parameterCodes: ["manual"],
+};
 const Carousel = () => {
   //const pendingDirRates = useAppSelector((state) => state.main.pendingDirRates);
   const color1 = useColorModeValue("bg.10", "bg.900");
@@ -87,50 +108,22 @@ const Carousel = () => {
   ];
 
   // вынесен наружу, иначе все внутри ErrorWrapper начинает высчитываться и выдает ошибку
-
+  const isError = !pendingDirRates && (!dirRates || !dirRates.length);
   return (
     <CustomBox3D mb="4">
-      <ErrorWrapper
-        isError={!dirRates || !dirRates.length}
-        isLoading={pendingDirRates}
-        primaryMessage="No rates available!"
-        secondaryMessage="check your network connection"
-        linkMessage="Report a problem"
-      >
-        <Swiper gap={12}>
-          {dirRates &&
-            dirRates.map((dirRate, index) => {
-              // topsData?.tops.filter((t) =>
-              //   dirRate?.tags?.find((tag) => tag === t.code)
-              // ) || [];
-              const parameters = allParameters
-                .filter((p) =>
-                  dirRate?.parameterCodes?.find((code) => code === p.code)
-                )
-                .map((p) => ({
-                  ...p.parameter,
-                  en_name: p.en_name,
-                  ru_name: p.ru_name,
-                }));
-              // parametersData?.parameters.filter(
-              //   (p) =>
-              //     dirRate.param &&
-              //     dirRate.param
-              //       .split(",")
-              //       .find((exchParam) => exchParam === p.code)
-              // ) || [];
-              return (
-                <ExchangerCard
-                  key={dirRate.exchangerId + index}
-                  dirRate={dirRate}
-                  parameters={parameters}
-                />
-              );
-            })}
-        </Swiper>
+      <Box minH="172px">
+        <ErrorWrapper
+          isError={isError}
+          isLoading={pendingDirRates}
+          primaryMessage="No rates available!"
+          secondaryMessage="check your network connection"
+          linkMessage="Report a problem"
+        >
+          <Swiper gap={12} dirRates={dirRates} allParameters={allParameters} />
+        </ErrorWrapper>
+      </Box>
 
-        <SwiperButtons />
-      </ErrorWrapper>
+      {!isError && <SwiperButtons />}
     </CustomBox3D>
   );
 };

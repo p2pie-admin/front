@@ -4,6 +4,7 @@ import {
   HStack,
   Image,
   useColorModeValue,
+  WrapItem,
 } from "@chakra-ui/react";
 
 import { IoInformation } from "react-icons/io5";
@@ -47,6 +48,7 @@ const ExchTag = ({ parameter }: { parameter: IParam }) => {
       openDelay={500}
     >
       <HStack
+        h="25"
         filter={filter}
         zIndex="4"
         position="relative"

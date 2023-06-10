@@ -2,11 +2,12 @@ import { gql } from "graphql-request";
 
 export const pmsQuery = gql`
   {
-    pms {
+    pms(pagination: { start: 0, limit: 1000 }) {
       data {
         id
         attributes {
           code
+          popular_as
           pm_group {
             data {
               id

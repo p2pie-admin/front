@@ -40,7 +40,7 @@ const RateLayer = ({
 }) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const pms = useAppSelector((state) => state.main.popularPms);
+  const pms = useAppSelector((state) => state.main.pms);
   const findPmByCode = (c: string) =>
     pms.find((pm) => pm.code.toUpperCase() === c);
   const cryptoPm = findPmByCode(code);

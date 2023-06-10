@@ -16,7 +16,8 @@ export const CustomBox3D = (props: any) => {
       {...chakraProps}
       w="100%"
       bgColor={useColorModeValue("bg.10", "bg.900")}
-      p="2"
+      py="4"
+      px="2"
     >
       {props.children}
     </Box3D>

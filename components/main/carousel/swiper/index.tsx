@@ -5,8 +5,9 @@ import { useMediaQuery, useTheme, Flex } from "@chakra-ui/react";
 import Item from "./item";
 import Carcas from "./Carcas";
 import SlidingLayout from "./SlidingLayout";
+import ExchangerCard from "../card";
 
-export default function Swiper({ children, gap }) {
+export default function Swiper({ dirRates, gap, allParameters }) {
   const [trackIsActive, setTrackIsActive] = useState(false);
   const [multiplier, setMultiplier] = useState(0.35);
   const [sliderWidth, setSliderWidth] = useState(0);
@@ -17,8 +18,8 @@ export default function Swiper({ children, gap }) {
   const initSliderWidth = useCallback((width) => setSliderWidth(width), []);
 
   const positions = useMemo(
-    () => children.map((_, index) => -Math.abs((itemWidth + gap) * index)),
-    [children, itemWidth, gap]
+    () => dirRates.map((_, index) => -Math.abs((itemWidth + gap) * index)),
+    [dirRates, itemWidth, gap]
   );
 
   useEffect(() => {
@@ -59,15 +60,29 @@ export default function Swiper({ children, gap }) {
   return (
     <Carcas {...carcasProps}>
       <SlidingLayout {...slidingLayoutProps}>
-        {children.map((child, index) => {
+        {dirRates.map((dirRate, index) => {
+          const parameters = allParameters
+            .filter((p) =>
+              dirRate?.parameterCodes?.find((code) => code === p.code)
+            )
+            .map((p) => ({
+              ...p.parameter,
+              en_name: p.en_name,
+              ru_name: p.ru_name,
+            }));
+
           return (
             <Item
               {...itemProps}
-              exIdIndexPair={[child.key, index]}
+              exIdIndexPair={[dirRate.key, index]}
               index={index}
               key={index}
             >
-              {child}
+              <ExchangerCard
+                key={dirRate.exchangerId + index}
+                dirRate={dirRate}
+                parameters={parameters}
+              />
             </Item>
           );
         })}

@@ -2,7 +2,7 @@ import { gql } from "graphql-request";
 
 export const articleCodesQuery = gql`
   {
-    articles {
+    articles(pagination: { start: 0, limit: 1000 }) {
       data {
         id
         attributes {

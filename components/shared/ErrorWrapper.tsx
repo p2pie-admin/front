@@ -40,7 +40,7 @@ const Error = ({
       <Text color="bg.400" fontSize="sm" mb="1">
         {secondaryMessage}
       </Text>
-      {linkMessage && (
+      {!!linkMessage && (
         <LinkButton
           href={String(process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT)}
           message={linkMessage}
@@ -60,7 +60,7 @@ const ErrorWrapper = (props: {
   linkMessage?: string;
 }) => {
   const { isError, isLoading, children } = props;
-
+  if (isError) return <Error {...props} />;
   if (isLoading)
     return (
       <Center
@@ -74,7 +74,7 @@ const ErrorWrapper = (props: {
         <Spinner size="xl" color="bg.500" />
       </Center>
     );
-  if (isError) return <Error {...props} />;
+
   return <>{children}</>;
 };
 

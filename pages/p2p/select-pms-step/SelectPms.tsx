@@ -3,7 +3,7 @@ import { useAppSelector } from "../../../redux/hooks";
 
 const SelectPms = ({ currencyCode }: { currencyCode: string }) => {
   const pmsByCurrency = useAppSelector((state) =>
-    state.main.popularPms.filter(
+    state.main.pms.filter(
       (pm) => pm.currency.code.toUpperCase() === currencyCode.toUpperCase()
     )
   );

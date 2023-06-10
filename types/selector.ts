@@ -61,11 +61,11 @@ interface IFiatRates {
 }
 
 /// дополнительный тип
-
+export type IPopularAs = "crypto" | "fiat" | "none";
 export interface IPmPointer {
   id: string;
   code: string;
-  popular_as?: "crypto" | "fiat" | "none";
+  popular_as?: IPopularAs;
   pm_group: IPmGroup;
 }
 
@@ -81,6 +81,7 @@ interface IPm {
   possible_pairs?: string[];
   tag?: string;
   color: string;
+  popular_as?: IPopularAs;
 }
 
 type ISide = "give" | "get";

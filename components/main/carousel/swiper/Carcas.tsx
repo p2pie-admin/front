@@ -6,13 +6,14 @@ import {
   Progress,
   Text,
   Slider,
+  VStack,
 } from "@chakra-ui/react";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { BiChevronRight } from "react-icons/bi";
 import useBoundingRect from "../hooks/useBoundingRect";
 import percentage from "../utils/percentage";
 import useAnimateNumber from "use-animate-number";
-import SmoothProgress from "./Progress";
+import SmoothProgress from "../card/Progress";
 import LimitsRange from "../../limits";
 import {
   decrementSwiper,
@@ -83,10 +84,6 @@ function Carcas({
       >
         {children}
       </Box>
-
-      <Flex w={`${itemWidth - 50}px`} mx="auto">
-        <SmoothProgress />
-      </Flex>
     </Box>
   );
 }

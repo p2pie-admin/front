@@ -3,6 +3,7 @@ import {
   IPmGroup,
   IPm,
   IPmPointer,
+  IPopularAs,
 } from "../../../../../../types/selector";
 
 export const capitalize = (s: string | undefined) => {
@@ -41,7 +42,10 @@ export const singlePmHasUnmetPairs = (pm: IPm, possiblePairs?: string[]) => {
   return true;
 };
 
-export const getPmsFromPmGroup = (pm_group: IPmGroup): IPm[] => {
+export const getPmsFromPmGroup = (
+  pm_group: IPmGroup,
+  popular_as?: IPopularAs
+): IPm[] => {
   return pm_group.options.map((option) => {
     const code = getOptionCode(option, pm_group?.prefix);
     const subgroup_name = option.name && option.name.toUpperCase();
@@ -61,14 +65,15 @@ export const getPmsFromPmGroup = (pm_group: IPmGroup): IPm[] => {
       icon: pm_group.icon,
       color: pm_group.color,
       tag,
+      popular_as,
     };
   });
 };
 
 export const getPmByCode = (pmPointer: IPmPointer): IPm | undefined => {
-  const { code, pm_group } = pmPointer;
+  const { code, pm_group, popular_as } = pmPointer;
   if (!pm_group?.options) return;
-  const pms = getPmsFromPmGroup(pm_group);
+  const pms = getPmsFromPmGroup(pm_group, popular_as);
   if (!code) return pms[0];
   return pms.find((pm) => pm.code.toLowerCase() == code.toLowerCase());
 };

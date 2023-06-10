@@ -35,7 +35,7 @@ export interface MainState {
   swiperIdVisible: number;
   activePopularSide?: string;
   selectedPopular?: IPm;
-  popularPms: IPm[];
+  pms: IPm[];
   popularCompleted?: ISide;
   isScrollLocked: boolean;
   activePetal?: IActivePetal;
@@ -52,7 +52,7 @@ const initialState: MainState = {
   pendingDirRates: false,
   amountOutputs: initialAmountOutputs,
   swiperIdVisible: 0,
-  popularPms: [],
+  pms: [],
   isScrollLocked: false,
   bestRatesPreview: {},
   pendingPopularRates: false,
@@ -195,9 +195,9 @@ export const ratesSlice = createSlice({
   //////////////////////////////////////////////////////////////////////////////////////////////////////
   extraReducers: (builder) => {
     builder.addCase(fetchPms.fulfilled, (state, action) => {
-      state.popularPms = action.payload.reduce((popularPms: IPm[], popular) => {
-        const pm = getPmByCode(popular);
-        return pm ? [...popularPms, pm] : popularPms;
+      state.pms = action.payload.reduce((pms: IPm[], pointer) => {
+        const pm = getPmByCode(pointer);
+        return pm ? [...pms, pm] : pms;
       }, []);
     });
 
