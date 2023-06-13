@@ -5,6 +5,7 @@ import {
   Text,
   Flex,
   useColorModeValue,
+  HStack,
 } from "@chakra-ui/react";
 import NavButton from "./NavButton";
 import Link from "next/link";
@@ -12,6 +13,7 @@ import { WeatherSunny } from "@styled-icons/fluentui-system-filled/WeatherSunny"
 import { i18n, useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import { FiSun } from "react-icons/fi";
+import Location from "./location";
 
 const Nav = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -24,7 +26,7 @@ const Nav = () => {
     });
   };
   return (
-    <Flex w="24" justifyContent="space-between">
+    <HStack spacing="2">
       <Button
         variant={useColorModeValue("gray", "black")}
         p="1"
@@ -41,12 +43,14 @@ const Nav = () => {
         <Text>{i18n.language === "en" ? "Ru" : "En"}</Text>
       </Button>
 
+      <Location />
+
       {/* <NavButton handleClick={() => toggleColorMode()} icon={WeatherSunny} />
       <NavButton
         handleClick={changeLanguageHandler}
         icon={i18n.language === "en" ? "Ru" : "En"}
       /> */}
-    </Flex>
+    </HStack>
   );
 };
 

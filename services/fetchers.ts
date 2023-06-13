@@ -1,9 +1,10 @@
+import axios from "axios";
 import { GraphQLClient } from "graphql-request";
 import normalize from "./normalizer";
 
 // // more about https://swr.vercel.app/docs/data-fetching
 
-const initFetcher = (variables = {}) => {
+export const initCMSFetcher = (variables = {}) => {
   const env = process.env.NODE_ENV;
   const url =
     env == "production"
@@ -18,4 +19,15 @@ const initFetcher = (variables = {}) => {
   };
 };
 
-export default initFetcher;
+export const initParserFetcher = () => {
+  const env = process.env.NODE_ENV;
+  const url =
+    env == "production"
+      ? process.env.NEXT_PUBLIC_COURSE_FILTER_PROD_URL
+      : process.env.NEXT_PUBLIC_COURSE_FILTER_DEV_URL;
+
+  return async (slug: string) => {
+    const { data } = await axios.get(url + "/" + slug);
+    return data;
+  };
+};

@@ -1,15 +1,14 @@
+import { Highlight } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
 import useSWR from "swr";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { setActiveSide } from "../../../../redux/mainReducer";
-import initFetcher from "../../../../services/graphql";
+import { initCMSFetcher } from "../../../../services/fetchers";
 import { ISelector } from "../../../../types/selector";
 import CustomModal from "../../../shared/CustomModal";
 
 import Selector from "./Selector";
 import { selectorQuery } from "./SelectorQuery";
-
-const fetcher = initFetcher();
 
 const SelectorModal = () => {
   // const gradient = useColorModeValue(
@@ -17,26 +16,33 @@ const SelectorModal = () => {
   //   "linear-gradient(0deg, rgba(88,79,98,1) 20%, rgba(88,79,98,0) 100%);"
   // );
 
-  const { data, error } = useSWR(selectorQuery, fetcher) as {
-    data: { selector: ISelector };
-    error: any;
-  };
-
-  const { i18n } = useTranslation();
+  // const { i18n } = useTranslation();
 
   const activeSide = useAppSelector((state) => state.main.activeSide);
-  const header = activeSide
-    ? data?.selector[`${i18n.language as "en" | "ru"}_${activeSide}_header`]
-    : "✓";
+
+  const header =
+    activeSide === "give" ? (
+      <Highlight
+        query="sell"
+        styles={{ px: "1", py: "0", rounded: "xl", mx: "2", bg: "pink.200" }}
+      >
+        {`What do you sell?`}
+      </Highlight>
+    ) : (
+      <Highlight
+        query="buy"
+        styles={{ px: "1", py: "0", rounded: "xl", mx: "2", bg: "green.200" }}
+      >
+        {`What do you buy?`}
+      </Highlight>
+    );
+  // const header = activeSide
+  //   ? data?.selector[`${i18n.language as "en" | "ru"}_${activeSide}_header`]
+  //   : "✓";
 
   return (
-    <CustomModal
-      id={String(activeSide)}
-      header={header}
-      isLoading={!data}
-      isError={!!error}
-    >
-      <Selector data={data} />
+    <CustomModal id={String(activeSide)} header={header}>
+      <Selector />
     </CustomModal>
   );
 };

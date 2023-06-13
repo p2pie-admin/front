@@ -15,20 +15,21 @@ import { batch } from "react-redux";
 import { fetchDirRates, restorePmsFromSlug } from "../../redux/thunks";
 
 const MainPageContent = () => {
+  const dispatch = useAppDispatch();
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown, true);
   }, []);
 
-  const dispatch = useAppDispatch();
   const router = useRouter();
+
   const { dir, pm_groups } = router.query;
+
   if (typeof dir === "string" && typeof pm_groups === "string") {
     batch(() => {
       dispatch(restorePmsFromSlug({ dir, pm_groups }));
       dispatch(fetchDirRates({ dir }));
     });
   }
-
   const handleKeyDown = (e: any) => {
     if (e.keyCode === 37) dispatch(decrementSwiper());
     if (e.keyCode === 39) dispatch(incrementSwiper());

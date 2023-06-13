@@ -14,11 +14,7 @@ import LinkButton from "./LinkButton";
 import { FaTelegramPlane } from "react-icons/fa";
 import { IoWarningOutline } from "react-icons/io5";
 
-const Error = ({
-  primaryMessage = "",
-  secondaryMessage = "",
-  linkMessage = "",
-}) => {
+const Error = ({ primaryMessage = "", secondaryMessage = "" }) => {
   const iconColor = useColorModeValue("orange.400", "yellow.200");
   const mainColor = useColorModeValue("bg.700", "bg.300");
   return (
@@ -35,18 +31,17 @@ const Error = ({
       </Box>
 
       <Text color={`${mainColor || "bg"}`} fontSize="2xl">
-        {primaryMessage}
+        {primaryMessage || "Connection Error"}
       </Text>
       <Text color="bg.400" fontSize="sm" mb="1">
-        {secondaryMessage}
+        {secondaryMessage || "Server is not responding"}
       </Text>
-      {!!linkMessage && (
-        <LinkButton
-          href={String(process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT)}
-          message={linkMessage}
-          CustomIcon={FaTelegramPlane}
-        />
-      )}
+
+      <LinkButton
+        href={String(process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT)}
+        message={"Report problem"}
+        CustomIcon={FaTelegramPlane}
+      />
     </Flex>
   );
 };
@@ -57,7 +52,6 @@ const ErrorWrapper = (props: {
   isLoading?: boolean;
   primaryMessage?: string;
   secondaryMessage?: string;
-  linkMessage?: string;
 }) => {
   const { isError, isLoading, children } = props;
   if (isError) return <Error {...props} />;

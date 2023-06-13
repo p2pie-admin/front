@@ -21,9 +21,10 @@ import {
 } from "../../../../redux/amountsHelper";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { triggerModal } from "../../../../redux/mainReducer";
-import { fetchPopularRates } from "../../../../redux/thunks";
+import CustomModal from "../../../shared/CustomModal";
 import Wrapper from "../Wrapper";
 import PopularRates from "./modal-data";
+import PopularRatesModal from "./modal-data";
 
 export default function BestRates() {
   //   const height = 50;
@@ -78,12 +79,6 @@ export default function BestRates() {
   const [bg50, bg900] = useToken("colors", ["bg.10", "bg.900"]);
   const bg = useColorModeValue(bg50, bg900);
   const dispatch = useAppDispatch();
-  const handleClick = () => {
-    batch(() => {
-      dispatch(triggerModal("popular-rates"));
-      dispatch(fetchPopularRates());
-    });
-  };
 
   return (
     <Wrapper title="Best Rates">
@@ -92,7 +87,7 @@ export default function BestRates() {
         position="relative"
         w="85%"
         cursor="pointer"
-        onClick={() => handleClick()}
+        onClick={() => dispatch(triggerModal("popular-rates"))}
         transition="all .3s ease"
         bgColor={useColorModeValue("rgba(2,2,2,0.1)", "rgba(200,200,200,0.05)")}
         _hover={{
@@ -100,16 +95,23 @@ export default function BestRates() {
         }}
         borderRadius="30%"
         p="2"
+        maxH="20"
+        gap="0"
       >
-        <PopularRates />
+        <CustomModal
+          id="popular-rates"
+          header="The best rates for crypto exchange"
+        >
+          <PopularRates />
+        </CustomModal>
+
         {ratePairs.map((ratePair, index) => (
           <Grid
             key={String(ratePair)}
             zIndex="3"
             gridTemplateColumns="1fr 2fr 12px"
             w={index % 2 ? "100%" : "95%"}
-            m="0 !important"
-            gridGap="0.5"
+            gap={0}
             color={index % 2 ? "green.500" : "red.500"}
             fontSize={index % 2 ? "sm" : "xs"}
           >
@@ -138,7 +140,7 @@ export default function BestRates() {
           bottom="0"
           borderRadius="xl"
           bgGradient={`linear(to-b, ${bg} 10%, transparent  50%, ${bg} 90%)`}
-        ></Box>
+        />
       </VStack>
     </Wrapper>
   );

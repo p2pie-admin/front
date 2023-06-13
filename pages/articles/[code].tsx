@@ -9,7 +9,7 @@ import {
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import Disclaimer from "../../components/shared/article/Disclaimer";
-import initFetcher from "../../services/graphql";
+import { initCMSFetcher } from "../../services/fetchers";
 import { articleCodesQuery, articleQuery } from "../../services/pageQueries";
 import { Box3D } from "../../styles/theme/wrappers";
 import { IArticle } from "../../types/pages";
@@ -92,7 +92,7 @@ export async function getStaticProps({
   locale: "en" | "ru";
   params: { code: string };
 }) {
-  const fetcher = initFetcher({
+  const fetcher = initCMSFetcher({
     locale,
     code: params.code,
   });
@@ -110,7 +110,7 @@ export async function getStaticProps({
 //const tabs = ['tab-1', 'tab-2']; const locales = ['en', 'de']; return { paths: tabs.reduce((arr, tab) => ([...arr, ...locales.map(locale => ({params: {tab}, locale}))]), []), fallback: false }
 
 export async function getStaticPaths() {
-  const fetcher = initFetcher();
+  const fetcher = initCMSFetcher();
   const res = await fetcher(articleCodesQuery);
 
   const codes = res.articles.map((a: any) => a.code);

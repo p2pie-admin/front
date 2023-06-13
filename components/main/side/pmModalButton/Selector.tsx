@@ -31,11 +31,18 @@ import { i18n, useTranslation } from "next-i18next";
 import LinkButton from "../../../shared/LinkButton";
 import { ScTelegram } from "@styled-icons/evil/ScTelegram";
 import error from "next/error";
+import useSWR from "swr";
+import { initCMSFetcher } from "../../../../services/fetchers";
 
 //const gqlFetcher = new GraphQLFetcher(); // may pass variables here
+const fetcher = initCMSFetcher();
 
-const Selector = ({ data }: { data: { selector: ISelector } }) => {
+const Selector = () => {
   //const { data, error } = useSWR(selectorQuery, gqlFetcher.fetcher);
+  const { data, error } = useSWR(selectorQuery, fetcher) as {
+    data: { selector: ISelector };
+    error: any;
+  };
 
   const searchBarInputValue = useAppSelector(
     (state) => state.main.searchBarInputValue
@@ -59,20 +66,25 @@ const Selector = ({ data }: { data: { selector: ISelector } }) => {
         },
       }}
     >
-      <SearchBar search_bar={data?.selector?.search_bar} />
+      <ErrorWrapper isLoading={!data} isError={!!error}>
+        <SearchBar search_bar={data?.selector?.search_bar} />
 
-      <SectionsList
-        sections={filterSections(searchBarInputValue, data?.selector?.sections)}
-      />
+        <SectionsList
+          sections={filterSections(
+            searchBarInputValue,
+            data?.selector?.sections
+          )}
+        />
 
-      <Text mt="5" color="bg.300">
-        Haven't found what were looking for?
-      </Text>
-      <LinkButton
-        message="CONTACT SUPPORT"
-        href={String(process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT)}
-        CustomIcon={ScTelegram}
-      />
+        <Text mt="5" color="bg.300">
+          Haven't found what were looking for?
+        </Text>
+        <LinkButton
+          message="CONTACT SUPPORT"
+          href={String(process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT)}
+          CustomIcon={ScTelegram}
+        />
+      </ErrorWrapper>
     </VStack>
   );
 };

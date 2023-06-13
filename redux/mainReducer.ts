@@ -11,7 +11,6 @@ import {
   fetchPms,
   fetchPossiblePairs,
   fetchFiat,
-  fetchPopularRates,
   restorePmsFromSlug,
 } from "./thunks";
 import { IFiatRates, IImage, IPm, IPmGroup } from "../types/selector";
@@ -44,6 +43,7 @@ export interface MainState {
   popularRates?: IPopularDirRates;
   modals: { [key: string]: boolean };
   trash?: any;
+  location: { country: string; city: string };
 }
 
 const initialState: MainState = {
@@ -57,6 +57,7 @@ const initialState: MainState = {
   bestRatesPreview: {},
   pendingPopularRates: false,
   modals: {},
+  location: { country: "Russia", city: "Moscow" },
 };
 
 const getUpdatedAmount = (state: MainState, newSwiperId: number) => {
@@ -191,6 +192,13 @@ export const ratesSlice = createSlice({
       state.swiperIdVisible = newSwiperId;
       state.amountOutputs = getUpdatedAmount(state, newSwiperId);
     },
+
+    setLocation: (
+      state: MainState,
+      action: PayloadAction<{ country: string; city: string }>
+    ) => {
+      state.location = action.payload;
+    },
   },
   //////////////////////////////////////////////////////////////////////////////////////////////////////
   extraReducers: (builder) => {
@@ -228,13 +236,13 @@ export const ratesSlice = createSlice({
         state.getPm.possible_pairs = action.payload.possiblePairs;
     });
     // popular rates
-    builder.addCase(fetchPopularRates.pending, (state) => {
-      state.pendingPopularRates = true;
-    });
-    builder.addCase(fetchPopularRates.fulfilled, (state, action) => {
-      state.pendingPopularRates = false;
-      state.popularRates = action.payload;
-    });
+    // builder.addCase(fetchPopularRates.pending, (state) => {
+    //   state.pendingPopularRates = true;
+    // });
+    // builder.addCase(fetchPopularRates.fulfilled, (state, action) => {
+    //   state.pendingPopularRates = false;
+    //   state.popularRates = action.payload;
+    // });
     builder.addCase(restorePmsFromSlug.fulfilled, (state, action) => {
       const { givePmGroup, getPmGroup, dir } = action.payload as {
         givePmGroup?: IPmGroup;
@@ -272,6 +280,7 @@ export const {
   triggerModal,
   incrementSwiper,
   decrementSwiper,
+  setLocation,
 } = ratesSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

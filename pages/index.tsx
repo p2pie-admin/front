@@ -6,6 +6,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   // must be async
+
   return {
     props: {
       ...(await serverSideTranslations(locale || "ru", ["home"])),
@@ -13,11 +14,23 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   };
 };
 
+// const router = useRouter();
+// console.log(router.query);
+// const { dir, pm_groups } = router.query;
+
+// if (typeof dir === "string" && typeof pm_groups === "string") {
+//   console.log("main triggered");
+//   batch(() => {
+//     dispatch(restorePmsFromSlug({ dir, pm_groups }));
+//     dispatch(fetchDirRates({ dir }));
+//   });
+// }
+
 const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Cotleta</title>
+        <title>p2pie</title>
         <meta name="description" content="Monitoring Tool" />
         <link rel="icon" href="/avatar.ico" />
         <link

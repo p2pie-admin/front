@@ -37,12 +37,7 @@ const ExchangeInfo = () => {
   );
 
   return (
-    <CustomModal
-      id="exchange-info"
-      header={<Header />}
-      isLoading={false}
-      isError={false}
-    >
+    <CustomModal id="exchange-info" header={<Header />}>
       <Box p="2" minH="200">
         <ExchangerDetails />
         <RateDetails />

@@ -11,7 +11,7 @@ import {
 import { IParam } from "../../../types/rates";
 
 import ErrorWrapper from "../../shared/ErrorWrapper";
-import initFetcher from "../../../services/graphql";
+import { initCMSFetcher } from "../../../services/fetchers";
 import { SearchOff } from "@styled-icons/material-outlined/SearchOff";
 import {
   Box,
@@ -25,7 +25,7 @@ import ExchangerCard from "./card";
 import Swiper from "./swiper";
 import { Box3D, CustomBox3D } from "../../../styles/theme/wrappers";
 
-const fetcher = initFetcher();
+const fetcher = initCMSFetcher();
 
 interface IParamData {
   id: string;
@@ -117,7 +117,6 @@ const Carousel = () => {
           isLoading={pendingDirRates}
           primaryMessage="No rates available!"
           secondaryMessage="check your network connection"
-          linkMessage="Report a problem"
         >
           <Swiper gap={12} dirRates={dirRates} allParameters={allParameters} />
         </ErrorWrapper>

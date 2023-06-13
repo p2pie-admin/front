@@ -11,7 +11,7 @@ import Swiper from "../main/carousel/swiper";
 
 import useSWR from "swr";
 import { useAppSelector } from "../../redux/hooks";
-import initFetcher from "../../services/graphql";
+import { initCMSFetcher } from "../../services/fetchers";
 import { Box3D, CustomBox3D } from "../../styles/theme/wrappers";
 import { IExchangerData } from "../../types/exchanger";
 import ExchangerNameRating from "./ExchangerNameRating";
@@ -22,7 +22,7 @@ const ExchangerDetails = () => {
   const exchangerId = useAppSelector(
     (state) => state.main.dirRates?.[state.main.swiperIdVisible]?.exchangerId
   );
-  const fetcher = initFetcher({ id: exchangerId });
+  const fetcher = initCMSFetcher({ id: exchangerId });
 
   const { data, error } = useSWR(exchangerQuery, fetcher) as {
     data: { exchanger: IExchangerData };

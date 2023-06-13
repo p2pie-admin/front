@@ -8,3 +8,7 @@ export type ITone =
   | "gray"
   | "light"
   | "white";
+
+export interface ICitiesList {
+  [key: string]: [string, string];
+}

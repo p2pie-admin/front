@@ -3,7 +3,7 @@ import { IPopularDirRates, IRate } from "../types/rates";
 import axios from "axios";
 
 import { pmGroupQuery, pmsQuery } from "../services/initialQueries";
-import initFetcher from "../services/graphql";
+import { initCMSFetcher } from "../services/fetchers";
 import { MainState } from "./mainReducer";
 import { IPmPointer } from "../types/selector";
 import side from "../components/main/side";
@@ -79,8 +79,8 @@ export const restorePmsFromSlug = createAsyncThunk(
   "rates/restorePmsFromSlug",
   async ({ dir, pm_groups }: { dir: string; pm_groups: string }) => {
     const ids = pm_groups.split("_");
-    const fetcher0 = initFetcher({ id: ids[0] });
-    const fetcher1 = initFetcher({ id: ids[1] });
+    const fetcher0 = initCMSFetcher({ id: ids[0] });
+    const fetcher1 = initCMSFetcher({ id: ids[1] });
     const response0 = await fetcher0(pmGroupQuery);
     const response1 = await fetcher1(pmGroupQuery);
     return {
@@ -106,26 +106,26 @@ export const fetchPossiblePairs = createAsyncThunk(
 );
 
 export const fetchPms = createAsyncThunk("initial/fetchPms", async () => {
-  const fetcher = initFetcher();
+  const fetcher = initCMSFetcher();
   const response = await fetcher(pmsQuery);
   return response?.pms as IPmPointer[];
 });
 
 // export const fetchPms = createAsyncThunk("initial/fetchPms", async () => {
-//   const fetcher = initFetcher();
+//   const fetcher = initCMSFetcher();
 //   const response = await fetcher(pmsQuery);
 //   return response?.pms as IPmPointer[];
 // });
 
-export const fetchPopularRates = createAsyncThunk(
-  "rates/fetchPopularRates",
-  async () => {
-    const response = await axios
-      .get(`${courseFilterLink}/popular_rates`)
-      .catch((err) => console.error(err));
-    return response?.data as IPopularDirRates;
-  }
-);
+// export const fetchPopularRates = createAsyncThunk(
+//   "rates/fetchPopularRates",
+//   async () => {
+//     const response = await axios
+//       .get(`${courseFilterLink}/popular_rates`)
+//       .catch((err) => console.error(err));
+//     return response?.data as IPopularDirRates;
+//   }
+// );
 // export const reverseDir = createAsyncThunk(
 //   "rates/reverseDir",
 //   async (r: string, thunkAPI) => {

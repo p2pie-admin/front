@@ -10,20 +10,15 @@ import {
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { triggerModal } from "../../redux/mainReducer";
-import ErrorWrapper from "./ErrorWrapper";
 
 const CustomModal = ({
   children,
   id,
   header,
-  isLoading,
-  isError,
 }: {
   children: ReactJSXElement;
   id: string;
   header: string | ReactJSXElement;
-  isLoading?: boolean;
-  isError?: boolean;
 }) => {
   const dispatch = useAppDispatch();
   const isOpen = useAppSelector((state) => state.main.modals[id]);
@@ -65,15 +60,7 @@ const CustomModal = ({
             //  "&::-webkit-overflow-scrolling": "touch",
           }}
         >
-          <ErrorWrapper
-            isError={isError}
-            isLoading={isLoading}
-            primaryMessage="Connection error!"
-            secondaryMessage="CMS connection is lost!"
-            linkMessage="report"
-          >
-            {children}
-          </ErrorWrapper>
+          {children}
         </ModalBody>
       </ModalContent>
     </Modal>

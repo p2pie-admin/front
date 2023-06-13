@@ -5,6 +5,8 @@ import { useBreakpointValue, VStack } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { batch } from "react-redux";
 import { fetchPms, fetchFiat } from "../../redux/thunks";
+import axios from "axios";
+import { setLocation } from "../../redux/mainReducer";
 
 const Layout = ({ children }: { children: ReactChild }) => {
   const maxW = useBreakpointValue({ base: "100%", lg: "980" });
@@ -13,6 +15,13 @@ const Layout = ({ children }: { children: ReactChild }) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    const url = "https://ip.nf/me.json";
+    axios.get(url).then((resp) => {
+      if (resp.data?.ip) {
+        const { country, city } = resp.data?.ip;
+        dispatch(setLocation({ country, city }));
+      }
+    });
     batch(() => {
       dispatch(fetchPms());
       dispatch(fetchFiat());
