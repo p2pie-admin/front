@@ -1,26 +1,17 @@
-import { Box, Collapse, Grid, Highlight, Text } from "@chakra-ui/react";
-import useSWR from "swr";
-import { initCMSFetcher } from "../../../../../services/fetchers";
-import { ICitiesList } from "../../../../../types/shared";
-import ErrorWrapper from "../../../../shared/ErrorWrapper";
-import citiesQuery from "./citiesQuery";
+import { Box, Grid, Text } from "@chakra-ui/react";
+import { ICityCodesList } from "../../../../../types/shared";
 import Country from "./Country";
-import { formatCities } from "./helper";
+import { formatCityCodesList } from "./helper";
 
-const CountryList = () => {
-  const fetcher = initCMSFetcher();
-  const { data, error } = useSWR(citiesQuery, fetcher) as {
-    data: {
-      parserSetting: { cities: ICitiesList };
-    };
-    error: boolean;
-  };
-  const cities = data?.parserSetting?.cities as ICitiesList;
-  const cityCodes = Object.keys(data?.parserSetting?.cities);
-  const ru = formatCities(0, cityCodes, cities);
-  const en = formatCities(1, cityCodes, cities);
-  console.log(ru);
-  const list = Object.entries(en).sort();
+const CountryList = ({ cityCodesList }: { cityCodesList?: ICityCodesList }) => {
+  if (!cityCodesList) return <></>;
+
+  const formattedCountryList = formatCityCodesList(cityCodesList);
+
+  const list = Object.values(formattedCountryList).sort((a, b) =>
+    a.en_name.localeCompare(b.en_name)
+  );
+
   const threePartIndex = Math.ceil(list.length / 3);
   const parts = [
     list.splice(-threePartIndex),
@@ -29,17 +20,15 @@ const CountryList = () => {
   ].reverse();
 
   return (
-    <ErrorWrapper isError={!!error} isLoading={!data}>
-      <Grid gridTemplateColumns="1fr 1fr 1fr">
-        {parts.map((part, index) => (
-          <Box p="2" key={index}>
-            {part.map(([country, cities]) => (
-              <Country country={country} cities={cities} />
-            ))}
-          </Box>
-        ))}
-      </Grid>
-    </ErrorWrapper>
+    <Grid gridTemplateColumns="1fr 1fr 1fr" mt="4" p="4">
+      {parts.map((part, index) => (
+        <Box key={index}>
+          {part.map((country) => (
+            <Country key={country.en_name} country={country} />
+          ))}
+        </Box>
+      ))}
+    </Grid>
   );
 };
 

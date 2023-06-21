@@ -1,4 +1,4 @@
-import { lighten, getColor, mode } from "@chakra-ui/theme-tools";
+import { lighten, getColor, mode, StyleConfig } from "@chakra-ui/theme-tools";
 import { AnyCnameRecord } from "dns";
 import { ITone } from "../../types/shared";
 import { colors3D } from "./colors";
@@ -26,7 +26,7 @@ const createGradient = (theme: any, tone: ITone, glowing = false) => {
   };
 };
 
-const components = {
+const components: Record<string, StyleConfig> = {
   IconButton: {
     variants: {
       primary_bright: (props: any) => ({
@@ -59,36 +59,38 @@ const components = {
       },
     },
     variants: {
-      error: ({ theme }: { theme: any }) => {
+      error: ({ theme, colorMode }) => {
         return createGradient(theme, "error", true);
       },
 
-      primary: ({ theme }: { theme: any }) => {
-        return createGradient(theme, "primary", true);
+      primary: ({ theme, colorMode }) => {
+        return colorMode === "light"
+          ? createGradient(theme, "primary", true)
+          : createGradient(theme, "secondary", true);
       },
 
-      secondary: ({ theme }: { theme: any }) => {
-        return createGradient(theme, "secondary", true);
-      },
+      // secondary: ({ theme }) => {
+      //   return createGradient(theme, "secondary", true);
+      // },
 
-      shaded: ({ theme }: { theme: any }) => {
+      shaded: ({ theme }) => {
         return createGradient(theme, "shaded");
       },
 
-      dark: ({ theme }: { theme: any }) => {
+      dark: ({ theme }) => {
         return createGradient(theme, "dark");
       },
 
-      black: ({ theme }: { theme: any }) => {
+      black: ({ theme }) => {
         return createGradient(theme, "black");
       },
-      gray: ({ theme }: { theme: any }) => {
+      gray: ({ theme }) => {
         return createGradient(theme, "gray", true);
       },
-      light: ({ theme }: { theme: any }) => {
+      light: ({ theme }) => {
         return createGradient(theme, "light", true);
       },
-      white: ({ theme }: { theme: any }) => {
+      white: ({ theme }) => {
         return createGradient(theme, "white", true);
       },
 
@@ -103,4 +105,4 @@ export default components;
 // const { theme, fromcolor, tocolor } = props
 // const lgFrom = getColor(theme, fromcolor)
 // const lgTo = getColor(theme, tocolor)
-// const bgColor = getColor(theme, mode('white', 'gray.800')(props))
+// const bgColor = getColor(theme, mode('white', 'gray.800')({ theme }))

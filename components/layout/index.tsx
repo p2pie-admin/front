@@ -19,7 +19,7 @@ const Layout = ({ children }: { children: ReactChild }) => {
     axios.get(url).then((resp) => {
       if (resp.data?.ip) {
         const { country, city } = resp.data?.ip;
-        dispatch(setLocation({ country, city }));
+        dispatch(setLocation({ en_country_name: country, en_city_name: city }));
       }
     });
     batch(() => {

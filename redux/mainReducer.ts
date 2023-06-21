@@ -19,6 +19,7 @@ import { initialAmountOutputs, getAmountOutputs } from "./helper";
 import Side from "../components/main/side";
 
 import { getPmByCode } from "../components/main/side/pmModalButton/section/PmGroup/helper";
+import { ILocation } from "../types/shared";
 
 type ISide = "give" | "get";
 
@@ -43,7 +44,7 @@ export interface MainState {
   popularRates?: IPopularDirRates;
   modals: { [key: string]: boolean };
   trash?: any;
-  location: { country: string; city: string };
+  location: ILocation;
 }
 
 const initialState: MainState = {
@@ -57,7 +58,7 @@ const initialState: MainState = {
   bestRatesPreview: {},
   pendingPopularRates: false,
   modals: {},
-  location: { country: "Russia", city: "Moscow" },
+  location: { en_country_name: "Russia", en_city_name: "Moscow" },
 };
 
 const getUpdatedAmount = (state: MainState, newSwiperId: number) => {
@@ -193,10 +194,7 @@ export const ratesSlice = createSlice({
       state.amountOutputs = getUpdatedAmount(state, newSwiperId);
     },
 
-    setLocation: (
-      state: MainState,
-      action: PayloadAction<{ country: string; city: string }>
-    ) => {
+    setLocation: (state: MainState, action: PayloadAction<ILocation>) => {
       state.location = action.payload;
     },
   },
