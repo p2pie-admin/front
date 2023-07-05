@@ -23,3 +23,16 @@ export const filterSections = (
     ),
   }));
 };
+
+export const countryCurrencies = {
+  ARMENIA: "AMD",
+  AZERBAIJAN: "AZN",
+  BELARUS: "BYN",
+  CHINA: "JPY",
+  KAZAKHSTAN: "KZT",
+  KYRGYZSTAN: "KGS",
+  TURKEY: "TRY",
+  UK: "GBP",
+  UKRAINE: "UAH",
+  UZBEKISTAN: "UZS",
+};

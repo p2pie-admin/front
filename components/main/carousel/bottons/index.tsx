@@ -29,9 +29,6 @@ const SwiperButtons = () => {
   //   "pink.400",
   // ]);
 
-  const mainVariant = useColorModeValue("secondary", "primary");
-  const buttonVariant = useColorModeValue("light", "shaded");
-
   return (
     <Grid
       gridTemplateColumns="40px 1fr 40px"
@@ -42,18 +39,18 @@ const SwiperButtons = () => {
     >
       <Button
         p="1"
-        variant={buttonVariant}
+        variant="contrast"
         onClick={() => dispatch(decrementSwiper())}
       >
         <IoIosArrowBack size="1.2rem" />
       </Button>
       <ExchangeInfo />
-      <Button variant={mainVariant} rightIcon={<BiLinkExternal size="1rem" />}>
+      <Button variant="primary" rightIcon={<BiLinkExternal size="1rem" />}>
         Exchange
       </Button>
       <Button
         p="1"
-        variant={buttonVariant}
+        variant="contrast"
         onClick={() => dispatch(incrementSwiper())}
       >
         <IoIosArrowForward size="1.2rem" />

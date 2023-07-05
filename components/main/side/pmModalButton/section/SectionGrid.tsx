@@ -1,5 +1,5 @@
 import { Grid } from "@chakra-ui/react";
-import { SectionContext } from "./SectionContext";
+import { SectionContext } from "../../../../shared/contexts/SectionContext";
 import { ReactChildren, useContext } from "react";
 
 const SectionGrid = ({ children }: { children: JSX.Element[] }) => {

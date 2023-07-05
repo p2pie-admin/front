@@ -27,19 +27,11 @@ const Nav = () => {
   };
   return (
     <HStack spacing="2">
-      <Button
-        variant={useColorModeValue("gray", "black")}
-        p="1"
-        onClick={toggleColorMode}
-      >
+      <Button variant="contrast" p="1" onClick={toggleColorMode}>
         <FiSun />
       </Button>
 
-      <Button
-        variant={useColorModeValue("gray", "black")}
-        p="1"
-        onClick={changeLanguageHandler}
-      >
+      <Button variant="contrast" p="1" onClick={changeLanguageHandler}>
         <Text>{i18n.language === "en" ? "Ru" : "En"}</Text>
       </Button>
 

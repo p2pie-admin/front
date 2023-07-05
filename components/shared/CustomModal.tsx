@@ -6,6 +6,7 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
+  Text,
 } from "@chakra-ui/react";
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -45,7 +46,7 @@ const CustomModal = ({
           display="flex"
           justifyContent="center"
         >
-          {header}
+          <Text variant="contrast">{header}</Text>
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody

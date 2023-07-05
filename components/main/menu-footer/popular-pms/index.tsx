@@ -2,7 +2,7 @@ import { HiArrowLongRight } from "react-icons/hi2";
 
 import Wrapper from "../Wrapper";
 import { HStack, useColorModeValue } from "@chakra-ui/react";
-import SideContext from "../../../shared/SideContext";
+import SideContext from "../../../shared/contexts/SideContext";
 import PopularSide from "./popular-side";
 
 const Popular = () => {
@@ -10,7 +10,7 @@ const Popular = () => {
     <Wrapper title="Quick Change">
       <HStack
         justifyContent="center"
-        color={useColorModeValue("secondary.600", "primary.200")}
+        color={useColorModeValue("violet.600", "peach.200")}
       >
         <SideContext.Provider value={"give"}>
           <PopularSide />

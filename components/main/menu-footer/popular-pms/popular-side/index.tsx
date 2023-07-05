@@ -15,7 +15,7 @@ import { useContext, useRef, useState } from "react";
 
 import { IoAddSharp } from "react-icons/io5";
 import { BsCheckLg } from "react-icons/bs";
-import SideContext from "../../../../shared/SideContext";
+import SideContext from "../../../../shared/contexts/SideContext";
 
 function PopularSide() {
   //const activeSide = useAppSelector((state) => state.main.activeSide);
@@ -59,11 +59,11 @@ function PopularSide() {
             cursor="pointer"
             bgColor="rgba(200,200,200,0.05)"
             _hover={{
-              color: useColorModeValue("secondary.800", "primary.100"),
+              color: useColorModeValue("violet.800", "peach.100"),
               bgColor: "transparent",
             }}
             _active={{
-              color: useColorModeValue("secondary.600", "primary.400"),
+              color: useColorModeValue("violet.600", "peach.400"),
             }}
             p="1"
             borderRadius="50%"

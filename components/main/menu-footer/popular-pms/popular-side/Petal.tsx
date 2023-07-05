@@ -22,7 +22,7 @@ import {
 } from "../../../../../redux/mainReducer";
 import { IPm, ISide } from "../../../../../types/selector";
 import CircularIcon from "../../../../shared/CircularIcon";
-import SideContext from "../../../../shared/SideContext";
+import SideContext from "../../../../shared/contexts/SideContext";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { batch } from "react-redux";
 import {
@@ -30,6 +30,7 @@ import {
   fetchPossiblePairs,
   fetchDirRates,
 } from "../../../../../redux/thunks";
+import { RegularBox } from "../../../../../styles/theme/wrappers";
 
 /**
  * Positioning Stuff
@@ -137,17 +138,16 @@ function Petal({
       }}
     >
       {!pm ? (
-        <Box
-          bgColor={useColorModeValue("bg.200", "bg.700")}
+        <RegularBox
           onClick={() => openPmModal()}
           p="1"
           borderRadius="50%"
-          color={useColorModeValue("secondary.600", "primary.200")}
+          color={useColorModeValue("violet.600", "peach.200")}
           border="1px solid"
-          borderColor={useColorModeValue("secondary.600", "primary.200")}
+          borderColor={useColorModeValue("violet.600", "peach.200")}
         >
           <FiMoreHorizontal size="1rem" />
-        </Box>
+        </RegularBox>
       ) : (
         <Box onClick={() => choosePm(pm)}>
           <CircularIcon icon={pm.icon} color={pm.color} />

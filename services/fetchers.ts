@@ -31,3 +31,16 @@ export const initParserFetcher = () => {
     return data;
   };
 };
+
+export const initCurrencyConverterFetcher = () => {
+  const env = process.env.NODE_ENV;
+  const url =
+    env == "production"
+      ? process.env.NEXT_PUBLIC_CURRENCY_CONVERTER_PROD_URL
+      : process.env.NEXT_PUBLIC_CURRENCY_CONVERTER_DEV_URL;
+
+  return async (dir: string) => {
+    const { data } = await axios.get(url + "/" + dir.toUpperCase());
+    return data;
+  };
+};

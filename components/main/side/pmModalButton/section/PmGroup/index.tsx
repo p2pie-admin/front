@@ -11,10 +11,23 @@ import {
   fetchPossiblePairs,
 } from "../../../../../../redux/thunks";
 import { IPmGroup, IPm } from "../../../../../../types/selector";
-import { setActiveSide, setPm } from "../../../../../../redux/mainReducer";
+import {
+  setActiveSide,
+  setCurrencyConverterRate,
+  setPm,
+} from "../../../../../../redux/mainReducer";
 import { useRouter } from "next/router";
+import { useContext } from "react";
+import P2PContext from "../../../../../shared/contexts/p2pContext";
+import { init } from "next/dist/compiled/@vercel/og/satori";
+import {
+  initCurrencyConverterFetcher,
+  initParserFetcher,
+} from "../../../../../../services/fetchers";
+import { ICurrencyConverterRate } from "../../../../../../types/rates";
 
 const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
+  const isP2P = useContext(P2PContext);
   const dispatch = useAppDispatch();
   const activeSide = useAppSelector((state) => state.main.activeSide);
   const possiblePairs = useAppSelector((state) =>
@@ -40,10 +53,27 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
           side: activeSide,
         })
       ); // нужен только код валюты,  reducer сам запишет куда надо
+
+      dispatch(setActiveSide(null));
+      // for p2p
+      dispatch(setPm({ pm: selectedPm, side: activeSide }));
+      if (oppositePm?.code && isP2P) {
+        const dir =
+          activeSide === "get"
+            ? `${oppositePm.currency.code}_${selectedPm.currency.code}`
+            : `${selectedPm.currency.code}_${oppositePm.currency.code}`;
+        const fetcher = initCurrencyConverterFetcher();
+        fetcher(dir)
+          .then((rate: ICurrencyConverterRate) =>
+            dispatch(setCurrencyConverterRate(rate))
+          )
+          .catch((e) => console.log(e));
+        return;
+      }
+      // for exchangers
       dispatch(fetchPossiblePairs({ code: selectedPm.code, side: activeSide }));
       dispatch(setPm({ pm: selectedPm, side: activeSide }));
-      dispatch(setActiveSide(null));
-      if (oppositePm?.code) {
+      if (oppositePm?.code && !isP2P) {
         if (shaded) {
           // clear opposite Pm is no pair possible anyway
           dispatch(

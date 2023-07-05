@@ -11,7 +11,7 @@ import { batchActions } from "redux-batched-actions";
 import { roundAmount } from "../../../../redux/amountsHelper";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { setAmount } from "../../../../redux/mainReducer";
-import SideContext from "../../../shared/SideContext";
+import SideContext from "../../../shared/contexts/SideContext";
 import Fiat from "./Fiat";
 
 const AmountInput = () => {

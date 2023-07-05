@@ -10,11 +10,10 @@ const LinkButton = ({
   message: string;
   CustomIcon?: any;
 }) => {
-  const variant = useColorModeValue("light", "shaded");
   return (
     <NextLink href={href || ""}>
       <Button
-        variant={variant}
+        variant="contrast"
         size="sm"
         my="1"
         rightIcon={<CustomIcon size="1rem" />}

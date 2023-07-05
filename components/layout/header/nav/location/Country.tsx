@@ -3,6 +3,7 @@ import { useState } from "react";
 import { batch } from "react-redux";
 import { useAppDispatch } from "../../../../../redux/hooks";
 import { setLocation, triggerModal } from "../../../../../redux/mainReducer";
+import { RegularBox } from "../../../../../styles/theme/wrappers";
 import { ICity, IFormattedCountry } from "../../../../../types/shared";
 import { popularCountryNames } from "./helper";
 
@@ -27,11 +28,12 @@ const Country = ({ country }: { country: IFormattedCountry }) => {
     });
   };
   return (
-    <Box>
+    <>
       <Text
+        my="1"
         fontWeight={isPopular ? "bold" : "normal"}
-        fontSize="xl"
-        color={opened ? "primary.200" : "bg.50"}
+        fontSize={isPopular ? "xl" : "lg"}
+        variant={isPopular ? "primary" : "extra_contrast"}
         cursor="pointer"
         onClick={() => setOpened(!opened)}
       >
@@ -39,13 +41,17 @@ const Country = ({ country }: { country: IFormattedCountry }) => {
       </Text>
       <Collapse in={opened}>
         {country.cities.map((city) => (
-          <Text ml="1" cursor="pointer" onClick={() => handleChooseCity(city)}>
+          <Text
+            ml="1"
+            cursor="pointer"
+            variant="contrast"
+            onClick={() => handleChooseCity(city)}
+          >
             {city.en_name}
           </Text>
         ))}
-        <Box h="4"></Box>
       </Collapse>
-    </Box>
+    </>
   );
 };
 

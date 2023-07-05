@@ -19,7 +19,7 @@ export const SubButton = ({
     gridColumn={`span ${
       pm.subgroup_name && pm.subgroup_name.length > 5 ? 2 : 1
     }`}
-    variant={useColorModeValue("white", "black")}
+    variant="extra_contrast"
     onClick={() => choosePm(pm, shaded)}
   >
     {children}

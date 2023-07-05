@@ -17,12 +17,19 @@ import { useTranslation } from "next-i18next";
 import { Box3D } from "../../../../styles/theme/wrappers";
 import { MdOutlineClear } from "react-icons/md";
 import { RiSearchLine } from "react-icons/ri";
+import { countryCurrencies } from "./helper";
 
 const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {
   const [inputFocused, setInputFocused] = useState(false);
   const searchBarInputValue = useAppSelector(
     (state) => state.main.searchBarInputValue
   );
+  const country = useAppSelector((state) =>
+    state.main.location.en_country_name.toUpperCase()
+  ) as keyof typeof countryCurrencies;
+
+  const localCurrency = countryCurrencies?.[country] || "EUR";
+  const currencies = ["RUB", "USD", localCurrency, "UAH"];
 
   const { i18n } = useTranslation();
   const activeSide = useAppSelector((state) => state.main.activeSide);
@@ -45,22 +52,17 @@ const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {
       w="100%"
       h="12"
       alignItems="center"
-      spacing="4"
+      spacing="2"
       justifyContent="space-between"
     >
-      <Box3D
-        w="100%"
-        boxShadow="lg"
-        borderRadius="2xl"
-        bgColor={useColorModeValue("bg.200", "bg.700")}
-      >
+      <Box3D w="100%" boxShadow="lg" borderRadius="2xl" variant="contrast">
         <InputGroup
           size="sm"
           transition="width .5s ease-in-out;"
           borderRadius="2xl"
         >
           <Input
-            color={useColorModeValue("secondary.600", "primary.200")}
+            color={useColorModeValue("violet.600", "peach.200")}
             border="none"
             boxShadow="none !important"
             placeholder={placeholder}
@@ -84,16 +86,16 @@ const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {
         </InputGroup>
       </Box3D>
       <HStack spacing="1">
-        <Button variant="white" size="sm" minH="8">
-          USD
-        </Button>
-
-        <Button variant="white" size="sm" minH="8">
-          RUB
-        </Button>
-        <Button variant="white" size="sm" minH="8">
-          TRY
-        </Button>
+        {currencies.map((currency) => (
+          <Button
+            variant="extra_contrast"
+            size="sm"
+            minH="8"
+            onClick={() => dispatch(setSearchBarInputValue(currency))}
+          >
+            {currency}
+          </Button>
+        ))}
       </HStack>
     </HStack>
   );

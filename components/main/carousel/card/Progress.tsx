@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { setSwiperIdVisible } from "../../../../redux/mainReducer";
 import useSmooth from "../../../../services/hooks/smooth";
+import { RegularBox } from "../../../../styles/theme/wrappers";
 
 const Dot = ({
   selected = false,
@@ -23,18 +24,18 @@ const Dot = ({
   handleClickDot: Function;
 }) => (
   <VStack cursor="pointer" onClick={() => handleClickDot()}>
-    <Box
+    <RegularBox
       position="relative"
       w={2}
       h={3}
       mx="0.5"
       mt="0 !important"
       borderRadius="sm"
-      bgColor={useColorModeValue("bg.100", "bg.800")}
+
       // outline="1px solid"
       // outlineColor={
       //   selected
-      //     ? useColorModeValue("secondary.600", "primary.200")
+      //     ? useColorModeValue("violet.600", "peach.200")
       //     : useColorModeValue("bg.200", "bg.600")
       // }
     >
@@ -46,11 +47,11 @@ const Dot = ({
         borderRadius="sm"
         bgColor={
           selected
-            ? useColorModeValue("secondary.600", "primary.200")
+            ? useColorModeValue("violet.600", "peach.200")
             : useColorModeValue("bg.300", "bg.400")
         }
       />
-    </Box>
+    </RegularBox>
   </VStack>
 );
 const SmoothProgress = () => {
@@ -66,12 +67,12 @@ const SmoothProgress = () => {
   //const smoothProgressValue = useSmooth((100 * swiperIdVisible) / ratesLength);
 
   const color_bg = useColorModeValue("bg.100", "bg.1000");
-  const color1 = useColorModeValue("secondary.600", "primary.200");
+  const color1 = useColorModeValue("violet.600", "peach.200");
   const color2 = useColorModeValue("bg.10", "bg.500");
   const color3 = useColorModeValue("bg.100", "bg.800");
   const [primary300, secondary600] = useToken("colors", [
-    "primary.300",
-    "secondary.600",
+    "peach.300",
+    "violet.600",
   ]);
   const colorKey = useColorModeValue(secondary600, primary300);
   const length = ratesLimits.length;

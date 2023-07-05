@@ -26,7 +26,7 @@ import {
 } from "../../../../../../redux/amountsHelper";
 import { capitalize } from "../../../../side/pmModalButton/section/PmGroup/helper";
 import { useContext } from "react";
-import SideContext from "../../../../../shared/SideContext";
+import SideContext from "../../../../../shared/contexts/SideContext";
 import CircularIcon from "../../../../../shared/CircularIcon";
 import { useRouter } from "next/router";
 import { triggerModal } from "../../../../../../redux/mainReducer";
@@ -45,11 +45,11 @@ const RateLayer = ({
     pms.find((pm) => pm.code.toUpperCase() === c);
   const cryptoPm = findPmByCode(code);
   const side = useContext(SideContext) as "buy" | "sell";
-  const mainColor = useColorModeValue("secondary.600", "primary.200");
+  const mainColor = useColorModeValue("violet.600", "peach.200");
 
   if (!cryptoPm) return <></>;
   return (
-    <Box3D p="4" mb="4" bgColor="bg.900" key={code}>
+    <Box3D p="4" mb="4" key={code}>
       <PmFullName pm={cryptoPm} />
 
       <TableContainer mt="4">
@@ -58,7 +58,7 @@ const RateLayer = ({
             <Tr>
               <Th color={mainColor}>{side === "buy" ? "Pay by" : "Receive"}</Th>
               <Th color={mainColor} isNumeric>
-                Starting from
+                best offer
               </Th>
               <Th color={mainColor}></Th>
             </Tr>

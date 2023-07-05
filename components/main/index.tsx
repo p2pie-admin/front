@@ -1,7 +1,7 @@
 import { Box, useColorModeValue } from "@chakra-ui/react";
 import Side from "./side";
 import ReverseButton from "./ReverseButton";
-import SideContext from "../shared/SideContext";
+import SideContext from "../shared/contexts/SideContext";
 import Carousel from "../main/carousel";
 import LimitsRange from "./limits";
 import MenuHeader from "./MenuHeader";
@@ -13,6 +13,8 @@ import { decrementSwiper, incrementSwiper } from "../../redux/mainReducer";
 import { useRouter } from "next/router";
 import { batch } from "react-redux";
 import { fetchDirRates, restorePmsFromSlug } from "../../redux/thunks";
+import { RegularBox } from "../../styles/theme/wrappers";
+import P2PContext from "../shared/contexts/p2pContext";
 
 const MainPageContent = () => {
   const dispatch = useAppDispatch();
@@ -37,25 +39,28 @@ const MainPageContent = () => {
   };
 
   return (
-    <Box
+    <RegularBox
       p="4"
-      bgColor={useColorModeValue("bg.100", "bg.800")}
+      variant="no_contrast"
       boxShadow="lg"
       mt="4"
       borderRadius="2xl"
       w={{ base: "98%", sm: 432 }}
     >
       <MenuHeader />
+
       <Box mb="4">
-        <SideContext.Provider value={"give"}>
-          <Side />
-        </SideContext.Provider>
+        <P2PContext.Provider value={false}>
+          <SideContext.Provider value={"give"}>
+            <Side />
+          </SideContext.Provider>
 
-        <ReverseButton />
+          <ReverseButton />
 
-        <SideContext.Provider value={"get"}>
-          <Side />
-        </SideContext.Provider>
+          <SideContext.Provider value={"get"}>
+            <Side />
+          </SideContext.Provider>
+        </P2PContext.Provider>
       </Box>
 
       <LimitsRange />
@@ -85,7 +90,7 @@ const MainPageContent = () => {
 
         <MenuFooter />
       </Flex> */}
-    </Box>
+    </RegularBox>
   );
 };
 

@@ -8,7 +8,7 @@ import {
 
 import { useAppSelector } from "../../../../redux/hooks";
 import { ILimit } from "../../../../types/rates";
-import SideContext from "../../../shared/SideContext";
+import SideContext from "../../../shared/contexts/SideContext";
 
 const renderHint = (leftPart: string, amount?: number, currency?: string) => {
   if (!amount) return;

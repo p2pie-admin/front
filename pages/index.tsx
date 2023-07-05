@@ -30,8 +30,6 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>p2pie</title>
-        <meta name="description" content="Monitoring Tool" />
         <link rel="icon" href="/avatar.ico" />
         <link
           href="https://fonts.googleapis.com/css2?family=Sriracha&text=p2ie"
@@ -41,6 +39,8 @@ const Home: NextPage = () => {
           href="http://fonts.googleapis.com/css?family=Inconsolata&text=1234567890,.-+"
           rel="stylesheet"
         />
+        <title>p2pie</title>
+        <meta name="description" content="Monitoring Tool" />
       </Head>
 
       <MainPageContent />

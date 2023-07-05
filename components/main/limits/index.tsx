@@ -104,10 +104,10 @@ const LimitsRange = () => {
     isClose(MIN, a) ? MIN : isClose(MAX, a) ? MAX : a;
   const stickyAmount = stick(amount);
 
-  const mainColor = useColorModeValue("secondary.600", "primary.200");
+  const mainColor = useColorModeValue("violet.600", "peach.200");
   const [primary300, secondary600] = useToken("colors", [
-    "primary.300",
-    "secondary.600",
+    "peach.300",
+    "violet.600",
   ]);
   const colorKey = useColorModeValue(secondary600, primary300);
   const color1 = useColorModeValue("bg.200", "bg.700");
@@ -123,7 +123,7 @@ const LimitsRange = () => {
 
   if (!MIN || !MAX) return <></>;
   return (
-    <Box3D bgColor={color2} py="2" mb="4" cursor="pointer">
+    <Box3D py="2" mb="4" cursor="pointer">
       {/* <Text>highestMax: {highestMax}</Text> */}
       <Center position="relative" mb="2">
         <Box w="90%" position="absolute" top="0" zIndex="3">

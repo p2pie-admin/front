@@ -32,6 +32,7 @@ export const selectorQuery = gql`
                   ru_name
                   color
                   prefix
+                  countries
                   options {
                     ... on ComponentSelectorSubgroup {
                       id

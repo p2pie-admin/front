@@ -28,6 +28,7 @@ interface ISection {
 
 interface IPmGroup {
   id: string;
+  countries: string[];
   en_name: string;
   ru_name?: string;
   prefix?: string;

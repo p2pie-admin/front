@@ -1,4 +1,8 @@
-import { IPopularDirRates, IRate } from "./../types/rates";
+import {
+  ICurrencyConverterRate,
+  IPopularDirRates,
+  IRate,
+} from "./../types/rates";
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 
 import { AmountOutputs, AmountInput } from "../types/amount";
@@ -45,6 +49,7 @@ export interface MainState {
   modals: { [key: string]: boolean };
   trash?: any;
   location: ILocation;
+  currencyConverterRate?: ICurrencyConverterRate;
 }
 
 const initialState: MainState = {
@@ -197,6 +202,12 @@ export const ratesSlice = createSlice({
     setLocation: (state: MainState, action: PayloadAction<ILocation>) => {
       state.location = action.payload;
     },
+    setCurrencyConverterRate: (
+      state: MainState,
+      action: PayloadAction<ICurrencyConverterRate>
+    ) => {
+      state.currencyConverterRate = action.payload;
+    },
   },
   //////////////////////////////////////////////////////////////////////////////////////////////////////
   extraReducers: (builder) => {
@@ -279,6 +290,7 @@ export const {
   incrementSwiper,
   decrementSwiper,
   setLocation,
+  setCurrencyConverterRate,
 } = ratesSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

@@ -31,7 +31,7 @@ export const colors3D = {
     "whiteAlpha.300",
     "blackAlpha.300",
   ],
-  primary: [
+  peach: [
     "pink.300",
     "orange.300",
     "orange.400",
@@ -39,7 +39,7 @@ export const colors3D = {
     "pink.500",
     "orange.500",
   ],
-  secondary: [
+  violet: [
     "purple.300",
     "blue.300",
     "blue.400",
@@ -71,7 +71,7 @@ export const colors3D = {
     "whiteAlpha.200",
     "blackAlpha.200",
   ],
-  // primary: [
+  // peach: [
   //   "orange.400",
   //   "orange.300",
   //   "orange.300",
@@ -81,7 +81,7 @@ export const colors3D = {
   // ],
 };
 
-const colors = {
+export const colors = {
   // bg: {
   //   50: "#f1f0fb",
   //   100: "#d6d5df",
@@ -108,7 +108,7 @@ const colors = {
     "900": "#1b1818",
     "1000": "#141313",
   },
-  primary: {
+  peach: {
     "50": "#fff5f1",
     "100": "#fed9c9",
     "200": "#fcb597",
@@ -120,7 +120,7 @@ const colors = {
     "800": "#7b300f",
     "900": "#59230b",
   },
-  secondary: {
+  violet: {
     "50": "#f7f7fd",
     "100": "#e0ddf8",
     "200": "#c6c0f2",

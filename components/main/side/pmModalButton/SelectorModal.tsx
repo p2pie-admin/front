@@ -1,4 +1,4 @@
-import { Highlight } from "@chakra-ui/react";
+import { Highlight, useColorModeValue } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
 import useSWR from "swr";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
@@ -19,19 +19,21 @@ const SelectorModal = () => {
   // const { i18n } = useTranslation();
 
   const activeSide = useAppSelector((state) => state.main.activeSide);
+  const pink = useColorModeValue("pink.400", "pink.200");
+  const green = useColorModeValue("green.400", "green.200");
 
   const header =
     activeSide === "give" ? (
       <Highlight
         query="sell"
-        styles={{ px: "1", py: "0", rounded: "xl", mx: "2", bg: "pink.200" }}
+        styles={{ px: "2", py: "1", rounded: "xl", mx: "1", bg: pink }}
       >
         {`What do you sell?`}
       </Highlight>
     ) : (
       <Highlight
         query="buy"
-        styles={{ px: "1", py: "0", rounded: "xl", mx: "2", bg: "green.200" }}
+        styles={{ px: "2", py: "1", rounded: "xl", mx: "1", bg: green }}
       >
         {`What do you buy?`}
       </Highlight>

@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { useContext } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import SideContext from "../../../shared/SideContext";
+import SideContext from "../../../shared/contexts/SideContext";
 import { BiChevronDown } from "react-icons/bi";
 import PmAvatar from "../../../shared/Avatar";
 import { capitalize } from "./section/PmGroup/helper";
@@ -19,7 +19,6 @@ import { setActiveSide, triggerModal } from "../../../../redux/mainReducer";
 import SelectorModal from "./SelectorModal";
 import side from "..";
 import CircularIcon from "../../../shared/CircularIcon";
-import { IoAddSharp } from "react-icons/io5";
 import Arrow from "../../../shared/Arrow";
 import { batch } from "react-redux";
 
@@ -53,7 +52,7 @@ const SelectorButton = () => {
         px="0"
         bgColor="transparent"
         variant="default"
-        color={useColorModeValue("secondary.600", "primary.200")}
+        color={useColorModeValue("violet.600", "peach.200")}
         // boxShadow="sm"
         // borderColor="bg.600"
         // _hover={{

@@ -141,9 +141,8 @@ export const kFormatter = (num: number) => {
     : Math.sign(num) * Math.abs(num);
 };
 
-export const roundAmount = (amount: number, rude = false): number => {
+export const roundAmount = (amount: number, strength = 1): number => {
   // в логарифм нули не вставляем
-  const factor = rude ? 1 : 3;
 
   // if (amount > 99)
   //   return (
@@ -151,20 +150,22 @@ export const roundAmount = (amount: number, rude = false): number => {
   //     10 ** String(amount).length
   //   );
   if (!amount || typeof amount !== "number") return 0;
-  if (amount > 100 && rude)
+  if (amount > 100 && strength > 1)
     return +(
-      +(amount / 10 ** amount.toFixed(0).length).toFixed(2) *
+      +(amount / 10 ** amount.toFixed(0).length).toFixed(6 - strength) *
       10 ** amount.toFixed(0).length
     ).toFixed(0);
   // нахожу минимальный значимый порядок числа
   // это такое число, в которое нужно возвести десятку, чтобы получить тысячную долю amount
-  const orderOfMagnitude = -Math.floor(Math.log10(amount / 10 ** factor));
+  const orderOfMagnitude = -Math.floor(
+    Math.log10(amount / 10 ** (4 - strength))
+  );
   //  округляем только часть после точки до порядка равного orderOfMagnitude
   return +amount.toFixed(orderOfMagnitude < 0 ? 0 : orderOfMagnitude);
 };
 
 export const formatNumberInput = (x: string | number) => {
-  if (!x) return x;
+  if (!x) return String(x);
   const s = String(x);
   let parts = s.split(".");
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");

@@ -57,10 +57,10 @@ const ExchangerDetails = () => {
     "green.400",
     "yellow.400",
     "orange.400",
-    "primary.500",
+    "peach.500",
     "red.400",
   ];
-  const mainColor = useColorModeValue("secondary.600", "primary.200");
+  const mainColor = useColorModeValue("violet.600", "peach.200");
 
   return (
     <CustomBox3D>

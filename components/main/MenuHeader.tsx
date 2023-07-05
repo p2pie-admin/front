@@ -18,20 +18,15 @@ const MenuHeader = () => {
       justifyContent="space-between"
       h="10"
     >
-      <Button variant={useColorModeValue("white", "black")} p="1">
+      <Button variant="extra_contrast" p="1">
         <FiSettings />
       </Button>
-      <HStack
-        justifyContent="center"
-        fontWeight="bold"
-        alignItems="center"
-        color="bg.500"
-      >
-        <Text whiteSpace="nowrap" fontSize="2xl">
+      <HStack justifyContent="center" fontWeight="bold" alignItems="center">
+        <Text variant="no_contrast" whiteSpace="nowrap" fontSize="2xl">
           Search Exchangers
         </Text>
       </HStack>
-      <Button variant={useColorModeValue("white", "black")} p="1">
+      <Button variant="extra_contrast" p="1">
         <FiShare />
       </Button>
     </Grid>

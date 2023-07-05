@@ -1,18 +1,27 @@
-import { lighten, getColor, mode, StyleConfig } from "@chakra-ui/theme-tools";
+import { Box } from "@chakra-ui/react";
+import { mode, StyleConfig } from "@chakra-ui/theme-tools";
 import { AnyCnameRecord } from "dns";
 import { ITone } from "../../types/shared";
 import { colors3D } from "./colors";
+
+const colorNameToHex = (theme: any, colorFullName: string) => {
+  const [colorName, colorNumber] = colorFullName.split(".");
+  const c = theme.colors[colorName] as any;
+  const hex = c[colorNumber];
+  return hex || "#fcb597";
+};
 
 const createGradient = (theme: any, tone: ITone, glowing = false) => {
   const [bgFrom, bgTo, borderFrom, borderTo, whiteAlpha, shadeTo] = colors3D[
     tone
   ];
-  const bgFromHEX = getColor(theme, bgFrom);
-  const bgToHEX = getColor(theme, bgTo);
-  const borderFromHEX = getColor(theme, borderFrom);
-  const borderToHEX = getColor(theme, borderTo);
-  const shadeFromHEX = getColor(theme, whiteAlpha);
-  const shadeToHEX = getColor(theme, shadeTo);
+
+  const bgFromHEX = colorNameToHex(theme, bgFrom);
+  const bgToHEX = colorNameToHex(theme, bgTo);
+  const borderFromHEX = colorNameToHex(theme, borderFrom);
+  const borderToHEX = colorNameToHex(theme, borderTo);
+  const shadeFromHEX = colorNameToHex(theme, whiteAlpha);
+  const shadeToHEX = colorNameToHex(theme, shadeTo);
   const glowingShadow = `-2px -2px 15px -8px ${shadeFromHEX}, 2px 2px 15px -8px ${shadeToHEX}`;
   const regularShadow = `-2px -2px 5px ${shadeFromHEX}, 2px 2px 5px ${shadeToHEX}`;
 
@@ -31,15 +40,32 @@ const components: Record<string, StyleConfig> = {
     variants: {
       primary_bright: (props: any) => ({
         bgGradient: mode(
-          "linear(to-br, primary.100, primary.200)",
+          "linear(to-br, peach.100, peach.200)",
           "linear(to-br, bg.300, bg.400)"
         )(props),
       }),
       primary_regular: (props: any) => ({
         bgGradient: mode(
-          "linear(to-br, primary.200, primary.300)",
+          "linear(to-br, peach.200, peach.300)",
           "linear(to-br, bg.400, bg.500)"
         )(props),
+      }),
+    },
+  },
+
+  Text: {
+    variants: {
+      no_contrast: (props: any) => ({
+        color: mode("bg.600", "bg.400")(props),
+      }),
+      contrast: (props: any) => ({
+        color: mode("bg.800", "bg.200")(props),
+      }),
+      extra_contrast: (props: any) => ({
+        color: mode("bg.1000", "bg.50")(props),
+      }),
+      primary: (props: any) => ({
+        color: mode("violet.700", "peach.200")(props),
       }),
     },
   },
@@ -62,15 +88,32 @@ const components: Record<string, StyleConfig> = {
       error: ({ theme, colorMode }) => {
         return createGradient(theme, "error", true);
       },
-
+      //useColorModeValue("white", "black")
+      //useColorModeValue("light", "shaded")
+      //useColorModeValue("dark", "gray")
       primary: ({ theme, colorMode }) => {
         return colorMode === "light"
-          ? createGradient(theme, "primary", true)
-          : createGradient(theme, "secondary", true);
+          ? createGradient(theme, "violet", true)
+          : createGradient(theme, "peach", true);
+      },
+      no_contrast: ({ theme, colorMode }) => {
+        return colorMode === "light"
+          ? createGradient(theme, "gray", true)
+          : createGradient(theme, "shaded");
+      },
+      contrast: ({ theme, colorMode }) => {
+        return colorMode === "light"
+          ? createGradient(theme, "light", true)
+          : createGradient(theme, "dark");
+      },
+      extra_contrast: ({ theme, colorMode }) => {
+        return colorMode === "light"
+          ? createGradient(theme, "white", true)
+          : createGradient(theme, "black");
       },
 
       // secondary: ({ theme }) => {
-      //   return createGradient(theme, "secondary", true);
+      //   return createGradient(theme, "violet", true);
       // },
 
       shaded: ({ theme }) => {
@@ -84,6 +127,7 @@ const components: Record<string, StyleConfig> = {
       black: ({ theme }) => {
         return createGradient(theme, "black");
       },
+      //
       gray: ({ theme }) => {
         return createGradient(theme, "gray", true);
       },

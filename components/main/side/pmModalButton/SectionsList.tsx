@@ -6,7 +6,7 @@ import Section from "./section";
 //const listFilter = new ListFilter();
 //import { SectionContext } from "./section/SectionContext";
 
-import { SectionContext } from "./section/SectionContext";
+import { SectionContext } from "../../../shared/contexts/SectionContext";
 import { ISection } from "../../../../types/selector";
 
 const SectionsList = ({ sections }: { sections: ISection[] }) => {

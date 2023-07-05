@@ -3,12 +3,13 @@ export type ITone =
   | "dark"
   | "black"
   | "error"
-  | "primary"
-  | "secondary"
+  | "peach"
+  | "violet"
   | "gray"
   | "light"
   | "white";
 
+export type IVariant = "contrast" | "extra_contrast" | "no_contrast";
 export interface ICityCodesList {
   [key: string]: [string, string];
 }

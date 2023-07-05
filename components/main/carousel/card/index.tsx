@@ -43,8 +43,6 @@ const ExchangerCard = ({
   const color1 = useColorModeValue("bg.50", "bg.700");
   const color2 = useColorModeValue("bg.300", "bg.600");
 
-  const buttonVariant = useColorModeValue("light", "dark");
-
   return (
     <VStack
       spacing="2"
@@ -80,7 +78,7 @@ const ExchangerCard = ({
           <Button
             p="1"
             zIndex="3"
-            variant={buttonVariant}
+            variant="contrast"
             onClick={() => dispatch(triggerModal("exchange-info"))}
           >
             <MdQueryStats size="1.5rem" />
@@ -88,7 +86,7 @@ const ExchangerCard = ({
           <Button
             p="1"
             zIndex="3"
-            variant={buttonVariant}
+            variant="contrast"
             onClick={() => dispatch(triggerModal("exchange-info"))}
           >
             <BiDotsVerticalRounded size="1.5rem" />

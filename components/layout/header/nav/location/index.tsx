@@ -8,19 +8,19 @@ const Location = () => {
   const { en_city_name, ru_city_name } = useAppSelector(
     (state) => state.main.location
   );
-  const variant = useColorModeValue("gray", "black");
+
   const dispatch = useAppDispatch();
   return (
     <>
-      <CustomModal id="location" header={"Please Choose the City"}>
+      <CustomModal id="location" header={"Choose the City"}>
         <CountryListWrapper />
       </CustomModal>
       <Button
-        variant={variant}
+        variant="contrast"
         p="1"
         onClick={() => dispatch(triggerModal("location"))}
       >
-        <Text>{en_city_name}</Text>
+        {en_city_name}
       </Button>
     </>
   );

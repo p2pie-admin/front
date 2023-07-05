@@ -25,10 +25,10 @@ const ExchangerNameRating = ({
     blackAlpha300,
     whiteAlpha300,
   ] = useToken("colors", [
-    "primary.200",
-    "primary.300",
-    "secondary.600",
-    "secondary.500",
+    "peach.200",
+    "peach.300",
+    "violet.600",
+    "violet.500",
     "blackAlpha.300",
     "whiteAlpha.300",
   ]);

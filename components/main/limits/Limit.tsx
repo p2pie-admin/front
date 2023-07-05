@@ -42,13 +42,13 @@ const Limit = ({
       )}`}</Text>
       <Text
         mx="2px !important"
-        color={useColorModeValue("secondary.600", "primary.200")}
+        color={useColorModeValue("violet.600", "peach.200")}
       >
         {pmCurrencyName}
       </Text>
       <Box
         mx="0 !important"
-        color={useColorModeValue("secondary.600", "primary.200")}
+        color={useColorModeValue("violet.600", "peach.200")}
       >
         <CgSync size="0.8rem" />
       </Box>

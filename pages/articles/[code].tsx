@@ -50,9 +50,9 @@ const Article = ({ article }: { article: IArticle }) => {
           <Text
             cursor="pointer"
             fontWeight="bold"
-            color="primary.200"
+            color="peach.200"
             _hover={{
-              color: "primary.50",
+              color: "peach.50",
             }}
             onClick={() => executeScroll(chapter.ref)}
           >
@@ -66,7 +66,7 @@ const Article = ({ article }: { article: IArticle }) => {
           return (
             <>
               <HStack fontSize="lg" fontWeight="bold">
-                <Text color="primary.200">#</Text>
+                <Text color="peach.200">#</Text>
                 <Text mt="4" ref={chapter.ref}>
                   {chapter.title || ""}
                 </Text>

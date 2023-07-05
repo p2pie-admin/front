@@ -32,8 +32,8 @@ export default function BestRates() {
   //   const padding = 8;
 
   //   const [primary200, primary500, bg700, bg900] = useToken("colors", [
-  //     "primary.200",
-  //     "primary.500",
+  //     "peach.200",
+  //     "peach.500",
   //     "bg.700",
   //     "bg.900",
   //   ]);
@@ -115,7 +115,7 @@ export default function BestRates() {
             color={index % 2 ? "green.500" : "red.500"}
             fontSize={index % 2 ? "sm" : "xs"}
           >
-            <Text color={useColorModeValue("secondary.600", "primary.200")}>
+            <Text color={useColorModeValue("violet.600", "peach.200")}>
               {String(ratePair[0]).toUpperCase()}
             </Text>
 
@@ -123,7 +123,7 @@ export default function BestRates() {
               color={useColorModeValue("bg.700", "bg.200")}
               justifySelf="end"
             >
-              {ratePair[1]}
+              {"~" + ratePair[1]}
             </Text>
             {index % 2 ? (
               <RiArrowDropUpFill size="1rem" />

@@ -23,7 +23,7 @@ import {
 import SwiperButtons from "./bottons";
 import ExchangerCard from "./card";
 import Swiper from "./swiper";
-import { Box3D, CustomBox3D } from "../../../styles/theme/wrappers";
+import { CustomBox3D } from "../../../styles/theme/wrappers";
 
 const fetcher = initCMSFetcher();
 

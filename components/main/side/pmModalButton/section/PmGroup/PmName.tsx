@@ -1,6 +1,6 @@
 import { Text, VStack, useColorModeValue } from "@chakra-ui/react";
 import { useContext } from "react";
-import { SectionContext } from "../SectionContext";
+import { SectionContext } from "../../../../../shared/contexts/SectionContext";
 import { capitalize } from "./helper";
 
 export default function PmName({

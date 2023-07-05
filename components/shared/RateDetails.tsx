@@ -43,7 +43,7 @@ const RateDetails = () => {
   ]);
   const course = rate?.course;
   const amounts = !course ? [0, 0] : course < 1 ? [1, 1 / course] : [course, 1];
-  const mainColor = useColorModeValue("secondary.600", "primary.200");
+  const mainColor = useColorModeValue("violet.600", "peach.200");
 
   //   const renderCourse = () =>  <Text>{`1 ${giveCurrency} = ${} ${getCurrency}`}</Text>
   if (!rate || !giveCurrency || !getCurrency) return <></>;
@@ -106,7 +106,7 @@ const RateDetails = () => {
       <HStack spacing="2" mt="4" justifyContent="end">
         <Button
           disabled
-          variant="shaded"
+          variant="contrast"
           rightIcon={<MdOutlineNotifications />}
         >
           Notify Change

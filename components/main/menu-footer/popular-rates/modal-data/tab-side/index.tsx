@@ -7,7 +7,7 @@ import { initParserFetcher } from "../../../../../../services/fetchers";
 import { Box3D } from "../../../../../../styles/theme/wrappers";
 import { IPopularRate } from "../../../../../../types/rates";
 import ErrorWrapper from "../../../../../shared/ErrorWrapper";
-import SideContext from "../../../../../shared/SideContext";
+import SideContext from "../../../../../shared/contexts/SideContext";
 import RateLayer from "./RateLayer";
 
 const fetcher = initParserFetcher();
