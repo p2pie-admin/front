@@ -1,4 +1,4 @@
-import { Box, Collapse, Text } from "@chakra-ui/react";
+import { Box, Collapse, VStack, Text } from "@chakra-ui/react";
 import limits from "../../../../components/main/limits";
 import { roundAmount } from "../../../../redux/amountsHelper";
 import { useAppSelector } from "../../../../redux/hooks";
@@ -13,48 +13,64 @@ const Sliders = () => {
     state.main.givePm?.currency.code?.toUpperCase(),
     state.main.getPm?.currency.code?.toUpperCase(),
   ]);
-  let rateValues = [0, 0, 0];
-  let minValues = [0, 0, 0];
-  let maxValues = [0, 0, 0];
 
   if (!currencyConverterRate) return <></>;
   const { rate, giveToUSD, getToUSD } = currencyConverterRate;
-  const r = rate > 1 ? rate : 1 / rate;
-  rateValues = [r * 0.95, r * 0.8, r * 1.1];
-  minValues = [getToUSD * 300, getToUSD * 100, getToUSD * 2000];
-  maxValues = [getToUSD * 2000, getToUSD * 100, getToUSD * 25000];
 
-  const [mainCur, secondaryCur] =
+  const [mainCur, secondaryCur, defRate, toUsdRate] =
     giveCur && getCur
       ? rate > 1
-        ? [giveCur, getCur]
-        : [getCur, giveCur]
-      : ["", ""];
+        ? [giveCur, getCur, rate, giveToUSD]
+        : [getCur, giveCur, 1 / rate, getToUSD]
+      : ["", "", 0, 0];
+
+  const rateValues = [defRate, defRate * 0.8, defRate * 1.1];
+  const minValues = [toUsdRate * 300, toUsdRate * 100, toUsdRate * 2000];
+  const maxValues = [toUsdRate * 2000, toUsdRate * 100, toUsdRate * 25000];
+  const toUsd =
+    !giveCur?.includes("USD") && !getCur?.includes("USD")
+      ? toUsdRate
+      : undefined;
 
   return (
     <Box>
       <Text fontSize="lg" color="bg.300" mt="4">
-        Set your own exchange rate and limits for BTC/RUB:
+        {`Set your own exchange rate and limits for ${giveCur} → ${getCur}:`}
       </Text>
-      <RegularBox variant="extra_contrast" my="4">
-        <InputWithSlider
-          leftSide={`1 ${secondaryCur} =`}
-          rightSide={mainCur}
-          values={rateValues}
-          strength={2}
-        />
-        <InputWithSlider
-          leftSide="min: "
-          rightSide={mainCur}
-          values={minValues}
-          strength={4}
-        />
-        <InputWithSlider
-          leftSide="max: "
-          rightSide={mainCur}
-          values={maxValues}
-          strength={4}
-        />
+      <RegularBox
+        variant="extra_contrast"
+        mt="4"
+        pb="4"
+        pt="1"
+        display="flex"
+        justifyContent="center"
+      >
+        <VStack alignItems="end" w="fit-content">
+          <InputWithSlider
+            id="rate"
+            leftSide={`1 ${secondaryCur} =`}
+            rightSide={mainCur}
+            values={rateValues}
+            toUsd={toUsd}
+            strength={2}
+          />
+          <InputWithSlider
+            id="min"
+            leftSide="min: "
+            rightSide={mainCur}
+            values={minValues}
+            toUsd={toUsd}
+            strength={4}
+          />
+          <InputWithSlider
+            id="max"
+            leftSide="max: "
+            rightSide={mainCur}
+            values={maxValues}
+            toUsd={toUsd}
+            strength={4}
+          />
+        </VStack>
       </RegularBox>
     </Box>
   );

@@ -37,9 +37,7 @@ const Limit = ({
       <Text
         whiteSpace="nowrap"
         color={useColorModeValue("bg.800", "bg.100")}
-      >{`${label.toUpperCase()}: ${kFormatter(
-        roundAmount(value, true)
-      )}`}</Text>
+      >{`${label.toUpperCase()}: ${kFormatter(roundAmount(value, 2))}`}</Text>
       <Text
         mx="2px !important"
         color={useColorModeValue("violet.600", "peach.200")}

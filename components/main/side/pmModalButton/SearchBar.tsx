@@ -9,7 +9,7 @@ import {
   HStack,
   Wrap,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { setSearchBarInputValue } from "../../../../redux/mainReducer";
 import { ISearchBar } from "../../../../types/selector";
@@ -18,6 +18,7 @@ import { Box3D } from "../../../../styles/theme/wrappers";
 import { MdOutlineClear } from "react-icons/md";
 import { RiSearchLine } from "react-icons/ri";
 import { countryCurrencies } from "./helper";
+import SideContext from "../../../shared/contexts/SideContext";
 
 const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {
   const [inputFocused, setInputFocused] = useState(false);
@@ -32,10 +33,10 @@ const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {
   const currencies = ["RUB", "USD", localCurrency, "UAH"];
 
   const { i18n } = useTranslation();
-  const activeSide = useAppSelector((state) => state.main.activeSide);
+  const side = useContext(SideContext) as "give" | "get";
   const placeholder =
-    activeSide && inputFocused
-      ? search_bar?.[`${i18n.language as "en" | "ru"}_${activeSide}_adornment`]
+    side && inputFocused
+      ? search_bar?.[`${i18n.language as "en" | "ru"}_${side}_adornment`]
       : search_bar[`${i18n.language as "en" | "ru"}_placeholder`];
 
   const dispatch = useAppDispatch();

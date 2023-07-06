@@ -65,8 +65,8 @@ const LimitsRange = () => {
 
   const [highestMax, lowestMin] = useAppSelector((state) => {
     const dirRates = state.main.dirRates || [];
-    const allMins = dirRates.map((r) => roundAmount(r.min?.[side], true));
-    const allMaxes = dirRates.map((r) => roundAmount(r.max?.[side], true));
+    const allMins = dirRates.map((r) => roundAmount(r.min?.[side], 2));
+    const allMaxes = dirRates.map((r) => roundAmount(r.max?.[side], 2));
     return [Math.max(...allMaxes), Math.min(...allMins)];
   });
 
@@ -83,7 +83,7 @@ const LimitsRange = () => {
 
   const [MIN, MAX] =
     min?.[side] && max?.[side]
-      ? [roundAmount(min[side], true), roundAmount(max[side], true)]
+      ? [roundAmount(min[side], 2), roundAmount(max[side], 2)]
       : [0, 0];
   // needMargin если min близок к highestMin && max далек от highestMax
   const needMarginMin = MIN / lowestMin > 5; //&& MAX / lowestMax < 10;
@@ -92,7 +92,7 @@ const LimitsRange = () => {
   const log = (base: number, n: number) => Math.log(n) / Math.log(base);
   const curvingStrength = 100 / (1 - log(highestMax, lowestMin));
   const percToAmount = (x: number) =>
-    roundAmount(highestMax ** (1 + (x - 100) / curvingStrength), true);
+    roundAmount(highestMax ** (1 + (x - 100) / curvingStrength), 2);
 
   const amountToPerc = (x?: number) => {
     if (!x) return 0;

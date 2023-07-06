@@ -7,12 +7,13 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { Box3D } from "../../../styles/theme/wrappers";
+import { IPm } from "../../../types/selector";
 import AmountInput from "./amountInput";
 import PmModalButton from "./pmModalButton";
 
-const Side = () => {
+const Side = ({ pm }: { pm?: IPm }) => {
   return (
-    <Box3D >
+    <Box3D>
       <Grid
         templateColumns="auto 1fr"
         gridGap="4"
@@ -25,7 +26,7 @@ const Side = () => {
         justifyContent="space-between"
         // boxShadow="inset -1px 1px 28px rgba(0,0,0,0.1);"
       >
-        <PmModalButton />
+        <PmModalButton pm={pm} />
 
         <AmountInput />
       </Grid>

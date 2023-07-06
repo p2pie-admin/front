@@ -12,9 +12,10 @@ import {
 } from "../../../../../../redux/thunks";
 import { IPmGroup, IPm } from "../../../../../../types/selector";
 import {
-  setActiveSide,
+  addPm,
   setCurrencyConverterRate,
   setPm,
+  triggerModal,
 } from "../../../../../../redux/mainReducer";
 import { useRouter } from "next/router";
 import { useContext } from "react";
@@ -25,15 +26,15 @@ import {
   initParserFetcher,
 } from "../../../../../../services/fetchers";
 import { ICurrencyConverterRate } from "../../../../../../types/rates";
+import SideContext from "../../../../../shared/contexts/SideContext";
 
 const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   const isP2P = useContext(P2PContext);
   const dispatch = useAppDispatch();
-  const activeSide = useAppSelector((state) => state.main.activeSide);
+  const side = useContext(SideContext) as "give" | "get";
   const possiblePairs = useAppSelector((state) =>
-    activeSide
-      ? state.main[`${activeSide === "give" ? "get" : "give"}Pm`]
-          ?.possible_pairs
+    side
+      ? state.main[`${side === "give" ? "get" : "give"}Pm`]?.possible_pairs
       : undefined
   );
   const router = useRouter();
@@ -43,57 +44,58 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
     state.main.getPm,
   ]);
 
-  const choosePm = (selectedPm: IPm, shaded: boolean) => {
-    if (!activeSide) return;
-    const oppositePm = activeSide === "give" ? getPm : givePm;
+  const choosePmP2P = (selectedPm: IPm, shaded: boolean) => {
+    const oppositePm = side === "give" ? getPm : givePm;
     batch(() => {
-      dispatch(
-        fetchFiatByCurrencyCode({
-          code: selectedPm.currency.code,
-          side: activeSide,
-        })
-      ); // нужен только код валюты,  reducer сам запишет куда надо
+      dispatch(addPm({ pm: selectedPm, side }));
+      dispatch(triggerModal(side));
 
-      dispatch(setActiveSide(null));
-      // for p2p
-      dispatch(setPm({ pm: selectedPm, side: activeSide }));
-      if (oppositePm?.code && isP2P) {
-        const dir =
-          activeSide === "get"
-            ? `${oppositePm.currency.code}_${selectedPm.currency.code}`
-            : `${selectedPm.currency.code}_${oppositePm.currency.code}`;
-        const fetcher = initCurrencyConverterFetcher();
-        fetcher(dir)
-          .then((rate: ICurrencyConverterRate) =>
-            dispatch(setCurrencyConverterRate(rate))
-          )
-          .catch((e) => console.log(e));
-        return;
+      if (oppositePm?.code) {
       }
-      // for exchangers
-      dispatch(fetchPossiblePairs({ code: selectedPm.code, side: activeSide }));
-      dispatch(setPm({ pm: selectedPm, side: activeSide }));
-      if (oppositePm?.code && !isP2P) {
+      //   const dir =
+      //     side === "get"
+      //       ? `${oppositePm.currency.code}_${selectedPm.currency.code}`
+      //       : `${selectedPm.currency.code}_${oppositePm.currency.code}`;
+      //   const fetcher = initCurrencyConverterFetcher();
+      //   fetcher(dir)
+      //     .then((rate: ICurrencyConverterRate) =>
+      //       dispatch(setCurrencyConverterRate(rate))
+      //     )
+      //     .catch((e) => console.log(e));
+      //   return;
+      // }
+    });
+  };
+
+  const choosePm = (selectedPm: IPm, shaded: boolean) => {
+    const oppositePm = side === "give" ? getPm : givePm;
+    batch(() => {
+      dispatch(fetchPossiblePairs({ code: selectedPm.code, side }));
+      dispatch(triggerModal(side));
+      dispatch(setPm({ pm: selectedPm, side }));
+
+      if (oppositePm?.code) {
         if (shaded) {
           // clear opposite Pm is no pair possible anyway
           dispatch(
             setPm({
-              side: activeSide === "give" ? "get" : "give",
+              side: side === "give" ? "get" : "give",
             })
           );
         } else {
           const dir =
-            activeSide === "get"
+            side === "get"
               ? `${oppositePm.code}_${selectedPm.code}`
               : `${selectedPm.code}_${oppositePm.code}`;
           const pmGroups =
-            activeSide === "get"
+            side === "get"
               ? `${oppositePm.pm_group_id}_${selectedPm.pm_group_id}`
               : `${selectedPm.pm_group_id}_${oppositePm.pm_group_id}`;
           router.push(`/?dir=${dir}&pm_groups=${pmGroups}`, undefined, {
             shallow: true,
           });
-          dispatch(fetchDirRates({ code: selectedPm.code, side: activeSide }));
+          //dispatch(fetchCurrencyConverterRate(rate))
+          dispatch(fetchDirRates({ code: selectedPm.code, side }));
         }
       }
     });
@@ -112,7 +114,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
         pmGroupName={name}
         pms={pms}
         color={pm_group.color}
-        choosePm={choosePm}
+        choosePm={isP2P ? choosePmP2P : choosePm}
         possiblePairs={possiblePairs}
       />
     ); // pm_id from pm_group_short_name + currency or subitem
@@ -125,7 +127,11 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
     <PmButton
       color={pm_group.color}
       icon={pm_group.icon}
-      handleToggle={() => choosePm(pms[0], shadedPm)}
+      handleToggle={
+        isP2P
+          ? () => choosePmP2P(pms[0], shadedPm)
+          : () => choosePm(pms[0], shadedPm)
+      }
       shaded={shadedPm}
     >
       <PmName

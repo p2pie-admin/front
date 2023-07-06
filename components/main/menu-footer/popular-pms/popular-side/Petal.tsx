@@ -15,7 +15,6 @@ import {
 } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
 import {
-  setActiveSide,
   setPm,
   setPopularCompleted,
   triggerModal,
@@ -81,7 +80,6 @@ function Petal({
   index: number;
 }) {
   const side = useContext(SideContext) as "give" | "get";
-  const activePetal = useAppSelector((state) => state.main.activePetal);
 
   const [givePm, getPm] = useAppSelector((state) => [
     state.main.givePm,
@@ -102,7 +100,7 @@ function Petal({
       ); // нужен только код валюты,  reducer сам запишет куда надо
       dispatch(fetchPossiblePairs({ code: selectedPm.code, side: side }));
       dispatch(setPm({ pm: selectedPm, side }));
-      dispatch(setActiveSide(null));
+
       if (oppositePm?.code) {
         dispatch(fetchDirRates({ code: selectedPm.code, side: side }));
         dispatch(setPopularCompleted(undefined));
@@ -113,10 +111,7 @@ function Petal({
   };
 
   const openPmModal = () => {
-    batch(() => {
-      dispatch(setActiveSide(side));
-      dispatch(triggerModal(side));
-    });
+    dispatch(triggerModal(side));
   };
 
   return (

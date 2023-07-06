@@ -24,6 +24,7 @@ import Side from "../components/main/side";
 
 import { getPmByCode } from "../components/main/side/pmModalButton/section/PmGroup/helper";
 import { ILocation } from "../types/shared";
+import { IP2P } from "../types/p2p";
 
 type ISide = "give" | "get";
 
@@ -31,7 +32,7 @@ export interface MainState {
   searchBarInputValue: string;
   givePm?: IPm;
   getPm?: IPm;
-  activeSide: ISide | null;
+
   dirRates?: IRate[]; //  uniqueRates + bestRates
   pendingDirRates: boolean;
   amountInput?: AmountInput;
@@ -50,11 +51,11 @@ export interface MainState {
   trash?: any;
   location: ILocation;
   currencyConverterRate?: ICurrencyConverterRate;
+  p2p: IP2P;
 }
 
 const initialState: MainState = {
   searchBarInputValue: "",
-  activeSide: null,
   pendingDirRates: false,
   amountOutputs: initialAmountOutputs,
   swiperIdVisible: 0,
@@ -64,6 +65,9 @@ const initialState: MainState = {
   pendingPopularRates: false,
   modals: {},
   location: { en_country_name: "Russia", en_city_name: "Moscow" },
+  p2p: {
+    dirs: [],
+  },
 };
 
 const getUpdatedAmount = (state: MainState, newSwiperId: number) => {
@@ -104,6 +108,25 @@ export const ratesSlice = createSlice({
     ) => {
       state.popularCompleted = action.payload;
     },
+    addPm: (
+      state: MainState,
+      action: PayloadAction<{ pm?: IPm; side: ISide }>
+    ) => {
+      const { side, pm } = action.payload;
+      const lastIndex = state.p2p.dirs.length - 1;
+      const lastDir = state.p2p.dirs[lastIndex];
+      if (!state.p2p.dirs.length || (lastDir?.give && lastDir.get)) {
+        // create new
+        state.p2p.dirs = [
+          ...state.p2p.dirs,
+          {
+            [side]: pm,
+          },
+        ];
+        return;
+      }
+      state.p2p.dirs[lastIndex][side] = pm;
+    },
 
     setPm: (
       state: MainState,
@@ -123,10 +146,10 @@ export const ratesSlice = createSlice({
       state.givePm = undefined;
     },
 
-    setActiveSide: (state: MainState, action: PayloadAction<ISide | null>) => {
-      state.activeSide = action.payload;
-      state.searchBarInputValue = "";
-    },
+    // setActiveSide: (state: MainState, action: PayloadAction<ISide | null>) => {
+    //   state.activeSide = action.payload;
+    //   state.searchBarInputValue = "";
+    // },
     setSwiperIdVisible: (state: MainState, action: PayloadAction<number>) => {
       state.swiperIdVisible = action.payload;
       state.amountOutputs = getUpdatedAmount(state, action.payload);
@@ -277,7 +300,7 @@ export const ratesSlice = createSlice({
 
 export const {
   setAmount,
-  setActiveSide,
+  //setActiveSide,
   setPm,
   setSearchBarInputValue,
   setSwiperIdVisible,
@@ -291,6 +314,7 @@ export const {
   decrementSwiper,
   setLocation,
   setCurrencyConverterRate,
+  addPm,
 } = ratesSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

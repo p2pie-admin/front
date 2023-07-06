@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Center,
+  color,
   HStack,
   Icon,
   Tag,
@@ -9,96 +10,94 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import { useContext } from "react";
+import React, { ReactElement, useContext } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import SideContext from "../../../shared/contexts/SideContext";
 import { BiChevronDown } from "react-icons/bi";
 import PmAvatar from "../../../shared/Avatar";
 import { capitalize } from "./section/PmGroup/helper";
-import { setActiveSide, triggerModal } from "../../../../redux/mainReducer";
+import { triggerModal } from "../../../../redux/mainReducer";
 import SelectorModal from "./SelectorModal";
 import side from "..";
 import CircularIcon from "../../../shared/CircularIcon";
 import Arrow from "../../../shared/Arrow";
 import { batch } from "react-redux";
+import { IImage, IPm } from "../../../../types/selector";
 
-const SelectorButton = () => {
+const ButtonWrapper = ({
+  children,
+  leftIcon,
+  handleClick,
+}: {
+  leftIcon?: ReactElement;
+  children: any;
+  handleClick: Function;
+}) => (
+  <>
+    <SelectorModal />
+    <Button
+      onClick={() => handleClick()}
+      position="relative"
+      py="1"
+      px="0"
+      bgColor="transparent"
+      variant="default"
+      color={useColorModeValue("violet.600", "peach.200")}
+      h="12"
+      display="flex"
+      justifyContent="space-between"
+      //leftIcon={currency ? <PmAvatar icon={icon} /> : ""}
+      rightIcon={<Arrow isUp={false} />}
+      leftIcon={leftIcon}
+    >
+      {children}
+    </Button>
+  </>
+);
+
+// {
+//   currencyCode ? (
+//     <CircularIcon icon={icon} color={color || "gray"} />
+//   ) : (
+//     <></>
+//   )
+// }
+const SelectorButton = ({ pm }: { pm?: IPm }) => {
   const dispatch = useAppDispatch();
 
   const side = useContext(SideContext) as "give" | "get";
 
-  const PmCurrencyName = useAppSelector((state) =>
-    state.main[`${side}Pm`]?.currency.code.toUpperCase()
-  );
-  const tag = useAppSelector((state) => state.main[`${side}Pm`]?.subgroup_name);
+  if (!pm)
+    return (
+      <ButtonWrapper handleClick={() => dispatch(triggerModal(side))}>
+        <Text fontSize="xl">
+          {capitalize(side === "give" ? "sell" : "buy")}
+        </Text>
+      </ButtonWrapper>
+    );
 
-  const PmIcon = useAppSelector((state) => state.main[`${side}Pm`]?.icon);
-  const PmColor = useAppSelector((state) => state.main[`${side}Pm`]?.color);
-
-  const handleModalOpen = () => {
-    batch(() => {
-      dispatch(setActiveSide(side));
-      dispatch(triggerModal(side));
-    });
-  };
-
+  const { icon, tag, color } = pm;
+  const currencyCode = pm.currency.code.toUpperCase();
   return (
-    <>
-      {typeof window !== "undefined" && <SelectorModal />}
-      <Button
-        onClick={() => handleModalOpen()}
-        position="relative"
-        py="1"
-        px="0"
-        bgColor="transparent"
-        variant="default"
-        color={useColorModeValue("violet.600", "peach.200")}
-        // boxShadow="sm"
-        // borderColor="bg.600"
-        // _hover={{
-        //   borderColor: "pink.400",
-        //   bgColor: "bg.600",
-        // }}
-        // _active={{
-        //   bgColor: "bg.500",
-        // }}
-        h="12"
-        display="flex"
-        justifyContent="space-between"
-        //leftIcon={PmCurrencyName ? <PmAvatar icon={PmIcon} /> : ""}
-        rightIcon={<Arrow isUp={false} />}
-        leftIcon={
-          PmCurrencyName ? (
-            <CircularIcon icon={PmIcon} color={PmColor || "gray"} />
-          ) : (
-            <></>
-          )
-        }
-      >
-        {PmCurrencyName ? (
-          <Box>
-            <Text fontSize="lg">{PmCurrencyName}</Text>
-            {tag && (
-              <Box
-                position="absolute"
-                zIndex="5"
-                w="fit-content"
-                right={-3}
-                bottom={-2.5}
-              >
-                <Tag size="sm" colorScheme="bg">
-                  {tag}
-                </Tag>
-              </Box>
-            )}
-          </Box>
-        ) : (
-          <Text fontSize="xl">
-            {capitalize(side === "give" ? "sell" : "buy")}
-          </Text>
-        )}
-      </Button>
-    </>
+    <ButtonWrapper
+      leftIcon={<CircularIcon icon={icon} color={color || "gray"} />}
+      handleClick={() => dispatch(triggerModal(side))}
+    >
+      <Text fontSize="lg">{currencyCode}</Text>
+      {tag && (
+        <Box
+          position="absolute"
+          zIndex="5"
+          w="fit-content"
+          right={-3}
+          bottom={-2.5}
+        >
+          <Tag size="sm" colorScheme="bg">
+            {tag}
+          </Tag>
+        </Box>
+      )}
+    </ButtonWrapper>
   );
 };
 

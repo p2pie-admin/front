@@ -8,7 +8,7 @@ import MenuHeader from "./MenuHeader";
 
 import MenuFooter from "./menu-footer";
 import { useEffect } from "react";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { decrementSwiper, incrementSwiper } from "../../redux/mainReducer";
 import { useRouter } from "next/router";
 import { batch } from "react-redux";
@@ -23,20 +23,66 @@ const MainPageContent = () => {
   }, []);
 
   const router = useRouter();
+  const [givePm, getPm] = useAppSelector((state) => [
+    state.main.givePm,
+    state.main.getPm,
+  ]);
 
   const { dir, pm_groups } = router.query;
 
-  if (typeof dir === "string" && typeof pm_groups === "string") {
-    batch(() => {
-      dispatch(restorePmsFromSlug({ dir, pm_groups }));
-      dispatch(fetchDirRates({ dir }));
-    });
-  }
+  // if (typeof dir === "string" && typeof pm_groups === "string") {
+  //   batch(() => {
+  //     dispatch(restorePmsFromSlug({ dir, pm_groups }));
+  //     dispatch(fetchDirRates({ dir }));
+  //   });
+  // }
   const handleKeyDown = (e: any) => {
     if (e.keyCode === 37) dispatch(decrementSwiper());
     if (e.keyCode === 39) dispatch(incrementSwiper());
     document.removeEventListener("keydown", handleKeyDown);
   };
+
+  // const {
+  //   giveCurrency,
+  //   getCurrency,
+  //   giveTag,
+  //   getTag,
+  //   giveIcon,
+  //   getIcon,
+  //   giveColor,
+  //   getColor,
+  // } = useAppSelector((state) => {
+  //   const givePm = state.main.givePm;
+  //   const getPm = state.main.getPm;
+  //   if (givePm && getPm && Object.keys(givePm).length && Object.keys(getPm).length) {
+  //     return {
+  //       giveCurrency: givePm.currency.code.toUpperCase(),
+  //       getCurrency: getPm.currency.code.toUpperCase(),
+  //       giveTag: givePm.subgroup_name,
+  //       getTag: getPm.subgroup_name,
+  //       giveIcon: givePm.icon,
+  //       getIcon: getPm.icon,
+  //       giveColor: givePm.color,
+  //       getColor: getPm.color
+  //     };
+  //   }
+  //   return {};
+  // });
+
+  // const selectProps = (side: "give" | "get") =>
+  //   useAppSelector((state) => {
+  //     const pm = state.main[`${side}Pm`];
+  //     if (pm && Object.keys(pm).length) {
+  //       const { tag, icon, color } = pm;
+  //       return {
+  //         currency: pm.currency.code.toUpperCase(),
+  //         tag,
+  //         icon,
+  //         color,
+  //       };
+  //     }
+  //     return {};
+  //   });
 
   return (
     <RegularBox
@@ -52,13 +98,13 @@ const MainPageContent = () => {
       <Box mb="4">
         <P2PContext.Provider value={false}>
           <SideContext.Provider value={"give"}>
-            <Side />
+            <Side pm={givePm} />
           </SideContext.Provider>
 
           <ReverseButton />
 
           <SideContext.Provider value={"get"}>
-            <Side />
+            <Side pm={getPm} />
           </SideContext.Provider>
         </P2PContext.Provider>
       </Box>

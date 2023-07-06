@@ -1,10 +1,12 @@
 import { Highlight, useColorModeValue } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
+import { useContext } from "react";
 import useSWR from "swr";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { setActiveSide } from "../../../../redux/mainReducer";
+
 import { initCMSFetcher } from "../../../../services/fetchers";
 import { ISelector } from "../../../../types/selector";
+import SideContext from "../../../shared/contexts/SideContext";
 import CustomModal from "../../../shared/CustomModal";
 
 import Selector from "./Selector";
@@ -18,12 +20,12 @@ const SelectorModal = () => {
 
   // const { i18n } = useTranslation();
 
-  const activeSide = useAppSelector((state) => state.main.activeSide);
+  const side = useContext(SideContext) as "give" | "get";
   const pink = useColorModeValue("pink.400", "pink.200");
   const green = useColorModeValue("green.400", "green.200");
 
   const header =
-    activeSide === "give" ? (
+    side === "give" ? (
       <Highlight
         query="sell"
         styles={{ px: "2", py: "1", rounded: "xl", mx: "1", bg: pink }}
@@ -43,7 +45,7 @@ const SelectorModal = () => {
   //   : "✓";
 
   return (
-    <CustomModal id={String(activeSide)} header={header}>
+    <CustomModal id={String(side)} header={header}>
       <Selector />
     </CustomModal>
   );
