@@ -96,17 +96,15 @@ const MainPageContent = () => {
       <MenuHeader />
 
       <Box mb="4">
-        <P2PContext.Provider value={false}>
-          <SideContext.Provider value={"give"}>
-            <Side pm={givePm} />
-          </SideContext.Provider>
+        <SideContext.Provider value={"give"}>
+          <Side pm={givePm} />
+        </SideContext.Provider>
 
-          <ReverseButton />
+        <ReverseButton />
 
-          <SideContext.Provider value={"get"}>
-            <Side pm={getPm} />
-          </SideContext.Provider>
-        </P2PContext.Provider>
+        <SideContext.Provider value={"get"}>
+          <Side pm={getPm} />
+        </SideContext.Provider>
       </Box>
 
       <LimitsRange />

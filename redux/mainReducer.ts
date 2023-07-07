@@ -1,8 +1,5 @@
-import {
-  ICurrencyConverterRate,
-  IPopularDirRates,
-  IRate,
-} from "./../types/rates";
+import { IP2PDir } from "./../types/p2p";
+import { IPopularDirRates, IRate } from "./../types/rates";
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 
 import { AmountOutputs, AmountInput } from "../types/amount";
@@ -16,6 +13,7 @@ import {
   fetchPossiblePairs,
   fetchFiat,
   restorePmsFromSlug,
+  fetchCurrencyConverterRate,
 } from "./thunks";
 import { IFiatRates, IImage, IPm, IPmGroup } from "../types/selector";
 import { IActivePetal, IDir } from "../types/dir";
@@ -24,7 +22,7 @@ import Side from "../components/main/side";
 
 import { getPmByCode } from "../components/main/side/pmModalButton/section/PmGroup/helper";
 import { ILocation } from "../types/shared";
-import { IP2P } from "../types/p2p";
+import { ICurrencyConverterRate, IP2P } from "../types/p2p";
 
 type ISide = "give" | "get";
 
@@ -66,7 +64,7 @@ const initialState: MainState = {
   modals: {},
   location: { en_country_name: "Russia", en_city_name: "Moscow" },
   p2p: {
-    dirs: [],
+    dirs: [{ isVisible: true }],
   },
 };
 
@@ -110,22 +108,24 @@ export const ratesSlice = createSlice({
     },
     addPm: (
       state: MainState,
-      action: PayloadAction<{ pm?: IPm; side: ISide }>
+      action: PayloadAction<{ pm: IPm; side: ISide; index: number }>
     ) => {
-      const { side, pm } = action.payload;
-      const lastIndex = state.p2p.dirs.length - 1;
-      const lastDir = state.p2p.dirs[lastIndex];
-      if (!state.p2p.dirs.length || (lastDir?.give && lastDir.get)) {
-        // create new
-        state.p2p.dirs = [
-          ...state.p2p.dirs,
-          {
-            [side]: pm,
-          },
-        ];
-        return;
-      }
-      state.p2p.dirs[lastIndex][side] = pm;
+      const { side, pm, index } = action.payload;
+      state.p2p.dirs[index][side] = pm;
+    },
+
+    addEmptyDir: (state: MainState) => {
+      state.p2p.dirs = state.p2p.dirs = [
+        ...state.p2p.dirs.reduce((dirs: IP2PDir[], dir) => {
+          return [...dirs, { ...dir, isVisible: false }];
+        }, []),
+        { isVisible: true },
+      ];
+    },
+
+    triggerP2PDir: (state: MainState, action: PayloadAction<number>) => {
+      state.p2p.dirs[action.payload].isVisible = !state.p2p.dirs[action.payload]
+        .isVisible;
     },
 
     setPm: (
@@ -267,6 +267,16 @@ export const ratesSlice = createSlice({
       if (action.payload.side === "get" && state.getPm)
         state.getPm.possible_pairs = action.payload.possiblePairs;
     });
+
+    builder.addCase(fetchCurrencyConverterRate.fulfilled, (state, action) => {
+      const { p2pIndex, data } = action.payload;
+      if (p2pIndex === undefined) {
+        state.currencyConverterRate = data;
+        return;
+      }
+      state.p2p.dirs[p2pIndex].currencyConverterRate = data;
+    });
+
     // popular rates
     // builder.addCase(fetchPopularRates.pending, (state) => {
     //   state.pendingPopularRates = true;
@@ -315,6 +325,8 @@ export const {
   setLocation,
   setCurrencyConverterRate,
   addPm,
+  addEmptyDir,
+  triggerP2PDir,
 } = ratesSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

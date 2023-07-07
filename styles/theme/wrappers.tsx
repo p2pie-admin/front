@@ -28,6 +28,7 @@ export const RegularBox = (props: any) => {
     contrast: useColorModeValue("bg.50", "bg.800"),
     extra_contrast: useColorModeValue("bg.10", "bg.900"),
   };
+  const color = useColorModeValue("bg.700", "bg.100");
   const bgVarinat = bgVarinats[variant];
   return (
     <Box
@@ -35,6 +36,7 @@ export const RegularBox = (props: any) => {
       borderRadius="2xl"
       position="relative"
       bgColor={bgVarinat}
+      color={props.color || color}
     >
       {children}
     </Box>

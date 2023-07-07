@@ -3,7 +3,10 @@ import { IPopularDirRates, IRate } from "../types/rates";
 import axios from "axios";
 
 import { pmGroupQuery, pmsQuery } from "../services/initialQueries";
-import { initCMSFetcher } from "../services/fetchers";
+import {
+  initCMSFetcher,
+  initCurrencyConverterFetcher,
+} from "../services/fetchers";
 import { MainState } from "./mainReducer";
 import { IPmPointer } from "../types/selector";
 import side from "../components/main/side";
@@ -110,6 +113,14 @@ export const fetchPms = createAsyncThunk("initial/fetchPms", async () => {
   const response = await fetcher(pmsQuery);
   return response?.pms as IPmPointer[];
 });
+
+export const fetchCurrencyConverterRate = createAsyncThunk(
+  "p2p/fetchCurrencyConverterRate",
+  async ({ dir, p2pIndex }: { dir: string; p2pIndex?: number }) => {
+    const fetcher = initCurrencyConverterFetcher(p2pIndex);
+    return await fetcher(dir);
+  }
+);
 
 // export const fetchPms = createAsyncThunk("initial/fetchPms", async () => {
 //   const fetcher = initCMSFetcher();

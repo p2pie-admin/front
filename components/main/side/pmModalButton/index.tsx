@@ -23,6 +23,8 @@ import CircularIcon from "../../../shared/CircularIcon";
 import Arrow from "../../../shared/Arrow";
 import { batch } from "react-redux";
 import { IImage, IPm } from "../../../../types/selector";
+import P2PContext from "../../../shared/contexts/p2pContext";
+import e from "cors";
 
 const ButtonWrapper = ({
   children,
@@ -33,26 +35,26 @@ const ButtonWrapper = ({
   children: any;
   handleClick: Function;
 }) => (
-  <>
-    <SelectorModal />
-    <Button
-      onClick={() => handleClick()}
-      position="relative"
-      py="1"
-      px="0"
-      bgColor="transparent"
-      variant="default"
-      color={useColorModeValue("violet.600", "peach.200")}
-      h="12"
-      display="flex"
-      justifyContent="space-between"
-      //leftIcon={currency ? <PmAvatar icon={icon} /> : ""}
-      rightIcon={<Arrow isUp={false} />}
-      leftIcon={leftIcon}
-    >
-      {children}
-    </Button>
-  </>
+  <Button
+    onClick={(e: React.MouseEvent<HTMLElement>) => {
+      handleClick();
+      e.stopPropagation();
+    }}
+    position="relative"
+    py="1"
+    px="0"
+    bgColor="transparent"
+    variant="default"
+    color={useColorModeValue("violet.600", "peach.200")}
+    h="12"
+    display="flex"
+    justifyContent="space-between"
+    //leftIcon={currency ? <PmAvatar icon={icon} /> : ""}
+    rightIcon={<Arrow isUp={false} />}
+    leftIcon={leftIcon}
+  >
+    {children}
+  </Button>
 );
 
 // {
@@ -66,10 +68,18 @@ const SelectorButton = ({ pm }: { pm?: IPm }) => {
   const dispatch = useAppDispatch();
 
   const side = useContext(SideContext) as "give" | "get";
+  const p2pIndex = useContext(P2PContext);
 
   if (!pm)
     return (
-      <ButtonWrapper handleClick={() => dispatch(triggerModal(side))}>
+      <ButtonWrapper
+        handleClick={() =>
+          dispatch(
+            triggerModal(side + (p2pIndex === undefined ? "" : p2pIndex))
+          )
+        }
+      >
+        <SelectorModal p2pIndex={p2pIndex} />
         <Text fontSize="xl">
           {capitalize(side === "give" ? "sell" : "buy")}
         </Text>
@@ -81,8 +91,11 @@ const SelectorButton = ({ pm }: { pm?: IPm }) => {
   return (
     <ButtonWrapper
       leftIcon={<CircularIcon icon={icon} color={color || "gray"} />}
-      handleClick={() => dispatch(triggerModal(side))}
+      handleClick={() =>
+        dispatch(triggerModal(side + (p2pIndex === undefined ? "" : p2pIndex)))
+      }
     >
+      <SelectorModal p2pIndex={p2pIndex} />
       <Text fontSize="lg">{currencyCode}</Text>
       {tag && (
         <Box

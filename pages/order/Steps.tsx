@@ -34,29 +34,29 @@ function Steps() {
   const [tabIndex, setTabIndex] = useState(0);
 
   return (
-    <Box>
-      <Stepper index={tabIndex} colorScheme="peach" size="sm">
-        {steps.map((step, index) => (
-          <Step key={index}>
-            <StepIndicator>
-              <StepStatus
-                complete={<StepIcon />}
-                incomplete={<StepNumber />}
-                active={<StepNumber />}
-              />
-            </StepIndicator>
+    <VStack h="90%" justifyContent="space-between">
+      <Box w="100%">
+        <Stepper index={tabIndex} colorScheme="peach" size="sm">
+          {steps.map((step, index) => (
+            <Step key={index}>
+              <StepIndicator>
+                <StepStatus
+                  complete={<StepIcon />}
+                  incomplete={<StepNumber />}
+                  active={<StepNumber />}
+                />
+              </StepIndicator>
 
-            <Box flexShrink="0">
-              <StepTitle>{step.title}</StepTitle>
-              <StepDescription>{step.description}</StepDescription>
-            </Box>
+              <Box flexShrink="0">
+                <StepTitle>{step.title}</StepTitle>
+                <StepDescription>{step.description}</StepDescription>
+              </Box>
 
-            <StepSeparator />
-          </Step>
-        ))}
-      </Stepper>
+              <StepSeparator />
+            </Step>
+          ))}
+        </Stepper>
 
-      <Box h="500">
         <Tabs index={tabIndex}>
           <TabPanels>
             <TabPanel px="0" py="4">
@@ -74,7 +74,7 @@ function Steps() {
         </Tabs>
       </Box>
 
-      <HStack mt="4" justifyContent="space-between">
+      <HStack w="100%" mt="6" justifyContent="space-between">
         {tabIndex > 0 ? (
           <Button
             leftIcon={<IoIosArrowRoundBack size="1.5rem" />}
@@ -100,7 +100,7 @@ function Steps() {
           </Button>
         )}
       </HStack>
-    </Box>
+    </VStack>
   );
 }
 

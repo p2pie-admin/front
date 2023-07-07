@@ -42,9 +42,3 @@ export interface IPopularRate {
   course: number;
   fiat: string;
 }
-
-export interface ICurrencyConverterRate {
-  rate: number;
-  giveToUSD: number;
-  getToUSD: number;
-}

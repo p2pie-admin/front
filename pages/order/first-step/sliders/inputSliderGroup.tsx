@@ -74,7 +74,7 @@ const InputWithSlider = ({
             value={valueStr}
             keepWithinRange={true}
             clampValueOnBlur={true}
-            w={`${valueStr.length * 9.5 + 9.5}px`}
+            w={`${valueStr.length * 9.5 + 10}px`}
             max={max}
             min={0} // no negative
           >
