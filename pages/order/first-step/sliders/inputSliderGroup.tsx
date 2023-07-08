@@ -12,7 +12,8 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import P2PContext from "../../../../components/shared/contexts/p2pContext";
 import {
   formatNumberInput,
   roundAmount,
@@ -20,14 +21,12 @@ import {
 import { useAppSelector } from "../../../../redux/hooks";
 
 const InputWithSlider = ({
-  id,
   leftSide,
   rightSide,
   values,
   strength,
   toUsd,
 }: {
-  id: string;
   leftSide: string;
   rightSide: string;
   values: number[];
@@ -48,12 +47,12 @@ const InputWithSlider = ({
     min + (sv * (max - min)) / 100;
   const format = (v: number): string =>
     formatNumberInput(roundAmount(v, strength));
-  const [sliderValue, setSliderValue] = useState(valueToSliderValue(def));
 
-  const valueStr = format(sliderValueToValue(sliderValue));
-  const usdValueStr = toUsd
-    ? `~ $ ${format(sliderValueToValue(sliderValue) / toUsd)}`
-    : "";
+  const [value, setValue] = useState(def);
+  const valueStr = format(value);
+
+  const usdValueStr = toUsd ? `~ $ ${format(+value / toUsd)}` : "";
+  console.log(value, +value);
 
   return (
     <HStack px="2" py="2">
@@ -63,22 +62,25 @@ const InputWithSlider = ({
           <NumberInput
             //step={roundAmount(value / 100)}
             //allowMouseWheel
+            onClick={(e: any) => {
+              e.target.select();
+            }}
+            keepWithinRange={true}
+            clampValueOnBlur={true}
             borderRadius="lg"
             color={primaryColor}
             bgColor={inputBgColor}
             borderColor={`${shadedColor} !important`}
             border="1px solid"
             variant="unstyled"
-            position="relative"
-            onChange={() => {}}
             value={valueStr}
-            keepWithinRange={true}
-            clampValueOnBlur={true}
+            position="relative"
+            onChange={(v) => setValue(+v.replaceAll(" ", ""))}
             w={`${valueStr.length * 9.5 + 10}px`}
             max={max}
             min={0} // no negative
           >
-            <NumberInputField textAlign="end" px="1" value={valueStr} />
+            <NumberInputField textAlign="end" px="1" />
           </NumberInput>
           <Text>{rightSide}</Text>
         </HStack>
@@ -87,11 +89,12 @@ const InputWithSlider = ({
         </Text>
       </Box>
       <Slider
-        aria-label="slider-ex-4"
-        value={sliderValue}
+        aria-label={"slider " + rightSide}
+        value={valueToSliderValue(value)}
         w="250px"
         mx="2"
-        onChange={(v) => setSliderValue(v)}
+        focusThumbOnChange={false}
+        onChange={(v) => setValue(sliderValueToValue(v))}
       >
         <SliderTrack bg={trackColor}>
           <SliderFilledTrack bg={primaryColor} />

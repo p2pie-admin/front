@@ -35,7 +35,7 @@ const SelectCurrency = () => {
         </HStack>
       )} */}
       {dirs.map((dir, index) => (
-        <SuggestedRate index={index} />
+        <SuggestedRate key={index} dir={dir} index={index} />
       ))}
 
       {lastDirSelected && dirs.length < 3 && (

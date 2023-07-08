@@ -75,7 +75,6 @@ const Sliders = () => {
       <Box mt="4" pb="4" pt="1" display="flex" justifyContent="center">
         <VStack alignItems="end" w="fit-content">
           <InputWithSlider
-            id="rate"
             leftSide={`1 ${secondaryCur} =`}
             rightSide={mainCur}
             values={rateValues}
@@ -83,7 +82,6 @@ const Sliders = () => {
             strength={2}
           />
           <InputWithSlider
-            id="min"
             leftSide="min: "
             rightSide={mainCur}
             values={minValues}
@@ -91,7 +89,6 @@ const Sliders = () => {
             strength={4}
           />
           <InputWithSlider
-            id="max"
             leftSide="max: "
             rightSide={mainCur}
             values={maxValues}

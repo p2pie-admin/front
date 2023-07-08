@@ -75,6 +75,7 @@ const ExchTag = ({ parameter }: { parameter: IParam }) => {
       >
         {parameter.icon?.url ? (
           <Image
+            alt="tag_image"
             w="5"
             h="5"
             // filter={shaded ? "grayscale(0.6) brightness(0.3)" : "none"}

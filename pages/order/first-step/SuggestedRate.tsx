@@ -19,6 +19,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import Sliders from "./sliders";
 import { triggerP2PDir } from "../../../redux/mainReducer";
 import { SlArrowUp, SlArrowDown } from "react-icons/sl";
+import { IP2PDir } from "../../../types/p2p";
 
 const PmWrapper = ({ children }: { children: React.ReactChild }) => {
   const borderColor = useColorModeValue("blackAlpha.300", "whiteAlpha.300");
@@ -29,8 +30,8 @@ const PmWrapper = ({ children }: { children: React.ReactChild }) => {
   );
 };
 
-const SuggestedRate = ({ index }: { index: number }) => {
-  const { give, get } = useAppSelector((state) => state.main.p2p.dirs[index]);
+const SuggestedRate = ({ dir, index }: { dir: IP2PDir; index: number }) => {
+  const { give, get } = dir;
   const [isVisible, ratesExist] = useAppSelector((state) => [
     state.main.p2p.dirs[index].isVisible,
     !!state.main.p2p.dirs[index].currencyConverterRate?.rate,
@@ -42,7 +43,7 @@ const SuggestedRate = ({ index }: { index: number }) => {
         <HStack
           spacing="4"
           cursor="pointer"
-          onClick={() => dispatch(triggerP2PDir(index))}
+          onClick={() => ratesExist && dispatch(triggerP2PDir(index))}
         >
           <PmWrapper>
             <SideContext.Provider value={"give"}>

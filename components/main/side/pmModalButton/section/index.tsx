@@ -70,7 +70,7 @@ const Section = ({
         <Box p="2" pb="1" borderBottomRadius="2xl">
           <SectionGridWrapper>
             {filteredPmGroups.slice(0, itemsToShow).map((pm_group) => {
-              return <PmGroup pm_group={pm_group} key={pm_group.en_name} />;
+              return <PmGroup pm_group={pm_group} key={pm_group.id} />;
             })}
           </SectionGridWrapper>
 

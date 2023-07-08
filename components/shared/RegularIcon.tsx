@@ -26,7 +26,7 @@ const CustomImage = ({ url, index }: { url: string; index: number }) => {
         h: "50%",
       }}
     >
-      <Image w="8" h="8" src={SRC + url} />
+      <Image alt={"icon" + index} w="8" h="8" src={SRC + url} />
     </Center>
   );
 };

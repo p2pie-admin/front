@@ -6,7 +6,7 @@ import { useColorModeValue } from "@chakra-ui/react";
 const Logo = () => {
   return (
     <Flex mx="2" flexDir="row" alignItems="center">
-      <Image src={profilePic} width={30} height={30} />
+      <Image alt="logo" src={profilePic} width={30} height={30} />
 
       <Text
         color={useColorModeValue("bg.700", "peach.100")}
