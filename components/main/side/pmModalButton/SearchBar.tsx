@@ -32,12 +32,7 @@ const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {
   const localCurrency = countryCurrencies?.[country] || "EUR";
   const currencies = ["RUB", "USD", localCurrency, "UAH"];
 
-  const { i18n } = useTranslation();
-  const side = useContext(SideContext) as "give" | "get";
-  const placeholder =
-    side && inputFocused
-      ? search_bar?.[`${i18n.language as "en" | "ru"}_${side}_adornment`]
-      : search_bar[`${i18n.language as "en" | "ru"}_placeholder`];
+  const placeholder = "Search...";
 
   const dispatch = useAppDispatch();
 

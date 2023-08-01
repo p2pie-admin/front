@@ -32,7 +32,7 @@ export const initParserFetcher = () => {
   };
 };
 
-export const initCurrencyConverterFetcher = (p2pIndex?: number) => {
+export const initCurrencyConverterFetcher = (p2pDirIndex?: number) => {
   const env = process.env.NODE_ENV;
   const url =
     env == "production"
@@ -41,6 +41,6 @@ export const initCurrencyConverterFetcher = (p2pIndex?: number) => {
 
   return async (dir: string) => {
     const { data } = await axios.get(url + "/" + dir.toUpperCase());
-    return { data, p2pIndex };
+    return { data, p2pDirIndex };
   };
 };

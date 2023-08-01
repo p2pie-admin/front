@@ -116,8 +116,8 @@ export const fetchPms = createAsyncThunk("initial/fetchPms", async () => {
 
 export const fetchCurrencyConverterRate = createAsyncThunk(
   "p2p/fetchCurrencyConverterRate",
-  async ({ dir, p2pIndex }: { dir: string; p2pIndex?: number }) => {
-    const fetcher = initCurrencyConverterFetcher(p2pIndex);
+  async ({ dir, p2pDirIndex }: { dir: string; p2pDirIndex?: number }) => {
+    const fetcher = initCurrencyConverterFetcher(p2pDirIndex);
     return await fetcher(dir);
   }
 );

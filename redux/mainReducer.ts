@@ -1,4 +1,4 @@
-import { IP2PDir } from "./../types/p2p";
+import { IP2PDir, IUsersRate } from "./../types/p2p";
 import { IPopularDirRates, IRate } from "./../types/rates";
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 
@@ -17,12 +17,22 @@ import {
 } from "./thunks";
 import { IFiatRates, IImage, IPm, IPmGroup } from "../types/selector";
 import { IActivePetal, IDir } from "../types/dir";
-import { initialAmountOutputs, getAmountOutputs } from "./helper";
+import {
+  initialAmountOutputs,
+  getAmountOutputs,
+  maxDef,
+  maxFrom,
+  minDef,
+  minFrom,
+  minTo,
+  maxTo,
+} from "./helper";
 import Side from "../components/main/side";
 
 import { getPmByCode } from "../components/main/side/pmModalButton/section/PmGroup/helper";
 import { ILocation } from "../types/shared";
 import { ICurrencyConverterRate, IP2P } from "../types/p2p";
+import { format, roundAmount } from "./amountsHelper";
 
 type ISide = "give" | "get";
 
@@ -106,20 +116,24 @@ export const ratesSlice = createSlice({
     ) => {
       state.popularCompleted = action.payload;
     },
+
     addPm: (
       state: MainState,
       action: PayloadAction<{ pm: IPm; side: ISide; index: number }>
     ) => {
       const { side, pm, index } = action.payload;
-      state.p2p.dirs[index][side] = pm;
+      state.p2p.dirs[index][side] = [
+        ...(state.p2p.dirs[index][side] || []),
+        pm,
+      ];
     },
 
     addEmptyDir: (state: MainState) => {
       state.p2p.dirs = state.p2p.dirs = [
         ...state.p2p.dirs.reduce((dirs: IP2PDir[], dir) => {
-          return [...dirs, { ...dir, isVisible: false }];
+          return [...dirs, { ...dir, isVisible: false }]; // close all prev
         }, []),
-        { isVisible: true },
+        { isVisible: true }, // add and open new one
       ];
     },
 
@@ -231,6 +245,22 @@ export const ratesSlice = createSlice({
     ) => {
       state.currencyConverterRate = action.payload;
     },
+    setP2PUsersRate: (
+      state: MainState,
+      action: PayloadAction<{
+        id: keyof IUsersRate;
+        p2pDirIndex: number;
+        values: number[];
+      }>
+    ) => {
+      const { id, p2pDirIndex, values } = action.payload;
+      const strength = id == "rate" ? 2 : 4;
+      const usersRate = state.p2p.dirs[p2pDirIndex].usersRate!;
+      state.p2p.dirs[p2pDirIndex].usersRate = {
+        ...usersRate,
+        [id]: values.map((v) => roundAmount(v, strength)),
+      };
+    },
   },
   //////////////////////////////////////////////////////////////////////////////////////////////////////
   extraReducers: (builder) => {
@@ -269,12 +299,40 @@ export const ratesSlice = createSlice({
     });
 
     builder.addCase(fetchCurrencyConverterRate.fulfilled, (state, action) => {
-      const { p2pIndex, data } = action.payload;
-      if (p2pIndex === undefined) {
+      const { p2pDirIndex, data } = action.payload as {
+        p2pDirIndex: number;
+        data: ICurrencyConverterRate;
+      };
+      if (p2pDirIndex === undefined) {
         state.currencyConverterRate = data;
         return;
       }
-      state.p2p.dirs[p2pIndex].currencyConverterRate = data;
+      state.p2p.dirs[p2pDirIndex].currencyConverterRate = data;
+      const { rate, giveToUSD, getToUSD } = data;
+      const [defRate, toUsdRate, coefficient] =
+        rate > 1 ? [rate, giveToUSD, 0.95] : [1 / rate, getToUSD, 1.05];
+      const rateValues = [
+        defRate * coefficient,
+        defRate * 0.85,
+        defRate * 1.15,
+      ].map((v) => roundAmount(v, 2));
+
+      const min = [
+        toUsdRate * minDef,
+        toUsdRate * minFrom,
+        toUsdRate * minTo,
+      ].map((v) => roundAmount(v, 4));
+
+      const max = [
+        toUsdRate * maxDef,
+        toUsdRate * maxFrom,
+        toUsdRate * maxTo,
+      ].map((v) => roundAmount(v, 4));
+
+      state.p2p.dirs[p2pDirIndex].usersRate = { rate: rateValues, min, max };
+      state.p2p.dirs[p2pDirIndex].toUsdRate = toUsdRate;
+      state.p2p.dirs[p2pDirIndex].defRate = defRate;
+      state.p2p.dirs[p2pDirIndex].giveBiggerValueThanGet = giveToUSD > getToUSD;
     });
 
     // popular rates
@@ -327,6 +385,7 @@ export const {
   addPm,
   addEmptyDir,
   triggerP2PDir,
+  setP2PUsersRate,
 } = ratesSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

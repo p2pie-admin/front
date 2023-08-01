@@ -16,7 +16,10 @@ import SideContext from "../../../shared/contexts/SideContext";
 import { BiChevronDown } from "react-icons/bi";
 import PmAvatar from "../../../shared/Avatar";
 import { capitalize } from "./section/PmGroup/helper";
-import { triggerModal } from "../../../../redux/mainReducer";
+import {
+  setSearchBarInputValue,
+  triggerModal,
+} from "../../../../redux/mainReducer";
 import SelectorModal from "./SelectorModal";
 import side from "..";
 import CircularIcon from "../../../shared/CircularIcon";
@@ -24,7 +27,6 @@ import Arrow from "../../../shared/Arrow";
 import { batch } from "react-redux";
 import { IImage, IPm } from "../../../../types/selector";
 import P2PContext from "../../../shared/contexts/p2pContext";
-import e from "cors";
 
 const ButtonWrapper = ({
   children,
@@ -57,47 +59,44 @@ const ButtonWrapper = ({
   </Button>
 );
 
-// {
-//   currencyCode ? (
-//     <CircularIcon icon={icon} color={color || "gray"} />
-//   ) : (
-//     <></>
-//   )
-// }
-const SelectorButton = ({ pm }: { pm?: IPm }) => {
+const SelectorButton = () => {
   const dispatch = useAppDispatch();
-
+  const p2pDirIndex = useContext(P2PContext);
   const side = useContext(SideContext) as "give" | "get";
-  const p2pIndex = useContext(P2PContext);
+  const pm = useAppSelector((state) => {
+    if (p2pDirIndex !== undefined)
+      return state.main.p2p.dirs[p2pDirIndex][side]?.[0];
+    return state.main[`${side}Pm`];
+  });
+  const tagBgColor = useColorModeValue("bg.100", "bg.600");
+
+  const openDialog = () => {
+    batch(() => {
+      dispatch(triggerModal(side));
+      dispatch(setSearchBarInputValue(""));
+    });
+  };
 
   if (!pm)
     return (
-      <ButtonWrapper
-        handleClick={() =>
-          dispatch(
-            triggerModal(side + (p2pIndex === undefined ? "" : p2pIndex))
-          )
-        }
-      >
-        <SelectorModal p2pIndex={p2pIndex} />
+      <ButtonWrapper handleClick={() => dispatch(triggerModal(side))}>
+        <SelectorModal />
         <Text fontSize="xl">
           {capitalize(side === "give" ? "sell" : "buy")}
         </Text>
       </ButtonWrapper>
     );
 
-  const { icon, tag, color } = pm;
+  const { icon, subgroup_name, color } = pm;
   const currencyCode = pm.currency.code.toUpperCase();
   return (
     <ButtonWrapper
       leftIcon={<CircularIcon icon={icon} color={color || "gray"} />}
-      handleClick={() =>
-        dispatch(triggerModal(side + (p2pIndex === undefined ? "" : p2pIndex)))
-      }
+      handleClick={openDialog}
     >
-      <SelectorModal p2pIndex={p2pIndex} />
+      <SelectorModal />
       <Text fontSize="lg">{currencyCode}</Text>
-      {tag && (
+      {subgroup_name && (
         <Box
           position="absolute"
           zIndex="5"
@@ -105,8 +104,8 @@ const SelectorButton = ({ pm }: { pm?: IPm }) => {
           right={-3}
           bottom={-2.5}
         >
-          <Tag size="sm" colorScheme="bg">
-            {tag}
+          <Tag size="sm" bgColor={tagBgColor}>
+            <Text variant="contrast">{subgroup_name}</Text>
           </Tag>
         </Box>
       )}

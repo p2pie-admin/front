@@ -13,7 +13,7 @@ import CustomModal from "../../../shared/CustomModal";
 import Selector from "./Selector";
 import { selectorQuery } from "./SelectorQuery";
 
-const SelectorModal = ({ p2pIndex }: { p2pIndex?: number }) => {
+const SelectorModal = () => {
   // const gradient = useColorModeValue(
   //   "linear-gradient(0deg, rgba(241,240,251,1) 10%, rgba(241,240,251,0) 100%);",
   //   "linear-gradient(0deg, rgba(88,79,98,1) 20%, rgba(88,79,98,0) 100%);"
@@ -46,10 +46,7 @@ const SelectorModal = ({ p2pIndex }: { p2pIndex?: number }) => {
   //   : "✓";
 
   return (
-    <CustomModal
-      id={side + (p2pIndex !== undefined ? p2pIndex : "")}
-      header={header}
-    >
+    <CustomModal id={side} header={header}>
       <Selector />
     </CustomModal>
   );

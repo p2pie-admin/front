@@ -12,86 +12,106 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import { useContext, useState } from "react";
+import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
+import { ReactComponentElement, useContext, useEffect, useState } from "react";
 import P2PContext from "../../../../components/shared/contexts/p2pContext";
 import {
+  format,
   formatNumberInput,
   roundAmount,
 } from "../../../../redux/amountsHelper";
-import { useAppSelector } from "../../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { setP2PUsersRate } from "../../../../redux/mainReducer";
+import { IUsersRate } from "../../../../types/p2p";
+import Commission from "./Commission";
+import Recalc from "./Recalc";
 
 const InputWithSlider = ({
   leftSide,
   rightSide,
-  values,
-  strength,
-  toUsd,
+  id,
+  adornment,
 }: {
   leftSide: string;
   rightSide: string;
-  values: number[];
-  strength: number;
-  toUsd?: number;
+  id: keyof IUsersRate;
+  adornment: ReactJSXElement;
 }) => {
-  const shadedColor = useColorModeValue("bg.600", "bg.300");
+  const shadedColor = useColorModeValue("bg.500", "bg.400");
   const trackColor = useColorModeValue("bg.100", "bg.700");
   const contrastColor = useColorModeValue("bg.900", "bg.100");
   const inputBgColor = useColorModeValue("blackAlpha.200", "blackAlpha.600");
   const primaryColor = useColorModeValue("violet.600", "peach.200");
 
-  const [def, min, max] = values.map((v) => roundAmount(v, strength));
+  const p2pDirIndex = useContext(P2PContext)!;
+  const dispatch = useAppDispatch();
+
+  const [values, toUsd] = useAppSelector((state) => {
+    const dirs = state.main.p2p.dirs;
+    if (!dirs[p2pDirIndex].usersRate) return [];
+    const usersRate = dirs[p2pDirIndex].usersRate!;
+    return [usersRate[id], dirs[p2pDirIndex].toUsdRate];
+  });
+
+  const [value, min, max] = values || [];
 
   const valueToSliderValue = (v: number): number =>
     ((v - min) / (max - min)) * 100;
   const sliderValueToValue = (sv: number): number =>
     min + (sv * (max - min)) / 100;
-  const format = (v: number): string =>
-    formatNumberInput(roundAmount(v, strength));
 
-  const [value, setValue] = useState(def);
-  const valueStr = format(value);
+  const valueStr = formatNumberInput(value);
+  const usdValueStr = toUsd ? `~ $ ${format(+value / toUsd, 2)}` : "";
 
-  const usdValueStr = toUsd ? `~ $ ${format(+value / toUsd)}` : "";
-  console.log(value, +value);
+  const setValue = (newValue: number) =>
+    dispatch(
+      setP2PUsersRate({ id, p2pDirIndex, values: [newValue, min, max] })
+    );
 
   return (
-    <HStack px="2" py="2">
+    <>
       <Box position="relative">
-        <HStack color={contrastColor}>
+        <HStack color={contrastColor} justifyContent="space-between">
           <Text whiteSpace="nowrap">{leftSide}</Text>
-          <NumberInput
-            //step={roundAmount(value / 100)}
-            //allowMouseWheel
-            onClick={(e: any) => {
-              e.target.select();
-            }}
-            keepWithinRange={true}
-            clampValueOnBlur={true}
-            borderRadius="lg"
-            color={primaryColor}
-            bgColor={inputBgColor}
-            borderColor={`${shadedColor} !important`}
-            border="1px solid"
-            variant="unstyled"
-            value={valueStr}
-            position="relative"
-            onChange={(v) => setValue(+v.replaceAll(" ", ""))}
-            w={`${valueStr.length * 9.5 + 10}px`}
-            max={max}
-            min={0} // no negative
-          >
-            <NumberInputField textAlign="end" px="1" />
-          </NumberInput>
-          <Text>{rightSide}</Text>
+
+          <HStack>
+            <NumberInput
+              //step={roundAmount(value / 100)}
+              //allowMouseWheel
+              onClick={(e: any) => {
+                e.target.select();
+              }}
+              keepWithinRange={true}
+              clampValueOnBlur={true}
+              borderRadius="lg"
+              color={primaryColor}
+              bgColor={inputBgColor}
+              borderColor={`${shadedColor} !important`}
+              border="1px solid"
+              variant="unstyled"
+              value={valueStr}
+              position="relative"
+              onChange={(v) => setValue(+v.replaceAll(" ", ""))}
+              minW="90px"
+              maxW="110px"
+              max={max}
+              min={min} // no negative
+            >
+              <NumberInputField textAlign="end" px="1" />
+            </NumberInput>
+
+            <Text>{rightSide}</Text>
+          </HStack>
         </HStack>
-        <Text position="absolute" right="0" fontSize="xs" color={shadedColor}>
-          {usdValueStr}
-        </Text>
+        <HStack position="absolute" right="0" fontSize="xs" color={shadedColor}>
+          {adornment}
+          <Text>{usdValueStr}</Text>
+        </HStack>
       </Box>
       <Slider
+        justifySelf="end"
         aria-label={"slider " + rightSide}
         value={valueToSliderValue(value)}
-        w="250px"
         mx="2"
         focusThumbOnChange={false}
         onChange={(v) => setValue(sliderValueToValue(v))}
@@ -101,7 +121,7 @@ const InputWithSlider = ({
         </SliderTrack>
         <SliderThumb boxSize={4} />
       </Slider>
-    </HStack>
+    </>
   );
 };
 

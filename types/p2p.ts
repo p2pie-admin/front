@@ -6,11 +6,23 @@ export interface ICurrencyConverterRate {
   getToUSD: number;
 }
 
+export interface IUsersRate {
+  rate: number[];
+  min: number[];
+  max: number[];
+}
+
 export interface IP2PDir {
-  give?: IPm;
-  get?: IPm;
+  give?: IPm[];
+  get?: IPm[];
   currencyConverterRate?: ICurrencyConverterRate;
-  isVisible?: boolean;
+  usersRate?: IUsersRate;
+  mainCur?: string;
+  secondaryCur?: string;
+  isVisible: boolean;
+  toUsdRate?: number;
+  defRate?: number;
+  giveBiggerValueThanGet?: boolean;
 }
 
 export interface IP2P {

@@ -80,7 +80,6 @@ interface IPm {
   icon?: IImage;
   fiat?: IFiatRates;
   possible_pairs?: string[];
-  tag?: string;
   color: string;
   popular_as?: IPopularAs;
 }

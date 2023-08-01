@@ -1,19 +1,16 @@
 import { RegularBox } from "../../../styles/theme/wrappers";
 import { AiOutlinePlus } from "react-icons/ai";
-import { Box, HStack, Text } from "@chakra-ui/react";
-import SuggestedRate from "./SuggestedRate";
-import { useContext, useState } from "react";
+import { Box, Text } from "@chakra-ui/react";
+import CustomRate from "./CustomRate";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { addEmptyDir, addPm } from "../../../redux/mainReducer";
-import P2PContext from "../../../components/shared/contexts/p2pContext";
-import { batch } from "react-redux";
+import { addEmptyDir } from "../../../redux/mainReducer";
 
 const SelectCurrency = () => {
   const dispatch = useAppDispatch();
   const dirs = useAppSelector((state) => state.main.p2p.dirs);
   const lastIndex = dirs.length - 1;
   const lastDirSelected =
-    dirs[lastIndex].give?.code && dirs[lastIndex].get?.code;
+    dirs[lastIndex].give?.[0]?.code && dirs[lastIndex].get?.[0]?.code;
 
   return (
     <Box px="1">
@@ -34,8 +31,9 @@ const SelectCurrency = () => {
           <Text fontWeight="bold">SEE ALL</Text>
         </HStack>
       )} */}
-      {dirs.map((dir, index) => (
-        <SuggestedRate key={index} dir={dir} index={index} />
+
+      {dirs.map((_, index) => (
+        <CustomRate key={index} index={index} />
       ))}
 
       {lastDirSelected && dirs.length < 3 && (
@@ -62,24 +60,6 @@ const SelectCurrency = () => {
         </RegularBox>
       )}
     </Box>
-    // <Tabs isLazy variant="soft-rounded" colorScheme="green">
-    //   <TabList>
-    //     <Tab>RUB</Tab>
-    //     <Tab>USD</Tab>
-    //     <Tab>TRY</Tab>
-    //   </TabList>
-    //   <TabPanels>
-    //     <TabPanel>
-    //       <SelectPms currencyCode="rub" />
-    //     </TabPanel>
-    //     <TabPanel>
-    //       <SelectPms currencyCode="usd" />
-    //     </TabPanel>
-    //     <TabPanel>
-    //       <SelectPms currencyCode="try" />
-    //     </TabPanel>
-    //   </TabPanels>
-    // </Tabs>
   );
 };
 

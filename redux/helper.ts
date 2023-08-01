@@ -4,6 +4,15 @@ import { MainState } from "./mainReducer";
 
 export const initialAmountOutputs = { give: "", get: "" };
 
+export const [minDef, maxDef, minFrom, minTo, maxFrom, maxTo] = [
+  300,
+  2000,
+  100,
+  2000,
+  100,
+  15000,
+];
+
 export const getAmountOutputs = (
   state: MainState,
   amount?: AmountInput,

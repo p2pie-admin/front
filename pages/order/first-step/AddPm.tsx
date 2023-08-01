@@ -1,0 +1,67 @@
+import { Center, Text, useColorModeValue } from "@chakra-ui/react";
+import { symbols } from "../../../redux/amountsHelper";
+import { useContext } from "react";
+import { IoAddSharp } from "react-icons/io5";
+import { batch } from "react-redux";
+
+import p2pContext from "../../../components/shared/contexts/p2pContext";
+import SideContext from "../../../components/shared/contexts/SideContext";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import {
+  setSearchBarInputValue,
+  triggerModal,
+} from "../../../redux/mainReducer";
+
+const AddPm = () => {
+  const side = useContext(SideContext) as "give" | "get";
+  const p2pIndex = useContext(p2pContext);
+  const dispatch = useAppDispatch();
+
+  const currencyCode = useAppSelector((state) =>
+    p2pIndex !== undefined
+      ? state.main.p2p.dirs[p2pIndex][side]?.[0]?.currency.code
+      : undefined
+  );
+
+  if (
+    !currencyCode ||
+    !Object.keys(symbols).find(
+      (key) => key.toUpperCase() === currencyCode?.toUpperCase()
+    )
+  )
+    return <></>;
+
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    console.log(side, p2pIndex);
+    if (side && p2pIndex !== undefined) {
+      batch(() => {
+        dispatch(triggerModal(side));
+        dispatch(setSearchBarInputValue(currencyCode.toUpperCase()));
+      });
+    }
+    e.stopPropagation();
+  };
+  return (
+    <Center
+      onClick={handleClick}
+      transition="all .3s ease"
+      cursor="pointer"
+      bgColor="rgba(200,200,200,0.05)"
+      _hover={{
+        color: useColorModeValue("violet.800", "peach.100"),
+        bgColor: "transparent",
+      }}
+      _active={{
+        color: useColorModeValue("violet.600", "peach.400"),
+      }}
+      p="0.5"
+      borderRadius="50%"
+      border="1px dashed"
+      borderColor="bg.500"
+    >
+      <IoAddSharp size="1.2rem" />
+    </Center>
+  );
+};
+
+export default AddPm;

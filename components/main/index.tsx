@@ -23,10 +23,10 @@ const MainPageContent = () => {
   }, []);
 
   const router = useRouter();
-  const [givePm, getPm] = useAppSelector((state) => [
-    state.main.givePm,
-    state.main.getPm,
-  ]);
+  // const [givePm, getPm] = useAppSelector((state) => [
+  //   state.main.givePm,
+  //   state.main.getPm,
+  // ]);
 
   const { dir, pm_groups } = router.query;
 
@@ -97,13 +97,13 @@ const MainPageContent = () => {
 
       <Box mb="4">
         <SideContext.Provider value={"give"}>
-          <Side pm={givePm} />
+          <Side />
         </SideContext.Provider>
 
         <ReverseButton />
 
         <SideContext.Provider value={"get"}>
-          <Side pm={getPm} />
+          <Side />
         </SideContext.Provider>
       </Box>
 

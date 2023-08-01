@@ -4,7 +4,7 @@ import { IRate } from "../types/rates";
 // customAmount введена в калькуляторе в одно из полей отдаю/получаю
 // ограничить поле ввода до 8 знаков
 
-const symbols = {
+export const symbols = {
   usd: "$",
   rub: "₽",
   uah: "₴",
@@ -163,6 +163,9 @@ export const roundAmount = (amount: number, strength = 1): number => {
   //  округляем только часть после точки до порядка равного orderOfMagnitude
   return +amount.toFixed(orderOfMagnitude < 0 ? 0 : orderOfMagnitude);
 };
+
+export const format = (v: number, strength: number): string =>
+  formatNumberInput(roundAmount(v, strength));
 
 export const formatNumberInput = (x: string | number) => {
   if (!x) return String(x);

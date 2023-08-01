@@ -22,7 +22,7 @@ import P2PContext from "../../../../../shared/contexts/p2pContext";
 import SideContext from "../../../../../shared/contexts/SideContext";
 
 const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
-  const p2pIndex = useContext(P2PContext);
+  const p2pDirIndex = useContext(P2PContext);
   const dispatch = useAppDispatch();
   const side = useContext(SideContext) as "give" | "get";
   const possiblePairs = useAppSelector((state) =>
@@ -38,35 +38,23 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   ]);
 
   const [p2pGivePm, p2pGetPm] = useAppSelector((state) => [
-    state.main.p2p.dirs[p2pIndex || 0].give,
-    state.main.p2p.dirs[p2pIndex || 0].get,
+    state.main.p2p.dirs[p2pDirIndex || 0].give,
+    state.main.p2p.dirs[p2pDirIndex || 0].get,
   ]);
 
   const choosePmP2P = (selectedPm: IPm) => {
-    const oppositePm = side === "give" ? p2pGetPm : p2pGivePm;
+    const oppositePm = side === "give" ? p2pGetPm?.[0] : p2pGivePm?.[0];
     batch(() => {
-      dispatch(addPm({ pm: selectedPm, side, index: p2pIndex || 0 }));
-      dispatch(triggerModal(side + (p2pIndex === undefined ? "" : p2pIndex)));
+      dispatch(addPm({ pm: selectedPm, side, index: p2pDirIndex || 0 }));
+      dispatch(triggerModal(side));
 
       if (oppositePm?.code) {
         const dir =
           side === "get"
             ? `${oppositePm.currency.code}_${selectedPm.currency.code}`
             : `${selectedPm.currency.code}_${oppositePm.currency.code}`;
-        dispatch(fetchCurrencyConverterRate({ dir, p2pIndex }));
+        dispatch(fetchCurrencyConverterRate({ dir, p2pDirIndex }));
       }
-      //   const dir =
-      //     side === "get"
-      //       ? `${oppositePm.currency.code}_${selectedPm.currency.code}`
-      //       : `${selectedPm.currency.code}_${oppositePm.currency.code}`;
-      //   const fetcher = initCurrencyConverterFetcher();
-      //   fetcher(dir)
-      //     .then((rate: ICurrencyConverterRate) =>
-      //       dispatch(setCurrencyConverterRate(rate))
-      //     )
-      //     .catch((e) => console.log(e));
-      //   return;
-      // }
     });
   };
 
@@ -74,7 +62,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
     const oppositePm = side === "give" ? getPm : givePm;
     batch(() => {
       dispatch(fetchPossiblePairs({ code: selectedPm.code, side }));
-      dispatch(triggerModal(side + (p2pIndex === undefined ? "" : p2pIndex)));
+      dispatch(triggerModal(side));
       dispatch(setPm({ pm: selectedPm, side }));
 
       if (oppositePm?.code) {
@@ -117,7 +105,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
         pmGroupName={name}
         pms={pms}
         color={pm_group.color}
-        choosePm={p2pIndex !== undefined ? choosePmP2P : choosePm}
+        choosePm={p2pDirIndex !== undefined ? choosePmP2P : choosePm}
         possiblePairs={possiblePairs}
       />
     ); // pm_id from pm_group_short_name + currency or subitem
@@ -131,7 +119,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
       color={pm_group.color}
       icon={pm_group.icon}
       handleToggle={
-        p2pIndex !== undefined
+        p2pDirIndex !== undefined
           ? () => choosePmP2P(pms[0])
           : () => choosePm(pms[0], shadedPm)
       }

@@ -11,7 +11,7 @@ import { IPm } from "../../../types/selector";
 import AmountInput from "./amountInput";
 import PmModalButton from "./pmModalButton";
 
-const Side = ({ pm }: { pm?: IPm }) => {
+const Side = () => {
   return (
     <Box3D>
       <Grid
@@ -26,7 +26,7 @@ const Side = ({ pm }: { pm?: IPm }) => {
         justifyContent="space-between"
         // boxShadow="inset -1px 1px 28px rgba(0,0,0,0.1);"
       >
-        <PmModalButton pm={pm} />
+        <PmModalButton />
 
         <AmountInput />
       </Grid>
