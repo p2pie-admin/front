@@ -1,104 +1,214 @@
-import { memo, useCallback, useState } from "react";
 import {
+  useLoadScript,
   GoogleMap,
   InfoWindow,
-  Marker,
-  useJsApiLoader,
+  OverlayViewF,
+  CircleF,
+  OverlayView,
 } from "@react-google-maps/api";
-import { Box, Text } from "@chakra-ui/react";
+import type { NextPage } from "next";
+import { useMemo, useState } from "react";
+import { Box, Text, useToken } from "@chakra-ui/react";
 
-const containerStyle = {
-  width: "90vw",
-  height: "90vh",
-};
+import { testMarkers } from "./helper";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { FaLocationPin } from "react-icons/fa6";
+import { set } from "lodash";
 
-const center = {
-  lat: 41.02571061642778,
-  lng: 28.974107139116633,
-};
+import { initCMSFetcher } from "../../services/fetchers";
+import { PhysicalExchangersQuery } from "./queries";
+import useSWR from "swr";
+import { IPhysicalExchanger } from "../../types/exchanger";
+import CustomMarker from "./marker";
 
-const markers = [
-  {
-    id: 1,
-    name: "Chicago, Illinois",
-    position: { lat: 41.081832, lng: 28.9623177 },
-  },
-  {
-    id: 2,
-    name: "Denver, Colorado",
-    position: { lat: 41.021832, lng: 28.9023177 },
-  },
-  {
-    id: 3,
-    name: "Los Angeles, California",
-    position: { lat: 41.121832, lng: 28.8923177 },
-  },
-  {
-    id: 4,
-    name: "New York, New York",
-    position: { lat: 41.481832, lng: 28.8623177 },
-  },
-];
-
-function MyComponent() {
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: "AIzaSyCAsTQCzFsHpWIHQ-VlIBL1_kDDG06VpVA",
-  });
-
-  const [activeMarker, setActiveMarker] = useState(null);
-
-  const handleActiveMarker = (marker) => {
-    if (marker === activeMarker) {
-      return;
-    }
-    setActiveMarker(marker);
+const Home: NextPage = () => {
+  const fetcher = initCMSFetcher();
+  const { data, error } = useSWR(PhysicalExchangersQuery, fetcher) as {
+    data: {
+      physicalExchangers: IPhysicalExchanger[];
+    };
+    error: boolean;
   };
 
-  const [map, setMap] = useState(null);
+  const libraries = useMemo(() => ["places"], []);
 
-  const onLoad = useCallback(function callback(map) {
-    // This is just an example of getting and using the map instance!!! don't just blindly copy!
-    const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
+  const containerStyle = {
+    width: "90vw",
+    height: "80vh",
+  };
 
-    setMap(map);
-  }, []);
+  const center = {
+    lat: 41.02571061642778,
+    lng: 28.974107139116633,
+  };
 
-  const onUnmount = useCallback(function callback(map) {
-    setMap(null);
-  }, []);
+  const [peach200, bg100, bg300, bg500, bg600, bg700, bg800, bg900] = useToken(
+    "colors",
+    [
+      "peach.200",
+      "bg.100",
+      "bg.300",
+      "bg.500",
+      "bg.600",
+      "bg.700",
+      "bg.800",
+      "bg.900",
+    ]
+  );
 
-  return isLoaded ? (
-    <Box bgColor="bg.600" borderRadius="lg" p="4">
+  const mapOptions = useMemo<google.maps.MapOptions>(
+    () => ({
+      disableDefaultUI: true,
+      clickableIcons: true,
+      gestureHandling: "greedy",
+      fullscreenControl: true,
+
+      styles: [
+        {
+          featureType: "poi.business",
+          stylers: [{ visibility: "off" }],
+        },
+        {
+          featureType: "poi.attraction",
+          stylers: [{ visibility: "off" }],
+        },
+        {
+          featureType: "poi.medical",
+          stylers: [{ visibility: "off" }],
+        },
+        {
+          featureType: "poi.park",
+          stylers: [{ visibility: "off" }],
+        },
+        {
+          featureType: "poi.government",
+          stylers: [{ visibility: "off" }],
+        },
+        {
+          featureType: "poi.school",
+          stylers: [{ visibility: "off" }],
+        },
+        {
+          featureType: "poi.place_of_worship",
+          stylers: [{ visibility: "off" }],
+        },
+        {
+          featureType: "poi.sports_complex",
+          stylers: [{ visibility: "off" }],
+        },
+        {
+          elementType: "geometry",
+          stylers: [{ color: bg700 }],
+        },
+        { elementType: "labels.text.stroke", stylers: [{ color: bg600 }] },
+        { elementType: "labels.text.fill", stylers: [{ color: bg100 }] },
+        {
+          featureType: "administrative.locality",
+          elementType: "labels.text.fill",
+          stylers: [{ color: peach200 }],
+        },
+        {
+          featureType: "poi",
+          elementType: "labels.text.fill",
+          stylers: [{ color: bg100 }],
+        },
+        {
+          featureType: "poi.park",
+          elementType: "labels.text.fill",
+          stylers: [{ color: bg300 }],
+        },
+        {
+          featureType: "road",
+          elementType: "geometry",
+          stylers: [{ color: bg500 }],
+        },
+        {
+          featureType: "road",
+          elementType: "geometry.stroke",
+          stylers: [{ color: bg600 }],
+        },
+        {
+          featureType: "road",
+          elementType: "labels.text.fill",
+          stylers: [{ color: bg100 }],
+        },
+        {
+          featureType: "road.highway",
+          elementType: "geometry",
+          stylers: [{ color: bg300 }],
+        },
+        {
+          featureType: "road.highway",
+          elementType: "geometry.stroke",
+          stylers: [{ color: bg800 }],
+        },
+        {
+          featureType: "road.highway",
+          elementType: "labels.text.fill",
+          stylers: [{ color: bg300 }],
+        },
+        {
+          featureType: "transit",
+          elementType: "geometry",
+          stylers: [{ color: bg600 }],
+        },
+        {
+          featureType: "transit.station",
+          elementType: "labels.text.fill",
+          stylers: [{ color: bg100 }],
+        },
+        {
+          featureType: "water",
+          elementType: "geometry",
+          stylers: [{ color: bg900 }],
+        },
+        {
+          featureType: "water",
+          elementType: "labels.text.fill",
+          stylers: [{ color: bg500 }],
+        },
+        {
+          featureType: "water",
+          elementType: "labels.text.stroke",
+          stylers: [{ color: bg700 }],
+        },
+      ],
+    }),
+    []
+  );
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY as string,
+    libraries: libraries as any,
+  });
+
+  if (!isLoaded || !data) {
+    return <Text>Loading...</Text>;
+  }
+
+  return (
+    <Box bgColor="bg.800" borderRadius="lg" p="4">
       <GoogleMap
-        mapContainerStyle={containerStyle}
+        options={mapOptions}
+        zoom={13}
         center={center}
-        zoom={12}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
-        onClick={() => setActiveMarker(null)}
+        mapContainerStyle={containerStyle}
       >
-        {markers.map(({ id, name, position }) => (
-          <Marker
-            key={id}
-            position={position}
-            onClick={() => handleActiveMarker(id)}
-          >
-            {activeMarker === id ? (
-              <InfoWindow onCloseClick={() => setActiveMarker(null)}>
-                <Box p="2" color="bg.600">
-                  <Text>test</Text>
-                </Box>
-              </InfoWindow>
-            ) : null}
-          </Marker>
-        ))}
+        {data.physicalExchangers.map((physicalExchanger) => {
+          const { id, lat, lng } = physicalExchanger;
+          return (
+            <OverlayView
+              key={id}
+              position={{ lat, lng }}
+              mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+            >
+              <CustomMarker physicalExchanger={physicalExchanger} />
+            </OverlayView>
+          );
+        })}
       </GoogleMap>
     </Box>
-  ) : (
-    <></>
   );
-}
+};
 
-export default memo(MyComponent);
+export default Home;
