@@ -6,7 +6,7 @@ const SRC =
     ? process.env.NEXT_PUBLIC_STRAPI_PROD_BASE_URL
     : process.env.NEXT_PUBLIC_STRAPI_DEV_BASE_URL;
 
-const CustomImage = ({ url, index }: { url: string; index: number }) => {
+const RegularIcon = ({ url, index }: { url: string; index: number }) => {
   return (
     <Center
       // filter={`invert(60%) sepia(97%) saturate(150%) hue-rotate(${
@@ -31,4 +31,4 @@ const CustomImage = ({ url, index }: { url: string; index: number }) => {
   );
 };
 
-export default CustomImage;
+export default RegularIcon;

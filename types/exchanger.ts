@@ -14,20 +14,20 @@ export interface IExchangerData {
 
 export interface IPhysicalRate {
   id: string;
-  currency: ICurrency;
+  currency?: ICurrency;
   buy_price: number;
   sell_price: number;
 }
 
 export interface IPhysicalExchanger {
   id: string;
-  name: string;
+  name?: string;
   lng: number;
   lat: number;
   contact: string;
   opened: boolean;
-  photo: IImage;
-  days_off: string[];
+  photo?: IImage;
+  days_off?: string[];
   updatedAt: string;
-  physical_rates: IPhysicalRate[];
+  physical_rates?: IPhysicalRate[];
 }

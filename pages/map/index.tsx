@@ -10,7 +10,7 @@ import type { NextPage } from "next";
 import { useMemo, useState } from "react";
 import { Box, Text, useToken } from "@chakra-ui/react";
 
-import { testMarkers } from "./helper";
+import { getPricesUSD, testMarkers } from "./helper";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FaLocationPin } from "react-icons/fa6";
 import { set } from "lodash";
@@ -186,6 +186,9 @@ const Home: NextPage = () => {
     return <Text>Loading...</Text>;
   }
 
+  const priceBasis = getPricesUSD(data.physicalExchangers);
+  console.log(priceBasis);
+
   return (
     <Box bgColor="bg.800" borderRadius="lg" p="4">
       <GoogleMap
@@ -198,11 +201,18 @@ const Home: NextPage = () => {
           const { id, lat, lng } = physicalExchanger;
           return (
             <OverlayView
+              getPixelPositionOffset={(width, height) => ({
+                x: -(width / 2),
+                y: -(height / 2),
+              })}
               key={id}
               position={{ lat, lng }}
               mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
             >
-              <CustomMarker physicalExchanger={physicalExchanger} />
+              <CustomMarker
+                physicalExchanger={physicalExchanger}
+                priceBasis={priceBasis}
+              />
             </OverlayView>
           );
         })}

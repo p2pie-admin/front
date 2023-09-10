@@ -1,3 +1,5 @@
+import { IPhysicalExchanger, IPhysicalRate } from "../../types/exchanger";
+
 export const testMarkers = [
   {
     id: 1,
@@ -45,3 +47,57 @@ export const testMarkers = [
     position: { lat: 41.123732, lng: 28.8653177 },
   },
 ];
+
+export const getPricesUSD = (
+  physicalExchangers: IPhysicalExchanger[]
+): [number, number] => {
+  const prices = physicalExchangers
+    .map((exchanger) =>
+      !exchanger.opened
+        ? 0
+        : exchanger.physical_rates?.find(
+            (r) => r.currency?.code.toUpperCase() === "USD"
+          )?.buy_price || 0
+    )
+    .filter((i) => i !== 0);
+
+  return [Math.max(...prices), Math.min(...prices)];
+};
+
+export const getDollars = (
+  priceBasis: [number, number],
+  physicalExchanger: IPhysicalExchanger
+) => {
+  const buyPriceUSD = !physicalExchanger.opened
+    ? 0
+    : physicalExchanger?.physical_rates?.find(
+        (r) => r.currency?.code.toUpperCase() === "USD"
+      )?.buy_price;
+
+  if (!buyPriceUSD) return 0;
+  const [bestPriceUSD, worstPriceUSD] = priceBasis;
+  const difference = (bestPriceUSD - worstPriceUSD) / 3;
+  return buyPriceUSD > worstPriceUSD + difference * 2
+    ? 1
+    : buyPriceUSD > worstPriceUSD + difference
+    ? 2
+    : 3;
+};
+// const getUSDStats = (physicalExchangers: IPhysicalExchanger[]): {[key: string]: number} => {
+//   return physicalExchangers.reduce((rateStats, exchanger) => {
+//     const rates = exchanger.physical_rates
+//     if(!rates) return rateStats
+
+//     // const buyPrices = rates.reduce((buyPrices, {buy_price, currency}) => {
+//     //   if(!currency) return buyPrices
+//     //   return {...buyPrices, [currency.code]: buy_price}
+//     // } , {} as {[key: string]: number})
+
+//     // if(!Object.keys(rateStats).length) return rates
+//     // Object.keys(rates).map(code => {
+//     //   if(rateStats[code])
+//     // })
+
+//     return {...rateStats, }
+//   }, {})
+// }
