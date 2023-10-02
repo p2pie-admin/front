@@ -28,7 +28,7 @@ const CustomMarker = ({
 
   const dollarSigns = Array(dollars).fill("$").join("");
   const colors = !dollars
-    ? ["bg.1000", "bg.500"]
+    ? ["bg.300", "bg.700"]
     : active || hovered
     ? ["white", "bg.800"]
     : dollars === 3
@@ -64,7 +64,7 @@ const CustomMarker = ({
         }}
       >
         <Box position="absolute" right="-3" top="-7">
-          <FaLocationPin size="2rem" />
+          <FaLocationPin size={"2rem"} />
           <Center position="absolute" w="8" top="1.5">
             <Text color={colors[1]} fontSize="xs" fontWeight="bold">
               {dollarSigns || "zZ"}

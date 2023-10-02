@@ -57,7 +57,7 @@ export const getPricesUSD = (
         ? 0
         : exchanger.physical_rates?.find(
             (r) => r.currency?.code.toUpperCase() === "USD"
-          )?.buy_price || 0
+          )?.selling || 0
     )
     .filter((i) => i !== 0);
 
@@ -72,7 +72,7 @@ export const getDollars = (
     ? 0
     : physicalExchanger?.physical_rates?.find(
         (r) => r.currency?.code.toUpperCase() === "USD"
-      )?.buy_price;
+      )?.selling;
 
   if (!buyPriceUSD) return 0;
   const [bestPriceUSD, worstPriceUSD] = priceBasis;
@@ -88,9 +88,9 @@ export const getDollars = (
 //     const rates = exchanger.physical_rates
 //     if(!rates) return rateStats
 
-//     // const buyPrices = rates.reduce((buyPrices, {buy_price, currency}) => {
+//     // const buyPrices = rates.reduce((buyPrices, {selling, currency}) => {
 //     //   if(!currency) return buyPrices
-//     //   return {...buyPrices, [currency.code]: buy_price}
+//     //   return {...buyPrices, [currency.code]: selling}
 //     // } , {} as {[key: string]: number})
 
 //     // if(!Object.keys(rateStats).length) return rates

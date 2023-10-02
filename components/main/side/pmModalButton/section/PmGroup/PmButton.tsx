@@ -1,4 +1,4 @@
-import Avatar from "../../../../../shared/Avatar";
+
 import { Button, useColorModeValue } from "@chakra-ui/react";
 import CircularIcon from "../../../../../shared/CircularIcon";
 

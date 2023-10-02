@@ -15,8 +15,8 @@ export interface IExchangerData {
 export interface IPhysicalRate {
   id: string;
   currency?: ICurrency;
-  buy_price: number;
-  sell_price: number;
+  selling: number;
+  buying: number;
 }
 
 export interface IPhysicalExchanger {

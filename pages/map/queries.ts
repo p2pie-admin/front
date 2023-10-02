@@ -33,8 +33,8 @@ export const PhysicalExchangersQuery = gql`
                 }
               }
             }
-            buy_price
-            sell_price
+            selling
+            buying
           }
         }
       }

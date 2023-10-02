@@ -11,14 +11,14 @@ const PhysicalExchangerRates = ({ rates }: { rates?: IPhysicalRate[] }) => {
       justifyContent="center"
     >
       {rates &&
-        rates.map(({ currency, id, buy_price, sell_price }) => {
+        rates.map(({ currency, id, selling, buying }) => {
           if (!currency?.code) return <></>;
           return (
             <>
               <Text key={id}>{currency.code.toUpperCase()}</Text>
-              <Text color="green.200">{`₺${buy_price}`}</Text>
+              <Text color="green.200">{`₺${buying}`}</Text>
               <Text>|</Text>
-              <Text color="red.200">{`₺${sell_price}`}</Text>
+              <Text color="red.200">{`₺${selling}`}</Text>
             </>
           );
         })}

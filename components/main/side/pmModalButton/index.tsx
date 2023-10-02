@@ -14,7 +14,6 @@ import React, { ReactElement, useContext } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import SideContext from "../../../shared/contexts/SideContext";
 import { BiChevronDown } from "react-icons/bi";
-import PmAvatar from "../../../shared/Avatar";
 import { capitalize } from "./section/PmGroup/helper";
 import {
   setSearchBarInputValue,
