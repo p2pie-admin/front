@@ -42,10 +42,10 @@ function Carcas({
 }) {
   const [ref, { width }] = useBoundingRect();
 
-  useLayoutEffect(() => initSliderWidth(Math.round(width)), [
-    width,
-    initSliderWidth,
-  ]);
+  useLayoutEffect(
+    () => initSliderWidth(Math.round(width)),
+    [width, initSliderWidth]
+  );
 
   return (
     <Box position="relative" mb="4">

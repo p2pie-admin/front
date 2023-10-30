@@ -1,6 +1,6 @@
-import { RegularBox } from "../../../styles/theme/wrappers";
+import { RegularBox, ShadedButton } from "../../../styles/theme/wrappers";
 import { AiOutlinePlus } from "react-icons/ai";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Center, Divider, Text } from "@chakra-ui/react";
 import CustomRate from "./CustomRate";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { addEmptyDir } from "../../../redux/mainReducer";
@@ -33,31 +33,23 @@ const SelectCurrency = () => {
       )} */}
 
       {dirs.map((_, index) => (
-        <CustomRate key={index} index={index} />
+        <>
+          <CustomRate key={index} index={index} />
+          {index !== dirs.length - 1 && <Divider />}
+        </>
       ))}
 
       {lastDirSelected && dirs.length < 3 && (
-        <RegularBox
-          onClick={() => dispatch(addEmptyDir())}
-          variant="no_contrast"
-          h="16"
-          border="2px dashed"
-          borderColor="bg.500"
+        <ShadedButton
           display="flex"
           justifyContent="center"
-          alignItems="center"
-          cursor="pointer"
-          mt="4"
-          transition="filter 0.2s"
-          _hover={{
-            filter: "brightness(0.8)",
-          }}
-          _active={{
-            filter: "brightness(1.1)",
-          }}
+          border="2px dashed"
+          borderColor="bg.500"
+          onClick={() => dispatch(addEmptyDir())}
+          p="4"
         >
           <AiOutlinePlus size="1.5rem" />
-        </RegularBox>
+        </ShadedButton>
       )}
     </Box>
   );

@@ -22,7 +22,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import useSmooth from "../../../services/hooks/smooth";
 import { Box3D } from "../../../styles/theme/wrappers";
 import Limit from "./Limit";
-import { isClose, kFormatter, roundAmount } from "../../../redux/amountsHelper";
+import { isClose, kFormatter, R } from "../../../redux/amountsHelper";
 import { setAmount } from "../../../redux/mainReducer";
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { BsArrowLeftShort, BsArrowRightShort } from "react-icons/bs";
@@ -51,28 +51,31 @@ const CustomRangeSlider = ({
 const LimitsRange = () => {
   const dispatch = useAppDispatch();
   const [showTooltip, setShowTooltip] = useState(false);
-  const [side, setSide]: [side: "give" | "get", setSide: Function] = useState(
-    "get"
-  );
+  const [side, setSide]: [side: "give" | "get", setSide: Function] =
+    useState("get");
 
   const currentDirRate = useAppSelector(
     (state) => state.main?.dirRates?.[state.main.swiperIdVisible]
   );
 
-  const pmCurrencyName = useAppSelector(
-    (state) => state.main[`${side}Pm`]?.currency.code.toUpperCase() || ""
-  );
+  // const pmCurrencyName = useAppSelector(
+  //   (state) => state.main[`${side}Pm`]?.currency.code.toUpperCase() || ""
+  // );
+  const [giveCur, getCur] = useAppSelector((state) => [
+    state.main.givePm?.currency.code.toUpperCase() || "",
+    state.main.getPm?.currency.code.toUpperCase() || "",
+  ]);
 
   const [highestMax, lowestMin] = useAppSelector((state) => {
     const dirRates = state.main.dirRates || [];
-    const allMins = dirRates.map((r) => roundAmount(r.min?.[side], 2));
-    const allMaxes = dirRates.map((r) => roundAmount(r.max?.[side], 2));
+    const allMins = dirRates.map((r) => R(r.min?.[side], 2));
+    const allMaxes = dirRates.map((r) => R(r.max?.[side], 2));
     return [Math.max(...allMaxes), Math.min(...allMins)];
   });
 
   const amount =
     useAppSelector(
-      (state) => +state.main.amountOutputs[side].replaceAll(" ", "")
+      (state) => +state.main.amountOutputs[side].replaceAll(",", "")
     ) || 0;
 
   const changeSide = () => setSide(side === "get" ? "give" : "get");
@@ -82,9 +85,7 @@ const LimitsRange = () => {
     : { min: { give: 0, get: 0 }, max: { give: 0, get: 0 } };
 
   const [MIN, MAX] =
-    min?.[side] && max?.[side]
-      ? [roundAmount(min[side], 2), roundAmount(max[side], 2)]
-      : [0, 0];
+    min?.[side] && max?.[side] ? [R(min[side], 2), R(max[side], 2)] : [0, 0];
   // needMargin если min близок к highestMin && max далек от highestMax
   const needMarginMin = MIN / lowestMin > 5; //&& MAX / lowestMax < 10;
   const needMarginMax = highestMax / MAX > 5;
@@ -92,13 +93,14 @@ const LimitsRange = () => {
   const log = (base: number, n: number) => Math.log(n) / Math.log(base);
   const curvingStrength = 100 / (1 - log(highestMax, lowestMin));
   const percToAmount = (x: number) =>
-    roundAmount(highestMax ** (1 + (x - 100) / curvingStrength), 2);
+    R(highestMax ** (1 + (x - 100) / curvingStrength), 2);
 
   const amountToPerc = (x?: number) => {
     if (!x) return 0;
     return 100 + curvingStrength * (log(highestMax, x) - 1);
   };
   const [percMin, percMax] = [amountToPerc(MIN), amountToPerc(MAX)];
+  const smoothCenter = useSmooth(percMin + (percMax - percMin) / 2);
 
   const stick = (a: number) =>
     isClose(MIN, a) ? MIN : isClose(MAX, a) ? MAX : a;
@@ -110,11 +112,11 @@ const LimitsRange = () => {
     "violet.600",
   ]);
   const colorKey = useColorModeValue(secondary600, primary300);
-  const color1 = useColorModeValue("bg.200", "bg.700");
+  const color1 = useColorModeValue("bg.200", "bg.800");
   const color2 = useColorModeValue("bg.10", "bg.900");
   const color3 = useColorModeValue("bg.100", "bg.800");
   const color4 =
-    stickyAmount >= MIN && stickyAmount <= MAX ? mainColor : "bg.500";
+    stickyAmount >= MIN && stickyAmount <= MAX ? mainColor : "bg.600";
   const shake = keyframes`
   from {transform: translateX(-5px)}
   to {transform: translateX(0)}
@@ -152,7 +154,7 @@ const LimitsRange = () => {
               color={color4}
               placement="top"
               isOpen={showTooltip}
-              label={`${kFormatter(stickyAmount)} ${pmCurrencyName}`}
+              label={`${kFormatter(stickyAmount)} ${giveCur}`}
             >
               <SliderThumb
                 boxSize={8}
@@ -192,27 +194,66 @@ const LimitsRange = () => {
 
         <Box w="90%" pointerEvents="none">
           <CustomRangeSlider resMin={percMin} resMax={percMax}>
+            <Flex
+              justifyContent="center"
+              position="absolute"
+              minW="100px"
+              maxW="100px"
+              minH="20"
+              left={`calc(${smoothCenter.toFixed(0)}% - 50px)`}
+            >
+              <Box
+                mt="3"
+                py="0.5"
+                px="1"
+                bgColor="bg.900"
+                borderRadius="lg"
+                h="fit-content"
+                zIndex="5"
+              >
+                <Text whiteSpace="nowrap" fontSize="xs">{`${kFormatter(
+                  R(min.give, 2)
+                )} - ${kFormatter(R(max.give, 2))} ${giveCur}`}</Text>
+                <Text whiteSpace="nowrap" fontSize="xs">{`${kFormatter(
+                  R(min.get, 2)
+                )} - ${kFormatter(R(max.get, 2))} ${getCur}`}</Text>
+              </Box>
+            </Flex>
             <RangeSliderTrack bgColor={color1}>
               <RangeSliderFilledTrack bgColor={color4} />
             </RangeSliderTrack>
             <RangeSliderThumb boxSize={1} index={0} zIndex="2">
-              <Limit
+              {/* <Box borderRadius="lg" py="0.5" px="1" bgColor="bg.700">
+                <Text
+                  fontSize="xs"
+                  whiteSpace="nowrap"
+                  minW="6"
+                  textAlign="center"
+                >
+                  {kFormatter(R(MIN, 2))}{" "}
+                </Text>
+              </Box> */}
+            </RangeSliderThumb>
+            {/* <Limit
                 label="min"
                 value={MIN}
                 needMargin={needMarginMin}
                 pmCurrencyName={pmCurrencyName}
                 changeSide={changeSide}
-              />
-            </RangeSliderThumb>
-            <RangeSliderThumb boxSize={1} index={1} zIndex="1">
-              <Limit
+              /> */}
+
+            <RangeSliderThumb
+              boxSize={1}
+              index={1}
+              zIndex="1"
+            ></RangeSliderThumb>
+            {/* <Limit
                 label="max"
                 value={MAX}
                 needMargin={needMarginMax}
                 pmCurrencyName={pmCurrencyName}
                 changeSide={changeSide}
-              />
-            </RangeSliderThumb>
+              /> */}
           </CustomRangeSlider>
         </Box>
       </Center>

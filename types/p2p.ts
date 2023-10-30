@@ -7,9 +7,9 @@ export interface ICurrencyConverterRate {
 }
 
 export interface IUsersRate {
-  rate: number[];
-  min: number[];
-  max: number[];
+  rate: [string, number, number];
+  min: [string, number, number];
+  max: [string, number, number];
 }
 
 export interface IP2PDir {

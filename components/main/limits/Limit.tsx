@@ -1,5 +1,5 @@
 import { Box, HStack, Text, useColorModeValue } from "@chakra-ui/react";
-import { kFormatter, roundAmount } from "../../../redux/amountsHelper";
+import { kFormatter, R } from "../../../redux/amountsHelper";
 import { CgSync } from "react-icons/cg";
 
 const Limit = ({
@@ -37,7 +37,7 @@ const Limit = ({
       <Text
         whiteSpace="nowrap"
         color={useColorModeValue("bg.800", "bg.100")}
-      >{`${label.toUpperCase()}: ${kFormatter(roundAmount(value, 2))}`}</Text>
+      >{`${label.toUpperCase()}: ${kFormatter(R(value, 2))}`}</Text>
       <Text
         mx="2px !important"
         color={useColorModeValue("violet.600", "peach.200")}

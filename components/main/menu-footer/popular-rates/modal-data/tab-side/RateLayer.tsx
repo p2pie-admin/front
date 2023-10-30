@@ -22,7 +22,7 @@ import PmFullName from "../../../../../shared/PmFullName";
 import {
   codeToSymbol,
   formatNumberInput,
-  roundAmount,
+  R,
 } from "../../../../../../redux/amountsHelper";
 import { capitalize } from "../../../../side/pmModalButton/section/PmGroup/helper";
 import { useContext } from "react";
@@ -70,7 +70,7 @@ const RateLayer = ({
               const name = capitalize(pm.en_name);
               const course = `~ ${codeToSymbol(
                 pm.currency.code
-              )} ${formatNumberInput(roundAmount(rate.course))}`;
+              )} ${formatNumberInput(R(rate.course))}`;
               const slug =
                 side === "buy"
                   ? `/?dir=${cryptoPm.code}_${pm.code}&pm_groups=${cryptoPm.pm_group_id}_${pm.pm_group_id}`

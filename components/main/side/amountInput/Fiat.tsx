@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import {
   codeToSymbol,
   formatNumberInput,
-  roundAmount,
+  R,
 } from "../../../../redux/amountsHelper";
 
 import { useAppSelector } from "../../../../redux/hooks";
@@ -13,7 +13,7 @@ import SideContext from "../../../shared/contexts/SideContext";
 const renderHint = (leftPart: string, amount?: number, currency?: string) => {
   if (!amount) return;
   //const a =  showUSD ? fiat_courses.usd * value : fiat_courses.rub * value,
-  return `${leftPart || ""} ${formatNumberInput(String(roundAmount(amount)))} ${
+  return `${leftPart || ""} ${formatNumberInput(String(R(amount)))} ${
     currency || ""
   }`;
 };
@@ -41,8 +41,8 @@ const Fiat = ({
     ? "rub"
     : "usd";
 
-  const roundedMin = roundAmount(min?.[side] || 0);
-  const roundedMax = roundAmount(max?.[side] || 0);
+  const roundedMin = R(min?.[side] || 0);
+  const roundedMax = R(max?.[side] || 0);
 
   return (
     <HStack pos="absolute" top="9" right="0" fontSize="sm" color="bg.500">

@@ -42,14 +42,14 @@ export class FeesCalculator {
 
     outputs[oppositeSide] = // то, что посчитано
       calculatedAmount > 0
-        ? formatNumberInput(String(roundAmount(calculatedAmount)))
+        ? formatNumberInput(String(R(calculatedAmount)))
         : "";
 
     const input = Number.isNaN(+str) // то, что введено
       ? "" // гасим вставки букв из буфера
       : str.endsWith(".") || str.endsWith("0") || str === ""
       ? str // не округляем незаконченные строки
-      : String(roundAmount(+str));
+      : String(R(+str));
 
     outputs[side] = formatNumberInput(input) || "";
 
@@ -141,7 +141,7 @@ export const kFormatter = (num: number) => {
     : Math.sign(num) * Math.abs(num);
 };
 
-export const roundAmount = (amount: number, strength = 1): number => {
+export const R = (amount: number, strength = 1): number => {
   // в логарифм нули не вставляем
 
   // if (amount > 99)
@@ -149,7 +149,7 @@ export const roundAmount = (amount: number, strength = 1): number => {
   //     +(amount / 10 ** String(amount).length).toFixed(1) *
   //     10 ** String(amount).length
   //   );
-  if (!amount || typeof amount !== "number") return 0;
+  if (!amount || typeof amount !== "number" || strength > 5) return 0;
   if (amount > 100 && strength > 1)
     return +(
       +(amount / 10 ** amount.toFixed(0).length).toFixed(6 - strength) *
@@ -165,13 +165,13 @@ export const roundAmount = (amount: number, strength = 1): number => {
 };
 
 export const format = (v: number, strength: number): string =>
-  formatNumberInput(roundAmount(v, strength));
+  formatNumberInput(R(v, strength));
 
 export const formatNumberInput = (x: string | number) => {
   if (!x) return String(x);
   const s = String(x);
   let parts = s.split(".");
-  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   return parts.join(".");
 };
 
@@ -179,4 +179,4 @@ export const isClose = (a: number, b: number): boolean =>
   Math.abs(a - b) / a < 0.1;
 
 export const beautifyAmount = (number: number, currency: string) =>
-  formatNumberInput(roundAmount(number) + " " + currency);
+  formatNumberInput(R(number) + " " + currency);

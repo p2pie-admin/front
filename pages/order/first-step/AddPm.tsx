@@ -11,6 +11,7 @@ import {
   setSearchBarInputValue,
   triggerModal,
 } from "../../../redux/mainReducer";
+import { ShadedButton } from "../../../styles/theme/wrappers";
 
 const AddPm = () => {
   const side = useContext(SideContext) as "give" | "get";
@@ -42,25 +43,11 @@ const AddPm = () => {
     e.stopPropagation();
   };
   return (
-    <Center
-      onClick={handleClick}
-      transition="all .3s ease"
-      cursor="pointer"
-      bgColor="rgba(200,200,200,0.05)"
-      _hover={{
-        color: useColorModeValue("violet.800", "peach.100"),
-        bgColor: "transparent",
-      }}
-      _active={{
-        color: useColorModeValue("violet.600", "peach.400"),
-      }}
-      p="0.5"
-      borderRadius="50%"
-      border="1px dashed"
-      borderColor="bg.500"
-    >
-      <IoAddSharp size="1.2rem" />
-    </Center>
+    <ShadedButton>
+      <Center onClick={handleClick}>
+        <IoAddSharp size="1.2rem" />
+      </Center>
+    </ShadedButton>
   );
 };
 

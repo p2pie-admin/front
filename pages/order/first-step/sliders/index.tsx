@@ -1,23 +1,13 @@
-import {
-  Box,
-  Collapse,
-  VStack,
-  Text,
-  Grid,
-  HStack,
-  Checkbox,
-} from "@chakra-ui/react";
+import { Collapse, Text, Grid, HStack, Checkbox } from "@chakra-ui/react";
 import { useContext } from "react";
-import limits from "../../../../components/main/limits";
 import { capitalize } from "../../../../components/main/side/pmModalButton/section/PmGroup/helper";
 import P2PContext from "../../../../components/shared/contexts/p2pContext";
 import InfoTooltip from "../../../../components/shared/Info";
-import { roundAmount } from "../../../../redux/amountsHelper";
 import { useAppSelector } from "../../../../redux/hooks";
-import { RegularBox } from "../../../../styles/theme/wrappers";
-import Commission from "./Commission";
-import InputWithSlider from "./InputSliderGroup";
-import Recalc from "./Recalc";
+import Commission from "./adornments/Commission";
+
+import LimitRecalc from "./adornments/LimitRecalc";
+import InputWithSlider from "./InputWithSlider";
 
 const Sliders = () => {
   const p2pDirIndex = useContext(P2PContext);
@@ -53,12 +43,7 @@ const Sliders = () => {
       dir.isVisible,
     ];
   });
-  console.log(
-    p2pDirIndex === undefined,
-    !currencyConverterRate,
-    !giveCur,
-    !getCur
-  );
+
   if (
     p2pDirIndex === undefined ||
     !currencyConverterRate ||
@@ -70,7 +55,7 @@ const Sliders = () => {
 
   const [mainCur, secondaryCur, header] =
     rate > 1
-      ? [giveCur, getCur, `buy ${getPmName} with ${givePmName}`]
+      ? [giveCur, getCur, `sell ${givePmName} for ${getPmName}`]
       : [getCur, giveCur, `sell ${givePmName} for ${getPmName}`];
 
   // const rateValues = [defRate * coefficient, defRate * 0.9, defRate * 1.1];
@@ -83,23 +68,23 @@ const Sliders = () => {
 
   return (
     <Collapse in={isVisible} delay={1000}>
-      <Text fontSize={{ base: "md", md: "lg" }} color="bg.300" my="4">
+      <Text fontSize={{ base: "sm", md: "md" }} color="bg.400" my="4">
         {`Choose a price to ${header}: `}
       </Text>
       <Grid
         ml="auto"
         mr="10%"
         w={{ base: "100%", md: "80%" }}
-        gridRowGap="6"
+        gridRowGap="7"
         gridColumnGap="8"
         gridTemplateColumns="3fr 5fr"
-        mb="4"
+        mb="6"
         px="2"
       >
         <InputWithSlider
           id="rate"
-          leftSide={`1 ${secondaryCur} =`}
-          rightSide={mainCur}
+          leftSide={rate > 1 ? "" : `1 ${secondaryCur} =`}
+          rightSide={rate > 1 ? `${mainCur} = 1 ${secondaryCur}` : mainCur}
           // values={rateValues}
           // toUsd={toUsd}
           // strength={2}
@@ -109,7 +94,7 @@ const Sliders = () => {
           id="min"
           leftSide="min: "
           rightSide={mainCur}
-          adornment={<Recalc id="min" cur={secondaryCur} />}
+          adornment={<LimitRecalc id="min" cur={secondaryCur} />}
           // values={minValues}
           // toUsd={toUsd}
           // strength={4}
@@ -118,7 +103,7 @@ const Sliders = () => {
           id="max"
           leftSide="max: "
           rightSide={mainCur}
-          adornment={<Recalc id="max" cur={secondaryCur} />}
+          adornment={<LimitRecalc id="max" cur={secondaryCur} />}
           // values={maxValues}
           // toUsd={toUsd}
           // strength={4}

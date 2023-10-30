@@ -17,6 +17,7 @@ export const CustomBox3D = (props: any) => {
     </Box3D>
   );
 };
+
 export const RegularBox = (props: any) => {
   const {
     children,
@@ -54,5 +55,27 @@ export const Box3D = (props: any) => {
     >
       {children}
     </RegularBox>
+  );
+};
+
+export const ShadedButton = (props: any) => {
+  const { children, ...chakraProps }: { children: ReactJSXElement } = props;
+  return (
+    <Box
+      {...chakraProps}
+      transition="all .3s ease"
+      cursor="pointer"
+      bgColor="rgba(200,200,200,0.05)"
+      _hover={{
+        color: useColorModeValue("violet.800", "peach.100"),
+        bgColor: "transparent",
+      }}
+      _active={{
+        color: useColorModeValue("violet.600", "peach.400"),
+      }}
+      borderRadius="2xl"
+    >
+      {children}
+    </Box>
   );
 };

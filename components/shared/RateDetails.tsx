@@ -20,7 +20,7 @@ import {
 import {
   beautifyAmount,
   formatNumberInput,
-  roundAmount,
+  R,
 } from "../../redux/amountsHelper";
 import { useAppSelector } from "../../redux/hooks";
 import { IoWarningOutline } from "react-icons/io5";
@@ -92,12 +92,8 @@ const RateDetails = () => {
             {rateProps.map((rateProp, index) => (
               <Tr key={index}>
                 <Td>{rateProp.name}</Td>
-                <Td isNumeric>
-                  {formatNumberInput(roundAmount(rateProp.give))}
-                </Td>
-                <Td isNumeric>
-                  {formatNumberInput(roundAmount(rateProp.get))}
-                </Td>
+                <Td isNumeric>{formatNumberInput(R(rateProp.give))}</Td>
+                <Td isNumeric>{formatNumberInput(R(rateProp.get))}</Td>
               </Tr>
             ))}
           </Tbody>

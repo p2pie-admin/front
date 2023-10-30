@@ -20,19 +20,20 @@ import { IActivePetal, IDir } from "../types/dir";
 import {
   initialAmountOutputs,
   getAmountOutputs,
-  maxDef,
-  maxFrom,
   minDef,
-  minFrom,
-  minTo,
-  maxTo,
+  maxDef,
+  minStart,
+  minEnd,
+  maxStart,
+  maxEnd,
+  rateSpread,
 } from "./helper";
 import Side from "../components/main/side";
 
 import { getPmByCode } from "../components/main/side/pmModalButton/section/PmGroup/helper";
 import { ILocation } from "../types/shared";
 import { ICurrencyConverterRate, IP2P } from "../types/p2p";
-import { format, roundAmount } from "./amountsHelper";
+import { format, R } from "./amountsHelper";
 
 type ISide = "give" | "get";
 
@@ -138,8 +139,8 @@ export const ratesSlice = createSlice({
     },
 
     triggerP2PDir: (state: MainState, action: PayloadAction<number>) => {
-      state.p2p.dirs[action.payload].isVisible = !state.p2p.dirs[action.payload]
-        .isVisible;
+      state.p2p.dirs[action.payload].isVisible =
+        !state.p2p.dirs[action.payload].isVisible;
     },
 
     setPm: (
@@ -250,15 +251,15 @@ export const ratesSlice = createSlice({
       action: PayloadAction<{
         id: keyof IUsersRate;
         p2pDirIndex: number;
-        values: number[];
+        value: string;
       }>
     ) => {
-      const { id, p2pDirIndex, values } = action.payload;
-      const strength = id == "rate" ? 2 : 4;
+      const { id, p2pDirIndex, value } = action.payload;
       const usersRate = state.p2p.dirs[p2pDirIndex].usersRate!;
+      const [_, startValue, endValue] = usersRate[id];
       state.p2p.dirs[p2pDirIndex].usersRate = {
         ...usersRate,
-        [id]: values.map((v) => roundAmount(v, strength)),
+        [id]: [value, startValue, endValue],
       };
     },
   },
@@ -310,24 +311,25 @@ export const ratesSlice = createSlice({
       state.p2p.dirs[p2pDirIndex].currencyConverterRate = data;
       const { rate, giveToUSD, getToUSD } = data;
       const [defRate, toUsdRate, coefficient] =
-        rate > 1 ? [rate, giveToUSD, 0.95] : [1 / rate, getToUSD, 1.05];
+        rate > 1 ? [rate, giveToUSD, 0.98] : [1 / rate, getToUSD, 1.02];
+
       const rateValues = [
-        defRate * coefficient,
-        defRate * 0.85,
-        defRate * 1.15,
-      ].map((v) => roundAmount(v, 2));
+        String(R(defRate * coefficient, 2)),
+        R(defRate * (1 - rateSpread), 4),
+        R(defRate * (1 + rateSpread), 4),
+      ] as [string, number, number];
 
       const min = [
-        toUsdRate * minDef,
-        toUsdRate * minFrom,
-        toUsdRate * minTo,
-      ].map((v) => roundAmount(v, 4));
+        String(R(toUsdRate * minDef, 5)),
+        R(toUsdRate * minStart, 5),
+        R(toUsdRate * minEnd, 5),
+      ] as [string, number, number];
 
       const max = [
-        toUsdRate * maxDef,
-        toUsdRate * maxFrom,
-        toUsdRate * maxTo,
-      ].map((v) => roundAmount(v, 4));
+        String(R(toUsdRate * maxDef, 5)),
+        R(toUsdRate * maxStart, 5),
+        R(toUsdRate * maxEnd, 5),
+      ] as [string, number, number];
 
       state.p2p.dirs[p2pDirIndex].usersRate = { rate: rateValues, min, max };
       state.p2p.dirs[p2pDirIndex].toUsdRate = toUsdRate;

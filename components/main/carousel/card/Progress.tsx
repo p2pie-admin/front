@@ -62,7 +62,7 @@ const SmoothProgress = () => {
       state.main.dirRates?.map((r) => [r.min.give, r.max.give])
     ) || [];
   const amount = +useAppSelector((state) =>
-    state.main.amountOutputs.give.replaceAll(" ", "")
+    state.main.amountOutputs.give.replaceAll(",", "")
   );
   //const smoothProgressValue = useSmooth((100 * swiperIdVisible) / ratesLength);
 

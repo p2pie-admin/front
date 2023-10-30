@@ -8,10 +8,10 @@ import {
   IconButton,
   Button,
 } from "@chakra-ui/react";
-import { IoIosArrowRoundForward } from "react-icons/io";
+import { TbArrowsExchange } from "react-icons/tb";
 import SideContext from "../../../components/shared/contexts/SideContext";
-import { RegularBox } from "../../../styles/theme/wrappers";
-import InputWithSlider from "./sliders/InputSliderGroup";
+import { RegularBox, ShadedButton } from "../../../styles/theme/wrappers";
+
 import PmModalButton from "../../../components/main/side/pmModalButton";
 
 import P2PContext from "../../../components/shared/contexts/p2pContext";
@@ -25,16 +25,11 @@ import ReverseButton from "../../../components/main/ReverseButton";
 import P2PReverseButton from "./P2PReverseButton";
 
 const PmWrapper = ({ children }: { children: React.ReactChild }) => {
-  const borderColor = useColorModeValue("blackAlpha.300", "whiteAlpha.300");
+  const borderColor = useColorModeValue("blackAlpha.500", "whiteAlpha.300");
   return (
-    <HStack
-      px="2"
-      border="1px solid"
-      borderColor={borderColor}
-      borderRadius="2xl"
-    >
-      {children}
-    </HStack>
+    <ShadedButton px="2" border="2px solid" borderColor="bg.500">
+      <HStack>{children}</HStack>
+    </ShadedButton>
   );
 };
 
@@ -43,13 +38,16 @@ const CustomRate = ({ index }: { index: number }) => {
     state.main.p2p.dirs[index].isVisible,
     !!state.main.p2p.dirs[index].currencyConverterRate?.rate,
   ]);
+
   const dispatch = useAppDispatch();
+
   return (
-    <RegularBox key={index} p="2" my="4" variant="extra_contrast">
+    <RegularBox key={index} p="2" my="2" variant="contrast">
       <P2PContext.Provider value={index}>
         <HStack
           spacing="4"
           cursor="pointer"
+          color="bg.300"
           onClick={() => ratesExist && dispatch(triggerP2PDir(index))}
         >
           <PmWrapper>
@@ -58,8 +56,9 @@ const CustomRate = ({ index }: { index: number }) => {
               <PmModalButton />
             </SideContext.Provider>
           </PmWrapper>
-          <P2PReverseButton />
-          {/* <IoIosArrowRoundForward size="2rem" /> */}
+          {/* <P2PReverseButton /> */}
+          <TbArrowsExchange size="1.5rem" />
+
           <PmWrapper>
             <SideContext.Provider value={"get"}>
               <AddPm />
@@ -68,13 +67,13 @@ const CustomRate = ({ index }: { index: number }) => {
           </PmWrapper>
 
           {ratesExist && (
-            <RegularBox ml="auto" px="2">
+            <Box ml="auto" px="2">
               {isVisible ? (
                 <SlArrowUp size="1rem" />
               ) : (
                 <SlArrowDown size="1rem" />
               )}
-            </RegularBox>
+            </Box>
           )}
         </HStack>
 

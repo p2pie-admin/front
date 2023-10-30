@@ -8,7 +8,7 @@ import {
 import { useContext } from "react";
 
 import { batchActions } from "redux-batched-actions";
-import { roundAmount } from "../../../../redux/amountsHelper";
+import { R } from "../../../../redux/amountsHelper";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { setAmount } from "../../../../redux/mainReducer";
 import SideContext from "../../../shared/contexts/SideContext";
@@ -31,13 +31,13 @@ const AmountInput = () => {
     ? [currentRate.min, currentRate.max]
     : [undefined, undefined];
   const stringValue = amountOutputs[side] || "";
-  const value = roundAmount(+stringValue.replaceAll(" ", ""));
+  const value = R(+stringValue.replaceAll(",", ""));
   const outRange = min && max && (value > max[side] || value < min[side]);
 
   return (
     <Box justifySelf="end">
       <NumberInput
-        step={roundAmount(value / 100)}
+        step={R(value / 100)}
         //allowMouseWheel
         variant="unstyled"
         position="relative"
