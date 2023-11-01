@@ -1,10 +1,6 @@
 import { Fade, Box, Text, HStack } from "@chakra-ui/react";
 import { useContext, useState } from "react";
-import {
-  codeToSymbol,
-  formatNumberInput,
-  R,
-} from "../../../../redux/amountsHelper";
+import { codeToSymbol, addCommas, R } from "../../../../redux/amountsHelper";
 
 import { useAppSelector } from "../../../../redux/hooks";
 import { ILimit } from "../../../../types/rates";
@@ -13,9 +9,7 @@ import SideContext from "../../../shared/contexts/SideContext";
 const renderHint = (leftPart: string, amount?: number, currency?: string) => {
   if (!amount) return;
   //const a =  showUSD ? fiat_courses.usd * value : fiat_courses.rub * value,
-  return `${leftPart || ""} ${formatNumberInput(String(R(amount)))} ${
-    currency || ""
-  }`;
+  return `${leftPart || ""} ${addCommas(String(R(amount)))} ${currency || ""}`;
 };
 
 const Fiat = ({

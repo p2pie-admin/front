@@ -41,9 +41,7 @@ export class FeesCalculator {
     const calculatedAmount = this._calculateFee();
 
     outputs[oppositeSide] = // то, что посчитано
-      calculatedAmount > 0
-        ? formatNumberInput(String(R(calculatedAmount)))
-        : "";
+      calculatedAmount > 0 ? addCommas(String(R(calculatedAmount))) : "";
 
     const input = Number.isNaN(+str) // то, что введено
       ? "" // гасим вставки букв из буфера
@@ -51,7 +49,7 @@ export class FeesCalculator {
       ? str // не округляем незаконченные строки
       : String(R(+str));
 
-    outputs[side] = formatNumberInput(input) || "";
+    outputs[side] = addCommas(input) || "";
 
     return outputs;
   };
@@ -165,9 +163,9 @@ export const R = (amount: number, strength = 1): number => {
 };
 
 export const format = (v: number, strength: number): string =>
-  formatNumberInput(R(v, strength));
+  addCommas(R(v, strength));
 
-export const formatNumberInput = (x: string | number) => {
+export const addCommas = (x: string | number) => {
   if (!x) return String(x);
   const s = String(x);
   let parts = s.split(".");
@@ -179,4 +177,4 @@ export const isClose = (a: number, b: number): boolean =>
   Math.abs(a - b) / a < 0.1;
 
 export const beautifyAmount = (number: number, currency: string) =>
-  formatNumberInput(R(number) + " " + currency);
+  addCommas(R(number) + " " + currency);

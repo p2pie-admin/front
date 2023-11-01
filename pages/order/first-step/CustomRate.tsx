@@ -22,24 +22,25 @@ import { SlArrowUp, SlArrowDown } from "react-icons/sl";
 import { IP2PDir } from "../../../types/p2p";
 import AddPm from "./AddPm";
 import ReverseButton from "../../../components/main/ReverseButton";
-import P2PReverseButton from "./P2PReverseButton";
+import { RiDeleteBinLine } from "react-icons/ri";
 
-const PmWrapper = ({ children }: { children: React.ReactChild }) => {
-  const borderColor = useColorModeValue("blackAlpha.500", "whiteAlpha.300");
-  return (
-    <ShadedButton px="2" border="2px solid" borderColor="bg.500">
-      <HStack>{children}</HStack>
-    </ShadedButton>
-  );
-};
+// const PmWrapper = ({ children }: { children: React.ReactChild }) => {
+//   const borderColor = useColorModeValue("blackAlpha.500", "whiteAlpha.300");
+//   return (
+//     <Button p="2" variant="contrast">
+//       <HStack>{children}</HStack>
+//     </Button>
+//   );
+// };
 
 const CustomRate = ({ index }: { index: number }) => {
+  //const [isVisible, ratesExist] = [true, true];
   const [isVisible, ratesExist] = useAppSelector((state) => [
     state.main.p2p.dirs[index].isVisible,
     !!state.main.p2p.dirs[index].currencyConverterRate?.rate,
   ]);
 
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
   return (
     <RegularBox key={index} p="2" my="2" variant="contrast">
@@ -50,30 +51,26 @@ const CustomRate = ({ index }: { index: number }) => {
           color="bg.300"
           onClick={() => ratesExist && dispatch(triggerP2PDir(index))}
         >
-          <PmWrapper>
-            <SideContext.Provider value={"give"}>
-              <AddPm />
-              <PmModalButton />
-            </SideContext.Provider>
-          </PmWrapper>
-          {/* <P2PReverseButton /> */}
-          <TbArrowsExchange size="1.5rem" />
-
-          <PmWrapper>
-            <SideContext.Provider value={"get"}>
-              <AddPm />
-              <PmModalButton />
-            </SideContext.Provider>
-          </PmWrapper>
+          {ratesExist ? (
+            <Button variant="contrast" size="sm" color="red.500">
+              <RiDeleteBinLine size="1rem" />
+            </Button>
+          ) : (
+            <Box minW="10"></Box>
+          )}
 
           {ratesExist && (
-            <Box ml="auto" px="2">
+            <HStack ml="auto" px="2">
               {isVisible ? (
-                <SlArrowUp size="1rem" />
+                <Button variant="contrast" size="sm">
+                  <SlArrowUp size="1rem" />
+                </Button>
               ) : (
-                <SlArrowDown size="1rem" />
+                <Button variant="contrast" size="sm">
+                  <SlArrowDown size="1rem" />
+                </Button>
               )}
-            </Box>
+            </HStack>
           )}
         </HStack>
 

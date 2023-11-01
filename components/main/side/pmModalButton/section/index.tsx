@@ -66,7 +66,7 @@ const Section = ({
         <Arrow isUp={!isHidden} />
       </Button>
 
-      <Collapse in={!isHidden} unmountOnExit>
+      <Collapse in={!isHidden}>
         <Box p="2" pb="1" borderBottomRadius="2xl">
           <SectionGridWrapper>
             {filteredPmGroups.slice(0, itemsToShow).map((pm_group) => {

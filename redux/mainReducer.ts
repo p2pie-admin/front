@@ -83,8 +83,8 @@ const getUpdatedAmount = (state: MainState, newSwiperId: number) => {
   return getAmountOutputs(state, state.amountInput, newSwiperId || 0);
 };
 
-export const ratesSlice = createSlice({
-  name: "rates",
+export const mainSlice = createSlice({
+  name: "main",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
@@ -388,9 +388,9 @@ export const {
   addEmptyDir,
   triggerP2PDir,
   setP2PUsersRate,
-} = ratesSlice.actions;
+} = mainSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectAmounts = (state: RootState) => state.main;
+//export const selectAmounts = (state: RootState) => state.main;
 
-export default ratesSlice.reducer;
+export default mainSlice.reducer;

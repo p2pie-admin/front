@@ -26,6 +26,7 @@ import Arrow from "../../../shared/Arrow";
 import { batch } from "react-redux";
 import { IImage, IPm } from "../../../../types/selector";
 import P2PContext from "../../../shared/contexts/p2pContext";
+import AddPm from "../../../../pages/order/first-step/AddPm";
 
 const ButtonWrapper = ({
   children,
@@ -43,9 +44,9 @@ const ButtonWrapper = ({
     }}
     position="relative"
     py="1"
-    px="0"
+    px="2"
     bgColor="transparent"
-    variant="default"
+    variant="contrast"
     color={useColorModeValue("violet.600", "peach.200")}
     h="12"
     display="flex"
@@ -90,7 +91,12 @@ const SelectorButton = () => {
   const currencyCode = pm.currency.code.toUpperCase();
   return (
     <ButtonWrapper
-      leftIcon={<CircularIcon icon={icon} color={color || "gray"} />}
+      leftIcon={
+        <HStack>
+          <AddPm />
+          <CircularIcon icon={icon} color={color || "gray"} />
+        </HStack>
+      }
       handleClick={openDialog}
     >
       <SelectorModal />

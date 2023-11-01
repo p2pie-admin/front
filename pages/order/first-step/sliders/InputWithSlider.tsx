@@ -15,7 +15,7 @@ import {
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { ReactComponentElement, useContext, useEffect, useState } from "react";
 import P2PContext from "../../../../components/shared/contexts/p2pContext";
-import { format, formatNumberInput, R } from "../../../../redux/amountsHelper";
+import { format, addCommas, R } from "../../../../redux/amountsHelper";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { setP2PUsersRate } from "../../../../redux/mainReducer";
 import { IUsersRate } from "../../../../types/p2p";
@@ -61,7 +61,7 @@ const InputWithSlider = ({
   const sliderValueToValue = (sv: number): number =>
     startValue + (sv * (endValue - startValue)) / 100;
 
-  //const valueStr = formatNumberInput(value);
+  //const valueStr = addCommas(value);
   const usdValueStr =
     !giveCode?.includes("USD") && !getCode?.includes("USD") && toUsd
       ? `(~$${format(+value / toUsd, 2)})`
@@ -97,13 +97,13 @@ const InputWithSlider = ({
               borderColor={`${shadedColor} !important`}
               borderBottom="1px solid"
               variant="unstyled"
-              value={value}
+              value={addCommas(value)}
               position="relative"
               onChange={(v) => setValue(v)}
               minW="90px"
               maxW="110px"
-              max={endValue * 2}
-              min={startValue / 2} // no negative
+              max={endValue * 1.2}
+              min={startValue / 1.2} // no negative
             >
               <NumberInputField textAlign="end" px="1" />
             </NumberInput>
@@ -122,7 +122,9 @@ const InputWithSlider = ({
         value={valueToSliderValue(value)}
         mx="2"
         focusThumbOnChange={false}
-        onChange={(v) => setValue(String(sliderValueToValue(v)))}
+        onChange={(v) =>
+          setValue(String(R(sliderValueToValue(v), id === "rate" ? 2 : 4)))
+        }
       >
         <SliderTrack bg={trackColor}>
           <SliderFilledTrack bg={primaryColor} />

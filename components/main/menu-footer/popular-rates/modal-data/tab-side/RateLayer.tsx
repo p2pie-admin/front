@@ -21,7 +21,7 @@ import PmFullName from "../../../../../shared/PmFullName";
 
 import {
   codeToSymbol,
-  formatNumberInput,
+  addCommas,
   R,
 } from "../../../../../../redux/amountsHelper";
 import { capitalize } from "../../../../side/pmModalButton/section/PmGroup/helper";
@@ -68,9 +68,9 @@ const RateLayer = ({
               const pm = findPmByCode(rate.fiat);
               if (!pm) return <Tr></Tr>;
               const name = capitalize(pm.en_name);
-              const course = `~ ${codeToSymbol(
-                pm.currency.code
-              )} ${formatNumberInput(R(rate.course))}`;
+              const course = `~ ${codeToSymbol(pm.currency.code)} ${addCommas(
+                R(rate.course)
+              )}`;
               const slug =
                 side === "buy"
                   ? `/?dir=${cryptoPm.code}_${pm.code}&pm_groups=${cryptoPm.pm_group_id}_${pm.pm_group_id}`

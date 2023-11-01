@@ -43,9 +43,9 @@ const AddPm = () => {
     e.stopPropagation();
   };
   return (
-    <ShadedButton>
+    <ShadedButton p="0.5" border="2px dashed" borderColor="bg.500">
       <Center onClick={handleClick}>
-        <IoAddSharp size="1.2rem" />
+        <IoAddSharp size="1rem" />
       </Center>
     </ShadedButton>
   );

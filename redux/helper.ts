@@ -5,7 +5,7 @@ import { MainState } from "./mainReducer";
 export const initialAmountOutputs = { give: "", get: "" };
 
 export const [minDef, maxDef, minStart, minEnd, maxStart, maxEnd, rateSpread] =
-  [300, 2000, 100, 2000, 100, 15000, 0.1]; // EQUAL TO USD
+  [300, 500, 100, 500, 100, 10000, 0.1]; // EQUAL TO USD
 
 export const getAmountOutputs = (
   state: MainState,

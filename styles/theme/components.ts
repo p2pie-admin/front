@@ -12,9 +12,8 @@ const colorNameToHex = (theme: any, colorFullName: string) => {
 };
 
 const createGradient = (theme: any, tone: ITone, glowing = false) => {
-  const [bgFrom, bgTo, borderFrom, borderTo, whiteAlpha, shadeTo] = colors3D[
-    tone
-  ];
+  const [bgFrom, bgTo, borderFrom, borderTo, whiteAlpha, shadeTo] =
+    colors3D[tone];
 
   const bgFromHEX = colorNameToHex(theme, bgFrom);
   const bgToHEX = colorNameToHex(theme, bgTo);
@@ -75,7 +74,7 @@ const components: Record<string, StyleConfig> = {
       // эти стили добавятся ко всем прочим только если будет выбран какой-то вариант
       filter: "none",
       minH: "10",
-      borderRadius: "2xl",
+      borderRadius: "xl",
       transition: "0.2s filter ease-in",
       _hover: {
         filter: "brightness(1.2)",
