@@ -40,7 +40,7 @@ const CustomRate = ({ index }: { index: number }) => {
     !!state.main.p2p.dirs[index].currencyConverterRate?.rate,
   ]);
 
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   return (
     <RegularBox key={index} p="2" my="2" variant="contrast">
@@ -58,6 +58,19 @@ const CustomRate = ({ index }: { index: number }) => {
           ) : (
             <Box minW="10"></Box>
           )}
+
+          <SideContext.Provider value={"give"}>
+            <AddPm />
+            <PmModalButton />
+          </SideContext.Provider>
+
+          {/* <P2PReverseButton /> */}
+          <TbArrowsExchange size="1.5rem" />
+
+          <SideContext.Provider value={"get"}>
+            <AddPm />
+            <PmModalButton />
+          </SideContext.Provider>
 
           {ratesExist && (
             <HStack ml="auto" px="2">
