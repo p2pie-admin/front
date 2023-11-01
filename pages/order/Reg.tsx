@@ -9,7 +9,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { Formik, Field } from "formik";
-import { Box3D } from "../../styles/theme/wrappers";
+import { Box3D } from "../../styles/theme/custom";
 
 const Reg = () => {
   return (

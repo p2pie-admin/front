@@ -9,7 +9,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { Box3D } from "../../../../../styles/theme/wrappers";
+import { Box3D } from "../../../../../styles/theme/custom";
 import SideContext from "../../../../shared/contexts/SideContext";
 import TabSide from "./tab-side";
 

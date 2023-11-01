@@ -2,7 +2,7 @@ import { Flex, Box, Text, Center, useColorModeValue } from "@chakra-ui/react";
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { title } from "process";
 import { ReactChildren } from "react";
-import { Box3D, CustomBox3D } from "../../../styles/theme/wrappers";
+import { Box3D, CustomBox3D } from "../../../styles/theme/custom";
 
 const Wrapper = ({
   title,

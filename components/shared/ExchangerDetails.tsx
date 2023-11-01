@@ -12,7 +12,7 @@ import Swiper from "../main/carousel/swiper";
 import useSWR from "swr";
 import { useAppSelector } from "../../redux/hooks";
 import { initCMSFetcher } from "../../services/fetchers";
-import { Box3D, CustomBox3D } from "../../styles/theme/wrappers";
+import { Box3D, CustomBox3D } from "../../styles/theme/custom";
 import { IExchangerData } from "../../types/exchanger";
 import ExchangerNameRating from "./ExchangerNameRating";
 import { exchangerQuery } from "./queries";

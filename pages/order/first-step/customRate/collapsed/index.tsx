@@ -1,15 +1,16 @@
 import { Collapse, Text, Grid, HStack, Checkbox } from "@chakra-ui/react";
 import { useContext } from "react";
-import { capitalize } from "../../../../components/main/side/pmModalButton/section/PmGroup/helper";
-import P2PContext from "../../../../components/shared/contexts/p2pContext";
-import InfoTooltip from "../../../../components/shared/Info";
-import { useAppSelector } from "../../../../redux/hooks";
+import { capitalize } from "../../../../../components/main/side/pmModalButton/section/PmGroup/helper";
+import P2PContext from "../../../../../components/shared/contexts/p2pContext";
+import InfoTooltip from "../../../../../components/shared/Info";
+import { useAppSelector } from "../../../../../redux/hooks";
 import Commission from "./adornments/Commission";
 
 import LimitRecalc from "./adornments/LimitRecalc";
 import InputWithSlider from "./InputWithSlider";
+import { ResponsiveText } from "../../../../../styles/theme/custom";
 
-const Sliders = () => {
+const Collapsed = () => {
   const p2pDirIndex = useContext(P2PContext);
   const currencyConverterRate = useAppSelector((state) =>
     p2pDirIndex !== undefined
@@ -68,9 +69,8 @@ const Sliders = () => {
 
   return (
     <Collapse in={isVisible} delay={1000}>
-      <Text fontSize={{ base: "sm", md: "md" }} color="bg.400" my="4">
-        {`Choose a price to ${header}: `}
-      </Text>
+      <ResponsiveText my="4">{`Choose price and limits to ${header}: `}</ResponsiveText>
+
       <Grid
         ml="auto"
         mr="10%"
@@ -117,8 +117,20 @@ const Sliders = () => {
           </HStack>
         </Checkbox>
       </HStack>
+
+      <HStack
+        bgColor="bg.900"
+        py="1"
+        px="2"
+        mt="4"
+        borderRadius="lg"
+        justifyContent="space-between"
+      >
+        <Text>Found 18 P2P rates starting from 1 BTC = 18 900 RUB</Text>
+        <Text fontWeight="bold">SEE ALL</Text>
+      </HStack>
     </Collapse>
   );
 };
 
-export default Sliders;
+export default Collapsed;

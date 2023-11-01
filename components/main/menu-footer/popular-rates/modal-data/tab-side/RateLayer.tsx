@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "../../../../../../redux/hooks";
-import { Box3D } from "../../../../../../styles/theme/wrappers";
+import { Box3D } from "../../../../../../styles/theme/custom";
 import { IPopularRate } from "../../../../../../types/rates";
 import {
   Box,

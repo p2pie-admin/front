@@ -14,13 +14,14 @@ import {
 } from "@chakra-ui/react";
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { ReactComponentElement, useContext, useEffect, useState } from "react";
-import P2PContext from "../../../../components/shared/contexts/p2pContext";
-import { format, addCommas, R } from "../../../../redux/amountsHelper";
-import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { setP2PUsersRate } from "../../../../redux/mainReducer";
-import { IUsersRate } from "../../../../types/p2p";
+import P2PContext from "../../../../../components/shared/contexts/p2pContext";
+import { format, addCommas, R } from "../../../../../redux/amountsHelper";
+import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
+import { setP2PUsersRate } from "../../../../../redux/mainReducer";
+import { IUsersRate } from "../../../../../types/p2p";
 import Commission from "./adornments/Commission";
 import LimitRecalc from "./adornments/LimitRecalc";
+import { ResponsiveText } from "../../../../../styles/theme/custom";
 
 const InputWithSlider = ({
   leftSide,
@@ -80,7 +81,7 @@ const InputWithSlider = ({
     <>
       <Box position="relative">
         <HStack color={contrastColor} justifyContent="space-between">
-          <Text whiteSpace="nowrap">{leftSide}</Text>
+          <ResponsiveText>{leftSide}</ResponsiveText>
 
           <HStack>
             <NumberInput
@@ -108,12 +109,12 @@ const InputWithSlider = ({
               <NumberInputField textAlign="end" px="1" />
             </NumberInput>
 
-            <Text whiteSpace="nowrap">{rightSide}</Text>
+            <ResponsiveText>{rightSide}</ResponsiveText>
           </HStack>
         </HStack>
         <HStack position="absolute" right="0" fontSize="xs" color={shadedColor}>
           {adornment}
-          <Text>{usdValueStr}</Text>
+          <ResponsiveText variant="no_contrast">{usdValueStr}</ResponsiveText>
         </HStack>
       </Box>
       <Slider

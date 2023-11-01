@@ -12,7 +12,7 @@ import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { setSwiperIdVisible } from "../../../../redux/mainReducer";
 import useSmooth from "../../../../services/hooks/smooth";
-import { RegularBox } from "../../../../styles/theme/wrappers";
+import { RegularBox } from "../../../../styles/theme/custom";
 
 const Dot = ({
   selected = false,

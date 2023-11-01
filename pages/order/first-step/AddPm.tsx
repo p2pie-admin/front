@@ -11,7 +11,7 @@ import {
   setSearchBarInputValue,
   triggerModal,
 } from "../../../redux/mainReducer";
-import { ShadedButton } from "../../../styles/theme/wrappers";
+import { ShadedButton } from "../../../styles/theme/custom";
 
 const AddPm = () => {
   const side = useContext(SideContext) as "give" | "get";

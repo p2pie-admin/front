@@ -1,4 +1,4 @@
-import { CustomBox3D } from "../../styles/theme/wrappers";
+import { CustomBox3D } from "../../styles/theme/custom";
 import { IRate } from "../../types/rates";
 import {
   Box,

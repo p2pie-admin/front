@@ -20,7 +20,7 @@ import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import useSmooth from "../../../services/hooks/smooth";
-import { Box3D } from "../../../styles/theme/wrappers";
+import { Box3D } from "../../../styles/theme/custom";
 import Limit from "./Limit";
 import { isClose, kFormatter, R } from "../../../redux/amountsHelper";
 import { setAmount } from "../../../redux/mainReducer";

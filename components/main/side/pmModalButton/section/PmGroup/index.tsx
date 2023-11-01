@@ -43,6 +43,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   ]);
 
   const choosePmP2P = (selectedPm: IPm) => {
+    // для странички ордеров
     const oppositePm = side === "give" ? p2pGetPm?.[0] : p2pGivePm?.[0];
     batch(() => {
       dispatch(addPm({ pm: selectedPm, side, index: p2pDirIndex || 0 }));

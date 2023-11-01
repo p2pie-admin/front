@@ -1,7 +1,11 @@
-import { RegularBox, ShadedButton } from "../../../styles/theme/wrappers";
+import {
+  RegularBox,
+  ResponsiveText,
+  ShadedButton,
+} from "../../../styles/theme/custom";
 import { AiOutlinePlus } from "react-icons/ai";
 import { Box, Center, Divider, HStack, Text } from "@chakra-ui/react";
-import CustomRate from "./CustomRate";
+import CustomRate from "./customRate";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { addEmptyDir } from "../../../redux/mainReducer";
 
@@ -13,24 +17,10 @@ const SelectCurrency = () => {
     dirs[lastIndex].give?.[0]?.code && dirs[lastIndex].get?.[0]?.code;
 
   return (
-    <Box px="1">
-      <Text fontSize="lg" color="bg.300" mt="2" mb="4">
+    <Box>
+      <ResponsiveText variant="contrast" mt="2" mb="4">
         Choose directions:
-      </Text>
-
-      {lastDirSelected && (
-        <HStack
-          bgColor="green.900"
-          py="1"
-          px="2"
-          mt="4"
-          borderRadius="lg"
-          justifyContent="space-between"
-        >
-          <Text>Found 18 P2P rates starting from 1 BTC = 18 900 RUB</Text>
-          <Text fontWeight="bold">SEE ALL</Text>
-        </HStack>
-      )}
+      </ResponsiveText>
 
       {dirs.map((_, index) => (
         <>

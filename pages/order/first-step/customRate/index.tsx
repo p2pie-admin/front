@@ -9,19 +9,19 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { TbArrowsExchange } from "react-icons/tb";
-import SideContext from "../../../components/shared/contexts/SideContext";
-import { RegularBox, ShadedButton } from "../../../styles/theme/wrappers";
+import SideContext from "../../../../components/shared/contexts/SideContext";
+import { RegularBox, ResponsiveText } from "../../../../styles/theme/custom";
 
-import PmModalButton from "../../../components/main/side/pmModalButton";
+import PmModalButton from "../../../../components/main/side/pmModalButton";
 
-import P2PContext from "../../../components/shared/contexts/p2pContext";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import Sliders from "./sliders";
-import { triggerP2PDir } from "../../../redux/mainReducer";
+import P2PContext from "../../../../components/shared/contexts/p2pContext";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import Collapsed from "./collapsed";
+import { triggerP2PDir } from "../../../../redux/mainReducer";
 import { SlArrowUp, SlArrowDown } from "react-icons/sl";
-import { IP2PDir } from "../../../types/p2p";
-import AddPm from "./AddPm";
-import ReverseButton from "../../../components/main/ReverseButton";
+import { IP2PDir } from "../../../../types/p2p";
+import AddPm from "../AddPm";
+import ReverseButton from "../../../../components/main/ReverseButton";
 import { RiDeleteBinLine } from "react-icons/ri";
 
 // const PmWrapper = ({ children }: { children: React.ReactChild }) => {
@@ -60,7 +60,6 @@ const CustomRate = ({ index }: { index: number }) => {
           )}
 
           <SideContext.Provider value={"give"}>
-            <AddPm />
             <PmModalButton />
           </SideContext.Provider>
 
@@ -68,7 +67,6 @@ const CustomRate = ({ index }: { index: number }) => {
           <TbArrowsExchange size="1.5rem" />
 
           <SideContext.Provider value={"get"}>
-            <AddPm />
             <PmModalButton />
           </SideContext.Provider>
 
@@ -87,7 +85,7 @@ const CustomRate = ({ index }: { index: number }) => {
           )}
         </HStack>
 
-        <Sliders />
+        <Collapsed />
       </P2PContext.Provider>
     </RegularBox>
   );

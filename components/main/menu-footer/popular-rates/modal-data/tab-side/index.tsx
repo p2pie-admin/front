@@ -4,7 +4,7 @@ import useSWR from "swr";
 
 import { useAppSelector } from "../../../../../../redux/hooks";
 import { initParserFetcher } from "../../../../../../services/fetchers";
-import { Box3D } from "../../../../../../styles/theme/wrappers";
+import { Box3D } from "../../../../../../styles/theme/custom";
 import { IPopularRate } from "../../../../../../types/rates";
 import ErrorWrapper from "../../../../../shared/ErrorWrapper";
 import SideContext from "../../../../../shared/contexts/SideContext";

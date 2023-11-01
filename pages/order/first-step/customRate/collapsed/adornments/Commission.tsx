@@ -1,9 +1,10 @@
 import { HStack, Highlight, Text, useColorModeValue } from "@chakra-ui/react";
 import { assertEnumType } from "graphql";
 import { useContext } from "react";
-import P2PContext from "../../../../../components/shared/contexts/p2pContext";
-import { format } from "../../../../../redux/amountsHelper";
-import { useAppSelector } from "../../../../../redux/hooks";
+import P2PContext from "../../../../../../components/shared/contexts/p2pContext";
+import { format } from "../../../../../../redux/amountsHelper";
+import { useAppSelector } from "../../../../../../redux/hooks";
+import { ResponsiveText } from "../../../../../../styles/theme/custom";
 
 const Commission = () => {
   const p2pDirIndex = useContext(P2PContext);
@@ -13,9 +14,9 @@ const Commission = () => {
         ? [
             state.main.p2p.dirs[p2pDirIndex].defRate,
             state.main.p2p.dirs[p2pDirIndex].giveBiggerValueThanGet,
-            state.main.p2p.dirs[p2pDirIndex].usersRate?.rate[0],
+            Number(state.main.p2p.dirs[p2pDirIndex].usersRate?.rate[0]),
           ]
-        : [undefined, undefined]
+        : [undefined, undefined, undefined]
   );
 
   if (!defRate || !currentRate || Math.abs(1 - defRate / currentRate) * 200 < 1)
@@ -34,11 +35,14 @@ const Commission = () => {
   const shadedColor = useColorModeValue("bg.500", "bg.400");
 
   return (
-    <Text color={isProfit ? "green.600" : "red.600"} whiteSpace="nowrap">
+    <ResponsiveText
+      variant="no_contrast"
+      color={isProfit ? "green.600" : "red.600"}
+    >
       <Highlight query={text} styles={{ py: "1", color: shadedColor }}>
         {value + " " + text}
       </Highlight>
-    </Text>
+    </ResponsiveText>
   );
 };
 

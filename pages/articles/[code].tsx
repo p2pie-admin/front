@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import Disclaimer from "../../components/shared/article/Disclaimer";
 import { initCMSFetcher } from "../../services/fetchers";
 import { articleCodesQuery, articleQuery } from "../../services/pageQueries";
-import { Box3D } from "../../styles/theme/wrappers";
+import { Box3D } from "../../styles/theme/custom";
 import { IArticle } from "../../types/pages";
 import ReactMarkdown from "react-markdown";
 import { useRef } from "react";

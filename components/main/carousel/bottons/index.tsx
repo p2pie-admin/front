@@ -14,7 +14,7 @@ import {
   setSwiperIdVisible,
 } from "../../../../redux/mainReducer";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { Box3D } from "../../../../styles/theme/wrappers";
+import { Box3D } from "../../../../styles/theme/custom";
 
 import { BiLinkExternal } from "react-icons/bi";
 import ExchangeInfo from "../card/ExchangeInfo";

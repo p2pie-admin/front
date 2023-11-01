@@ -3,7 +3,7 @@ import { useState } from "react";
 import { batch } from "react-redux";
 import { useAppDispatch } from "../../../../../redux/hooks";
 import { setLocation, triggerModal } from "../../../../../redux/mainReducer";
-import { RegularBox } from "../../../../../styles/theme/wrappers";
+import { RegularBox } from "../../../../../styles/theme/custom";
 import { ICity, IFormattedCountry } from "../../../../../types/shared";
 import { popularCountryNames } from "./helper";
 

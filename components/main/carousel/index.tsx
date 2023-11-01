@@ -23,7 +23,7 @@ import {
 import SwiperButtons from "./bottons";
 import ExchangerCard from "./card";
 import Swiper from "./swiper";
-import { CustomBox3D } from "../../../styles/theme/wrappers";
+import { CustomBox3D } from "../../../styles/theme/custom";
 
 const fetcher = initCMSFetcher();
 
@@ -70,25 +70,21 @@ const Carousel = () => {
     error: boolean;
   };
 
-  const {
-    data: directionParametersData,
-    error: directionParameterError,
-  } = useSWR(DirectionParametersQuery, fetcher) as {
-    data: {
-      directionParameters: IParamData[];
+  const { data: directionParametersData, error: directionParameterError } =
+    useSWR(DirectionParametersQuery, fetcher) as {
+      data: {
+        directionParameters: IParamData[];
+      };
+      error: boolean;
     };
-    error: boolean;
-  };
 
-  const {
-    data: exchangerParametersData,
-    error: exchangerParameterError,
-  } = useSWR(DirectionParametersQuery, fetcher) as {
-    data: {
-      exchangerParameters: IParamData[];
+  const { data: exchangerParametersData, error: exchangerParameterError } =
+    useSWR(DirectionParametersQuery, fetcher) as {
+      data: {
+        exchangerParameters: IParamData[];
+      };
+      error: boolean;
     };
-    error: boolean;
-  };
 
   const bothPmsSelected = useAppSelector(
     (state) => !!state.main.givePm?.code && !!state.main.getPm?.code

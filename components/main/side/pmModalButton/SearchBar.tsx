@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { setSearchBarInputValue } from "../../../../redux/mainReducer";
 import { ISearchBar } from "../../../../types/selector";
 import { useTranslation } from "next-i18next";
-import { Box3D } from "../../../../styles/theme/wrappers";
+import { Box3D } from "../../../../styles/theme/custom";
 import { MdOutlineClear } from "react-icons/md";
 import { RiSearchLine } from "react-icons/ri";
 import { countryCurrencies } from "./helper";

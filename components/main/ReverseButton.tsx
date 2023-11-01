@@ -17,7 +17,7 @@ import { reverseDir } from "../../redux/mainReducer";
 import { batch } from "react-redux";
 import { fetchDirRates } from "../../redux/thunks";
 import { useRouter } from "next/router";
-import { RegularBox } from "../../styles/theme/wrappers";
+import { RegularBox } from "../../styles/theme/custom";
 
 const Patch = () => {
   const [bg10, bg900] = useToken("colors", ["bg.10", "bg.900"]);

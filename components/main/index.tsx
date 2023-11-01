@@ -13,7 +13,7 @@ import { decrementSwiper, incrementSwiper } from "../../redux/mainReducer";
 import { useRouter } from "next/router";
 import { batch } from "react-redux";
 import { fetchDirRates, restorePmsFromSlug } from "../../redux/thunks";
-import { RegularBox } from "../../styles/theme/wrappers";
+import { RegularBox } from "../../styles/theme/custom";
 import P2PContext from "../shared/contexts/p2pContext";
 
 const MainPageContent = () => {
