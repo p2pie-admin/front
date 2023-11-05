@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, useBreakpointValue } from "@chakra-ui/react";
 import Section from "./section";
 
 // import ListFilter from "../../../ListFilter";
@@ -13,7 +13,10 @@ const SectionsList = ({ sections }: { sections: ISection[] }) => {
   //   const list = [];
   //   const { i18n } = useTranslation();
   //const list = listFilter.filterJsonByString(inputFieldValue.value, pmsList);
-
+  const isSmall = useBreakpointValue({
+    base: true,
+    sm: false,
+  });
   //console.log(sections && _findAllByKey(sections, "name"));
 
   return (
@@ -34,7 +37,11 @@ const SectionsList = ({ sections }: { sections: ISection[] }) => {
             <Section
               key={section.id}
               title={section[`en_title`]}
-              itemsToShow={section.columns * section.rows}
+              itemsToShow={
+                isSmall
+                  ? section.columns * 2 - 2
+                  : section.columns * section.rows
+              }
               pmGroups={section.pm_groups}
             />
             {/* </SlideFade> */}

@@ -25,18 +25,21 @@ const SelectCurrency = () => {
       {dirs.map((_, index) => (
         <>
           <CustomRate key={index} index={index} />
-          {index !== dirs.length - 1 && <Divider />}
+          {index !== dirs.length - 1 && (
+            <Box borderRadius="lg" h="1" bgColor="blackAlpha.300" m="2" />
+          )}
         </>
       ))}
 
-      {lastDirSelected && dirs.length < 3 && (
+      {lastDirSelected && dirs.length < 9 && (
         <ShadedButton
           display="flex"
           justifyContent="center"
           border="2px dashed"
           borderColor="bg.500"
           onClick={() => dispatch(addEmptyDir())}
-          p="4"
+          py="2"
+          my="4"
         >
           <AiOutlinePlus size="1.5rem" />
         </ShadedButton>

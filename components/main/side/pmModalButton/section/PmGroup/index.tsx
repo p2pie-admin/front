@@ -32,22 +32,22 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   );
   const router = useRouter();
 
-  const [givePm, getPm] = useAppSelector((state) => [
-    state.main.givePm,
-    state.main.getPm,
-  ]);
+  const givePm = useAppSelector((state) => state.main.givePm);
+  const getPm = useAppSelector((state) => state.main.getPm);
 
-  const [p2pGivePm, p2pGetPm] = useAppSelector((state) => [
-    state.main.p2p.dirs[p2pDirIndex || 0].give,
-    state.main.p2p.dirs[p2pDirIndex || 0].get,
-  ]);
+  const p2pGivePm = useAppSelector(
+    (state) => state.main.p2p.dirs[p2pDirIndex || 0].give
+  );
+  const p2pGetPm = useAppSelector(
+    (state) => state.main.p2p.dirs[p2pDirIndex || 0].get
+  );
 
   const choosePmP2P = (selectedPm: IPm) => {
     // для странички ордеров
     const oppositePm = side === "give" ? p2pGetPm?.[0] : p2pGivePm?.[0];
     batch(() => {
       dispatch(addPm({ pm: selectedPm, side, index: p2pDirIndex || 0 }));
-      dispatch(triggerModal(side));
+      dispatch(triggerModal(side + p2pDirIndex || ""));
 
       if (oppositePm?.code) {
         const dir =
@@ -63,7 +63,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
     const oppositePm = side === "give" ? getPm : givePm;
     batch(() => {
       dispatch(fetchPossiblePairs({ code: selectedPm.code, side }));
-      dispatch(triggerModal(side));
+      dispatch(triggerModal(side + p2pDirIndex || ""));
       dispatch(setPm({ pm: selectedPm, side }));
 
       if (oppositePm?.code) {

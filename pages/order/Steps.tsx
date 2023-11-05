@@ -23,9 +23,10 @@ import { useState } from "react";
 import FirstStep from "./first-step";
 import SelectPmsStep from "./first-step";
 import { IoIosArrowRoundForward, IoIosArrowRoundBack } from "react-icons/io";
+import { ResponsiveButton, ResponsiveText } from "../../styles/theme/custom";
 
 const steps = [
-  { title: "Create Order", description: "Suggest Your Rates" },
+  { title: "Order Rates", description: "Rates & Limits" },
   { title: "Details", description: "Date & Regulations" },
   { title: "Confirmation", description: "Leave Contacts" },
 ];
@@ -34,7 +35,7 @@ function Steps() {
   const [tabIndex, setTabIndex] = useState(0);
 
   return (
-    <VStack h="90%" justifyContent="space-between">
+    <VStack minH="70vh" justifyContent="space-between">
       <Box w="100%">
         <Stepper index={tabIndex} colorScheme="peach" size="sm">
           {steps.map((step, index) => (
@@ -47,9 +48,16 @@ function Steps() {
                 />
               </StepIndicator>
 
-              <Box flexShrink="0">
-                <StepTitle>{step.title}</StepTitle>
-                <StepDescription>{step.description}</StepDescription>
+              <Box
+                flexShrink="0"
+                display={{
+                  base: tabIndex !== index ? "none" : "block",
+                  sm: "block",
+                }}
+              >
+                <ResponsiveText size="sm">{step.title}</ResponsiveText>
+
+                <ResponsiveText size="xs">{step.description}</ResponsiveText>
               </Box>
 
               <StepSeparator />
@@ -76,28 +84,30 @@ function Steps() {
 
       <HStack w="100%" mt="6" justifyContent="space-between">
         {tabIndex > 0 ? (
-          <Button
+          <ResponsiveButton
             leftIcon={<IoIosArrowRoundBack size="1.5rem" />}
-            variant="default"
+            my="4"
+            variant="contrast"
             onClick={() => setTabIndex(tabIndex - 1)}
           >
             {"PREVIOUS STEP"}
-          </Button>
+          </ResponsiveButton>
         ) : (
           <Box />
         )}
         {tabIndex == 2 ? (
-          <Button variant="primary" onClick={() => {}}>
+          <ResponsiveButton my="4" variant="primary" onClick={() => {}}>
             {"SUGGEST EXCHANGE"}
-          </Button>
+          </ResponsiveButton>
         ) : (
-          <Button
+          <ResponsiveButton
+            my="4"
+            variant="contrast"
             rightIcon={<IoIosArrowRoundForward size="1.5rem" />}
-            variant="default"
             onClick={() => setTabIndex(tabIndex + 1)}
           >
             {"NEXT STEP"}
-          </Button>
+          </ResponsiveButton>
         )}
       </HStack>
     </VStack>

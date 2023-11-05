@@ -1,17 +1,17 @@
 import { Center, Text, useColorModeValue } from "@chakra-ui/react";
-import { symbols } from "../../../redux/amountsHelper";
+import { symbols } from "../../../../redux/amountsHelper";
 import { useContext } from "react";
 import { IoAddSharp } from "react-icons/io5";
 import { batch } from "react-redux";
 
-import p2pContext from "../../../components/shared/contexts/p2pContext";
-import SideContext from "../../../components/shared/contexts/SideContext";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import p2pContext from "../../../../components/shared/contexts/p2pContext";
+import SideContext from "../../../../components/shared/contexts/SideContext";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import {
   setSearchBarInputValue,
   triggerModal,
-} from "../../../redux/mainReducer";
-import { ShadedButton } from "../../../styles/theme/custom";
+} from "../../../../redux/mainReducer";
+import { ShadedButton } from "../../../../styles/theme/custom";
 
 const AddPm = () => {
   const side = useContext(SideContext) as "give" | "get";
@@ -36,7 +36,7 @@ const AddPm = () => {
     console.log(side, p2pIndex);
     if (side && p2pIndex !== undefined) {
       batch(() => {
-        dispatch(triggerModal(side));
+        dispatch(triggerModal(side + p2pIndex || ""));
         dispatch(setSearchBarInputValue(currencyCode.toUpperCase()));
       });
     }

@@ -43,19 +43,14 @@ const InputWithSlider = ({
   const p2pDirIndex = useContext(P2PContext)!;
   const dispatch = useAppDispatch();
 
-  const [values, toUsd, giveCode, getCode] = useAppSelector((state) => {
-    const dirs = state.main.p2p.dirs;
-    if (!dirs[p2pDirIndex].usersRate) return [];
-    const usersRate = dirs[p2pDirIndex].usersRate!;
-    return [
-      usersRate[id],
-      dirs[p2pDirIndex].toUsdRate,
-      dirs[p2pDirIndex].give?.[0].code,
-      dirs[p2pDirIndex].get?.[0].code,
-    ];
-  });
+  const dir = useAppSelector((state) => state.main.p2p.dirs[p2pDirIndex]);
+  const { usersRate, toUsdRate, give, get } = dir;
+  const [giveCode, getCode] = [give?.[0].code, get?.[0].code];
+  console.log("rerendered input with sliders");
 
-  const [value, startValue, endValue] = values || ["", 0, 0];
+  if (!usersRate) return <></>;
+
+  const [value, startValue, endValue] = usersRate[id] || ["", 0, 0];
 
   const valueToSliderValue = (v: string): number =>
     ((+v - startValue) / (endValue - startValue)) * 100;
@@ -64,8 +59,8 @@ const InputWithSlider = ({
 
   //const valueStr = addCommas(value);
   const usdValueStr =
-    !giveCode?.includes("USD") && !getCode?.includes("USD") && toUsd
-      ? `(~$${format(+value / toUsd, 2)})`
+    !giveCode?.includes("USD") && !getCode?.includes("USD") && toUsdRate
+      ? `(~$${format(+value / toUsdRate, 2)})`
       : "";
 
   const setValue = (value: string) =>
@@ -81,7 +76,7 @@ const InputWithSlider = ({
     <>
       <Box position="relative">
         <HStack color={contrastColor} justifyContent="space-between">
-          <ResponsiveText>{leftSide}</ResponsiveText>
+          <ResponsiveText size="sm">{leftSide}</ResponsiveText>
 
           <HStack>
             <NumberInput
@@ -109,12 +104,12 @@ const InputWithSlider = ({
               <NumberInputField textAlign="end" px="1" />
             </NumberInput>
 
-            <ResponsiveText>{rightSide}</ResponsiveText>
+            <ResponsiveText size="sm">{rightSide}</ResponsiveText>
           </HStack>
         </HStack>
         <HStack position="absolute" right="0" fontSize="xs" color={shadedColor}>
           {adornment}
-          <ResponsiveText variant="no_contrast">{usdValueStr}</ResponsiveText>
+          <ResponsiveText size="xs">{usdValueStr}</ResponsiveText>
         </HStack>
       </Box>
       <Slider

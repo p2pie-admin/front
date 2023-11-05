@@ -26,7 +26,11 @@ import Arrow from "../../../shared/Arrow";
 import { batch } from "react-redux";
 import { IImage, IPm } from "../../../../types/selector";
 import P2PContext from "../../../shared/contexts/p2pContext";
-import AddPm from "../../../../pages/order/first-step/AddPm";
+import AddPm from "../../../../pages/order/first-step/customRate/AddPm";
+import {
+  ResponsiveButton,
+  ResponsiveText,
+} from "../../../../styles/theme/custom";
 
 const ButtonWrapper = ({
   children,
@@ -37,15 +41,12 @@ const ButtonWrapper = ({
   children: any;
   handleClick: Function;
 }) => (
-  <Button
+  <ResponsiveButton
     onClick={(e: React.MouseEvent<HTMLElement>) => {
       handleClick();
       e.stopPropagation();
     }}
     position="relative"
-    py="1"
-    px="2"
-    bgColor="transparent"
     variant="contrast"
     color={useColorModeValue("violet.600", "peach.200")}
     h="12"
@@ -56,10 +57,10 @@ const ButtonWrapper = ({
     leftIcon={leftIcon}
   >
     {children}
-  </Button>
+  </ResponsiveButton>
 );
 
-const SelectorButton = () => {
+const PmModalButton = () => {
   const dispatch = useAppDispatch();
   const p2pDirIndex = useContext(P2PContext);
   const side = useContext(SideContext) as "give" | "get";
@@ -72,15 +73,15 @@ const SelectorButton = () => {
 
   const openDialog = () => {
     batch(() => {
-      dispatch(triggerModal(side));
+      dispatch(triggerModal(side + p2pDirIndex || ""));
       dispatch(setSearchBarInputValue(""));
     });
   };
 
   if (!pm)
     return (
-      <ButtonWrapper handleClick={() => dispatch(triggerModal(side))}>
-        <SelectorModal />
+      <ButtonWrapper handleClick={openDialog}>
+        <SelectorModal id={side + p2pDirIndex || ""} />
         <Text fontSize="xl">
           {capitalize(side === "give" ? "sell" : "buy")}
         </Text>
@@ -99,8 +100,10 @@ const SelectorButton = () => {
       }
       handleClick={openDialog}
     >
-      <SelectorModal />
-      <Text fontSize="lg">{currencyCode}</Text>
+      <SelectorModal id={side + p2pDirIndex || ""} />
+      <ResponsiveText size="md" variant="primary">
+        {currencyCode}
+      </ResponsiveText>
       {subgroup_name && (
         <Box
           position="absolute"
@@ -118,4 +121,4 @@ const SelectorButton = () => {
   );
 };
 
-export default SelectorButton;
+export default PmModalButton;

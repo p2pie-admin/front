@@ -57,13 +57,10 @@ const Dot = ({
 const SmoothProgress = () => {
   const dispatch = useAppDispatch();
   const swiperIdVisible = useAppSelector((state) => state.main.swiperIdVisible);
-  const ratesLimits =
-    useAppSelector((state) =>
-      state.main.dirRates?.map((r) => [r.min.give, r.max.give])
-    ) || [];
-  const amount = +useAppSelector((state) =>
-    state.main.amountOutputs.give.replaceAll(",", "")
-  );
+  const dirRates = useAppSelector((state) => state.main.dirRates) || [];
+  const ratesLimits = dirRates?.map((r) => [r.min.give, r.max.give]);
+  const amountStr = useAppSelector((state) => state.main.amountOutputs.give);
+  const amount = +amountStr.replaceAll(",", "");
   //const smoothProgressValue = useSmooth((100 * swiperIdVisible) / ratesLength);
 
   const color_bg = useColorModeValue("bg.100", "bg.1000");

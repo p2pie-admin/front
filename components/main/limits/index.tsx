@@ -20,7 +20,7 @@ import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import useSmooth from "../../../services/hooks/smooth";
-import { Box3D } from "../../../styles/theme/custom";
+import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
 import Limit from "./Limit";
 import { isClose, kFormatter, R } from "../../../redux/amountsHelper";
 import { setAmount } from "../../../redux/mainReducer";
@@ -61,17 +61,18 @@ const LimitsRange = () => {
   // const pmCurrencyName = useAppSelector(
   //   (state) => state.main[`${side}Pm`]?.currency.code.toUpperCase() || ""
   // );
-  const [giveCur, getCur] = useAppSelector((state) => [
-    state.main.givePm?.currency.code.toUpperCase() || "",
-    state.main.getPm?.currency.code.toUpperCase() || "",
-  ]);
 
-  const [highestMax, lowestMin] = useAppSelector((state) => {
-    const dirRates = state.main.dirRates || [];
-    const allMins = dirRates.map((r) => R(r.min?.[side], 2));
-    const allMaxes = dirRates.map((r) => R(r.max?.[side], 2));
-    return [Math.max(...allMaxes), Math.min(...allMins)];
-  });
+  const giveCur = useAppSelector(
+    (state) => state.main.givePm?.currency.code.toUpperCase() || ""
+  );
+  const getCur = useAppSelector(
+    (state) => state.main.getPm?.currency.code.toUpperCase() || ""
+  );
+
+  const dirRates = useAppSelector((state) => state.main.dirRates || []);
+  const allMins = dirRates.map((r) => R(r.min?.[side], 2));
+  const allMaxes = dirRates.map((r) => R(r.max?.[side], 2));
+  const [highestMax, lowestMin] = [Math.max(...allMaxes), Math.min(...allMins)];
 
   const amount =
     useAppSelector(
@@ -206,17 +207,17 @@ const LimitsRange = () => {
                 mt="3"
                 py="0.5"
                 px="1"
-                bgColor="bg.900"
+                bgColor="blackAlpha.500"
                 borderRadius="lg"
                 h="fit-content"
                 zIndex="5"
               >
-                <Text whiteSpace="nowrap" fontSize="xs">{`${kFormatter(
+                <ResponsiveText variant="no_contrast">{`${kFormatter(
                   R(min.give, 2)
-                )} - ${kFormatter(R(max.give, 2))} ${giveCur}`}</Text>
-                <Text whiteSpace="nowrap" fontSize="xs">{`${kFormatter(
+                )} - ${kFormatter(R(max.give, 2))} ${giveCur}`}</ResponsiveText>
+                <ResponsiveText variant="no_contrast">{`${kFormatter(
                   R(min.get, 2)
-                )} - ${kFormatter(R(max.get, 2))} ${getCur}`}</Text>
+                )} - ${kFormatter(R(max.get, 2))} ${getCur}`}</ResponsiveText>
               </Box>
             </Flex>
             <RangeSliderTrack bgColor={color1}>

@@ -21,10 +21,8 @@ import RateDetails from "../../../shared/RateDetails";
 import PmFullName from "../../../shared/PmFullName";
 
 const ExchangeInfo = () => {
-  const [givePm, getPm] = useAppSelector((state) => [
-    state.main.givePm,
-    state.main.getPm,
-  ]);
+  const givePm = useAppSelector((state) => state.main.givePm);
+  const getPm = useAppSelector((state) => state.main.getPm);
 
   if (!givePm || !getPm) return <></>;
 

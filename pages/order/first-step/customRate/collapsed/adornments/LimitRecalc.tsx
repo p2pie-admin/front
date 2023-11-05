@@ -8,20 +8,23 @@ import { ResponsiveText } from "../../../../../../styles/theme/custom";
 
 const LimitRecalc = ({ id, cur }: { id: keyof IUsersRate; cur: string }) => {
   const p2pDirIndex = useContext(P2PContext);
-  const [currentRate, limit] = useAppSelector((state) =>
+
+  const currentRate = useAppSelector((state) =>
     p2pDirIndex !== undefined
-      ? [
-          Number(state.main.p2p.dirs[p2pDirIndex].usersRate?.rate[0]),
-          Number(state.main.p2p.dirs[p2pDirIndex].usersRate?.[id][0]),
-        ]
-      : [undefined, undefined]
+      ? Number(state.main.p2p.dirs[p2pDirIndex].usersRate?.rate[0])
+      : undefined
   );
+
+  const limit = useAppSelector((state) =>
+    p2pDirIndex !== undefined
+      ? Number(state.main.p2p.dirs[p2pDirIndex].usersRate?.[id][0])
+      : undefined
+  );
+
   if (!limit || !currentRate) return <></>;
   const recalc = currentRate > 1 ? limit / currentRate : limit * currentRate;
   return (
-    <ResponsiveText variant="no_contrast">
-      {`${format(recalc, 2)} ${cur}`}
-    </ResponsiveText>
+    <ResponsiveText size="xs">{`${format(recalc, 2)} ${cur}`}</ResponsiveText>
   );
 };
 

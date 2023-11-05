@@ -41,7 +41,6 @@ export interface MainState {
   searchBarInputValue: string;
   givePm?: IPm;
   getPm?: IPm;
-
   dirRates?: IRate[]; //  uniqueRates + bestRates
   pendingDirRates: boolean;
   amountInput?: AmountInput;

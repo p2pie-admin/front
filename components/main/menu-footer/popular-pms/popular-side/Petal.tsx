@@ -81,10 +81,8 @@ function Petal({
 }) {
   const side = useContext(SideContext) as "give" | "get";
 
-  const [givePm, getPm] = useAppSelector((state) => [
-    state.main.givePm,
-    state.main.getPm,
-  ]);
+  const givePm = useAppSelector((state) => state.main.givePm);
+  const getPm = useAppSelector((state) => state.main.getPm);
 
   const dispatch = useAppDispatch();
 

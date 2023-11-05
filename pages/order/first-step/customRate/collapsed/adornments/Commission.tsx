@@ -8,15 +8,23 @@ import { ResponsiveText } from "../../../../../../styles/theme/custom";
 
 const Commission = () => {
   const p2pDirIndex = useContext(P2PContext);
-  const [defRate, giveBiggerValueThanGet, currentRate] = useAppSelector(
-    (state) =>
-      p2pDirIndex !== undefined
-        ? [
-            state.main.p2p.dirs[p2pDirIndex].defRate,
-            state.main.p2p.dirs[p2pDirIndex].giveBiggerValueThanGet,
-            Number(state.main.p2p.dirs[p2pDirIndex].usersRate?.rate[0]),
-          ]
-        : [undefined, undefined, undefined]
+
+  const defRate = useAppSelector((state) =>
+    p2pDirIndex !== undefined
+      ? state.main.p2p.dirs[p2pDirIndex].defRate
+      : undefined
+  );
+
+  const giveBiggerValueThanGet = useAppSelector((state) =>
+    p2pDirIndex !== undefined
+      ? state.main.p2p.dirs[p2pDirIndex].giveBiggerValueThanGet
+      : undefined
+  );
+
+  const currentRate = useAppSelector((state) =>
+    p2pDirIndex !== undefined
+      ? Number(state.main.p2p.dirs[p2pDirIndex].usersRate?.rate[0])
+      : undefined
   );
 
   if (!defRate || !currentRate || Math.abs(1 - defRate / currentRate) * 200 < 1)
@@ -35,10 +43,7 @@ const Commission = () => {
   const shadedColor = useColorModeValue("bg.500", "bg.400");
 
   return (
-    <ResponsiveText
-      variant="no_contrast"
-      color={isProfit ? "green.600" : "red.600"}
-    >
+    <ResponsiveText size="xs" color={isProfit ? "green.600" : "red.600"}>
       <Highlight query={text} styles={{ py: "1", color: shadedColor }}>
         {value + " " + text}
       </Highlight>

@@ -23,10 +23,6 @@ const MainPageContent = () => {
   }, []);
 
   const router = useRouter();
-  // const [givePm, getPm] = useAppSelector((state) => [
-  //   state.main.givePm,
-  //   state.main.getPm,
-  // ]);
 
   const { dir, pm_groups } = router.query;
 

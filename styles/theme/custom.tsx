@@ -1,6 +1,7 @@
 import {
   background,
   Box,
+  Button,
   Text,
   useColorModeValue,
   useToken,
@@ -83,26 +84,67 @@ export const ShadedButton = (props: any) => {
 export const ResponsiveText = (props: any) => {
   const {
     children,
+    size = "md",
     variant,
     ...chakraProps
-  }: { children: ReactJSXElement; variant?: IVariant } = props;
-  const sizes =
-    variant === "extra_contrast"
-      ? { base: "xl", md: "2xl", lg: "3xl" }
-      : variant === "contrast"
-      ? { base: "md", md: "lg", lg: "xl" }
-      : variant === "no_contrast"
-      ? { base: "0.65rem", md: "xs", lg: "sm" }
-      : { base: "xs", md: "sm", lg: "md" };
+  }: {
+    children: ReactJSXElement;
+    size?: "xs" | "sm" | "md" | "lg" | "xl";
+    variant: IVariant;
+  } = props;
+  const sizes = {
+    xs: ["0.65rem", "0.65rem", "xs", "sm"],
+    sm: ["xs", "xs", "sm", "md"],
+    md: ["sm", "sm", "md", "lg"],
+    lg: ["md", "md", "lg", "xl"],
+    xl: ["lg", "lg", "xl", "2xl"],
+  };
+  const variants = {
+    xs: "no_contrast",
+    sm: "contrast",
+    md: "contrast",
+    lg: "extra_contrast",
+    xl: "extra_contrast",
+  };
+  const fontSize = sizes[size];
 
   return (
     <Text
       whiteSpace="nowrap"
-      fontSize={sizes}
-      variant={variant || "contrast"}
+      fontSize={fontSize}
+      variant={variant || variants[size]}
       {...chakraProps}
     >
       {children}
     </Text>
+  );
+};
+
+export const ResponsiveButton = (props: any) => {
+  const {
+    children,
+    size,
+    ...chakraProps
+  }: { children: ReactJSXElement; size?: string } = props;
+  // const rSize =
+  //   size === "lg"
+  //     ? { base: "md", md: "lg", lg: "xl" }
+  //     : size === "sm"
+  //     ? { base: "xs", md: "sm", lg: "md" }
+  //     : size === "xs"
+  //     ? { base: "xs", md: "xs", lg: "sm" }
+  //     : { base: "sm", md: "md", lg: "lg" }; // md
+
+  return (
+    <Button
+      whiteSpace="nowrap"
+      size={["xs", "sm", "md", "lg"]}
+      px={["0.5", "1", "2"]}
+      py={["0", "0.5", "1"]}
+      // fontSize={fontSize}
+      {...chakraProps}
+    >
+      {children}
+    </Button>
   );
 };

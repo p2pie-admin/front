@@ -33,10 +33,12 @@ const RateDetails = () => {
   const rate = useAppSelector(
     (state) => state.main.dirRates?.[state.main.swiperIdVisible]
   );
-  const [giveCurrency, getCurrency] = useAppSelector((state) => [
-    state.main.givePm?.currency.code.toUpperCase(),
-    state.main.getPm?.currency.code.toUpperCase(),
-  ]);
+  const giveCurrency = useAppSelector((state) =>
+    state.main.givePm?.currency.code.toUpperCase()
+  );
+  const getCurrency = useAppSelector((state) =>
+    state.main.getPm?.currency.code.toUpperCase()
+  );
   const course = rate?.course;
   const amounts = !course ? [0, 0] : course < 1 ? [1, 1 / course] : [course, 1];
   const mainColor = useColorModeValue("violet.600", "peach.200");

@@ -13,16 +13,16 @@ import { useAppSelector } from "../../redux/hooks";
 
 const Greeting = () => {
   const { t } = useTranslation();
-  const topsExist = useAppSelector(
-    (state) => Object.keys(state.main.dirParserResp?.uniqueRates || {}).length
-  );
+  // const topsExist = useAppSelector(
+  //   (state) => Object.keys(state.main.dirParserResp?.uniqueRates || {}).length
+  // );
 
-  const collapsed = useBreakpointValue({ base: !topsExist, md: true });
+  // const collapsed = useBreakpointValue({ base: !topsExist, md: true });
   const [bg100, bg50] = useToken("colors", ["bg.200", "orange.200"]);
 
   return (
     <SlideFade in>
-      <Collapse in={collapsed}>
+      <Collapse in={true}>
         <Box
           mt={{ base: 1, md: 2 }}
           mb={{ base: 3, md: 5 }}
