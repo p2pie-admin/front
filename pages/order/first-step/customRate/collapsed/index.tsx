@@ -22,6 +22,7 @@ import { MainState } from "../../../../../redux/mainReducer";
 import { ISide } from "../../../../../types/selector";
 
 import FoundRates from "./FoundRates";
+import DirDescription from "./DirDescription";
 
 const Collapsed = () => {
   const p2pDirIndex = useContext(P2PContext);
@@ -60,13 +61,7 @@ const Collapsed = () => {
   )
     return <></>;
 
-  const [mainCur, secondaryCur, header] = [
-    giveCur,
-    getCur,
-    rateBiggerThanOne
-      ? `buy ${getCur} with ${giveCur}`
-      : `sell ${giveCur} for ${getCur}`,
-  ];
+  const [mainCur, secondaryCur] = [giveCur, getCur];
 
   // const rateValues = [defRate * coefficient, defRate * 0.9, defRate * 1.1];
   // const minValues = [toUsdRate * 300, toUsdRate * 100, toUsdRate * 2000];
@@ -79,10 +74,10 @@ const Collapsed = () => {
   return (
     <Collapse in={isVisible}>
       <FoundRates />
-      <ResponsiveText my="4" size="md">
+      {/* <ResponsiveText size="md" mb="4">
         {`Choose a price and limits to ${header}: `}
-      </ResponsiveText>
-
+      </ResponsiveText> */}
+      <DirDescription rateBiggerThanOne={rateBiggerThanOne} />
       <Grid
         ml="auto"
         mr="10%"

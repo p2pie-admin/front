@@ -15,6 +15,7 @@ import {
   Tooltip,
   keyframes,
   useColorModeValue,
+  HStack,
 } from "@chakra-ui/react";
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { useState } from "react";
@@ -22,7 +23,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import useSmooth from "../../../services/hooks/smooth";
 import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
 import Limit from "./Limit";
-import { isClose, kFormatter, R } from "../../../redux/amountsHelper";
+import { isClose, kFormatter, R, symbols } from "../../../redux/amountsHelper";
 import { setAmount } from "../../../redux/mainReducer";
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { BsArrowLeftShort, BsArrowRightShort } from "react-icons/bs";
@@ -68,6 +69,7 @@ const LimitsRange = () => {
   const getCur = useAppSelector(
     (state) => state.main.getPm?.currency.code.toUpperCase() || ""
   );
+  const mainCur = side === "give" ? giveCur : getCur;
 
   const dirRates = useAppSelector((state) => state.main.dirRates || []);
   const allMins = dirRates.map((r) => R(r.min?.[side], 2));
@@ -94,7 +96,7 @@ const LimitsRange = () => {
   const log = (base: number, n: number) => Math.log(n) / Math.log(base);
   const curvingStrength = 100 / (1 - log(highestMax, lowestMin));
   const percToAmount = (x: number) =>
-    R(highestMax ** (1 + (x - 100) / curvingStrength), 2);
+    R(highestMax ** (1 + (x - 100) / curvingStrength), 4);
 
   const amountToPerc = (x?: number) => {
     if (!x) return 0;
@@ -105,6 +107,7 @@ const LimitsRange = () => {
 
   const stick = (a: number) =>
     isClose(MIN, a) ? MIN : isClose(MAX, a) ? MAX : a;
+
   const stickyAmount = stick(amount);
 
   const mainColor = useColorModeValue("violet.600", "peach.200");
@@ -126,10 +129,18 @@ const LimitsRange = () => {
 
   if (!MIN || !MAX) return <></>;
   return (
-    <Box3D py="2" mb="4" cursor="pointer">
+    <Box3D py="3" mb="4" cursor="pointer" display="flex" flexDir="row">
       {/* <Text>highestMax: {highestMax}</Text> */}
-      <Center position="relative" mb="2">
-        <Box w="90%" position="absolute" top="0" zIndex="3">
+      <HStack minW="25%" justifyContent="center" onClick={changeSide}>
+        <Text fontSize="xs" color={side === "give" ? mainColor : "bg.500"}>
+          {giveCur}
+        </Text>
+        <Text fontSize="xs" color={side === "get" ? mainColor : "bg.500"}>
+          {getCur}
+        </Text>
+      </HStack>
+      <Box position="relative" mb="2" w="75%">
+        <Box w="98%" position="absolute" top="0" zIndex="3">
           <Slider
             aria-label="limits"
             focusThumbOnChange={false}
@@ -137,18 +148,20 @@ const LimitsRange = () => {
             step={0.5}
             onChange={(x) => {
               const newAmount = stick(percToAmount(x));
-              dispatch(
-                setAmount({
-                  side,
-                  num: newAmount,
-                  str: String(newAmount),
-                })
-              );
+              if (amount !== newAmount) {
+                dispatch(
+                  setAmount({
+                    side,
+                    num: newAmount,
+                    str: String(newAmount),
+                  })
+                );
+              }
             }}
             onMouseEnter={() => setShowTooltip(true)}
             onMouseLeave={() => setShowTooltip(false)}
           >
-            <Tooltip
+            {/* <Tooltip
               hasArrow
               bg={color2}
               borderRadius="2xl"
@@ -156,46 +169,59 @@ const LimitsRange = () => {
               placement="top"
               isOpen={showTooltip}
               label={`${kFormatter(stickyAmount)} ${giveCur}`}
+            > */}
+            <SliderThumb
+              boxSize={8}
+              bgColor="transparent"
+              position="relative"
+              boxShadow="none"
             >
-              <SliderThumb
-                boxSize={8}
-                bgColor="transparent"
+              <Box
+                w="6"
+                h="4"
+                mb="2px"
                 position="relative"
-                boxShadow="none"
+                borderRadius="md"
+                bgColor={mainColor}
+                boxShadow={`0 0 10px -2px ${colorKey}`}
+                color={color3}
+                as={RxDragHandleDots2}
+              />
+              <Text
+                position="absolute"
+                top="6"
+                color={mainColor}
+                fontSize="xs"
+                whiteSpace="nowrap"
               >
-                <Box
-                  w="6"
-                  h="4"
-                  borderRadius="md"
-                  bgColor={mainColor}
-                  boxShadow={`0 0 10px -2px ${colorKey}`}
-                  color={color3}
-                  as={RxDragHandleDots2}
-                />
-                <Box
-                  position="absolute"
-                  color={mainColor}
-                  right={stickyAmount <= MAX ? "-5" : "6"}
-                  zIndex="5"
-                  animation={shakeAnimation}
-                >
-                  {stickyAmount >= MIN && stickyAmount <= MAX ? (
-                    <></>
-                  ) : stickyAmount <= MAX ? (
-                    <BsArrowRightShort size="1.5rem" />
-                  ) : (
-                    <BsArrowLeftShort size="1.5rem" />
-                  )}
-                </Box>
-              </SliderThumb>
-            </Tooltip>
+                {`${kFormatter(stickyAmount)} ${
+                  symbols[mainCur.toLocaleLowerCase() || ""]
+                }`}
+              </Text>
+              <Box
+                position="absolute"
+                color={mainColor}
+                right={stickyAmount <= MAX ? "-5" : "6"}
+                zIndex="5"
+                animation={shakeAnimation}
+              >
+                {stickyAmount >= MIN && stickyAmount <= MAX ? (
+                  <></>
+                ) : stickyAmount <= MAX ? (
+                  <BsArrowRightShort size="1.5rem" />
+                ) : (
+                  <BsArrowLeftShort size="1.5rem" />
+                )}
+              </Box>
+            </SliderThumb>
+            {/* </Tooltip> */}
             <SliderTrack bgColor="transparent"></SliderTrack>
           </Slider>
         </Box>
 
-        <Box w="90%" pointerEvents="none">
+        <Box w="98%" pointerEvents="none" color="bg.500">
           <CustomRangeSlider resMin={percMin} resMax={percMax}>
-            <Flex
+            {/* <Flex
               justifyContent="center"
               position="absolute"
               minW="100px"
@@ -203,37 +229,21 @@ const LimitsRange = () => {
               minH="20"
               left={`calc(${smoothCenter.toFixed(0)}% - 50px)`}
             >
-              <Box
-                mt="3"
-                py="0.5"
-                px="1"
-                bgColor="blackAlpha.500"
-                borderRadius="lg"
-                h="fit-content"
-                zIndex="5"
-              >
-                <ResponsiveText variant="no_contrast">{`${kFormatter(
+              <Box h="fit-content" zIndex="5" mt="1">
+                <ResponsiveText fontSize="xs">{`${kFormatter(
                   R(min.give, 2)
-                )} - ${kFormatter(R(max.give, 2))} ${giveCur}`}</ResponsiveText>
-                <ResponsiveText variant="no_contrast">{`${kFormatter(
-                  R(min.get, 2)
-                )} - ${kFormatter(R(max.get, 2))} ${getCur}`}</ResponsiveText>
+                )} - ${kFormatter(R(max.give, 2))}`}</ResponsiveText>
               </Box>
-            </Flex>
+            </Flex> */}
             <RangeSliderTrack bgColor={color1}>
               <RangeSliderFilledTrack bgColor={color4} />
             </RangeSliderTrack>
             <RangeSliderThumb boxSize={1} index={0} zIndex="2">
-              {/* <Box borderRadius="lg" py="0.5" px="1" bgColor="bg.700">
-                <Text
-                  fontSize="xs"
-                  whiteSpace="nowrap"
-                  minW="6"
-                  textAlign="center"
-                >
-                  {kFormatter(R(MIN, 2))}{" "}
-                </Text>
-              </Box> */}
+              <Text mt="7" fontSize="xs" whiteSpace="nowrap" textAlign="center">
+                {`${kFormatter(R(MIN, 2))} ${
+                  symbols[mainCur.toLocaleLowerCase() || ""]
+                }`}
+              </Text>
             </RangeSliderThumb>
             {/* <Limit
                 label="min"
@@ -243,11 +253,13 @@ const LimitsRange = () => {
                 changeSide={changeSide}
               /> */}
 
-            <RangeSliderThumb
-              boxSize={1}
-              index={1}
-              zIndex="1"
-            ></RangeSliderThumb>
+            <RangeSliderThumb boxSize={1} index={1} zIndex="1">
+              <Text mt="7" fontSize="xs" whiteSpace="nowrap" textAlign="center">
+                {`${kFormatter(R(MAX, 2))} ${
+                  symbols[mainCur.toLocaleLowerCase() || ""]
+                }`}
+              </Text>
+            </RangeSliderThumb>
             {/* <Limit
                 label="max"
                 value={MAX}
@@ -257,7 +269,7 @@ const LimitsRange = () => {
               /> */}
           </CustomRangeSlider>
         </Box>
-      </Center>
+      </Box>
     </Box3D>
   );
 };

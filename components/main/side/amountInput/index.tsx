@@ -43,7 +43,7 @@ const AmountInput = () => {
         position="relative"
         onChange={onAmountChange}
         minW="10"
-        mr="3"
+        mr={["0", "2"]}
         zIndex="3"
         value={stringValue.length > 11 || pendingDirRates ? "-" : stringValue}
         keepWithinRange={true}
@@ -57,7 +57,7 @@ const AmountInput = () => {
           textAlign="end"
           placeholder="0.00"
           fontFamily="Inconsolata, sans-serif"
-          fontSize="3xl"
+          fontSize={["2xl", "3xl"]}
           color={outRange ? "bg.500" : useColorModeValue("bg.800", "bg.100")}
           onClick={(e: any) => e.target.select()}
           _placeholder={{ color: "bg.500" }}

@@ -3,6 +3,7 @@ import {
   Button,
   Center,
   color,
+  Hide,
   HStack,
   Icon,
   Tag,
@@ -53,7 +54,11 @@ const ButtonWrapper = ({
     display="flex"
     justifyContent="space-between"
     //leftIcon={currency ? <PmAvatar icon={icon} /> : ""}
-    rightIcon={<Arrow isUp={false} />}
+    rightIcon={
+      <Hide below="xs">
+        <Arrow isUp={false} />
+      </Hide>
+    }
     leftIcon={leftIcon}
   >
     {children}
@@ -64,11 +69,12 @@ const PmModalButton = () => {
   const dispatch = useAppDispatch();
   const p2pDirIndex = useContext(P2PContext);
   const side = useContext(SideContext) as "give" | "get";
-  const pm = useAppSelector((state) => {
+  const tmp = useAppSelector((state) => {
     if (p2pDirIndex !== undefined)
-      return state.main.p2p.dirs[p2pDirIndex][side]?.[0];
+      return state.main.p2p.dirs[p2pDirIndex][side];
     return state.main[`${side}Pm`];
   });
+  const pms = !tmp ? [] : Array.isArray(tmp) ? [...tmp.slice(0, 3)] : [tmp];
   const tagBgColor = useColorModeValue("bg.100", "bg.600");
 
   const openDialog = () => {
@@ -78,24 +84,34 @@ const PmModalButton = () => {
     });
   };
 
-  if (!pm)
+  if (!pms.length)
     return (
       <ButtonWrapper handleClick={openDialog}>
         <SelectorModal id={side + p2pDirIndex || ""} />
-        <Text fontSize="xl">
+        <ResponsiveText size="md" variant="primary">
           {capitalize(side === "give" ? "sell" : "buy")}
-        </Text>
+        </ResponsiveText>
       </ButtonWrapper>
     );
 
-  const { icon, subgroup_name, color } = pm;
-  const currencyCode = pm.currency.code.toUpperCase();
+  const { subgroup_name } = pms[0];
+  const currencyCode = pms[0].currency.code.toUpperCase();
   return (
     <ButtonWrapper
       leftIcon={
-        <HStack>
+        <HStack position="relative">
           <AddPm />
-          <CircularIcon icon={icon} color={color || "gray"} />
+          <HStack minW={`${pms.length * 8 + 20}px`}>
+            {pms.map((pm, index) => (
+              <Box position="absolute" right={`${index * 10}px`}>
+                <CircularIcon
+                  key={pm.code + index}
+                  icon={pm.icon}
+                  color={pm.color || "gray"}
+                />
+              </Box>
+            ))}
+          </HStack>
         </HStack>
       }
       handleClick={openDialog}

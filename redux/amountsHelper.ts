@@ -139,20 +139,32 @@ export const kFormatter = (num: number) => {
     : Math.sign(num) * Math.abs(num);
 };
 
-export const R = (amount: number, strength = 1): number => {
-  // в логарифм нули не вставляем
+const stick = (num: number) => {
+  if (num < 1) return num;
+  let mult = 0;
+  while (num % 10 === 0) {
+    mult += 1;
+    num /= 10;
+  }
 
-  // if (amount > 99)
-  //   return (
-  //     +(amount / 10 ** String(amount).length).toFixed(1) *
-  //     10 ** String(amount).length
-  //   );
+  if (num < 10) return num * 10 ** mult;
+  const lastDigit = num % 10;
+  if (lastDigit === 4 || lastDigit === 9) return (num + 1) * 10 ** mult;
+  if (lastDigit === 6 || lastDigit === 1) return (num - 1) * 10 ** mult;
+  return num * 10 ** mult;
+};
+
+export const R = (amount: number, strength = 1): number => {
   if (!amount || typeof amount !== "number" || strength > 5) return 0;
-  if (amount > 100 && strength > 1)
-    return +(
+  if (amount > 100 && strength > 1) {
+    const res = +(
       +(amount / 10 ** amount.toFixed(0).length).toFixed(6 - strength) *
       10 ** amount.toFixed(0).length
     ).toFixed(0);
+    console.log(stick(res));
+    return stick(res);
+  }
+
   // нахожу минимальный значимый порядок числа
   // это такое число, в которое нужно возвести десятку, чтобы получить тысячную долю amount
   const orderOfMagnitude = -Math.floor(
@@ -174,7 +186,7 @@ export const addCommas = (x: string | number) => {
 };
 
 export const isClose = (a: number, b: number): boolean =>
-  Math.abs(a - b) / a < 0.1;
+  Math.abs(a - b) / a < 0.2;
 
 export const beautifyAmount = (number: number, currency: string) =>
   addCommas(R(number) + " " + currency);

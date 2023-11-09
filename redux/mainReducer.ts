@@ -8,14 +8,13 @@ import { RootState } from "./store";
 import {
   fetchDirRates,
   fetchAllDirRates,
-  fetchFiatByCurrencyCode,
   fetchPms,
   fetchPossiblePairs,
   fetchFiat,
   restorePmsFromSlug,
   fetchCurrencyConverterRate,
 } from "./thunks";
-import { IFiatRates, IImage, IPm, IPmGroup } from "../types/selector";
+import { IPm, IPmGroup } from "../types/selector";
 import { IActivePetal, IDir } from "../types/dir";
 import {
   initialAmountOutputs,
@@ -160,20 +159,10 @@ export const mainSlice = createSlice({
       state.givePm = undefined;
     },
 
-    // setActiveSide: (state: MainState, action: PayloadAction<ISide | null>) => {
-    //   state.activeSide = action.payload;
-    //   state.searchBarInputValue = "";
-    // },
     setSwiperIdVisible: (state: MainState, action: PayloadAction<number>) => {
       state.swiperIdVisible = action.payload;
       state.amountOutputs = getUpdatedAmount(state, action.payload);
     },
-    // setExchangerIdVisible: (
-    //   state: MainState,
-    //   action: PayloadAction<string | undefined>
-    // ) => {
-    //   state.exchangerIdVisible = action.payload;
-    // },
     // свайпаем
 
     // вводим свои числа
@@ -193,6 +182,19 @@ export const mainSlice = createSlice({
     },
     reverseDir: (state: MainState) => {
       [state.givePm, state.getPm] = [state.getPm, state.givePm];
+      if (
+        state.currencyConverterRate?.giveToUSD &&
+        state.currencyConverterRate?.getToUSD
+      ) {
+        [
+          state.currencyConverterRate.giveToUSD,
+          state.currencyConverterRate.getToUSD,
+        ] = [
+          state.currencyConverterRate?.getToUSD,
+          state.currencyConverterRate?.giveToUSD,
+        ];
+      }
+
       state.amountOutputs = getUpdatedAmount(state, state.swiperIdVisible);
     },
     updateScrollLock: (state: MainState, action: PayloadAction<boolean>) => {
@@ -281,12 +283,6 @@ export const mainSlice = createSlice({
       state.amountOutputs = getAmountOutputs(state);
       state.pendingDirRates = false;
       state.swiperIdVisible = 0;
-    });
-    builder.addCase(fetchFiatByCurrencyCode.fulfilled, (state, action) => {
-      const key = (action.payload.side + "Pm") as "givePm" | "getPm";
-      if (state[key]) {
-        state[key]!.fiat = action.payload.fiatRates;
-      }
     });
     builder.addCase(fetchFiat.fulfilled, (state, action) => {
       state.bestRatesPreview = action.payload.fiatRates;

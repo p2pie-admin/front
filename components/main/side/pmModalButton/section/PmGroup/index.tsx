@@ -77,8 +77,8 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
         } else {
           const dir =
             side === "get"
-              ? `${oppositePm.code}_${selectedPm.code}`
-              : `${selectedPm.code}_${oppositePm.code}`;
+              ? `${oppositePm.currency.code}_${selectedPm.currency.code}`
+              : `${selectedPm.currency.code}_${oppositePm.currency.code}`;
           const pmGroups =
             side === "get"
               ? `${oppositePm.pm_group_id}_${selectedPm.pm_group_id}`
@@ -86,6 +86,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
           router.push(`/?dir=${dir}&pm_groups=${pmGroups}`, undefined, {
             shallow: true,
           });
+          console.log(dir);
           dispatch(fetchCurrencyConverterRate({ dir }));
           dispatch(fetchDirRates({ code: selectedPm.code, side }));
         }

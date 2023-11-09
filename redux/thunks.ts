@@ -28,20 +28,6 @@ export const fetchFiat = createAsyncThunk("initial/fetchFiat", async () => {
   };
 });
 
-export const fetchFiatByCurrencyCode = createAsyncThunk(
-  "currencies/fetchFiatByCurrencyCode",
-  async ({ code, side }: { code: string; side: ISide }) => {
-    const response = await axios
-      .get(`${process.env.NEXT_PUBLIC_COINGECKO_URL}/${code.toLowerCase()}`)
-      .catch((err) => console.error("ERROR: ", err));
-    const fiatRates = response?.data;
-    return {
-      fiatRates,
-      side,
-    };
-  }
-);
-
 export const fetchAllDirRates = createAsyncThunk(
   "rates/fetchAllDirRates",
   async (dir: string) => {

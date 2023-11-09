@@ -1,6 +1,6 @@
 import { Fade, Box, Text, HStack } from "@chakra-ui/react";
 import { useContext, useState } from "react";
-import { codeToSymbol, addCommas, R } from "../../../../redux/amountsHelper";
+import { addCommas, R } from "../../../../redux/amountsHelper";
 
 import { useAppSelector } from "../../../../redux/hooks";
 import { ILimit } from "../../../../types/rates";
@@ -8,7 +8,6 @@ import SideContext from "../../../shared/contexts/SideContext";
 
 const renderHint = (leftPart: string, amount?: number, currency?: string) => {
   if (!amount) return;
-  //const a =  showUSD ? fiat_courses.usd * value : fiat_courses.rub * value,
   return `${leftPart || ""} ${addCommas(String(R(amount)))} ${currency || ""}`;
 };
 
@@ -22,18 +21,12 @@ const Fiat = ({
   max?: ILimit;
 }) => {
   const side = useContext(SideContext) as "give" | "get";
-  const fiat_courses = useAppSelector((state) => state.main[`${side}Pm`]?.fiat);
+  const toUsd = useAppSelector(
+    (state) => state.main.currencyConverterRate?.[`${side}ToUSD`]
+  );
   const sideCurrencyCode = useAppSelector((state) =>
     state.main[`${side}Pm`]?.currency.code.toUpperCase()
   );
-  const oppositeSideCurrencyCode = useAppSelector((state) =>
-    state.main[
-      `${side === "give" ? "get" : "give"}Pm`
-    ]?.currency.code.toUpperCase()
-  );
-  const fiatCurrencyCode = oppositeSideCurrencyCode?.includes("USD")
-    ? "rub"
-    : "usd";
 
   const roundedMin = R(min?.[side] || 0);
   const roundedMax = R(max?.[side] || 0);
@@ -46,11 +39,9 @@ const Fiat = ({
         <Text>{renderHint("max: ", roundedMax, sideCurrencyCode)}</Text>
       ) : (
         <Text>
-          {renderHint(
-            "~",
-            fiat_courses && fiat_courses[fiatCurrencyCode] * value,
-            codeToSymbol(fiatCurrencyCode)
-          )}
+          {toUsd &&
+            sideCurrencyCode !== "USD" &&
+            `~ $${R((1 / toUsd) * value, 2)}`}
         </Text>
       )}
     </HStack>

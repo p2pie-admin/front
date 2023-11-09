@@ -55,12 +55,6 @@ interface ICurrency {
   accuracy: string;
 }
 
-interface IFiatRates {
-  id: string;
-  usd: number;
-  rub: number;
-}
-
 /// дополнительный тип
 export type IPopularAs = "crypto" | "fiat" | "none";
 export interface IPmPointer {
@@ -78,7 +72,7 @@ interface IPm {
   ru_name?: string;
   subgroup_name?: string; // ERC-20 отобразить в подгруппе
   icon?: IImage;
-  fiat?: IFiatRates;
+  toUsd?: number;
   possible_pairs?: string[];
   color: string;
   popular_as?: IPopularAs;
@@ -95,6 +89,5 @@ export type {
   IOption,
   IPm,
   IImage,
-  IFiatRates,
   ISide,
 };
