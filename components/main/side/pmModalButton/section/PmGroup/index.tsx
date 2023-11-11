@@ -86,7 +86,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
           router.push(`/?dir=${dir}&pm_groups=${pmGroups}`, undefined, {
             shallow: true,
           });
-          console.log(dir);
+
           dispatch(fetchCurrencyConverterRate({ dir }));
           dispatch(fetchDirRates({ code: selectedPm.code, side }));
         }

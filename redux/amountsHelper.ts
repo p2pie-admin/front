@@ -16,6 +16,7 @@ export const symbols = {
   inr: "₹",
   jpy: "¥",
   cny: "¥",
+  btc: "₿",
 };
 
 export const codeToSymbol = (code: string) =>
@@ -161,7 +162,7 @@ export const R = (amount: number, strength = 1): number => {
       +(amount / 10 ** amount.toFixed(0).length).toFixed(6 - strength) *
       10 ** amount.toFixed(0).length
     ).toFixed(0);
-    console.log(stick(res));
+
     return stick(res);
   }
 

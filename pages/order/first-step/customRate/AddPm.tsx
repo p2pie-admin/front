@@ -33,7 +33,6 @@ const AddPm = () => {
     return <></>;
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    console.log(side, p2pIndex);
     if (side && p2pIndex !== undefined) {
       batch(() => {
         dispatch(triggerModal(side + p2pIndex || ""));

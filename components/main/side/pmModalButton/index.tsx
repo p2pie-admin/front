@@ -48,7 +48,7 @@ const ButtonWrapper = ({
       e.stopPropagation();
     }}
     position="relative"
-    variant="contrast"
+    variant="default"
     color={useColorModeValue("violet.600", "peach.200")}
     h="12"
     display="flex"

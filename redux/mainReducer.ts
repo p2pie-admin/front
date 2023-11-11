@@ -136,6 +136,15 @@ export const mainSlice = createSlice({
       ];
     },
 
+    removeDir: (state: MainState, action: PayloadAction<number>) => {
+      const index = action.payload;
+
+      state.p2p.dirs.splice(index, 1);
+      if (state.p2p.dirs.length === 0) {
+        state.p2p.dirs = [{ isVisible: true }];
+      }
+    },
+
     triggerP2PDir: (state: MainState, action: PayloadAction<number>) => {
       state.p2p.dirs[action.payload].isVisible =
         !state.p2p.dirs[action.payload].isVisible;
@@ -381,6 +390,7 @@ export const {
   setCurrencyConverterRate,
   addPm,
   addEmptyDir,
+  removeDir,
   triggerP2PDir,
   setP2PUsersRate,
 } = mainSlice.actions;

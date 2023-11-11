@@ -195,7 +195,7 @@ const LimitsRange = () => {
                 whiteSpace="nowrap"
               >
                 {`${kFormatter(stickyAmount)} ${
-                  symbols[mainCur.toLocaleLowerCase() || ""]
+                  symbols[mainCur.toLocaleLowerCase()] || ""
                 }`}
               </Text>
               <Box
@@ -241,7 +241,7 @@ const LimitsRange = () => {
             <RangeSliderThumb boxSize={1} index={0} zIndex="2">
               <Text mt="7" fontSize="xs" whiteSpace="nowrap" textAlign="center">
                 {`${kFormatter(R(MIN, 2))} ${
-                  symbols[mainCur.toLocaleLowerCase() || ""]
+                  symbols[mainCur.toLocaleLowerCase()] || ""
                 }`}
               </Text>
             </RangeSliderThumb>
@@ -256,7 +256,7 @@ const LimitsRange = () => {
             <RangeSliderThumb boxSize={1} index={1} zIndex="1">
               <Text mt="7" fontSize="xs" whiteSpace="nowrap" textAlign="center">
                 {`${kFormatter(R(MAX, 2))} ${
-                  symbols[mainCur.toLocaleLowerCase() || ""]
+                  symbols[mainCur.toLocaleLowerCase()] || ""
                 }`}
               </Text>
             </RangeSliderThumb>

@@ -25,9 +25,9 @@ const SelectCurrency = () => {
       {dirs.map((_, index) => (
         <>
           <CustomRate key={index} index={index} />
-          {index !== dirs.length - 1 && (
+          {/* {index !== dirs.length - 1 && (
             <Box borderRadius="lg" h="1" bgColor="blackAlpha.300" m="2" />
-          )}
+          )} */}
         </>
       ))}
 

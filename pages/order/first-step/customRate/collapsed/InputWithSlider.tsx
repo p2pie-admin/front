@@ -46,7 +46,6 @@ const InputWithSlider = ({
   const dir = useAppSelector((state) => state.main.p2p.dirs[p2pDirIndex]);
   const { usersRate, toUsdRate, give, get } = dir;
   const [giveCode, getCode] = [give?.[0].code, get?.[0].code];
-  console.log("rerendered input with sliders");
 
   if (!usersRate) return <></>;
 
