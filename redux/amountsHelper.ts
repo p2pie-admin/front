@@ -42,7 +42,7 @@ export class FeesCalculator {
     const calculatedAmount = this._calculateFee();
 
     outputs[oppositeSide] = // то, что посчитано
-      calculatedAmount > 0 ? addCommas(String(R(calculatedAmount))) : "";
+      calculatedAmount > 0 ? addSpaces(String(R(calculatedAmount))) : "";
 
     const input = Number.isNaN(+str) // то, что введено
       ? "" // гасим вставки букв из буфера
@@ -50,7 +50,7 @@ export class FeesCalculator {
       ? str // не округляем незаконченные строки
       : String(R(+str));
 
-    outputs[side] = addCommas(input) || "";
+    outputs[side] = addSpaces(input) || "";
 
     return outputs;
   };
@@ -131,13 +131,15 @@ export class FeesCalculator {
 }
 
 export const kFormatter = (num: number) => {
-  return Math.abs(num) > 999999999
+  if (num < 100 && !(num % 1)) return num + ".00";
+  const abs = Math.abs(num);
+  return abs > 999999999
     ? "-"
-    : Math.abs(num) > 999999
-    ? Math.sign(num) * +(Math.abs(num) / 1000000).toFixed(1) + "m"
-    : Math.abs(num) > 999
-    ? Math.sign(num) * +(Math.abs(num) / 1000).toFixed(1) + "k"
-    : Math.sign(num) * Math.abs(num);
+    : abs > 999999
+    ? (num / 1000000).toFixed(0) + "m"
+    : abs > 999
+    ? (num / 1000).toFixed(0) + "k"
+    : num;
 };
 
 const stick = (num: number) => {
@@ -169,20 +171,21 @@ export const R = (amount: number, strength = 1): number => {
   // нахожу минимальный значимый порядок числа
   // это такое число, в которое нужно возвести десятку, чтобы получить тысячную долю amount
   const orderOfMagnitude = -Math.floor(
-    Math.log10(amount / 10 ** (4 - strength))
+    Math.log10(amount / 10 ** (4 - (strength > 3 ? 3 : strength)))
   );
   //  округляем только часть после точки до порядка равного orderOfMagnitude
   return +amount.toFixed(orderOfMagnitude < 0 ? 0 : orderOfMagnitude);
 };
 
 export const format = (v: number, strength: number): string =>
-  addCommas(R(v, strength));
+  addSpaces(R(v, strength));
 
-export const addCommas = (x: string | number) => {
-  if (!x) return String(x);
+export const addSpaces = (x: string | number) => {
   const s = String(x);
+  if (!x) return s;
   let parts = s.split(".");
-  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  // if (!parts[1] && +x < 100) return parts[0] + ".00";
   return parts.join(".");
 };
 
@@ -190,4 +193,4 @@ export const isClose = (a: number, b: number): boolean =>
   Math.abs(a - b) / a < 0.2;
 
 export const beautifyAmount = (number: number, currency: string) =>
-  addCommas(R(number) + " " + currency);
+  addSpaces(R(number) + " " + currency);

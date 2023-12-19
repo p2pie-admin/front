@@ -17,7 +17,7 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import { beautifyAmount, addCommas, R } from "../../redux/amountsHelper";
+import { beautifyAmount, addSpaces, R } from "../../redux/amountsHelper";
 import { useAppSelector } from "../../redux/hooks";
 import { IoWarningOutline } from "react-icons/io5";
 import { MdOutlineNotifications } from "react-icons/md";
@@ -90,8 +90,8 @@ const RateDetails = () => {
             {rateProps.map((rateProp, index) => (
               <Tr key={index}>
                 <Td>{rateProp.name}</Td>
-                <Td isNumeric>{addCommas(R(rateProp.give))}</Td>
-                <Td isNumeric>{addCommas(R(rateProp.get))}</Td>
+                <Td isNumeric>{addSpaces(R(rateProp.give))}</Td>
+                <Td isNumeric>{addSpaces(R(rateProp.get))}</Td>
               </Tr>
             ))}
           </Tbody>

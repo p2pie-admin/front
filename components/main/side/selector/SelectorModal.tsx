@@ -10,7 +10,7 @@ import P2PContext from "../../../shared/contexts/p2pContext";
 import SideContext from "../../../shared/contexts/SideContext";
 import CustomModal from "../../../shared/CustomModal";
 
-import Selector from "./Selector";
+import Selector from ".";
 import { selectorQuery } from "./SelectorQuery";
 
 const SelectorModal = ({ id }: { id: string }) => {

@@ -31,7 +31,7 @@ const AmountInput = () => {
     ? [currentRate.min, currentRate.max]
     : [undefined, undefined];
   const stringValue = amountOutputs[side] || "";
-  const value = R(+stringValue.replaceAll(",", ""));
+  const value = R(+stringValue.replaceAll(" ", ""));
   const outRange = min && max && (value > max[side] || value < min[side]);
 
   return (

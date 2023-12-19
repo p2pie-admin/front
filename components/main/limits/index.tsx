@@ -52,8 +52,9 @@ const CustomRangeSlider = ({
 const LimitsRange = () => {
   const dispatch = useAppDispatch();
   const [showTooltip, setShowTooltip] = useState(false);
-  const [side, setSide]: [side: "give" | "get", setSide: Function] =
-    useState("get");
+  const [side, setSide]: [side: "give" | "get", setSide: Function] = useState(
+    "get" as "give" | "get"
+  );
 
   const currentDirRate = useAppSelector(
     (state) => state.main?.dirRates?.[state.main.swiperIdVisible]
@@ -69,6 +70,7 @@ const LimitsRange = () => {
   const getCur = useAppSelector(
     (state) => state.main.getPm?.currency.code.toUpperCase() || ""
   );
+
   const mainCur = side === "give" ? giveCur : getCur;
 
   const dirRates = useAppSelector((state) => state.main.dirRates || []);
@@ -78,7 +80,7 @@ const LimitsRange = () => {
 
   const amount =
     useAppSelector(
-      (state) => +state.main.amountOutputs[side].replaceAll(",", "")
+      (state) => +state.main.amountOutputs[side].replaceAll(" ", "")
     ) || 0;
 
   const changeSide = () => setSide(side === "get" ? "give" : "get");
@@ -90,8 +92,9 @@ const LimitsRange = () => {
   const [MIN, MAX] =
     min?.[side] && max?.[side] ? [R(min[side], 2), R(max[side], 2)] : [0, 0];
   // needMargin если min близок к highestMin && max далек от highestMax
-  const needMarginMin = MIN / lowestMin > 5; //&& MAX / lowestMax < 10;
-  const needMarginMax = highestMax / MAX > 5;
+  // const needMarginMin = MIN / lowestMin > 5; //&& MAX / lowestMax < 10;
+  // const needMarginMax = highestMax / MAX > 5;
+  const tooCloseMinMax = MIN / MAX < 5 || MAX / MIN < 5;
 
   const log = (base: number, n: number) => Math.log(n) / Math.log(base);
   const curvingStrength = 100 / (1 - log(highestMax, lowestMin));
@@ -126,6 +129,11 @@ const LimitsRange = () => {
   to {transform: translateX(0)}
   `;
   const shakeAnimation = `${shake} infinite 1s ease-in-out alternate`;
+
+  const localFormat = (n: number) => {
+    const cur = mainCur.toLocaleLowerCase() as keyof typeof symbols;
+    return `${symbols[cur] || ""} ${kFormatter(n)}`;
+  };
 
   if (!MIN || !MAX) return <></>;
   return (
@@ -194,9 +202,7 @@ const LimitsRange = () => {
                 fontSize="xs"
                 whiteSpace="nowrap"
               >
-                {`${kFormatter(stickyAmount)} ${
-                  symbols[mainCur.toLocaleLowerCase()] || ""
-                }`}
+                {localFormat(stickyAmount)}
               </Text>
               <Box
                 position="absolute"
@@ -221,52 +227,49 @@ const LimitsRange = () => {
 
         <Box w="98%" pointerEvents="none" color="bg.500">
           <CustomRangeSlider resMin={percMin} resMax={percMax}>
-            {/* <Flex
-              justifyContent="center"
-              position="absolute"
-              minW="100px"
-              maxW="100px"
-              minH="20"
-              left={`calc(${smoothCenter.toFixed(0)}% - 50px)`}
-            >
-              <Box h="fit-content" zIndex="5" mt="1">
-                <ResponsiveText fontSize="xs">{`${kFormatter(
-                  R(min.give, 2)
-                )} - ${kFormatter(R(max.give, 2))}`}</ResponsiveText>
-              </Box>
-            </Flex> */}
             <RangeSliderTrack bgColor={color1}>
               <RangeSliderFilledTrack bgColor={color4} />
             </RangeSliderTrack>
-            <RangeSliderThumb boxSize={1} index={0} zIndex="2">
-              <Text mt="7" fontSize="xs" whiteSpace="nowrap" textAlign="center">
-                {`${kFormatter(R(MIN, 2))} ${
-                  symbols[mainCur.toLocaleLowerCase()] || ""
-                }`}
-              </Text>
-            </RangeSliderThumb>
-            {/* <Limit
-                label="min"
-                value={MIN}
-                needMargin={needMarginMin}
-                pmCurrencyName={pmCurrencyName}
-                changeSide={changeSide}
-              /> */}
+            {percMax - percMin < 20 ? (
+              <Flex
+                justifyContent="center"
+                position="absolute"
+                minW="100px"
+                maxW="100px"
+                minH="20"
+                left={`calc(${smoothCenter.toFixed(0)}% - 50px)`}
+              >
+                <Box h="fit-content" zIndex="5" mt="1">
+                  <ResponsiveText fontSize="xs" color="bg.500">{`${localFormat(
+                    MIN
+                  )} - ${localFormat(MAX)}`}</ResponsiveText>
+                </Box>
+              </Flex>
+            ) : (
+              <>
+                <RangeSliderThumb boxSize={1} index={0} zIndex="2">
+                  <Text
+                    mt="7"
+                    fontSize="xs"
+                    whiteSpace="nowrap"
+                    textAlign="center"
+                  >
+                    {localFormat(MIN)}
+                  </Text>
+                </RangeSliderThumb>
 
-            <RangeSliderThumb boxSize={1} index={1} zIndex="1">
-              <Text mt="7" fontSize="xs" whiteSpace="nowrap" textAlign="center">
-                {`${kFormatter(R(MAX, 2))} ${
-                  symbols[mainCur.toLocaleLowerCase()] || ""
-                }`}
-              </Text>
-            </RangeSliderThumb>
-            {/* <Limit
-                label="max"
-                value={MAX}
-                needMargin={needMarginMax}
-                pmCurrencyName={pmCurrencyName}
-                changeSide={changeSide}
-              /> */}
+                <RangeSliderThumb boxSize={1} index={1} zIndex="1">
+                  <Text
+                    mt="7"
+                    fontSize="xs"
+                    whiteSpace="nowrap"
+                    textAlign="center"
+                  >
+                    {localFormat(MAX)}
+                  </Text>
+                </RangeSliderThumb>
+              </>
+            )}
           </CustomRangeSlider>
         </Box>
       </Box>

@@ -17,7 +17,7 @@ export const SubButton = ({
     size="sm"
     filter={shaded ? "opacity(0.5) grayscale(0.8)" : "none"}
     gridColumn={`span ${
-      pm.subgroup_name && pm.subgroup_name.length > 5 ? 2 : 1
+      pm.subgroup_name && pm.subgroup_name.length > 4 ? 2 : 1
     }`}
     variant="extra_contrast"
     onClick={() => choosePm(pm, shaded)}

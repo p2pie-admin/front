@@ -29,9 +29,9 @@ import {
 } from "./helper";
 import Side from "../components/main/side";
 
-import { getPmByCode } from "../components/main/side/pmModalButton/section/PmGroup/helper";
+import { getPmByCode } from "../components/main/side/selector/section/PmGroup/helper";
 import { ILocation } from "../types/shared";
-import { ICurrencyConverterRate, IP2P } from "../types/p2p";
+import { ICurrencyConverterRate } from "../types/p2p";
 import { format, R } from "./amountsHelper";
 
 type ISide = "give" | "get";
@@ -54,11 +54,11 @@ export interface MainState {
   bestRatesPreview: { [key: string]: string }; // from coingecko
   pendingPopularRates: boolean;
   popularRates?: IPopularDirRates;
-  modals: { [key: string]: boolean };
+  modal?: string;
   trash?: any;
   location: ILocation;
   currencyConverterRate?: ICurrencyConverterRate;
-  p2p: IP2P;
+  p2p: { dirs: IP2PDir[] };
 }
 
 const initialState: MainState = {
@@ -70,10 +70,9 @@ const initialState: MainState = {
   isScrollLocked: false,
   bestRatesPreview: {},
   pendingPopularRates: false,
-  modals: {},
   location: { en_country_name: "Russia", en_city_name: "Moscow" },
   p2p: {
-    dirs: [{ isVisible: true }],
+    dirs: [{ expanded: true, deleted: false }],
   },
 };
 
@@ -121,46 +120,50 @@ export const mainSlice = createSlice({
       action: PayloadAction<{ pm: IPm; side: ISide; index: number }>
     ) => {
       const { side, pm, index } = action.payload;
-      state.p2p.dirs[index][side] = [
-        ...(state.p2p.dirs[index][side] || []),
-        pm,
-      ];
+      const cur = state.p2p.dirs[index][side]?.[0].currency.code.toUpperCase();
+      if (cur === pm.currency.code.toUpperCase())
+        state.p2p.dirs[index][side] = [
+          ...(state.p2p.dirs[index][side] || []),
+          pm,
+        ];
+    },
+
+    setPm: (
+      state: MainState,
+      action: PayloadAction<{ pm?: IPm; side: ISide; index?: number }>
+    ) => {
+      const { pm, index, side } = action.payload;
+      if (!pm) {
+        state.amountInput = undefined;
+        state.amountOutputs = initialAmountOutputs;
+        state.dirRates = undefined;
+        return;
+      } // опустошаем пм
+      if (index !== undefined) {
+        state.p2p.dirs[index][side] = [pm];
+      }
+      state[`${side}Pm`] = pm;
     },
 
     addEmptyDir: (state: MainState) => {
       state.p2p.dirs = state.p2p.dirs = [
         ...state.p2p.dirs.reduce((dirs: IP2PDir[], dir) => {
-          return [...dirs, { ...dir, isVisible: false }]; // close all prev
+          return [...dirs, { ...dir, expanded: false }]; // close all prev
         }, []),
-        { isVisible: true }, // add and open new one
+        { expanded: true, deleted: false }, // add and open new one
       ];
     },
 
     removeDir: (state: MainState, action: PayloadAction<number>) => {
-      const index = action.payload;
-
-      state.p2p.dirs.splice(index, 1);
+      state.p2p.dirs[action.payload].deleted = true;
       if (state.p2p.dirs.length === 0) {
-        state.p2p.dirs = [{ isVisible: true }];
+        state.p2p.dirs = [{ expanded: true, deleted: false }];
       }
     },
 
     triggerP2PDir: (state: MainState, action: PayloadAction<number>) => {
-      state.p2p.dirs[action.payload].isVisible =
-        !state.p2p.dirs[action.payload].isVisible;
-    },
-
-    setPm: (
-      state: MainState,
-      action: PayloadAction<{ pm?: IPm; side: ISide }>
-    ) => {
-      if (!action.payload.pm) {
-        state.amountInput = undefined;
-        state.amountOutputs = initialAmountOutputs;
-        state.dirRates = undefined;
-      } // опустошаем пм
-      if (action.payload.side === "give") state.givePm = action.payload.pm;
-      if (action.payload.side === "get") state.getPm = action.payload.pm;
+      state.p2p.dirs[action.payload].expanded =
+        !state.p2p.dirs[action.payload].expanded;
     },
 
     clearPms: (state: MainState) => {
@@ -210,8 +213,11 @@ export const mainSlice = createSlice({
       state.isScrollLocked = action.payload;
     },
 
-    triggerModal: (state: MainState, action: PayloadAction<string>) => {
-      state.modals[action.payload] = !state.modals[action.payload];
+    triggerModal: (
+      state: MainState,
+      action: PayloadAction<string | undefined>
+    ) => {
+      state.modal = action.payload;
     },
     setActivePetal: (
       state: MainState,

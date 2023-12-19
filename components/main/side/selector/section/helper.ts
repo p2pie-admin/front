@@ -1,5 +1,5 @@
-import Transliterator from "../../../../services/transliterator";
-import { IPmGroup, ISection } from "../../../../types/selector";
+import Transliterator from "../../../../../services/transliterator";
+import { IPmGroup, ISection } from "../../../../../types/selector";
 
 const transliterator = new Transliterator();
 
@@ -7,7 +7,6 @@ const _checkPmGroupMatching = (pm_group: IPmGroup, input: string): boolean => {
   const pmGroupNamesToMatch =
     `${pm_group.en_name} ${pm_group.ru_name} ` +
     String(pm_group.options.map((op) => `${op.name} ${op.currency.code}`));
-
   return transliterator.findMatch(pmGroupNamesToMatch, input);
 };
 

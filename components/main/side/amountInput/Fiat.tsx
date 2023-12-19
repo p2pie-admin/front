@@ -1,6 +1,6 @@
 import { Fade, Box, Text, HStack } from "@chakra-ui/react";
 import { useContext, useState } from "react";
-import { addCommas, R } from "../../../../redux/amountsHelper";
+import { addSpaces, R } from "../../../../redux/amountsHelper";
 
 import { useAppSelector } from "../../../../redux/hooks";
 import { ILimit } from "../../../../types/rates";
@@ -8,7 +8,9 @@ import SideContext from "../../../shared/contexts/SideContext";
 
 const renderHint = (leftPart: string, amount?: number, currency?: string) => {
   if (!amount) return;
-  return `${leftPart || ""} ${addCommas(String(R(amount)))} ${currency || ""}`;
+  return `${leftPart || ""} ${addSpaces(String(R(amount, 3)))} ${
+    currency || ""
+  }`;
 };
 
 const Fiat = ({
@@ -28,21 +30,18 @@ const Fiat = ({
     state.main[`${side}Pm`]?.currency.code.toUpperCase()
   );
 
-  const roundedMin = R(min?.[side] || 0);
-  const roundedMax = R(max?.[side] || 0);
+  const Min = min?.[side] || 0;
+  const Max = max?.[side] || 0;
+  const toUSD = toUsd && sideCurrencyCode !== "USD" ? (1 / toUsd) * value : 0;
 
   return (
     <HStack pos="absolute" top="9" right="0" fontSize="sm" color="bg.500">
-      {roundedMin > 0 && value < roundedMin ? (
-        <Text>{renderHint("min: ", roundedMin, sideCurrencyCode)}</Text>
-      ) : roundedMax > 0 && value > roundedMax ? (
-        <Text>{renderHint("max: ", roundedMax, sideCurrencyCode)}</Text>
+      {Min > 0 && value < Min ? (
+        <Text>{renderHint("min: ", Min, sideCurrencyCode)}</Text>
+      ) : Max > 0 && value > Max ? (
+        <Text>{renderHint("max: ", Max, sideCurrencyCode)}</Text>
       ) : (
-        <Text>
-          {toUsd &&
-            sideCurrencyCode !== "USD" &&
-            `~ $${R((1 / toUsd) * value, 2)}`}
-        </Text>
+        <Text>{renderHint("~ $", toUSD)}</Text>
       )}
     </HStack>
   );

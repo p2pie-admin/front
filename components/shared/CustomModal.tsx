@@ -22,12 +22,12 @@ const CustomModal = ({
   header: string | ReactJSXElement;
 }) => {
   const dispatch = useAppDispatch();
-  const isOpen = useAppSelector((state) => state.main.modals[id]);
+  const isOpen = useAppSelector((state) => state.main.modal === id);
   return (
     <Modal
       size={"lg"}
       isOpen={isOpen}
-      onClose={() => dispatch(triggerModal(id))}
+      onClose={() => dispatch(triggerModal(undefined))}
     >
       <ModalOverlay />
       <ModalContent

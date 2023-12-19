@@ -21,10 +21,10 @@ import PmFullName from "../../../../../shared/PmFullName";
 
 import {
   codeToSymbol,
-  addCommas,
+  addSpaces,
   R,
 } from "../../../../../../redux/amountsHelper";
-import { capitalize } from "../../../../side/pmModalButton/section/PmGroup/helper";
+import { capitalize } from "../../../../side/selector/section/PmGroup/helper";
 import { useContext } from "react";
 import SideContext from "../../../../../shared/contexts/SideContext";
 import CircularIcon from "../../../../../shared/CircularIcon";
@@ -68,7 +68,7 @@ const RateLayer = ({
               const pm = findPmByCode(rate.fiat);
               if (!pm) return <Tr></Tr>;
               const name = capitalize(pm.en_name);
-              const course = `~ ${codeToSymbol(pm.currency.code)} ${addCommas(
+              const course = `~ ${codeToSymbol(pm.currency.code)} ${addSpaces(
                 R(rate.course)
               )}`;
               const slug =

@@ -12,7 +12,7 @@ import {
 import { useAppSelector, useAppDispatch } from "../../../../redux/hooks";
 import { triggerModal } from "../../../../redux/mainReducer";
 import CustomModal from "../../../shared/CustomModal";
-import { capitalize } from "../../side/pmModalButton/section/PmGroup/helper";
+import { capitalize } from "../../side/selector/section/PmGroup/helper";
 import { BsArrowRight } from "react-icons/bs";
 import { RxInfoCircled } from "react-icons/rx";
 

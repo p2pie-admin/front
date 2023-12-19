@@ -1,6 +1,6 @@
 import { HStack, Tag, Text, useColorModeValue } from "@chakra-ui/react";
 import { IPm } from "../../types/selector";
-import { capitalize } from "../main/side/pmModalButton/section/PmGroup/helper";
+import { capitalize } from "../main/side/selector/section/PmGroup/helper";
 import CircularIcon from "./CircularIcon";
 
 const PmFullName = ({ pm }: { pm: IPm }) => {

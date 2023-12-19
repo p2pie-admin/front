@@ -1,6 +1,6 @@
 import { Highlight } from "@chakra-ui/react";
 import { useContext } from "react";
-import { capitalize } from "../../../../../components/main/side/pmModalButton/section/PmGroup/helper";
+import { capitalize } from "../../../../../components/main/side/selector/section/PmGroup/helper";
 import P2PContext from "../../../../../components/shared/contexts/p2pContext";
 import { useAppSelector } from "../../../../../redux/hooks";
 import { MainState } from "../../../../../redux/mainReducer";
@@ -42,7 +42,7 @@ const DirDescription = ({
     : `buy ${getNames} ${getCurrency} with ${giveNames} ${giveCurrency}:`;
 
   return (
-    <ResponsiveText size="md" whiteSpace="normal" mb="4">
+    <ResponsiveText size="sm" whiteSpace="normal" mb="4">
       <Highlight
         query={[giveCurrency, getCurrency]}
         styles={{ fontWeight: "bold", color: "inherit" }}

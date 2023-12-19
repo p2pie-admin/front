@@ -18,7 +18,7 @@ import StarRatings from "react-star-ratings";
 import { useAppDispatch } from "../../../../redux/hooks";
 import { IParam, IRate } from "../../../../types/rates";
 import ExchangerNameRating from "../../../shared/ExchangerNameRating";
-import { capitalize } from "../../side/pmModalButton/section/PmGroup/helper";
+import { capitalize } from "../../side/selector/section/PmGroup/helper";
 import Wave from "../Wave";
 import { triggerModal } from "../../../../redux/mainReducer";
 import ExchTag from "./ExchTag";

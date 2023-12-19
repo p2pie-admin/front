@@ -15,7 +15,7 @@ import {
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { ReactComponentElement, useContext, useEffect, useState } from "react";
 import P2PContext from "../../../../../components/shared/contexts/p2pContext";
-import { format, addCommas, R } from "../../../../../redux/amountsHelper";
+import { format, addSpaces, R } from "../../../../../redux/amountsHelper";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
 import { setP2PUsersRate } from "../../../../../redux/mainReducer";
 import { IUsersRate } from "../../../../../types/p2p";
@@ -35,7 +35,7 @@ const InputWithSlider = ({
   adornment: ReactJSXElement;
 }) => {
   const shadedColor = useColorModeValue("bg.500", "bg.400");
-  const trackColor = useColorModeValue("bg.100", "bg.700");
+  const trackColor = useColorModeValue("bg.300", "bg.900");
   const contrastColor = useColorModeValue("bg.900", "bg.100");
   const inputBgColor = useColorModeValue("blackAlpha.100", "blackAlpha.400");
   const primaryColor = useColorModeValue("violet.600", "peach.200");
@@ -56,7 +56,7 @@ const InputWithSlider = ({
   const sliderValueToValue = (sv: number): number =>
     startValue + (sv * (endValue - startValue)) / 100;
 
-  //const valueStr = addCommas(value);
+  //const valueStr = addSpaces(value);
   const usdValueStr =
     !giveCode?.includes("USD") && !getCode?.includes("USD") && toUsdRate
       ? `(~$${format(+value / toUsdRate, 2)})`
@@ -92,7 +92,7 @@ const InputWithSlider = ({
               borderColor={`${shadedColor} !important`}
               borderBottom="1px solid"
               variant="unstyled"
-              value={addCommas(value)}
+              value={addSpaces(value)}
               position="relative"
               onChange={(v) => setValue(v)}
               minW="90px"

@@ -1,6 +1,6 @@
 import Subitems from "./Subitems";
-import PmButton from "./PmButton";
-import PmName from "./PmName";
+import PmButton from ".";
+import Name from "./Name";
 import { getPmsFromPmGroup, singlePmHasUnmetPairs } from "./helper";
 import { useAppDispatch, useAppSelector } from "../../../../../../redux/hooks";
 import { batch } from "react-redux";
@@ -25,6 +25,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   const p2pDirIndex = useContext(P2PContext);
   const dispatch = useAppDispatch();
   const side = useContext(SideContext) as "give" | "get";
+
   const possiblePairs = useAppSelector((state) =>
     side
       ? state.main[`${side === "give" ? "get" : "give"}Pm`]?.possible_pairs
@@ -41,13 +42,18 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   const p2pGetPm = useAppSelector(
     (state) => state.main.p2p.dirs[p2pDirIndex || 0].get
   );
+  const isAddPm = useAppSelector((state) => state.main.modal?.includes("+"));
 
   const choosePmP2P = (selectedPm: IPm) => {
     // для странички ордеров
     const oppositePm = side === "give" ? p2pGetPm?.[0] : p2pGivePm?.[0];
+
     batch(() => {
-      dispatch(addPm({ pm: selectedPm, side, index: p2pDirIndex || 0 }));
-      dispatch(triggerModal(side + p2pDirIndex || ""));
+      isAddPm
+        ? dispatch(addPm({ pm: selectedPm, side, index: p2pDirIndex || 0 }))
+        : dispatch(setPm({ pm: selectedPm, side, index: p2pDirIndex || 0 }));
+
+      dispatch(triggerModal(undefined));
 
       if (oppositePm?.code) {
         const dir =
@@ -63,7 +69,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
     const oppositePm = side === "give" ? getPm : givePm;
     batch(() => {
       dispatch(fetchPossiblePairs({ code: selectedPm.code, side }));
-      dispatch(triggerModal(side + p2pDirIndex || ""));
+      dispatch(triggerModal(undefined));
       dispatch(setPm({ pm: selectedPm, side }));
 
       if (oppositePm?.code) {
@@ -127,7 +133,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
       }
       shaded={shadedPm}
     >
-      <PmName
+      <Name
         name={name}
         code={pms[0].currency?.code} // for crypto
       />

@@ -11,7 +11,7 @@ export const capitalize = (s: string | undefined) => {
   const words = s.split(" ");
   const res = words
     .map((w, index) =>
-      index > 0 && w.length < 5
+      index > 0 && w.length < 4
         ? w.toUpperCase()
         : w.charAt(0).toUpperCase() + w.slice(1)
     )

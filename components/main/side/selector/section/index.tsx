@@ -13,7 +13,7 @@ import {
 import Arrow from "../../../../shared/Arrow";
 import SectionGridWrapper from "./SectionGrid";
 import SectionHidden from "./SectionHidden";
-import PmGroup from "./PmGroup";
+import PmGroup from "./PmGroup/PmP2P";
 import { IPmGroup } from "../../../../../types/selector";
 import { Box3D } from "../../../../../styles/theme/custom";
 import { useAppSelector } from "../../../../../redux/hooks";
@@ -41,6 +41,7 @@ const Section = ({
       !pmGroup.countries.length ||
       pmGroup.countries.find((c) => c.toUpperCase() == country)
   );
+  const showSeeAll = filteredPmGroups.length > itemsToShow;
 
   if (!filteredPmGroups.length) return <></>;
   return (
@@ -67,14 +68,14 @@ const Section = ({
       </Button>
 
       <Collapse in={!isHidden}>
-        <Box p="2" pb="1" borderBottomRadius="2xl">
+        <Box p="2" pb="1">
           <SectionGridWrapper>
             {filteredPmGroups.slice(0, itemsToShow).map((pm_group) => {
               return <PmGroup pm_group={pm_group} key={pm_group.id} />;
             })}
           </SectionGridWrapper>
 
-          {filteredPmGroups.length > itemsToShow && (
+          {showSeeAll && (
             <SectionHidden>{filteredPmGroups.slice(itemsToShow)}</SectionHidden>
           )}
         </Box>

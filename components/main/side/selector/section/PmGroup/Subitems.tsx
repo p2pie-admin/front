@@ -9,8 +9,8 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import PmName from "./PmName";
-import PmButton from "./PmButton";
+import Name from "./Name";
+import PmButton from ".";
 import React from "react";
 import Arrow from "../../../../../shared/Arrow";
 import { SubButton } from "./SubButton";
@@ -41,31 +41,31 @@ const Subitems = ({
         handleToggle={() => setFolded(!folded)}
         shaded={allPmsHaveUnmetPairs(pms, possiblePairs)}
       >
-        <PmName
+        <Name
           name={pmGroupName}
           code={pms[0].currency.code.toUpperCase()} // только для крипты нужен код
         />
         <Spacer />
         <Arrow isUp={folded} />
+        <Spacer />
       </PmButton>
-      <Box w="100% !important" m="0 !important">
-        <Collapse in={folded} unmountOnExit animateOpacity>
-          <Box p="2" w="100% !important" my="1">
-            <Grid templateColumns="1fr 1fr" gridGap="2" gridAutoFlow="dense">
-              {pms.map((pm: IPm) => (
-                <SubButton
-                  pm={pm}
-                  choosePm={choosePm}
-                  key={pm.code}
-                  shaded={singlePmHasUnmetPairs(pm, possiblePairs)}
-                >
-                  {pm.subgroup_name || pm.currency.code.toUpperCase()}
-                </SubButton>
-              ))}
-            </Grid>
-          </Box>
-        </Collapse>
-      </Box>
+
+      <Collapse in={folded}>
+        <Box p="2" w="100% !important" my="1">
+          <Grid templateColumns="1fr 1fr" gridGap="2" gridAutoFlow="dense">
+            {pms.map((pm: IPm) => (
+              <SubButton
+                pm={pm}
+                choosePm={choosePm}
+                key={pm.code}
+                shaded={singlePmHasUnmetPairs(pm, possiblePairs)}
+              >
+                {pm.subgroup_name || pm.currency.code.toUpperCase()}
+              </SubButton>
+            ))}
+          </Grid>
+        </Box>
+      </Collapse>
     </VStack>
   );
 };

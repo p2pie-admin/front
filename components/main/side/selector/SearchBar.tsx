@@ -17,7 +17,7 @@ import { useTranslation } from "next-i18next";
 import { Box3D } from "../../../../styles/theme/custom";
 import { MdOutlineClear } from "react-icons/md";
 import { RiSearchLine } from "react-icons/ri";
-import { countryCurrencies } from "./helper";
+import { countryCurrencies } from "./section/helper";
 import SideContext from "../../../shared/contexts/SideContext";
 
 const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {

@@ -9,19 +9,13 @@ import {
 
 import { IoInformation } from "react-icons/io5";
 import { IParam } from "../../../../types/rates";
-import { capitalize } from "../../side/pmModalButton/section/PmGroup/helper";
+import { capitalize } from "../../side/selector/section/PmGroup/helper";
 
 const ExchTag = ({ parameter }: { parameter: IParam }) => {
   // const IconComponent = parameterIcons?.[parameter.code] || IoInformation;
 
-  const {
-    code,
-    en_name,
-    ru_name,
-    en_description,
-    ru_description,
-    icon,
-  } = parameter;
+  const { code, en_name, ru_name, en_description, ru_description, icon } =
+    parameter;
 
   const env = process.env.NODE_ENV;
   const SRC =

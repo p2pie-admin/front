@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import Arrow from "../../../../shared/Arrow";
 import SectionGridWrapper from "./SectionGrid";
-import PmGroup from "./PmGroup";
+import PmGroup from "./PmGroup/PmP2P";
 import { IPmGroup } from "../../../../../types/selector";
 
 const SectionHidden = ({ children }: { children: IPmGroup[] }) => {
@@ -24,20 +24,20 @@ const SectionHidden = ({ children }: { children: IPmGroup[] }) => {
 
   return (
     <Box mt="1">
-      <Collapse in={!isHidden} unmountOnExit>
+      <Collapse in={!isHidden}>
         <SectionGridWrapper>
           {children.map((pm_group) => {
             return <PmGroup pm_group={pm_group} key={pm_group.en_name} />;
           })}
         </SectionGridWrapper>
       </Collapse>
-      {isHidden && (
-        <Box
-          w="100%"
-          h="1px"
-          background={`linear-gradient(to right, rgba(0,0,0,0) 10%, ${dividerColor} 30%, ${dividerColor} 70%, rgba(0,0,0,0) 90%)`}
-        />
-      )}
+
+      <Box
+        w="100%"
+        h="1px"
+        background={`linear-gradient(to right, rgba(0,0,0,0) 10%, ${dividerColor} 30%, ${dividerColor} 70%, rgba(0,0,0,0) 90%)`}
+      />
+
       <Button // see all
         maxH="6"
         w="100%"

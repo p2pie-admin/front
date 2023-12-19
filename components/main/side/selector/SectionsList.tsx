@@ -21,7 +21,6 @@ const SectionsList = ({ sections }: { sections: ISection[] }) => {
 
   return (
     <Box w="100%" borderRadius="lg">
-      {/* {filterSections(sections).map((section, id) => ( */}
       {sections?.length &&
         sections.map((section, index) => (
           <SectionContext.Provider
@@ -33,7 +32,6 @@ const SectionsList = ({ sections }: { sections: ISection[] }) => {
                 section.en_title.toLowerCase().includes("cash"),
             }}
           >
-            {/* <SlideFade in delay={index * 0.05}> */}
             <Section
               key={section.id}
               title={section[`en_title`]}
@@ -44,7 +42,6 @@ const SectionsList = ({ sections }: { sections: ISection[] }) => {
               }
               pmGroups={section.pm_groups}
             />
-            {/* </SlideFade> */}
           </SectionContext.Provider>
         ))}
     </Box>

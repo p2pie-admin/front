@@ -13,18 +13,30 @@ export interface IUsersRate {
 }
 
 export interface IP2PDir {
+  deleted: boolean;
   give?: IPm[];
   get?: IPm[];
   currencyConverterRate?: ICurrencyConverterRate;
   usersRate?: IUsersRate;
   mainCur?: string;
   secondaryCur?: string;
-  isVisible: boolean;
+  expanded: boolean;
   toUsdRate?: number;
   defRate?: number;
   giveBiggerValueThanGet?: boolean;
 }
 
-export interface IP2P {
-  dirs: IP2PDir[];
+export interface IP2PRegulation {
+  en_title: string;
+  ru_title: string;
+  en_description: string;
+  ru_description: string;
+  default_checked: boolean;
+}
+
+export interface IP2PRegulationGroup {
+  id: string;
+  en_title: string;
+  ru_title: string;
+  regulations: IP2PRegulation[];
 }

@@ -8,6 +8,8 @@ import {
   IconButton,
   Button,
   useToken,
+  useBreakpointValue,
+  Fade,
 } from "@chakra-ui/react";
 import { TbArrowsExchange } from "react-icons/tb";
 import SideContext from "../../../../components/shared/contexts/SideContext";
@@ -23,6 +25,7 @@ import { SlArrowUp, SlArrowDown } from "react-icons/sl";
 import { motion, useDragControls } from "framer-motion";
 import { useState } from "react";
 import { RiDeleteBinFill } from "react-icons/ri";
+import { IP2PDir } from "../../../../types/p2p";
 // const PmWrapper = ({ children }: { children: React.ReactChild }) => {
 //   const borderColor = useColorModeValue("blackAlpha.500", "whiteAlpha.300");
 //   return (
@@ -32,27 +35,19 @@ import { RiDeleteBinFill } from "react-icons/ri";
 //   );
 // };
 
-const CustomRate = ({ index }: { index: number }) => {
-  const [startedClientX, setStartedClientX] = useState(-10000);
-  const [collapsed, setCollapsed] = useState(true);
-  const [isDeleted, setDeleted] = useState(false);
+const CustomRate = ({ dir, index }: { dir: IP2PDir; index: number }) => {
+  const [startedClientX, setStartedClientX] = useState(0);
 
-  const isVisible = useAppSelector(
-    (state) => state.main.p2p.dirs[index].isVisible
-  );
-  const ratesExist = useAppSelector(
-    (state) => !!state.main.p2p.dirs[index].currencyConverterRate?.rate
-  );
-  const [bg800, bg200] = useToken("colors", ["bg.800", "bg.200"]);
-  const bg = useColorModeValue(bg200, bg800);
+  const [bg700, bg200] = useToken("colors", ["bg.700", "bg.200"]);
+  const bg = useColorModeValue(bg200, bg700);
 
   const dispatch = useAppDispatch();
 
   return (
-    <Collapse in={collapsed}>
+    <Collapse in={!dir.deleted}>
       <RegularBox
         key={index}
-        variant={"contrast"}
+        variant={"no_contrast"}
         mt={[3, 4]}
         mb={[2, 3]}
         overflowX="hidden"
@@ -62,25 +57,26 @@ const CustomRate = ({ index }: { index: number }) => {
         <P2PContext.Provider value={index}>
           <Box
             bgColor="red.500"
-            boxShadow={`inset 2px 0 0 5px ${bg}`}
+            boxShadow={`inset 0 0 -2px 8px ${bg}`}
             pos="relative"
             zIndex="1"
           >
             <motion.div
               style={{ width: "100%" }}
               onPointerMove={(e) => {
-                if (startedClientX - e.clientX > 150 && !isDeleted) {
-                  console.log("deleted" + index);
-                  setDeleted(true);
-                  setStartedClientX(-10000);
-                  index !== 0 && setCollapsed(false);
-                  setTimeout(() => dispatch(removeDir(index)), 300);
+                if (startedClientX - e.clientX > 150) {
+                  dispatch(removeDir(index));
                 }
+              }}
+              onTouchStart={(e) =>
+                setStartedClientX(e.changedTouches[0].clientX)
+              }
+              onTouchEnd={(e) => {
+                setStartedClientX(0);
               }}
               onMouseDown={(e) => setStartedClientX(e.clientX)}
               onMouseUp={(e) => {
-                setStartedClientX(-10000);
-                setDeleted(false);
+                setStartedClientX(0);
               }}
               drag="x"
               dragConstraints={{
@@ -98,8 +94,9 @@ const CustomRate = ({ index }: { index: number }) => {
                 spacing={["2", "4"]}
                 cursor="pointer"
                 color="bg.300"
-                bgColor="bg.800"
-                onClick={() => ratesExist && dispatch(triggerP2PDir(index))}
+                bgColor="bg.700"
+                boxShadow={`0 0 0 5px ${bg}`}
+                onClick={() => dir.defRate && dispatch(triggerP2PDir(index))}
               >
                 {/* {ratesExist ? (
             <Button variant="contrast" size="sm" color="red.500">
@@ -120,9 +117,9 @@ const CustomRate = ({ index }: { index: number }) => {
                   <PmModalButton />
                 </SideContext.Provider>
 
-                {ratesExist && (
+                {dir.defRate && (
                   <HStack ml="auto" px="2">
-                    {isVisible ? (
+                    {dir.expanded ? (
                       <SlArrowUp size="1rem" />
                     ) : (
                       <SlArrowDown size="1rem" />

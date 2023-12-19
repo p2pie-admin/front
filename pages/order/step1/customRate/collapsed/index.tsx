@@ -1,15 +1,5 @@
-import {
-  Collapse,
-  Text,
-  Grid,
-  HStack,
-  Checkbox,
-  Box,
-  Highlight,
-  useToken,
-} from "@chakra-ui/react";
+import { Collapse, Grid, HStack, Checkbox } from "@chakra-ui/react";
 import { useContext } from "react";
-import { capitalize } from "../../../../../components/main/side/pmModalButton/section/PmGroup/helper";
 import P2PContext from "../../../../../components/shared/contexts/p2pContext";
 import InfoTooltip from "../../../../../components/shared/Info";
 import { useAppSelector } from "../../../../../redux/hooks";
@@ -46,11 +36,11 @@ const Collapsed = () => {
   const dirSelector = (state: { main: MainState }) =>
     p2pDirIndex !== undefined ? state.main.p2p.dirs[p2pDirIndex] : undefined;
 
-  //const [givePmName, getPmName, isVisible] = useAppSelector((state) => {
-  const isVisible = useAppSelector((state) => {
+  //const [givePmName, getPmName, expanded] = useAppSelector((state) => {
+  const expanded = useAppSelector((state) => {
     const dir = dirSelector(state);
     if (!dir) return false;
-    return dir.isVisible;
+    return dir.expanded;
   });
 
   if (
@@ -61,7 +51,8 @@ const Collapsed = () => {
   )
     return <></>;
 
-  const [mainCur, secondaryCur] = [giveCur, getCur];
+  const mainCur = rateBiggerThanOne ? giveCur : getCur;
+  const secondaryCur = rateBiggerThanOne ? getCur : giveCur;
 
   // const rateValues = [defRate * coefficient, defRate * 0.9, defRate * 1.1];
   // const minValues = [toUsdRate * 300, toUsdRate * 100, toUsdRate * 2000];
@@ -72,7 +63,7 @@ const Collapsed = () => {
   //     : undefined;
 
   return (
-    <Collapse in={isVisible}>
+    <Collapse in={expanded}>
       <FoundRates />
       {/* <ResponsiveText size="md" mb="4">
         {`Choose a price and limits to ${header}: `}
@@ -90,10 +81,8 @@ const Collapsed = () => {
       >
         <InputWithSlider
           id="rate"
-          leftSide={rateBiggerThanOne ? "" : `1 ${mainCur} =`}
-          rightSide={
-            rateBiggerThanOne ? `${mainCur} = 1 ${secondaryCur}` : secondaryCur
-          }
+          leftSide={rateBiggerThanOne ? "" : `1 ${giveCur} =`}
+          rightSide={rateBiggerThanOne ? `${giveCur} = 1 ${getCur}` : getCur}
           // values={rateValues}
           // toUsd={toUsd}
           // strength={2}
@@ -118,14 +107,14 @@ const Collapsed = () => {
           // strength={4}
         />
       </Grid>
-      <HStack justifyContent="end">
+      {/* <HStack justifyContent="end">
         <Checkbox defaultChecked colorScheme="peach">
           <HStack>
             <ResponsiveText>Dynamic rate</ResponsiveText>
             <InfoTooltip text="Your rate will follow the market" />
           </HStack>
         </Checkbox>
-      </HStack>
+      </HStack> */}
     </Collapse>
   );
 };

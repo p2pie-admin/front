@@ -16,6 +16,7 @@
     "@react-google-maps/api": "^2.19.0",
     "@reduxjs/toolkit": "^1.7.2",
     "@types/styled-components": "^5.1.26",
+    "@types/uuid": "^9.0.7",
     "axios": "^0.27.2",
     "cors": "^2.8.5",
     "formik": "^2.4.1",
@@ -37,7 +38,8 @@
     "styled-components": "^5.3.5",
     "styled-icons": "^10.45.0",
     "swr": "^1.2.2",
-    "use-animate-number": "^1.0.5"
+    "use-animate-number": "^1.0.5",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",

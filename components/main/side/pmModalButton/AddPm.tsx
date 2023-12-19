@@ -4,14 +4,15 @@ import { useContext } from "react";
 import { IoAddSharp } from "react-icons/io5";
 import { batch } from "react-redux";
 
-import p2pContext from "../../../../components/shared/contexts/p2pContext";
-import SideContext from "../../../../components/shared/contexts/SideContext";
+import p2pContext from "../../../shared/contexts/p2pContext";
+import SideContext from "../../../shared/contexts/SideContext";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import {
   setSearchBarInputValue,
   triggerModal,
 } from "../../../../redux/mainReducer";
 import { ShadedButton } from "../../../../styles/theme/custom";
+import SelectorModal from "../selector/SelectorModal";
 
 const AddPm = () => {
   const side = useContext(SideContext) as "give" | "get";
@@ -27,7 +28,8 @@ const AddPm = () => {
   if (
     !currencyCode ||
     !Object.keys(symbols).find(
-      (key) => key.toUpperCase() === currencyCode?.toUpperCase()
+      (key) =>
+        key.toUpperCase() === currencyCode?.toUpperCase() && key !== "btc"
     )
   )
     return <></>;
@@ -35,7 +37,7 @@ const AddPm = () => {
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     if (side && p2pIndex !== undefined) {
       batch(() => {
-        dispatch(triggerModal(side + p2pIndex || ""));
+        dispatch(triggerModal("+" + side + p2pIndex));
         dispatch(setSearchBarInputValue(currencyCode.toUpperCase()));
       });
     }
@@ -43,8 +45,9 @@ const AddPm = () => {
   };
   return (
     <ShadedButton p="0.5" border="2px dashed" borderColor="bg.500">
+      <SelectorModal id={"+" + side + p2pIndex || ""} />
       <Center onClick={handleClick}>
-        <IoAddSharp size="1rem" />
+        <IoAddSharp size="1.2rem" />
       </Center>
     </ShadedButton>
   );

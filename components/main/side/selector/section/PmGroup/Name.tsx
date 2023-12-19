@@ -3,13 +3,7 @@ import { useContext } from "react";
 import { SectionContext } from "../../../../../shared/contexts/SectionContext";
 import { capitalize } from "./helper";
 
-export default function PmName({
-  name,
-  code,
-}: {
-  name: string;
-  code?: string;
-}) {
+export default function Name({ name, code }: { name: string; code?: string }) {
   const { currencyVisible } = useContext(SectionContext);
   const nameSameAsCurrency = code?.toUpperCase() === name.toUpperCase();
 

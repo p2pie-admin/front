@@ -1,4 +1,5 @@
 import { Box, Center, Text } from "@chakra-ui/react";
+import { ResponsiveText } from "../../styles/theme/custom";
 
 const ErrorMessage = ({
   errorMessage,
@@ -10,7 +11,7 @@ const ErrorMessage = ({
   return (
     <Center p="2">
       <Box p="2">
-        <Text> {errorMessage} </Text>
+        <ResponsiveText size="sm"> {errorMessage} </ResponsiveText>
         {feedback && "feedback"}
       </Box>
     </Center>
