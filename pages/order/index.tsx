@@ -76,7 +76,7 @@ function Steps() {
         </Stepper>
       </Box3D>
 
-      <VStack minH="74vh" justifyContent="space-between" p={[2, 4]}>
+      <VStack minH="74vh" justifyContent="space-between" px={[2, 4]} pb="2">
         <Box w="100%">
           <Tabs index={tabIndex}>
             <TabPanels>

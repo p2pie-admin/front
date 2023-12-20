@@ -32,6 +32,7 @@ export interface IP2PRegulation {
   en_description: string;
   ru_description: string;
   default_checked: boolean;
+  has_article: boolean;
 }
 
 export interface IP2PRegulationGroup {

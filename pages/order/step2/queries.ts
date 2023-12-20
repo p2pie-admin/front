@@ -15,6 +15,7 @@ export const RegulationsQuery = gql`
               en_description
               ru_description
               default_checked
+              has_article
             }
           }
         }

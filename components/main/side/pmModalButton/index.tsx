@@ -11,9 +11,9 @@ import {
   triggerModal,
   setSearchBarInputValue,
 } from "../../../../redux/mainReducer";
-import SideButton from "./sideButton";
+import SideButton from "./SideButton";
 import SelectorModal from "../selector/SelectorModal";
-import PmIcons from "./pmIcons";
+import PmIcons from "./PmIcons";
 
 const PmModalButton = () => {
   const dispatch = useAppDispatch();

@@ -7,11 +7,12 @@ import { Box, Checkbox, Text, VStack } from "@chakra-ui/react";
 const Regulation = ({ regulation }: { regulation: IP2PRegulation }) => {
   return (
     <Box px="2" py="1">
-      <Checkbox colorScheme="red" defaultChecked={regulation.default_checked}>
+      <Checkbox colorScheme="peach" defaultChecked={regulation.default_checked}>
         <ResponsiveText size="md">
           {capitalize(regulation.en_title)}
         </ResponsiveText>
       </Checkbox>
+
       <ResponsiveText whiteSpace="normal" size="xs">
         {regulation.en_description}
       </ResponsiveText>

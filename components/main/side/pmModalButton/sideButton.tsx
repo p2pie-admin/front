@@ -27,9 +27,11 @@ const SideButton = ({
       p="0"
       justifyContent="space-between"
       rightIcon={
-        <Hide below="xs">
-          <Arrow isUp={false} />
-        </Hide>
+        !leftIcon && (
+          <Hide below="xs">
+            <Arrow isUp={false} />
+          </Hide>
+        )
       }
       leftIcon={leftIcon}
     >
