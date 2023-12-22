@@ -14,6 +14,7 @@ import { i18n, useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import { FiSun } from "react-icons/fi";
 import Location from "./location";
+import MultipleCitiesContext from "./location/MultipleCitiesContext";
 
 const Nav = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -34,8 +35,9 @@ const Nav = () => {
       <Button variant="contrast" p="1" onClick={changeLanguageHandler}>
         <Text>{i18n.language === "en" ? "Ru" : "En"}</Text>
       </Button>
-
-      <Location />
+      <MultipleCitiesContext.Provider value={false}>
+        <Location />
+      </MultipleCitiesContext.Provider>
 
       {/* <NavButton handleClick={() => toggleColorMode()} icon={WeatherSunny} />
       <NavButton

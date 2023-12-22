@@ -26,7 +26,7 @@ const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {
     (state) => state.main.searchBarInputValue
   );
   const country = useAppSelector((state) =>
-    state.main.location.en_country_name.toUpperCase()
+    state.main.locations[0].en_country_name.toUpperCase()
   ) as keyof typeof countryCurrencies;
 
   const localCurrency = countryCurrencies?.[country] || "EUR";

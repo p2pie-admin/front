@@ -3,13 +3,16 @@ import { useAppSelector, useAppDispatch } from "../../../../../redux/hooks";
 import { triggerModal } from "../../../../../redux/mainReducer";
 import CustomModal from "../../../../shared/CustomModal";
 import CountryListWrapper from "./CountryListWrapper";
+import MultipleCitiesContext from "./MultipleCitiesContext";
+import { useContext } from "react";
 
 const Location = () => {
-  const { en_city_name, ru_city_name } = useAppSelector(
-    (state) => state.main.location
-  );
-
+  const locations = useAppSelector((state) => state.main.locations);
+  console.log(locations);
   const dispatch = useAppDispatch();
+  const isMultiple = useContext(MultipleCitiesContext);
+  const cityNames = locations.filter((l) => l.en_city_name !== "");
+
   return (
     <>
       <CustomModal id="location" header={"Choose the City"}>
@@ -20,7 +23,7 @@ const Location = () => {
         p="1"
         onClick={() => dispatch(triggerModal("location"))}
       >
-        {en_city_name}
+        {isMultiple ? `+` : ">"}
       </Button>
     </>
   );

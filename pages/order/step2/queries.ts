@@ -10,6 +10,7 @@ export const RegulationsQuery = gql`
           ru_title
           regulations {
             ... on ComponentP2PRegulationItem {
+              id
               en_title
               ru_title
               en_description

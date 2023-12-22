@@ -1,4 +1,9 @@
-import { IP2PDir, IUsersRate } from "./../types/p2p";
+import {
+  IP2PDir,
+  IP2PRegulationCodes,
+  IP2PRegulationGroup,
+  IUsersRate,
+} from "./../types/p2p";
 import { IPopularDirRates, IRate } from "./../types/rates";
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 
@@ -56,9 +61,9 @@ export interface MainState {
   popularRates?: IPopularDirRates;
   modal?: string;
   trash?: any;
-  location: ILocation;
+  locations: ILocation[];
   currencyConverterRate?: ICurrencyConverterRate;
-  p2p: { dirs: IP2PDir[] };
+  p2p: { dirs: IP2PDir[]; regulationCodes?: IP2PRegulationCodes };
 }
 
 const initialState: MainState = {
@@ -70,7 +75,7 @@ const initialState: MainState = {
   isScrollLocked: false,
   bestRatesPreview: {},
   pendingPopularRates: false,
-  location: { en_country_name: "Russia", en_city_name: "Moscow" },
+  locations: [{ en_country_name: "Russia", en_city_name: "Moscow" }],
   p2p: {
     dirs: [{ expanded: true, deleted: false }],
   },
@@ -254,8 +259,18 @@ export const mainSlice = createSlice({
     },
 
     setLocation: (state: MainState, action: PayloadAction<ILocation>) => {
-      state.location = action.payload;
+      state.locations = [action.payload];
     },
+    addLocation: (state: MainState, action: PayloadAction<ILocation>) => {
+      if (state.locations.find((l) => l.code == action.payload.code)) {
+        state.locations = state.locations.filter(
+          (l) => l.code !== action.payload.code
+        );
+        return;
+      }
+      state.locations = [...state.locations, action.payload];
+    },
+
     setCurrencyConverterRate: (
       state: MainState,
       action: PayloadAction<ICurrencyConverterRate>
@@ -278,7 +293,35 @@ export const mainSlice = createSlice({
         [id]: [value, startValue, endValue],
       };
     },
+    initRegulationGroups: (
+      state: MainState,
+      action: PayloadAction<IP2PRegulationGroup[]>
+    ) => {
+      state.p2p.regulationCodes = action.payload.reduce(
+        (regulationCodes: IP2PRegulationCodes, rg) => {
+          const codes = rg.regulations.reduce(
+            (codes: IP2PRegulationCodes, r) => ({
+              ...codes,
+              [r.en_title.replaceAll(" ", "_").toLocaleLowerCase()]:
+                r.default_checked,
+            }),
+            {}
+          );
+          return { ...regulationCodes, ...codes };
+        },
+        {}
+      );
+    },
+    setRegulation: (
+      state: MainState,
+      action: PayloadAction<[string, boolean]>
+    ) => {
+      const [code, checked] = action.payload;
+      if (state.p2p.regulationCodes?.[code] !== undefined)
+        state.p2p.regulationCodes[code] = checked;
+    },
   },
+
   //////////////////////////////////////////////////////////////////////////////////////////////////////
   extraReducers: (builder) => {
     builder.addCase(fetchPms.fulfilled, (state, action) => {
@@ -393,12 +436,15 @@ export const {
   incrementSwiper,
   decrementSwiper,
   setLocation,
+  addLocation,
   setCurrencyConverterRate,
   addPm,
   addEmptyDir,
   removeDir,
   triggerP2PDir,
   setP2PUsersRate,
+  initRegulationGroups,
+  setRegulation,
 } = mainSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

@@ -27,6 +27,7 @@ export interface IP2PDir {
 }
 
 export interface IP2PRegulation {
+  id: string;
   en_title: string;
   ru_title: string;
   en_description: string;
@@ -35,9 +36,23 @@ export interface IP2PRegulation {
   has_article: boolean;
 }
 
+export type IP2PRegulationCodes = { [key: string]: boolean };
+
 export interface IP2PRegulationGroup {
   id: string;
   en_title: string;
   ru_title: string;
   regulations: IP2PRegulation[];
+}
+
+export interface IP2PStep {
+  en_title: string;
+  ru_title: string;
+  en_description: string;
+  ru_description: string;
+  en_stepper_title: string;
+  ru_stepper_title: string;
+  en_stepper_description: string;
+  ru_stepper_description: string;
+  component: any;
 }

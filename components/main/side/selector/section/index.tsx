@@ -29,21 +29,18 @@ const Section = ({
 }) => {
   const [isHidden, setHidden] = useState(false);
 
-  // useEffect(() => {
-  //   setTimeout(() => setHidden(false), 10);
-  // }, []);
-  const country = useAppSelector((state) =>
-    state.main.location.en_country_name.toUpperCase()
-  );
-  const filteredPmGroups = pmGroups.filter(
-    (pmGroup) =>
-      !pmGroup.countries ||
-      !pmGroup.countries.length ||
-      pmGroup.countries.find((c) => c.toUpperCase() == country)
-  );
-  const showSeeAll = filteredPmGroups.length > itemsToShow;
+  // const country = useAppSelector((state) =>
+  //   state.main.location.en_country_name.toUpperCase()
+  // );
+  // const filteredPmGroups = pmGroups.filter(
+  //   (pmGroup) =>
+  //     !pmGroup.countries ||
+  //     !pmGroup.countries.length ||
+  //     pmGroup.countries.find((c) => c.toUpperCase() == country)
+  // );
+  const showSeeAll = pmGroups.length > itemsToShow;
 
-  if (!filteredPmGroups.length) return <></>;
+  if (!pmGroups.length) return <></>;
   return (
     <Box3D mb="4" position="relative">
       <Button
@@ -70,13 +67,13 @@ const Section = ({
       <Collapse in={!isHidden}>
         <Box p="2" pb="1">
           <SectionGridWrapper>
-            {filteredPmGroups.slice(0, itemsToShow).map((pm_group) => {
+            {pmGroups.slice(0, itemsToShow).map((pm_group) => {
               return <PmGroup pm_group={pm_group} key={pm_group.id} />;
             })}
           </SectionGridWrapper>
 
           {showSeeAll && (
-            <SectionHidden>{filteredPmGroups.slice(itemsToShow)}</SectionHidden>
+            <SectionHidden>{pmGroups.slice(itemsToShow)}</SectionHidden>
           )}
         </Box>
       </Collapse>

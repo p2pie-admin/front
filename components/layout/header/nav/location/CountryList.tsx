@@ -2,8 +2,13 @@ import { Box, Grid, Text } from "@chakra-ui/react";
 import { ICityCodesList } from "../../../../../types/shared";
 import Country from "./Country";
 import { formatCityCodesList } from "./helper";
+import { useAppSelector } from "../../../../../redux/hooks";
 
 const CountryList = ({ cityCodesList }: { cityCodesList?: ICityCodesList }) => {
+  const highlightedCities = useAppSelector((state) =>
+    state.main.locations.map((l) => l.en_city_name)
+  );
+
   if (!cityCodesList) return <></>;
 
   const formattedCountryList = formatCityCodesList(cityCodesList);
@@ -24,7 +29,11 @@ const CountryList = ({ cityCodesList }: { cityCodesList?: ICityCodesList }) => {
       {parts.map((part, index) => (
         <Box key={index}>
           {part.map((country) => (
-            <Country key={country.en_name} country={country} />
+            <Country
+              key={country.en_name}
+              country={country}
+              highlightedCities={highlightedCities}
+            />
           ))}
         </Box>
       ))}

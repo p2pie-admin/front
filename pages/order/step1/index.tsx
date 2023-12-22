@@ -20,14 +20,6 @@ const Step1 = () => {
 
   return (
     <Box>
-      <ResponsiveText>Publish your own rates</ResponsiveText>
-
-      <ResponsiveText size="xs" whiteSpace="normal">
-        Make it once and your rates will automatically follow the market. Or fix
-        them if you wish. Use deposit or rating to increase client's trust for
-        online exchange. Or choose options for meeting in real life.
-      </ResponsiveText>
-
       {dirs.map((dir, index) => (
         <CustomRate dir={dir} index={index} />
       ))}

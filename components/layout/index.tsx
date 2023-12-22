@@ -18,6 +18,7 @@ const Layout = ({ children }: { children: ReactChild }) => {
     const url = "https://ip.nf/me.json";
     axios.get(url).then((resp) => {
       if (resp.data?.ip) {
+        console.log(resp.data);
         const { country, city } = resp.data?.ip;
         dispatch(setLocation({ en_country_name: country, en_city_name: city }));
       }
