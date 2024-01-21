@@ -1,3 +1,4 @@
+import { useAppSelector } from "../../../redux/hooks";
 import { RegularBox, ResponsiveText } from "../../../styles/theme/custom";
 
 const Step3 = () => {

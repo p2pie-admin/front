@@ -3,16 +3,25 @@ import {
   IFormattedCountry,
 } from "./../../../../../types/shared";
 
-export const popularCountryNames = [
-  "Russia",
-  "Turkey",
-  "Kazakhstan",
-  "Ukraine",
-  "Belarus",
-  "Azerbaijan",
-  "Armenia",
-  "Uzbekistan",
-];
+export const popularCountryNames = {
+  russia: "xl",
+  turkey: "md",
+  ukraine: "lg",
+  belarus: "lg",
+  kazakhstan: "md",
+  azerbaijan: "md",
+  armenia: "md",
+  uzbekistan: "md",
+};
+
+export const popularCityNames = {
+  "st. petersburg": "lg",
+  moscow: "xl",
+  minsk: "xl",
+  kyiv: "xl",
+  kharkiv: "lg",
+  istanbul: "md",
+};
 
 export const formatCityCodesList = (
   cityCodesList: ICityCodesList

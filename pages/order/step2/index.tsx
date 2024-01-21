@@ -33,16 +33,15 @@ const Step2 = () => {
 
   return (
     <ErrorWrapper isError={!!error} isLoading={!fetchedRegGroups}>
-      <Box>
+      <Box mt="2">
+        <MultipleCitiesContext.Provider value={true}>
+          <Location />
+        </MultipleCitiesContext.Provider>
         {fetchedRegGroups &&
           fetchedRegGroups.map((regulationGroup) => (
             <RegulationGroup regulationGroup={regulationGroup} />
           ))}
       </Box>
-
-      <MultipleCitiesContext.Provider value={true}>
-        <Location />
-      </MultipleCitiesContext.Provider>
     </ErrorWrapper>
   );
 };

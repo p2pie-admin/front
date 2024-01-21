@@ -6,7 +6,7 @@ import { useAppSelector } from "../../../../../redux/hooks";
 
 const CountryList = ({ cityCodesList }: { cityCodesList?: ICityCodesList }) => {
   const highlightedCities = useAppSelector((state) =>
-    state.main.locations.map((l) => l.en_city_name)
+    state.main.p2p.locations.map((l) => l.en_city_name)
   );
 
   if (!cityCodesList) return <></>;

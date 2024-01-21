@@ -9,7 +9,7 @@ import {
 } from "../../../../../redux/mainReducer";
 import { RegularBox } from "../../../../../styles/theme/custom";
 import { ICity, IFormattedCountry } from "../../../../../types/shared";
-import { popularCountryNames } from "./helper";
+import { popularCityNames, popularCountryNames } from "./helper";
 import MultipleCitiesContext from "./MultipleCitiesContext";
 
 const Country = ({
@@ -20,9 +20,9 @@ const Country = ({
   highlightedCities: string[];
 }) => {
   const [opened, setOpened] = useState(false);
-  const isPopular = popularCountryNames.find(
-    (c) => c.toLowerCase() === country.en_name.toLowerCase()
-  );
+  const countryName = country.en_name.toLowerCase() as
+    | keyof typeof popularCountryNames;
+  const isPopular = popularCountryNames?.[countryName] || "";
   const dispatch = useAppDispatch();
   const isMultiple = useContext(MultipleCitiesContext);
   const handleChooseCity = (city: ICity) => {
@@ -45,28 +45,36 @@ const Country = ({
       <Text
         my="1"
         fontWeight={isPopular ? "bold" : "normal"}
-        fontSize={isPopular ? "xl" : "lg"}
-        variant="extra_contrast"
+        fontSize={isPopular}
+        variant={isPopular ? "extra_contrast" : "contrast"}
         cursor="pointer"
         onClick={() => setOpened(!opened)}
       >
         {country.en_name}
       </Text>
       <Collapse in={opened}>
-        {country.cities.map((city) => (
-          <Text
-            ml="1"
-            cursor="pointer"
-            variant={
-              highlightedCities.find((c) => c == city.en_name)
-                ? "primary"
-                : "contrast"
-            }
-            onClick={() => handleChooseCity(city)}
-          >
-            {city.en_name}
-          </Text>
-        ))}
+        {country.cities.map((city) => {
+          const cityName =
+            city.en_name.toLowerCase() as keyof typeof popularCityNames;
+          const isPopular = popularCityNames?.[cityName] || "";
+          const selected = highlightedCities.find((c) => c == city.en_name);
+          const bullet = !isMultiple ? "" : selected ? "•" : "◦";
+          return (
+            <Text
+              ml="1"
+              key={city.code}
+              cursor="pointer"
+              fontWeight={isPopular ? "bold" : "normal"}
+              fontSize={isPopular}
+              variant={
+                selected ? "primary" : isPopular ? "constrast" : "no_contrast"
+              }
+              onClick={() => handleChooseCity(city)}
+            >
+              {bullet} {city.en_name}
+            </Text>
+          );
+        })}
       </Collapse>
     </Box>
   );

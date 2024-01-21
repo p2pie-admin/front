@@ -29,12 +29,13 @@ import {
 } from "../../styles/theme/custom";
 import Step2 from "./step2";
 import Step3 from "./step3";
-import NextLink from "next/link";
+
 import useSWR from "swr";
 import { initCMSFetcher } from "../../services/fetchers";
 import { IP2PStep } from "../../types/p2p";
 import { StepsQuery } from "./queries";
 import ErrorWrapper from "../../components/shared/ErrorWrapper";
+import OrderButton from "./step3/OrderButton";
 
 const Steps = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -130,11 +131,7 @@ const Steps = () => {
               <Box />
             )}
             {tabIndex == 2 ? (
-              <NextLink href={String(process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT)}>
-                <ResponsiveButton mb="1" variant="primary" onClick={() => {}}>
-                  {"SUGGEST EXCHANGE"}
-                </ResponsiveButton>
-              </NextLink>
+              <OrderButton />
             ) : (
               <ResponsiveButton
                 mb="1"

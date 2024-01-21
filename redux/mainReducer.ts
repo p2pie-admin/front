@@ -18,6 +18,7 @@ import {
   fetchFiat,
   restorePmsFromSlug,
   fetchCurrencyConverterRate,
+  createOrder,
 } from "./thunks";
 import { IPm, IPmGroup } from "../types/selector";
 import { IActivePetal, IDir } from "../types/dir";
@@ -61,9 +62,14 @@ export interface MainState {
   popularRates?: IPopularDirRates;
   modal?: string;
   trash?: any;
-  locations: ILocation[];
+  location: ILocation;
   currencyConverterRate?: ICurrencyConverterRate;
-  p2p: { dirs: IP2PDir[]; regulationCodes?: IP2PRegulationCodes };
+  p2p: {
+    dirs: IP2PDir[];
+    regulationCodes?: IP2PRegulationCodes;
+    locations: ILocation[];
+    orderSent: boolean;
+  };
 }
 
 const initialState: MainState = {
@@ -75,9 +81,11 @@ const initialState: MainState = {
   isScrollLocked: false,
   bestRatesPreview: {},
   pendingPopularRates: false,
-  locations: [{ en_country_name: "Russia", en_city_name: "Moscow" }],
+  location: { en_country_name: "Russia", en_city_name: "Moscow" },
   p2p: {
+    locations: [],
     dirs: [{ expanded: true, deleted: false }],
+    orderSent: false,
   },
 };
 
@@ -259,16 +267,16 @@ export const mainSlice = createSlice({
     },
 
     setLocation: (state: MainState, action: PayloadAction<ILocation>) => {
-      state.locations = [action.payload];
+      state.location = action.payload;
     },
     addLocation: (state: MainState, action: PayloadAction<ILocation>) => {
-      if (state.locations.find((l) => l.code == action.payload.code)) {
-        state.locations = state.locations.filter(
+      if (state.p2p.locations.find((l) => l.code == action.payload.code)) {
+        state.p2p.locations = state.p2p.locations.filter(
           (l) => l.code !== action.payload.code
         );
         return;
       }
-      state.locations = [...state.locations, action.payload];
+      state.p2p.locations = [...state.p2p.locations, action.payload];
     },
 
     setCurrencyConverterRate: (
@@ -388,6 +396,10 @@ export const mainSlice = createSlice({
       state.p2p.dirs[p2pDirIndex].toUsdRate = toUsdRate;
       state.p2p.dirs[p2pDirIndex].defRate = defRate;
       state.p2p.dirs[p2pDirIndex].giveBiggerValueThanGet = giveToUSD > getToUSD;
+    });
+
+    builder.addCase(createOrder.fulfilled, (state) => {
+      state.p2p.orderSent = true;
     });
 
     // popular rates

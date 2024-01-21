@@ -10,6 +10,8 @@ import {
 import { MainState } from "./mainReducer";
 import { IPmPointer } from "../types/selector";
 import side from "../components/main/side";
+import { CreateOrderMutation } from "../pages/order/step3/queries";
+import { IOrder } from "../types/p2p";
 
 type ISide = "give" | "get";
 const env = process.env.NODE_ENV;
@@ -105,6 +107,25 @@ export const fetchCurrencyConverterRate = createAsyncThunk(
   async ({ dir, p2pDirIndex }: { dir: string; p2pDirIndex?: number }) => {
     const fetcher = initCurrencyConverterFetcher(p2pDirIndex);
     return await fetcher(dir);
+  }
+);
+
+export const createOrder = createAsyncThunk(
+  "order/createOrder",
+  async (_, thunkAPI) => {
+    const { main } = thunkAPI.getState() as { main: MainState };
+    const { dirs, regulationCodes, locations } = main.p2p;
+    console.log(main.p2p);
+    const fetcher = initCMSFetcher({
+      status: "suspended",
+      dirs,
+      regulationCodes,
+      locations,
+      name: "gg",
+      info: "dfg",
+    } as IOrder);
+    const response = await fetcher(CreateOrderMutation);
+    return response?.createP2P as IPmPointer[];
   }
 );
 

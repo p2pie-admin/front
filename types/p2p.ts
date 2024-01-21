@@ -1,4 +1,5 @@
 import { IPm } from "./selector";
+import { ILocation } from "./shared";
 
 export interface ICurrencyConverterRate {
   rate: number;
@@ -55,4 +56,13 @@ export interface IP2PStep {
   en_stepper_description: string;
   ru_stepper_description: string;
   component: any;
+}
+
+export interface IOrder {
+  name: String;
+  status?: "active" | "suspended" | "disabled";
+  info?: String;
+  dirs?: IP2PDir[];
+  regulationCodes?: IP2PRegulationCodes;
+  locations?: ILocation[];
 }
