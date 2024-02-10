@@ -26,7 +26,6 @@ const RegulationGroup = ({
   );
   return (
     <Box
-      key={regulationGroup.id}
       border={`1px ${opened ? "solid" : "dashed"}`}
       borderColor="bg.600"
       borderRadius="lg"
@@ -46,7 +45,7 @@ const RegulationGroup = ({
 
       <Collapse in={opened}>
         {regulationGroup.regulations.map((regulation) => (
-          <Regulation regulation={regulation} />
+          <Regulation key={regulation.id} regulation={regulation} />
         ))}
       </Collapse>
     </Box>

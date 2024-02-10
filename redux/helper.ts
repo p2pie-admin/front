@@ -1,4 +1,11 @@
 import { AmountInput, AmountOutputs } from "../types/amount";
+import {
+  ICurrencyConverterRate,
+  IP2PDir,
+  IP2PRegulationCodes,
+  IP2PRegulationGroup,
+} from "../types/p2p";
+import { IRate } from "../types/rates";
 import { FeesCalculator } from "./amountsHelper";
 import { MainState } from "./mainReducer";
 
@@ -9,16 +16,12 @@ export const [minDef, maxDef, minStart, minEnd, maxStart, maxEnd, rateSpread] =
 
 export const getAmountOutputs = (
   state: MainState,
-  amount?: AmountInput,
-  swiperIdVisible?: number
+  swiperIdVisible: number,
+  amount?: AmountInput
 ): AmountOutputs => {
   const dir = `${state.givePm?.code.toUpperCase()}_${state.getPm?.code.toUpperCase()}`;
-  const id = // updateAmounts не успевает подхватить swiperIdVisible, поэтому передаем дополнительно
-    swiperIdVisible !== undefined ? swiperIdVisible : state.swiperIdVisible;
-  // const rate =
-  // state.dirParserResp?.bestRates[Object.keys(state.dirParserResp.bestRates)[id]];
-
-  const rate = state?.dirRates?.[id];
+  // updateAmounts не успевает подхватить swiperIdVisible, поэтому передаем дополнительно
+  const rate = state?.dirRates?.[swiperIdVisible];
 
   if (rate) {
     const feesCalculator = new FeesCalculator(
@@ -35,6 +38,33 @@ export const getAmountOutputs = (
   return initialAmountOutputs;
 };
 
+export const convertP2PRatioToCourse = (
+  dirRates: IRate[],
+  currencyConverterRate?: ICurrencyConverterRate
+): IRate[] => {
+  if (!currencyConverterRate || !currencyConverterRate?.rate) return dirRates;
+  dirRates.map((rate) => {
+    if (!rate?.p2pRatio) return rate;
+    return { ...rate, course: currencyConverterRate?.rate * rate.p2pRatio };
+  });
+  return dirRates;
+};
+
+export const getDefaultRegulationCodes = (
+  regulationGroups: IP2PRegulationGroup[]
+) => {
+  return regulationGroups.reduce((regulationCodes: IP2PRegulationCodes, rg) => {
+    const codes = rg.regulations.reduce(
+      (codes: IP2PRegulationCodes, r) => ({
+        ...codes,
+        [r.en_title.replaceAll(" ", "_").toLocaleLowerCase()]:
+          r.default_checked,
+      }),
+      {}
+    );
+    return { ...regulationCodes, ...codes };
+  }, {});
+};
 // export const findBestCourseRateByAmountInput = (
 //   amountInput?: AmountInput,
 //   bestRates?: IDirRates

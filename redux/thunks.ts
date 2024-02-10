@@ -12,6 +12,7 @@ import { IPmPointer } from "../types/selector";
 import side from "../components/main/side";
 import { CreateOrderMutation } from "../pages/order/step3/queries";
 import { IOrder } from "../types/p2p";
+import { writeOrders } from "../pages/order/localStorageHandler";
 
 type ISide = "give" | "get";
 const env = process.env.NODE_ENV;
@@ -34,7 +35,7 @@ export const fetchAllDirRates = createAsyncThunk(
   "rates/fetchAllDirRates",
   async (dir: string) => {
     const response = await axios
-      .get(`${courseFilterLink}/dir=${dir}/tops=false`)
+      .get(`${courseFilterLink}/dir=${dir}/type=all`)
       .catch((err) => console.error(err));
     return response?.data as IRate[];
   }
@@ -60,7 +61,7 @@ export const fetchDirRates = createAsyncThunk(
       : "";
 
     const response = await axios
-      .get(`${courseFilterLink}/dir=${_dir}/tops=true`)
+      .get(`${courseFilterLink}/dir=${_dir}/type=tops+p2p`)
       .catch((err) => console.error("could not fetch, ", err));
     return response?.data as IRate[];
   }
@@ -112,18 +113,22 @@ export const fetchCurrencyConverterRate = createAsyncThunk(
 
 export const createOrder = createAsyncThunk(
   "order/createOrder",
-  async (_, thunkAPI) => {
+  async (uid: String, thunkAPI) => {
     const { main } = thunkAPI.getState() as { main: MainState };
     const { dirs, regulationCodes, locations } = main.p2p;
-    console.log(main.p2p);
-    const fetcher = initCMSFetcher({
+    const order = {
+      uid,
       status: "suspended",
       dirs,
       regulationCodes,
       locations,
-      name: "gg",
-      info: "dfg",
-    } as IOrder);
+      info: "",
+      orderSent: true,
+    } as IOrder;
+
+    writeOrders(order); // to localStorage
+
+    const fetcher = initCMSFetcher();
     const response = await fetcher(CreateOrderMutation);
     return response?.createP2P as IPmPointer[];
   }

@@ -9,6 +9,7 @@ export interface IRate {
   tag?: string; // pro , p2p, new ...
   admin_rating: number;
   course: number;
+  p2pRatio?: number;
   min_fee: string;
   from_fee: string;
   to_fee: string;
@@ -28,6 +29,15 @@ export interface IParam {
   ru_name?: string;
   icon: IImage;
 }
+
+export interface IParamData {
+  id: string;
+  code: string;
+  parameter: IParam;
+  en_name?: string;
+  ru_name?: string;
+}
+
 export type ExchangerId = string;
 
 export interface IPopularDirRates {

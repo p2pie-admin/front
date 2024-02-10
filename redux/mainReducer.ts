@@ -1,4 +1,5 @@
 import {
+  IOrder,
   IP2PDir,
   IP2PRegulationCodes,
   IP2PRegulationGroup,
@@ -32,6 +33,8 @@ import {
   maxStart,
   maxEnd,
   rateSpread,
+  convertP2PRatioToCourse,
+  getDefaultRegulationCodes,
 } from "./helper";
 import Side from "../components/main/side";
 
@@ -39,6 +42,7 @@ import { getPmByCode } from "../components/main/side/selector/section/PmGroup/he
 import { ILocation } from "../types/shared";
 import { ICurrencyConverterRate } from "../types/p2p";
 import { format, R } from "./amountsHelper";
+import { readSavedOrders } from "../pages/order/localStorageHandler";
 
 type ISide = "give" | "get";
 
@@ -64,12 +68,7 @@ export interface MainState {
   trash?: any;
   location: ILocation;
   currencyConverterRate?: ICurrencyConverterRate;
-  p2p: {
-    dirs: IP2PDir[];
-    regulationCodes?: IP2PRegulationCodes;
-    locations: ILocation[];
-    orderSent: boolean;
-  };
+  p2p: IOrder;
 }
 
 const initialState: MainState = {
@@ -83,14 +82,11 @@ const initialState: MainState = {
   pendingPopularRates: false,
   location: { en_country_name: "Russia", en_city_name: "Moscow" },
   p2p: {
+    uid: "",
     locations: [],
     dirs: [{ expanded: true, deleted: false }],
     orderSent: false,
   },
-};
-
-const getUpdatedAmount = (state: MainState, newSwiperId: number) => {
-  return getAmountOutputs(state, state.amountInput, newSwiperId || 0);
 };
 
 export const mainSlice = createSlice({
@@ -184,11 +180,11 @@ export const mainSlice = createSlice({
       state.givePm = undefined;
     },
 
+    // свайпаем
     setSwiperIdVisible: (state: MainState, action: PayloadAction<number>) => {
       state.swiperIdVisible = action.payload;
-      state.amountOutputs = getUpdatedAmount(state, action.payload);
+      state.amountOutputs = getAmountOutputs(state, action.payload);
     },
-    // свайпаем
 
     // вводим свои числа
     setAmount: (
@@ -196,7 +192,11 @@ export const mainSlice = createSlice({
       action: PayloadAction<AmountInput | undefined>
     ) => {
       state.amountInput = action.payload;
-      state.amountOutputs = getAmountOutputs(state, action.payload);
+      state.amountOutputs = getAmountOutputs(
+        state,
+        state.swiperIdVisible,
+        action.payload
+      );
     },
     setActivePopularSide: (
       state: MainState,
@@ -220,7 +220,7 @@ export const mainSlice = createSlice({
         ];
       }
 
-      state.amountOutputs = getUpdatedAmount(state, state.swiperIdVisible);
+      state.amountOutputs = getAmountOutputs(state, 0);
     },
     updateScrollLock: (state: MainState, action: PayloadAction<boolean>) => {
       state.isScrollLocked = action.payload;
@@ -242,28 +242,26 @@ export const mainSlice = createSlice({
       const length = state.dirRates?.length || 0;
       if (!length) return;
       if (state.swiperIdVisible == length - 1) {
-        const newSwiperId = 0;
-        state.swiperIdVisible = newSwiperId;
-        state.amountOutputs = getUpdatedAmount(state, newSwiperId);
+        state.swiperIdVisible = 0;
+        state.amountOutputs = getAmountOutputs(state, 0);
         return;
       }
       const newSwiperId = state.swiperIdVisible + 1;
       state.swiperIdVisible = newSwiperId;
-      state.amountOutputs = getUpdatedAmount(state, newSwiperId);
+      state.amountOutputs = getAmountOutputs(state, newSwiperId);
     },
 
     decrementSwiper: (state: MainState) => {
       const length = state.dirRates?.length || 0;
       if (!length) return;
       if (state.swiperIdVisible == 0) {
-        const newSwiperId = length - 1;
-        state.swiperIdVisible = newSwiperId;
-        state.amountOutputs = getUpdatedAmount(state, newSwiperId);
+        state.swiperIdVisible = length - 1;
+        state.amountOutputs = getAmountOutputs(state, length - 1);
         return;
       }
       const newSwiperId = state.swiperIdVisible - 1;
       state.swiperIdVisible = newSwiperId;
-      state.amountOutputs = getUpdatedAmount(state, newSwiperId);
+      state.amountOutputs = getAmountOutputs(state, newSwiperId);
     },
 
     setLocation: (state: MainState, action: PayloadAction<ILocation>) => {
@@ -301,24 +299,12 @@ export const mainSlice = createSlice({
         [id]: [value, startValue, endValue],
       };
     },
-    initRegulationGroups: (
+    initDefaultRegulationCodes: (
       state: MainState,
       action: PayloadAction<IP2PRegulationGroup[]>
     ) => {
-      state.p2p.regulationCodes = action.payload.reduce(
-        (regulationCodes: IP2PRegulationCodes, rg) => {
-          const codes = rg.regulations.reduce(
-            (codes: IP2PRegulationCodes, r) => ({
-              ...codes,
-              [r.en_title.replaceAll(" ", "_").toLocaleLowerCase()]:
-                r.default_checked,
-            }),
-            {}
-          );
-          return { ...regulationCodes, ...codes };
-        },
-        {}
-      );
+      if (state.p2p.regulationCodes) return;
+      state.p2p.regulationCodes = getDefaultRegulationCodes(action.payload);
     },
     setRegulation: (
       state: MainState,
@@ -327,6 +313,13 @@ export const mainSlice = createSlice({
       const [code, checked] = action.payload;
       if (state.p2p.regulationCodes?.[code] !== undefined)
         state.p2p.regulationCodes[code] = checked;
+    },
+
+    getSavedOrders: (state: MainState) => {
+      const savedOrders = readSavedOrders();
+      if (savedOrders && Object.keys(savedOrders).length) {
+        state.p2p = savedOrders;
+      }
     },
   },
 
@@ -339,20 +332,31 @@ export const mainSlice = createSlice({
       }, []);
     });
 
-    //
     builder.addCase(fetchDirRates.pending, (state) => {
       state.pendingDirRates = true;
     });
+
     builder.addCase(fetchDirRates.fulfilled, (state, action) => {
-      state.dirRates = action.payload;
+      if (!action.payload) {
+        // если не получены курсы, парсер не отвечает вовсе
+        state.pendingDirRates = false;
+        return;
+      }
+      state.dirRates = convertP2PRatioToCourse(
+        // прослойка чтобы превратить курсы p2p в реальное число
+        action.payload,
+        state.currencyConverterRate
+      );
       state.amountInput = undefined;
-      state.amountOutputs = getAmountOutputs(state);
+      state.amountOutputs = getAmountOutputs(state, 0);
       state.pendingDirRates = false;
       state.swiperIdVisible = 0;
     });
+
     builder.addCase(fetchFiat.fulfilled, (state, action) => {
       state.bestRatesPreview = action.payload.fiatRates;
     });
+
     builder.addCase(fetchPossiblePairs.fulfilled, (state, action) => {
       if (action.payload.side === "give" && state.givePm)
         state.givePm.possible_pairs = action.payload.possiblePairs;
@@ -455,8 +459,9 @@ export const {
   removeDir,
   triggerP2PDir,
   setP2PUsersRate,
-  initRegulationGroups,
+  initDefaultRegulationCodes,
   setRegulation,
+  getSavedOrders,
 } = mainSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

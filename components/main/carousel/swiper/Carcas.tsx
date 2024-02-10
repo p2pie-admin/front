@@ -33,7 +33,6 @@ function Carcas({
 }: {
   setTrackIsActive: Function;
   initSliderWidth: Function;
-  handleSwiperIdVisible: Function;
   constraint: number;
   itemWidth: number;
   positions: number[];

@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { updateScrollLock } from "../../../../redux/mainReducer";
 
-function Item({ constraint, itemWidth, positions, children, index, gap }: any) {
+function Item({ itemWidth, children, index, gap }: any) {
   const isScrollLocked = useAppSelector((state) => state.main.isScrollLocked);
 
   const dispatch = useAppDispatch();

@@ -26,12 +26,12 @@ const SideButton = ({
       display="flex"
       p="0"
       justifyContent="space-between"
+      border={`2px ${leftIcon ? "solid" : "dashed"}`}
+      borderColor="whiteAlpha.100"
       rightIcon={
-        !leftIcon && (
-          <Hide below="xs">
-            <Arrow isUp={false} />
-          </Hide>
-        )
+        <Hide below="xs">
+          <Arrow isUp={false} />
+        </Hide>
       }
       leftIcon={leftIcon}
     >

@@ -6,8 +6,17 @@ import Item from "./item";
 import Carcas from "./Carcas";
 import SlidingLayout from "./SlidingLayout";
 import ExchangerCard from "../card";
+import { IParamData, IRate } from "../../../../types/rates";
 
-export default function Swiper({ dirRates, gap, allParameters }) {
+export default function Swiper({
+  dirRates,
+  gap,
+  allParameters,
+}: {
+  dirRates?: IRate[];
+  gap: number;
+  allParameters: IParamData[];
+}) {
   const [trackIsActive, setTrackIsActive] = useState(false);
   const [multiplier, setMultiplier] = useState(0.35);
   const [sliderWidth, setSliderWidth] = useState(0);
@@ -16,6 +25,8 @@ export default function Swiper({ dirRates, gap, allParameters }) {
   const [itemWidth, setItemWidth] = useState(0);
 
   const initSliderWidth = useCallback((width) => setSliderWidth(width), []);
+
+  if (!dirRates || !dirRates.length) return <></>;
 
   const positions = useMemo(
     () => dirRates.map((_, index) => -Math.abs((itemWidth + gap) * index)),
@@ -74,7 +85,7 @@ export default function Swiper({ dirRates, gap, allParameters }) {
           return (
             <Item
               {...itemProps}
-              exIdIndexPair={[dirRate.key, index]}
+              //exIdIndexPair={[dirRate.key, index]}
               index={index}
               key={index}
             >

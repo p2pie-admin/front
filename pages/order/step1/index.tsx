@@ -4,10 +4,11 @@ import {
   ShadedButton,
 } from "../../../styles/theme/custom";
 import { AiOutlinePlus } from "react-icons/ai";
-import { Box } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import CustomRate from "./customRate";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { addEmptyDir } from "../../../redux/mainReducer";
+import { writeOrders } from "../localStorageHandler";
 
 const Step1 = () => {
   const dispatch = useAppDispatch();
@@ -21,7 +22,7 @@ const Step1 = () => {
   return (
     <Box>
       {dirs.map((dir, index) => (
-        <CustomRate dir={dir} index={index} />
+        <CustomRate key={index} dir={dir} index={index} />
       ))}
 
       {firstDirSelected && dirsAmount < 3 && (

@@ -2,7 +2,7 @@ import { gql } from "graphql-request";
 
 export const CreateOrderMutation = gql`
   mutation P2P(
-    $name: String
+    $uid: String
     $status: ENUM_P2P_STATUS
     $info: String
     $regulationCodes: JSON
@@ -11,7 +11,7 @@ export const CreateOrderMutation = gql`
   ) {
     createP2P(
       data: {
-        name: $name
+        uid: $uid
         status: $status
         info: $info
         regulationCodes: $regulationCodes

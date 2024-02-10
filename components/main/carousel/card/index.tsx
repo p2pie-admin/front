@@ -38,6 +38,7 @@ const ExchangerCard = ({
 
   const rating = dirRate.admin_rating === null ? 3 : dirRate.admin_rating;
 
+  // decoration
   const shift1 = +Math.floor(Math.random() * 20 + 10) / 10;
   const shift2 = +Math.floor(Math.random() * 20 + 10) / 10;
   const color1 = useColorModeValue("bg.50", "bg.700");

@@ -6,15 +6,16 @@ import { initCMSFetcher } from "../../../services/fetchers";
 import { RegulationsQuery } from "./queries";
 import { IP2PRegulationGroup } from "../../../types/p2p";
 import RegulationGroup from "./RegulationGroup";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { useEffect } from "react";
-import { initRegulationGroups } from "../../../redux/mainReducer";
 import MultipleCitiesContext from "../../../components/layout/header/nav/location/MultipleCitiesContext";
 import Location from "../../../components/layout/header/nav/location";
+import { useAppDispatch } from "../../../redux/hooks";
+import { useEffect } from "react";
+import { initDefaultRegulationCodes } from "../../../redux/mainReducer";
 
 const Step2 = () => {
-  const fetcher = initCMSFetcher();
   const dispatch = useAppDispatch();
+  const fetcher = initCMSFetcher();
+
   const { data, error } = useSWR(RegulationsQuery, fetcher) as {
     data: {
       regulationGroups: any;
@@ -23,12 +24,12 @@ const Step2 = () => {
   };
 
   const fetchedRegGroups = data?.regulationGroups as IP2PRegulationGroup[];
-  // const regulationGroups = useAppSelector(
-  //   (state) => state.main.regulationGroups
-  // );
 
   useEffect(() => {
-    fetchedRegGroups && dispatch(initRegulationGroups(fetchedRegGroups));
+    // забираем первичные дефолтные параметры если нет из localStorage
+    if (fetchedRegGroups?.length) {
+      dispatch(initDefaultRegulationCodes(fetchedRegGroups));
+    }
   }, [fetchedRegGroups]);
 
   return (
@@ -39,7 +40,10 @@ const Step2 = () => {
         </MultipleCitiesContext.Provider>
         {fetchedRegGroups &&
           fetchedRegGroups.map((regulationGroup) => (
-            <RegulationGroup regulationGroup={regulationGroup} />
+            <RegulationGroup
+              key={regulationGroup.id}
+              regulationGroup={regulationGroup}
+            />
           ))}
       </Box>
     </ErrorWrapper>

@@ -185,9 +185,8 @@ const LimitsRange = () => {
               boxShadow="none"
             >
               <Box
-                w="6"
-                h="4"
-                mb="2px"
+                w="5"
+                h="3"
                 position="relative"
                 borderRadius="md"
                 bgColor={mainColor}
@@ -197,9 +196,9 @@ const LimitsRange = () => {
               />
               <Text
                 position="absolute"
-                top="6"
+                top="22px"
                 color={mainColor}
-                fontSize="xs"
+                fontSize="0.75rem"
                 whiteSpace="nowrap"
               >
                 {localFormat(stickyAmount)}
@@ -239,18 +238,20 @@ const LimitsRange = () => {
                 minH="20"
                 left={`calc(${smoothCenter.toFixed(0)}% - 50px)`}
               >
-                <Box h="fit-content" zIndex="5" mt="1">
-                  <ResponsiveText fontSize="xs" color="bg.500">{`${localFormat(
-                    MIN
-                  )} - ${localFormat(MAX)}`}</ResponsiveText>
+                <Box h="fit-content" zIndex="5" mt="-6">
+                  <ResponsiveText fontSize="xs" color="bg.500">
+                    {MIN == MAX
+                      ? localFormat(MIN)
+                      : `${localFormat(MIN)} - ${localFormat(MAX)}`}
+                  </ResponsiveText>
                 </Box>
               </Flex>
             ) : (
               <>
                 <RangeSliderThumb boxSize={1} index={0} zIndex="2">
                   <Text
-                    mt="7"
-                    fontSize="xs"
+                    mt="-8"
+                    fontSize="0.6rem"
                     whiteSpace="nowrap"
                     textAlign="center"
                   >
@@ -260,8 +261,8 @@ const LimitsRange = () => {
 
                 <RangeSliderThumb boxSize={1} index={1} zIndex="1">
                   <Text
-                    mt="7"
-                    fontSize="xs"
+                    mt="-8"
+                    fontSize="0.6rem"
                     whiteSpace="nowrap"
                     textAlign="center"
                   >

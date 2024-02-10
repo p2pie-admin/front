@@ -43,6 +43,12 @@ const Collapsed = () => {
     return dir.expanded;
   });
 
+  const minMoreThanMax = useAppSelector((state) => {
+    const dir = dirSelector(state);
+    const [minVal, maxVal] = [dir?.usersRate?.min[0], dir?.usersRate?.max[0]];
+    return !(minVal && maxVal && +maxVal >= +minVal);
+  });
+
   if (
     p2pDirIndex === undefined ||
     rateBiggerThanOne === undefined ||
@@ -83,9 +89,6 @@ const Collapsed = () => {
           id="rate"
           leftSide={rateBiggerThanOne ? "" : `1 ${giveCur} =`}
           rightSide={rateBiggerThanOne ? `${giveCur} = 1 ${getCur}` : getCur}
-          // values={rateValues}
-          // toUsd={toUsd}
-          // strength={2}
           adornment={<Commission />}
         />
         <InputWithSlider
@@ -93,18 +96,14 @@ const Collapsed = () => {
           leftSide="min: "
           rightSide={mainCur}
           adornment={<LimitRecalc id="min" cur={secondaryCur} />}
-          // values={minValues}
-          // toUsd={toUsd}
-          // strength={4}
+          isError={minMoreThanMax}
         />
         <InputWithSlider
           id="max"
           leftSide="max: "
           rightSide={mainCur}
           adornment={<LimitRecalc id="max" cur={secondaryCur} />}
-          // values={maxValues}
-          // toUsd={toUsd}
-          // strength={4}
+          isError={minMoreThanMax}
         />
       </Grid>
       {/* <HStack justifyContent="end">

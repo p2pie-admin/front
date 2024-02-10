@@ -10,12 +10,12 @@ const PmIcons = ({ pms }: { pms: IPm[] }) => {
       <AddPm />
       <HStack minW={`${pms.length * 8 + 20}px`}>
         {pms.map((pm, index) => (
-          <Box position="absolute" right={`${index * 10}px`}>
-            <CircularIcon
-              key={pm.code + index}
-              icon={pm.icon}
-              color={pm.color || "gray"}
-            />
+          <Box
+            key={pm.code + index}
+            position="absolute"
+            right={`${index * 10}px`}
+          >
+            <CircularIcon icon={pm.icon} color={pm.color || "gray"} />
           </Box>
         ))}
       </HStack>

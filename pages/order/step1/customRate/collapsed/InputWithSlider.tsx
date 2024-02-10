@@ -28,11 +28,13 @@ const InputWithSlider = ({
   rightSide,
   id,
   adornment,
+  isError,
 }: {
   leftSide: string;
   rightSide: string;
   id: keyof IUsersRate;
   adornment: ReactJSXElement;
+  isError?: boolean;
 }) => {
   const shadedColor = useColorModeValue("bg.500", "bg.400");
   const trackColor = useColorModeValue("bg.300", "bg.900");
@@ -87,7 +89,7 @@ const InputWithSlider = ({
               keepWithinRange={true}
               clampValueOnBlur={true}
               borderRadius="md"
-              color={primaryColor}
+              color={isError ? "red.500" : primaryColor}
               bgColor={inputBgColor}
               borderColor={`${shadedColor} !important`}
               borderBottom="1px solid"

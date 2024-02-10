@@ -36,7 +36,6 @@ const CustomRate = ({ dir, index }: { dir: IP2PDir; index: number }) => {
   return (
     <Collapse in={!dir.deleted}>
       <RegularBox
-        key={index}
         variant={"no_contrast"}
         mt={[3, 4]}
         mb={[2, 3]}

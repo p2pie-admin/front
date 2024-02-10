@@ -7,55 +7,17 @@ import {
   DirectionParametersQuery,
   ExchangerParametersQuery,
 } from "./queries";
-
-import { IParam } from "../../../types/rates";
-
 import ErrorWrapper from "../../shared/ErrorWrapper";
 import { initCMSFetcher } from "../../../services/fetchers";
 import { SearchOff } from "@styled-icons/material-outlined/SearchOff";
-import {
-  Box,
-  Collapse,
-  Text,
-  useColorMode,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 import SwiperButtons from "./bottons";
-import ExchangerCard from "./card";
 import Swiper from "./swiper";
 import { CustomBox3D } from "../../../styles/theme/custom";
+import { IParamData } from "../../../types/rates";
 
 const fetcher = initCMSFetcher();
 
-interface IParamData {
-  id: string;
-  code: string;
-  parameter: IParam;
-  en_name?: string;
-  ru_name?: string;
-}
-
-const a = {
-  exchangerId: "987",
-  name: "BroExchange",
-  admin_rating: null,
-  tag: null,
-  logo: null,
-  course: 4.475853011295575e-7,
-  min: {
-    give: 0.04,
-    get: 89368.43971205759,
-  },
-  max: {
-    give: 1.3427559,
-    get: 2999999.9924289905,
-  },
-  reserve: {
-    give: 1.9425202069022796,
-    get: 4340000,
-  },
-  parameterCodes: ["manual"],
-};
 const Carousel = () => {
   //const pendingDirRates = useAppSelector((state) => state.main.pendingDirRates);
   const color1 = useColorModeValue("bg.10", "bg.900");

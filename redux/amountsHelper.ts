@@ -59,7 +59,7 @@ export class FeesCalculator {
     const { side, num } = this.amountInput;
     let to_fee,
       from_fee,
-      course = undefined;
+      course = 0;
     try {
       ({ to_fee, from_fee, course } = this.rate);
     } catch (e) {}

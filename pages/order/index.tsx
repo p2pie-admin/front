@@ -19,7 +19,7 @@ import {
   HStack,
   VStack,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Step1 from "./step1";
 import { IoIosArrowRoundForward, IoIosArrowRoundBack } from "react-icons/io";
 import {
@@ -37,8 +37,15 @@ import { StepsQuery } from "./queries";
 import ErrorWrapper from "../../components/shared/ErrorWrapper";
 import OrderButton from "./step3/OrderButton";
 
+import { useAppDispatch } from "../../redux/hooks";
+import { getSavedOrders } from "../../redux/mainReducer";
+
 const Steps = () => {
   const [tabIndex, setTabIndex] = useState(0);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getSavedOrders());
+  }, []);
 
   const stepComponents = [<Step1 />, <Step2 />, <Step3 />];
   const fetcher = initCMSFetcher();
@@ -67,7 +74,7 @@ const Steps = () => {
           <Stepper index={tabIndex} colorScheme="peach" size="sm">
             {!!steps &&
               steps.map((step, index) => (
-                <Step key={index}>
+                <Step key={step.en_title}>
                   <StepIndicator>
                     <StepStatus
                       complete={<StepIcon />}
@@ -104,7 +111,7 @@ const Steps = () => {
               <TabPanels>
                 {!!steps &&
                   steps.map((step) => (
-                    <TabPanel px="0" py="4">
+                    <TabPanel px="0" py="4" key={step.en_title}>
                       <ResponsiveText>{step.en_title}</ResponsiveText>
 
                       <ResponsiveText size="xs" whiteSpace="normal">

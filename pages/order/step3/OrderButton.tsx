@@ -5,15 +5,16 @@ import NextLink from "next/link";
 
 const OrderButton = () => {
   const dispatch = useAppDispatch();
-  const handleClick = () => {
-    dispatch(createOrder());
-  };
 
   const botLink = process.env.NEXT_PUBLIC_TELEGRAM_BOT;
   const uid = "ref_" + new Date().getTime().toString(36) + "pie";
 
+  const handleClick = () => {
+    dispatch(createOrder(uid));
+  };
+
   return (
-    <NextLink href={`${botLink}?start=${uid}`}>
+    <NextLink target="_blank" href={`${botLink}?start=${uid}`}>
       <ResponsiveButton mb="1" variant="primary" onClick={handleClick}>
         {"SUGGEST EXCHANGE"}
       </ResponsiveButton>

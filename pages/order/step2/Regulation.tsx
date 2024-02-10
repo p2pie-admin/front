@@ -2,21 +2,25 @@ import { capitalize } from "../../../components/main/side/selector/section/PmGro
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { IP2PRegulation } from "../../../types/p2p";
 import { Box, Checkbox, Text, VStack } from "@chakra-ui/react";
-import { useAppDispatch } from "../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { setRegulation } from "../../../redux/mainReducer";
 
 const Regulation = ({ regulation }: { regulation: IP2PRegulation }) => {
   const dispatch = useAppDispatch();
+  const code = regulation.en_title.replaceAll(" ", "_").toLocaleLowerCase();
+  const defaultChecked = useAppSelector(
+    (state) => state.main.p2p?.regulationCodes?.[code]
+  );
+
   const handleCheckboxClick = (checked: boolean) => {
-    const code = regulation.en_title.replaceAll(" ", "_").toLocaleLowerCase();
     dispatch(setRegulation([code, checked]));
   };
 
   return (
-    <Box px="2" py="1">
+    <Box px="2" py="1" key={regulation.id}>
       <Checkbox
         colorScheme="peach"
-        defaultChecked={regulation.default_checked}
+        isChecked={defaultChecked}
         onChange={(e) => handleCheckboxClick(e.target.checked)}
       >
         <ResponsiveText size="md">

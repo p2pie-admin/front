@@ -1,5 +1,5 @@
-import { useAppSelector } from "../../../redux/hooks";
 import { RegularBox, ResponsiveText } from "../../../styles/theme/custom";
+import { readSavedOrders } from "../localStorageHandler";
 
 const Step3 = () => {
   return (
