@@ -21,6 +21,7 @@ import {
   fetchCurrencyConverterRate,
   createOrder,
   getOrderByIP,
+  getOrderByUID,
 } from "./thunks";
 import { IPm, IPmGroup } from "../types/selector";
 import { IActivePetal, IDir } from "../types/dir";
@@ -412,6 +413,9 @@ export const mainSlice = createSlice({
       state.p2p.orderSent = true;
     });
     builder.addCase(getOrderByIP.fulfilled, (state, action) => {
+      if (action.payload && action.payload.uid) state.p2p = action.payload;
+    });
+    builder.addCase(getOrderByUID.fulfilled, (state, action) => {
       if (action.payload && action.payload.uid) state.p2p = action.payload;
     });
     // popular rates

@@ -20,6 +20,26 @@ export const OrderByIPQuery = gql`
   }
 `;
 
+export const OrderByUIDQuery = gql`
+  query orderByUID($uid: String) {
+    p2Ps(filters: { uid: { eq: $uid } }) {
+      data {
+        id
+        attributes {
+          uid
+          ip
+          name
+          info
+          status
+          dirs
+          regulationCodes
+          locations
+        }
+      }
+    }
+  }
+`;
+
 export const StepsQuery = gql`
   {
     steps {
