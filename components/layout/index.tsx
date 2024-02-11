@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { batch } from "react-redux";
 import { fetchPms, fetchFiat } from "../../redux/thunks";
 import axios from "axios";
-import { setLocation } from "../../redux/mainReducer";
+import { setIP, setLocation } from "../../redux/mainReducer";
 
 const Layout = ({ children }: { children: ReactChild }) => {
   const maxW = useBreakpointValue({ base: "100%", lg: "980" });
@@ -18,9 +18,9 @@ const Layout = ({ children }: { children: ReactChild }) => {
     const url = "https://ip.nf/me.json";
     axios.get(url).then((resp) => {
       if (resp.data?.ip) {
-        console.log(resp.data);
-        const { country, city } = resp.data?.ip;
+        const { country, city, ip } = resp.data?.ip;
         dispatch(setLocation({ en_country_name: country, en_city_name: city }));
+        dispatch(setIP(resp.data.ip.ip));
       }
     });
     batch(() => {

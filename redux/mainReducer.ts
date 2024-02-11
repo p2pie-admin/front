@@ -20,6 +20,7 @@ import {
   restorePmsFromSlug,
   fetchCurrencyConverterRate,
   createOrder,
+  getOrderByIP,
 } from "./thunks";
 import { IPm, IPmGroup } from "../types/selector";
 import { IActivePetal, IDir } from "../types/dir";
@@ -39,10 +40,10 @@ import {
 import Side from "../components/main/side";
 
 import { getPmByCode } from "../components/main/side/selector/section/PmGroup/helper";
-import { ILocation } from "../types/shared";
+import { IFingerprint, ILocation } from "../types/shared";
 import { ICurrencyConverterRate } from "../types/p2p";
 import { format, R } from "./amountsHelper";
-import { readSavedOrders } from "../pages/order/localStorageHandler";
+import { readLocalOrder } from "../pages/order/localStorageHandler";
 
 type ISide = "give" | "get";
 
@@ -69,6 +70,7 @@ export interface MainState {
   location: ILocation;
   currencyConverterRate?: ICurrencyConverterRate;
   p2p: IOrder;
+  fingerprint?: IFingerprint;
 }
 
 const initialState: MainState = {
@@ -316,10 +318,14 @@ export const mainSlice = createSlice({
     },
 
     getSavedOrders: (state: MainState) => {
-      const savedOrders = readSavedOrders();
+      const savedOrders = readLocalOrder();
       if (savedOrders && Object.keys(savedOrders).length) {
         state.p2p = savedOrders;
       }
+    },
+    setIP: (state: MainState, action: PayloadAction<string | undefined>) => {
+      if (action.payload)
+        state.fingerprint = { ...state.fingerprint, ip: action.payload };
     },
   },
 
@@ -405,7 +411,9 @@ export const mainSlice = createSlice({
     builder.addCase(createOrder.fulfilled, (state) => {
       state.p2p.orderSent = true;
     });
-
+    builder.addCase(getOrderByIP.fulfilled, (state, action) => {
+      if (action.payload && action.payload.uid) state.p2p = action.payload;
+    });
     // popular rates
     // builder.addCase(fetchPopularRates.pending, (state) => {
     //   state.pendingPopularRates = true;
@@ -462,6 +470,7 @@ export const {
   initDefaultRegulationCodes,
   setRegulation,
   getSavedOrders,
+  setIP,
 } = mainSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

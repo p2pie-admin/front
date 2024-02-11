@@ -33,3 +33,6 @@ export interface ILocation {
   ru_city_name?: string;
   code?: string;
 }
+export interface IFingerprint {
+  ip: string;
+}

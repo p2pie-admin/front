@@ -1,5 +1,5 @@
 import { RegularBox, ResponsiveText } from "../../../styles/theme/custom";
-import { readSavedOrders } from "../localStorageHandler";
+import { readLocalOrder } from "../localStorageHandler";
 
 const Step3 = () => {
   return (

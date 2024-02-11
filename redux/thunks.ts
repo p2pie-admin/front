@@ -12,7 +12,8 @@ import { IPmPointer } from "../types/selector";
 import side from "../components/main/side";
 import { CreateOrderMutation } from "../pages/order/step3/queries";
 import { IOrder } from "../types/p2p";
-import { writeOrders } from "../pages/order/localStorageHandler";
+import { writeLocalOrder } from "../pages/order/localStorageHandler";
+import { OrderByIPQuery } from "../pages/order/queries";
 
 type ISide = "give" | "get";
 const env = process.env.NODE_ENV;
@@ -118,19 +119,34 @@ export const createOrder = createAsyncThunk(
     const { dirs, regulationCodes, locations } = main.p2p;
     const order = {
       uid,
+      name: "name_" + uid,
       status: "suspended",
       dirs,
+      info: "---",
       regulationCodes,
       locations,
-      info: "",
       orderSent: true,
+      ip: main.fingerprint?.ip,
     } as IOrder;
 
-    writeOrders(order); // to localStorage
+    writeLocalOrder(order); // to localStorage
 
-    const fetcher = initCMSFetcher();
+    const fetcher = initCMSFetcher(order);
     const response = await fetcher(CreateOrderMutation);
     return response?.createP2P as IPmPointer[];
+  }
+);
+
+export const getOrderByIP = createAsyncThunk(
+  "order/getOrderByIP",
+  async (_, thunkAPI) => {
+    const { main } = thunkAPI.getState() as { main: MainState };
+    const ip = main.fingerprint?.ip;
+    const uid = main.p2p.uid; // if already exists then skip recovery
+    if (uid || !ip) return;
+    const fetcher = initCMSFetcher({ ip });
+    const response = await fetcher(OrderByIPQuery);
+    return response?.p2Ps?.[0] as IOrder | undefined;
   }
 );
 

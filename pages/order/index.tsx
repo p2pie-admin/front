@@ -39,12 +39,14 @@ import OrderButton from "./step3/OrderButton";
 
 import { useAppDispatch } from "../../redux/hooks";
 import { getSavedOrders } from "../../redux/mainReducer";
+import { getOrderByIP } from "../../redux/thunks";
 
 const Steps = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getSavedOrders());
+    setTimeout(() => dispatch(getOrderByIP()), 2000);
   }, []);
 
   const stepComponents = [<Step1 />, <Step2 />, <Step3 />];

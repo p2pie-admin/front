@@ -1,5 +1,25 @@
 import { gql } from "graphql-request";
 
+export const OrderByIPQuery = gql`
+  query orderByIP($ip: String) {
+    p2Ps(filters: { ip: { eq: $ip } }) {
+      data {
+        id
+        attributes {
+          uid
+          ip
+          name
+          info
+          status
+          dirs
+          regulationCodes
+          locations
+        }
+      }
+    }
+  }
+`;
+
 export const StepsQuery = gql`
   {
     steps {

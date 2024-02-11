@@ -1,6 +1,6 @@
 import { IOrder } from "../../types/p2p";
 
-export const readSavedOrders = (): IOrder | undefined => {
+export const readLocalOrder = (): IOrder | undefined => {
   let savedOrders = undefined;
   try {
     savedOrders = JSON.parse(localStorage.getItem("orders") || "");
@@ -8,7 +8,7 @@ export const readSavedOrders = (): IOrder | undefined => {
   return savedOrders;
 };
 
-export const writeOrders = (orders?: IOrder) => {
+export const writeLocalOrder = (orders?: IOrder) => {
   if (orders && Object.keys(orders).length)
     localStorage.setItem("orders", JSON.stringify(orders));
 };
