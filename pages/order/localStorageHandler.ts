@@ -1,14 +1,14 @@
 import { IOrder } from "../../types/p2p";
 
 export const readLocalOrder = (): IOrder | undefined => {
-  let savedOrders = undefined;
+  let savedOrder = undefined;
   try {
-    savedOrders = JSON.parse(localStorage.getItem("orders") || "");
+    savedOrder = JSON.parse(localStorage.getItem("order") || "");
   } catch {}
-  return savedOrders;
+  return savedOrder;
 };
 
-export const writeLocalOrder = (orders?: IOrder) => {
-  if (orders && Object.keys(orders).length)
-    localStorage.setItem("orders", JSON.stringify(orders));
+export const writeLocalOrder = (order?: IOrder) => {
+  if (order && Object.keys(order).length)
+    localStorage.setItem("order", JSON.stringify(order));
 };

@@ -19,7 +19,7 @@ import {
   fetchFiat,
   restorePmsFromSlug,
   fetchCurrencyConverterRate,
-  createOrder,
+  submitOrder,
   getOrderByIP,
   getOrderByUID,
 } from "./thunks";
@@ -67,7 +67,7 @@ export interface MainState {
   pendingPopularRates: boolean;
   popularRates?: IPopularDirRates;
   modal?: string;
-  trash?: any;
+  toast: { title: string; status: "success" | "error" | "warning" | "info" };
   location: ILocation;
   currencyConverterRate?: ICurrencyConverterRate;
   p2p: IOrder;
@@ -83,12 +83,12 @@ const initialState: MainState = {
   isScrollLocked: false,
   bestRatesPreview: {},
   pendingPopularRates: false,
+  toast: { title: "", status: "info" },
   location: { en_country_name: "Russia", en_city_name: "Moscow" },
   p2p: {
     uid: "",
     locations: [],
     dirs: [{ expanded: true, deleted: false }],
-    orderSent: false,
   },
 };
 
@@ -409,8 +409,17 @@ export const mainSlice = createSlice({
       state.p2p.dirs[p2pDirIndex].giveBiggerValueThanGet = giveToUSD > getToUSD;
     });
 
-    builder.addCase(createOrder.fulfilled, (state) => {
-      state.p2p.orderSent = true;
+    builder.addCase(submitOrder.rejected, (state, action) => {
+      state.toast = { title: "Failed!", status: "error" };
+    });
+
+    builder.addCase(submitOrder.fulfilled, (state, action) => {
+      if (!action.payload) {
+        state.toast = { title: "Already exists!", status: "warning" };
+        return;
+      }
+      state.toast = { title: "Success!", status: "success" };
+      return;
     });
     builder.addCase(getOrderByIP.fulfilled, (state, action) => {
       if (action.payload && action.payload.uid) state.p2p = action.payload;

@@ -10,9 +10,16 @@ import {
 import { MainState } from "./mainReducer";
 import { IPmPointer } from "../types/selector";
 import side from "../components/main/side";
-import { CreateOrderMutation } from "../pages/order/step3/queries";
+import {
+  CreateOrderMutation,
+  GetIDFromUIDQuery,
+  UpdateOrderMutation,
+} from "../pages/order/step3/queries";
 import { IOrder } from "../types/p2p";
-import { writeLocalOrder } from "../pages/order/localStorageHandler";
+import {
+  readLocalOrder,
+  writeLocalOrder,
+} from "../pages/order/localStorageHandler";
 import { OrderByIPQuery, OrderByUIDQuery } from "../pages/order/queries";
 
 type ISide = "give" | "get";
@@ -112,13 +119,17 @@ export const fetchCurrencyConverterRate = createAsyncThunk(
   }
 );
 
-export const createOrder = createAsyncThunk(
-  "order/createOrder",
-  async (uid: String, thunkAPI) => {
+export const submitOrder = createAsyncThunk(
+  "order/submitOrder",
+  async (_, thunkAPI) => {
     const { main } = thunkAPI.getState() as { main: MainState };
     const { dirs, regulationCodes, locations } = main.p2p;
+    const generatedUID = "ref_" + new Date().getTime().toString(36) + "pie";
+    const uid = main.p2p.uid;
+    let id = main.p2p.id;
+
     const order = {
-      uid,
+      uid: uid || generatedUID,
       name: "name_" + uid,
       status: "suspended",
       dirs,
@@ -129,13 +140,32 @@ export const createOrder = createAsyncThunk(
       ip: main.fingerprint?.ip,
     } as IOrder;
 
-    // to localStorage
+    const localStorageOrder = readLocalOrder();
+    const orderNotChanged =
+      JSON.stringify(order) == JSON.stringify(localStorageOrder);
+    if (orderNotChanged) {
+      return;
+    }
+    if (uid) {
+      if (!id) {
+        // в случае восстановления из localStorage мы незнаем id
+        const fetcher = initCMSFetcher({ uid });
+        const response = await fetcher(GetIDFromUIDQuery);
+        id = response.p2Ps[0].id;
+        console.log("got id", id);
+      }
+      const fetcher = initCMSFetcher({ id, ...order });
+      const response = await fetcher(UpdateOrderMutation);
+      response?.updateP2P?.id && writeLocalOrder(order);
+      return uid;
+    } else {
+      const fetcher = initCMSFetcher(order);
+      const response = await fetcher(CreateOrderMutation);
+      response?.createP2P?.id && writeLocalOrder(order);
+      return uid;
+    }
 
-    const fetcher = initCMSFetcher(order);
-    const response = await fetcher(CreateOrderMutation);
-    const isCreated = response?.createP2P?.id;
-    // записываем в loсalStorage если рдер создался
-    if (isCreated) writeLocalOrder(order);
+    return;
   }
 );
 

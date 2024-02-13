@@ -24,11 +24,7 @@ import CircularIcon from "../../../../shared/CircularIcon";
 import SideContext from "../../../../shared/contexts/SideContext";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { batch } from "react-redux";
-import {
-  fetchFiatByCurrencyCode,
-  fetchPossiblePairs,
-  fetchDirRates,
-} from "../../../../../redux/thunks";
+import { fetchPossiblePairs, fetchDirRates } from "../../../../../redux/thunks";
 import { RegularBox } from "../../../../../styles/theme/custom";
 
 /**
@@ -90,12 +86,6 @@ function Petal({
     if (!side) return;
     const oppositePm = side === "give" ? getPm : givePm;
     batch(() => {
-      dispatch(
-        fetchFiatByCurrencyCode({
-          code: selectedPm.currency.code,
-          side,
-        })
-      ); // нужен только код валюты,  reducer сам запишет куда надо
       dispatch(fetchPossiblePairs({ code: selectedPm.code, side: side }));
       dispatch(setPm({ pm: selectedPm, side }));
 
@@ -146,7 +136,7 @@ function Petal({
           <CircularIcon icon={pm.icon} color={pm.color} />
         </Box>
       )}
-      {pm?.tag && (
+      {pm?.subgroup_name && (
         <Flex
           position="absolute"
           w="8"

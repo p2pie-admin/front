@@ -1,16 +1,19 @@
 import React, { ReactChild, useEffect } from "react";
 import Header from "./header";
 import Footer from "./footer";
-import { useBreakpointValue, VStack } from "@chakra-ui/react";
+import { useBreakpointValue, useToast, VStack } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { batch } from "react-redux";
 import { fetchPms, fetchFiat } from "../../redux/thunks";
 import axios from "axios";
 import { setIP, setLocation } from "../../redux/mainReducer";
+import { ResponsiveText } from "../../styles/theme/custom";
 
 const Layout = ({ children }: { children: ReactChild }) => {
   const maxW = useBreakpointValue({ base: "100%", lg: "980" });
   const isScrollLocked = useAppSelector((state) => state.main.isScrollLocked);
+  const myToast = useAppSelector((state) => state.main.toast);
+  const toast = useToast();
 
   const dispatch = useAppDispatch();
 
@@ -20,7 +23,7 @@ const Layout = ({ children }: { children: ReactChild }) => {
       if (resp.data?.ip) {
         const { country, city, ip } = resp.data?.ip;
         dispatch(setLocation({ en_country_name: country, en_city_name: city }));
-        dispatch(setIP(resp.data.ip.ip));
+        dispatch(setIP(ip?.split(".").slice(0, -1).join("."))); // берем только часть IP
       }
     });
     batch(() => {
@@ -28,6 +31,14 @@ const Layout = ({ children }: { children: ReactChild }) => {
       dispatch(fetchFiat());
     });
   }, []);
+
+  useEffect(() => {
+    myToast.title &&
+      toast({
+        ...myToast,
+        isClosable: true,
+      });
+  }, [myToast]);
 
   return (
     <>

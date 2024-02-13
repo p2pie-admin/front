@@ -61,7 +61,7 @@ export interface IP2PStep {
 export interface IOrder {
   uid: String;
   ip?: string;
-  orderSent: boolean;
+  id?: string;
   dirs: IP2PDir[];
   regulationCodes?: IP2PRegulationCodes;
   locations: ILocation[];
