@@ -45,6 +45,7 @@ import { IFingerprint, ILocation } from "../types/shared";
 import { ICurrencyConverterRate } from "../types/p2p";
 import { format, R } from "./amountsHelper";
 import { readLocalOrder } from "../pages/order/localStorageHandler";
+import { IToast } from "../types/general";
 
 type ISide = "give" | "get";
 
@@ -67,7 +68,7 @@ export interface MainState {
   pendingPopularRates: boolean;
   popularRates?: IPopularDirRates;
   modal?: string;
-  toast: { title: string; status: "success" | "error" | "warning" | "info" };
+  toast: IToast;
   location: ILocation;
   currencyConverterRate?: ICurrencyConverterRate;
   p2p: IOrder;
@@ -409,21 +410,14 @@ export const mainSlice = createSlice({
       state.p2p.dirs[p2pDirIndex].giveBiggerValueThanGet = giveToUSD > getToUSD;
     });
 
-    builder.addCase(submitOrder.rejected, (state, action) => {
+    builder.addCase(submitOrder.rejected, (state, _) => {
       state.toast = { title: "Failed!", status: "error" };
     });
 
     builder.addCase(submitOrder.fulfilled, (state, action) => {
-      if (!action.payload) {
-        state.toast = { title: "Already exists!", status: "warning" };
-        return;
-      }
-      state.toast = { title: "Success!", status: "success" };
-      return;
+      state.toast = action.payload;
     });
-    builder.addCase(getOrderByIP.fulfilled, (state, action) => {
-      if (action.payload && action.payload.uid) state.p2p = action.payload;
-    });
+
     builder.addCase(getOrderByUID.fulfilled, (state, action) => {
       if (action.payload && action.payload.uid) state.p2p = action.payload;
     });

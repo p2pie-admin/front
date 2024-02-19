@@ -59,13 +59,13 @@ export interface IP2PStep {
 }
 
 export interface IOrder {
-  uid: String;
+  uid: string;
   ip?: string;
   id?: string;
   dirs: IP2PDir[];
   regulationCodes?: IP2PRegulationCodes;
   locations: ILocation[];
-  name?: String;
+  name?: string;
   status?: "active" | "suspended" | "disabled";
-  info?: String;
+  info?: string;
 }

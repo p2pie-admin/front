@@ -39,7 +39,7 @@ import OrderButton from "./step3/OrderButton";
 
 import { useAppDispatch } from "../../redux/hooks";
 import { getSavedOrders } from "../../redux/mainReducer";
-import { getOrderByIP, getOrderByUID } from "../../redux/thunks";
+import { getOrderByUID } from "../../redux/thunks";
 import { useRouter } from "next/router";
 
 const Steps = () => {
@@ -50,10 +50,10 @@ const Steps = () => {
 
   // первичная загрузка, сперва пытаемся из localStorage загрузиться,
   // и если не удалось, то пробуем по IP
-  useEffect(() => {
-    dispatch(getSavedOrders());
-    setTimeout(() => dispatch(getOrderByIP()), 2000);
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getSavedOrders());
+  //   setTimeout(() => dispatch(getOrderByIP()), 2000);
+  // }, []);
 
   // если есть в ссылке uid то грузимся от него, иначе скипаем
   useEffect(() => {

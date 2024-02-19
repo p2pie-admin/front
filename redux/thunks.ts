@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IPopularDirRates, IRate } from "../types/rates";
 import axios from "axios";
-
 import { pmGroupQuery, pmsQuery } from "../services/initialQueries";
 import {
   initCMSFetcher,
@@ -9,7 +8,6 @@ import {
 } from "../services/fetchers";
 import { MainState } from "./mainReducer";
 import { IPmPointer } from "../types/selector";
-import side from "../components/main/side";
 import {
   CreateOrderMutation,
   GetIDFromUIDQuery,
@@ -21,6 +19,13 @@ import {
   writeLocalOrder,
 } from "../pages/order/localStorageHandler";
 import { OrderByIPQuery, OrderByUIDQuery } from "../pages/order/queries";
+import { createOrder, createUID } from "./helper";
+import { IToast } from "../types/general";
+//import { redirect } from "next/navigation";
+
+// export async function navigate() {
+//   redirect(`/posts`);
+// }
 
 type ISide = "give" | "get";
 const env = process.env.NODE_ENV;
@@ -121,51 +126,47 @@ export const fetchCurrencyConverterRate = createAsyncThunk(
 
 export const submitOrder = createAsyncThunk(
   "order/submitOrder",
-  async (_, thunkAPI) => {
+  async (_, thunkAPI): Promise<IToast> => {
     const { main } = thunkAPI.getState() as { main: MainState };
-    const { dirs, regulationCodes, locations } = main.p2p;
-    const generatedUID = "ref_" + new Date().getTime().toString(36) + "pie";
-    const uid = main.p2p.uid;
+
+    const uid = main.p2p.uid; // запрещаем создавать кучу ордеров с разных IP
+    // если localStorage уже хранит uid и он отличается (ip другой) то не создатся
     let id = main.p2p.id;
-
-    const order = {
-      uid: uid || generatedUID,
-      name: "name_" + uid,
-      status: "suspended",
-      dirs,
-      info: "---",
-      regulationCodes,
-      locations,
-      orderSent: true,
-      ip: main.fingerprint?.ip,
-    } as IOrder;
-
-    const localStorageOrder = readLocalOrder();
+    const fingerprint = main.fingerprint;
+    if (!fingerprint?.ip) return { title: "Network error", status: "error" };
+    const uid_new = createUID(fingerprint);
+    const order = createOrder(main.p2p, uid || uid_new);
     const orderNotChanged =
-      JSON.stringify(order) == JSON.stringify(localStorageOrder);
+      JSON.stringify(order) == JSON.stringify(readLocalOrder());
+    if (!order.dirs[0].defRate) {
+      return { title: "Order is empty!", status: "warning" };
+    }
     if (orderNotChanged) {
-      return;
+      return { title: "No changes!", status: "warning" };
     }
     if (uid) {
+      // Если uid восстановлен и происходит редактирование
       if (!id) {
-        // в случае восстановления из localStorage мы незнаем id
+        // в случае восстановления из localStorage мы не знаем id
         const fetcher = initCMSFetcher({ uid });
         const response = await fetcher(GetIDFromUIDQuery);
         id = response.p2Ps[0].id;
-        console.log("got id", id);
+        if (!id) {
+          writeLocalOrder(); // чистим localStorage
+          return { title: "Order does not exist!", status: "error" };
+        }
       }
       const fetcher = initCMSFetcher({ id, ...order });
       const response = await fetcher(UpdateOrderMutation);
       response?.updateP2P?.id && writeLocalOrder(order);
-      return uid;
+      return { title: "Order was updated!", status: "info" };
     } else {
+      // Если создается новый
       const fetcher = initCMSFetcher(order);
       const response = await fetcher(CreateOrderMutation);
       response?.createP2P?.id && writeLocalOrder(order);
-      return uid;
+      return { title: "Order was created!", status: "success" };
     }
-
-    return;
   }
 );
 

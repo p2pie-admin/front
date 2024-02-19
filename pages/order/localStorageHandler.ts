@@ -9,6 +9,5 @@ export const readLocalOrder = (): IOrder | undefined => {
 };
 
 export const writeLocalOrder = (order?: IOrder) => {
-  if (order && Object.keys(order).length)
-    localStorage.setItem("order", JSON.stringify(order));
+  localStorage.setItem("order", JSON.stringify(order));
 };

@@ -1,11 +1,14 @@
+import main from "../components/main";
 import { AmountInput, AmountOutputs } from "../types/amount";
 import {
   ICurrencyConverterRate,
+  IOrder,
   IP2PDir,
   IP2PRegulationCodes,
   IP2PRegulationGroup,
 } from "../types/p2p";
 import { IRate } from "../types/rates";
+import { IFingerprint } from "../types/shared";
 import { FeesCalculator } from "./amountsHelper";
 import { MainState } from "./mainReducer";
 
@@ -65,6 +68,15 @@ export const getDefaultRegulationCodes = (
     return { ...regulationCodes, ...codes };
   }, {});
 };
+
+export const createOrder = (p2pData: IOrder, uid: string): IOrder => ({
+  ...p2pData,
+  uid,
+  status: "suspended",
+});
+
+export const createUID = (fingerprint?: IFingerprint) =>
+  "uid_" + Number(fingerprint?.ip.replaceAll(".", "")).toString(36);
 // export const findBestCourseRateByAmountInput = (
 //   amountInput?: AmountInput,
 //   bestRates?: IDirRates

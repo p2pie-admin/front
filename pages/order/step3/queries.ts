@@ -20,7 +20,6 @@ export const UpdateOrderMutation = gql`
     $regulationCodes: JSON
     $dirs: JSON
     $locations: JSON
-    $ip: String
   ) {
     updateP2P(
       id: $id
@@ -32,7 +31,6 @@ export const UpdateOrderMutation = gql`
         regulationCodes: $regulationCodes
         dirs: $dirs
         locations: $locations
-        ip: $ip
       }
     ) {
       data {
@@ -50,7 +48,6 @@ export const CreateOrderMutation = gql`
     $regulationCodes: JSON
     $dirs: JSON
     $locations: JSON
-    $ip: String
   ) {
     createP2P(
       data: {
@@ -61,7 +58,6 @@ export const CreateOrderMutation = gql`
         regulationCodes: $regulationCodes
         dirs: $dirs
         locations: $locations
-        ip: $ip
       }
     ) {
       data {
