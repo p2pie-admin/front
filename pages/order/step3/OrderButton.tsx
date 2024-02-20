@@ -20,7 +20,7 @@ const OrderButton = () => {
     console.log(fingerprint);
     const botLink = process.env.NEXT_PUBLIC_TELEGRAM_BOT;
     isSuccess &&
-      setTimeout(() => router.push(`${botLink}?start=${uid}`, "_blank"), 1000);
+      setTimeout(() => router.push("https://google.com", "_blank"), 1000);
   }, [isSuccess]);
 
   const handleClick = () => {

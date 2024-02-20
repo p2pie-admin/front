@@ -20,7 +20,6 @@ import {
   restorePmsFromSlug,
   fetchCurrencyConverterRate,
   submitOrder,
-  getOrderByIP,
   getOrderByUID,
 } from "./thunks";
 import { IPm, IPmGroup } from "../types/selector";

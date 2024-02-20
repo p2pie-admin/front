@@ -18,7 +18,7 @@ import {
   readLocalOrder,
   writeLocalOrder,
 } from "../pages/order/localStorageHandler";
-import { OrderByIPQuery, OrderByUIDQuery } from "../pages/order/queries";
+import { OrderByUIDQuery } from "../pages/order/queries";
 import { createOrder, createUID } from "./helper";
 import { IToast } from "../types/general";
 //import { redirect } from "next/navigation";
@@ -170,22 +170,13 @@ export const submitOrder = createAsyncThunk(
   }
 );
 
-export const getOrderByIP = createAsyncThunk(
-  "order/getOrderByIP",
-  async (_, thunkAPI) => {
-    const { main } = thunkAPI.getState() as { main: MainState };
-    const ip = main.fingerprint?.ip;
-    const uid = main.p2p.uid; // if already exists then skip recovery
-    if (uid || !ip) return;
-    const fetcher = initCMSFetcher({ ip });
-    const response = await fetcher(OrderByIPQuery);
-    return response?.p2Ps?.[0] as IOrder | undefined;
-  }
-);
-
 export const getOrderByUID = createAsyncThunk(
   "order/getOrderByUID",
-  async (uid: string) => {
+  async (uidFromLink: string | undefined, thunkAPI) => {
+    const { main } = thunkAPI.getState() as { main: MainState };
+
+    const uidFromIP = createUID(main.fingerprint);
+    const uid = uidFromLink || uidFromIP;
     const fetcher = initCMSFetcher({ uid });
     const response = await fetcher(OrderByUIDQuery);
     return response?.p2Ps?.[0] as IOrder | undefined;

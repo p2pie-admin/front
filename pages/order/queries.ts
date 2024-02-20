@@ -1,24 +1,23 @@
 import { gql } from "graphql-request";
 
-export const OrderByIPQuery = gql`
-  query orderByIP($ip: String) {
-    p2Ps(filters: { ip: { eq: $ip } }) {
-      data {
-        id
-        attributes {
-          uid
-          ip
-          name
-          info
-          status
-          dirs
-          regulationCodes
-          locations
-        }
-      }
-    }
-  }
-`;
+// export const OrderByIPQuery = gql`
+//   query orderByIP($ip: String) {
+//     p2Ps(filters: { ip: { eq: $ip } }) {
+//       data {
+//         id
+//         attributes {
+//           uid
+//           name
+//           info
+//           status
+//           dirs
+//           regulationCodes
+//           locations
+//         }
+//       }
+//     }
+//   }
+// `;
 
 export const OrderByUIDQuery = gql`
   query orderByUID($uid: String) {
@@ -27,7 +26,6 @@ export const OrderByUIDQuery = gql`
         id
         attributes {
           uid
-          ip
           name
           info
           status
@@ -59,3 +57,13 @@ export const StepsQuery = gql`
     }
   }
 `;
+
+// export const updateUIDMutation = gql`
+//   mutation updateUID($id: ID!, $uid: String) {
+//     updateP2P(id: $id, data: { uid: $uid }) {
+//       data {
+//         id
+//       }
+//     }
+//   }
+// `;

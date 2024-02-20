@@ -48,17 +48,17 @@ const Steps = () => {
   const router = useRouter();
   const { uid } = router.query;
 
-  // первичная загрузка, сперва пытаемся из localStorage загрузиться,
-  // и если не удалось, то пробуем по IP
-  // useEffect(() => {
-  //   dispatch(getSavedOrders());
-  //   setTimeout(() => dispatch(getOrderByIP()), 2000);
-  // }, []);
-
-  // если есть в ссылке uid то грузимся от него, иначе скипаем
   useEffect(() => {
-    uid && dispatch(getOrderByUID(uid as string));
+    dispatch(getSavedOrders()); //первичная загрузка, сперва пытаемся из localStorage
+  }, []);
+  useEffect(() => {
+    // затем реверифицируемся и грузимся из uid
+    setTimeout(() => dispatch(getOrderByUID(uid as string)), 2000);
   }, [uid]);
+  // если есть в ссылке uid то грузимся от него, иначе скипаем
+  // useEffect(() => {
+  //   uid && dispatch(getOrderByUID(uid as string));
+  // }, [uid]);
 
   const stepComponents = [<Step1 />, <Step2 />, <Step3 />];
   const fetcher = initCMSFetcher();
