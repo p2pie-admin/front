@@ -47,13 +47,15 @@ const Steps = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { uid } = router.query;
-
+ 
   useEffect(() => {
     dispatch(getSavedOrders()); //первичная загрузка, сперва пытаемся из localStorage
   }, []);
   useEffect(() => {
     // затем реверифицируемся и грузимся из uid
-    setTimeout(() => dispatch(getOrderByUID(uid as string)), 2000);
+    uid && setTimeout(() => {
+      dispatch(getOrderByUID(uid as string))
+    }, 2000);
   }, [uid]);
   // если есть в ссылке uid то грузимся от него, иначе скипаем
   // useEffect(() => {

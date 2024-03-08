@@ -43,10 +43,19 @@ import { getPmByCode } from "../components/main/side/selector/section/PmGroup/he
 import { IFingerprint, ILocation } from "../types/shared";
 import { ICurrencyConverterRate } from "../types/p2p";
 import { format, R } from "./amountsHelper";
-import { readLocalOrder } from "../pages/order/localStorageHandler";
+import {
+  readLocalOrder,
+  writeLocalOrder,
+} from "../pages/order/localStorageHandler";
 import { IToast } from "../types/general";
 
 type ISide = "give" | "get";
+
+const initialOrder = {
+  uid: "",
+  locations: [],
+  dirs: [{ expanded: true, deleted: false }],
+};
 
 export interface MainState {
   searchBarInputValue: string;
@@ -85,11 +94,7 @@ const initialState: MainState = {
   pendingPopularRates: false,
   toast: { title: "", status: "info" },
   location: { en_country_name: "Russia", en_city_name: "Moscow" },
-  p2p: {
-    uid: "",
-    locations: [],
-    dirs: [{ expanded: true, deleted: false }],
-  },
+  p2p: initialOrder,
 };
 
 export const mainSlice = createSlice({
@@ -410,6 +415,8 @@ export const mainSlice = createSlice({
     });
 
     builder.addCase(submitOrder.rejected, (state, _) => {
+      writeLocalOrder(); // чистим localStorage
+      state.p2p = initialOrder;
       state.toast = { title: "Failed!", status: "error" };
     });
 

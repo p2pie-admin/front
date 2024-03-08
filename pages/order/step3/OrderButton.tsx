@@ -10,18 +10,16 @@ import { createUID } from "../../../redux/helper";
 const OrderButton = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const isSuccess = useAppSelector(
-    (state) => state.main.toast.status == "success"
-  );
+  const status = useAppSelector((state) => state.main.toast.status);
   const fingerprint = useAppSelector((state) => state.main.fingerprint);
   const uid = createUID(fingerprint);
 
   useEffect(() => {
-    console.log(fingerprint);
     const botLink = process.env.NEXT_PUBLIC_TELEGRAM_BOT;
-    isSuccess &&
-      setTimeout(() => router.push("https://google.com", "_blank"), 1000);
-  }, [isSuccess]);
+    status === "success" &&
+      setTimeout(() => router.push(`${botLink}?start=${uid}`), 1000);
+    status === "error" && setTimeout(() => router.reload(), 1000);
+  }, [status]);
 
   const handleClick = () => {
     dispatch(submitOrder());

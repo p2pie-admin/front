@@ -145,20 +145,17 @@ export const submitOrder = createAsyncThunk(
       return { title: "No changes!", status: "warning" };
     }
     if (uid) {
-      // Если uid восстановлен и происходит редактирование
       if (!id) {
-        // в случае восстановления из localStorage мы не знаем id
-        const fetcher = initCMSFetcher({ uid });
-        const response = await fetcher(GetIDFromUIDQuery);
-        id = response.p2Ps[0].id;
-        if (!id) {
-          writeLocalOrder(); // чистим localStorage
-          return { title: "Order does not exist!", status: "error" };
-        }
+        writeLocalOrder(); // чистим localStorage
+        return { title: "Order does not exist!", status: "error" };
       }
       const fetcher = initCMSFetcher({ id, ...order });
       const response = await fetcher(UpdateOrderMutation);
-      response?.updateP2P?.id && writeLocalOrder(order);
+      if (!response?.updateP2P?.id) {
+        writeLocalOrder();
+        return { title: "Order does not exist!", status: "error" };
+      }
+      writeLocalOrder(order);
       return { title: "Order was updated!", status: "info" };
     } else {
       // Если создается новый
