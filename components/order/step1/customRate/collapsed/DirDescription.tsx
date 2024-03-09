@@ -1,7 +1,7 @@
 import { Highlight } from "@chakra-ui/react";
 import { useContext } from "react";
-import { capitalize } from "../../../../../components/main/side/selector/section/PmGroup/helper";
-import P2PContext from "../../../../../components/shared/contexts/p2pContext";
+import { capitalize } from "../../../../main/side/selector/section/PmGroup/helper";
+import P2PContext from "../../../../shared/contexts/p2pContext";
 import { useAppSelector } from "../../../../../redux/hooks";
 import { MainState } from "../../../../../redux/mainReducer";
 import { ResponsiveText } from "../../../../../styles/theme/custom";

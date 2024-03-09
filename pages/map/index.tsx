@@ -1,25 +1,14 @@
-import {
-  useLoadScript,
-  GoogleMap,
-  InfoWindow,
-  OverlayViewF,
-  CircleF,
-  OverlayView,
-} from "@react-google-maps/api";
+//@ts-nocheck
+import { useLoadScript, GoogleMap, OverlayView } from "@react-google-maps/api";
 import type { NextPage } from "next";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Box, Text, useToken } from "@chakra-ui/react";
-
-import { getPricesUSD, testMarkers } from "./helper";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { FaLocationPin } from "react-icons/fa6";
-import { set } from "lodash";
-
 import { initCMSFetcher } from "../../services/fetchers";
-import { PhysicalExchangersQuery } from "./queries";
 import useSWR from "swr";
 import { IPhysicalExchanger } from "../../types/exchanger";
-import CustomMarker from "./marker";
+import CustomMarker from "../../components/map/marker";
+import { getPricesUSD } from "../../components/map/helper";
+import { PhysicalExchangersQuery } from "../../components/map/queries";
 
 const Home: NextPage = () => {
   const fetcher = initCMSFetcher();

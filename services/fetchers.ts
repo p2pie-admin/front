@@ -23,8 +23,8 @@ export const initParserFetcher = () => {
   const env = process.env.NODE_ENV;
   const url =
     env == "production"
-      ? process.env.NEXT_PUBLIC_COURSE_FILTER_PROD_URL
-      : process.env.NEXT_PUBLIC_COURSE_FILTER_DEV_URL;
+      ? process.env.NEXT_PUBLIC_PARSER_PROD_URL
+      : process.env.NEXT_PUBLIC_PARSER_DEV_URL;
 
   return async (slug: string) => {
     const { data } = await axios.get(url + "/" + slug);
@@ -36,8 +36,8 @@ export const initCurrencyConverterFetcher = (p2pDirIndex?: number) => {
   const env = process.env.NODE_ENV;
   const url =
     env == "production"
-      ? process.env.NEXT_PUBLIC_CURRENCY_CONVERTER_PROD_URL
-      : process.env.NEXT_PUBLIC_CURRENCY_CONVERTER_DEV_URL;
+      ? process.env.NEXT_PUBLIC_CONVERTER_PROD_URL
+      : process.env.NEXT_PUBLIC_CONVERTER_DEV_URL;
 
   return async (dir: string) => {
     const { data } = await axios.get(url + "/" + dir.toUpperCase());

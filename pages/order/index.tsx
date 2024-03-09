@@ -20,42 +20,44 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import Step1 from "./step1";
+import Step1 from "../../components/order/step1";
 import { IoIosArrowRoundForward, IoIosArrowRoundBack } from "react-icons/io";
 import {
   Box3D,
   ResponsiveButton,
   ResponsiveText,
 } from "../../styles/theme/custom";
-import Step2 from "./step2";
-import Step3 from "./step3";
 
 import useSWR from "swr";
 import { initCMSFetcher } from "../../services/fetchers";
 import { IP2PStep } from "../../types/p2p";
-import { StepsQuery } from "./queries";
+
 import ErrorWrapper from "../../components/shared/ErrorWrapper";
-import OrderButton from "./step3/OrderButton";
 
 import { useAppDispatch } from "../../redux/hooks";
 import { getSavedOrders } from "../../redux/mainReducer";
 import { getOrderByUID } from "../../redux/thunks";
 import { useRouter } from "next/router";
+import { StepsQuery } from "../../components/order/queries";
+import Step2 from "../../components/order/step2";
+import Step3 from "../../components/order/step3";
+import OrderButton from "../../components/order/step3/OrderButton";
 
 const Steps = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { uid } = router.query;
- 
+
   useEffect(() => {
     dispatch(getSavedOrders()); //первичная загрузка, сперва пытаемся из localStorage
   }, []);
   useEffect(() => {
     // затем реверифицируемся и грузимся из uid
-    uid && setTimeout(() => {
-      dispatch(getOrderByUID(uid as string))
-    }, 2000);
+    uid &&
+      setTimeout(() => {
+        dispatch(getOrderByUID(uid as string));
+      }, 2000);
   }, [uid]);
   // если есть в ссылке uid то грузимся от него, иначе скипаем
   // useEffect(() => {

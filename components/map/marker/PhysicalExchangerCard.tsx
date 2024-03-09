@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import { IPhysicalExchanger } from "../../../types/exchanger";
 import PhysicalExchangerRates from "./PhysicalExchangerRates";
-import CustomImage from "../../../components/shared/CustomImage";
+import CustomImage from "../../shared/CustomImage";
 
 const PhysicalExchangerCard = ({
   physicalExchanger,

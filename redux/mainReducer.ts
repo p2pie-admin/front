@@ -43,11 +43,12 @@ import { getPmByCode } from "../components/main/side/selector/section/PmGroup/he
 import { IFingerprint, ILocation } from "../types/shared";
 import { ICurrencyConverterRate } from "../types/p2p";
 import { format, R } from "./amountsHelper";
+
+import { IToast } from "../types/general";
 import {
   readLocalOrder,
   writeLocalOrder,
-} from "../pages/order/localStorageHandler";
-import { IToast } from "../types/general";
+} from "../components/order/localStorageHandler";
 
 type ISide = "give" | "get";
 

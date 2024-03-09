@@ -8,19 +8,18 @@ import {
 } from "../services/fetchers";
 import { MainState } from "./mainReducer";
 import { IPmPointer } from "../types/selector";
-import {
-  CreateOrderMutation,
-  GetIDFromUIDQuery,
-  UpdateOrderMutation,
-} from "../pages/order/step3/queries";
 import { IOrder } from "../types/p2p";
+import { createOrder, createUID } from "./helper";
+import { IToast } from "../types/general";
 import {
   readLocalOrder,
   writeLocalOrder,
-} from "../pages/order/localStorageHandler";
-import { OrderByUIDQuery } from "../pages/order/queries";
-import { createOrder, createUID } from "./helper";
-import { IToast } from "../types/general";
+} from "../components/order/localStorageHandler";
+import { OrderByUIDQuery } from "../components/order/queries";
+import {
+  UpdateOrderMutation,
+  CreateOrderMutation,
+} from "../components/order/step3/queries";
 //import { redirect } from "next/navigation";
 
 // export async function navigate() {
@@ -31,8 +30,8 @@ type ISide = "give" | "get";
 const env = process.env.NODE_ENV;
 const courseFilterLink =
   env === "production"
-    ? process.env.NEXT_PUBLIC_COURSE_FILTER_PROD_URL
-    : process.env.NEXT_PUBLIC_COURSE_FILTER_DEV_URL;
+    ? process.env.NEXT_PUBLIC_PARSER_PROD_URL
+    : process.env.NEXT_PUBLIC_PARSER_DEV_URL;
 
 export const fetchFiat = createAsyncThunk("initial/fetchFiat", async () => {
   const response = await axios

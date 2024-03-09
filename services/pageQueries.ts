@@ -22,7 +22,6 @@ export const articleQuery = gql`
           header
           subheader
           section
-          time_to_read
           updatedAt
           chapters {
             ... on ComponentArticleChapter {
