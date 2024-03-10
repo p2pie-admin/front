@@ -3,7 +3,7 @@ import { ReactElement } from "react";
 import Arrow from "../../../shared/Arrow";
 import { ResponsiveButton } from "../../../../styles/theme/custom";
 
-const SideButton = ({
+const ModalButton = ({
   children,
   leftIcon,
   openDialog,
@@ -40,4 +40,4 @@ const SideButton = ({
   );
 };
 
-export default SideButton;
+export default ModalButton;

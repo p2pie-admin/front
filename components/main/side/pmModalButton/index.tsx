@@ -11,9 +11,10 @@ import {
   triggerModal,
   setSearchBarInputValue,
 } from "../../../../redux/mainReducer";
-import SideButton from "./SideButton";
+
 import SelectorModal from "../selector/SelectorModal";
 import PmIcons from "./PmIcons";
+import ModalButton from "./ModalButton";
 
 const PmModalButton = () => {
   const dispatch = useAppDispatch();
@@ -34,18 +35,18 @@ const PmModalButton = () => {
 
   if (!pms.length)
     return (
-      <SideButton openDialog={openDialog}>
+      <ModalButton openDialog={openDialog}>
         <SelectorModal id={side + p2pIndex || ""} />
         <ResponsiveText size="md" variant="primary">
           {capitalize(side === "give" ? "sell" : "buy")}
         </ResponsiveText>
-      </SideButton>
+      </ModalButton>
     );
 
   const { subgroup_name } = pms[0]; // TAG
   const currencyCode = pms[0].currency.code.toUpperCase();
   return (
-    <SideButton openDialog={openDialog} leftIcon={<PmIcons pms={pms} />}>
+    <ModalButton openDialog={openDialog} leftIcon={<PmIcons pms={pms} />}>
       <SelectorModal id={side + p2pIndex || ""} />
       <ResponsiveText size="md" variant="primary">
         {currencyCode}
@@ -64,7 +65,7 @@ const PmModalButton = () => {
           </Tag>
         </Box>
       )}
-    </SideButton>
+    </ModalButton>
   );
 };
 
