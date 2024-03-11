@@ -68,7 +68,7 @@ const Carousel = () => {
   // вынесен наружу, иначе все внутри ErrorWrapper начинает высчитываться и выдает ошибку
   const isError = !pendingDirRates && (!dirRates || !dirRates.length);
   return (
-    <CustomBox3D mb="4">
+    <CustomBox3D>
       <Box minH="172px">
         <ErrorWrapper
           isError={isError}

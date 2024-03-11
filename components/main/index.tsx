@@ -82,16 +82,16 @@ const MainPageContent = () => {
 
   return (
     <RegularBox
-      p="4"
+      p={[2, 3, 4]}
       variant="no_contrast"
       boxShadow="lg"
-      mt="4"
+      mt={[2, 3, 4]}
       borderRadius="2xl"
       w={{ base: "98%", sm: 432 }}
     >
-      <MenuHeader />
+      {/* <MenuHeader /> */}
 
-      <Box mb="4">
+      <Box mb={[2, 3, 4]}>
         <SideContext.Provider value={"give"}>
           <Side />
         </SideContext.Provider>
