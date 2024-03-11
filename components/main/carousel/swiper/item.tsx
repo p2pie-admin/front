@@ -32,12 +32,12 @@ function Item({ itemWidth, children, index, gap }: any) {
   return (
     <Flex
       // onFocus={handleFocus}
-      onTouchMove={() => {
-        !isScrollLocked && dispatch(updateScrollLock(true));
-      }}
-      onTouchEndCapture={() => {
-        dispatch(updateScrollLock(false));
-      }}
+      // onTouchMove={() => {
+      //   !isScrollLocked && dispatch(updateScrollLock(true));
+      // }}
+      // onTouchEndCapture={() => {
+      //   dispatch(updateScrollLock(false));
+      // }}
       transition="all .3s ease-out"
       filter={swiperIdVisible === index ? "brightness(1)" : "brightness(0.8)"}
       transform={
