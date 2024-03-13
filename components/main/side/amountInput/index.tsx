@@ -37,6 +37,7 @@ const AmountInput = () => {
   return (
     <Box justifySelf="end">
       <NumberInput
+        lang="en_EN"
         step={R(value / 100)}
         //allowMouseWheel
         variant="unstyled"
@@ -53,8 +54,6 @@ const AmountInput = () => {
       >
         <NumberInputField
           p="0"
-          step="1"
-          lang="en"
           float="right"
           textAlign="end"
           placeholder="0.00"
