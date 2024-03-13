@@ -91,7 +91,7 @@ const MainPageContent = () => {
     >
       <MenuHeader />
 
-      <Box bgColor="red.500">
+      <Box>
         <SideContext.Provider value={"give"}>
           <Side />
         </SideContext.Provider>
