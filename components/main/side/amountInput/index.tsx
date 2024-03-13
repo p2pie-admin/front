@@ -37,6 +37,8 @@ const AmountInput = () => {
   return (
     <Box justifySelf="end">
       <NumberInput
+        pattern="\d*"
+        inputMode="decimal"
         lang="en_EN"
         step={R(value / 100)}
         //allowMouseWheel
