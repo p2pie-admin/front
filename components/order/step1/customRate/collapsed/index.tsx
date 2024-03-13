@@ -78,6 +78,7 @@ const Collapsed = () => {
       <Box>
         <Grid
           ml="auto"
+          mr={[2, 4, "10%"]}
           w={{ base: "96%", md: "80%" }}
           gridRowGap={["6", "7", "8"]}
           gridColumnGap={["2", "4", "8"]}
