@@ -89,9 +89,9 @@ const MainPageContent = () => {
       borderRadius="2xl"
       w={{ base: "98%", sm: 432 }}
     >
-      {/* <MenuHeader /> */}
+      <MenuHeader />
 
-      <Box mb={[2, 3, 4]}>
+      <Box>
         <SideContext.Provider value={"give"}>
           <Side />
         </SideContext.Provider>

@@ -32,7 +32,7 @@ const Home: NextPage = () => {
       <Head>
         <link rel="icon" href="/avatar.ico" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Sriracha&text=p2ie"
+          href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&display=swap&text=p2ie"
           rel="stylesheet"
         />
         <link

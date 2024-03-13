@@ -1,4 +1,4 @@
-import { Collapse, Grid, HStack, Checkbox } from "@chakra-ui/react";
+import { Collapse, Grid, Box, HStack, Checkbox } from "@chakra-ui/react";
 import { useContext } from "react";
 import P2PContext from "../../../../../components/shared/contexts/p2pContext";
 import InfoTooltip from "../../../../../components/shared/Info";
@@ -75,37 +75,39 @@ const Collapsed = () => {
         {`Choose a price and limits to ${header}: `}
       </ResponsiveText> */}
       <DirDescription rateBiggerThanOne={rateBiggerThanOne} />
-      <Grid
-        ml="auto"
-        mr="10%"
-        w={{ base: "96%", md: "80%" }}
-        gridRowGap={["6", "7", "8"]}
-        gridColumnGap={["2", "4", "8"]}
-        gridTemplateColumns="3fr 5fr"
-        mb="6"
-        px={["1", "2", "3"]}
-      >
-        <InputWithSlider
-          id="rate"
-          leftSide={rateBiggerThanOne ? "" : `1 ${giveCur} =`}
-          rightSide={rateBiggerThanOne ? `${giveCur} = 1 ${getCur}` : getCur}
-          adornment={<Commission />}
-        />
-        <InputWithSlider
-          id="min"
-          leftSide="min: "
-          rightSide={mainCur}
-          adornment={<LimitRecalc id="min" cur={secondaryCur} />}
-          isError={minMoreThanMax}
-        />
-        <InputWithSlider
-          id="max"
-          leftSide="max: "
-          rightSide={mainCur}
-          adornment={<LimitRecalc id="max" cur={secondaryCur} />}
-          isError={minMoreThanMax}
-        />
-      </Grid>
+      <Box>
+        <Grid
+          ml="auto"
+          mr="10%"
+          w={{ base: "96%", md: "80%" }}
+          gridRowGap={["6", "7", "8"]}
+          gridColumnGap={["2", "4", "8"]}
+          gridTemplateColumns="3fr 5fr"
+          mb="6"
+          px={["1", "2", "3"]}
+        >
+          <InputWithSlider
+            id="rate"
+            leftSide={rateBiggerThanOne ? "" : `1 ${giveCur} =`}
+            rightSide={rateBiggerThanOne ? `${giveCur} = 1 ${getCur}` : getCur}
+            adornment={<Commission />}
+          />
+          <InputWithSlider
+            id="min"
+            leftSide="min: "
+            rightSide={mainCur}
+            adornment={<LimitRecalc id="min" cur={secondaryCur} />}
+            isError={minMoreThanMax}
+          />
+          <InputWithSlider
+            id="max"
+            leftSide="max: "
+            rightSide={mainCur}
+            adornment={<LimitRecalc id="max" cur={secondaryCur} />}
+            isError={minMoreThanMax}
+          />
+        </Grid>
+      </Box>
       {/* <HStack justifyContent="end">
         <Checkbox defaultChecked colorScheme="peach">
           <HStack>

@@ -8,6 +8,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { FiShare, FiSettings } from "react-icons/fi";
+import { ResponsiveText } from "../../styles/theme/custom";
 
 const MenuHeader = () => {
   return (
@@ -21,10 +22,10 @@ const MenuHeader = () => {
       <Button variant="extra_contrast" p="1">
         <FiSettings />
       </Button>
-      <HStack justifyContent="center" fontWeight="bold" alignItems="center">
-        <Text variant="no_contrast" whiteSpace="nowrap" fontSize="2xl">
-          Search Exchangers
-        </Text>
+      <HStack justifyContent="center" alignItems="center">
+        <ResponsiveText variant="no_contrast" whiteSpace="nowrap" size="lg">
+          {`Search Exchangers and P2P`}
+        </ResponsiveText>
       </HStack>
       <Button variant="extra_contrast" p="1">
         <FiShare />

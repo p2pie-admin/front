@@ -44,11 +44,14 @@ const AddPm = () => {
     e.stopPropagation();
   };
   return (
-    <ShadedButton p="0.5" border="2px dashed" borderColor="bg.500">
+    <ShadedButton
+      onClick={handleClick}
+      p={["0.3", "0.5"]}
+      border="2px dashed"
+      borderColor="bg.500"
+    >
       <SelectorModal id={"+" + side + p2pIndex || ""} />
-      <Center onClick={handleClick}>
-        <IoAddSharp size="1.2rem" />
-      </Center>
+      <IoAddSharp size="1.2rem" />
     </ShadedButton>
   );
 };

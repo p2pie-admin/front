@@ -10,7 +10,7 @@ import { setIP, setLocation } from "../../redux/mainReducer";
 import { ResponsiveText } from "../../styles/theme/custom";
 
 const Layout = ({ children }: { children: ReactChild }) => {
-  const maxW = useBreakpointValue({ base: "100%", lg: "980" });
+  // const maxW = useBreakpointValue({ base: "100%", lg: "980" });
   const isScrollLocked = useAppSelector((state) => state.main.isScrollLocked);
   const myToast = useAppSelector((state) => state.main.toast);
   const toast = useToast();
@@ -41,30 +41,28 @@ const Layout = ({ children }: { children: ReactChild }) => {
   }, [myToast]);
 
   return (
-    <>
-      <Box // careful! populars may stop working!
-        // justifyContent="center"
-        w="100%"
-        pb="0 !important"
-        position="relative"
-        //overflowY={isScrollLocked ? "hidden" : "scroll"}
-        overflowX="hidden"
-        h="100vh"
-        sx={{
-          "&::-webkit-scrollbar": {
-            width: "0",
-          },
-          "&::-webkit-overflow-scrolling": "touch",
-        }}
-      >
-        <Header />
+    <Box // careful! populars may stop working!
+      // justifyContent="center"
+      w="100%"
+      pb="0 !important"
+      position="relative"
+      //overflowY={isScrollLocked ? "hidden" : "scroll"}
+      overflowX="hidden"
+      h="100vh"
+      sx={{
+        "&::-webkit-scrollbar": {
+          width: "0",
+        },
+        "&::-webkit-overflow-scrolling": "touch",
+      }}
+    >
+      <Header />
 
-        <VStack alignItems="center" w="100%" maxW={maxW}>
-          {children}
-        </VStack>
-        {/* <Footer /> */}
-      </Box>
-    </>
+      <VStack alignItems="center" w="100%" mt={[2, 4, 8]}>
+        {children}
+      </VStack>
+      {/* <Footer /> */}
+    </Box>
   );
 };
 

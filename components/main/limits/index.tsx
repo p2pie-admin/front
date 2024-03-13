@@ -137,7 +137,7 @@ const LimitsRange = () => {
 
   if (!MIN || !MAX) return <></>;
   return (
-    <Box3D py="3" mb={[2, 3, 4]} cursor="pointer" display="flex" flexDir="row">
+    <Box3D py="3" my={[2, 3, 4]} cursor="pointer" display="flex" flexDir="row">
       {/* <Text>highestMax: {highestMax}</Text> */}
       <HStack minW="25%" justifyContent="center" onClick={changeSide}>
         <Text fontSize="xs" color={side === "give" ? mainColor : "bg.500"}>

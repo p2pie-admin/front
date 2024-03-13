@@ -5,15 +5,15 @@ import { useColorModeValue } from "@chakra-ui/react";
 
 const Logo = () => {
   return (
-    <Flex mx="2" flexDir="row" alignItems="center">
-      <Image alt="logo" src={profilePic} width={30} height={30} />
+    <Flex flexDir="row">
+      <Image alt="logo" src={profilePic} width={36} height={36} />
 
       <Text
-        color={useColorModeValue("bg.700", "peach.100")}
+        color={useColorModeValue("bg.900", "peach.100")}
         fontSize="2xl"
-        fontFamily="Sriracha, sans-serif"
-        fontWeight="light"
+        fontFamily="Zen Maru Gothic, sans-serif"
         mx="2"
+        pb="2"
       >
         p2pie
       </Text>

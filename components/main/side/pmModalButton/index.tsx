@@ -37,7 +37,7 @@ const PmModalButton = () => {
     return (
       <ModalButton openDialog={openDialog}>
         <SelectorModal id={side + p2pIndex || ""} />
-        <ResponsiveText size="md" variant="primary">
+        <ResponsiveText size="sm" variant="primary">
           {capitalize(side === "give" ? "sell" : "buy")}
         </ResponsiveText>
       </ModalButton>
@@ -48,7 +48,7 @@ const PmModalButton = () => {
   return (
     <ModalButton openDialog={openDialog} leftIcon={<PmIcons pms={pms} />}>
       <SelectorModal id={side + p2pIndex || ""} />
-      <ResponsiveText size="md" variant="primary">
+      <ResponsiveText size="sm" variant="primary">
         {currencyCode}
       </ResponsiveText>
 
