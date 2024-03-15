@@ -201,17 +201,16 @@ export const mainSlice = createSlice({
       action: PayloadAction<AmountInput | undefined>
     ) => {
       state.amountInput = action.payload;
-      if (!action.payload) return;
-      const { side, str } = action.payload;
-      state.amountOutputs =
-        side === "give" ? { give: str, get: "" } : { give: "", get: str };
-      if (state.givePm?.code && state.getPm?.code) {
-        state.amountOutputs = getAmountOutputs(
-          state,
-          state.swiperIdVisible,
-          action.payload
-        );
-      }
+      // if (!action.payload) return;
+      // const { side, str } = action.payload;
+      // state.amountOutputs =
+      //   side === "give" ? { give: str, get: "" } : { give: "", get: str };
+      // if (state.givePm?.code && state.getPm?.code) {
+      state.amountOutputs = getAmountOutputs(
+        state,
+        state.swiperIdVisible,
+        action.payload
+      );
     },
     setActivePopularSide: (
       state: MainState,

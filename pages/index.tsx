@@ -41,6 +41,11 @@ const Home: NextPage = () => {
         />
         <title>p2pie</title>
         <meta name="description" content="Monitoring Tool" />
+        <meta name="google" content="notranslate" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1 , maximum-scale=1, user-scalable=no"
+        />
       </Head>
 
       <MainPageContent />
