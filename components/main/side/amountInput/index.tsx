@@ -6,6 +6,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useContext } from "react";
+import { NumericFormat } from "react-number-format";
 
 import { batchActions } from "redux-batched-actions";
 import { R } from "../../../../redux/amountsHelper";
@@ -37,11 +38,10 @@ const AmountInput = () => {
   return (
     <Box justifySelf="end">
       <NumberInput
-        pattern="\d*"
-        inputMode="decimal"
-        lang="en_EN"
         step={R(value / 100)}
         //allowMouseWheel
+        isValidCharacter={(v) => !!v.match(/^[Ee0-9+\.,]$/)}
+        format={(value) => value.toString().replace(",", ".")}
         variant="unstyled"
         position="relative"
         onChange={onAmountChange}

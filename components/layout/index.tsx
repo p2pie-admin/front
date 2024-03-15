@@ -1,7 +1,13 @@
 import React, { ReactChild, useEffect } from "react";
 import Header from "./header";
 import Footer from "./footer";
-import { useBreakpointValue, useToast, VStack, Box } from "@chakra-ui/react";
+import {
+  useBreakpointValue,
+  useToast,
+  Text,
+  Box,
+  VStack,
+} from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { batch } from "react-redux";
 import { fetchPms, fetchFiat } from "../../redux/thunks";
@@ -43,12 +49,12 @@ const Layout = ({ children }: { children: ReactChild }) => {
   return (
     <Box // careful! populars may stop working!
       // justifyContent="center"
-      w="100%"
-      pb="0 !important"
-      position="relative"
-      //overflowY={isScrollLocked ? "hidden" : "scroll"}
-      overflowX="hidden"
-      h="100vh"
+
+      // w="100%"
+      // pb="0 !important"
+      //position="relative"
+
+      bgColor="red.600"
       sx={{
         "&::-webkit-scrollbar": {
           width: "0",
@@ -61,6 +67,7 @@ const Layout = ({ children }: { children: ReactChild }) => {
       <VStack alignItems="center" w="100%" mt={[2, 4, 8]}>
         {children}
       </VStack>
+
       {/* <Footer /> */}
     </Box>
   );

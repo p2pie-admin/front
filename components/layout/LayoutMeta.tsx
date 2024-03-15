@@ -8,7 +8,7 @@ export default function LayoutHeader() {
         href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@700&family=Nunito:ital,wght@0,300;0,700;0,900;1,600&family=Varela+Round&display=swap"
         rel="stylesheet"
       />
-
+      <meta name="google" content="notranslate" />
       <meta
         name="viewport"
         content="width=device-width, initial-scale=1 , maximum-scale=1, user-scalable=no"
