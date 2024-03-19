@@ -14,8 +14,9 @@ import { fetchPms, fetchFiat } from "../../redux/thunks";
 import axios from "axios";
 import { setIP, setLocation } from "../../redux/mainReducer";
 import { ResponsiveText } from "../../styles/theme/custom";
+import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 
-const Layout = ({ children }: { children: ReactChild }) => {
+const Layout = ({ children }: { children: any }) => {
   // const maxW = useBreakpointValue({ base: "100%", lg: "980" });
   const isScrollLocked = useAppSelector((state) => state.main.isScrollLocked);
   const myToast = useAppSelector((state) => state.main.toast);
@@ -50,11 +51,9 @@ const Layout = ({ children }: { children: ReactChild }) => {
     <Box // careful! populars may stop working!
       // justifyContent="center"
 
-      // w="100%"
-      // pb="0 !important"
-      //position="relative"
-
-      bgColor="red.600"
+      w="100%"
+      pb="0 !important"
+      position="relative"
       sx={{
         "&::-webkit-scrollbar": {
           width: "0",

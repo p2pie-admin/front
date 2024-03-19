@@ -194,15 +194,15 @@ const LimitsRange = () => {
                 color={color3}
                 as={RxDragHandleDots2}
               />
-              <Text
+              <ResponsiveText
+                size="xs"
                 position="absolute"
                 top="22px"
                 color={mainColor}
-                fontSize="0.75rem"
                 whiteSpace="nowrap"
               >
                 {localFormat(stickyAmount)}
-              </Text>
+              </ResponsiveText>
               <Box
                 position="absolute"
                 color={mainColor}
@@ -229,7 +229,7 @@ const LimitsRange = () => {
             <RangeSliderTrack bgColor={color1}>
               <RangeSliderFilledTrack bgColor={color4} />
             </RangeSliderTrack>
-            {percMax - percMin < 20 ? (
+            {percMax - percMin < 25 ? (
               <Flex
                 justifyContent="center"
                 position="absolute"
@@ -238,36 +238,36 @@ const LimitsRange = () => {
                 minH="20"
                 left={`calc(${smoothCenter.toFixed(0)}% - 50px)`}
               >
-                <Box h="fit-content" zIndex="5" mt="-6">
-                  <ResponsiveText fontSize="xs" color="bg.500">
+                <Box h="fit-content" zIndex="5" mt="-7">
+                  <ResponsiveText size="xs" color="bg.500">
                     {MIN == MAX
                       ? localFormat(MIN)
-                      : `${localFormat(MIN)} - ${localFormat(MAX)}`}
+                      : `${localFormat(MIN)} — ${localFormat(MAX)}`}
                   </ResponsiveText>
                 </Box>
               </Flex>
             ) : (
               <>
                 <RangeSliderThumb boxSize={1} index={0} zIndex="2">
-                  <Text
-                    mt="-8"
-                    fontSize="0.6rem"
+                  <ResponsiveText
+                    mt="-9"
+                    size="xs"
                     whiteSpace="nowrap"
                     textAlign="center"
                   >
                     {localFormat(MIN)}
-                  </Text>
+                  </ResponsiveText>
                 </RangeSliderThumb>
 
                 <RangeSliderThumb boxSize={1} index={1} zIndex="1">
-                  <Text
-                    mt="-8"
-                    fontSize="0.6rem"
+                  <ResponsiveText
+                    mt="-9"
+                    size="xs"
                     whiteSpace="nowrap"
                     textAlign="center"
                   >
                     {localFormat(MAX)}
-                  </Text>
+                  </ResponsiveText>
                 </RangeSliderThumb>
               </>
             )}

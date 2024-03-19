@@ -22,7 +22,7 @@ const Header = () => {
       top="0"
       bgColor={useColorModeValue("bg.300", "bg.900")}
       w="100%"
-      p={[1, 2]}
+      p={[2, 4]}
       zIndex="modal"
       justifyContent="center"
       boxShadow={`0 15px 15px -6px ${useColorModeValue(bg300, bg900)}`}

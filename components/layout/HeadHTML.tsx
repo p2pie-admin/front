@@ -4,6 +4,11 @@ import Head from "next/head";
 export default function LayoutHeader() {
   return (
     <Head>
+      <meta charSet="UTF-8" />
+      <meta
+        name="keywords"
+        content="обмен, наличные, крипта, биткойн, криптовалюта, п2п, обменять, p2p, exchange, bitcoin, crypto, monitoring, rate"
+      />
       <link
         href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@700&family=Nunito:ital,wght@0,300;0,700;0,900;1,600&family=Varela+Round&display=swap"
         rel="stylesheet"

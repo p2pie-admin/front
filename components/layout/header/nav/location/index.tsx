@@ -89,7 +89,7 @@ const Location = () => {
         <MultipleCities />
       ) : (
         <Button
-          variant="contrast"
+          variant="extra_contrast"
           p="1"
           onClick={() => dispatch(triggerModal("location"))}
         >

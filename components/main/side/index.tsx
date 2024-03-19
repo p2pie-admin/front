@@ -5,6 +5,7 @@ import {
   Divider,
   Text,
   Flex,
+  HStack,
 } from "@chakra-ui/react";
 import { Box3D } from "../../../styles/theme/custom";
 import { IPm } from "../../../types/selector";
@@ -14,22 +15,18 @@ import PmModalButton from "./pmModalButton";
 const Side = () => {
   return (
     <Box3D>
-      <Grid
-        templateColumns="auto 1fr"
-        gridGap="4"
+      <HStack
+        gap="4"
         py="0"
         px="4"
         w="100%"
         h="20"
-        borderRadius="2xl"
-        alignItems="center"
         justifyContent="space-between"
-        // boxShadow="inset -1px 1px 28px rgba(0,0,0,0.1);"
       >
         <PmModalButton />
 
         <AmountInput />
-      </Grid>
+      </HStack>
     </Box3D>
   );
 };

@@ -30,7 +30,7 @@ const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {
   ) as keyof typeof countryCurrencies;
 
   const localCurrency = countryCurrencies?.[country] || "EUR";
-  const currencies = ["RUB", "USD", localCurrency, "UAH"];
+  const currencyCodes = ["RUB", "USD", localCurrency, "UAH"];
 
   const placeholder = "Search...";
 
@@ -82,14 +82,15 @@ const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {
         </InputGroup>
       </Box3D>
       <HStack spacing="1">
-        {currencies.map((currency) => (
+        {currencyCodes.map((code) => (
           <Button
+            key={code}
             variant="extra_contrast"
             size="sm"
             minH="8"
-            onClick={() => dispatch(setSearchBarInputValue(currency))}
+            onClick={() => dispatch(setSearchBarInputValue(code))}
           >
-            {currency}
+            {code}
           </Button>
         ))}
       </HStack>

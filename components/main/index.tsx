@@ -85,11 +85,10 @@ const MainPageContent = () => {
       p={[2, 3, 4]}
       variant="no_contrast"
       boxShadow="lg"
-      mt={[2, 3, 4]}
       borderRadius="2xl"
       w={{ base: "98%", sm: 432 }}
     >
-      <MenuHeader />
+      {/* <MenuHeader /> */}
 
       <Box>
         <SideContext.Provider value={"give"}>
@@ -108,28 +107,6 @@ const MainPageContent = () => {
       <Carousel />
 
       <MenuFooter />
-      {/* <Popular /> */}
-      {/* {Object.entries(tagIcons).map(([name, Icon]) => (
-        <HStack w="100%">
-          <Box>
-            {name} <Icon />
-          </Box>
-        </HStack>
-      ))} */}
-      {/* <MenuFooter /> */}
-      {/* <LowerPanel /> */}
-      {/* <Greeting /> */}
-
-      {/* <Flex flexDir="column">
-
-    
-      {/* 
-        <Carousel />
-
-        <LowerPanel />
-
-        <MenuFooter />
-      </Flex> */}
     </RegularBox>
   );
 };

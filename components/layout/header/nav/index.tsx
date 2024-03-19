@@ -32,7 +32,7 @@ const Nav = () => {
         <FiSun />
       </Button>
 
-      <Button variant="contrast" p="1" onClick={changeLanguageHandler}>
+      <Button variant="default" p="1" onClick={changeLanguageHandler}>
         <Text>{i18n.language === "en" ? "Ru" : "En"}</Text>
       </Button>
       <MultipleCitiesContext.Provider value={false}>

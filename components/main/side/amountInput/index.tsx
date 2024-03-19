@@ -1,5 +1,6 @@
 import {
   Box,
+  Grid,
   NumberInput,
   NumberInputField,
   Text,
@@ -36,17 +37,17 @@ const AmountInput = () => {
   const outRange = min && max && (value > max[side] || value < min[side]);
 
   return (
-    <Box justifySelf="end">
+    <Grid gridTemplateRows="1fr 36px 1fr" alignItems="center">
+      <Box />
       <NumberInput
+        isDisabled={!currentRate}
         step={R(value / 100)}
         //allowMouseWheel
         isValidCharacter={(v) => !!v.match(/^[Ee0-9+\.,]$/)}
-        format={(value) => value.toString().replace(",", ".")}
+        //format={(value) => value.toString().replace(",", ".")}
         variant="unstyled"
-        position="relative"
         onChange={onAmountChange}
         minW="10"
-        mr={["0", "2"]}
         zIndex="3"
         value={stringValue.length > 11 || pendingDirRates ? "-" : stringValue}
         keepWithinRange={true}
@@ -73,11 +74,10 @@ const AmountInput = () => {
           w="100%"
         />
 
-        <Fiat value={value} min={min} max={max} />
-
         {/* <Text color="teal.400">{`step: ${step} / fiatStep: ${fiatStep}`}</Text> */}
       </NumberInput>
-    </Box>
+      <Fiat value={value} min={min} max={max} />
+    </Grid>
   );
 };
 

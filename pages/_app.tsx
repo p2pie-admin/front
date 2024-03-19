@@ -6,12 +6,14 @@ import Layout from "../components/layout";
 import store from "../redux/store";
 import { Provider } from "react-redux";
 import { appWithTranslation } from "next-i18next";
+import HeadHTML from "../components/layout/HeadHTML";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <Provider store={store}>
         <Layout>
+          <HeadHTML />
           <Component {...pageProps} />
         </Layout>
       </Provider>
