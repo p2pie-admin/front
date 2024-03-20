@@ -4,6 +4,19 @@ import Head from "next/head";
 export default function LayoutHeader() {
   return (
     <Head>
+      <link rel="icon" href="/avatar.ico" />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Geologica"
+        rel="stylesheet"
+      />
+      <link
+        href="http://fonts.googleapis.com/css?family=Inconsolata&text=1234567890,.-+"
+        rel="stylesheet"
+      />
+      <title>p2pie</title>
+      <meta name="description" content="Monitoring Tool" />
       <meta charSet="UTF-8" />
       <meta
         name="keywords"

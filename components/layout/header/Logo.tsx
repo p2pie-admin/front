@@ -11,7 +11,6 @@ const Logo = () => {
       <Text
         color={useColorModeValue("bg.900", "peach.100")}
         fontSize="2xl"
-        fontFamily="Zen Maru Gothic, sans-serif"
         mx="2"
         pb="2"
       >

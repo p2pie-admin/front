@@ -52,6 +52,7 @@ const Layout = ({ children }: { children: any }) => {
       // justifyContent="center"
       w="100%"
       //pb="0 !important"
+      fontFamily="Geologica, sans-serif"
       maxH="-webkit-fill-available"
       overflowY="hidden"
       position="relative"
