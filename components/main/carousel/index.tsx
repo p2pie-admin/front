@@ -69,7 +69,7 @@ const Carousel = () => {
   const isError = !pendingDirRates && (!dirRates || !dirRates.length);
   return (
     <CustomBox3D>
-      <Box minH="172px">
+      <Box>
         <ErrorWrapper
           isError={isError}
           isLoading={pendingDirRates}

@@ -54,35 +54,39 @@ function Carcas({
         px={`${gap / 2}px`}
         position="relative"
         overflow="hidden"
-        _before={{
-          bgGradient: `linear(to-r, ${useColorModeValue(
-            "bg.10",
-            "bg.900"
-          )}, transparent)`,
-          position: "absolute",
-          w: `${gap}px`,
-          content: "''",
-          zIndex: 1,
-          h: "100%",
-          left: 0,
-          top: 0,
-        }}
-        _after={{
-          bgGradient: `linear(to-l, ${useColorModeValue(
-            "bg.10",
-            "bg.900"
-          )}, transparent)`,
-          position: "absolute",
-          w: `${gap}px`,
-          content: "''",
-          zIndex: 1,
-          h: "100%",
-          right: 0,
-          top: 0,
-        }}
+        // _before={{
+        //   bgGradient: `linear(to-r, ${useColorModeValue(
+        //     "bg.10",
+        //     "bg.900"
+        //   )}, transparent)`,
+        //   position: "absolute",
+        //   w: `${gap}px`,
+        //   content: "''",
+        //   zIndex: 1,
+        //   h: "100%",
+        //   left: 0,
+        //   top: 0,
+        // }}
+        // _after={{
+        //   bgGradient: `linear(to-l, ${useColorModeValue(
+        //     "bg.10",
+        //     "bg.900"
+        //   )}, transparent)`,
+        //   position: "absolute",
+        //   w: `${gap}px`,
+        //   content: "''",
+        //   zIndex: 1,
+        //   h: "100%",
+        //   right: 0,
+        //   top: 0,
+        // }}
       >
         {children}
       </Box>
+
+      <Flex mx="auto">
+        <SmoothProgress />
+      </Flex>
     </Box>
   );
 }

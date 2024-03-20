@@ -49,7 +49,7 @@ const RateLayer = ({
 
   if (!cryptoPm) return <></>;
   return (
-    <Box3D p="4" mb="4" key={code}>
+    <Box3D p={["2", "4"]} mb="4" key={code}>
       <PmFullName pm={cryptoPm} />
 
       <TableContainer mt="4">

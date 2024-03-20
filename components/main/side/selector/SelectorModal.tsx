@@ -27,17 +27,11 @@ const SelectorModal = ({ id }: { id: string }) => {
 
   const header =
     side === "give" ? (
-      <Highlight
-        query="sell"
-        styles={{ px: "2", py: "1", rounded: "xl", mx: "1", bg: pink }}
-      >
+      <Highlight query="sell" styles={{ color: pink }}>
         {`What do you sell?`}
       </Highlight>
     ) : (
-      <Highlight
-        query="buy"
-        styles={{ px: "2", py: "1", rounded: "xl", mx: "1", bg: green }}
-      >
+      <Highlight query="buy" styles={{ color: green }}>
         {`What do you buy?`}
       </Highlight>
     );

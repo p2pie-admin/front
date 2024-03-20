@@ -50,9 +50,10 @@ const Layout = ({ children }: { children: any }) => {
   return (
     <Box // careful! populars may stop working!
       // justifyContent="center"
-
       w="100%"
-      pb="0 !important"
+      //pb="0 !important"
+      maxH="-webkit-fill-available"
+      overflowY="hidden"
       position="relative"
       sx={{
         "&::-webkit-scrollbar": {
@@ -61,6 +62,9 @@ const Layout = ({ children }: { children: any }) => {
         "&::-webkit-overflow-scrolling": "touch",
       }}
     >
+      {/* <Box minH="-webkit-fill-available" p="1" w="100%" bgColor="red.500">
+       
+      </Box> */}
       <Header />
 
       <VStack alignItems="center" w="100%" mt={[2, 4, 8]}>

@@ -8,7 +8,7 @@ const PmIcons = ({ pms }: { pms: IPm[] }) => {
   return (
     <HStack position="relative">
       <AddPm />
-      <HStack minW={`${pms.length * 8 + 20}px`}>
+      <HStack minW={`${pms.length * 8 + 12}px`}>
         {pms.map((pm, index) => (
           <Box
             key={pm.code + index}

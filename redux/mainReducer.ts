@@ -138,8 +138,13 @@ export const mainSlice = createSlice({
       action: PayloadAction<{ pm: IPm; side: ISide; index: number }>
     ) => {
       const { side, pm, index } = action.payload;
+      const pms = state.p2p.dirs[index][side];
       const cur = state.p2p.dirs[index][side]?.[0].currency.code.toUpperCase();
-      if (cur === pm.currency.code.toUpperCase())
+      if (
+        cur === pm.currency.code.toUpperCase() &&
+        pms &&
+        !pms.find((p) => p.code === pm.code)
+      )
         state.p2p.dirs[index][side] = [
           ...(state.p2p.dirs[index][side] || []),
           pm,

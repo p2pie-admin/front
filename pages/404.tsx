@@ -5,7 +5,7 @@ import Link from "next/link";
 import { RegularBox } from "../styles/theme/custom";
 
 const notFound = () => (
-  <Flex width="100%" height="100vh" justifyContent="center" alignItems="center">
+  <Flex width="100%" justifyContent="center" alignItems="center">
     <Center w="100px">
       <RegularBox display="flex" alignItems="center" flexDir="column">
         <Text fontSize="6xl" textAlign="center">

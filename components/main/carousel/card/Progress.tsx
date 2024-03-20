@@ -82,7 +82,7 @@ const SmoothProgress = () => {
       alignItems="end"
       position="absolute"
       left="0"
-      bottom="2.5"
+      bottom="1.5"
       w="100%"
       h="2"
       zIndex="3"
@@ -96,7 +96,7 @@ const SmoothProgress = () => {
             boxShadow={
               swiperIdVisible === index ? `0 0 10px -1px ${colorKey}` : "none"
             }
-            w={length > 18 ? 1.5 : length > 9 ? 2 : 3}
+            w="2" //{length > 18 ? 1.5 : length > 9 ? 2 : 3}
             cursor="pointer"
             borderRadius="2px"
             bgColor={

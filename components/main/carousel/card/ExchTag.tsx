@@ -42,7 +42,6 @@ const ExchTag = ({ parameter }: { parameter: IParam }) => {
       openDelay={500}
     >
       <HStack
-        h="25"
         filter={filter}
         zIndex="4"
         position="relative"

@@ -41,7 +41,7 @@ const CustomModal = ({
         <ModalHeader
           w="100%"
           pt="2"
-          pb="1"
+          pb="2"
           position="relative"
           display="flex"
           justifyContent="center"

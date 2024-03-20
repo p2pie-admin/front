@@ -5,11 +5,10 @@ import QuickChange from "./popular-pms";
 
 const MenuFooter = () => {
   return (
-    <></>
-    // <Grid gridTemplateColumns="1fr 1fr" gridGap="4" userSelect="none">
-    //   <QuickChange />
-    //   <PopularRates />
-    // </Grid>
+    <Grid gridTemplateColumns="1fr 1fr" gridGap="4" userSelect="none" mt="4">
+      <QuickChange />
+      <PopularRates />
+    </Grid>
   );
 };
 

@@ -15,6 +15,7 @@ import { batch } from "react-redux";
 import { fetchDirRates, restorePmsFromSlug } from "../../redux/thunks";
 import { RegularBox } from "../../styles/theme/custom";
 import P2PContext from "../shared/contexts/p2pContext";
+import Greeting from "./Greeting";
 
 const MainPageContent = () => {
   const dispatch = useAppDispatch();
@@ -81,33 +82,34 @@ const MainPageContent = () => {
   //   });
 
   return (
-    <RegularBox
-      p={[2, 3, 4]}
-      variant="no_contrast"
-      boxShadow="lg"
-      borderRadius="2xl"
-      w={{ base: "98%", sm: 432 }}
-    >
-      {/* <MenuHeader /> */}
+    <>
+      <Greeting />
+      <RegularBox
+        p={[2, 3, 4]}
+        variant="no_contrast"
+        boxShadow="lg"
+        borderRadius="2xl"
+        w={{ base: "98%", sm: 432 }}
+      >
+        <Box>
+          <SideContext.Provider value={"give"}>
+            <Side />
+          </SideContext.Provider>
 
-      <Box>
-        <SideContext.Provider value={"give"}>
-          <Side />
-        </SideContext.Provider>
+          <ReverseButton />
 
-        <ReverseButton />
+          <SideContext.Provider value={"get"}>
+            <Side />
+          </SideContext.Provider>
+        </Box>
 
-        <SideContext.Provider value={"get"}>
-          <Side />
-        </SideContext.Provider>
-      </Box>
+        <LimitsRange />
 
-      <LimitsRange />
+        <Carousel />
 
-      <Carousel />
-
-      <MenuFooter />
-    </RegularBox>
+        <MenuFooter />
+      </RegularBox>
+    </>
   );
 };
 

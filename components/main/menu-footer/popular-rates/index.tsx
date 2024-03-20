@@ -68,9 +68,9 @@ export default function BestRates() {
           addSpaces(rate),
         ])
       : [
-          ["ETH", "$ --- "],
-          ["BTC", "$ --- "],
-          ["USDT", "₽ --- "],
+          ["ETH", ""],
+          ["BTC", ""],
+          ["USDT", ""],
         ];
 
   const [bg50, bg900] = useToken("colors", ["bg.10", "bg.900"]);
@@ -120,7 +120,7 @@ export default function BestRates() {
               color={useColorModeValue("bg.700", "bg.200")}
               justifySelf="end"
             >
-              {"~" + ratePair[1]}
+              {ratePair[1]}
             </Text>
             {index % 2 ? (
               <RiArrowDropUpFill size="1rem" />

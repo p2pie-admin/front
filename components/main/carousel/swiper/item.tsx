@@ -38,11 +38,11 @@ function Item({ itemWidth, children, index, gap }: any) {
       // onTouchEndCapture={() => {
       //   dispatch(updateScrollLock(false));
       // }}
-      transition="all .3s ease-out"
-      filter={swiperIdVisible === index ? "brightness(1)" : "brightness(0.8)"}
-      transform={
-        swiperIdVisible === index ? "scale(1)" : "scale(0.9) skew(2deg, 1deg)"
-      }
+      // transition="all .3s ease-out"
+      // filter={swiperIdVisible === index ? "brightness(1)" : "brightness(0.8)"}
+      // transform={
+      //   swiperIdVisible === index ? "scale(1)" : "scale(0.9) skew(2deg, 1deg)"
+      // }
       // onBlur={handleBlur}
       // onKeyUp={handleKeyUp}
       // onKeyDown={handleKeyDown}

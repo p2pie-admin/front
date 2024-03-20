@@ -21,7 +21,8 @@ const AmountInput = () => {
   const side = useContext(SideContext) as "give" | "get";
 
   const onAmountChange = (str: string, num: number) => {
-    str.length < 11 && dispatch(setAmount({ side, str, num }));
+    str.length < 11 &&
+      dispatch(setAmount({ side, str: str.replace(",", "."), num }));
   };
 
   const amountOutputs = useAppSelector((state) => state.main.amountOutputs);
@@ -37,8 +38,7 @@ const AmountInput = () => {
   const outRange = min && max && (value > max[side] || value < min[side]);
 
   return (
-    <Grid gridTemplateRows="1fr 36px 1fr" alignItems="center">
-      <Box />
+    <>
       <NumberInput
         isDisabled={!currentRate}
         step={R(value / 100)}
@@ -76,8 +76,9 @@ const AmountInput = () => {
 
         {/* <Text color="teal.400">{`step: ${step} / fiatStep: ${fiatStep}`}</Text> */}
       </NumberInput>
+      <Box />
       <Fiat value={value} min={min} max={max} />
-    </Grid>
+    </>
   );
 };
 

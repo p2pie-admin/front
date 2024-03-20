@@ -49,6 +49,7 @@ const AddPm = () => {
       p={["0.3", "0.5"]}
       border="2px dashed"
       borderColor="bg.500"
+      mr="2"
     >
       <SelectorModal id={"+" + side + p2pIndex || ""} />
       <IoAddSharp size="1.2rem" />
