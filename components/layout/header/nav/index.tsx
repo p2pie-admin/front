@@ -13,6 +13,7 @@ import { WeatherSunny } from "@styled-icons/fluentui-system-filled/WeatherSunny"
 import { i18n, useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import { FiSun } from "react-icons/fi";
+import { AiOutlineMenu } from "react-icons/ai";
 import Location from "./location";
 import MultipleCitiesContext from "./location/MultipleCitiesContext";
 
@@ -28,16 +29,15 @@ const Nav = () => {
   };
   return (
     <HStack spacing="2">
-      <Button variant="contrast" p="1" onClick={toggleColorMode}>
-        <FiSun />
-      </Button>
-
-      <Button variant="default" p="1" onClick={changeLanguageHandler}>
+      {/* <Button variant="default" p="1" onClick={changeLanguageHandler}>
         <Text>{i18n.language === "en" ? "Ru" : "En"}</Text>
-      </Button>
+      </Button> */}
       <MultipleCitiesContext.Provider value={false}>
         <Location />
       </MultipleCitiesContext.Provider>
+      <Button variant="contrast" p="1" onClick={toggleColorMode}>
+        <AiOutlineMenu />
+      </Button>
 
       {/* <NavButton handleClick={() => toggleColorMode()} icon={WeatherSunny} />
       <NavButton

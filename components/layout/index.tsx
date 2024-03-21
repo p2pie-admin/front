@@ -74,11 +74,9 @@ const Layout = ({ children }: { children: any }) => {
       </Box> */}
       <Header />
 
-      <VStack alignItems="center" w="100%" mt={[2, 4, 8]}>
+      <VStack alignItems="center" mt={[2, 4, 8]}>
         {children}
       </VStack>
-
-      {/* <Footer /> */}
     </Box>
   );
 };

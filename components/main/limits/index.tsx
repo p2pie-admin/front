@@ -197,7 +197,7 @@ const LimitsRange = () => {
               <ResponsiveText
                 size="xs"
                 position="absolute"
-                top="22px"
+                top="-12px"
                 color={mainColor}
                 whiteSpace="nowrap"
               >
@@ -238,7 +238,7 @@ const LimitsRange = () => {
                 minH="20"
                 left={`calc(${smoothCenter.toFixed(0)}% - 50px)`}
               >
-                <Box h="fit-content" zIndex="5" mt="-7">
+                <Box h="fit-content" zIndex="5" mt="1">
                   <ResponsiveText size="xs" color="bg.500">
                     {MIN == MAX
                       ? localFormat(MIN)
@@ -250,7 +250,7 @@ const LimitsRange = () => {
               <>
                 <RangeSliderThumb boxSize={1} index={0} zIndex="2">
                   <ResponsiveText
-                    mt="-9"
+                    mt="8"
                     size="xs"
                     whiteSpace="nowrap"
                     textAlign="center"
@@ -261,7 +261,7 @@ const LimitsRange = () => {
 
                 <RangeSliderThumb boxSize={1} index={1} zIndex="1">
                   <ResponsiveText
-                    mt="-9"
+                    mt="8"
                     size="xs"
                     whiteSpace="nowrap"
                     textAlign="center"

@@ -9,7 +9,7 @@ const Footer = () => {
     >
       <VStack justifyContent="center" alignItems="center" minH="40">
         <Text>p2pie.com</Text>
-        <Text>2023</Text>
+        <Text>2024</Text>
       </VStack>
     </Box>
   );

@@ -34,7 +34,7 @@ const ExchangerNameRating = ({
   ]);
 
   return (
-    <HStack h="40px" px={["2", "4"]} position="relative">
+    <HStack h="40px" px="2" position="relative">
       <Text
         fontSize={exchangerName.length > 12 ? "xl" : "2xl"}
         textAlign="left"
@@ -55,11 +55,11 @@ const ExchangerNameRating = ({
           starEmptyColor={useColorModeValue(blackAlpha300, whiteAlpha300)}
           // changeRating={this.changeRating}
           numberOfStars={5}
-          starDimension="10px"
+          starDimension="16px"
           starSpacing="2px"
           name="rating"
         />
-        <Text flexWrap="nowrap" fontSize="xs" mt="1" color="bg.400">
+        <Text flexWrap="nowrap" fontSize="sm" mt="1" color="bg.400">
           {`${rating}/5`}
         </Text>
       </HStack>

@@ -14,8 +14,12 @@ import CustomModal from "../../../../shared/CustomModal";
 import CountryListWrapper from "./CountryListWrapper";
 import MultipleCitiesContext from "./MultipleCitiesContext";
 import { useContext } from "react";
-import { RegularBox } from "../../../../../styles/theme/custom";
+import {
+  RegularBox,
+  ResponsiveButton,
+} from "../../../../../styles/theme/custom";
 import { AiOutlinePlus } from "react-icons/ai";
+import Arrow from "../../../../shared/Arrow";
 
 const Location = () => {
   const locations = useAppSelector((state) => state.main.p2p.locations);
@@ -25,6 +29,7 @@ const Location = () => {
   );
   const dispatch = useAppDispatch();
   const isMultiple = useContext(MultipleCitiesContext);
+  const color = useColorModeValue("violet.600", "peach.200");
 
   const SelectButton = () => (
     <RegularBox
@@ -37,7 +42,7 @@ const Location = () => {
       w="100%"
       p="4"
     >
-      <Button variant="no_contrast" onClick={() => dispatch(triggerModal(""))}>
+      <Button variant="default" onClick={() => dispatch(triggerModal(""))}>
         {`Select ${citiesSelectedLength}`}
       </Button>
     </RegularBox>
@@ -46,14 +51,14 @@ const Location = () => {
   const MultipleCities = () => (
     <RegularBox p="2">
       <HStack>
-        <Button
-          variant="contrast"
+        <ResponsiveButton
+          variant="default"
           p="2"
           onClick={() => dispatch(triggerModal("locations"))}
           leftIcon={<AiOutlinePlus size="1rem" />}
         >
           Add City
-        </Button>
+        </ResponsiveButton>
         <Wrap w="80%">
           {locations.map((l) => (
             <Tag
@@ -88,13 +93,20 @@ const Location = () => {
       {isMultiple ? (
         <MultipleCities />
       ) : (
-        <Button
-          variant="extra_contrast"
+        <ResponsiveButton
+          variant="default"
           p="1"
+          mx="2"
+          color={color}
+          rightIcon={
+            // <Hide below="xs">
+            <Arrow isUp={false} />
+            // </Hide>
+          }
           onClick={() => dispatch(triggerModal("location"))}
         >
           {location.en_city_name || "City"}
-        </Button>
+        </ResponsiveButton>
       )}
     </>
   );

@@ -4,9 +4,7 @@ import ReverseButton from "./ReverseButton";
 import SideContext from "../shared/contexts/SideContext";
 import Carousel from "../main/carousel";
 import LimitsRange from "./limits";
-import MenuHeader from "./MenuHeader";
 
-import MenuFooter from "./menu-footer";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { decrementSwiper, incrementSwiper } from "../../redux/mainReducer";
@@ -106,8 +104,6 @@ const MainPageContent = () => {
         <LimitsRange />
 
         <Carousel />
-
-        <MenuFooter />
       </RegularBox>
     </>
   );

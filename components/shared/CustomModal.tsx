@@ -9,6 +9,7 @@ import {
   Text,
   Box,
   useToken,
+  useColorMode,
 } from "@chakra-ui/react";
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -25,7 +26,10 @@ const CustomModal = ({
 }) => {
   const dispatch = useAppDispatch();
   const isOpen = useAppSelector((state) => state.main.modal === id);
-  const [shaderColor] = useToken("colors", ["bg.800"]);
+  const [shaderColor] = useToken(
+    "colors",
+    useColorModeValue(["bg.100"], ["bg.800"])
+  );
   return (
     <Modal
       size={"lg"}
@@ -34,12 +38,10 @@ const CustomModal = ({
     >
       <ModalOverlay />
       <ModalContent
-        borderRadius="2xl"
-        p="2"
-        bgColor={useColorModeValue("bg.100", "bg.800")}
-        color={useColorModeValue("bg.400", "bg.100")}
         overflow="hidden"
         h="78vh"
+        position="relative"
+        bgColor={shaderColor}
       >
         <ModalHeader
           w="100%"
@@ -65,12 +67,13 @@ const CustomModal = ({
           }}
         >
           {children}
-          <Box w="100%" h="20" />
+          <Box w="100%" h="20" onScroll={(e) => e.preventDefault()} />
         </ModalBody>
         <Box
           w="100%"
-          h="40"
-          bgGradient={`linear-gradient(0deg, ${shaderColor} , transparent)`}
+          h="2"
+          boxShadow={`0 11px 51px 46px ${shaderColor}`}
+          // bgGradient={`linear-gradient(0deg, ${shaderColor} , transparent)`}
           position="absolute"
           left="0"
           bottom="0"
