@@ -8,7 +8,7 @@ export default function LayoutHeader() {
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" />
       <link
-        href="https://fonts.googleapis.com/css2?family=Geologica"
+        href="https://fonts.googleapis.com/css2?family=Roboto"
         rel="stylesheet"
       />
       <link
