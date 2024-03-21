@@ -13,19 +13,19 @@ import Nav from "./nav";
 
 const Header = () => {
   const maxW = useBreakpointValue({ base: "100%", lg: "980" });
-  const [bg300, bg900] = useToken("colors", ["bg.300", "bg.900"]);
+  const [bg200, bg900] = useToken("colors", ["bg.200", "bg.900"]);
 
   return (
     <Flex
       h="46px" // строго
       position="sticky"
       top="0"
-      bgColor={useColorModeValue("bg.300", "bg.900")}
+      bgColor={useColorModeValue("bg.200", "bg.900")}
       w="100%"
       p={[2, 4]}
       zIndex="modal"
       justifyContent="center"
-      boxShadow={`0 15px 15px -6px ${useColorModeValue(bg300, bg900)}`}
+      boxShadow={`0 11px 11px -6px ${useColorModeValue(bg200, bg900)}`}
       // bgGradient={useColorModeValue(
       //   `linear(to-t, ${bg100}, rgba(0,0,0,0))`,
       //   `linear(to-t, ${bg900}, rgba(0,0,0,0))`

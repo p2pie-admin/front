@@ -11,11 +11,22 @@ export default function LayoutHeader() {
         href="https://fonts.googleapis.com/css2?family=Roboto"
         rel="stylesheet"
       />
+
       <link
         href="http://fonts.googleapis.com/css?family=Inconsolata&text=1234567890,.-+"
         rel="stylesheet"
       />
       <title>p2pie</title>
+      <meta name="google" content="notranslate" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1 , maximum-scale=1, user-scalable=no"
+      />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&display=swap&text=p2ie"
+        rel="stylesheet"
+      />
+
       <meta name="description" content="Monitoring Tool" />
       <meta charSet="UTF-8" />
       <meta

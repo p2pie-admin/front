@@ -6,6 +6,7 @@ import {
   SlideFade,
   Text,
   useBreakpointValue,
+  useColorModeValue,
   useToken,
 } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
@@ -16,14 +17,17 @@ const Greeting = () => {
   const noRates = useAppSelector((state) => !state.main.dirRates?.length);
 
   // const collapsed = useBreakpointValue({ base: !topsExist, md: true });
-  const [bg100, bg50] = useToken("colors", ["bg.200", "peach.200"]);
+  const [peripheryColor, centerColor] = useToken(
+    "colors",
+    useColorModeValue(["bg.700", "violet.800"], ["bg.400", "peach.200"])
+  );
 
   return (
     <Collapse delay={1} in={noRates}>
       <SlideFade delay={1} in>
         <Box
           my={[4, 6]}
-          bgGradient={`radial-gradient(circle at 50% -10%, ${bg50} 0%, ${bg100} 60%)`}
+          bgGradient={`radial-gradient(circle at 50% -10%, ${centerColor} 0%, ${peripheryColor} 60%)`}
           bgClip="text"
         >
           <Text

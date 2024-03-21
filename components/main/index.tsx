@@ -89,7 +89,7 @@ const MainPageContent = () => {
         variant="no_contrast"
         boxShadow="lg"
         borderRadius="2xl"
-        w={{ base: "98%", sm: 432 }}
+        w={{ base: "96%", sm: 432 }}
       >
         <Box>
           <SideContext.Provider value={"give"}>

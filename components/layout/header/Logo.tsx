@@ -1,21 +1,25 @@
-import { Box, Flex, HStack, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import profilePic from "../../../public/cake.svg";
 import { useColorModeValue } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 const Logo = () => {
+  const router = useRouter();
   return (
-    <HStack justifyContent="center">
-      <Image alt="logo" src={profilePic} width={30} height={30} />
+    <Flex flexDir="row" onClick={() => router.reload()} cursor="pointer">
+      <Image alt="logo" src={profilePic} width={36} height={36} />
 
       <Text
         color={useColorModeValue("bg.900", "peach.100")}
         fontSize="2xl"
-        mx={["1", "2"]}
+        fontFamily="Zen Maru Gothic, sans-serif"
+        mx="2"
+        pb="2"
       >
         p2pie
       </Text>
-    </HStack>
+    </Flex>
   );
 };
 

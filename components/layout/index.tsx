@@ -7,6 +7,8 @@ import {
   Text,
   Box,
   VStack,
+  useColorModeValue,
+  useToken,
 } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { batch } from "react-redux";
@@ -46,11 +48,15 @@ const Layout = ({ children }: { children: any }) => {
         isClosable: true,
       });
   }, [myToast]);
-
+  const ambientColor = useColorModeValue(
+    "rgba(143,92,292,0.1)",
+    "rgba(247,178,177,0.05)"
+  );
   return (
     <Box // careful! populars may stop working!
       // justifyContent="center"
       w="100%"
+      bgGradient={`radial-gradient(circle at 50% -10%, ${ambientColor} 0%, transparent 40%)`}
       //pb="0 !important"
       fontFamily="Roboto, sans-serif"
       maxH="-webkit-fill-available"
