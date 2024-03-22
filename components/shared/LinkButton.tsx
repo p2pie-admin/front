@@ -10,13 +10,15 @@ const LinkButton = ({
   message: string;
   CustomIcon?: any;
 }) => {
+  const color = useColorModeValue("bg.700", "bg.300");
   return (
     <NextLink href={href || ""}>
       <Button
-        variant="contrast"
-        size="sm"
+        variant="default"
+        color={color}
+        size="md"
         my="1"
-        rightIcon={<CustomIcon size="1rem" />}
+        leftIcon={<CustomIcon size="1.2rem" />}
       >
         {message}
       </Button>

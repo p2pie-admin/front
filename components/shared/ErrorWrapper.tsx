@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 
 import LinkButton from "./LinkButton";
-import { FaTelegramPlane } from "react-icons/fa";
+import { BsTelegram } from "react-icons/bs";
 import { IoWarningOutline } from "react-icons/io5";
 
 const Error = ({ primaryMessage = "", secondaryMessage = "" }) => {
@@ -40,7 +40,7 @@ const Error = ({ primaryMessage = "", secondaryMessage = "" }) => {
       <LinkButton
         href={String(process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT)}
         message={"Report problem"}
-        CustomIcon={FaTelegramPlane}
+        CustomIcon={BsTelegram}
       />
     </Flex>
   );

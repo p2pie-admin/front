@@ -47,7 +47,7 @@ function Carcas({
   );
 
   return (
-    <Box position="relative" mb="4">
+    <Box position="relative">
       <Box
         ref={ref}
         px={`${gap / 2}px`}

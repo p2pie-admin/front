@@ -14,7 +14,7 @@ import CustomModal from "../../../../shared/CustomModal";
 import CountryListWrapper from "./CountryListWrapper";
 import MultipleCitiesContext from "./MultipleCitiesContext";
 import { useContext } from "react";
-import { FaLocationDot } from "react-icons/fa6";
+import { FaMapMarkerAlt } from "react-icons/fa";
 import {
   RegularBox,
   ResponsiveButton,
@@ -103,7 +103,7 @@ const Location = () => {
           color={color}
           p="1"
           mx="2"
-          leftIcon={<FaLocationDot size="1rem" />}
+          leftIcon={<FaMapMarkerAlt size="1rem" />}
           rightIcon={
             // <Hide below="xs">
             <Arrow isUp={false} />

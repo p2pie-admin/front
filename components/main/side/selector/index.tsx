@@ -29,8 +29,8 @@ import { ISelector } from "../../../../types/selector";
 import ErrorWrapper from "../../../shared/ErrorWrapper";
 import { i18n, useTranslation } from "next-i18next";
 import LinkButton from "../../../shared/LinkButton";
-import { ScTelegram } from "@styled-icons/evil/ScTelegram";
-import error from "next/error";
+import { BsTelegram } from "react-icons/bs";
+
 import useSWR from "swr";
 import { initCMSFetcher } from "../../../../services/fetchers";
 import { memo } from "react";
@@ -83,7 +83,7 @@ const Selector = memo(function Selector() {
         <LinkButton
           message="CONTACT SUPPORT"
           href={String(process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT)}
-          CustomIcon={ScTelegram}
+          CustomIcon={BsTelegram}
         />
       </ErrorWrapper>
     </VStack>
