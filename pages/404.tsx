@@ -9,7 +9,7 @@ function NotFound() {
     <Flex width="100%" justifyContent="center" alignItems="center">
       <Center w="100px">
         <RegularBox display="flex" alignItems="center" flexDir="column">
-          <Text fontSize="6xl" textAlign="center">
+          <Text fontSize="6xl" fontWeight="bold" textAlign="center">
             404
           </Text>
           <Link href={`/`}>
