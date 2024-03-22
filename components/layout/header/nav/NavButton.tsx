@@ -1,15 +1,17 @@
 import { Button, Icon, Text } from "@chakra-ui/react";
 import { StyledIcon } from "@styled-icons/styled-icon";
+import { IconType } from "react-icons";
+import { ResponsiveButton } from "../../../../styles/theme/custom";
 
 const NavButton = ({
   handleClick,
   icon,
 }: {
   handleClick: () => void;
-  icon: StyledIcon | string;
+  icon: StyledIcon | IconType | string;
 }) => {
   return (
-    <Button w="8" h="8" onClick={handleClick} mx="1" variant="ghost">
+    <Button w="8" h="8" variant="no_contrast" onClick={handleClick} mx="1">
       {typeof icon === "string" ? (
         <Text>{icon}</Text>
       ) : (
