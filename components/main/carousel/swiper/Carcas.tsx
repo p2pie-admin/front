@@ -13,7 +13,7 @@ import { BiChevronRight } from "react-icons/bi";
 import useBoundingRect from "../hooks/useBoundingRect";
 import percentage from "../utils/percentage";
 import useAnimateNumber from "use-animate-number";
-import SmoothProgress from "../card/Progress";
+import SmoothProgress from "../Progress";
 import LimitsRange from "../../limits";
 import {
   decrementSwiper,

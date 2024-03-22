@@ -24,7 +24,7 @@ import { triggerModal } from "../../../../redux/mainReducer";
 import ExchTag from "./ExchTag";
 import { MdQueryStats } from "react-icons/md";
 import { BiDotsVerticalRounded } from "react-icons/bi";
-import SmoothProgress from "./Progress";
+import SmoothProgress from "../Progress";
 
 //const ExchangerCard = ({ top, rate }: { top: ITop; rate: IRate }) => {
 const ExchangerCard = ({

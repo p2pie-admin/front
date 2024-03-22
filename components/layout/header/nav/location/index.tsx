@@ -25,7 +25,7 @@ const Location = () => {
   const locations = useAppSelector((state) => state.main.p2p.locations);
   const location = useAppSelector((state) => state.main.location);
   const citiesSelectedLength = useAppSelector(
-    (state) => state.main.p2p.locations.length || ""
+    (state) => state.main.p2p.locations.length || 0
   );
   const dispatch = useAppDispatch();
   const isMultiple = useContext(MultipleCitiesContext);
@@ -42,8 +42,12 @@ const Location = () => {
       w="100%"
       p="4"
     >
-      <Button variant="default" onClick={() => dispatch(triggerModal(""))}>
-        {`Select ${citiesSelectedLength}`}
+      <Button
+        zIndex="11"
+        variant={citiesSelectedLength > 0 ? "primary" : "contrast"}
+        onClick={() => dispatch(triggerModal(""))}
+      >
+        {`Select ${citiesSelectedLength || ""}`}
       </Button>
     </RegularBox>
   );

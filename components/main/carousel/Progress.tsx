@@ -9,10 +9,10 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { setSwiperIdVisible } from "../../../../redux/mainReducer";
-import useSmooth from "../../../../services/hooks/smooth";
-import { RegularBox } from "../../../../styles/theme/custom";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { setSwiperIdVisible } from "../../../redux/mainReducer";
+import useSmooth from "../../../services/hooks/smooth";
+import { RegularBox } from "../../../styles/theme/custom";
 
 const Dot = ({
   selected = false,
@@ -66,7 +66,7 @@ const SmoothProgress = () => {
   const color_bg = useColorModeValue("bg.100", "bg.1000");
   const color1 = useColorModeValue("violet.600", "peach.200");
   const color2 = useColorModeValue("bg.10", "bg.500");
-  const color3 = useColorModeValue("bg.100", "bg.800");
+  const color3 = useColorModeValue("bg.200", "bg.800");
   const [primary300, secondary600] = useToken("colors", [
     "peach.300",
     "violet.600",

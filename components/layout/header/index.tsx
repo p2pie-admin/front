@@ -17,7 +17,7 @@ const Header = () => {
 
   return (
     <Flex
-      h="16" // строго
+      h="14" // строго
       position="sticky"
       top="0"
       bgColor={useColorModeValue("bg.200", "bg.900")}

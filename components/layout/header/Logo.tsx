@@ -1,6 +1,7 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
-import profilePic from "../../../public/cake.svg";
+import darkPie from "../../../public/darkPie.svg";
+import lightPie from "../../../public/lightPie.svg";
 import { useColorModeValue } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
@@ -8,7 +9,12 @@ const Logo = () => {
   const router = useRouter();
   return (
     <Flex flexDir="row" onClick={() => router.reload()} cursor="pointer">
-      <Image alt="logo" src={profilePic} width={36} height={36} />
+      <Image
+        alt="logo"
+        src={useColorModeValue(lightPie, darkPie)}
+        width={36}
+        height={36}
+      />
 
       <Text
         color={useColorModeValue("bg.900", "peach.100")}

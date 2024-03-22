@@ -28,7 +28,7 @@ const CustomModal = ({
   const isOpen = useAppSelector((state) => state.main.modal === id);
   const [shaderColor] = useToken(
     "colors",
-    useColorModeValue(["bg.100"], ["bg.800"])
+    useColorModeValue(["bg.100"], ["bg.700"])
   );
   return (
     <Modal
@@ -38,10 +38,12 @@ const CustomModal = ({
     >
       <ModalOverlay />
       <ModalContent
+        borderRadius="2xl"
+        p="2"
+        bgColor={useColorModeValue("bg.50", "bg.800")}
+        color={useColorModeValue("bg.400", "bg.100")}
         overflow="hidden"
         h="78vh"
-        position="relative"
-        bgColor={shaderColor}
       >
         <ModalHeader
           w="100%"
