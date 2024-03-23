@@ -10,13 +10,14 @@ const Popular = () => {
     <Wrapper title="Quick Change">
       <HStack
         justifyContent="center"
+        gap="12"
         color={useColorModeValue("violet.600", "peach.200")}
       >
         <SideContext.Provider value={"give"}>
           <PopularSide />
         </SideContext.Provider>
 
-        <HiArrowLongRight size="1.5rem" />
+        <HiArrowLongRight size="2rem" />
 
         <SideContext.Provider value={"get"}>
           <PopularSide />

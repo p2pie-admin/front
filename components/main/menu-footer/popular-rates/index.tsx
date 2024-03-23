@@ -68,9 +68,9 @@ export default function BestRates() {
           addSpaces(rate),
         ])
       : [
-          ["ETH", ""],
-          ["BTC", ""],
-          ["USDT", ""],
+          ["ETH", "$3,331.35"],
+          ["BTC", "$63,750.60"],
+          ["USDT", "$1.01"],
         ];
 
   const [bg50, bg900] = useToken("colors", ["bg.10", "bg.900"]);

@@ -60,7 +60,6 @@ const Layout = ({ children }: { children: any }) => {
       //pb="0 !important"
       fontFamily="Roboto, sans-serif"
       maxH="-webkit-fill-available"
-      overflowY="hidden"
       position="relative"
       sx={{
         "&::-webkit-scrollbar": {

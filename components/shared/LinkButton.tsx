@@ -14,6 +14,8 @@ const LinkButton = ({
   return (
     <NextLink href={href || ""}>
       <Button
+        w="100%"
+        justifyContent="start"
         variant="default"
         color={color}
         size="md"

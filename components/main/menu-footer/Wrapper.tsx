@@ -12,8 +12,8 @@ const Wrapper = ({
   children: ReactJSXElement;
 }) => {
   return (
-    <CustomBox3D h="120">
-      <Text color="bg.500" fontSize="sm" textAlign="center">
+    <CustomBox3D p="10" minW="300">
+      <Text color="bg.500" fontSize="lg" textAlign="center" mb="10">
         {title}
       </Text>
 

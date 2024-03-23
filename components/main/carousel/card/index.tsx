@@ -55,6 +55,7 @@ const ExchangerCard = ({
       w="100%"
       p={["1", "2"]}
       pb="24px"
+      maxH="150"
       overflow="hidden"
       // _before={{
       //   content: '""',
