@@ -86,7 +86,7 @@ const SwipeableDrawer = () => {
             />
             <LinkButton
               message="Create Exchanger"
-              href={"/exchanger"}
+              href={"/create"}
               CustomIcon={RiTokenSwapLine}
             />
             <LinkButton
