@@ -8,7 +8,6 @@ import { Box, Button } from "@chakra-ui/react";
 import CustomRate from "./customRate";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { addEmptyDir } from "../../../redux/mainReducer";
-import { writeLocalOrder } from "../localStorageHandler";
 
 const Step1 = () => {
   const dispatch = useAppDispatch();

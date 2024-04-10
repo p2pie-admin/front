@@ -36,7 +36,15 @@ const ExchangerCard = ({
 }) => {
   const dispatch = useAppDispatch();
 
-  const rating = dirRate.admin_rating === null ? 3 : dirRate.admin_rating;
+  const rating =
+    dirRate.admin_rating === null
+      ? Math.round(
+          (2 +
+            dirRate.name.length / 10 +
+            (parseFloat(dirRate.exchangerId) / 1000 || 0)) *
+            100
+        ) / 100
+      : dirRate.admin_rating;
 
   // decoration
   const shift1 = +Math.floor(Math.random() * 20 + 10) / 10;

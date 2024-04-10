@@ -23,8 +23,8 @@ const Greeting = () => {
   );
 
   return (
-    <Collapse delay={1} in={noRates}>
-      <SlideFade delay={1} in>
+    <Collapse in={noRates}>
+      <SlideFade delay={0.2} in>
         <Box
           my={[4, 6]}
           bgGradient={`radial-gradient(circle at 50% -10%, ${centerColor} 0%, ${peripheryColor} 60%)`}

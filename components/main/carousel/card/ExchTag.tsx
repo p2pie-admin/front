@@ -45,8 +45,8 @@ const ExchTag = ({ parameter }: { parameter: IParam }) => {
         filter={filter}
         zIndex="4"
         position="relative"
-        px={parameter?.en_name ? "2" : "1"}
-        py="0.5"
+        px={parameter?.en_name ? ["1", "2"] : "1"}
+        py={["0.2", "0.5"]}
         justifyContent="center"
         cursor="pointer"
         borderRadius="lg"
@@ -69,8 +69,9 @@ const ExchTag = ({ parameter }: { parameter: IParam }) => {
         {parameter.icon?.url ? (
           <Image
             alt="tag_image"
-            w="5"
-            h="5"
+            w={["4", "5"]}
+            h={["4", "5"]}
+            p="0 !important"
             // filter={shaded ? "grayscale(0.6) brightness(0.3)" : "none"}
             // fallbackSrc={fallbackSRC}
             src={SRC + parameter?.icon?.url}
@@ -78,7 +79,7 @@ const ExchTag = ({ parameter }: { parameter: IParam }) => {
         ) : (
           <IoInformation size="1rem" />
         )}
-        {en_name && <Text fontSize="sm">{en_name}</Text>}
+        {en_name && <Text fontSize={["xs", "sm"]}>{en_name}</Text>}
       </HStack>
     </Tooltip>
   );

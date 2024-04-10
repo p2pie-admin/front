@@ -20,6 +20,7 @@ import {
   UpdateOrderMutation,
   CreateOrderMutation,
 } from "../components/order/step3/queries";
+import { CreateRedirectMutation } from "../components/main/carousel/bottons/queries";
 //import { redirect } from "next/navigation";
 
 // export async function navigate() {
@@ -116,7 +117,7 @@ export const fetchPms = createAsyncThunk("initial/fetchPms", async () => {
 });
 
 export const fetchCurrencyConverterRate = createAsyncThunk(
-  "p2p/fetchCurrencyConverterRate",
+  "order/fetchCurrencyConverterRate",
   async ({ dir, p2pDirIndex }: { dir: string; p2pDirIndex?: number }) => {
     const fetcher = initCurrencyConverterFetcher(p2pDirIndex);
     return await fetcher(dir);
@@ -130,7 +131,7 @@ export const submitOrder = createAsyncThunk(
 
     const uid = main.p2p.uid; // запрещаем создавать кучу ордеров с разных IP
     // если localStorage уже хранит uid и он отличается (ip другой) то не создатся
-    let id = main.p2p.id;
+    let id = main.p2p.id; // уже существует
     const fingerprint = main.fingerprint;
     if (!fingerprint?.ip) return { title: "Network error", status: "error" };
     const uid_new = createUID(fingerprint);
@@ -143,26 +144,18 @@ export const submitOrder = createAsyncThunk(
     if (orderNotChanged) {
       return { title: "No changes!", status: "warning" };
     }
-    if (uid) {
-      if (!id) {
-        writeLocalOrder(); // чистим localStorage
-        return { title: "Order does not exist!", status: "error" };
-      }
-      const fetcher = initCMSFetcher({ id, ...order });
-      const response = await fetcher(UpdateOrderMutation);
-      if (!response?.updateP2P?.id) {
-        writeLocalOrder();
-        return { title: "Order does not exist!", status: "error" };
-      }
-      writeLocalOrder(order);
-      return { title: "Order was updated!", status: "info" };
-    } else {
-      // Если создается новый
+    if (!id) {
+      // creating
       const fetcher = initCMSFetcher(order);
       const response = await fetcher(CreateOrderMutation);
       response?.createP2P?.id && writeLocalOrder(order);
       return { title: "Order was created!", status: "success" };
     }
+    // updating
+    const fetcher = initCMSFetcher({ id, ...order });
+    await fetcher(UpdateOrderMutation);
+    writeLocalOrder(order);
+    return { title: "Order was updated!", status: "info" };
   }
 );
 
@@ -170,12 +163,29 @@ export const getOrderByUID = createAsyncThunk(
   "order/getOrderByUID",
   async (uidFromLink: string | undefined, thunkAPI) => {
     const { main } = thunkAPI.getState() as { main: MainState };
-
     const uidFromIP = createUID(main.fingerprint);
     const uid = uidFromLink || uidFromIP;
     const fetcher = initCMSFetcher({ uid });
     const response = await fetcher(OrderByUIDQuery);
     return response?.p2Ps?.[0] as IOrder | undefined;
+  }
+);
+
+export const redirect = createAsyncThunk(
+  "exchanger/redirect",
+  async (_, thunkAPI) => {
+    const { main } = thunkAPI.getState() as { main: MainState };
+    const currentRate = main?.dirRates?.[main.swiperIdVisible];
+    const fetcher = initCMSFetcher({
+      direction: `${main.givePm?.code}_${main.getPm?.code}`,
+      give: +main.amountOutputs.give,
+      get: +main.amountOutputs.get,
+      id_related_to: currentRate?.exchangerId,
+      isP2P: !!currentRate?.tag,
+      ip: main.fingerprint?.ip,
+    });
+
+    await fetcher(CreateRedirectMutation);
   }
 );
 

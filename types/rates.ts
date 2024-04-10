@@ -18,6 +18,7 @@ export interface IRate {
   reserve: ILimit;
   parameterCodes: string[];
   cities?: { [key: string]: string[] };
+  ref_link?: string;
 }
 
 export interface IParam {

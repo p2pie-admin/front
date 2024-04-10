@@ -5,10 +5,12 @@ const LinkButton = ({
   href,
   message,
   CustomIcon,
+  variant,
 }: {
   href: string;
   message: string;
   CustomIcon?: any;
+  variant?: string;
 }) => {
   const color = useColorModeValue("bg.700", "bg.300");
   return (
@@ -16,7 +18,7 @@ const LinkButton = ({
       <Button
         w="100%"
         justifyContent="start"
-        variant="default"
+        variant={variant || "default"}
         color={color}
         size="md"
         my="1"

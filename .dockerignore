@@ -1,1 +1,4 @@
+.cache
+.tmp
+.vscode
 node_modules
