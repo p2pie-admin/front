@@ -13,7 +13,7 @@ import {
 import Arrow from "../../../../shared/Arrow";
 import SectionGridWrapper from "./SectionGrid";
 import SectionHidden from "./SectionHidden";
-import PmGroup from "./PmGroup/PmP2P";
+import PmGroup from "./PmGroup";
 import { IPmGroup } from "../../../../../types/selector";
 import { Box3D } from "../../../../../styles/theme/custom";
 import { useAppSelector } from "../../../../../redux/hooks";

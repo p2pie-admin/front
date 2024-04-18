@@ -27,6 +27,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 // }
 
 const Home: NextPage = () => {
+  console.log("updated!!");
   return (
     <>
       <Head>

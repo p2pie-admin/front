@@ -1,4 +1,4 @@
-import { Box, Checkbox, Collapse, HStack } from "@chakra-ui/react";
+import { Box, Checkbox, Collapse, Divider, HStack } from "@chakra-ui/react";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { IP2PRegulationGroup } from "../../../types/p2p";
 import Regulation from "./Regulation";
@@ -38,7 +38,7 @@ const RegulationGroup = ({
         cursor="pointer"
       >
         {icon}
-        <ResponsiveText fontWeight="bold">
+        <ResponsiveText fontWeight="bold" size="lg">
           {capitalize(regulationGroup.en_title)}
         </ResponsiveText>
       </HStack>

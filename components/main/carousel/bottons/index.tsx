@@ -11,17 +11,19 @@ import { BiLinkExternal } from "react-icons/bi";
 import ExchangeInfo from "../card/ExchangeInfo";
 import { redirect } from "../../../../redux/thunks";
 import NextLink from "next/link";
+import { ResponsiveButton } from "../../../../styles/theme/custom";
 
 const SwiperButtons = () => {
   const dispatch = useAppDispatch();
 
   const href = useAppSelector((state) => {
     const ref_link =
-      state.main?.dirRates?.[state.main.swiperIdVisible].ref_link;
+      state.main?.dirRates?.[state.main.swiperIdVisible]?.ref_link;
     const [giveCode, getCode] = [
       state.main.givePm?.code,
       state.main.getPm?.code,
     ];
+    if (!ref_link) return undefined;
     const dirSlug =
       giveCode && getCode ? `cur_from=${giveCode}&cur_to=${getCode}` : "";
     return ref_link?.includes("?")
@@ -46,14 +48,14 @@ const SwiperButtons = () => {
       </Button>
       <ExchangeInfo />
       <NextLink href={href || ""} target="_blank">
-        <Button
+        <ResponsiveButton
           w="100%"
-          variant="primary"
+          variant={"primary"}
           rightIcon={<BiLinkExternal size="1rem" />}
           onClick={() => dispatch(redirect())}
         >
           Exchange
-        </Button>
+        </ResponsiveButton>
       </NextLink>
       <Button
         p="1"

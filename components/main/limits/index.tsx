@@ -27,6 +27,7 @@ import { isClose, kFormatter, R, symbols } from "../../../redux/amountsHelper";
 import { setAmount } from "../../../redux/mainReducer";
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { BsArrowLeftShort, BsArrowRightShort } from "react-icons/bs";
+import Thumb from "./Thumb";
 
 const CustomRangeSlider = ({
   resMin,
@@ -108,32 +109,24 @@ const LimitsRange = () => {
   const [percMin, percMax] = [amountToPerc(MIN), amountToPerc(MAX)];
   const smoothCenter = useSmooth(percMin + (percMax - percMin) / 2);
 
-  const stick = (a: number) =>
-    isClose(MIN, a) ? MIN : isClose(MAX, a) ? MAX : a;
+  const stickTo = [1, 10, 100, 1_000, 10_000, 100_000, 1_000_000, MIN, MAX];
+  const stick = (a: number) => stickTo.find((s) => isClose(s, a)) || a;
 
   const stickyAmount = stick(amount);
 
   const mainColor = useColorModeValue("violet.600", "peach.200");
-  const [primary300, secondary600] = useToken("colors", [
-    "peach.300",
-    "violet.600",
-  ]);
-  const colorKey = useColorModeValue(secondary600, primary300);
+
   const color1 = useColorModeValue("bg.200", "bg.800");
-  const color2 = useColorModeValue("bg.10", "bg.900");
-  const color3 = useColorModeValue("bg.100", "bg.800");
+
   const color4 =
     stickyAmount >= MIN && stickyAmount <= MAX ? mainColor : "bg.600";
-  const shake = keyframes`
-  from {transform: translateX(-5px)}
-  to {transform: translateX(0)}
-  `;
-  const shakeAnimation = `${shake} infinite 1s ease-in-out alternate`;
 
   const localFormat = (n: number) => {
     const cur = mainCur.toLocaleLowerCase() as keyof typeof symbols;
     return `${symbols[cur] || ""} ${kFormatter(n)}`;
   };
+
+  const props = { mainCur, stickyAmount, MIN, MAX };
 
   if (!MIN || !MAX) return <></>;
   return (
@@ -178,47 +171,8 @@ const LimitsRange = () => {
               isOpen={showTooltip}
               label={`${kFormatter(stickyAmount)} ${giveCur}`}
             > */}
-            <SliderThumb
-              boxSize={8}
-              bgColor="transparent"
-              position="relative"
-              boxShadow="none"
-            >
-              <Box
-                w="5"
-                h="3"
-                position="relative"
-                borderRadius="md"
-                bgColor={mainColor}
-                boxShadow={`0 0 10px -2px ${colorKey}`}
-                color={color3}
-                as={RxDragHandleDots2}
-              />
-              <ResponsiveText
-                size="xs"
-                position="absolute"
-                top="-12px"
-                color={mainColor}
-                whiteSpace="nowrap"
-              >
-                {localFormat(stickyAmount)}
-              </ResponsiveText>
-              <Box
-                position="absolute"
-                color={mainColor}
-                right={stickyAmount <= MAX ? "-5" : "6"}
-                zIndex="5"
-                animation={shakeAnimation}
-              >
-                {stickyAmount >= MIN && stickyAmount <= MAX ? (
-                  <></>
-                ) : stickyAmount <= MAX ? (
-                  <BsArrowRightShort size="1.5rem" />
-                ) : (
-                  <BsArrowLeftShort size="1.5rem" />
-                )}
-              </Box>
-            </SliderThumb>
+            <Thumb {...props} />
+
             {/* </Tooltip> */}
             <SliderTrack bgColor="transparent"></SliderTrack>
           </Slider>
@@ -251,6 +205,7 @@ const LimitsRange = () => {
                 <RangeSliderThumb boxSize={1} index={0} zIndex="2">
                   <ResponsiveText
                     mt="8"
+                    ml={isClose(lowestMin, MIN) ? 6 : 0}
                     size="xs"
                     whiteSpace="nowrap"
                     textAlign="center"
@@ -262,6 +217,7 @@ const LimitsRange = () => {
                 <RangeSliderThumb boxSize={1} index={1} zIndex="1">
                   <ResponsiveText
                     mt="8"
+                    mr={isClose(highestMax, MAX) ? 6 : 0}
                     size="xs"
                     whiteSpace="nowrap"
                     textAlign="center"

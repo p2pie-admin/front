@@ -76,10 +76,12 @@ const ReverseButton = () => {
   const handleReverseDir = () => {
     reverseSlug();
 
-    batch(() => {
-      dispatch(reverseDir());
-      dispatch(fetchDirRates({}));
-    });
+    dispatch(reverseDir());
+
+    // batch(() => {
+    //   dispatch(reverseDir());
+    //   dispatch(fetchDirRates({}));
+    // });
   };
 
   return (

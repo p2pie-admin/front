@@ -1,4 +1,4 @@
-import { IPm } from "./selector";
+import { IImage, IPm } from "./selector";
 import { ILocation } from "./shared";
 
 export interface ICurrencyConverterRate {
@@ -67,4 +67,13 @@ export interface IOrder {
   name?: string;
   status?: "active" | "suspended" | "disabled";
   info?: string;
+}
+
+export interface IOrderIntro {
+  id: string;
+  en_header: string;
+  ru_header: string;
+  en_description: string;
+  ru_description: string;
+  image: IImage;
 }

@@ -10,7 +10,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import Name from "./Name";
-import PmButton from ".";
+import PmButton from "./PmButton";
 import React from "react";
 import Arrow from "../../../../../shared/Arrow";
 import { SubButton } from "./SubButton";

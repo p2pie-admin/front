@@ -1,7 +1,15 @@
 import { capitalize } from "../../../components/main/side/selector/section/PmGroup/helper";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { IP2PRegulation } from "../../../types/p2p";
-import { Box, Checkbox, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Checkbox,
+  Divider,
+  HStack,
+  Switch,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { setRegulation } from "../../../redux/mainReducer";
 
@@ -17,18 +25,23 @@ const Regulation = ({ regulation }: { regulation: IP2PRegulation }) => {
   };
 
   return (
-    <Box px="2" py="1" key={regulation.id}>
-      <Checkbox
-        colorScheme="peach"
-        isChecked={defaultChecked}
-        onChange={(e) => handleCheckboxClick(e.target.checked)}
-      >
-        <ResponsiveText size="md">
+    <Box px="7" py="1" key={regulation.id}>
+      <Divider my="2" />
+      <HStack justifyContent="space-between">
+        <ResponsiveText size="lg">
           {capitalize(regulation.en_title)}
         </ResponsiveText>
-      </Checkbox>
+        <Switch
+          id={regulation.id}
+          // isDisabled
+          // defaultChecked
+          onChange={(e) => handleCheckboxClick(e.target.checked)}
+          colorScheme="peach"
+          isChecked={defaultChecked}
+        />
+      </HStack>
 
-      <ResponsiveText whiteSpace="normal" size="xs">
+      <ResponsiveText whiteSpace="normal" size="sm">
         {regulation.en_description}
       </ResponsiveText>
     </Box>

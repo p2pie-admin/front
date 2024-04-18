@@ -39,8 +39,8 @@ export const initCurrencyConverterFetcher = (p2pDirIndex?: number) => {
       ? process.env.NEXT_PUBLIC_CONVERTER_PROD_URL
       : process.env.NEXT_PUBLIC_CONVERTER_DEV_URL;
 
-  return async (dir: string) => {
-    const { data } = await axios.get(url + "/" + dir.toUpperCase());
+  return async (currenciesPair: string) => {
+    const { data } = await axios.get(url + "/" + currenciesPair.toUpperCase());
     return { data, p2pDirIndex };
   };
 };

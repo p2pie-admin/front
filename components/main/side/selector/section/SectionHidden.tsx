@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import Arrow from "../../../../shared/Arrow";
 import SectionGridWrapper from "./SectionGrid";
-import PmGroup from "./PmGroup/PmP2P";
+import PmGroup from "./PmGroup";
 import { IPmGroup } from "../../../../../types/selector";
 
 const SectionHidden = ({ children }: { children: IPmGroup[] }) => {

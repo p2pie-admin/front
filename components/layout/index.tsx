@@ -35,10 +35,6 @@ const Layout = ({ children }: { children: any }) => {
         dispatch(setIP(ip?.split(".").slice(0, -1).join("."))); // берем только часть IP
       }
     });
-    batch(() => {
-      dispatch(fetchPms());
-      dispatch(fetchFiat());
-    });
   }, []);
 
   useEffect(() => {

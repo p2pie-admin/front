@@ -20,7 +20,7 @@ const fetcher = initCMSFetcher();
 
 const Carousel = () => {
   //const pendingDirRates = useAppSelector((state) => state.main.pendingDirRates);
-  const color1 = useColorModeValue("bg.10", "bg.900");
+  console.log(" --- carousel updated ---- ");
 
   const { data: topParametersData, error: topParameterError } = useSWR(
     TopParametersQuery,
@@ -48,16 +48,8 @@ const Carousel = () => {
       error: boolean;
     };
 
-  const bothPmsSelected = useAppSelector(
-    (state) => !!state.main.givePm?.code && !!state.main.getPm?.code
-  );
-
   const dirRates = useAppSelector((state) => state.main.dirRates);
   const pendingDirRates = useAppSelector((state) => state.main.pendingDirRates);
-
-  if (!bothPmsSelected) {
-    return <></>;
-  }
 
   const allParameters = [
     ...(topParametersData?.topParameters || []),

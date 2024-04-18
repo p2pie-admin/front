@@ -57,10 +57,10 @@ const PmModalButton = () => {
           position="absolute"
           zIndex="5"
           w="fit-content"
-          right={-3}
-          bottom={-2.5}
+          right={2}
+          bottom={-3}
         >
-          <Tag size="sm" bgColor={tagBgColor}>
+          <Tag size="sm" bgColor="blackAlpha.300">
             <Text variant="contrast">{subgroup_name}</Text>
           </Tag>
         </Box>

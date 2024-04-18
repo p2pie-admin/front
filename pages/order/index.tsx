@@ -129,9 +129,9 @@ const Steps = () => {
                 {!!steps &&
                   steps.map((step) => (
                     <TabPanel px="0" py="4" key={step.en_title}>
-                      <ResponsiveText>{step.en_title}</ResponsiveText>
+                      <ResponsiveText size="lg">{step.en_title}</ResponsiveText>
 
-                      <ResponsiveText size="xs" whiteSpace="normal">
+                      <ResponsiveText size="sm" whiteSpace="normal">
                         {step.en_description}
                       </ResponsiveText>
                       {step.component}

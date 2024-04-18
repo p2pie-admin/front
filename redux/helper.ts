@@ -17,25 +17,24 @@ export const initialAmountOutputs = { give: "", get: "" };
 export const [minDef, maxDef, minStart, minEnd, maxStart, maxEnd, rateSpread] =
   [300, 5000, 100, 5000, 100, 10000, 0.1]; // EQUAL TO USD
 
+const initialAmount = (side: "give" | "get") => ({
+  num: 1,
+  str: "1",
+  side: side,
+});
 export const getAmountOutputs = (
   state: MainState,
   swiperIdVisible: number,
-  amount?: AmountInput
+  customAmount?: AmountInput
 ): AmountOutputs => {
   const dir = `${state.givePm?.code.toUpperCase()}_${state.getPm?.code.toUpperCase()}`;
   // updateAmounts не успевает подхватить swiperIdVisible, поэтому передаем дополнительно
   const rate = state?.dirRates?.[swiperIdVisible];
+  const side = rate && rate?.course > 1 ? "get" : "give";
+  const amount = customAmount || state.amountInput || initialAmount(side);
 
   if (rate) {
-    const feesCalculator = new FeesCalculator(
-      dir,
-      rate,
-      amount || {
-        num: 1,
-        str: "1",
-        side: rate?.course > 1 ? "get" : "give",
-      }
-    );
+    const feesCalculator = new FeesCalculator(dir, rate, amount);
     return feesCalculator.calculateAmountOutputs();
   }
   return initialAmountOutputs;

@@ -8,6 +8,7 @@ import { Box, Button } from "@chakra-ui/react";
 import CustomRate from "./customRate";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { addEmptyDir } from "../../../redux/mainReducer";
+import Intro from "./Intro";
 
 const Step1 = () => {
   const dispatch = useAppDispatch();
@@ -20,6 +21,7 @@ const Step1 = () => {
 
   return (
     <Box>
+      <Intro />
       {dirs.map((dir, index) => (
         <CustomRate key={index} dir={dir} index={index} />
       ))}
