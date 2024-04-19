@@ -21,9 +21,10 @@ const Intro = () => {
   const hidden = useAppSelector((state) => !state.main.p2p.dirs[0].toUsdRate);
   return (
     <Collapse in={hidden}>
-      <ResponsiveText fontSize="3xl" textAlign="center" fontWeight="bold">
-        Suggest your own rates
+      <ResponsiveText size="xl" textAlign="center" fontWeight="bold" my="4">
+        Why publish rates on p2pie?
       </ResponsiveText>
+
       <Grid
         my={["2", "4"]}
         gap="2"

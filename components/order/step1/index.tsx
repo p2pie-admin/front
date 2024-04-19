@@ -21,11 +21,14 @@ const Step1 = () => {
 
   return (
     <Box>
-      <Intro />
+      <ResponsiveText size="xl" textAlign="center" fontWeight="bold" my="4">
+        Suggest your own exchange rates
+      </ResponsiveText>
+
       {dirs.map((dir, index) => (
         <CustomRate key={index} dir={dir} index={index} />
       ))}
-
+      <Intro />
       {firstDirSelected && dirsAmount < 3 && (
         <ShadedButton
           display="flex"

@@ -10,8 +10,8 @@ const IntroItem = ({ introItem }: { introItem: IOrderIntro }) => {
 
   return (
     <VStack justifyContent="start">
-      <CustomImage img={image} w="50" h="50" />
-      <ResponsiveText size="lg" variant="primary">
+      <CustomImage img={image} w="100" h="100" />
+      <ResponsiveText size="lg" variant="primary" fontWeight="bold">
         {en_header}
       </ResponsiveText>
       <HStack h="100%" alignItems="start">

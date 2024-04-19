@@ -11,8 +11,9 @@ import {
 } from "../../../../../../redux/thunks";
 import { IPmGroup, IPm } from "../../../../../../types/selector";
 import {
-  addPm,
+  addPmP2P,
   setPm,
+  setPmP2P,
   triggerModal,
 } from "../../../../../../redux/mainReducer";
 import { useRouter } from "next/router";
@@ -50,8 +51,8 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
 
     batch(() => {
       isAddPm
-        ? dispatch(addPm({ pm: selectedPm, side, index: p2pDirIndex || 0 }))
-        : dispatch(setPm({ pm: selectedPm, side, index: p2pDirIndex || 0 }));
+        ? dispatch(addPmP2P({ pm: selectedPm, side, index: p2pDirIndex || 0 }))
+        : dispatch(setPmP2P({ pm: selectedPm, side, index: p2pDirIndex || 0 }));
 
       dispatch(triggerModal(undefined));
 
@@ -77,6 +78,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
           // clear opposite Pm is no pair possible anyway
           dispatch(
             setPm({
+              pm: undefined,
               side: side === "give" ? "get" : "give",
             })
           );

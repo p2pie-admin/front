@@ -133,7 +133,7 @@ export const mainSlice = createSlice({
       state.popularCompleted = action.payload;
     },
 
-    addPm: (
+    addPmP2P: (
       state: MainState,
       action: PayloadAction<{ pm: IPm; side: ISide; index: number }>
     ) => {
@@ -151,20 +151,18 @@ export const mainSlice = createSlice({
         ];
     },
 
+    setPmP2P: (
+      state: MainState,
+      action: PayloadAction<{ pm: IPm; side: ISide; index: number }>
+    ) => {
+      const { pm, side, index } = action.payload;
+      state.p2p.dirs[index][side] = [pm];
+    },
     setPm: (
       state: MainState,
-      action: PayloadAction<{ pm?: IPm; side: ISide; index?: number }>
+      action: PayloadAction<{ pm?: IPm; side: ISide }>
     ) => {
-      const { pm, index, side } = action.payload;
-      if (!pm) {
-        state.amountInput = undefined;
-        state.amountOutputs = initialAmountOutputs;
-        state.dirRates = undefined;
-        return;
-      } // опустошаем пм
-      if (index !== undefined) {
-        state.p2p.dirs[index][side] = [pm];
-      }
+      const { pm, side } = action.payload;
       state[`${side}Pm`] = pm;
     },
 
@@ -471,7 +469,7 @@ export const mainSlice = createSlice({
 
 export const {
   setAmount,
-  //setActiveSide,
+  setPmP2P,
   setPm,
   setSearchBarInputValue,
   setSwiperIdVisible,
@@ -486,7 +484,7 @@ export const {
   setLocation,
   addLocation,
   setCurrencyConverterRate,
-  addPm,
+  addPmP2P,
   addEmptyDir,
   removeDir,
   triggerP2PDir,

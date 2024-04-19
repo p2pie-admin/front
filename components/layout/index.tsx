@@ -9,6 +9,7 @@ import {
   VStack,
   useColorModeValue,
   useToken,
+  Grid,
 } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { batch } from "react-redux";
@@ -50,10 +51,8 @@ const Layout = ({ children }: { children: any }) => {
   );
   return (
     <Box // careful! populars may stop working!
-      // justifyContent="center"
       w="100%"
       bgGradient={`radial-gradient(circle at 50% -10%, ${ambientColor} 0%, transparent 40%)`}
-      //pb="0 !important"
       fontFamily="Roboto, sans-serif"
       maxH="-webkit-fill-available"
       position="relative"
