@@ -27,7 +27,7 @@ const Intro = () => {
 
       <Grid
         my={["2", "4"]}
-        gridTemplateColumns={["6fr 2px 6fr 2px", "6fr 2px 6fr 2px 6fr 2px"]}
+        gridTemplateColumns={["6fr 2px", "6fr 2px 6fr 1px"]}
       >
         {introItems &&
           introItems.map((introItem, idx) => (
@@ -38,10 +38,7 @@ const Intro = () => {
                 alignSelf="end"
                 h="calc(100% - 150px)"
                 orientation="vertical"
-                visibility={[
-                  (+idx + 1) % 2 ? "unset" : "hidden",
-                  (+idx + 1) % 3 ? "unset" : "hidden",
-                ]}
+                visibility={["hidden", (+idx + 1) % 2 ? "unset" : "hidden"]}
               />
             </>
           ))}

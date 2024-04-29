@@ -1,4 +1,4 @@
-import { Box, Divider, HStack, VStack } from "@chakra-ui/react";
+import { Box, Center, Divider, Flex, HStack, VStack } from "@chakra-ui/react";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { IOrderIntro } from "../../../types/p2p";
 
@@ -10,17 +10,31 @@ const IntroItem = ({ introItem }: { introItem: IOrderIntro }) => {
   const { t, i18n } = useTranslation();
   const lang = i18n.language as "en" | "ru";
   return (
-    <VStack key={id} justifyContent="start">
-      <CustomImage img={image} w="100" h="100" />
-      <ResponsiveText whiteSpace="normal" variant="primary" fontWeight="bold">
-        {introItem[`${lang}_header`]}
-      </ResponsiveText>
-      <HStack h="100%" alignItems="start" px={[1, 2]}>
-        <ResponsiveText whiteSpace="normal" w="100%">
-          {introItem[`${lang}_description`]}
+    <Flex flexDir={["row", "column"]} key={id} justifyContent="start">
+      <Center>
+        <CustomImage img={image} w="100" h="100" />
+      </Center>
+
+      <VStack
+        w={["calc(100% - 100px)", "100%"]}
+        justifyContent="center"
+        alignItems={["start", "center"]}
+      >
+        <ResponsiveText
+          whiteSpace="normal"
+          variant="primary"
+          size="lg"
+          fontWeight="bold"
+        >
+          {introItem[`${lang}_header`]}
         </ResponsiveText>
-      </HStack>
-    </VStack>
+        <Box h="100%" px={[0, 2]}>
+          <ResponsiveText whiteSpace="normal" w="100%">
+            {introItem[`${lang}_description`]}
+          </ResponsiveText>
+        </Box>
+      </VStack>
+    </Flex>
   );
 };
 
