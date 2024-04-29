@@ -1,24 +1,24 @@
 import { Box, Divider, HStack, VStack } from "@chakra-ui/react";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { IOrderIntro } from "../../../types/p2p";
-import Image from "next/image";
+
 import CustomImage from "../../shared/CustomImage";
-import image from "next/image";
+import { useTranslation } from "next-i18next";
 
 const IntroItem = ({ introItem }: { introItem: IOrderIntro }) => {
-  const { id, en_header, en_description, image } = introItem;
-
+  const { id, image } = introItem;
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language as "en" | "ru";
   return (
-    <VStack justifyContent="start">
+    <VStack key={id} justifyContent="start">
       <CustomImage img={image} w="100" h="100" />
       <ResponsiveText size="lg" variant="primary" fontWeight="bold">
-        {en_header}
+        {introItem[`${lang}_header`]}
       </ResponsiveText>
-      <HStack h="100%" alignItems="start">
+      <HStack h="100%" alignItems="start" px={[1, 2]}>
         <ResponsiveText whiteSpace="normal" w="100%">
-          {en_description}
+          {introItem[`${lang}_description`]}
         </ResponsiveText>
-        {+id % 3 && <Divider orientation="vertical" />}
       </HStack>
     </VStack>
   );

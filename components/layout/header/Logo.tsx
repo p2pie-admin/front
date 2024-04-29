@@ -11,13 +11,13 @@ const Logo = () => {
     <Flex flexDir="row" onClick={() => router.reload()} cursor="pointer">
       <Image
         alt="logo"
-        src={useColorModeValue(lightPie, darkPie)}
+        src={useColorModeValue(darkPie, lightPie)}
         width={36}
         height={36}
       />
 
       <Text
-        color={useColorModeValue("bg.900", "peach.100")}
+        color={useColorModeValue("violet.900", "peach.200")}
         fontSize="2xl"
         fontFamily="Zen Maru Gothic, sans-serif"
         mx="2"

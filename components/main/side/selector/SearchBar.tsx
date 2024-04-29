@@ -18,9 +18,9 @@ import { Box3D } from "../../../../styles/theme/custom";
 import { MdOutlineClear } from "react-icons/md";
 import { RiSearchLine } from "react-icons/ri";
 import { countryCurrencies } from "./section/helper";
-import SideContext from "../../../shared/contexts/SideContext";
 
 const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {
+  const { t, i18n } = useTranslation();
   const [inputFocused, setInputFocused] = useState(false);
   const searchBarInputValue = useAppSelector(
     (state) => state.main.searchBarInputValue
@@ -32,7 +32,9 @@ const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {
   const localCurrency = countryCurrencies?.[country] || "EUR";
   const currencyCodes = ["RUB", "USD", localCurrency, "UAH"];
 
-  const placeholder = "Search...";
+  const placeholder = inputFocused
+    ? search_bar?.[`${i18n.language as "en" | "ru"}_give_adornment`]
+    : "Search...";
 
   const dispatch = useAppDispatch();
 

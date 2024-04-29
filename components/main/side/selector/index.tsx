@@ -27,7 +27,7 @@ import SectionsList from "./SectionsList";
 
 import { ISelector } from "../../../../types/selector";
 import ErrorWrapper from "../../../shared/ErrorWrapper";
-import { i18n, useTranslation } from "next-i18next";
+
 import LinkButton from "../../../shared/LinkButton";
 import { BsTelegram } from "react-icons/bs";
 

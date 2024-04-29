@@ -14,13 +14,6 @@ import Selector from ".";
 import { selectorQuery } from "./SelectorQuery";
 
 const SelectorModal = ({ id }: { id: string }) => {
-  // const gradient = useColorModeValue(
-  //   "linear-gradient(0deg, rgba(241,240,251,1) 10%, rgba(241,240,251,0) 100%);",
-  //   "linear-gradient(0deg, rgba(88,79,98,1) 20%, rgba(88,79,98,0) 100%);"
-  // );
-
-  // const { i18n } = useTranslation();
-
   const side = useContext(SideContext) as "give" | "get";
   const pink = useColorModeValue("pink.400", "pink.200");
   const green = useColorModeValue("green.400", "green.200");

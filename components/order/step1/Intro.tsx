@@ -1,4 +1,4 @@
-import { Collapse, Grid } from "@chakra-ui/react";
+import { Collapse, Divider, Grid } from "@chakra-ui/react";
 import { useAppSelector } from "../../../redux/hooks";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { OrderIntrosQuery } from "./queries";
@@ -27,11 +27,24 @@ const Intro = () => {
 
       <Grid
         my={["2", "4"]}
-        gap="2"
-        gridTemplateColumns={["1fr 1fr", "1fr 1fr 1fr"]}
+        gridTemplateColumns={["6fr 2px 6fr 2px", "6fr 2px 6fr 2px 6fr 2px"]}
       >
         {introItems &&
-          introItems.map((introItem) => <IntroItem introItem={introItem} />)}
+          introItems.map((introItem, idx) => (
+            <>
+              <IntroItem introItem={introItem} />
+              <Divider
+                variant="dashed"
+                alignSelf="end"
+                h="calc(100% - 150px)"
+                orientation="vertical"
+                visibility={[
+                  (+idx + 1) % 2 ? "unset" : "hidden",
+                  (+idx + 1) % 3 ? "unset" : "hidden",
+                ]}
+              />
+            </>
+          ))}
       </Grid>
     </Collapse>
   );

@@ -1,4 +1,4 @@
-import { Button, Icon, useColorModeValue } from "@chakra-ui/react";
+import { Button, Box, Icon, useColorModeValue } from "@chakra-ui/react";
 import NextLink from "next/link";
 
 const LinkButton = ({
@@ -13,6 +13,7 @@ const LinkButton = ({
   variant?: string;
 }) => {
   const color = useColorModeValue("bg.700", "bg.300");
+  const iconColor = useColorModeValue("violet.600", "peach.200");
   return (
     <NextLink href={href || ""}>
       <Button
@@ -22,7 +23,11 @@ const LinkButton = ({
         color={color}
         size="md"
         my="1"
-        leftIcon={<CustomIcon size="1.2rem" />}
+        leftIcon={
+          <Box color={iconColor}>
+            <CustomIcon size="1.2rem" />
+          </Box>
+        }
       >
         {message}
       </Button>

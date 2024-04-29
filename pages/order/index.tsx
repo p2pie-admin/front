@@ -42,6 +42,17 @@ import { StepsQuery } from "../../components/order/queries";
 import Step2 from "../../components/order/step2";
 import Step3 from "../../components/order/step3";
 import OrderButton from "../../components/order/step3/OrderButton";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { GetStaticProps } from "next";
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  // must be async
+  return {
+    props: {
+      ...(await serverSideTranslations(locale || "ru", ["order"])),
+    },
+  };
+};
 
 const Steps = () => {
   const [tabIndex, setTabIndex] = useState(0);

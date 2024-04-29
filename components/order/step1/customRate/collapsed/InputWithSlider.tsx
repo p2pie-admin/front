@@ -36,10 +36,9 @@ const InputWithSlider = ({
   adornment: ReactJSXElement;
   isError?: boolean;
 }) => {
-  const shadedColor = useColorModeValue("bg.500", "bg.400");
   const trackColor = useColorModeValue("bg.300", "bg.900");
   const contrastColor = useColorModeValue("bg.900", "bg.100");
-  const inputBgColor = useColorModeValue("blackAlpha.100", "blackAlpha.400");
+
   const primaryColor = useColorModeValue("violet.600", "peach.200");
 
   const p2pDirIndex = useContext(P2PContext)!;
@@ -90,8 +89,10 @@ const InputWithSlider = ({
               clampValueOnBlur={true}
               borderRadius="md"
               color={isError ? "red.500" : primaryColor}
-              bgColor={inputBgColor}
-              borderColor={`${shadedColor} !important`}
+              bgColor="blackAlpha.200"
+              borderBottomColor={"whiteAlpha.200 !important"}
+              borderTopColor={"blackAlpha.400 !important"}
+              borderTop="1px solid"
               borderBottom="1px solid"
               variant="unstyled"
               value={addSpaces(value)}
@@ -108,7 +109,7 @@ const InputWithSlider = ({
             <ResponsiveText size="sm">{rightSide}</ResponsiveText>
           </HStack>
         </HStack>
-        <HStack position="absolute" right="0" fontSize="xs" color={shadedColor}>
+        <HStack position="absolute" right="0" fontSize="xs">
           {adornment}
           <ResponsiveText size="xs">{usdValueStr}</ResponsiveText>
         </HStack>

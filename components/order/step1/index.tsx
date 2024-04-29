@@ -9,8 +9,10 @@ import CustomRate from "./customRate";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { addEmptyDir } from "../../../redux/mainReducer";
 import Intro from "./Intro";
+import { useTranslation } from "next-i18next";
 
 const Step1 = () => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const dirs = useAppSelector((state) => state.main.p2p.dirs);
   const dirsAmount = useAppSelector(
@@ -22,7 +24,7 @@ const Step1 = () => {
   return (
     <Box>
       <ResponsiveText size="xl" textAlign="center" fontWeight="bold" my="4">
-        Suggest your own exchange rates
+        {t("order:suggest")}
       </ResponsiveText>
 
       {dirs.map((dir, index) => (
