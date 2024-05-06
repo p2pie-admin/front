@@ -4,14 +4,14 @@ import { useMediaQuery, useTheme, Flex } from "@chakra-ui/react";
 
 import Item from "./item";
 import Carcas from "./Carcas";
-import SlidingLayout from "./SlidingLayout";
+
 import ExchangerCard from "../card";
 import { IParamData, IRate } from "../../../../types/rates";
+import { TextBoxList } from "./TextBoxList";
 
 export default function Swiper({
   dirRates,
   gap,
-  allParameters,
 }: {
   dirRates?: IRate[];
   gap: number;
@@ -67,10 +67,22 @@ export default function Swiper({
     positions,
     gap,
   };
-
+  const texts = [
+    "Text Item 1",
+    "Text Item 2",
+    "Text Item 3",
+    "Text Item 4",
+    "Text Item 5",
+    "Text Item 6",
+    "Text Item 7",
+    "Text Item 8",
+    "Text Item 9",
+    "Text Item 10",
+  ];
   return (
     <Carcas {...carcasProps}>
-      <SlidingLayout {...slidingLayoutProps}>
+      <TextBoxList texts={texts} />
+      {/* <SlidingLayout {...slidingLayoutProps}>
         {dirRates.map((dirRate, index) => {
           const parameters = allParameters
             .filter((p) =>
@@ -97,7 +109,7 @@ export default function Swiper({
             </Item>
           );
         })}
-      </SlidingLayout>
+      </SlidingLayout> */}
     </Carcas>
   );
 }

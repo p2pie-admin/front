@@ -21,7 +21,7 @@ import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 
 const Layout = ({ children }: { children: any }) => {
   // const maxW = useBreakpointValue({ base: "100%", lg: "980" });
-  const isScrollLocked = useAppSelector((state) => state.main.isScrollLocked);
+  //const isScrollLocked = useAppSelector((state) => state.main.isScrollLocked);
   const myToast = useAppSelector((state) => state.main.toast);
   const toast = useToast();
 

@@ -1,129 +1,88 @@
-import { Box, Flex, VStack } from "@chakra-ui/react";
-import { motion, useAnimation, useMotionValue } from "framer-motion";
-import { useState, useRef, useCallback, useEffect } from "react";
-import { batch } from "react-redux";
-import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { setSwiperIdVisible } from "../../../../redux/mainReducer";
+// import React, { useState } from "react";
+// import { AnimatePresence, motion } from "framer-motion";
 
-const MotionFlex = motion(Flex);
+// interface SlideProps {
+//   text: string;
+//   style: React.CSSProperties;
+// }
 
-const transitionProps = {
-  stiffness: 400,
-  type: "spring",
-  damping: 60,
-  mass: 3,
-};
+// const Slide: React.FC<SlideProps> = ({ text, style }) => {
+//   return <motion.div style={style}>{text}</motion.div>;
+// };
 
-function SlidingLayout({
-  setTrackIsActive,
-  trackIsActive,
-  constraint,
-  multiplier,
-  itemWidth,
-  positions,
-  children,
-}) {
-  const dispatch = useAppDispatch();
-  const swiperIdVisible = useAppSelector((state) => state.main.swiperIdVisible);
-  const handleSwiperIdVisible = (id: number) =>
-    dispatch(setSwiperIdVisible(id));
+// // src/components/VerticalTextSlider.tsx
 
-  const [dragStartPosition, setDragStartPosition] = useState(0);
-  const controls = useAnimation();
-  const x = useMotionValue(0);
-  const node = useRef(null);
+// interface SliderProps {
+//   texts: string[];
+// }
 
-  const handleDragStart = () =>
-    setDragStartPosition(positions[swiperIdVisible]);
+// const sliderVariants = {
+//   hidden: (direction: number) => ({
+//     y: direction > 0 ? 300 : -300,
+//     opacity: 0,
+//   }),
+//   visible: {
+//     y: 0,
+//     opacity: 1,
+//     transition: {
+//       y: { type: "spring", stiffness: 300, damping: 30 },
+//       opacity: { duration: 0.2 },
+//     },
+//   },
+//   exit: (direction: number) => ({
+//     y: direction < 0 ? 300 : -300,
+//     opacity: 0,
+//   }),
+// };
 
-  const handleDragEnd = (_, info) => {
-    const distance = info.offset.x;
-    const velocity = info.velocity.x * multiplier;
-    const direction = velocity < 0 || distance < 0 ? 1 : -1;
+// export const VerticalTextSlider: React.FC<SliderProps> = ({ texts }) => {
+//   const [[page, direction], setPage] = useState<[number, number]>([0, 0]);
 
-    const extrapolatedPosition =
-      dragStartPosition +
-      (direction === 1
-        ? Math.min(velocity, distance)
-        : Math.max(velocity, distance));
+//   const paginate = (newDirection: number) => {
+//     setPage([
+//       Math.max(0, Math.min(page + newDirection, texts.length - 3)),
+//       newDirection,
+//     ]);
+//   };
 
-    const closestPosition = positions.reduce((prev, curr) => {
-      return Math.abs(curr - extrapolatedPosition) <
-        Math.abs(prev - extrapolatedPosition)
-        ? curr
-        : prev;
-    }, 0);
-
-    if (!(closestPosition < positions[positions.length - constraint])) {
-      handleSwiperIdVisible(positions.indexOf(closestPosition));
-      controls.start({
-        x: closestPosition,
-        transition: {
-          velocity: info.velocity.x,
-          ...transitionProps,
-        },
-      });
-    } else {
-      handleSwiperIdVisible(positions.length - constraint);
-      controls.start({
-        x: positions[positions.length - constraint],
-        transition: {
-          velocity: info.velocity.x,
-          ...transitionProps,
-        },
-      });
-    }
-  };
-
-  const handleResize = useCallback(() => {
-    controls.start({
-      x: positions[swiperIdVisible],
-      transition: {
-        ...transitionProps,
-      },
-    });
-  }, [swiperIdVisible, controls, positions]);
-
-  const handleClick = useCallback(
-    (event) => {
-      if (node.current && node.current.contains(event.target)) {
-        setTrackIsActive(true);
-      } else setTrackIsActive(false);
-    },
-    [setTrackIsActive]
-  );
-
-  useEffect(() => {
-    handleResize();
-  }, [handleClick, handleResize, positions]);
-
-  return (
-    <>
-      {!!itemWidth && (
-        <VStack
-          ref={node}
-          spacing={4}
-          alignItems="stretch"
-          // onWheel={handleWheel}
-        >
-          <MotionFlex
-            dragConstraints={node}
-            onDragStart={handleDragStart}
-            onDragEnd={handleDragEnd}
-            animate={controls}
-            style={{ x }}
-            drag="x"
-            _active={{ cursor: "grabbing" }}
-            minWidth="min-content"
-            flexWrap="nowrap"
-            cursor="grab"
-          >
-            {children}
-          </MotionFlex>
-        </VStack>
-      )}
-    </>
-  );
-}
-
-export default SlidingLayout;
+//   return (
+//     <div
+//       className="slider-container"
+//       style={{ position: "relative", height: "300px", overflow: "hidden" }}
+//     >
+//       <AnimatePresence initial={false} custom={direction}>
+//         {[...Array(3)].map((_, i) => (
+//           <Slide
+//             key={page + i}
+//             text={texts[(page + i) % texts.length]}
+//             style={{
+//               position: "absolute",
+//               top: `${33.3 * i}%`,
+//               width: "100%",
+//               height: "100px",
+//               display: "flex",
+//               alignItems: "center",
+//               justifyContent: "center",
+//               fontSize: "24px",
+//             }}
+//           />
+//         ))}
+//       </AnimatePresence>
+//       <motion.div
+//         drag="y"
+//         dragConstraints={{ top: 0, bottom: 0 }}
+//         onDragEnd={(e, { offset, velocity }) => {
+//           const swipe = Math.abs(offset.y);
+//           if (swipe > 50) {
+//             paginate(offset.y > 0 ? -1 : 1);
+//           }
+//         }}
+//         style={{ width: "100%", height: "100%", position: "absolute", top: 0 }}
+//       ></motion.div>
+//       <div className="controls">
+//         <button onClick={() => paginate(-1)}>Prev</button>
+//         <button onClick={() => paginate(1)}>Next</button>
+//       </div>
+//     </div>
+//   );
+// };
