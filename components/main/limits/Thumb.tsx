@@ -75,7 +75,7 @@ const Thumb = ({
         onTouchEnd={() => setShowTooltip(false)}
       >
         <Box
-          w="4"
+          w="3"
           h="4"
           position="relative"
           borderRadius="md"
@@ -83,6 +83,7 @@ const Thumb = ({
           boxShadow={`0 0 10px -2px ${colorKey}`}
           color="blackAlpha.500"
           as={RxDragHandleDots2}
+          transform="rotate(90deg)"
         />
 
         <Box

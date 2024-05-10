@@ -1,4 +1,5 @@
 import React, { useEffect, useCallback } from "react";
+import { TbTriangleInvertedFilled } from "react-icons/tb";
 import {
   motion,
   useMotionValue,
@@ -188,6 +189,7 @@ export const ExchangersList = () => {
   return (
     <Grid gridTemplateColumns="1fr 40px" gridGap={["2", "4"]}>
       <Box3D
+        position="relative"
         overflow="hidden"
         h={`${containerHeight + 34}px`}
         variant="extra_contrast"
@@ -213,6 +215,15 @@ export const ExchangersList = () => {
           </motion.div>
 
           <Shader direction="top" />
+        </Box>
+        <Box
+          position="absolute"
+          right="0"
+          top={`calc(${containerHeight / 2}px )`}
+          color="bg.600"
+          transform="rotate(90deg)"
+        >
+          <TbTriangleInvertedFilled size="2rem" />
         </Box>
       </Box3D>
 
