@@ -10,6 +10,7 @@ import { fetchDirRates, restorePmsFromSlug } from "../../redux/thunks";
 import { RegularBox } from "../../styles/theme/custom";
 import Greeting from "./Greeting";
 import Calculator from "./Calculator";
+import TextBoxList from "./carousel/swiper";
 
 const MainPageContent = () => {
   const dispatch = useAppDispatch();
@@ -53,7 +54,6 @@ const MainPageContent = () => {
         <Calculator />
 
         <LimitsRange />
-
         {bothPmsSelected && <Carousel />}
       </RegularBox>
     </>

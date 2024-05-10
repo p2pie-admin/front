@@ -1,20 +1,12 @@
 import React from "react";
-
 import { useAppSelector } from "../../../redux/hooks";
 import useSWR from "swr";
-import {
-  TopParametersQuery,
-  DirectionParametersQuery,
-  ExchangerParametersQuery,
-} from "./queries";
+import { TopParametersQuery, DirectionParametersQuery } from "./queries";
 import ErrorWrapper from "../../shared/ErrorWrapper";
 import { initCMSFetcher } from "../../../services/fetchers";
-import { SearchOff } from "@styled-icons/material-outlined/SearchOff";
-import { Box, useColorModeValue } from "@chakra-ui/react";
-import SwiperButtons from "./bottons";
-import Swiper from "./swiper";
-import { CustomBox3D } from "../../../styles/theme/custom";
+import { Box } from "@chakra-ui/react";
 import { IParamData } from "../../../types/rates";
+import Swiper from "./swiper";
 
 const fetcher = initCMSFetcher();
 
@@ -60,20 +52,16 @@ const Carousel = () => {
   // вынесен наружу, иначе все внутри ErrorWrapper начинает высчитываться и выдает ошибку
   const isError = !pendingDirRates && (!dirRates || !dirRates.length);
   return (
-    <CustomBox3D>
-      <Box minH="164">
-        <ErrorWrapper
-          isError={isError}
-          isLoading={pendingDirRates}
-          primaryMessage="No rates available!"
-          secondaryMessage="check your network connection"
-        >
-          <Swiper gap={12} dirRates={dirRates} allParameters={allParameters} />
-        </ErrorWrapper>
-      </Box>
-
-      {!isError && <SwiperButtons />}
-    </CustomBox3D>
+    <Box minH="164">
+      <ErrorWrapper
+        isError={isError}
+        isLoading={pendingDirRates}
+        primaryMessage="No rates available!"
+        secondaryMessage="check your network connection"
+      >
+        <Swiper />
+      </ErrorWrapper>
+    </Box>
   );
 };
 

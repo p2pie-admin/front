@@ -9,6 +9,7 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import StarRatings from "react-star-ratings";
+import { capitalize } from "../main/side/selector/section/PmGroup/helper";
 
 const ExchangerNameRating = ({
   exchangerName,
@@ -43,7 +44,7 @@ const ExchangerNameRating = ({
         w="full"
         whiteSpace="nowrap"
       >
-        {exchangerName}
+        {capitalize(exchangerName)}
       </Text>
       {/* <Text>TAG</Text> */}
       <HStack position="absolute" top="8" minW="180">

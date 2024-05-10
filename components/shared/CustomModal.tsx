@@ -14,6 +14,7 @@ import {
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { triggerModal } from "../../redux/mainReducer";
+import Shader from "./Shader";
 
 const CustomModal = ({
   children,
@@ -26,10 +27,7 @@ const CustomModal = ({
 }) => {
   const dispatch = useAppDispatch();
   const isOpen = useAppSelector((state) => state.main.modal === id);
-  const [shaderColor] = useToken(
-    "colors",
-    useColorModeValue(["bg.100"], ["bg.700"])
-  );
+
   return (
     <Modal
       size={"lg"}
@@ -71,16 +69,7 @@ const CustomModal = ({
           {children}
           <Box w="100%" h="20" onScroll={(e) => e.preventDefault()} />
         </ModalBody>
-        <Box
-          w="100%"
-          h="2"
-          boxShadow={`0 11px 51px 46px ${shaderColor}`}
-          // bgGradient={`linear-gradient(0deg, ${shaderColor} , transparent)`}
-          position="absolute"
-          left="0"
-          bottom="0"
-          zIndex="10"
-        />
+        <Shader direction="bottom" intense />
       </ModalContent>
     </Modal>
   );

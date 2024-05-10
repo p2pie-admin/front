@@ -21,14 +21,6 @@ const Side = () => {
   const isEmpty = useAppSelector((state) => !state.main[`${side}Pm`]?.code);
   return (
     <Box3D>
-      {/* <HStack
-        gap="4"
-        py="0"
-        px={["2", "4"]}
-        w="100%"
-        h="20"
-        justifyContent="space-between"
-      > */}
       <Grid
         gridTemplateRows="1fr 36px 1fr"
         gridTemplateColumns="auto 1fr"
@@ -49,7 +41,6 @@ const Side = () => {
 
         <AmountInput />
       </Grid>
-      {/* </HStack> */}
     </Box3D>
   );
 };

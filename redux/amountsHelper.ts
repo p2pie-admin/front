@@ -194,3 +194,9 @@ export const isClose = (a: number, b: number): boolean =>
 
 export const beautifyAmount = (number: number, currency: string) =>
   addSpaces(R(number) + " " + currency);
+
+export const localFormat = (n: number, cur: string) => {
+  return `${
+    symbols?.[cur.toLocaleLowerCase() as keyof typeof symbols] || ""
+  } ${kFormatter(n)}`;
+};

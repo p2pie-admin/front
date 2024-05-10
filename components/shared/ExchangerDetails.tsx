@@ -7,7 +7,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import Swiper from "../main/carousel/swiper";
+import Swiper from "../main/carousel/swiper/_index";
 
 import useSWR from "swr";
 import { useAppSelector } from "../../redux/hooks";

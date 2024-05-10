@@ -23,11 +23,18 @@ import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import useSmooth from "../../../services/hooks/smooth";
 import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
 import Limit from "./Limit";
-import { isClose, kFormatter, R, symbols } from "../../../redux/amountsHelper";
+import {
+  isClose,
+  kFormatter,
+  localFormat,
+  R,
+  symbols,
+} from "../../../redux/amountsHelper";
 import { setAmount } from "../../../redux/mainReducer";
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { BsArrowLeftShort, BsArrowRightShort } from "react-icons/bs";
 import Thumb from "./Thumb";
+import side from "../side";
 
 const CustomRangeSlider = ({
   resMin,
@@ -52,18 +59,13 @@ const CustomRangeSlider = ({
 
 const LimitsRange = () => {
   const dispatch = useAppDispatch();
-  const [showTooltip, setShowTooltip] = useState(false);
-  const [side, setSide]: [side: "give" | "get", setSide: Function] = useState(
-    "get" as "give" | "get"
-  );
-
   const currentDirRate = useAppSelector(
     (state) => state.main?.dirRates?.[state.main.swiperIdVisible]
   );
-
-  // const pmCurrencyName = useAppSelector(
-  //   (state) => state.main[`${side}Pm`]?.currency.code.toUpperCase() || ""
-  // );
+  // if(!currentDirRate) return <></>
+  const [side, setSide]: [side: "give" | "get", setSide: Function] = useState(
+    "get" as "give" | "get" // (currentDirRate.course) > 1 ? "give" : "get"
+  );
 
   const giveCur = useAppSelector(
     (state) => state.main.givePm?.currency.code.toUpperCase() || ""
@@ -121,16 +123,11 @@ const LimitsRange = () => {
   const color4 =
     stickyAmount >= MIN && stickyAmount <= MAX ? mainColor : "bg.600";
 
-  const localFormat = (n: number) => {
-    const cur = mainCur.toLocaleLowerCase() as keyof typeof symbols;
-    return `${symbols[cur] || ""} ${kFormatter(n)}`;
-  };
-
   const props = { mainCur, stickyAmount, MIN, MAX };
 
   if (!MIN || !MAX) return <></>;
   return (
-    <Box3D py="3" my={[2, 3, 4]} cursor="pointer" display="flex" flexDir="row">
+    <Box3D py="2" my={[2, 3, 4]} cursor="pointer" display="flex" flexDir="row">
       {/* <Text>highestMax: {highestMax}</Text> */}
       <HStack minW="25%" justifyContent="center" onClick={changeSide}>
         <Text fontSize="xs" color={side === "give" ? mainColor : "bg.500"}>
@@ -159,21 +156,9 @@ const LimitsRange = () => {
                 );
               }
             }}
-            onMouseEnter={() => setShowTooltip(true)}
-            onMouseLeave={() => setShowTooltip(false)}
           >
-            {/* <Tooltip
-              hasArrow
-              bg={color2}
-              borderRadius="2xl"
-              color={color4}
-              placement="top"
-              isOpen={showTooltip}
-              label={`${kFormatter(stickyAmount)} ${giveCur}`}
-            > */}
             <Thumb {...props} />
 
-            {/* </Tooltip> */}
             <SliderTrack bgColor="transparent"></SliderTrack>
           </Slider>
         </Box>
@@ -195,8 +180,11 @@ const LimitsRange = () => {
                 <Box h="fit-content" zIndex="5" mt="1">
                   <ResponsiveText size="xs" color="bg.500">
                     {MIN == MAX
-                      ? localFormat(MIN)
-                      : `${localFormat(MIN)} — ${localFormat(MAX)}`}
+                      ? localFormat(MIN, mainCur)
+                      : `${localFormat(MIN, mainCur)} — ${localFormat(
+                          MAX,
+                          mainCur
+                        )}`}
                   </ResponsiveText>
                 </Box>
               </Flex>
@@ -210,7 +198,7 @@ const LimitsRange = () => {
                     whiteSpace="nowrap"
                     textAlign="center"
                   >
-                    {localFormat(MIN)}
+                    {localFormat(MIN, mainCur)}
                   </ResponsiveText>
                 </RangeSliderThumb>
 
@@ -222,7 +210,7 @@ const LimitsRange = () => {
                     whiteSpace="nowrap"
                     textAlign="center"
                   >
-                    {localFormat(MAX)}
+                    {localFormat(MAX, mainCur)}
                   </ResponsiveText>
                 </RangeSliderThumb>
               </>
