@@ -9,7 +9,13 @@ import ReactMarkdown from "react-markdown";
 import DefaultDirText from "./DefaultDirText";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-const Article = ({ article, dir }: { article?: IArticle; dir: string }) => {
+const Article = ({
+  article = null,
+  dir,
+}: {
+  article?: IArticle | null;
+  dir: string;
+}) => {
   const timestampToDate = (ts?: string) => {
     const [y, m, d] = ts ? ts?.split("T")[0]?.split("-") : ["-", "-", "-"];
     return `${d}.${m}.${y}`;
@@ -128,8 +134,7 @@ export async function getStaticProps({
       });
 
       const res = await fetcher(articleQuery);
-
-      article = res?.articles[0] as IArticle;
+      article = res?.articles[0] ? (res.articles[0] as IArticle) : null;
     } catch (e) {}
   }
 
