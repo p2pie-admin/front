@@ -29,19 +29,13 @@ const Layout = ({ children }: { children: any }) => {
 
   useEffect(() => {
     const url = "https://ip.nf/me.json";
-    setTimeout(
-      () =>
-        axios.get(url).then((resp) => {
-          if (resp.data?.ip) {
-            const { country, city, ip } = resp.data?.ip;
-            dispatch(
-              setLocation({ en_country_name: country, en_city_name: city })
-            );
-            dispatch(setIP(ip?.split(".").slice(0, -1).join("."))); // берем только часть IP
-          }
-        }),
-      3000
-    );
+    axios.get(url).then((resp) => {
+      if (resp.data?.ip) {
+        const { country, city, ip } = resp.data?.ip;
+        dispatch(setLocation({ en_country_name: country, en_city_name: city }));
+        dispatch(setIP(ip?.split(".").slice(0, -1).join("."))); // берем только часть IP
+      }
+    });
   }, []);
 
   useEffect(() => {
