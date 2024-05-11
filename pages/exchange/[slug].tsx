@@ -154,7 +154,7 @@ export async function getStaticProps({
       slug,
       ...(await serverSideTranslations(locale || "ru", ["article"])),
     },
-    revalidate: 3600, // 1h
+    revalidate: 36000, // 10h
   };
 }
 
@@ -206,7 +206,7 @@ export async function getStaticPaths() {
       ],
       []
     ),
-    fallback: false,
+    fallback: "blocking",
   };
   // const paths = [
   //   // if no `locale` is provided only the defaultLocale will be generated
