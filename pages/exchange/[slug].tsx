@@ -194,7 +194,7 @@ export async function getStaticPaths() {
   const locales = ["en", "ru"];
 
   return {
-    paths: slugs.slice(0, 40).reduce(
+    paths: slugs.reduce(
       (arr: { params: { slug: string }; locale: string }[], slug: string) => [
         ...arr,
         ...locales.map((locale) => ({
