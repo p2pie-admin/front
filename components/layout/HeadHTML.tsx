@@ -13,7 +13,7 @@ export default function LayoutHeader() {
       />
 
       <link
-        href="http://fonts.googleapis.com/css?family=Inconsolata&text=1234567890,.-+"
+        href="https://fonts.googleapis.com/css?family=Inconsolata&text=1234567890,.-+"
         rel="stylesheet"
       />
       <title>p2pie</title>
