@@ -87,7 +87,7 @@ const Article = ({
                 <Text ref={chapter.ref}>{chapter.title || ""}</Text>
               </HStack>
 
-              <ReactMarkdown>{chapter.text}</ReactMarkdown>
+              {/* <ReactMarkdown>{chapter.text}</ReactMarkdown> */}
 
               {chapter.disclaimer && (
                 <Disclaimer disclaimer={chapter.disclaimer} />
