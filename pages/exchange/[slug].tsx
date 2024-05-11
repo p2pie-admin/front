@@ -8,19 +8,29 @@ import { useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import DefaultDirText from "./DefaultDirText";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useRouter } from "next/router";
+import { restorePmsFromSlug } from "../../redux/thunks";
+import { pmGroupsQuery } from "../../services/initialQueries";
+import {
+  getPmsFromPmGroup,
+  pmsToSlug,
+} from "../../components/main/side/selector/section/PmGroup/helper";
+import { IPm, IPmGroup } from "../../types/selector";
 
 const Article = ({
   article = null,
-  dir,
+  slug,
 }: {
   article?: IArticle | null;
-  dir: string;
+  slug: string;
 }) => {
+  //dispatch(restorePmsFromSlug(slug[0]));
+
   const timestampToDate = (ts?: string) => {
     const [y, m, d] = ts ? ts?.split("T")[0]?.split("-") : ["-", "-", "-"];
     return `${d}.${m}.${y}`;
   };
-  if (!article) return <DefaultDirText dir={dir} />;
+  if (!article) return <DefaultDirText slug={slug} />;
   const refChapters = article.chapters.map((chapter) => ({
     ...chapter,
     ref: useRef(null),
@@ -38,7 +48,7 @@ const Article = ({
 
   return (
     <Box3D maxW="980" px={["2", "4", "8"]} py={["4", "8", "12"]}>
-      <DefaultDirText dir={dir} />
+      <DefaultDirText slug={slug} />
       <h1>{article.header}</h1>
       <h2>{article.subheader}</h2>
 
@@ -103,9 +113,9 @@ export async function getStaticProps({
   params,
 }: {
   locale: "en" | "ru";
-  params: { dir: string };
+  params: { slug: string };
 }) {
-  const { dir } = params;
+  const { slug } = params;
   let article = null;
 
   // ФЕТЧИМ ТОЛЬКО СПУСТЯ ВРЕМЯ ЧТОБЫ ЗАПРОСИТЬ НАПРАВЛЕНИЯ
@@ -123,7 +133,7 @@ export async function getStaticProps({
   }
 
   const articleCode = cachedData?.find(
-    (a) => a.code.toUpperCase() === dir.toUpperCase()
+    (a) => a.code.toUpperCase() === slug.toUpperCase()
   )?.code;
 
   if (articleCode) {
@@ -141,7 +151,7 @@ export async function getStaticProps({
   return {
     props: {
       article,
-      dir,
+      slug,
       ...(await serverSideTranslations(locale || "ru", ["article"])),
     },
     revalidate: 3600, // 1h
@@ -152,28 +162,44 @@ export async function getStaticProps({
 
 export async function getStaticPaths() {
   const possiblePairsFetcher = initParserFetcher();
-  const res = (await possiblePairsFetcher("possible_pairs")) as {
+  const ppRes = (await possiblePairsFetcher("possible_pairs")) as {
     [key: string]: string[];
   };
-  const dirs = Object.entries(res).reduce(
+  const dirs = Object.entries(ppRes).reduce(
     (res: string[], [code, pairs]) => [
       ...res,
       ...pairs.map((pair) => `${code}_${pair}`),
     ],
     []
   );
+  //["BTC_SBERRUB", "BTC_ETH"];
+  console.log("possible dirs: ", dirs);
+  const pmGroupsFetcher = initCMSFetcher();
+  const { pmGroups } = (await pmGroupsFetcher(pmGroupsQuery)) as {
+    pmGroups: IPmGroup[];
+  };
 
-  //const testDirs = ["BTC_SBERRUB", "BTC_ETH"];
+  const pms = pmGroups.reduce(
+    (res: IPm[], pmGroup: IPmGroup) => [...res, ...getPmsFromPmGroup(pmGroup)],
+    []
+  );
 
+  const possiblePmPairs = dirs.map((dir) => ({
+    givePm: pms.find((pm) => pm.code.toUpperCase() === dir.split("_")[0]),
+    getPm: pms.find((pm) => pm.code.toUpperCase() === dir.split("_")[1]),
+  }));
+
+  const slugs = possiblePmPairs.map((pair) => pmsToSlug(pair));
+  console.log("slugs length", slugs.length);
   const locales = ["en", "ru"];
 
   return {
-    paths: dirs.slice(0, 40).reduce(
-      (arr: { params: { dir: string }; locale: string }[], dir: string) => [
+    paths: slugs.slice(0, 40).reduce(
+      (arr: { params: { slug: string }; locale: string }[], slug: string) => [
         ...arr,
         ...locales.map((locale) => ({
           params: {
-            dir,
+            slug,
           },
           locale,
         })),

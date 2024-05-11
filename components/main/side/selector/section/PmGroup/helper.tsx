@@ -125,6 +125,41 @@ export const IsStringArray = (str: string) => {
   }
 };
 
+export const pmsToSlug = ({
+  givePm,
+  getPm,
+}: {
+  givePm?: IPm;
+  getPm?: IPm;
+}): string => {
+  if (!givePm || !getPm) return "";
+  return `${givePm.en_name.toLowerCase()}-${givePm.currency.code}${
+    givePm.subgroup_name ? "-" + givePm.subgroup_name : ""
+  }-to-${getPm.en_name.toLowerCase()}-${getPm.currency.code}${
+    getPm.subgroup_name ? "-" + getPm.subgroup_name : ""
+  }`.toLowerCase();
+};
+
+export const pmBySubgroupAndCurrency = (
+  curCode: string,
+  subgroupName: string,
+  pmGroups: IPmGroup[]
+): IPm | undefined => {
+  const pmGroup = pmGroups.find((pmGroup) =>
+    pmGroup.options.find(
+      (op) =>
+        op?.name?.toLowerCase() === subgroupName ||
+        op.currency.code.toLowerCase() === curCode
+    )
+  );
+  if (!pmGroup) return;
+  return getPmsFromPmGroup(pmGroup).find(
+    (pm) =>
+      pm.subgroup_name?.toLowerCase() === subgroupName ||
+      pm.currency.code === curCode
+  );
+};
+
 // export const saveDirToLocalStorage = (dir: string) => {
 //   if (typeof window !== "undefined") {
 //     const savedDirsString = localStorage.getItem("recent dirs");

@@ -45,16 +45,7 @@ const Thumb = ({
   };
 
   const [showTooltip, setShowTooltip] = useState(false);
-  //   <ResponsiveText
-  //   display={showTooltip ? "unset" : "none"}
-  //   size="xs"
-  //   position="absolute"
-  //   top="-10px"
-  //   color={mainColor}
-  //   whiteSpace="nowrap"
-  // >
-  //   {localFormat(stickyAmount)}
-  // </ResponsiveText>
+
   return (
     <Tooltip
       hasArrow

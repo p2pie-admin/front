@@ -1,13 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IPopularDirRates, IRate } from "../types/rates";
 import axios from "axios";
-import { pmGroupQuery, pmsQuery } from "../services/initialQueries";
+import { pmGroupsByNamesQuery, pmsQuery } from "../services/initialQueries";
 import {
   initCMSFetcher,
   initCurrencyConverterFetcher,
 } from "../services/fetchers";
 import { MainState } from "./mainReducer";
-import { IPmPointer } from "../types/selector";
+import { IPm, IPmGroup, IPmPointer } from "../types/selector";
 import { IOrder } from "../types/p2p";
 import { createOrder, createUID } from "./helper";
 import { IToast } from "../types/general";
@@ -21,6 +21,7 @@ import {
   CreateOrderMutation,
 } from "../components/order/step3/queries";
 import { CreateRedirectMutation } from "../components/main/carousel/bottons/queries";
+import { pmBySubgroupAndCurrency } from "../components/main/side/selector/section/PmGroup/helper";
 //import { redirect } from "next/navigation";
 
 // export async function navigate() {
@@ -82,16 +83,50 @@ export const fetchDirRates = createAsyncThunk(
 
 export const restorePmsFromSlug = createAsyncThunk(
   "rates/restorePmsFromSlug",
-  async ({ dir, pm_groups }: { dir: string; pm_groups: string }) => {
-    const ids = pm_groups.split("_");
-    const fetcher0 = initCMSFetcher({ id: ids[0] });
-    const fetcher1 = initCMSFetcher({ id: ids[1] });
-    const response0 = await fetcher0(pmGroupQuery);
-    const response1 = await fetcher1(pmGroupQuery);
+  async (slug: string): Promise<{ givePm?: IPm; getPm?: IPm }> => {
+    //   const ids = pm_groups.split("_");
+    //   const fetcher0 = initCMSFetcher({ id: ids[0] });
+    //   const fetcher1 = initCMSFetcher({ id: ids[1] });
+    //   const response0 = await fetcher0(pmGroupQuery);
+    //   const response1 = await fetcher1(pmGroupQuery);
+    //   return {
+    //     givePmGroup: response0?.pmGroup,
+    //     getPmGroup: response1?.pmGroup,
+    //     dir,
+    //   };
+    //}
+
+    // ex: bitcoin-to-cash-rub
+    // ex: tinkoff-rub-to-tether-usdt-trc20
+
+    const [giveNameCurCode, getNameCurCode] = slug.split("-to-");
+    const [giveName, giveCurCode, giveSubgroupName] =
+      giveNameCurCode.split("-");
+    const [getName, getCurCode, getSubgroupName] = getNameCurCode.split("-");
+    console.log(
+      "giveName, giveCurCode, giveSubgroupName",
+      giveName,
+      giveCurCode,
+      giveSubgroupName
+    );
+    const fetcher = initCMSFetcher({ giveName, getName });
+    const response = (await fetcher(pmGroupsByNamesQuery)) as {
+      pmGroups: IPmGroup[];
+    };
+    const givePmGroup = pmBySubgroupAndCurrency(
+      giveCurCode,
+      giveSubgroupName,
+      response.pmGroups
+    );
+    const getPmGroup = pmBySubgroupAndCurrency(
+      getCurCode,
+      getSubgroupName,
+      response.pmGroups
+    );
+    console.log("givePmGroup, getPmGroup", givePmGroup, getPmGroup);
     return {
-      givePmGroup: response0?.pmGroup,
-      getPmGroup: response1?.pmGroup,
-      dir,
+      givePm: undefined,
+      getPm: undefined,
     };
   }
 );

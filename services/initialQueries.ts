@@ -63,9 +63,9 @@ export const pmsQuery = gql`
   }
 `;
 
-export const pmGroupQuery = gql`
-  query getPmGroup($id: ID) {
-    pmGroup(id: $id) {
+export const pmGroupsQuery = gql`
+  {
+    pmGroups(pagination: { start: 0, limit: 1000 }) {
       data {
         id
         attributes {
@@ -107,6 +107,43 @@ export const pmGroupQuery = gql`
               attributes {
                 url
                 alternativeText
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const pmGroupsByNamesQuery = gql`
+  query pmGroupsByNames($giveName: String, $getName: String) {
+    pmGroups(
+      filters: {
+        or: [{ en_name: { eqi: $giveName } }, { en_name: { eqi: $getName } }]
+      }
+    ) {
+      data {
+        id
+        attributes {
+          en_name
+          options {
+            ... on ComponentSelectorSubgroup {
+              currency {
+                data {
+                  attributes {
+                    code
+                  }
+                }
+              }
+            }
+            ... on ComponentSelectorCurrency {
+              currency {
+                data {
+                  attributes {
+                    code
+                  }
+                }
               }
             }
           }
