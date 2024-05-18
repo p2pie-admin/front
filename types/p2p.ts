@@ -17,7 +17,7 @@ export interface IP2PDir {
   deleted: boolean;
   give?: IPm[];
   get?: IPm[];
-  currencyConverterRate?: ICurrencyConverterRate;
+  ccRates?: ICurrencyConverterRate;
   usersRate?: IUsersRate;
   mainCur?: string;
   secondaryCur?: string;

@@ -8,6 +8,7 @@ import {
   IP2PRegulationGroup,
 } from "../types/p2p";
 import { IRate } from "../types/rates";
+import { IPm } from "../types/selector";
 import { IFingerprint } from "../types/shared";
 import { FeesCalculator } from "./amountsHelper";
 import { MainState } from "./mainReducer";
@@ -23,7 +24,9 @@ const initialAmount = (side: "give" | "get") => ({
   side: side,
 });
 export const getAmountOutputs = (
-  state: MainState,
+  state:
+    | MainState
+    | { givePm: IPm; getPm: IPm; dirRates: IRate[]; amountInput?: AmountInput },
   swiperIdVisible: number,
   customAmount?: AmountInput
 ): AmountOutputs => {
@@ -42,12 +45,12 @@ export const getAmountOutputs = (
 
 export const convertP2PRatioToCourse = (
   dirRates: IRate[],
-  currencyConverterRate?: ICurrencyConverterRate
+  ccRates?: ICurrencyConverterRate
 ): IRate[] => {
-  if (!currencyConverterRate || !currencyConverterRate?.rate) return dirRates;
+  if (!ccRates || !ccRates?.rate) return dirRates;
   dirRates.map((rate) => {
     if (!rate?.p2pRatio) return rate;
-    return { ...rate, course: currencyConverterRate?.rate * rate.p2pRatio };
+    return { ...rate, course: ccRates?.rate * rate.p2pRatio };
   });
   return dirRates;
 };
@@ -76,6 +79,20 @@ export const createOrder = (p2pData: IOrder, uid: string): IOrder => ({
 
 export const createUID = (fingerprint?: IFingerprint) =>
   "uid_" + Number(fingerprint?.ip.replaceAll(".", "")).toString(36);
+
+export const destructureDirSlug = (slug: string) => {
+  const [giveNameCurCode, getNameCurCode] = slug.split("-to-");
+  const [giveName, giveCurCode, giveSubgroupName] = giveNameCurCode.split("-");
+  const [getName, getCurCode, getSubgroupName] = getNameCurCode.split("-");
+  return {
+    giveName,
+    giveCurCode,
+    giveSubgroupName,
+    getName,
+    getCurCode,
+    getSubgroupName,
+  };
+};
 // export const findBestCourseRateByAmountInput = (
 //   amountInput?: AmountInput,
 //   bestRates?: IDirRates

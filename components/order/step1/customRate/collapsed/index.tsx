@@ -25,11 +25,11 @@ const Collapsed = () => {
   const p2pDirIndex = useContext(P2PContext);
 
   const rateBiggerThanOne = useAppSelector((state) => {
-    const currencyConverterRate =
+    const ccRates =
       p2pDirIndex !== undefined
-        ? state.main.p2p.dirs[p2pDirIndex].currencyConverterRate
+        ? state.main.p2p.dirs[p2pDirIndex].ccRates
         : undefined;
-    return currencyConverterRate && currencyConverterRate.rate > 1;
+    return ccRates && ccRates.rate > 1;
   });
 
   const currencySelector = (side: ISide) => (state: { main: MainState }) =>

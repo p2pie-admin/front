@@ -48,7 +48,7 @@ export const getPmsFromPmGroup = (
 ): IPm[] => {
   return pm_group.options.map((option) => {
     const code = getOptionCode(option, pm_group?.prefix);
-    const subgroup_name = option.name && option.name.toUpperCase();
+    const subgroup_name = (option.name && option.name.toUpperCase()) || null;
 
     const en_name = pm_group.en_name;
     const ru_name = pm_group.ru_name;
@@ -61,7 +61,7 @@ export const getPmsFromPmGroup = (
       currency: option?.currency, // USDT
       icon: pm_group.icon,
       color: pm_group.color,
-      popular_as,
+      popular_as: popular_as || null,
     };
   });
 };
@@ -145,15 +145,16 @@ export const pmBySubgroupAndCurrency = (
   subgroupName: string,
   pmGroups: IPmGroup[]
 ): IPm | undefined => {
-  const pmGroup = pmGroups.find((pmGroup) =>
-    pmGroup.options.find(
+  const pmGroup = pmGroups.filter((pmg) => {
+    return pmg.options.find(
       (op) =>
-        op?.name?.toLowerCase() === subgroupName ||
-        op.currency.code.toLowerCase() === curCode
-    )
-  );
+        (op.name && op.name === subgroupName) || op.currency.code === curCode
+    );
+  });
+
   if (!pmGroup) return;
-  return getPmsFromPmGroup(pmGroup).find(
+
+  return getPmsFromPmGroup(pmGroup[0]).find(
     (pm) =>
       pm.subgroup_name?.toLowerCase() === subgroupName ||
       pm.currency.code === curCode

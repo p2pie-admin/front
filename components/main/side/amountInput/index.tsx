@@ -7,9 +7,6 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useContext } from "react";
-import { NumericFormat } from "react-number-format";
-
-import { batchActions } from "redux-batched-actions";
 import { R } from "../../../../redux/amountsHelper";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { setAmount } from "../../../../redux/mainReducer";
@@ -26,7 +23,7 @@ const AmountInput = () => {
   };
 
   const amountOutputs = useAppSelector((state) => state.main.amountOutputs);
-  const pendingDirRates = useAppSelector((state) => state.main.pendingDirRates);
+
   const currentRate = useAppSelector(
     (state) => state.main?.dirRates?.[state.main.swiperIdVisible]
   );
@@ -49,7 +46,7 @@ const AmountInput = () => {
         onChange={onAmountChange}
         minW="10"
         zIndex="3"
-        value={stringValue.length > 11 || pendingDirRates ? "-" : stringValue}
+        value={stringValue.length > 11 ? "-" : stringValue}
         keepWithinRange={true}
         clampValueOnBlur={true}
         max={9999999}

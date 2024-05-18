@@ -1,4 +1,4 @@
-import Carousel from "../main/carousel";
+import Carousel from "./tv";
 import LimitsRange from "./limits";
 import { useAppSelector } from "../../redux/hooks";
 import { RegularBox } from "../../styles/theme/custom";

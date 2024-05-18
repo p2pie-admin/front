@@ -90,7 +90,7 @@ function Petal({
       dispatch(setPm({ pm: selectedPm, side }));
 
       if (oppositePm?.code) {
-        dispatch(fetchDirRates({ code: selectedPm.code, side: side }));
+        //dispatch(fetchDirRates({ code: selectedPm.code, side: side }));
         dispatch(setPopularCompleted(undefined));
         return;
       }

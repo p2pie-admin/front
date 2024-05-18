@@ -70,12 +70,12 @@ interface IPm {
   currency: ICurrency; // USDT
   en_name: string; // Tether ERC-20
   ru_name?: string;
-  subgroup_name?: string; // ERC-20 отобразить в подгруппе
+  subgroup_name?: string | null; // ERC-20 отобразить в подгруппе
   icon?: IImage;
   toUsd?: number;
   possible_pairs?: string[];
   color: string;
-  popular_as?: IPopularAs;
+  popular_as?: IPopularAs | null;
 }
 
 type ISide = "give" | "get";

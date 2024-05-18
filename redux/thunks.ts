@@ -9,7 +9,7 @@ import {
 import { MainState } from "./mainReducer";
 import { IPm, IPmGroup, IPmPointer } from "../types/selector";
 import { IOrder } from "../types/p2p";
-import { createOrder, createUID } from "./helper";
+import { createOrder, createUID, destructureDirSlug } from "./helper";
 import { IToast } from "../types/general";
 import {
   readLocalOrder,
@@ -20,7 +20,7 @@ import {
   UpdateOrderMutation,
   CreateOrderMutation,
 } from "../components/order/step3/queries";
-import { CreateRedirectMutation } from "../components/main/carousel/bottons/queries";
+import { CreateRedirectMutation } from "../components/main/tv/bottons/queries";
 import { pmBySubgroupAndCurrency } from "../components/main/side/selector/section/PmGroup/helper";
 //import { redirect } from "next/navigation";
 
@@ -35,101 +35,119 @@ const courseFilterLink =
     ? process.env.NEXT_PUBLIC_PARSER_PROD_URL
     : process.env.NEXT_PUBLIC_PARSER_DEV_URL;
 
-export const fetchFiat = createAsyncThunk("initial/fetchFiat", async () => {
-  const response = await axios
-    .get(`${process.env.NEXT_PUBLIC_COINGECKO_URL}/`)
-    .catch((err) => console.error("ERROR: ", err));
-  const fiatRates = response?.data;
-  return {
-    fiatRates,
-  };
-});
+// export const fetchFiat = createAsyncThunk("initial/fetchFiat", async () => {
+//   const response = await axios
+//     .get(`${process.env.NEXT_PUBLIC_COINGECKO_URL}/`)
+//     .catch((err) => console.error("ERROR: ", err));
+//   const fiatRates = response?.data;
+//   return {
+//     fiatRates,
+//   };
+// });
 
-export const fetchAllDirRates = createAsyncThunk(
-  "rates/fetchAllDirRates",
-  async (dir: string) => {
-    const response = await axios
-      .get(`${courseFilterLink}/dir=${dir}/type=all`)
-      .catch((err) => console.error(err));
-    return response?.data as IRate[];
-  }
-);
+// export const fetchAllDirRates = createAsyncThunk(
+//   "rates/fetchAllDirRates",
+//   async (dir: string) => {
+//     const response = await axios
+//       .get(`${courseFilterLink}/dir=${dir}/type=all`)
+//       .catch((err) => console.error(err));
+//     return response?.data as IRate[];
+//   }
+// );
+
+export const fetchRates = async (dir: string) => {
+  const response = await axios
+    .get(`${courseFilterLink}/dir=${dir}/type=tops+p2p`)
+    .catch((err) => console.error("could not fetch, ", err));
+  return response?.data as IRate[];
+};
 
 export const fetchDirRates = createAsyncThunk(
   "rates/fetchDirRates",
-  async (
-    { dir, code, side }: { dir?: string; code?: string; side?: ISide },
-    thunkAPI
-  ) => {
-    const { main } = thunkAPI.getState() as { main: MainState };
-    // dir не успевает записаться в redux до вызова fetchDirRates, поэтому нужно передать последний выбранный code
-
-    const _dir = dir
-      ? dir
-      : !code
-      ? `${main.givePm?.code}_${main.getPm?.code}`
-      : side === "give"
-      ? `${code.toUpperCase()}_${main.getPm?.code}`
-      : side === "get"
-      ? `${main.givePm?.code}_${code.toUpperCase()}`
-      : "";
-
-    const response = await axios
-      .get(`${courseFilterLink}/dir=${_dir}/type=tops+p2p`)
-      .catch((err) => console.error("could not fetch, ", err));
-    return response?.data as IRate[];
-  }
+  fetchRates
 );
+
+export const fetchCCRates = async ({
+  curPair, // not dir but BTC_RUB
+  p2pDirIndex,
+}: {
+  curPair: string;
+  p2pDirIndex?: number;
+}) => {
+  const fetcher = initCurrencyConverterFetcher(p2pDirIndex);
+  return await fetcher(curPair);
+};
+
+export const fetchCurrencyConverterRates = createAsyncThunk(
+  "order/fetchCurrencyConverterRates",
+  fetchCCRates
+);
+// export const fetchDirRates = createAsyncThunk(
+//   "rates/fetchDirRates",
+//   async (
+//     { dir, code, side }: { dir?: string; code?: string; side?: ISide },
+//     thunkAPI
+//   ) => {
+//     const { main } = thunkAPI.getState() as { main: MainState };
+//     // dir не успевает записаться в redux до вызова fetchDirRates, поэтому нужно передать последний выбранный code
+
+//     const _dir = dir
+//       ? dir
+//       : !code
+//       ? `${main.givePm?.code}_${main.getPm?.code}`
+//       : side === "give"
+//       ? `${code.toUpperCase()}_${main.getPm?.code}`
+//       : side === "get"
+//       ? `${main.givePm?.code}_${code.toUpperCase()}`
+//       : "";
+
+//     const response = await axios
+//       .get(`${courseFilterLink}/dir=${_dir}/type=tops+p2p`)
+//       .catch((err) => console.error("could not fetch, ", err));
+//     return response?.data as IRate[];
+//   }
+// );
+
+export const restoreFromSlug = async (
+  slug: string
+): Promise<{ givePm?: IPm; getPm?: IPm }> => {
+  // ex: bitcoin-to-cash-rub
+  // ex: tinkoff-rub-to-tether-usdt-trc20
+  const {
+    giveName,
+    giveCurCode,
+    giveSubgroupName,
+    getName,
+    getCurCode,
+    getSubgroupName,
+  } = destructureDirSlug(slug);
+
+  const fetcher = initCMSFetcher({ giveName, getName });
+  const response = (await fetcher(pmGroupsByNamesQuery)) as {
+    pmGroups: IPmGroup[];
+  };
+  console.log(response);
+  const givePm = pmBySubgroupAndCurrency(
+    giveCurCode,
+    giveSubgroupName,
+    response.pmGroups
+  );
+  const getPm = pmBySubgroupAndCurrency(
+    getCurCode,
+    getSubgroupName,
+    response.pmGroups
+  );
+
+  return {
+    givePm,
+    getPm,
+  };
+};
 
 export const restorePmsFromSlug = createAsyncThunk(
   "rates/restorePmsFromSlug",
-  async (slug: string): Promise<{ givePm?: IPm; getPm?: IPm }> => {
-    //   const ids = pm_groups.split("_");
-    //   const fetcher0 = initCMSFetcher({ id: ids[0] });
-    //   const fetcher1 = initCMSFetcher({ id: ids[1] });
-    //   const response0 = await fetcher0(pmGroupQuery);
-    //   const response1 = await fetcher1(pmGroupQuery);
-    //   return {
-    //     givePmGroup: response0?.pmGroup,
-    //     getPmGroup: response1?.pmGroup,
-    //     dir,
-    //   };
-    //}
-
-    // ex: bitcoin-to-cash-rub
-    // ex: tinkoff-rub-to-tether-usdt-trc20
-
-    const [giveNameCurCode, getNameCurCode] = slug.split("-to-");
-    const [giveName, giveCurCode, giveSubgroupName] =
-      giveNameCurCode.split("-");
-    const [getName, getCurCode, getSubgroupName] = getNameCurCode.split("-");
-    console.log(
-      "giveName, giveCurCode, giveSubgroupName",
-      giveName,
-      giveCurCode,
-      giveSubgroupName
-    );
-    const fetcher = initCMSFetcher({ giveName, getName });
-    const response = (await fetcher(pmGroupsByNamesQuery)) as {
-      pmGroups: IPmGroup[];
-    };
-    const givePmGroup = pmBySubgroupAndCurrency(
-      giveCurCode,
-      giveSubgroupName,
-      response.pmGroups
-    );
-    const getPmGroup = pmBySubgroupAndCurrency(
-      getCurCode,
-      getSubgroupName,
-      response.pmGroups
-    );
-    console.log("givePmGroup, getPmGroup", givePmGroup, getPmGroup);
-    return {
-      givePm: undefined,
-      getPm: undefined,
-    };
-  }
-);
+  (slug: string) => restoreFromSlug(slug)
+) as any;
 
 export const fetchPossiblePairs = createAsyncThunk(
   "currencies/fetchPossiblePairs",
@@ -150,20 +168,6 @@ export const fetchPms = createAsyncThunk("initial/fetchPms", async () => {
   const response = await fetcher(pmsQuery);
   return response?.pms as IPmPointer[];
 });
-
-export const fetchCurrencyConverterRate = createAsyncThunk(
-  "order/fetchCurrencyConverterRate",
-  async ({
-    currenciesPair,
-    p2pDirIndex,
-  }: {
-    currenciesPair: string;
-    p2pDirIndex?: number;
-  }) => {
-    const fetcher = initCurrencyConverterFetcher(p2pDirIndex);
-    return await fetcher(currenciesPair);
-  }
-);
 
 export const submitOrder = createAsyncThunk(
   "order/submitOrder",

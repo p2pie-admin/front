@@ -5,9 +5,8 @@ import { getPmsFromPmGroup, pmsToSlug, singlePmHasUnmetPairs } from "./helper";
 import { useAppDispatch, useAppSelector } from "../../../../../../redux/hooks";
 import { batch } from "react-redux";
 import {
-  fetchDirRates,
   fetchPossiblePairs,
-  fetchCurrencyConverterRate,
+  fetchCurrencyConverterRates,
 } from "../../../../../../redux/thunks";
 import { IPmGroup, IPm } from "../../../../../../types/selector";
 import {
@@ -36,8 +35,6 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
 
   const givePm = useAppSelector((state) => state.main.givePm);
   const getPm = useAppSelector((state) => state.main.getPm);
-  console.log("pmsToSlug", pmsToSlug({ givePm, getPm }));
-
   const p2pGivePm = useAppSelector(
     (state) => state.main.p2p.dirs[p2pDirIndex || 0].give
   );
@@ -58,11 +55,11 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
       dispatch(triggerModal(undefined));
 
       if (oppositePm?.code) {
-        const currenciesPair =
+        const curPair =
           side === "get"
             ? `${oppositePm.currency.code}_${selectedPm.currency.code}`
             : `${selectedPm.currency.code}_${oppositePm.currency.code}`;
-        dispatch(fetchCurrencyConverterRate({ currenciesPair, p2pDirIndex }));
+        dispatch(fetchCurrencyConverterRates({ curPair, p2pDirIndex }));
       }
     });
   };
@@ -84,16 +81,12 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
             })
           );
         } else {
-          const dir =
+          const slug = pmsToSlug(
             side === "get"
-              ? `${oppositePm.code}_${selectedPm.code}`
-              : `${selectedPm.code}_${oppositePm.code}`;
-          const pmGroups =
-            side === "get"
-              ? `${oppositePm.pm_group_id}_${selectedPm.pm_group_id}`
-              : `${selectedPm.pm_group_id}_${oppositePm.pm_group_id}`;
-
-          router.push(`/?dir=${dir}&pm_groups=${pmGroups}`, undefined, {
+              ? { givePm, getPm: selectedPm }
+              : { givePm: selectedPm, getPm }
+          );
+          router.push(`/exchange/${slug}`, undefined, {
             shallow: true,
           });
         }

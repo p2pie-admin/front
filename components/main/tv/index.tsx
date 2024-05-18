@@ -5,15 +5,12 @@ import { TopParametersQuery, DirectionParametersQuery } from "./queries";
 import ErrorWrapper from "../../shared/ErrorWrapper";
 import { initCMSFetcher } from "../../../services/fetchers";
 import { Box } from "@chakra-ui/react";
-import { IParamData } from "../../../types/rates";
+import { IParamData, IRate } from "../../../types/rates";
 import Swiper from "./swiper";
 
 const fetcher = initCMSFetcher();
 
-const Carousel = () => {
-  //const pendingDirRates = useAppSelector((state) => state.main.pendingDirRates);
-  console.log(" --- carousel updated ---- ");
-
+const TV = () => {
   const { data: topParametersData, error: topParameterError } = useSWR(
     TopParametersQuery,
     fetcher
@@ -40,8 +37,7 @@ const Carousel = () => {
       error: boolean;
     };
 
-  const dirRates = useAppSelector((state) => state.main.dirRates);
-  const pendingDirRates = useAppSelector((state) => state.main.pendingDirRates);
+  const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
 
   const allParameters = [
     ...(topParametersData?.topParameters || []),
@@ -50,12 +46,12 @@ const Carousel = () => {
   ];
 
   // вынесен наружу, иначе все внутри ErrorWrapper начинает высчитываться и выдает ошибку
-  const isError = !pendingDirRates && (!dirRates || !dirRates.length);
+
   return (
     <Box minH="164">
       <ErrorWrapper
-        isError={isError}
-        isLoading={pendingDirRates}
+        isError={dirRatesStatus === "rejected"}
+        isLoading={dirRatesStatus === "pending"}
         primaryMessage="No rates available!"
         secondaryMessage="check your network connection"
       >
@@ -65,7 +61,7 @@ const Carousel = () => {
   );
 };
 
-export default Carousel;
+export default TV;
 
 // <ErrorWrapper
 // mainColor="red"

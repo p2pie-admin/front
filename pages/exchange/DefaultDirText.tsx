@@ -1,36 +1,37 @@
 import { capitalize } from "../../components/main/side/selector/section/PmGroup/helper";
-import { ResponsiveText } from "../../styles/theme/custom";
-import { Text } from "@chakra-ui/react";
+import { Heading, Highlight } from "@chakra-ui/react";
+import { destructureDirSlug } from "../../redux/helper";
 
 const DefaultDirText = ({ slug }: { slug?: string }) => {
   if (!slug) return <></>;
-  const dirTitle = String(
-    slug.split("-").map((word) => (word === "to" ? "→" : capitalize(word)))
-  ).replaceAll(",", " ");
+  const {
+    giveCurCode,
+    giveName,
+    giveSubgroupName,
+    getCurCode,
+    getName,
+    getSubgroupName,
+  } = destructureDirSlug(slug);
+  const U = (str: string) => (str ? str.toUpperCase() : "");
   return (
-    <>
-      <Text>
-        Все, что ты здесь видишь, грузится без JS и полностью читабельно для
-        поисковиков
-      </Text>
-      <Text>
-        Можешь вбить в конец любую существующую пару и прилетит в ответ
-        мгновенный html. Например: tinkoff-rub-to-tether-usdt-trc20
-      </Text>
-
-      <Text>
-        {`Сперва превращаем ссылку exchange/${slug} в читабельный заголовок:`}{" "}
-      </Text>
-      <Text fontSize="2xl" fontWeight="bold">
-        {`Обмен по направлению ${dirTitle}`}
-      </Text>
-      <Text> Далее фигачим авто-описание для SEO </Text>
-
-      <Text>
-        Затем грузим сгенеренный через chatGPT или вручную написанный текст из
-        админки, если таковой имеется.. Все h1 h2 расставляются автоматом :
-      </Text>
-    </>
+    <Heading
+      textAlign="center"
+      as="h1"
+      size="md"
+      noOfLines={2}
+      m="0"
+      mb="3"
+      color="bg.300"
+    >
+      <Highlight
+        query={[giveName, giveCurCode, getName, getCurCode]}
+        styles={{ color: "peach.200" }}
+      >
+        {`Обмен ${capitalize(giveName)} ${U(giveCurCode)} ${U(
+          giveSubgroupName
+        )} на ${capitalize(getName)} ${U(getCurCode)} ${U(getSubgroupName)}`}
+      </Highlight>
+    </Heading>
   );
 };
 

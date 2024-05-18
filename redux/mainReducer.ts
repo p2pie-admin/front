@@ -13,12 +13,10 @@ import { AmountOutputs, AmountInput } from "../types/amount";
 import { RootState } from "./store";
 import {
   fetchDirRates,
-  fetchAllDirRates,
   fetchPms,
   fetchPossiblePairs,
-  fetchFiat,
   restorePmsFromSlug,
-  fetchCurrencyConverterRate,
+  fetchCurrencyConverterRates,
   submitOrder,
   getOrderByUID,
 } from "./thunks";
@@ -63,7 +61,7 @@ export interface MainState {
   givePm?: IPm;
   getPm?: IPm;
   dirRates?: IRate[]; //  uniqueRates + bestRates
-  pendingDirRates: boolean;
+  dirRatesStatus: "fulfilled" | "rejected" | "pending";
   amountInput?: AmountInput;
   amountOutputs: AmountOutputs;
   swiperIdVisible: number;
@@ -79,14 +77,14 @@ export interface MainState {
   modal?: string;
   toast: IToast;
   location: ILocation;
-  currencyConverterRate?: ICurrencyConverterRate;
+  ccRates?: ICurrencyConverterRate;
   p2p: IOrder;
   fingerprint?: IFingerprint;
 }
 
 const initialState: MainState = {
   searchBarInputValue: "",
-  pendingDirRates: false,
+  dirRatesStatus: "pending",
   amountOutputs: initialAmountOutputs,
   swiperIdVisible: 0,
   pms: [],
@@ -208,16 +206,10 @@ export const mainSlice = createSlice({
     },
     reverseDir: (state: MainState) => {
       [state.givePm, state.getPm] = [state.getPm, state.givePm];
-      if (
-        state.currencyConverterRate?.giveToUSD &&
-        state.currencyConverterRate?.getToUSD
-      ) {
-        [
-          state.currencyConverterRate.giveToUSD,
-          state.currencyConverterRate.getToUSD,
-        ] = [
-          state.currencyConverterRate?.getToUSD,
-          state.currencyConverterRate?.giveToUSD,
+      if (state.ccRates?.giveToUSD && state.ccRates?.getToUSD) {
+        [state.ccRates.giveToUSD, state.ccRates.getToUSD] = [
+          state.ccRates?.getToUSD,
+          state.ccRates?.giveToUSD,
         ];
       }
 
@@ -282,7 +274,7 @@ export const mainSlice = createSlice({
       state: MainState,
       action: PayloadAction<ICurrencyConverterRate>
     ) => {
-      state.currencyConverterRate = action.payload;
+      state.ccRates = action.payload;
     },
     setP2PUsersRate: (
       state: MainState,
@@ -326,6 +318,35 @@ export const mainSlice = createSlice({
       if (action.payload)
         state.fingerprint = { ...state.fingerprint, ip: action.payload };
     },
+    setInitialData: (
+      state: MainState,
+      action: PayloadAction<{
+        givePm: IPm;
+        getPm: IPm;
+        dirRates: IRate[];
+        ccRates: ICurrencyConverterRate;
+      }>
+    ) => {
+      if (!action.payload) {
+        // если не получены курсы, парсер не отвечает вовсе
+        state.dirRatesStatus = "rejected";
+        return;
+      }
+      const { dirRates, givePm, getPm, ccRates } = action.payload;
+      state.dirRates = convertP2PRatioToCourse(
+        // прослойка чтобы превратить курсы p2p в реальное число
+        dirRates,
+        ccRates
+      );
+      // cleaning
+      state.amountInput = undefined;
+      state.amountOutputs = getAmountOutputs({ givePm, getPm, dirRates }, 1);
+      state.dirRatesStatus = "fulfilled";
+      state.swiperIdVisible = 1;
+      state.givePm = givePm;
+      state.getPm = getPm;
+      state.ccRates = ccRates;
+    },
   },
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -337,30 +358,31 @@ export const mainSlice = createSlice({
       }, []);
     });
 
-    builder.addCase(fetchDirRates.pending, (state) => {
-      state.pendingDirRates = true;
+    builder.addCase(fetchDirRates.rejected, (state) => {
+      state.dirRatesStatus = "rejected";
     });
 
     builder.addCase(fetchDirRates.fulfilled, (state, action) => {
       if (!action.payload) {
         // если не получены курсы, парсер не отвечает вовсе
-        state.pendingDirRates = false;
+        state.dirRatesStatus = "rejected";
         return;
       }
       state.dirRates = convertP2PRatioToCourse(
         // прослойка чтобы превратить курсы p2p в реальное число
         action.payload,
-        state.currencyConverterRate
+        state.ccRates
       );
+      // cleaning
       state.amountInput = undefined;
       state.amountOutputs = getAmountOutputs(state, 0);
-      state.pendingDirRates = false;
-      state.swiperIdVisible = 0;
+      state.dirRatesStatus = "fulfilled";
+      state.swiperIdVisible = 1;
     });
 
-    builder.addCase(fetchFiat.fulfilled, (state, action) => {
-      state.bestRatesPreview = action.payload.fiatRates;
-    });
+    // builder.addCase(fetchFiat.fulfilled, (state, action) => {
+    //   state.bestRatesPreview = action.payload.fiatRates;
+    // });
 
     builder.addCase(fetchPossiblePairs.fulfilled, (state, action) => {
       if (action.payload.side === "give" && state.givePm)
@@ -369,16 +391,16 @@ export const mainSlice = createSlice({
         state.getPm.possible_pairs = action.payload.possiblePairs;
     });
 
-    builder.addCase(fetchCurrencyConverterRate.fulfilled, (state, action) => {
+    builder.addCase(fetchCurrencyConverterRates.fulfilled, (state, action) => {
       const { p2pDirIndex, data } = action.payload as {
         p2pDirIndex: number;
         data: ICurrencyConverterRate;
       };
       if (p2pDirIndex === undefined) {
-        state.currencyConverterRate = data;
+        state.ccRates = data;
         return;
       }
-      state.p2p.dirs[p2pDirIndex].currencyConverterRate = data;
+      state.p2p.dirs[p2pDirIndex].ccRates = data;
       const { rate, giveToUSD, getToUSD } = data;
       const [defRate, toUsdRate, coefficient] =
         rate > 1 ? [rate, giveToUSD, 0.98] : [1 / rate, getToUSD, 1.02];
@@ -429,24 +451,13 @@ export const mainSlice = createSlice({
     //   state.popularRates = action.payload;
     // });
     builder.addCase(restorePmsFromSlug.fulfilled, (state, action) => {
-      const { givePmGroup, getPmGroup, dir } = action.payload as {
-        givePmGroup?: IPmGroup;
-        getPmGroup?: IPmGroup;
-        dir: string;
+      const { givePm, getPm } = action.payload as {
+        givePm?: IPm;
+        getPm?: IPm;
       };
-      const [giveCode, getCode] = dir.split("_");
-      if (giveCode && getCode && givePmGroup && getPmGroup) {
-        state.givePm = getPmByCode({
-          id: "",
-          code: giveCode,
-          pm_group: givePmGroup,
-        });
-        state.getPm = getPmByCode({
-          id: "",
-          code: getCode,
-          pm_group: getPmGroup,
-        });
-      }
+
+      state.givePm = givePm;
+      state.getPm = getPm;
     });
   },
 });
@@ -477,6 +488,7 @@ export const {
   setRegulation,
   getSavedOrders,
   setIP,
+  setInitialData,
 } = mainSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

@@ -23,9 +23,7 @@ const Fiat = ({
   max?: ILimit;
 }) => {
   const side = useContext(SideContext) as "give" | "get";
-  const toUsd = useAppSelector(
-    (state) => state.main.currencyConverterRate?.[`${side}ToUSD`]
-  );
+  const toUsd = useAppSelector((state) => state.main.ccRates?.[`${side}ToUSD`]);
   const sideCurrencyCode = useAppSelector((state) =>
     state.main[`${side}Pm`]?.currency.code.toUpperCase()
   );

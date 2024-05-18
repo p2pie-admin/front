@@ -2,22 +2,14 @@ import {
   useColorModeValue,
   Center,
   Button,
-  Icon,
-  Spinner,
-  IconButton,
   useToken,
   Box,
-  Grid,
 } from "@chakra-ui/react";
-import { useState } from "react";
 import { BiRefresh } from "react-icons/bi";
 import { CgArrowsExchange } from "react-icons/cg";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { reverseDir } from "../../redux/mainReducer";
-import { batch } from "react-redux";
-import { fetchDirRates } from "../../redux/thunks";
 import { useRouter } from "next/router";
-import { RegularBox } from "../../styles/theme/custom";
 
 const Patch = () => {
   const [bg10, bg900] = useToken("colors", ["bg.10", "bg.900"]);
@@ -50,38 +42,23 @@ const ReverseButton = () => {
   const dispatch = useAppDispatch();
 
   const color2 = useColorModeValue("bg.700", "bg.200");
-
-  const pendingDirRates = useAppSelector((state) => state.main.pendingDirRates);
   const bothPmsSelected = useAppSelector(
     (state) => state.main.givePm?.code && state.main.getPm?.code
   );
   const router = useRouter();
-  const { dir, pm_groups } = router.query;
-  let reverseSlug = () => {};
-  if (typeof dir === "string" && typeof pm_groups === "string") {
-    const reversedDir = `${dir.split("_")[1]}_${dir.split("_")[0]}`;
-    const reversedPmGroups = `${pm_groups.split("_")[1]}_${
-      pm_groups.split("_")[0]
-    }`;
-    reverseSlug = () =>
-      router.push(
-        `/?dir=${reversedDir}&pm_groups=${reversedPmGroups}`,
-        undefined,
-        {
-          shallow: true,
-        }
-      );
+  const slug = router.query.slug as string;
+  let reversed_slug = "";
+  if (slug && slug.length) {
+    const [leftPart, rightPart] = slug.split("-to-");
+    reversed_slug = `${rightPart}-to-${leftPart}`;
   }
 
   const handleReverseDir = () => {
-    reverseSlug();
+    router.push(`/exchange/${reversed_slug}`, undefined, {
+      shallow: true,
+    });
 
     dispatch(reverseDir());
-
-    // batch(() => {
-    //   dispatch(reverseDir());
-    //   dispatch(fetchDirRates({}));
-    // });
   };
 
   return (
@@ -94,7 +71,6 @@ const ReverseButton = () => {
           onClick={handleReverseDir}
           color={bothPmsSelected ? color2 : "bg.500"}
           zIndex="3"
-          isLoading={pendingDirRates}
           aria-label="Reverse direction"
         >
           {bothPmsSelected ? (
@@ -106,26 +82,6 @@ const ReverseButton = () => {
       </Box>
       <Patch />
     </Center>
-
-    // <Center w="100%" h="2" p="0">
-    //   <IconButton
-    //     border={`6px solid ${bg800}`}
-    //     onClick={handleReverseDir}
-    //     borderRadius="50%"
-    //     bgColor="bg.700"
-    //     color={bothPmsSelected ? "bg.300" : "bg.600"}
-    //     zIndex="2"
-    //     isLoading={pendingDirRates}
-    //     aria-label="Reverse direction"
-    //     icon={
-    //       bothPmsSelected ? (
-    //         <BiRefresh size="2rem" />
-    //       ) : (
-    //         <IoChevronDownOutline size="2rem" />
-    //       )
-    //     }
-    //   />
-    // </Center>
   );
 };
 
