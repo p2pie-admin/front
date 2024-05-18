@@ -133,11 +133,13 @@ export const pmsToSlug = ({
   getPm?: IPm;
 }): string => {
   if (!givePm || !getPm) return "";
-  return `${givePm.en_name.toLowerCase()}-${givePm.currency.code}${
+  return `${givePm.en_name}-${givePm.currency.code}${
     givePm.subgroup_name ? "-" + givePm.subgroup_name : ""
-  }-to-${getPm.en_name.toLowerCase()}-${getPm.currency.code}${
+  }-to-${getPm.en_name}-${getPm.currency.code}${
     getPm.subgroup_name ? "-" + getPm.subgroup_name : ""
-  }`.toLowerCase();
+  }`
+    .toLowerCase()
+    .replaceAll(" ", "");
 };
 
 export const pmBySubgroupAndCurrency = (
@@ -148,7 +150,8 @@ export const pmBySubgroupAndCurrency = (
   const pmGroup = pmGroups.filter((pmg) => {
     return pmg.options.find(
       (op) =>
-        (op.name && op.name === subgroupName) || op.currency.code === curCode
+        (op.name && op.name.replaceAll(" ", "") === subgroupName) ||
+        op.currency.code === curCode
     );
   });
 

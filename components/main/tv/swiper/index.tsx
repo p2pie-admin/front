@@ -147,7 +147,7 @@ export const ExchangersList = () => {
   const stepDown = () => {
     const currentIndex = getIndex();
     const newIndex = Math.max(currentIndex - 1, 0);
-    console.log(newIndex);
+
     dispatch(setSwiperIdVisible(newIndex));
     scrollToItem(newIndex);
   };
@@ -155,7 +155,7 @@ export const ExchangersList = () => {
   const stepUp = () => {
     const currentIndex = getIndex();
     const newIndex = Math.min(currentIndex + 1, length - 1);
-    console.log(newIndex);
+
     dispatch(setSwiperIdVisible(newIndex));
     scrollToItem(newIndex);
   };

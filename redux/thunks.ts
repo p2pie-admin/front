@@ -126,7 +126,7 @@ export const restoreFromSlug = async (
   const response = (await fetcher(pmGroupsByNamesQuery)) as {
     pmGroups: IPmGroup[];
   };
-  console.log(response);
+
   const givePm = pmBySubgroupAndCurrency(
     giveCurCode,
     giveSubgroupName,

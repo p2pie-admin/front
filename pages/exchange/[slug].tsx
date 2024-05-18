@@ -36,7 +36,7 @@ const Exchange = ({
   prerenderedCCRates,
 }: {
   article?: IArticle | null;
-  slug: string;
+  slug?: string;
   givePm: IPm;
   getPm: IPm;
   prerenderedDirRates: IRate[];
@@ -52,7 +52,7 @@ const Exchange = ({
       ccRates: prerenderedCCRates,
     })
   );
-
+  if (!slug) return <></>;
   return (
     <>
       <RegularBox
@@ -92,57 +92,63 @@ export async function getStaticProps({
   locale: "en" | "ru";
   params: { slug: string };
 }) {
-  const { slug } = params;
-  let article = null;
-  // ФЕТЧИМ ТОЛЬКО СПУСТЯ ВРЕМЯ ЧТОБЫ ЗАПРОСИТЬ НАПРАВЛЕНИЯ
-  // С СУЩЕСТВУЮЩИМИ АРТИКЛАМИ ТОЛЬКО ОДИН РАЗ
-  // И НЕ ЗАГРУЖАТЬ STRAPI
-  if (!cachedData.articleCodes) {
-    const getAllArticleCodes = initCMSFetcher();
-    const res = (await getAllArticleCodes(articleCodesQuery)) as {
-      articles: { id: string; code: string }[];
-    };
-    const { articles } = res;
-    cachedData.articleCodes = articles;
-  }
+  try {
+    const { slug } = params;
+    let article = null;
+    // ФЕТЧИМ ТОЛЬКО СПУСТЯ ВРЕМЯ ЧТОБЫ ЗАПРОСИТЬ НАПРАВЛЕНИЯ
+    // С СУЩЕСТВУЮЩИМИ АРТИКЛАМИ ТОЛЬКО ОДИН РАЗ
+    // И НЕ ЗАГРУЖАТЬ STRAPI
+    if (!cachedData.articleCodes) {
+      const getAllArticleCodes = initCMSFetcher();
+      const res = (await getAllArticleCodes(articleCodesQuery)) as {
+        articles: { id: string; code: string }[];
+      };
+      const { articles } = res;
+      cachedData.articleCodes = articles;
+    }
 
-  const articleCode = cachedData.articleCodes?.find(
-    (a) => a.code.toUpperCase() === slug.toUpperCase()
-  )?.code;
+    const articleCode = cachedData.articleCodes?.find(
+      (a) => a.code.toUpperCase() === slug.toUpperCase()
+    )?.code;
 
-  if (articleCode) {
-    try {
+    if (articleCode) {
       const fetcher = initCMSFetcher({
         locale,
         code: articleCode,
       });
-
       const res = await fetcher(articleQuery);
       article = res?.articles[0] ? (res.articles[0] as IArticle) : null;
-    } catch (e) {}
+    }
+    const res = await restoreFromSlug(slug);
+
+    const { givePm, getPm } = res;
+    const dir = `${givePm?.code}_${getPm?.code}`;
+    const curPair = `${givePm?.currency.code}_${getPm?.currency.code}`;
+    const prerenderedDirRates = await fetchRates(dir);
+    const prerenderedCCRates = (await fetchCCRates({ curPair })).data;
+
+    return {
+      props: {
+        article,
+        slug,
+        givePm,
+        getPm,
+        prerenderedDirRates,
+        prerenderedCCRates,
+        ...(await serverSideTranslations(locale || "ru", ["home"])),
+      },
+      revalidate: cachedData.articleCodes.find((ac) => ac.code == slug)
+        ? 300
+        : 6000, // sec
+    };
+  } catch (error) {
+    console.error(`Error fetching data for ${params.slug}:`, error);
+    return {
+      props: {
+        slug: null,
+      },
+    };
   }
-  const res = await restoreFromSlug(slug);
-
-  const { givePm, getPm } = res;
-  const dir = `${givePm?.code}_${getPm?.code}`;
-  const curPair = `${givePm?.currency.code}_${getPm?.currency.code}`;
-  const prerenderedDirRates = await fetchRates(dir);
-  const prerenderedCCRates = (await fetchCCRates({ curPair })).data;
-
-  return {
-    props: {
-      article,
-      slug,
-      givePm,
-      getPm,
-      prerenderedDirRates,
-      prerenderedCCRates,
-      ...(await serverSideTranslations(locale || "ru", ["home"])),
-    },
-    revalidate: cachedData.articleCodes.find((ac) => ac.code == slug)
-      ? 300
-      : 6000, // sec
-  };
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
