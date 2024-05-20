@@ -1,4 +1,4 @@
-import { capitalize } from "../../components/main/side/selector/section/PmGroup/helper";
+import { capitalize } from "../main/side/selector/section/PmGroup/helper";
 import { Heading, Highlight } from "@chakra-ui/react";
 import { destructureDirSlug } from "../../redux/helper";
 

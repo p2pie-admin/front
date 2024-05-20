@@ -5,7 +5,6 @@ import {
   Flex,
   SlideFade,
   Text,
-  useBreakpointValue,
   useColorModeValue,
   useToken,
 } from "@chakra-ui/react";
@@ -16,7 +15,6 @@ const Greeting = () => {
   const { t } = useTranslation();
   const noRates = useAppSelector((state) => !state.main.dirRates?.length);
 
-  // const collapsed = useBreakpointValue({ base: !topsExist, md: true });
   const [peripheryColor, centerColor] = useToken(
     "colors",
     useColorModeValue(["bg.700", "violet.800"], ["bg.400", "peach.200"])

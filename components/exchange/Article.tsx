@@ -1,7 +1,7 @@
 import { HStack, Box, Text } from "@chakra-ui/react";
 
 import { useRef } from "react";
-import Disclaimer from "../../components/shared/article/Disclaimer";
+import Disclaimer from "../shared/article/Disclaimer";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
 import { IArticle } from "../../types/pages";
 import DefaultDirText from "./DefaultDirText";

@@ -4,7 +4,6 @@ import {
   Grid,
   HStack,
   Text,
-  useBreakpointValue,
   useColorModeValue,
   useToken,
 } from "@chakra-ui/react";
@@ -12,7 +11,6 @@ import Logo from "./Logo";
 import Nav from "./nav";
 
 const Header = () => {
-  const maxW = useBreakpointValue({ base: "100%", lg: "980" });
   const [bg200, bg900] = useToken("colors", ["bg.200", "bg.900"]);
 
   return (
@@ -34,8 +32,8 @@ const Header = () => {
       <HStack
         justifyContent="space-between"
         alignItems="center"
-        maxW={maxW}
-        minW={maxW}
+        maxW={["100%", "980"]}
+        minW={["100%", "980"]}
       >
         <Logo />
         <Nav />

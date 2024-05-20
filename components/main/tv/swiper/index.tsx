@@ -26,12 +26,18 @@ import { setSwiperIdVisible } from "../../../../redux/mainReducer";
 import Item from "./item";
 import ErrorWrapper from "../../../shared/ErrorWrapper";
 
-export const ExchangersList = ({ length }: { length: number }) => {
+export const ExchangersList = ({
+  length,
+  isMobile,
+}: {
+  length: number;
+  isMobile: boolean;
+}) => {
   const dispatch = useAppDispatch();
   const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
   const [mouseEntered, setMouseEntered] = useState(false);
-  const isPhone = useBreakpointValue({ base: true, md: false });
-  const itemHeight = useBreakpointValue({ base: 80, md: 100, lg: 120 }) || 80; // Height of each text box
+
+  const itemHeight = isMobile ? 80 : 120; // Height of each text box
   const visibleItems = 3; // Number of items visible in the container
   const containerHeight = itemHeight * visibleItems;
 
@@ -109,7 +115,7 @@ export const ExchangersList = ({ length }: { length: number }) => {
   };
 
   const handleWheel = (event: any) => {
-    if (isPhone) return;
+    if (isMobile) return;
     if (!mouseEntered) return;
     if (event.deltaY < 0) {
       stepDown();
@@ -119,7 +125,7 @@ export const ExchangersList = ({ length }: { length: number }) => {
   };
 
   const handleKeyDown = (event: any) => {
-    if (isPhone) return;
+    if (isMobile) return;
     if (event.key === "ArrowUp" || event.key === "ArrowRight") {
       stepDown();
     } else if (event.key === "ArrowDown" || event.key === "ArrowLeft") {
@@ -128,7 +134,7 @@ export const ExchangersList = ({ length }: { length: number }) => {
   };
 
   useEffect(() => {
-    if (isPhone) return;
+    if (isMobile) return;
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("keydown", handleKeyDown);
 
@@ -164,7 +170,7 @@ export const ExchangersList = ({ length }: { length: number }) => {
             py="4"
             borderRadius={`${4}% ${4}% ${4}% ${4}% / 50% 50% 50% 50%`}
             onMouseEnter={() => {
-              if (isPhone) return;
+              if (isMobile) return;
               const scrollbarWidth =
                 window.innerWidth - document.documentElement.clientWidth;
               document.body.style.overflow = "hidden";
@@ -172,7 +178,7 @@ export const ExchangersList = ({ length }: { length: number }) => {
               setMouseEntered(true);
             }}
             onMouseLeave={() => {
-              if (isPhone) return;
+              if (isMobile) return;
               document.body.style.overflow = "auto";
               document.body.style.paddingRight = "0px";
               setMouseEntered(false);
@@ -189,6 +195,7 @@ export const ExchangersList = ({ length }: { length: number }) => {
             >
               {Array.from({ length }).map((_, index) => (
                 <Item
+                  key={index}
                   y={y}
                   index={index}
                   itemHeight={itemHeight}

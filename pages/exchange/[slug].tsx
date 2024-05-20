@@ -6,7 +6,7 @@ import { Box3D, RegularBox, ResponsiveText } from "../../styles/theme/custom";
 import { IArticle } from "../../types/pages";
 import { useRef } from "react";
 
-import DefaultDirText from "./DefaultDirText";
+import DefaultDirText from "../../components/exchange/DefaultDirText";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { pmGroupsQuery } from "../../services/initialQueries";
@@ -23,9 +23,10 @@ import { fetchCCRates, fetchRates, restoreFromSlug } from "../../redux/thunks";
 import { useAppDispatch } from "../../redux/hooks";
 
 import { IRate } from "../../types/rates";
-import Article from "./Article";
+import Article from "../../components/exchange/Article";
 import { ICurrencyConverterRate } from "../../types/p2p";
 import { setInitialData } from "../../redux/mainReducer";
+import { ifMobile } from "../../components/exchange/helper";
 
 const Exchange = ({
   article = null,
@@ -34,6 +35,7 @@ const Exchange = ({
   getPm,
   prerenderedDirRates,
   prerenderedCCRates,
+  isMobile,
 }: {
   article?: IArticle | null;
   slug?: string;
@@ -41,6 +43,7 @@ const Exchange = ({
   getPm: IPm;
   prerenderedDirRates: IRate[];
   prerenderedCCRates: ICurrencyConverterRate;
+  isMobile: boolean;
 }) => {
   const dispatch = useAppDispatch();
 
@@ -71,7 +74,7 @@ const Exchange = ({
         <Calculator />
 
         <LimitsRange />
-        <TV />
+        <TV isMobile={isMobile} />
       </RegularBox>
 
       <Article article={article} />
@@ -93,9 +96,11 @@ let cachedData = {} as {
 export async function getStaticProps({
   locale,
   params,
+  req,
 }: {
   locale: "en" | "ru";
   params: { slug: string };
+  req: any;
 }) {
   try {
     const { slug } = params;
@@ -132,6 +137,9 @@ export async function getStaticProps({
     const prerenderedDirRates = await fetchRates(dir);
     const prerenderedCCRates = (await fetchCCRates({ curPair })).data;
 
+    //const userAgent = req?.headers?.["user-agent"] || "";
+    const isMobile = false; //ifMobile(userAgent);
+
     return {
       props: {
         article,
@@ -140,14 +148,15 @@ export async function getStaticProps({
         getPm,
         prerenderedDirRates,
         prerenderedCCRates,
+        isMobile,
         ...(await serverSideTranslations(locale || "ru", ["home"])),
       },
-      revalidate: cachedData.articleCodes.find((ac) => ac.code == slug)
-        ? 3000
-        : 60000, // sec
+      // revalidate: cachedData.articleCodes.find((ac) => ac.code == slug)
+      //   ? 3000
+      //   : 60000, // sec
     };
   } catch (error) {
-    console.error(`Error fetching data for ${params.slug}`);
+    console.error(`Error fetching data for ${params.slug}`, error);
     return {
       notFound: true,
     };
@@ -183,7 +192,7 @@ export async function getStaticPaths() {
     []
   );
 
-  const possiblePmPairs = filteredDirs.map((dir) => ({
+  const possiblePmPairs = dirs.map((dir) => ({
     givePm: pms.find((pm) => pm.code.toUpperCase() === dir.split("_")[0]),
     getPm: pms.find((pm) => pm.code.toUpperCase() === dir.split("_")[1]),
   }));
@@ -205,7 +214,7 @@ export async function getStaticPaths() {
       ],
       []
     ),
-    fallback: "blocking",
+    fallback: true,
   };
 }
 
