@@ -42,7 +42,7 @@ const Exchange = ({
   givePm: IPm;
   getPm: IPm;
   prerenderedDirRates: IRate[];
-  prerenderedCCRates: ICurrencyConverterRate;
+  prerenderedCCRates?: ICurrencyConverterRate;
   isMobile: boolean;
 }) => {
   const dispatch = useAppDispatch();
@@ -102,65 +102,62 @@ export async function getStaticProps({
   params: { slug: string };
   req: any;
 }) {
-  try {
-    const { slug } = params;
-    let article = null;
-    // ФЕТЧИМ ТОЛЬКО СПУСТЯ ВРЕМЯ ЧТОБЫ ЗАПРОСИТЬ НАПРАВЛЕНИЯ
-    // С СУЩЕСТВУЮЩИМИ АРТИКЛАМИ ТОЛЬКО ОДИН РАЗ
-    // И НЕ ЗАГРУЖАТЬ STRAPI
-    if (!cachedData.articleCodes) {
-      const getAllArticleCodes = initCMSFetcher();
-      const res = (await getAllArticleCodes(articleCodesQuery)) as {
-        articles: { id: string; code: string }[];
-      };
-      const { articles } = res;
-      cachedData.articleCodes = articles;
-    }
-
-    const articleCode = cachedData.articleCodes?.find(
-      (a) => a.code.toUpperCase() === slug.toUpperCase()
-    )?.code;
-
-    if (articleCode) {
-      const fetcher = initCMSFetcher({
-        locale,
-        code: articleCode,
-      });
-      const res = await fetcher(articleQuery);
-      article = res?.articles[0] ? (res.articles[0] as IArticle) : null;
-    }
-    const res = await restoreFromSlug(slug);
-
-    const { givePm, getPm } = res;
-    const dir = `${givePm?.code}_${getPm?.code}`;
-    const curPair = `${givePm?.currency.code}_${getPm?.currency.code}`;
-    const prerenderedDirRates = await fetchRates(dir);
-    const prerenderedCCRates = (await fetchCCRates({ curPair })).data;
-
-    //const userAgent = req?.headers?.["user-agent"] || "";
-    const isMobile = false; //ifMobile(userAgent);
-
-    return {
-      props: {
-        article,
-        slug,
-        givePm,
-        getPm,
-        prerenderedDirRates,
-        prerenderedCCRates,
-        isMobile,
-        ...(await serverSideTranslations(locale || "ru", ["home"])),
-      },
-      // revalidate: cachedData.articleCodes.find((ac) => ac.code == slug)
-      //   ? 3000
-      //   : 60000, // sec
+  const { slug } = params;
+  let article = null;
+  // ФЕТЧИМ ТОЛЬКО СПУСТЯ ВРЕМЯ ЧТОБЫ ЗАПРОСИТЬ НАПРАВЛЕНИЯ
+  // С СУЩЕСТВУЮЩИМИ АРТИКЛАМИ ТОЛЬКО ОДИН РАЗ
+  // И НЕ ЗАГРУЖАТЬ STRAPI
+  if (!cachedData.articleCodes) {
+    const getAllArticleCodes = initCMSFetcher();
+    const res = (await getAllArticleCodes(articleCodesQuery)) as {
+      articles: { id: string; code: string }[];
     };
-  } catch (error) {
-    console.error(`Error fetching data for ${params.slug}`, error);
-    return {
-      notFound: true,
-    };
+    const { articles } = res;
+    cachedData.articleCodes = articles;
   }
+
+  const articleCode = cachedData.articleCodes?.find(
+    (a) => a.code.toUpperCase() === slug.toUpperCase()
+  )?.code;
+
+  if (articleCode) {
+    const fetcher = initCMSFetcher({
+      locale,
+      code: articleCode,
+    });
+    const res = await fetcher(articleQuery);
+    article = res?.articles[0] ? (res.articles[0] as IArticle) : null;
+  }
+
+  const { givePm, getPm } = await restoreFromSlug(slug);
+  const dir = `${givePm?.code}_${getPm?.code}`;
+  const curPair = `${givePm?.currency.code}_${getPm?.currency.code}`;
+  let prerenderedDirRates = [] as IRate[];
+  try {
+    prerenderedDirRates = (await fetchRates(dir)) as IRate[];
+  } catch (e) {
+    console.error("prerenderedDirRates failed: ", dir);
+  }
+  const prerenderedCCRates = null; //(await fetchCCRates({ curPair }))?.data;
+  console.log(dir);
+  //const userAgent = req?.headers?.["user-agent"] || "";
+  const isMobile = false; //ifMobile(userAgent);
+
+  return {
+    props: {
+      article,
+      slug,
+      givePm,
+      getPm,
+      prerenderedDirRates,
+      prerenderedCCRates,
+      isMobile,
+      ...(await serverSideTranslations(locale || "ru", ["home"])),
+    },
+    // revalidate: cachedData.articleCodes.find((ac) => ac.code == slug)
+    //   ? 3000
+    //   : 60000, // sec
+  };
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////

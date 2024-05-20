@@ -21,7 +21,7 @@ import {
   CreateOrderMutation,
 } from "../components/order/step3/queries";
 import { CreateRedirectMutation } from "../components/main/tv/bottons/queries";
-import { pmBySubgroupAndCurrency } from "../components/main/side/selector/section/PmGroup/helper";
+import { pmFromPmGroups } from "../components/main/side/selector/section/PmGroup/helper";
 //import { redirect } from "next/navigation";
 
 // export async function navigate() {
@@ -127,16 +127,20 @@ export const restoreFromSlug = async (
     pmGroups: IPmGroup[];
   };
 
-  const givePm = pmBySubgroupAndCurrency(
+  const givePm = pmFromPmGroups(
+    giveName,
     giveCurCode,
     giveSubgroupName,
     response.pmGroups
   );
-  const getPm = pmBySubgroupAndCurrency(
+  const getPm = pmFromPmGroups(
+    getName,
     getCurCode,
     getSubgroupName,
     response.pmGroups
   );
+
+  console.log("givePm, getPm: ", givePm, getPm);
 
   return {
     givePm,

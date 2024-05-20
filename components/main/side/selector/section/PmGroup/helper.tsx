@@ -142,16 +142,20 @@ export const pmsToSlug = ({
     .replaceAll(" ", "");
 };
 
-export const pmBySubgroupAndCurrency = (
+export const pmFromPmGroups = (
+  name: string,
   curCode: string,
   subgroupName: string,
   pmGroups: IPmGroup[]
 ): IPm | undefined => {
   const pmGroup = pmGroups.filter((pmg) => {
-    return pmg.options.find(
-      (op) =>
-        (op.name && op.name.replaceAll(" ", "") === subgroupName) ||
-        op.currency.code === curCode
+    return (
+      pmg.en_name === name &&
+      pmg.options.find(
+        (op) =>
+          (op.name && op.name.replaceAll(" ", "") === subgroupName) ||
+          op.currency.code === curCode
+      )
     );
   });
 

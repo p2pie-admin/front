@@ -327,7 +327,7 @@ export const mainSlice = createSlice({
         givePm: IPm;
         getPm: IPm;
         dirRates: IRate[];
-        ccRates: ICurrencyConverterRate;
+        ccRates?: ICurrencyConverterRate;
       }>
     ) => {
       if (!action.payload) {
