@@ -168,6 +168,10 @@ export async function getStaticPaths() {
     ],
     []
   );
+
+  const filteredDirs = dirs.filter(
+    (dir) => dir.includes("BTC") && dir.includes("RUB")
+  );
   //["BTC_SBERRUB", "BTC_ETH"];
   const pmGroupsFetcher = initCMSFetcher();
   const { pmGroups } = (await pmGroupsFetcher(pmGroupsQuery)) as {
@@ -179,7 +183,7 @@ export async function getStaticPaths() {
     []
   );
 
-  const possiblePmPairs = dirs.map((dir) => ({
+  const possiblePmPairs = filteredDirs.map((dir) => ({
     givePm: pms.find((pm) => pm.code.toUpperCase() === dir.split("_")[0]),
     getPm: pms.find((pm) => pm.code.toUpperCase() === dir.split("_")[1]),
   }));
