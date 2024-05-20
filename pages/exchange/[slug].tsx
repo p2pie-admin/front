@@ -147,11 +147,9 @@ export async function getStaticProps({
         : 60000, // sec
     };
   } catch (error) {
-    console.error(`Error fetching data for ${params.slug}:`, error);
+    console.error(`Error fetching data for ${params.slug}`);
     return {
-      props: {
-        slug: null,
-      },
+      notFound: true,
     };
   }
 }
@@ -186,7 +184,7 @@ export async function getStaticPaths() {
     getPm: pms.find((pm) => pm.code.toUpperCase() === dir.split("_")[1]),
   }));
 
-  const slugs = possiblePmPairs.map((pair) => pmsToSlug(pair));
+  const slugs = possiblePmPairs.map((pair) => pmsToSlug(pair)).slice(0, 100);
 
   const locales = ["en", "ru"];
 
