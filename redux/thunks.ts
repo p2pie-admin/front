@@ -140,8 +140,6 @@ export const restoreFromSlug = async (
     response.pmGroups
   );
 
-  console.log("givePm, getPm: ", givePm, getPm);
-
   return {
     givePm,
     getPm,
