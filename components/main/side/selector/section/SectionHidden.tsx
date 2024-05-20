@@ -20,16 +20,21 @@ const SectionHidden = ({ children }: { children: IPmGroup[] }) => {
     "rgba(225,200,255,0.1)"
   );
   // const [foldedSections, showSection] = React.useState({});
-  const [isHidden, setHidden] = React.useState(true);
+  const [folded, setFolded] = React.useState(true);
+  const [mounted, setMounted] = React.useState(false);
+  const mount = () => setMounted(true);
+  const unmount = () => setTimeout(() => setMounted(!mounted), 300);
 
   return (
     <Box mt="1">
-      <Collapse in={!isHidden}>
-        <SectionGridWrapper>
-          {children.map((pm_group) => {
-            return <PmGroup pm_group={pm_group} key={pm_group.en_name} />;
-          })}
-        </SectionGridWrapper>
+      <Collapse in={!folded}>
+        {mounted && (
+          <SectionGridWrapper>
+            {children.map((pm_group) => {
+              return <PmGroup pm_group={pm_group} key={pm_group.en_name} />;
+            })}
+          </SectionGridWrapper>
+        )}
       </Collapse>
 
       <Box
@@ -43,13 +48,16 @@ const SectionHidden = ({ children }: { children: IPmGroup[] }) => {
         w="100%"
         variant="default"
         justifyContent="center"
-        onClick={() => setHidden(!isHidden)}
+        onClick={() => {
+          setFolded(!folded);
+          mounted ? unmount() : mount();
+        }}
         color="bg.500"
       >
         <Text fontSize="md" m="0 2px">
-          {isHidden ? "see all" : "fold"}
+          {folded ? "see all" : "see less"}
         </Text>
-        <Arrow isUp={!isHidden} />
+        <Arrow isUp={!folded} />
       </Button>
     </Box>
   );

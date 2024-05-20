@@ -2,57 +2,73 @@ import { Flex } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { updateScrollLock } from "../../../../redux/mainReducer";
+import { useTransform, motion, MotionValue } from "framer-motion";
+import ExchangerCard from "./ExchangerCard";
 
-function Item({ itemWidth, children, index, gap }: any) {
-  const isScrollLocked = useAppSelector((state) => state.main.isScrollLocked);
+function Item({
+  y,
+  index,
+  itemHeight,
+  containerHeight,
+}: {
+  y: MotionValue<number>;
+  index: number;
+  itemHeight: number;
+  containerHeight: number;
+}) {
+  const getScaleX = useCallback(
+    (itemIndex) => {
+      const itemMiddleY = itemIndex * itemHeight + itemHeight / 2;
+      const containerMiddle = containerHeight / 2;
+      const distanceFromCenter = Math.abs(
+        y.get() + itemMiddleY - containerMiddle
+      );
+      const scaleXRange = 0.02; // Difference in scaleX
 
-  const dispatch = useAppDispatch();
-  const swiperIdVisible = useAppSelector((state) => state.main.swiperIdVisible);
-  // const handleFocus = () => {
-  //   setTrackIsActive(true);
-  //   console.log("handleFocus");
-  // };
+      return 1 - scaleXRange * (distanceFromCenter / itemHeight) ** 2;
+    },
+    [containerHeight, itemHeight, y]
+  );
+  const getShape = useCallback(
+    (itemIndex) => {
+      const itemMiddleY = itemIndex * itemHeight + itemHeight / 2;
+      const containerMiddle = containerHeight / 2;
+      const distanceFromCenter = y.get() + itemMiddleY - containerMiddle;
+      const maxRadiusEffect = itemHeight / 2;
+      if (
+        Math.abs(distanceFromCenter) > maxRadiusEffect &&
+        distanceFromCenter < 0
+      ) {
+        return `${3}% ${3}% ${0}% ${0}% / 100% 100% 0% 0%`;
+      } else if (
+        Math.abs(distanceFromCenter) > maxRadiusEffect &&
+        distanceFromCenter > 0
+      ) {
+        return `${0}% ${0}% ${3}% ${3}% / 0% 0% 100% 100%`;
+      }
+      return `${1}% ${1}% ${1}% ${1}% / 50% 50% 50% 50%`;
+    },
+    [containerHeight, itemHeight, y]
+  );
 
-  // const handleBlur = () => {
-  //   userDidTab && setTrackIsActive(false);
-  //   setUserDidTab(false);
-  //   console.log("handleBlur");
-  // };
-
-  // const handleKeyUp = (event) => {
-  //   event.key === "Tab" &&
-  //     !(swiperIdVisible === positions.length - constraint) &&
-  //     handleSwiperIdVisible(index);
-  // };
-
-  // const handleKeyDown = (event) => {
-  //   event.key === "Tab" && setUserDidTab(true);
-  // };
+  const scaleX = useTransform(y, () => getScaleX(index));
+  const borderRadius = useTransform(y, () => getShape(index));
 
   return (
-    <Flex
-      // onFocus={handleFocus}
-      // onTouchMove={() => {
-      //   !isScrollLocked && dispatch(updateScrollLock(true));
-      // }}
-      // onTouchEndCapture={() => {
-      //   dispatch(updateScrollLock(false));
-      // }}
-      // transition="all .3s ease-out"
-      // filter={swiperIdVisible === index ? "brightness(1)" : "brightness(0.8)"}
-      // transform={
-      //   swiperIdVisible === index ? "scale(1)" : "scale(0.9) skew(2deg, 1deg)"
-      // }
-      // onBlur={handleBlur}
-      // onKeyUp={handleKeyUp}
-      // onKeyDown={handleKeyDown}
-      w={`${itemWidth}px`}
-      _notLast={{
-        mr: `${gap}px`,
+    <motion.div
+      key={index}
+      style={{
+        height: `${itemHeight}px`,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius,
+        padding: "4px",
+        scaleX,
       }}
     >
-      {children}
-    </Flex>
+      <ExchangerCard index={index} />
+    </motion.div>
   );
 }
 

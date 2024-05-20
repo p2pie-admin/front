@@ -29,8 +29,8 @@ const Article = ({ article }: { article?: IArticle | null }) => {
 
   return (
     <Box3D
-      maxW="980"
-      mt={["4", "6"]}
+      variant="no_contrast"
+      maxW={{ base: "432px", md: "calc(980px - 432px - 20px)" }}
       px={["2", "4", "8"]}
       py={["4", "8", "12"]}
     >

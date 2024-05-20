@@ -30,7 +30,7 @@ const Side = () => {
         gridAutoFlow=""
       >
         {isEmpty ? (
-          <Box>⠀</Box>
+          <Box />
         ) : (
           <Text color="bg.500" fontSize="xs">
             {capitalize(side) + ":"}

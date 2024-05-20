@@ -26,13 +26,21 @@ const ControlPanel = ({
   const index = useAppSelector((state) => state.main.swiperIdVisible);
   return (
     <VStack justifyContent="space-between" spacing={["2", "4"]}>
-      <Button p="1" variant="contrast" onClick={() => stepDown()}>
-        <IoIosArrowUp size="1.2rem" />
+      <Button
+        p={["0.5", "1"]}
+        minW={["6", "10"]}
+        variant="contrast"
+        onClick={() => stepDown()}
+        color="whiteAlpha.500"
+      >
+        <IoIosArrowUp size="1rem" />
       </Button>
-      <Box3D h="100%" w="100%">
+      <Box3D h="100%" w={["6", "10"]}>
         <VStack
+          w="100%"
           spacing={length > 10 ? "1" : length > 20 ? "0.5" : "2"}
-          p={["2", "4"]}
+          py={["1", "2"]}
+          px={["0.5", "2"]}
           h="100%"
           justifyContent="space-around"
         >
@@ -43,16 +51,22 @@ const ControlPanel = ({
               bgColor={idx === index ? mainColor : "bg.800"}
               boxShadow={idx === index ? `0 0 10px -2px ${colorKey}` : "unset"}
               borderRadius="sm"
-              aspectRatio="2 / 1"
+              aspectRatio={["1 / 1", "2 / 1"]}
               h="100%"
-              maxH="4"
-              maxW="5"
+              maxH={["2", "3"]}
+              maxW={["2", "4"]}
             />
           ))}
         </VStack>
       </Box3D>
-      <Button p="1" variant="contrast" onClick={() => stepUp()}>
-        <IoIosArrowDown size="1.2rem" />
+      <Button
+        p={["0.5", "1"]}
+        minW={["6", "10"]}
+        variant="contrast"
+        onClick={() => stepUp()}
+        color="whiteAlpha.500"
+      >
+        <IoIosArrowDown size="1rem" />
       </Button>
     </VStack>
   );

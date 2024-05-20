@@ -46,19 +46,8 @@ const TV = () => {
   ];
 
   // вынесен наружу, иначе все внутри ErrorWrapper начинает высчитываться и выдает ошибку
-
-  return (
-    <Box minH="164">
-      <ErrorWrapper
-        isError={dirRatesStatus === "rejected"}
-        isLoading={dirRatesStatus === "pending"}
-        primaryMessage="No rates available!"
-        secondaryMessage="check your network connection"
-      >
-        <Swiper />
-      </ErrorWrapper>
-    </Box>
-  );
+  const length = useAppSelector((state) => state.main.dirRates?.length) || 0;
+  return <Swiper length={length} />;
 };
 
 export default TV;

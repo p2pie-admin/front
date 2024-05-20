@@ -318,6 +318,9 @@ export const mainSlice = createSlice({
       if (action.payload)
         state.fingerprint = { ...state.fingerprint, ip: action.payload };
     },
+    setDirRatesStatusPending: (state: MainState) => {
+      state.dirRatesStatus = "pending";
+    },
     setInitialData: (
       state: MainState,
       action: PayloadAction<{
@@ -489,6 +492,7 @@ export const {
   getSavedOrders,
   setIP,
   setInitialData,
+  setDirRatesStatusPending,
 } = mainSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

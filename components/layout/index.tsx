@@ -2,22 +2,16 @@ import React, { ReactChild, useEffect } from "react";
 import Header from "./header";
 import Footer from "./footer";
 import {
-  useBreakpointValue,
   useToast,
   Text,
   Box,
   VStack,
   useColorModeValue,
-  useToken,
-  Grid,
 } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { batch } from "react-redux";
-import { fetchPms, fetchFiat } from "../../redux/thunks";
+
 import axios from "axios";
 import { setIP, setLocation } from "../../redux/mainReducer";
-import { ResponsiveText } from "../../styles/theme/custom";
-import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 
 const Layout = ({ children }: { children: any }) => {
   // const maxW = useBreakpointValue({ base: "100%", lg: "980" });
@@ -52,10 +46,9 @@ const Layout = ({ children }: { children: any }) => {
   return (
     <Box // careful! populars may stop working!
       w="100%"
-      bgGradient={`radial-gradient(circle at 50% -10%, ${ambientColor} 0%, transparent 40%)`}
+      position="relative"
       fontFamily="Roboto, sans-serif"
       maxH="-webkit-fill-available"
-      position="relative"
       sx={{
         "&::-webkit-scrollbar": {
           width: "0",
@@ -66,6 +59,12 @@ const Layout = ({ children }: { children: any }) => {
       {/* <Box minH="-webkit-fill-available" p="1" w="100%" bgColor="red.500">
        
       </Box> */}
+      <Box
+        position="absolute"
+        w="100%"
+        h="50vh"
+        bgGradient={`radial-gradient(circle at 50% -10%, ${ambientColor} 0%, transparent 40%)`}
+      ></Box>
       <Header />
 
       <VStack alignItems="center" mt={[2, 4, 8]}>

@@ -38,7 +38,7 @@ import { memo } from "react";
 //const gqlFetcher = new GraphQLFetcher(); // may pass variables here
 const fetcher = initCMSFetcher();
 
-const Selector = memo(function Selector() {
+const Selector = function Selector() {
   //const { data, error } = useSWR(selectorQuery, gqlFetcher.fetcher);
   const { data, error } = useSWR(selectorQuery, fetcher) as {
     data: { selector: ISelector };
@@ -88,6 +88,6 @@ const Selector = memo(function Selector() {
       </ErrorWrapper>
     </VStack>
   );
-});
+};
 
 export default Selector;

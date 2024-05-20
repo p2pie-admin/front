@@ -30,7 +30,10 @@ const Subitems = ({
   possiblePairs?: string[];
   color: string;
 }) => {
-  const [folded, setFolded] = React.useState(false);
+  const [folded, setFolded] = React.useState(true);
+  const [mounted, setMounted] = React.useState(false);
+  const mount = () => setMounted(true);
+  const unmount = () => setTimeout(() => setMounted(!mounted), 300);
 
   return (
     // сама обложка раскрывалки
@@ -38,7 +41,10 @@ const Subitems = ({
       <PmButton
         color={color}
         icon={pms[0].icon}
-        handleToggle={() => setFolded(!folded)}
+        handleToggle={() => {
+          setFolded(!folded);
+          mounted ? unmount() : mount();
+        }}
         shaded={allPmsHaveUnmetPairs(pms, possiblePairs)}
       >
         <Name
@@ -50,21 +56,23 @@ const Subitems = ({
         <Spacer />
       </PmButton>
 
-      <Collapse in={folded}>
-        <Box p="2" w="100% !important" my="1">
-          <Grid templateColumns="1fr 1fr" gridGap="2" gridAutoFlow="dense">
-            {pms.map((pm: IPm) => (
-              <SubButton
-                pm={pm}
-                choosePm={choosePm}
-                key={pm.code}
-                shaded={singlePmHasUnmetPairs(pm, possiblePairs)}
-              >
-                {pm.subgroup_name || pm.currency.code.toUpperCase()}
-              </SubButton>
-            ))}
-          </Grid>
-        </Box>
+      <Collapse in={!folded}>
+        {mounted && (
+          <Box p="2" w="100% !important" my="1">
+            <Grid templateColumns="1fr 1fr" gridGap="2" gridAutoFlow="dense">
+              {pms.map((pm: IPm) => (
+                <SubButton
+                  pm={pm}
+                  choosePm={choosePm}
+                  key={pm.code}
+                  shaded={singlePmHasUnmetPairs(pm, possiblePairs)}
+                >
+                  {pm.subgroup_name || pm.currency.code.toUpperCase()}
+                </SubButton>
+              ))}
+            </Grid>
+          </Box>
+        )}
       </Collapse>
     </VStack>
   );

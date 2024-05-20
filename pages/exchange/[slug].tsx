@@ -1,4 +1,4 @@
-import { Box, HStack, Text } from "@chakra-ui/react";
+import { Box, Flex, Grid, HStack, Text } from "@chakra-ui/react";
 import Disclaimer from "../../components/shared/article/Disclaimer";
 import { initCMSFetcher, initParserFetcher } from "../../services/fetchers";
 import { articleCodesQuery, articleQuery } from "../../services/pageQueries";
@@ -54,13 +54,18 @@ const Exchange = ({
   );
   if (!slug) return <></>;
   return (
-    <>
+    <Grid
+      gridTemplateColumns={{ base: "1fr", md: "1fr auto" }}
+      gridGap="5"
+      maxH={{ base: "unset", md: "700px" }}
+      mt={["0", "10"]}
+    >
       <RegularBox
         p={[2, 3, 4]}
         variant="no_contrast"
         boxShadow="lg"
         borderRadius="2xl"
-        w={{ base: "96%", sm: 432 }}
+        w={{ base: "100%", sm: 432 }}
       >
         <DefaultDirText slug={slug} />
         <Calculator />
@@ -70,7 +75,7 @@ const Exchange = ({
       </RegularBox>
 
       <Article article={article} />
-    </>
+    </Grid>
   );
   // return (
   //   <Box3D>
@@ -138,8 +143,8 @@ export async function getStaticProps({
         ...(await serverSideTranslations(locale || "ru", ["home"])),
       },
       revalidate: cachedData.articleCodes.find((ac) => ac.code == slug)
-        ? 300
-        : 6000, // sec
+        ? 3000
+        : 60000, // sec
     };
   } catch (error) {
     console.error(`Error fetching data for ${params.slug}:`, error);

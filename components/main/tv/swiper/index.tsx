@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import { TbTriangleInvertedFilled } from "react-icons/tb";
 import {
   motion,
@@ -23,10 +23,14 @@ import ControlPanel from "./ControlPanel";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import ExchangerCard from "./ExchangerCard";
 import { setSwiperIdVisible } from "../../../../redux/mainReducer";
+import Item from "./item";
+import ErrorWrapper from "../../../shared/ErrorWrapper";
 
-export const ExchangersList = () => {
-  const length = useAppSelector((state) => state.main.dirRates?.length) || 0;
+export const ExchangersList = ({ length }: { length: number }) => {
   const dispatch = useAppDispatch();
+  const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
+  const [mouseEntered, setMouseEntered] = useState(false);
+  const isPhone = useBreakpointValue({ base: true, md: false });
   const itemHeight = useBreakpointValue({ base: 80, md: 100, lg: 120 }) || 80; // Height of each text box
   const visibleItems = 3; // Number of items visible in the container
   const containerHeight = itemHeight * visibleItems;
@@ -72,40 +76,6 @@ export const ExchangersList = () => {
     move(snapToNearest(y.get()));
   };
 
-  const getScaleX = useCallback(
-    (itemIndex) => {
-      const itemMiddleY = itemIndex * itemHeight + itemHeight / 2;
-      const containerMiddle = containerHeight / 2;
-      const distanceFromCenter = Math.abs(
-        y.get() + itemMiddleY - containerMiddle
-      );
-      const scaleXRange = 0.02; // Difference in scaleX
-
-      return 1 - scaleXRange * (distanceFromCenter / itemHeight) ** 2;
-    },
-    [containerHeight, itemHeight, y]
-  );
-  const getShape = useCallback(
-    (itemIndex) => {
-      const itemMiddleY = itemIndex * itemHeight + itemHeight / 2;
-      const containerMiddle = containerHeight / 2;
-      const distanceFromCenter = y.get() + itemMiddleY - containerMiddle;
-      const maxRadiusEffect = itemHeight / 2;
-      if (
-        Math.abs(distanceFromCenter) > maxRadiusEffect &&
-        distanceFromCenter < 0
-      ) {
-        return `${3}% ${3}% ${0}% ${0}% / 100% 100% 0% 0%`;
-      } else if (
-        Math.abs(distanceFromCenter) > maxRadiusEffect &&
-        distanceFromCenter > 0
-      ) {
-        return `${0}% ${0}% ${3}% ${3}% / 0% 0% 100% 100%`;
-      }
-      return `${1}% ${1}% ${1}% ${1}% / 50% 50% 50% 50%`;
-    },
-    [containerHeight, itemHeight, y]
-  );
   useEffect(() => {
     const unsubscribe = y.onChange(() => {
       controls.start({
@@ -115,28 +85,6 @@ export const ExchangersList = () => {
 
     return () => unsubscribe();
   }, [y, controls]);
-
-  const renderItem = (index: number) => {
-    const scaleX = useTransform(y, () => getScaleX(index));
-    const borderRadius = useTransform(y, () => getShape(index));
-
-    return (
-      <motion.div
-        key={index}
-        style={{
-          height: `${itemHeight}px`,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          borderRadius,
-          padding: "4px",
-          scaleX,
-        }}
-      >
-        <ExchangerCard index={index} />
-      </motion.div>
-    );
-  };
 
   const scrollToItem = (index: number) => {
     const targetY =
@@ -161,6 +109,8 @@ export const ExchangersList = () => {
   };
 
   const handleWheel = (event: any) => {
+    if (isPhone) return;
+    if (!mouseEntered) return;
     if (event.deltaY < 0) {
       stepDown();
     } else if (event.deltaY > 0) {
@@ -169,6 +119,7 @@ export const ExchangersList = () => {
   };
 
   const handleKeyDown = (event: any) => {
+    if (isPhone) return;
     if (event.key === "ArrowUp" || event.key === "ArrowRight") {
       stepDown();
     } else if (event.key === "ArrowDown" || event.key === "ArrowLeft") {
@@ -177,6 +128,7 @@ export const ExchangersList = () => {
   };
 
   useEffect(() => {
+    if (isPhone) return;
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("keydown", handleKeyDown);
 
@@ -187,7 +139,11 @@ export const ExchangersList = () => {
   }, [handleWheel, handleKeyDown]);
 
   return (
-    <Grid gridTemplateColumns="1fr 40px" gridGap={["2", "4"]}>
+    <Grid
+      gridTemplateColumns="1fr auto"
+      gridGap={["2", "4"]}
+      transition="width .3s ease"
+    >
       <Box3D
         position="relative"
         overflow="hidden"
@@ -195,36 +151,64 @@ export const ExchangersList = () => {
         variant="extra_contrast"
         px="2"
       >
-        <Box
-          h={`${containerHeight + 34}px`}
-          bgColor="bg.800"
-          px="1"
-          py="4"
-          borderRadius={`${4}% ${4}% ${4}% ${4}% / 50% 50% 50% 50%`}
+        <ErrorWrapper
+          isError={length === 0 || dirRatesStatus === "rejected"}
+          isLoading={dirRatesStatus === "pending"}
+          primaryMessage="No rates available!"
+          secondaryMessage="check your network connection"
         >
-          <Shader direction="bottom" />
-          <motion.div
-            drag="y"
-            dragConstraints={dragConstraints}
-            style={{ y, width: "100%" }}
-            dragElastic={0.2}
-            onDragEnd={onDragEnd}
-            animate={controls}
+          <Box
+            h={`${containerHeight + 34}px`}
+            bgColor="bg.800"
+            px="1"
+            py="4"
+            borderRadius={`${4}% ${4}% ${4}% ${4}% / 50% 50% 50% 50%`}
+            onMouseEnter={() => {
+              if (isPhone) return;
+              const scrollbarWidth =
+                window.innerWidth - document.documentElement.clientWidth;
+              document.body.style.overflow = "hidden";
+              document.body.style.paddingRight = `${scrollbarWidth}px`;
+              setMouseEntered(true);
+            }}
+            onMouseLeave={() => {
+              if (isPhone) return;
+              document.body.style.overflow = "auto";
+              document.body.style.paddingRight = "0px";
+              setMouseEntered(false);
+            }}
           >
-            {Array.from({ length }).map((_, index) => renderItem(index))}
-          </motion.div>
+            <Shader direction="bottom" />
+            <motion.div
+              drag="y"
+              dragConstraints={dragConstraints}
+              style={{ y, width: "100%" }}
+              dragElastic={0.2}
+              onDragEnd={onDragEnd}
+              animate={controls}
+            >
+              {Array.from({ length }).map((_, index) => (
+                <Item
+                  y={y}
+                  index={index}
+                  itemHeight={itemHeight}
+                  containerHeight={containerHeight}
+                />
+              ))}
+            </motion.div>
 
-          <Shader direction="top" />
-        </Box>
-        <Box
-          position="absolute"
-          right="0"
-          top={`calc(${containerHeight / 2}px )`}
-          color="bg.600"
-          transform="rotate(90deg)"
-        >
-          <TbTriangleInvertedFilled size="2rem" />
-        </Box>
+            <Shader direction="top" />
+          </Box>
+          <Box
+            position="absolute"
+            right="0"
+            top={`calc(${containerHeight / 2}px )`}
+            color={mouseEntered ? "bg.500" : "bg.600"}
+            transform="rotate(90deg)"
+          >
+            <TbTriangleInvertedFilled size="2rem" />
+          </Box>
+        </ErrorWrapper>
       </Box3D>
 
       <ControlPanel length={length} stepUp={stepUp} stepDown={stepDown} />

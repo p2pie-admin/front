@@ -8,7 +8,7 @@ import {
 import { BiRefresh } from "react-icons/bi";
 import { CgArrowsExchange } from "react-icons/cg";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
-import { reverseDir } from "../../redux/mainReducer";
+import { reverseDir, setDirRatesStatusPending } from "../../redux/mainReducer";
 import { useRouter } from "next/router";
 
 const Patch = () => {
@@ -54,11 +54,8 @@ const ReverseButton = () => {
   }
 
   const handleReverseDir = () => {
-    router.push(`/exchange/${reversed_slug}`, undefined, {
-      shallow: true,
-    });
-
-    dispatch(reverseDir());
+    router.push(`/exchange/${reversed_slug}`);
+    dispatch(setDirRatesStatusPending());
   };
 
   return (
