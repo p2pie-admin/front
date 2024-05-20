@@ -130,6 +130,10 @@ export async function getStaticProps({
   }
 
   const { givePm, getPm } = await restoreFromSlug(slug);
+  if (!givePm || !getPm)
+    return {
+      notFound: true,
+    };
   const dir = `${givePm?.code}_${getPm?.code}`;
   const curPair = `${givePm?.currency.code}_${getPm?.currency.code}`;
   let prerenderedDirRates = [] as IRate[];
@@ -185,7 +189,11 @@ export async function getStaticPaths() {
   };
 
   const pms = pmGroups.reduce(
-    (res: IPm[], pmGroup: IPmGroup) => [...res, ...getPmsFromPmGroup(pmGroup)],
+    (res: IPm[], pmGroup: IPmGroup) => {
+      const pms = getPmsFromPmGroup(pmGroup);
+      return !pms ? res : [...res, ...pms];
+    },
+
     []
   );
 

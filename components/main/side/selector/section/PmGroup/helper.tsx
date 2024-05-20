@@ -45,7 +45,8 @@ export const singlePmHasUnmetPairs = (pm: IPm, possiblePairs?: string[]) => {
 export const getPmsFromPmGroup = (
   pm_group: IPmGroup,
   popular_as?: IPopularAs
-): IPm[] => {
+): IPm[] | undefined => {
+  if (!pm_group) return;
   return pm_group.options.map((option) => {
     const code = getOptionCode(option, pm_group?.prefix);
     const subgroup_name = (option.name && option.name.toUpperCase()) || null;
@@ -70,6 +71,7 @@ export const getPmByCode = (pmPointer: IPmPointer): IPm | undefined => {
   const { code, pm_group, popular_as } = pmPointer;
   if (!pm_group?.options) return;
   const pms = getPmsFromPmGroup(pm_group, popular_as);
+  if (!pms) return;
   if (!code) return pms[0];
   return pms.find((pm) => pm.code.toLowerCase() == code.toLowerCase());
 };
@@ -160,11 +162,14 @@ export const pmFromPmGroups = (
   });
 
   if (!pmGroup) return;
-
-  return getPmsFromPmGroup(pmGroup[0]).find(
-    (pm) =>
-      pm.subgroup_name?.toLowerCase() === subgroupName ||
-      pm.currency.code === curCode
+  const pms = getPmsFromPmGroup(pmGroup[0]);
+  return (
+    pms &&
+    pms.find(
+      (pm) =>
+        pm.subgroup_name?.toLowerCase() === subgroupName ||
+        pm.currency.code === curCode
+    )
   );
 };
 
