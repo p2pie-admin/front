@@ -50,10 +50,10 @@ const Layout = ({ children }: { children: any }) => {
       fontFamily="Roboto, sans-serif"
       maxH="-webkit-fill-available"
       sx={{
-        "&::-webkit-scrollbar": {
+        "&::WebkitScrollbar": {
           width: "0",
         },
-        "&::-webkit-overflow-scrolling": "touch",
+        "&::WebkitOverflowScrolling": "touch",
       }}
     >
       {/* <Box minH="-webkit-fill-available" p="1" w="100%" bgColor="red.500">

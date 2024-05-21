@@ -27,7 +27,10 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   const p2pDirIndex = useContext(P2PContext);
   const dispatch = useAppDispatch();
   const side = useContext(SideContext) as "give" | "get";
-
+  const pms = getPmsFromPmGroup(pm_group);
+  if (!pms || !pms.length) {
+    return <></>;
+  }
   // const possiblePairs = useAppSelector((state) =>
   //   side
   //     ? state.main[`${side === "give" ? "get" : "give"}Pm`]?.possible_pairs
@@ -63,7 +66,28 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
     // });
   };
 
-  const choosePm = (selectedPm: IPm, shaded: boolean) => {
+  const choosePm = () => {
+    const pm = pms[0];
+    const oldSlug = router.query.slug as string;
+    const leftPart =
+      side === "give"
+        ? `${pm.en_name}-${pm.currency.code}`
+        : oldSlug.split("-to-")[0];
+    const rightPart =
+      side === "give"
+        ? oldSlug.split("-to-")[1]
+        : `${pm.en_name}-${pm.currency.code}`;
+    const slug = `${leftPart}-to-${rightPart}`
+      .replaceAll(" ", "")
+      .toLowerCase();
+
+    batch(() => {
+      dispatch(triggerModal(undefined));
+      dispatch(setDirRatesStatusPending());
+      dispatch(setPm({ pm, side }));
+    });
+    router.push(`/exchange/${slug}`);
+
     // const oppositePm = side === "give" ? getPm : givePm;
     // batch(() => {
     //   dispatch(fetchPossiblePairs({ code: selectedPm.code, side }));
@@ -92,12 +116,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
     // });
   };
 
-  const pms = getPmsFromPmGroup(pm_group);
   const name = pm_group.en_name;
-
-  if (!pms.length) {
-    return <></>;
-  }
 
   if (pms.length > 1) {
     return (
@@ -111,18 +130,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
     ); // pm_id from pm_group_short_name + currency or subitem
   }
 
-  const pm = pms[0];
   const shadedPm = false; //singlePmHasUnmetPairs(pms[0], possiblePairs);
-  const oldSlug = router.query.slug as string;
-  const leftPart =
-    side === "give"
-      ? `${pm.en_name.replaceAll(" ", "")}-${pm.currency.code}`
-      : oldSlug.split("-to-")[0];
-  const rightPart =
-    side === "give"
-      ? oldSlug.split("-to-")[1]
-      : `${pm.en_name.replaceAll(" ", "")}-${pm.currency.code}`;
-  const slug = `${leftPart}-to-${rightPart}`;
 
   return (
     // pm_id from pm_group_short_name or currency
@@ -130,13 +138,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
       color={pm_group.color}
       icon={pm_group.icon}
       handleToggle={
-        p2pDirIndex !== undefined
-          ? () => choosePmP2P(pms[0])
-          : () => {
-              dispatch(triggerModal(undefined));
-              dispatch(setDirRatesStatusPending());
-              router.push(`/exchange/${slug}`);
-            }
+        p2pDirIndex !== undefined ? () => choosePmP2P(pms[0]) : choosePm
       }
       shaded={shadedPm}
     >

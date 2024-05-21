@@ -1,24 +1,23 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import Exchange from "../../components/exchange";
+
 import {
   getPmsFromPmGroup,
   pmsToSlug,
 } from "../../components/main/side/selector/section/PmGroup/helper";
-import { restoreFromSlug, fetchRates } from "../../redux/thunks";
 import { initCMSFetcher, initParserFetcher } from "../../services/fetchers";
 import { pmGroupsQuery } from "../../services/initialQueries";
 import { articleCodesQuery, articleQuery } from "../../services/pageQueries";
 import { IArticle } from "../../types/pages";
 import { IRate } from "../../types/rates";
 import { IPmGroup, IPm } from "../../types/selector";
+import { fetchRates } from "../../redux/thunks";
+import { readCache, writeCache } from "../../services/cache";
+import React from "react";
+import Exchange from "../../components/exchange";
+import { ICache } from "../../types/exchange";
 
 const ExchangePage = (props: any) => {
   return <Exchange {...props} />;
-};
-
-let cachedData = {} as {
-  articleCodes: { id: string; code: string }[];
-  popular_dirs: string[];
 };
 
 export async function getStaticProps({
@@ -31,10 +30,9 @@ export async function getStaticProps({
   req: any;
 }) {
   const { slug } = params;
-  let article = null;
-  // ФЕТЧИМ ТОЛЬКО СПУСТЯ ВРЕМЯ ЧТОБЫ ЗАПРОСИТЬ НАПРАВЛЕНИЯ
-  // С СУЩЕСТВУЮЩИМИ АРТИКЛАМИ ТОЛЬКО ОДИН РАЗ
-  // И НЕ ЗАГРУЖАТЬ STRAPI
+  let article = null as IArticle | null;
+  const cachedData = readCache() as ICache;
+
   if (!cachedData.articleCodes) {
     const getAllArticleCodes = initCMSFetcher();
     const res = (await getAllArticleCodes(articleCodesQuery)) as {
@@ -42,10 +40,11 @@ export async function getStaticProps({
     };
     const { articles } = res;
     cachedData.articleCodes = articles;
+    writeCache(cachedData); // Save to cache
   }
 
   const articleCode = cachedData.articleCodes?.find(
-    (a) => a.code.toUpperCase() === slug.toUpperCase()
+    (a: any) => a.code.toUpperCase() === slug.toUpperCase()
   )?.code;
 
   if (articleCode) {
@@ -56,13 +55,16 @@ export async function getStaticProps({
     const res = await fetcher(articleQuery);
     article = res?.articles[0] ? (res.articles[0] as IArticle) : null;
   }
+  console.log(cachedData);
 
-  const { givePm, getPm } = await restoreFromSlug(slug);
-  if (!givePm || !getPm)
+  if (!cachedData?.dirSlugPairs?.[slug])
     return {
       notFound: true,
     };
+
+  const { givePm, getPm } = cachedData.dirSlugPairs[slug];
   const dir = `${givePm?.code}_${getPm?.code}`;
+  console.log(dir);
   const curPair = `${givePm?.currency.code}_${getPm?.currency.code}`;
   let prerenderedDirRates = [] as IRate[];
   try {
@@ -70,9 +72,9 @@ export async function getStaticProps({
   } catch (e) {
     console.error("prerenderedDirRates failed: ", dir);
   }
-  const prerenderedCCRates = null; //(await fetchCCRates({ curPair }))?.data;
-  //const userAgent = req?.headers?.["user-agent"] || "";
-  const isMobile = false; //ifMobile(userAgent);
+
+  const prerenderedCCRates = null;
+  const isMobile = false;
 
   return {
     props: {
@@ -85,9 +87,9 @@ export async function getStaticProps({
       isMobile,
       ...(await serverSideTranslations(locale || "ru", ["home"])),
     },
-    revalidate: cachedData.articleCodes.find((ac) => ac.code == slug)
+    revalidate: cachedData.articleCodes.find((ac: any) => ac.code == slug)
       ? 3000
-      : 60000, // sec
+      : 60000,
   };
 }
 
@@ -105,24 +107,19 @@ export async function getStaticPaths() {
     ],
     []
   );
+  console.log(`received ${dirs.length} dirs`);
 
-  const filteredDirs = dirs.filter(
-    (dir) => dir.includes("BTC") && dir.includes("RUB")
-  );
-  //["BTC_SBERRUB", "BTC_ETH"];
   const pmGroupsFetcher = initCMSFetcher();
   const { pmGroups } = (await pmGroupsFetcher(pmGroupsQuery)) as {
     pmGroups: IPmGroup[];
   };
-
-  const pms = pmGroups.reduce(
-    (res: IPm[], pmGroup: IPmGroup) => {
-      const pms = getPmsFromPmGroup(pmGroup);
-      return !pms ? res : [...res, ...pms];
-    },
-
-    []
-  );
+  console.log(`extracting pms from  ${pmGroups.length} pmGroups`);
+  const pms = pmGroups.reduce((res: IPm[], pmGroup: IPmGroup) => {
+    const pms = getPmsFromPmGroup(pmGroup);
+    if (!pms || !pms.length) console.log("cant get pms from: ", pmGroup);
+    return !pms ? res : [...res, ...pms];
+  }, []);
+  console.log(`received ${pms.length} pms`);
 
   const possiblePmPairs = dirs.map((dir) => ({
     givePm: pms.find((pm) => pm.code.toUpperCase() === dir.split("_")[0]),
@@ -130,8 +127,13 @@ export async function getStaticPaths() {
   }));
 
   const slugs = possiblePmPairs.map((pair) => pmsToSlug(pair));
-  //slugs.map(s => console.log(s));
   const locales = ["en", "ru"];
+  const cachedData = readCache() as ICache;
+  cachedData.dirSlugPairs = slugs.reduce(
+    (res, slug, idx) => ({ ...res, [slug]: possiblePmPairs[idx] }),
+    {}
+  );
+  writeCache(cachedData); // Save to cache
 
   return {
     paths: slugs.reduce(

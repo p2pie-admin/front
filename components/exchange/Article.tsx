@@ -4,7 +4,6 @@ import { useRef } from "react";
 import Disclaimer from "../shared/article/Disclaimer";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
 import { IArticle } from "../../types/pages";
-import DefaultDirText from "./DefaultDirText";
 
 const Article = ({ article }: { article?: IArticle | null }) => {
   const timestampToDate = (ts?: string) => {
@@ -48,6 +47,7 @@ const Article = ({ article }: { article?: IArticle | null }) => {
 
         {refChapters.map((chapter) => (
           <ResponsiveText
+            key={"manu:" + chapter.id + chapter.title}
             cursor="pointer"
             fontWeight="bold"
             color="peach.200"
@@ -63,9 +63,9 @@ const Article = ({ article }: { article?: IArticle | null }) => {
       </Box>
 
       <Box>
-        {refChapters.map((chapter) => {
+        {refChapters.map((chapter, idx) => {
           return (
-            <>
+            <Box key={"text:" + chapter.id + chapter.title + idx}>
               <HStack fontSize="lg" fontWeight="bold" mt="4">
                 <Text color="peach.200">#</Text>
                 <Text ref={chapter.ref}>{chapter.title || ""}</Text>
@@ -76,7 +76,7 @@ const Article = ({ article }: { article?: IArticle | null }) => {
               {chapter.disclaimer && (
                 <Disclaimer disclaimer={chapter.disclaimer} />
               )}
-            </>
+            </Box>
           );
         })}
       </Box>

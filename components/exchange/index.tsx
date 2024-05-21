@@ -80,12 +80,6 @@ const Exchange = ({
       <Article article={article} />
     </Grid>
   );
-  // return (
-  //   <Box3D>
-  //     <ResponsiveText>{dir}</ResponsiveText>
-  //     <ResponsiveText>{article?.header}</ResponsiveText>
-  //   </Box3D>
-  // );
 };
 
 export default Exchange;
