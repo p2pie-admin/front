@@ -71,10 +71,7 @@ const RateLayer = ({
               const course = `~ ${codeToSymbol(pm.currency.code)} ${addSpaces(
                 R(rate.course)
               )}`;
-              const slug =
-                side === "buy"
-                  ? `/?dir=${cryptoPm.code}_${pm.code}&pm_groups=${cryptoPm.pm_group_id}_${pm.pm_group_id}`
-                  : `/?dir=${pm.code}_${cryptoPm.code}&pm_groups=${pm.pm_group_id}_${cryptoPm.pm_group_id}`;
+              const slug = "";
               return (
                 <Tr>
                   <Td>

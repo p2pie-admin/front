@@ -2,8 +2,7 @@ import { capitalize } from "../main/side/selector/section/PmGroup/helper";
 import { Heading, Highlight } from "@chakra-ui/react";
 import { destructureDirSlug } from "../../redux/helper";
 
-const DefaultDirText = ({ slug }: { slug?: string }) => {
-  if (!slug) return <></>;
+const DirTitle = ({ slug, locale }: { slug: string; locale: "en" | "ru" }) => {
   const {
     giveCurCode,
     giveName,
@@ -13,6 +12,14 @@ const DefaultDirText = ({ slug }: { slug?: string }) => {
     getSubgroupName,
   } = destructureDirSlug(slug);
   const U = (str: string) => (str ? str.toUpperCase() : "");
+  const title =
+    locale === "ru"
+      ? `Обмен ${capitalize(giveName)} ${U(giveCurCode)} ${U(
+          giveSubgroupName
+        )} на ${capitalize(getName)} ${U(getCurCode)} ${U(getSubgroupName)}`
+      : `Exchange ${capitalize(giveName)} ${U(giveCurCode)} ${U(
+          giveSubgroupName
+        )} to ${capitalize(getName)} ${U(getCurCode)} ${U(getSubgroupName)}`;
   return (
     <Heading
       textAlign="center"
@@ -27,12 +34,10 @@ const DefaultDirText = ({ slug }: { slug?: string }) => {
         query={[giveName, giveCurCode, getName, getCurCode]}
         styles={{ color: "peach.200" }}
       >
-        {`Обмен ${capitalize(giveName)} ${U(giveCurCode)} ${U(
-          giveSubgroupName
-        )} на ${capitalize(getName)} ${U(getCurCode)} ${U(getSubgroupName)}`}
+        {title}
       </Highlight>
     </Heading>
   );
 };
 
-export default DefaultDirText;
+export default DirTitle;

@@ -1,7 +1,11 @@
 import Subitems from "./Subitems";
 import PmButton from "./PmButton";
 import Name from "./Name";
-import { getPmsFromPmGroup, pmsToSlug, singlePmHasUnmetPairs } from "./helper";
+import {
+  extractPmsFromPmGroup,
+  pmsToSlug,
+  singlePmHasUnmetPairs,
+} from "./helper";
 import { useAppDispatch, useAppSelector } from "../../../../../../redux/hooks";
 import { batch } from "react-redux";
 import {
@@ -27,7 +31,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   const p2pDirIndex = useContext(P2PContext);
   const dispatch = useAppDispatch();
   const side = useContext(SideContext) as "give" | "get";
-  const pms = getPmsFromPmGroup(pm_group);
+  const pms = extractPmsFromPmGroup(pm_group);
   if (!pms || !pms.length) {
     return <></>;
   }

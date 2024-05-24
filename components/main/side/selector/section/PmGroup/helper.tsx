@@ -42,7 +42,7 @@ export const singlePmHasUnmetPairs = (pm: IPm, possiblePairs?: string[]) => {
   return true;
 };
 
-export const getPmsFromPmGroup = (
+export const extractPmsFromPmGroup = (
   pm_group: IPmGroup,
   popular_as?: IPopularAs
 ): IPm[] | undefined => {
@@ -51,18 +51,19 @@ export const getPmsFromPmGroup = (
     const code = getOptionCode(option, pm_group?.prefix);
     const subgroup_name = (option.name && option.name.toUpperCase()) || null;
 
-    const en_name = pm_group.en_name;
-    const ru_name = pm_group.ru_name;
+    const { id, en_name, ru_name, section, icon, color } = pm_group;
+
     return {
-      pm_group_id: pm_group.id,
+      pm_group_id: id,
       code, // USDTERC20
       en_name, // Tether
       ru_name,
       subgroup_name, // ERC-20
       currency: option?.currency, // USDT
-      icon: pm_group.icon,
-      color: pm_group.color,
+      icon,
+      color,
       popular_as: popular_as || null,
+      section,
     };
   });
 };
@@ -70,7 +71,7 @@ export const getPmsFromPmGroup = (
 export const getPmByCode = (pmPointer: IPmPointer): IPm | undefined => {
   const { code, pm_group, popular_as } = pmPointer;
   if (!pm_group?.options) return;
-  const pms = getPmsFromPmGroup(pm_group, popular_as);
+  const pms = extractPmsFromPmGroup(pm_group, popular_as);
   if (!pms) return;
   if (!code) return pms[0];
   return pms.find((pm) => pm.code.toLowerCase() == code.toLowerCase());
@@ -135,13 +136,12 @@ export const pmsToSlug = ({
   getPm?: IPm;
 }): string => {
   if (!givePm || !getPm) return "";
-  return `${givePm.en_name}-${givePm.currency.code}${
+  const slug = `${givePm.en_name}-${givePm.currency.code}${
     givePm.subgroup_name ? "-" + givePm.subgroup_name : ""
   }-to-${getPm.en_name}-${getPm.currency.code}${
     getPm.subgroup_name ? "-" + getPm.subgroup_name : ""
-  }`
-    .toLowerCase()
-    .replaceAll(" ", "");
+  }`;
+  return slug.toLowerCase().replaceAll(" ", "");
 };
 
 export const pmFromPmGroups = (
@@ -162,7 +162,7 @@ export const pmFromPmGroups = (
   });
 
   if (!pmGroup) return;
-  const pms = getPmsFromPmGroup(pmGroup[0]);
+  const pms = extractPmsFromPmGroup(pmGroup[0]);
   return (
     pms &&
     pms.find(
@@ -172,14 +172,3 @@ export const pmFromPmGroups = (
     )
   );
 };
-
-// export const saveDirToLocalStorage = (dir: string) => {
-//   if (typeof window !== "undefined") {
-//     const savedDirsString = localStorage.getItem("recent dirs");
-//     const savedDirs = IsStringArray(savedDirsString)
-//       ? JSON.parse(savedDirsString)
-//       : [];
-//     const newSavedDirs = savedDirs.length ? [savedDirs.pop(), dir] : [dir];
-//     localStorage.setItem("recent dirs", JSON.stringify(newSavedDirs));
-//   }
-// };

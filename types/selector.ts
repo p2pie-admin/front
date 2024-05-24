@@ -35,6 +35,7 @@ interface IPmGroup {
   icon?: IImage;
   color: string;
   options: IOption[];
+  section?: string;
 }
 
 interface IImage {
@@ -76,6 +77,7 @@ interface IPm {
   possible_pairs?: string[];
   color: string;
   popular_as?: IPopularAs | null;
+  section?: string;
 }
 
 type ISide = "give" | "get";

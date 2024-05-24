@@ -326,29 +326,11 @@ export const mainSlice = createSlice({
       action: PayloadAction<{
         givePm: IPm;
         getPm: IPm;
-        dirRates: IRate[];
-        ccRates?: ICurrencyConverterRate;
       }>
     ) => {
-      if (!action.payload) {
-        // если не получены курсы, парсер не отвечает вовсе
-        state.dirRatesStatus = "rejected";
-        return;
-      }
-      const { dirRates, givePm, getPm, ccRates } = action.payload;
-      state.dirRates = convertP2PRatioToCourse(
-        // прослойка чтобы превратить курсы p2p в реальное число
-        dirRates,
-        ccRates
-      );
-      // cleaning
-      state.amountInput = undefined;
-      state.amountOutputs = getAmountOutputs({ givePm, getPm, dirRates }, 1);
-      state.dirRatesStatus = "fulfilled";
-      state.swiperIdVisible = 1;
-      state.givePm = givePm;
-      state.getPm = getPm;
-      state.ccRates = ccRates;
+      state.dirRatesStatus = "pending";
+      state.givePm = action.payload.givePm;
+      state.getPm = action.payload.getPm;
     },
   },
 

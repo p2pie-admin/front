@@ -1,58 +1,37 @@
-import { Box, Flex, Grid, HStack, Text } from "@chakra-ui/react";
-import Disclaimer from "../shared/article/Disclaimer";
-import { initCMSFetcher, initParserFetcher } from "../../services/fetchers";
-import { articleCodesQuery, articleQuery } from "../../services/pageQueries";
-import { Box3D, RegularBox, ResponsiveText } from "../../styles/theme/custom";
-import { IArticle } from "../../types/pages";
-import { useRef } from "react";
-
-import DefaultDirText from "./DefaultDirText";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-
-import { pmGroupsQuery } from "../../services/initialQueries";
-import {
-  getPmsFromPmGroup,
-  pmsToSlug,
-} from "../main/side/selector/section/PmGroup/helper";
-import { IPm, IPmGroup } from "../../types/selector";
-
+import { Box, Grid } from "@chakra-ui/react";
+import { Box3D, RegularBox } from "../../styles/theme/custom";
+import DirTitle from "./DirTitle";
+import { IPm } from "../../types/selector";
 import LimitsRange from "../main/limits";
 import TV from "../main/tv";
 import Calculator from "../main/Calculator";
-import { fetchCCRates, fetchRates, restoreFromSlug } from "../../redux/thunks";
 import { useAppDispatch } from "../../redux/hooks";
-
-import { IRate } from "../../types/rates";
-import Article from "./Article";
-import { ICurrencyConverterRate } from "../../types/p2p";
 import { setInitialData } from "../../redux/mainReducer";
-import { ifMobile } from "./helper";
+import DirText from "./DirText";
 
 const Exchange = ({
-  article = null,
+  //article = null,
+  locale,
   slug,
+  defaultDirText,
   givePm,
   getPm,
-  prerenderedDirRates,
-  prerenderedCCRates,
   isMobile,
 }: {
-  article?: IArticle | null;
+  //article?: IArticle | null;
+  locale: "en" | "ru";
   slug?: string;
+  defaultDirText: string;
   givePm: IPm;
   getPm: IPm;
-  prerenderedDirRates: IRate[];
-  prerenderedCCRates?: ICurrencyConverterRate;
   isMobile: boolean;
 }) => {
   const dispatch = useAppDispatch();
 
   dispatch(
     setInitialData({
-      dirRates: prerenderedDirRates,
       givePm,
       getPm,
-      ccRates: prerenderedCCRates,
     })
   );
   if (!slug) return <></>;
@@ -70,14 +49,16 @@ const Exchange = ({
         borderRadius="2xl"
         w={{ base: "100%", sm: 432 }}
       >
-        <DefaultDirText slug={slug} />
         <Calculator />
 
         <LimitsRange />
         <TV isMobile={isMobile} />
       </RegularBox>
-
-      <Article article={article} />
+      <Box3D p="5" variant="no_contrast" maxW="500px">
+        <DirTitle slug={slug} locale={locale} />
+        <DirText defaultDirText={defaultDirText} />
+      </Box3D>
+      {/* <Article article={article} /> */}
     </Grid>
   );
 };

@@ -22,7 +22,7 @@ import SelectorBody from "./SectionsList";
 import SearchBar from "./SearchBar";
 import { filterSections } from "./section/helper";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { selectorQuery } from "./SelectorQuery";
+
 import SectionsList from "./SectionsList";
 
 import { ISelector } from "../../../../types/selector";
@@ -34,6 +34,7 @@ import { BsTelegram } from "react-icons/bs";
 import useSWR from "swr";
 import { initCMSFetcher } from "../../../../services/fetchers";
 import { memo } from "react";
+import { selectorQuery } from "../../../../services/initialQueries";
 
 //const gqlFetcher = new GraphQLFetcher(); // may pass variables here
 const fetcher = initCMSFetcher();
