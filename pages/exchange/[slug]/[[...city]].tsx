@@ -134,7 +134,6 @@ export async function getStaticPaths() {
   cachedData.slugPmsObject = slugPmsObject;
   cachedData.textLayouts = textLayouts;
   cachedData.cities = cities;
-  writeCache(cachedData); // Save to cache
 
   const paths = Object.keys(slugPmsObject).reduce(
     (
@@ -159,17 +158,19 @@ export async function getStaticPaths() {
   Object.keys(cities).forEach((city) => {
     Object.keys(slugPmsObject).forEach((slug) => {
       locales.forEach((locale) => {
-        if (!slug.includes("cash-")) return;
+        if (!(slug.startsWith("cash-") || slug.includes("-cash-"))) return;
         paths.push({
           params: {
             slug,
-            city: [city],
+            city: [city.replaceAll(" ", "-")],
           },
           locale,
         });
       });
     });
   });
+  cachedData.paths = paths.map((p) => p.params.slug + "/" + p.params.city);
+  writeCache(cachedData); // Save to cache
 
   console.log("total paths: ", paths.length);
   return {

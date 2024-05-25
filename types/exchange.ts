@@ -14,13 +14,7 @@ export interface ICache {
   cities: {
     [key: string]: [string, string];
   };
-  paths: {
-    params: {
-      slug: string;
-      city?: string[];
-    };
-    locale: string;
-  }[];
+  paths: string[];
 }
 
 export interface IPossiblePmPair {
