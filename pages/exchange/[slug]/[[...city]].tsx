@@ -5,11 +5,7 @@ import {
   selectorQuery,
   textLayoutsQuery,
 } from "../../../services/initialQueries";
-import { articleCodesQuery, articleQuery } from "../../../services/pageQueries";
-import { IArticle } from "../../../types/pages";
-import { IRate } from "../../../types/rates";
 import { IPmGroup, IPm, ISelector, ISection } from "../../../types/selector";
-import { fetchCCRates, fetchRates } from "../../../redux/thunks";
 import { readCache, writeCache } from "../../../services/cache";
 import React from "react";
 import Exchange from "../../../components/exchange";
