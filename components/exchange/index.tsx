@@ -58,7 +58,7 @@ const Exchange = ({
         <Calculator />
 
         <LimitsRange />
-        {/* <TV /> */}
+        <TV />
       </RegularBox>
 
       {/* <Article article={article} /> */}

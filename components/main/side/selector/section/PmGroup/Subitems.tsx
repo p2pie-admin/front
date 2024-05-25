@@ -52,7 +52,7 @@ const Subitems = ({
           code={pms[0].currency.code.toUpperCase()} // только для крипты нужен код
         />
         <Spacer />
-        <Arrow isUp={folded} />
+        <Arrow isUp={!folded} />
         <Spacer />
       </PmButton>
 
