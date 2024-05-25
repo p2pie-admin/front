@@ -169,7 +169,7 @@ export async function getStaticPaths() {
       });
     });
   });
-  cachedData.paths = paths.map((p) => p.params.slug + "/" + p.params.city);
+
   writeCache(cachedData); // Save to cache
 
   console.log("total paths: ", paths.length);
