@@ -44,6 +44,10 @@ const Exchange = ({
       maxH={{ base: "unset", md: "700px" }}
       mt={["0", "4"]}
     >
+      <Box3D p="5" variant="no_contrast" maxW="432px">
+        <DirTitle slug={slug} locale={locale} />
+        <DirText defaultDirText={defaultDirText} />
+      </Box3D>
       <RegularBox
         p={[2, 3, 4]}
         variant="no_contrast"
@@ -56,10 +60,7 @@ const Exchange = ({
         <LimitsRange />
         <TV />
       </RegularBox>
-      <Box3D p="5" variant="no_contrast" maxW="432px">
-        <DirTitle slug={slug} locale={locale} />
-        <DirText defaultDirText={defaultDirText} />
-      </Box3D>
+
       {/* <Article article={article} /> */}
     </Grid>
   );
