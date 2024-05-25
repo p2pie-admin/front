@@ -25,18 +25,13 @@ import ExchangerCard from "./ExchangerCard";
 import { setSwiperIdVisible } from "../../../../redux/mainReducer";
 import Item from "./item";
 import ErrorWrapper from "../../../shared/ErrorWrapper";
+import { useIsMobile } from "./hooks";
 
-export const ExchangersList = ({
-  length,
-  isMobile,
-}: {
-  length: number;
-  isMobile: boolean;
-}) => {
+export const ExchangersList = ({ length }: { length: number }) => {
   const dispatch = useAppDispatch();
   const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
   const [mouseEntered, setMouseEntered] = useState(false);
-
+  const isMobile = useIsMobile();
   const itemHeight = isMobile ? 80 : 120; // Height of each text box
   const visibleItems = 3; // Number of items visible in the container
   const containerHeight = itemHeight * visibleItems;
@@ -158,8 +153,8 @@ export const ExchangersList = ({
         px="2"
       >
         <ErrorWrapper
-          isError={length === 0 || dirRatesStatus === "rejected"}
-          isLoading={dirRatesStatus === "pending"}
+          isError={dirRatesStatus === "rejected"}
+          isLoading={length === 0 || dirRatesStatus === "pending"}
           primaryMessage="No rates available!"
           secondaryMessage="check your network connection"
         >

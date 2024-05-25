@@ -55,7 +55,7 @@ const courseFilterLink =
 //   }
 // );
 
-export const fetchRates = async (dir: string) => {
+const _fetchRates = async (dir: string) => {
   const response = await axios
     .get(`${courseFilterLink}/dir=${dir}/type=tops+p2p`)
     .catch((err) => console.error("could not fetch, ", err));
@@ -64,7 +64,7 @@ export const fetchRates = async (dir: string) => {
 
 export const fetchDirRates = createAsyncThunk(
   "rates/fetchDirRates",
-  fetchRates
+  _fetchRates
 );
 
 export const fetchCCRates = async ({

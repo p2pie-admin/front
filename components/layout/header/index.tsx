@@ -32,8 +32,8 @@ const Header = () => {
       <HStack
         justifyContent="space-between"
         alignItems="center"
-        maxW={["100%", "980"]}
-        minW={["100%", "980"]}
+        maxW={["100%", "888"]}
+        minW={["100%", "888"]}
       >
         <Logo />
         <Nav />

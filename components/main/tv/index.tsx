@@ -10,7 +10,7 @@ import Swiper from "./swiper";
 
 const fetcher = initCMSFetcher();
 
-const TV = ({ isMobile }: { isMobile: boolean }) => {
+const TV = () => {
   const { data: topParametersData, error: topParameterError } = useSWR(
     TopParametersQuery,
     fetcher
@@ -47,7 +47,7 @@ const TV = ({ isMobile }: { isMobile: boolean }) => {
 
   // вынесен наружу, иначе все внутри ErrorWrapper начинает высчитываться и выдает ошибку
   const length = useAppSelector((state) => state.main.dirRates?.length) || 0;
-  return <Swiper length={length} isMobile={isMobile} />;
+  return <Swiper length={length} />;
 };
 
 export default TV;

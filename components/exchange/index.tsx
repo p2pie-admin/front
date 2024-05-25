@@ -8,6 +8,7 @@ import Calculator from "../main/Calculator";
 import { useAppDispatch } from "../../redux/hooks";
 import { setInitialData } from "../../redux/mainReducer";
 import DirText from "./DirText";
+import { fetchDirRates } from "../../redux/thunks";
 
 const Exchange = ({
   //article = null,
@@ -27,20 +28,21 @@ const Exchange = ({
   isMobile: boolean;
 }) => {
   const dispatch = useAppDispatch();
-
+  const dir = `${givePm.code}_${getPm.code}`;
   dispatch(
     setInitialData({
       givePm,
       getPm,
     })
   );
+  dispatch(fetchDirRates(dir));
   if (!slug) return <></>;
   return (
     <Grid
       gridTemplateColumns={{ base: "1fr", md: "1fr auto" }}
       gridGap="5"
       maxH={{ base: "unset", md: "700px" }}
-      mt={["0", "10"]}
+      mt={["0", "4"]}
     >
       <RegularBox
         p={[2, 3, 4]}
@@ -52,7 +54,7 @@ const Exchange = ({
         <Calculator />
 
         <LimitsRange />
-        <TV isMobile={isMobile} />
+        <TV />
       </RegularBox>
       <Box3D p="5" variant="no_contrast" maxW="432px">
         <DirTitle slug={slug} locale={locale} />
