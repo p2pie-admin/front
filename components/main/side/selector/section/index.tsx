@@ -37,9 +37,9 @@ const Section = ({
   //     !pmGroup.countries.length ||
   //     pmGroup.countries.find((c) => c.toUpperCase() == country)
   // );
-  // const showSeeAll = pmGroups.length > itemsToShow;
-  // const visiblePmGroups = [...pmGroups];
-  // visiblePmGroups.length = itemsToShow - 2;
+  const showSeeAll = pmGroups.length > itemsToShow;
+  const visiblePmGroups = [...pmGroups];
+  visiblePmGroups.length = itemsToShow - 2;
   if (!pmGroups.length) return <></>;
   return (
     <Box3D mb="4" position="relative">
@@ -67,7 +67,7 @@ const Section = ({
       <Collapse in={!isHidden}>
         <Box p="2" pb="1">
           <SectionGridWrapper>
-            {pmGroups.map((pm_group) => {
+            {pmGroups.slice(0, itemsToShow).map((pm_group) => {
               return <PmGroup pm_group={pm_group} key={pm_group.id} />;
             })}
             {/* {pmGroups.slice(0, itemsToShow).map((pm_group) => {
@@ -75,9 +75,9 @@ const Section = ({
             })} */}
           </SectionGridWrapper>
 
-          {/* {showSeeAll && (
+          {showSeeAll && (
             <SectionHidden>{pmGroups.slice(itemsToShow)}</SectionHidden>
-          )} */}
+          )}
         </Box>
       </Collapse>
     </Box3D>
