@@ -128,12 +128,13 @@ export async function getStaticPaths() {
   );
 
   const locales = ["en", "ru"];
-
+  writeCache({});
   const cachedData = {} as ICache;
   const cities = convertCities(parserSetting.cities);
   cachedData.slugPmsObject = slugPmsObject;
   cachedData.textLayouts = textLayouts;
   cachedData.cities = cities;
+  writeCache(cachedData); // Save to cache
 
   const paths = Object.keys(slugPmsObject).reduce(
     (
@@ -169,8 +170,6 @@ export async function getStaticPaths() {
       });
     });
   });
-
-  writeCache(cachedData); // Save to cache
 
   console.log("total paths: ", paths.length);
   return {
