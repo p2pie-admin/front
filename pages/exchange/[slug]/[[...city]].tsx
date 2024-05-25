@@ -117,7 +117,7 @@ export async function getStaticPaths() {
     getPm: pms.find((pm) => pm.code.toUpperCase() === dir.split("_")[1]),
   })) as IPossiblePmPair[];
 
-  const slugs = possiblePmPairs.map((pair) => pmsToSlug(pair));
+  const slugs = possiblePmPairs.map((pair) => pmsToSlug(pair)).slice(0, 300);
   const locales = ["en", "ru"];
 
   const dirSlugPairs = slugs.reduce(
