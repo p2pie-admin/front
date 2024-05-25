@@ -46,7 +46,7 @@ const ReverseButton = () => {
     (state) => state.main.givePm?.code && state.main.getPm?.code
   );
   const router = useRouter();
-  const slug = router.query.slug as string;
+  const { slug, city } = router.query as { slug: string; city: string };
   let reversed_slug = "";
   if (slug && slug.length) {
     const [leftPart, rightPart] = slug.split("-to-");
@@ -54,7 +54,7 @@ const ReverseButton = () => {
   }
 
   const handleReverseDir = () => {
-    router.push(`/exchange/${reversed_slug}`);
+    router.push(`/exchange/${reversed_slug}${city ? "/" + city : ""}`);
     dispatch(setDirRatesStatusPending());
   };
 

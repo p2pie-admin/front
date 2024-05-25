@@ -8,12 +8,19 @@ export interface ITextLayout {
 }
 
 export interface ICache {
-  dirSlugPairs: { [key: string]: { givePm: IPm; getPm: IPm } };
+  slugPmsObject: { [key: string]: IPossiblePmPair };
   articleCodes: { id: string; code: string }[];
   textLayouts: ITextLayout[];
   cities: {
     [key: string]: [string, string];
   };
+  paths: {
+    params: {
+      slug: string;
+      city?: string[];
+    };
+    locale: string;
+  }[];
 }
 
 export interface IPossiblePmPair {

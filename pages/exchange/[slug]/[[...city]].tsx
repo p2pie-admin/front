@@ -34,13 +34,13 @@ export async function getStaticProps({
   const cityParam = city ? city[0] : "";
 
   const cachedData = readCache() as ICache;
+  const { givePm, getPm } = cachedData.slugPmsObject[slug];
 
-  if (!cachedData?.dirSlugPairs?.[slug])
+  if (!cachedData?.slugPmsObject?.[slug] || !givePm || !getPm)
     return {
       notFound: true,
     };
 
-  const { givePm, getPm } = cachedData.dirSlugPairs[slug];
   const fullCity = cachedData.cities?.[cityParam];
   const cityName = !fullCity ? "" : locale === "ru" ? fullCity[0] : fullCity[1];
   const defaultDirText = generateText({
@@ -103,6 +103,7 @@ export async function getStaticPaths() {
   const { textLayouts } = (await cmsFetcher(textLayoutsQuery)) as {
     textLayouts: ITextLayout[];
   };
+
   console.log("textLayouts fetched: ", textLayouts.length);
   console.log(`extracting pms from  ${pmGroups.length} pmGroups`);
 
@@ -112,26 +113,30 @@ export async function getStaticPaths() {
     return !pms ? res : [...res, ...pms];
   }, []);
   console.log(`received ${pms.length} pms`);
-  const possiblePmPairs = dirs.map((dir) => ({
-    givePm: pms.find((pm) => pm.code.toUpperCase() === dir.split("_")[0]),
-    getPm: pms.find((pm) => pm.code.toUpperCase() === dir.split("_")[1]),
-  })) as IPossiblePmPair[];
 
-  const slugs = possiblePmPairs.map((pair) => pmsToSlug(pair)).slice(0, 300);
-  const locales = ["en", "ru"];
-
-  const dirSlugPairs = slugs.reduce(
-    (res, slug, idx) => ({ ...res, [slug]: possiblePmPairs[idx] }),
+  //console.log(possiblePmPairs.map(pmp => `${pmp.givePm?.code}_${pmp.getPm?.code}`));
+  const slugPmsObject = dirs.reduce(
+    (res: { [key: string]: IPossiblePmPair }, dir) => {
+      const pmPairFromDir = {
+        givePm: pms.find((pm) => pm.code.toUpperCase() === dir.split("_")[0]),
+        getPm: pms.find((pm) => pm.code.toUpperCase() === dir.split("_")[1]),
+      } as IPossiblePmPair;
+      const slug = pmsToSlug(pmPairFromDir);
+      return { ...res, [slug]: pmPairFromDir };
+    },
     {}
   );
-  const cachedData = readCache() as ICache;
+
+  const locales = ["en", "ru"];
+
+  const cachedData = {} as ICache;
   const cities = convertCities(parserSetting.cities);
-  cachedData.dirSlugPairs = dirSlugPairs;
+  cachedData.slugPmsObject = slugPmsObject;
   cachedData.textLayouts = textLayouts;
   cachedData.cities = cities;
   writeCache(cachedData); // Save to cache
 
-  const paths = slugs.reduce(
+  const paths = Object.keys(slugPmsObject).reduce(
     (
       res: {
         params: { slug: string; city?: string[] };
@@ -152,7 +157,7 @@ export async function getStaticPaths() {
   );
 
   Object.keys(cities).forEach((city) => {
-    slugs.forEach((slug) => {
+    Object.keys(slugPmsObject).forEach((slug) => {
       locales.forEach((locale) => {
         if (!slug.includes("cash-")) return;
         paths.push({
@@ -165,13 +170,7 @@ export async function getStaticPaths() {
       });
     });
   });
-  // const paths = prePaths.reduce((res: any, path) => {
-  //   const { params, locale } = path;
-  //   return [
-  //     ...res,
-  //     { params: { city: params.city, slug: pmsToSlug(params.ppp) }, locale },
-  //   ];
-  // }, []);
+
   console.log("total paths: ", paths.length);
   return {
     paths,

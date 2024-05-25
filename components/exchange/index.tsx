@@ -54,7 +54,7 @@ const Exchange = ({
         <LimitsRange />
         <TV isMobile={isMobile} />
       </RegularBox>
-      <Box3D p="5" variant="no_contrast" maxW="500px">
+      <Box3D p="5" variant="no_contrast" maxW="432px">
         <DirTitle slug={slug} locale={locale} />
         <DirText defaultDirText={defaultDirText} />
       </Box3D>
