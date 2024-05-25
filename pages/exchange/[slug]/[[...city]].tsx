@@ -173,7 +173,7 @@ export async function getStaticPaths() {
 
   console.log("total paths: ", paths.length);
   return {
-    paths,
+    paths: paths.slice(0, 10000),
     fallback: "blocking",
   };
 }
