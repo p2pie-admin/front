@@ -154,7 +154,7 @@ export async function getStaticPaths() {
   Object.keys(cities).forEach((city) => {
     slugs.forEach((slug) => {
       locales.forEach((locale) => {
-        if (!slug.includes("-cash-")) return;
+        if (!slug.includes("cash-")) return;
         paths.push({
           params: {
             slug,
