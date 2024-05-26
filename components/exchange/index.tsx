@@ -35,7 +35,7 @@ const Exchange = ({
       getPm,
     })
   );
-  dispatch(fetchDirRates(dir));
+  "undefined" !== typeof window && dispatch(fetchDirRates(dir));
   if (!slug) return <></>;
   return (
     <Grid

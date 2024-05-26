@@ -31,8 +31,8 @@ export const ExchangersList = ({ length }: { length: number }) => {
   const dispatch = useAppDispatch();
   const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
   const [mouseEntered, setMouseEntered] = useState(false);
-  const isMobile = useIsMobile();
-  const itemHeight = isMobile ? 80 : 120; // Height of each text box
+
+  const itemHeight = 120; // Height of each text box
   const visibleItems = 3; // Number of items visible in the container
   const containerHeight = itemHeight * visibleItems;
 
@@ -110,7 +110,6 @@ export const ExchangersList = ({ length }: { length: number }) => {
   };
 
   const handleWheel = (event: any) => {
-    if (isMobile) return;
     if (!mouseEntered) return;
     if (event.deltaY < 0) {
       stepDown();
@@ -120,7 +119,6 @@ export const ExchangersList = ({ length }: { length: number }) => {
   };
 
   const handleKeyDown = (event: any) => {
-    if (isMobile) return;
     if (event.key === "ArrowUp" || event.key === "ArrowRight") {
       stepDown();
     } else if (event.key === "ArrowDown" || event.key === "ArrowLeft") {
@@ -129,7 +127,6 @@ export const ExchangersList = ({ length }: { length: number }) => {
   };
 
   useEffect(() => {
-    if (isMobile) return;
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("keydown", handleKeyDown);
 
@@ -165,7 +162,6 @@ export const ExchangersList = ({ length }: { length: number }) => {
             py="4"
             borderRadius={`${4}% ${4}% ${4}% ${4}% / 50% 50% 50% 50%`}
             onMouseEnter={() => {
-              if (isMobile) return;
               const scrollbarWidth =
                 window.innerWidth - document.documentElement.clientWidth;
               document.body.style.overflow = "hidden";
@@ -173,7 +169,6 @@ export const ExchangersList = ({ length }: { length: number }) => {
               setMouseEntered(true);
             }}
             onMouseLeave={() => {
-              if (isMobile) return;
               document.body.style.overflow = "auto";
               document.body.style.paddingRight = "0px";
               setMouseEntered(false);

@@ -210,11 +210,11 @@
         "section": "bank"
       }
     },
-    "sber-rub-to-cash-rub": {
+    "": {
       "givePm": {
-        "pm_group_id": "13",
-        "code": "SBERRUB",
-        "en_name": "sber",
+        "pm_group_id": "15",
+        "code": "ADVCRUB",
+        "en_name": "Adv Cash",
         "ru_name": null,
         "subgroup_name": null,
         "currency": {
@@ -223,75 +223,13 @@
           "accuracy": 0
         },
         "icon": {
-          "id": "160",
+          "id": "228",
           "alternativeText": null,
-          "url": "/uploads/sber_74696b436a.png"
+          "url": "/uploads/advc_dcf1be13c9.png"
         },
-        "color": "green",
+        "color": "dark_teal",
         "popular_as": null,
         "section": "bank"
-      },
-      "getPm": {
-        "pm_group_id": "22",
-        "code": "CASHRUB",
-        "en_name": "Cash",
-        "ru_name": "Наличные",
-        "subgroup_name": null,
-        "currency": {
-          "id": "5",
-          "code": "rub",
-          "accuracy": 0
-        },
-        "icon": {
-          "id": "206",
-          "alternativeText": null,
-          "url": "/uploads/rub_d29508fc88.png"
-        },
-        "color": "green",
-        "popular_as": null,
-        "section": "cash"
-      }
-    },
-    "sber-rub-to-cash-usd": {
-      "givePm": {
-        "pm_group_id": "13",
-        "code": "SBERRUB",
-        "en_name": "sber",
-        "ru_name": null,
-        "subgroup_name": null,
-        "currency": {
-          "id": "5",
-          "code": "rub",
-          "accuracy": 0
-        },
-        "icon": {
-          "id": "160",
-          "alternativeText": null,
-          "url": "/uploads/sber_74696b436a.png"
-        },
-        "color": "green",
-        "popular_as": null,
-        "section": "bank"
-      },
-      "getPm": {
-        "pm_group_id": "21",
-        "code": "CASHUSD",
-        "en_name": "Cash",
-        "ru_name": "наличные",
-        "subgroup_name": null,
-        "currency": {
-          "id": "1",
-          "code": "usd",
-          "accuracy": 2
-        },
-        "icon": {
-          "id": "211",
-          "alternativeText": null,
-          "url": "/uploads/usd_b07a10126c.png"
-        },
-        "color": "green",
-        "popular_as": null,
-        "section": "cash"
       }
     },
     "sber-rub-to-bitcoin-btc": {
@@ -2012,48 +1950,6 @@
           "url": "/uploads/advc_dcf1be13c9.png"
         },
         "color": "dark_teal",
-        "popular_as": null,
-        "section": "bank"
-      }
-    },
-    "cash-usd-to-sber-rub": {
-      "givePm": {
-        "pm_group_id": "21",
-        "code": "CASHUSD",
-        "en_name": "Cash",
-        "ru_name": "наличные",
-        "subgroup_name": null,
-        "currency": {
-          "id": "1",
-          "code": "usd",
-          "accuracy": 2
-        },
-        "icon": {
-          "id": "211",
-          "alternativeText": null,
-          "url": "/uploads/usd_b07a10126c.png"
-        },
-        "color": "green",
-        "popular_as": null,
-        "section": "cash"
-      },
-      "getPm": {
-        "pm_group_id": "13",
-        "code": "SBERRUB",
-        "en_name": "sber",
-        "ru_name": null,
-        "subgroup_name": null,
-        "currency": {
-          "id": "5",
-          "code": "rub",
-          "accuracy": 0
-        },
-        "icon": {
-          "id": "160",
-          "alternativeText": null,
-          "url": "/uploads/sber_74696b436a.png"
-        },
-        "color": "green",
         "popular_as": null,
         "section": "bank"
       }
@@ -4032,48 +3928,6 @@
         "section": "crypto"
       }
     },
-    "eos-eos-to-eos-eos": {
-      "givePm": {
-        "pm_group_id": "30",
-        "code": "EOS",
-        "en_name": "EOS",
-        "ru_name": null,
-        "subgroup_name": null,
-        "currency": {
-          "id": "22",
-          "code": "eos",
-          "accuracy": 2
-        },
-        "icon": {
-          "id": "187",
-          "alternativeText": null,
-          "url": "/uploads/eos_d307e64d67.png"
-        },
-        "color": "dark_gray",
-        "popular_as": null,
-        "section": "crypto"
-      },
-      "getPm": {
-        "pm_group_id": "30",
-        "code": "EOS",
-        "en_name": "EOS",
-        "ru_name": null,
-        "subgroup_name": null,
-        "currency": {
-          "id": "22",
-          "code": "eos",
-          "accuracy": 2
-        },
-        "icon": {
-          "id": "187",
-          "alternativeText": null,
-          "url": "/uploads/eos_d307e64d67.png"
-        },
-        "color": "dark_gray",
-        "popular_as": null,
-        "section": "crypto"
-      }
-    },
     "eos-eos-to-pancake-cake": {
       "givePm": {
         "pm_group_id": "30",
@@ -5040,48 +4894,6 @@
         "section": "crypto"
       }
     },
-    "pancake-cake-to-pancake-cake": {
-      "givePm": {
-        "pm_group_id": "29",
-        "code": "CAKE",
-        "en_name": "Pancake",
-        "ru_name": null,
-        "subgroup_name": null,
-        "currency": {
-          "id": "20",
-          "code": "cake",
-          "accuracy": 2
-        },
-        "icon": {
-          "id": "171",
-          "alternativeText": null,
-          "url": "/uploads/cake_347aa41eb7.png"
-        },
-        "color": "cyan",
-        "popular_as": null,
-        "section": "crypto"
-      },
-      "getPm": {
-        "pm_group_id": "29",
-        "code": "CAKE",
-        "en_name": "Pancake",
-        "ru_name": null,
-        "subgroup_name": null,
-        "currency": {
-          "id": "20",
-          "code": "cake",
-          "accuracy": 2
-        },
-        "icon": {
-          "id": "171",
-          "alternativeText": null,
-          "url": "/uploads/cake_347aa41eb7.png"
-        },
-        "color": "cyan",
-        "popular_as": null,
-        "section": "crypto"
-      }
-    },
     "pancake-cake-to-icon-icx": {
       "givePm": {
         "pm_group_id": "29",
@@ -6044,48 +5856,6 @@
           "url": "/uploads/cake_347aa41eb7.png"
         },
         "color": "cyan",
-        "popular_as": null,
-        "section": "crypto"
-      }
-    },
-    "icon-icx-to-icon-icx": {
-      "givePm": {
-        "pm_group_id": "31",
-        "code": "ICX",
-        "en_name": "Icon",
-        "ru_name": null,
-        "subgroup_name": null,
-        "currency": {
-          "id": "21",
-          "code": "icx",
-          "accuracy": 2
-        },
-        "icon": {
-          "id": "199",
-          "alternativeText": null,
-          "url": "/uploads/icx_bcdfa33b84.png"
-        },
-        "color": "dark_teal",
-        "popular_as": null,
-        "section": "crypto"
-      },
-      "getPm": {
-        "pm_group_id": "31",
-        "code": "ICX",
-        "en_name": "Icon",
-        "ru_name": null,
-        "subgroup_name": null,
-        "currency": {
-          "id": "21",
-          "code": "icx",
-          "accuracy": 2
-        },
-        "icon": {
-          "id": "199",
-          "alternativeText": null,
-          "url": "/uploads/icx_bcdfa33b84.png"
-        },
-        "color": "dark_teal",
         "popular_as": null,
         "section": "crypto"
       }
