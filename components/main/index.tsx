@@ -23,7 +23,6 @@ const MainPageContent = () => {
         <Calculator />
 
         <LimitsRange />
-        {bothPmsSelected && <Carousel />}
       </RegularBox>
     </>
   );

@@ -37,6 +37,7 @@ export async function getStaticProps({
   const cachedData = readCache() as ICache;
 
   const ppp = cachedData?.slugPmsObject?.[slug];
+  console.log("ppp", ppp);
   if (!ppp || !ppp.givePm || !ppp.getPm)
     // если нет курсов по таким направлениям
     return {
@@ -79,7 +80,7 @@ export async function getStaticPaths() {
     ],
     []
   );
-  console.log(`received ${dirs.length} dirs`);
+  console.log(`received ${dirs} dirs`);
 
   const cmsFetcher = initCMSFetcher();
   const { selector } = (await cmsFetcher(selectorQuery)) as {
@@ -128,7 +129,6 @@ export async function getStaticPaths() {
   );
 
   const locales = ["en", "ru"];
-  writeCache({});
   const cachedData = {} as ICache;
   const cities = convertCities(parserSetting.cities);
   cachedData.slugPmsObject = slugPmsObject;
@@ -171,7 +171,7 @@ export async function getStaticPaths() {
     });
   });
   const slicedPaths = paths.slice(0, 7);
-  console.log("qiwi-rub-to-bitcoin-btc will be prerendered");
+
   return {
     paths: slicedPaths,
     fallback: "blocking",

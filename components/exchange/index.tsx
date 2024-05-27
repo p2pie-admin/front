@@ -17,7 +17,6 @@ const Exchange = ({
   defaultDirText,
   givePm,
   getPm,
-  isMobile,
 }: {
   //article?: IArticle | null;
   locale: "en" | "ru";
@@ -25,7 +24,6 @@ const Exchange = ({
   defaultDirText: string;
   givePm: IPm;
   getPm: IPm;
-  isMobile: boolean;
 }) => {
   const dispatch = useAppDispatch();
   const dir = `${givePm.code}_${getPm.code}`;
@@ -44,11 +42,11 @@ const Exchange = ({
       maxH={{ base: "unset", md: "700px" }}
       mt={["0", "4"]}
     >
-      <Box3D p={[2, 3, 4]} variant="no_contrast" maxW="432px">
+      {/* <Box3D p={[2, 3, 4]} variant="no_contrast" maxW="432px">
         <DirTitle slug={slug} locale={locale} />
         <DirText defaultDirText={defaultDirText} />
         <ScrollBottom />
-      </Box3D>
+      </Box3D> */}
       <Box3D variant="no_contrast" p={[2, 3, 4]} w={{ base: "100%", sm: 432 }}>
         <Calculator />
 

@@ -38,11 +38,11 @@ const ControlPanel = ({
       <Box3D h="100%" w={["6", "10"]}>
         <VStack
           w="100%"
-          spacing={length > 10 ? "1" : length > 20 ? "0.5" : "2"}
+          spacing={length > 10 ? "1" : length > 20 ? "0.5" : "5"}
           py={["1", "2"]}
           px={["0.5", "2"]}
           h="100%"
-          justifyContent="space-around"
+          justifyContent="center"
         >
           {Array.from({ length }).map((_, idx) => (
             <Box
