@@ -8,7 +8,6 @@ import Calculator from "../main/Calculator";
 import { useAppDispatch } from "../../redux/hooks";
 import { setInitialData } from "../../redux/mainReducer";
 import DirText from "./DirText";
-import { fetchDirRates } from "../../redux/thunks";
 
 const Exchange = ({
   //article = null,

@@ -20,7 +20,7 @@ import {
   UpdateOrderMutation,
   CreateOrderMutation,
 } from "../components/order/step3/queries";
-import { CreateRedirectMutation } from "../components/main/tv/bottons/queries";
+
 import { pmFromPmGroups } from "../components/main/side/selector/section/PmGroup/helper";
 //import { redirect } from "next/navigation";
 
@@ -218,23 +218,23 @@ export const getOrderByUID = createAsyncThunk(
   }
 );
 
-export const redirect = createAsyncThunk(
-  "exchanger/redirect",
-  async (_, thunkAPI) => {
-    const { main } = thunkAPI.getState() as { main: MainState };
-    const currentRate = main?.dirRates?.[main.swiperIdVisible];
-    const fetcher = initCMSFetcher({
-      direction: `${main.givePm?.code}_${main.getPm?.code}`,
-      give: +main.amountOutputs.give,
-      get: +main.amountOutputs.get,
-      id_related_to: currentRate?.exchangerId,
-      isP2P: !!currentRate?.tag,
-      ip: main.fingerprint?.ip,
-    });
+// export const redirect = createAsyncThunk(
+//   "exchanger/redirect",
+//   async (_, thunkAPI) => {
+//     const { main } = thunkAPI.getState() as { main: MainState };
+//     const currentRate = main?.dirRates?.[main.swiperIdVisible];
+//     const fetcher = initCMSFetcher({
+//       direction: `${main.givePm?.code}_${main.getPm?.code}`,
+//       give: +main.amountOutputs.give,
+//       get: +main.amountOutputs.get,
+//       id_related_to: currentRate?.exchangerId,
+//       isP2P: !!currentRate?.tag,
+//       ip: main.fingerprint?.ip,
+//     });
 
-    await fetcher(CreateRedirectMutation);
-  }
-);
+//     await fetcher(CreateRedirectMutation);
+//   }
+// );
 
 // export const fetchPms = createAsyncThunk("initial/fetchPms", async () => {
 //   const fetcher = initCMSFetcher();

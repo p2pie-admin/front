@@ -9,8 +9,6 @@ import { IParamData, IRate } from "../../../types/rates";
 import Swiper from "./Swiper";
 import { useIsMobile } from "./hooks";
 
-const fetcher = initCMSFetcher();
-
 const TV = ({ dir }: { dir: string }) => {
   const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
   const dirRates = useAppSelector((state) => state.main.dirRates) || [];
