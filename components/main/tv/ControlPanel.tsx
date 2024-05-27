@@ -8,8 +8,8 @@ import {
 
 import { IoIosArrowUp } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
-import { Box3D } from "../../../../styles/theme/custom";
-import { useAppSelector } from "../../../../redux/hooks";
+import { Box3D } from "../../../styles/theme/custom";
+import { useAppSelector } from "../../../redux/hooks";
 
 const ControlPanel = ({
   stepUp,

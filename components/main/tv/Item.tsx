@@ -1,16 +1,19 @@
 import { Flex } from "@chakra-ui/react";
 import { useCallback } from "react";
-import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { updateScrollLock } from "../../../../redux/mainReducer";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { updateScrollLock } from "../../../redux/mainReducer";
 import { useTransform, motion, MotionValue } from "framer-motion";
 import ExchangerCard from "./ExchangerCard";
+import { IRate } from "../../../types/rates";
 
 function Item({
+  rate,
   y,
   index,
   itemHeight,
   containerHeight,
 }: {
+  rate: IRate;
   y: MotionValue<number>;
   index: number;
   itemHeight: number;
@@ -56,7 +59,7 @@ function Item({
 
   return (
     <motion.div
-      key={index}
+      key={rate.exchangerId}
       style={{
         height: `${itemHeight}px`,
         display: "flex",
@@ -67,7 +70,7 @@ function Item({
         scaleX,
       }}
     >
-      <ExchangerCard index={index} />
+      <ExchangerCard index={index} rate={rate} />
     </motion.div>
   );
 }

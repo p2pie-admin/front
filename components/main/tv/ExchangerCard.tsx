@@ -1,35 +1,27 @@
 import { Box, Divider, HStack } from "@chakra-ui/react";
-import { ResponsiveText } from "../../../../styles/theme/custom";
-import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { ResponsiveText } from "../../../styles/theme/custom";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { FaStar } from "react-icons/fa";
+import { capitalize } from "../side/selector/section/PmGroup/helper";
+import { addSpaces, localFormat, R } from "../../../redux/amountsHelper";
+import { redirect } from "../../../redux/thunks";
+import { IRate } from "../../../types/rates";
 
-import ExchangerNameRating from "../../../shared/ExchangerNameRating";
-import { capitalize } from "../../side/selector/section/PmGroup/helper";
-import {
-  addSpaces,
-  isClose,
-  kFormatter,
-  localFormat,
-  R,
-  symbols,
-} from "../../../../redux/amountsHelper";
-import { redirect } from "../../../../redux/thunks";
-
-const ExchangerCard = ({ index }: { index: number }) => {
+const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
   const dispatch = useAppDispatch();
   const activeIndex = useAppSelector((state) => state.main.swiperIdVisible);
-  const dirRate = useAppSelector((state) => state.main.dirRates?.[index]);
-  if (!dirRate) return <></>;
+
+  if (!rate) return <></>;
 
   const rating =
-    dirRate.admin_rating === null
+    rate.admin_rating === null
       ? Math.round(
           (2 +
-            dirRate.name.length / 10 +
-            (parseFloat(dirRate.exchangerId) / 1000 || 0)) *
+            rate.name.length / 10 +
+            (parseFloat(rate.exchangerId) / 1000 || 0)) *
             100
         ) / 100
-      : dirRate.admin_rating;
+      : rate.admin_rating;
 
   const ratingColor =
     rating < 3
@@ -42,7 +34,7 @@ const ExchangerCard = ({ index }: { index: number }) => {
       ? "#97bb48"
       : "green.400";
 
-  const { name, course, min, max, ref_link } = dirRate;
+  const { name, course, min, max, ref_link } = rate;
 
   const giveCur = useAppSelector(
     (state) => state.main.givePm?.currency.code.toUpperCase() || ""

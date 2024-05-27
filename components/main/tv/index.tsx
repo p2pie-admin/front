@@ -6,67 +6,71 @@ import ErrorWrapper from "../../shared/ErrorWrapper";
 import { initCMSFetcher } from "../../../services/fetchers";
 import { Box } from "@chakra-ui/react";
 import { IParamData, IRate } from "../../../types/rates";
-import Swiper from "./swiper";
+import Swiper from "./Swiper";
+import { useIsMobile } from "./hooks";
 
 const fetcher = initCMSFetcher();
 
-const TV = () => {
-  const { data: topParametersData, error: topParameterError } = useSWR(
-    TopParametersQuery,
-    fetcher
-  ) as {
-    data: {
-      topParameters: IParamData[];
-    };
-    error: boolean;
+const TV = ({ dir }: { dir: string }) => {
+  const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
+  const dirRates = useAppSelector((state) => state.main.dirRates) || [];
+
+  const isMobile = useIsMobile();
+  const itemHeight = isMobile ? 80 : 120; // Height of each text box
+  const visibleItems = 3; // Number of items visible in the container
+  const containerHeight = itemHeight * visibleItems;
+
+  const props = {
+    isMobile,
+    itemHeight,
+    visibleItems,
+    containerHeight,
+    dirRates,
   };
 
-  const { data: directionParametersData, error: directionParameterError } =
-    useSWR(DirectionParametersQuery, fetcher) as {
-      data: {
-        directionParameters: IParamData[];
-      };
-      error: boolean;
-    };
-
-  const { data: exchangerParametersData, error: exchangerParameterError } =
-    useSWR(DirectionParametersQuery, fetcher) as {
-      data: {
-        exchangerParameters: IParamData[];
-      };
-      error: boolean;
-    };
-
-  const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
-
-  const allParameters = [
-    ...(topParametersData?.topParameters || []),
-    ...(directionParametersData?.directionParameters || []),
-    ...(exchangerParametersData?.exchangerParameters || []),
-  ];
-
-  // вынесен наружу, иначе все внутри ErrorWrapper начинает высчитываться и выдает ошибку
-  const length = useAppSelector((state) => state.main.dirRates?.length) || 0;
-  return <Swiper length={length} />;
+  return (
+    <Box h={`${containerHeight + 34}px`}>
+      <ErrorWrapper
+        isError={dirRatesStatus === "rejected"}
+        isLoading={!dirRates.length || dirRatesStatus === "pending"}
+        primaryMessage="No rates available!"
+        secondaryMessage="check your network connection"
+      >
+        <Swiper {...props} />
+      </ErrorWrapper>
+    </Box>
+  );
 };
 
 export default TV;
+// const { data: topParametersData, error: topParameterError } = useSWR(
+//   TopParametersQuery,
+//   fetcher
+// ) as {
+//   data: {
+//     topParameters: IParamData[];
+//   };
+//   error: boolean;
+// };
 
-// <ErrorWrapper
-// mainColor="red"
-// iconColor="yellow"
-// primaryMessage="Connection error!"
-// secondaryMessage="Rates parser connection is lost!"
-// linkMessage="report"
-// isError={error}
-// isLoading={!data || pendingDirRates}
-// >
-// <ErrorWrapper
-//   mainColor="bg"
-//   iconColor="bg"
-//   isError={dirParserRespEmpty}
-//   icon={SearchOff}
-//   primaryMessage="No results!"
-//   secondaryMessage="no rates were found for this direction"
-//   linkMessage="report"
-// >
+// const { data: directionParametersData, error: directionParameterError } =
+//   useSWR(DirectionParametersQuery, fetcher) as {
+//     data: {
+//       directionParameters: IParamData[];
+//     };
+//     error: boolean;
+//   };
+
+// const { data: exchangerParametersData, error: exchangerParameterError } =
+//   useSWR(DirectionParametersQuery, fetcher) as {
+//     data: {
+//       exchangerParameters: IParamData[];
+//     };
+//     error: boolean;
+//   };
+
+// const allParameters = [
+//   ...(topParametersData?.topParameters || []),
+//   ...(directionParametersData?.directionParameters || []),
+//   ...(exchangerParametersData?.exchangerParameters || []),
+// ];

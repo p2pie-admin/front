@@ -1,0 +1,201 @@
+import React, { useEffect, useCallback, useState, ReactChildren } from "react";
+import { TbTriangleInvertedFilled } from "react-icons/tb";
+import { motion, useMotionValue, useAnimation } from "framer-motion";
+import { Box, Grid } from "@chakra-ui/react";
+import Shader from "../../shared/Shader";
+import { Box3D } from "../../../styles/theme/custom";
+import ControlPanel from "./ControlPanel";
+import { useAppDispatch } from "../../../redux/hooks";
+import { setSwiperIdVisible } from "../../../redux/mainReducer";
+import { IRate } from "../../../types/rates";
+import Item from "./Item";
+
+export const Swiper = (props: {
+  isMobile: boolean;
+  itemHeight: number;
+  visibleItems: number;
+  containerHeight: number;
+  dirRates: IRate[];
+}) => {
+  const { isMobile, itemHeight, visibleItems, containerHeight, dirRates } =
+    props;
+  const length = dirRates.length;
+  const dispatch = useAppDispatch();
+
+  const [mouseEntered, setMouseEntered] = useState(false);
+
+  const y = useMotionValue(0);
+  const controls = useAnimation();
+  const getIndex = () => {
+    const index = Math.round(
+      (-y.get() + (containerHeight / 2 - itemHeight / 2)) / itemHeight
+    );
+
+    return Math.min(length - 1, Math.max(0, index));
+  };
+
+  const dragConstraints = {
+    top:
+      -itemHeight * (length - visibleItems) +
+      containerHeight / 2 -
+      itemHeight * 3,
+    bottom: containerHeight / 2,
+  };
+
+  const snapToNearest = useCallback(
+    (currentY) => {
+      const offset = containerHeight / 2 - itemHeight / 2;
+      const index = Math.round((-currentY + offset) / itemHeight);
+      if (index <= 0) return itemHeight;
+      if (index >= length) return -itemHeight * (length - 2);
+      return -index * itemHeight + offset;
+    },
+    [containerHeight, itemHeight]
+  );
+
+  const move = (y: number) => {
+    controls.start({
+      y,
+      transition: { type: "spring", stiffness: 220, damping: 25 },
+    });
+  };
+
+  const onDragEnd = () => {
+    dispatch(setSwiperIdVisible(getIndex()));
+    move(snapToNearest(y.get()));
+  };
+
+  useEffect(() => {
+    const unsubscribe = y.onChange(() => {
+      controls.start({
+        transition: { staggerChildren: 0.1 },
+      });
+    });
+
+    return () => unsubscribe();
+  }, [y, controls]);
+
+  const scrollToItem = (index: number) => {
+    const targetY =
+      -(itemHeight * index) + containerHeight / 2 - itemHeight / 2;
+    move(targetY);
+  };
+
+  const stepDown = () => {
+    const currentIndex = getIndex();
+    const newIndex = Math.max(currentIndex - 1, 0);
+
+    dispatch(setSwiperIdVisible(newIndex));
+    scrollToItem(newIndex);
+  };
+
+  const stepUp = () => {
+    const currentIndex = getIndex();
+    const newIndex = Math.min(currentIndex + 1, length - 1);
+
+    dispatch(setSwiperIdVisible(newIndex));
+    scrollToItem(newIndex);
+  };
+
+  const handleWheel = (event: any) => {
+    if (isMobile) return;
+    if (!mouseEntered) return;
+    if (event.deltaY < 0) {
+      stepDown();
+    } else if (event.deltaY > 0) {
+      stepUp();
+    }
+  };
+
+  const handleKeyDown = (event: any) => {
+    if (isMobile) return;
+    if (event.key === "ArrowUp" || event.key === "ArrowRight") {
+      stepDown();
+    } else if (event.key === "ArrowDown" || event.key === "ArrowLeft") {
+      stepUp();
+    }
+  };
+
+  useEffect(() => {
+    if (isMobile) return;
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleWheel, handleKeyDown]);
+
+  return (
+    <Grid
+      gridTemplateColumns="1fr auto"
+      gridGap={["2", "4"]}
+      transition="width .3s ease"
+    >
+      <Box3D
+        position="relative"
+        overflow="hidden"
+        variant="extra_contrast"
+        px="2"
+      >
+        <Box
+          h={`${containerHeight + 34}px`}
+          bgColor="bg.800"
+          px="1"
+          py="4"
+          borderRadius={`${4}% ${4}% ${4}% ${4}% / 50% 50% 50% 50%`}
+          onMouseEnter={() => {
+            if (isMobile) return;
+            const scrollbarWidth =
+              window.innerWidth - document.documentElement.clientWidth;
+            document.body.style.overflow = "hidden";
+            document.body.style.paddingRight = `${scrollbarWidth}px`;
+            setMouseEntered(true);
+          }}
+          onMouseLeave={() => {
+            if (isMobile) return;
+            document.body.style.overflow = "auto";
+            document.body.style.paddingRight = "0px";
+            setMouseEntered(false);
+          }}
+        >
+          <Shader direction="bottom" />
+          <motion.div
+            drag="y"
+            dragConstraints={dragConstraints}
+            style={{ y, width: "100%" }}
+            dragElastic={0.2}
+            onDragEnd={onDragEnd}
+            animate={controls}
+          >
+            {dirRates.map((rate, index) => (
+              <Item
+                rate={rate}
+                y={y}
+                index={index}
+                itemHeight={itemHeight}
+                containerHeight={containerHeight}
+              />
+            ))}
+          </motion.div>
+
+          <Shader direction="top" />
+        </Box>
+        <Box
+          position="absolute"
+          right="0"
+          top={`calc(${containerHeight / 2}px )`}
+          color={mouseEntered ? "bg.500" : "bg.600"}
+          transform="rotate(90deg)"
+        >
+          <TbTriangleInvertedFilled size="2rem" />
+        </Box>
+      </Box3D>
+
+      <ControlPanel length={length} stepUp={stepUp} stepDown={stepDown} />
+    </Grid>
+  );
+};
+
+export default Swiper;

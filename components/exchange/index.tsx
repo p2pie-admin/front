@@ -35,7 +35,8 @@ const Exchange = ({
       getPm,
     })
   );
-  "undefined" !== typeof window && dispatch(fetchDirRates(dir));
+
+  "undefined" !== typeof window;
   if (!slug) return <></>;
   return (
     <Grid
@@ -58,7 +59,7 @@ const Exchange = ({
         <Calculator />
 
         <LimitsRange />
-        <TV />
+        <TV dir={dir} />
       </RegularBox>
 
       {/* <Article article={article} /> */}
