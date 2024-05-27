@@ -43,7 +43,7 @@ const PmModalButton = () => {
   };
   const unselectedPmText = capitalize(side === "give" ? "sell" : "buy");
 
-  const currencyCode = pms?.[0].currency.code.toUpperCase();
+  const currencyCode = pms?.[0]?.currency.code.toUpperCase();
   return (
     <ModalButton
       openDialog={openDialog}
@@ -51,10 +51,10 @@ const PmModalButton = () => {
     >
       <SelectorModal id={side + p2pIndex || ""} />
       <ResponsiveText size="md" variant="primary">
-        {!pms ? unselectedPmText : currencyCode}
+        {!pms?.length ? unselectedPmText : currencyCode}
       </ResponsiveText>
 
-      {pms?.[0].subgroup_name && ( // tag
+      {pms?.[0]?.subgroup_name && ( // tag
         <Box
           position="absolute"
           zIndex="5"
