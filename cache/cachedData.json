@@ -165,7 +165,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "sber-rub-to-qiwi-rub": {
@@ -252,11 +252,11 @@
         "section": "bank"
       }
     },
-    "": {
+    "sber-rub-to-privat24-uah": {
       "givePm": {
-        "pm_group_id": "15",
-        "code": "ADVCRUB",
-        "en_name": "Adv Cash",
+        "pm_group_id": "13",
+        "code": "SBERRUB",
+        "en_name": "sber",
         "ru_name": null,
         "subgroup_name": null,
         "currency": {
@@ -265,11 +265,115 @@
           "accuracy": 0
         },
         "icon": {
-          "id": "228",
+          "id": "160",
           "alternativeText": null,
-          "url": "/uploads/advc_dcf1be13c9.png"
+          "url": "/uploads/sber_74696b436a.png"
         },
-        "color": "dark_teal",
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "sber-rub-to-gazprom-rub": {
+      "givePm": {
+        "pm_group_id": "13",
+        "code": "SBERRUB",
+        "en_name": "sber",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "160",
+          "alternativeText": null,
+          "url": "/uploads/sber_74696b436a.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "sber-rub-to-kaspi-kzt": {
+      "givePm": {
+        "pm_group_id": "13",
+        "code": "SBERRUB",
+        "en_name": "sber",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "160",
+          "alternativeText": null,
+          "url": "/uploads/sber_74696b436a.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
         "popular_as": null,
         "section": "bank"
       }
@@ -1111,7 +1215,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "sber-rub-to-advcash-rub": {
@@ -1153,7 +1257,2653 @@
         },
         "color": "dark_teal",
         "popular_as": null,
+        "section": "digital"
+      }
+    },
+    "privat24-uah-to-sber-rub": {
+      "givePm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
         "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "13",
+        "code": "SBERRUB",
+        "en_name": "sber",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "160",
+          "alternativeText": null,
+          "url": "/uploads/sber_74696b436a.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "privat24-uah-to-kaspi-kzt": {
+      "givePm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "privat24-uah-to-bitcoin-btc": {
+      "givePm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "18",
+        "code": "BTC",
+        "en_name": "bitcoin",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "4",
+          "code": "btc",
+          "accuracy": 3
+        },
+        "icon": {
+          "id": "182",
+          "alternativeText": null,
+          "url": "/uploads/btc_b73e043e56.png"
+        },
+        "color": "orange",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "privat24-uah-to-eos-eos": {
+      "givePm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "30",
+        "code": "EOS",
+        "en_name": "EOS",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "22",
+          "code": "eos",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "187",
+          "alternativeText": null,
+          "url": "/uploads/eos_d307e64d67.png"
+        },
+        "color": "dark_gray",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "privat24-uah-to-pancake-cake": {
+      "givePm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "29",
+        "code": "CAKE",
+        "en_name": "Pancake",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "20",
+          "code": "cake",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "171",
+          "alternativeText": null,
+          "url": "/uploads/cake_347aa41eb7.png"
+        },
+        "color": "cyan",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "privat24-uah-to-icon-icx": {
+      "givePm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "31",
+        "code": "ICX",
+        "en_name": "Icon",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "21",
+          "code": "icx",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "199",
+          "alternativeText": null,
+          "url": "/uploads/icx_bcdfa33b84.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "privat24-uah-to-polygon-matic": {
+      "givePm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "32",
+        "code": "MATIC",
+        "en_name": "Polygon",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "23",
+          "code": "matic",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "166",
+          "alternativeText": null,
+          "url": "/uploads/matic_aabcabc6be.png"
+        },
+        "color": "purple",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "privat24-uah-to-zcash-zec": {
+      "givePm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "34",
+        "code": "ZEC",
+        "en_name": "Zcash",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "9",
+          "code": "zec",
+          "accuracy": 4
+        },
+        "icon": {
+          "id": "224",
+          "alternativeText": null,
+          "url": "/uploads/zec_dd19512c8d.png"
+        },
+        "color": "dark_orange",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "privat24-uah-to-stellar-xlm": {
+      "givePm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "27",
+        "code": "XLM",
+        "en_name": "Stellar",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "25",
+          "code": "xlm",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "219",
+          "alternativeText": null,
+          "url": "/uploads/xlm_b8ebda3c45.png"
+        },
+        "color": "cyan",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "privat24-uah-to-classic-etc": {
+      "givePm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "28",
+        "code": "ETC",
+        "en_name": "Classic",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "19",
+          "code": "etc",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "190",
+          "alternativeText": null,
+          "url": "/uploads/etc_9af143c410.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "privat24-uah-to-ethereum-eth": {
+      "givePm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "10",
+        "code": "ETH",
+        "en_name": "ethereum",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "17",
+          "code": "eth",
+          "accuracy": 3
+        },
+        "icon": {
+          "id": "189",
+          "alternativeText": null,
+          "url": "/uploads/eth_f7f887b322.png"
+        },
+        "color": "dark_gray",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "privat24-uah-to-monero-xmr": {
+      "givePm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "25",
+        "code": "XMR",
+        "en_name": "Monero",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "18",
+          "code": "xmr",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "218",
+          "alternativeText": null,
+          "url": "/uploads/xmr_f44605addf.png"
+        },
+        "color": "dark_orange",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "privat24-uah-to-tether-usdt-erc20": {
+      "givePm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "12",
+        "code": "USDTERC20",
+        "en_name": "tether",
+        "ru_name": null,
+        "subgroup_name": "ERC20",
+        "currency": {
+          "id": "12",
+          "code": "usdt",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "215",
+          "alternativeText": null,
+          "url": "/uploads/usdt_69caf2e1c8.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "privat24-uah-to-tether-usdt-trc20": {
+      "givePm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "12",
+        "code": "USDTTRC20",
+        "en_name": "tether",
+        "ru_name": null,
+        "subgroup_name": "TRC20",
+        "currency": {
+          "id": "12",
+          "code": "usdt",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "215",
+          "alternativeText": null,
+          "url": "/uploads/usdt_69caf2e1c8.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "privat24-uah-to-cardano-ada": {
+      "givePm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "11",
+        "code": "ADA",
+        "en_name": "Cardano",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "13",
+          "code": "ada",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "174",
+          "alternativeText": null,
+          "url": "/uploads/ada_18b9f8a3b4.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "privat24-uah-to-litecoin-ltc": {
+      "givePm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "24",
+        "code": "LTC",
+        "en_name": "litecoin",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "8",
+          "code": "ltc",
+          "accuracy": 1
+        },
+        "icon": {
+          "id": "201",
+          "alternativeText": null,
+          "url": "/uploads/ltc_6f457a3d27.png"
+        },
+        "color": "gray",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "privat24-uah-to-ripple-xrp": {
+      "givePm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "26",
+        "code": "XRP",
+        "en_name": "Ripple",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "7",
+          "code": "xrp",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "216",
+          "alternativeText": null,
+          "url": "/uploads/xrp_aba4748965.png"
+        },
+        "color": "dark_gray",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "privat24-uah-to-polkadot-dot": {
+      "givePm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "16",
+        "code": "DOT",
+        "en_name": "polkadot",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "14",
+          "code": "dot",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "165",
+          "alternativeText": null,
+          "url": "/uploads/dot_ff8cb08b5b.png"
+        },
+        "color": "dark_pink",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "privat24-uah-to-advcash-usd": {
+      "givePm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "15",
+        "code": "ADVCUSD",
+        "en_name": "Adv Cash",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "1",
+          "code": "usd",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "228",
+          "alternativeText": null,
+          "url": "/uploads/advc_dcf1be13c9.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "digital"
+      }
+    },
+    "gazprom-rub-to-sber-rub": {
+      "givePm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "13",
+        "code": "SBERRUB",
+        "en_name": "sber",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "160",
+          "alternativeText": null,
+          "url": "/uploads/sber_74696b436a.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "gazprom-rub-to-gazprom-rub": {
+      "givePm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "gazprom-rub-to-kaspi-kzt": {
+      "givePm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "gazprom-rub-to-bitcoin-btc": {
+      "givePm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "18",
+        "code": "BTC",
+        "en_name": "bitcoin",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "4",
+          "code": "btc",
+          "accuracy": 3
+        },
+        "icon": {
+          "id": "182",
+          "alternativeText": null,
+          "url": "/uploads/btc_b73e043e56.png"
+        },
+        "color": "orange",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "gazprom-rub-to-eos-eos": {
+      "givePm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "30",
+        "code": "EOS",
+        "en_name": "EOS",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "22",
+          "code": "eos",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "187",
+          "alternativeText": null,
+          "url": "/uploads/eos_d307e64d67.png"
+        },
+        "color": "dark_gray",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "gazprom-rub-to-pancake-cake": {
+      "givePm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "29",
+        "code": "CAKE",
+        "en_name": "Pancake",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "20",
+          "code": "cake",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "171",
+          "alternativeText": null,
+          "url": "/uploads/cake_347aa41eb7.png"
+        },
+        "color": "cyan",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "gazprom-rub-to-icon-icx": {
+      "givePm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "31",
+        "code": "ICX",
+        "en_name": "Icon",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "21",
+          "code": "icx",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "199",
+          "alternativeText": null,
+          "url": "/uploads/icx_bcdfa33b84.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "gazprom-rub-to-polygon-matic": {
+      "givePm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "32",
+        "code": "MATIC",
+        "en_name": "Polygon",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "23",
+          "code": "matic",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "166",
+          "alternativeText": null,
+          "url": "/uploads/matic_aabcabc6be.png"
+        },
+        "color": "purple",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "gazprom-rub-to-uniswap-uni": {
+      "givePm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "33",
+        "code": "UNI",
+        "en_name": "Uniswap",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "24",
+          "code": "uni",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "157",
+          "alternativeText": null,
+          "url": "/uploads/uni_7f3df12e22.png"
+        },
+        "color": "pink",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "gazprom-rub-to-zcash-zec": {
+      "givePm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "34",
+        "code": "ZEC",
+        "en_name": "Zcash",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "9",
+          "code": "zec",
+          "accuracy": 4
+        },
+        "icon": {
+          "id": "224",
+          "alternativeText": null,
+          "url": "/uploads/zec_dd19512c8d.png"
+        },
+        "color": "dark_orange",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "gazprom-rub-to-stellar-xlm": {
+      "givePm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "27",
+        "code": "XLM",
+        "en_name": "Stellar",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "25",
+          "code": "xlm",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "219",
+          "alternativeText": null,
+          "url": "/uploads/xlm_b8ebda3c45.png"
+        },
+        "color": "cyan",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "gazprom-rub-to-classic-etc": {
+      "givePm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "28",
+        "code": "ETC",
+        "en_name": "Classic",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "19",
+          "code": "etc",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "190",
+          "alternativeText": null,
+          "url": "/uploads/etc_9af143c410.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "gazprom-rub-to-ethereum-eth": {
+      "givePm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "10",
+        "code": "ETH",
+        "en_name": "ethereum",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "17",
+          "code": "eth",
+          "accuracy": 3
+        },
+        "icon": {
+          "id": "189",
+          "alternativeText": null,
+          "url": "/uploads/eth_f7f887b322.png"
+        },
+        "color": "dark_gray",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "gazprom-rub-to-monero-xmr": {
+      "givePm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "25",
+        "code": "XMR",
+        "en_name": "Monero",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "18",
+          "code": "xmr",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "218",
+          "alternativeText": null,
+          "url": "/uploads/xmr_f44605addf.png"
+        },
+        "color": "dark_orange",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "gazprom-rub-to-tether-usdt-erc20": {
+      "givePm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "12",
+        "code": "USDTERC20",
+        "en_name": "tether",
+        "ru_name": null,
+        "subgroup_name": "ERC20",
+        "currency": {
+          "id": "12",
+          "code": "usdt",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "215",
+          "alternativeText": null,
+          "url": "/uploads/usdt_69caf2e1c8.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "gazprom-rub-to-tether-usdt-trc20": {
+      "givePm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "12",
+        "code": "USDTTRC20",
+        "en_name": "tether",
+        "ru_name": null,
+        "subgroup_name": "TRC20",
+        "currency": {
+          "id": "12",
+          "code": "usdt",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "215",
+          "alternativeText": null,
+          "url": "/uploads/usdt_69caf2e1c8.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "gazprom-rub-to-cardano-ada": {
+      "givePm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "11",
+        "code": "ADA",
+        "en_name": "Cardano",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "13",
+          "code": "ada",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "174",
+          "alternativeText": null,
+          "url": "/uploads/ada_18b9f8a3b4.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "gazprom-rub-to-binance-bnb": {
+      "givePm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "17",
+        "code": "BNB",
+        "en_name": "Binance",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "3",
+          "code": "bnb",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "180",
+          "alternativeText": null,
+          "url": "/uploads/bnb_46e2f4663a.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "gazprom-rub-to-neo-neo": {
+      "givePm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "20",
+        "code": "NEO",
+        "en_name": "NEO",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "6",
+          "code": "neo",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "169",
+          "alternativeText": null,
+          "url": "/uploads/neo_7f790e0bc8.png"
+        },
+        "color": "teal",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "gazprom-rub-to-litecoin-ltc": {
+      "givePm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "24",
+        "code": "LTC",
+        "en_name": "litecoin",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "8",
+          "code": "ltc",
+          "accuracy": 1
+        },
+        "icon": {
+          "id": "201",
+          "alternativeText": null,
+          "url": "/uploads/ltc_6f457a3d27.png"
+        },
+        "color": "gray",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "gazprom-rub-to-ripple-xrp": {
+      "givePm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "26",
+        "code": "XRP",
+        "en_name": "Ripple",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "7",
+          "code": "xrp",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "216",
+          "alternativeText": null,
+          "url": "/uploads/xrp_aba4748965.png"
+        },
+        "color": "dark_gray",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "gazprom-rub-to-polkadot-dot": {
+      "givePm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "16",
+        "code": "DOT",
+        "en_name": "polkadot",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "14",
+          "code": "dot",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "165",
+          "alternativeText": null,
+          "url": "/uploads/dot_ff8cb08b5b.png"
+        },
+        "color": "dark_pink",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "gazprom-rub-to-advcash-usd": {
+      "givePm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "15",
+        "code": "ADVCUSD",
+        "en_name": "Adv Cash",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "1",
+          "code": "usd",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "228",
+          "alternativeText": null,
+          "url": "/uploads/advc_dcf1be13c9.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "digital"
+      }
+    },
+    "gazprom-rub-to-advcash-rub": {
+      "givePm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "15",
+        "code": "ADVCRUB",
+        "en_name": "Adv Cash",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "228",
+          "alternativeText": null,
+          "url": "/uploads/advc_dcf1be13c9.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "digital"
+      }
+    },
+    "kaspi-kzt-to-sber-rub": {
+      "givePm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "13",
+        "code": "SBERRUB",
+        "en_name": "sber",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "160",
+          "alternativeText": null,
+          "url": "/uploads/sber_74696b436a.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "kaspi-kzt-to-privat24-uah": {
+      "givePm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "kaspi-kzt-to-gazprom-rub": {
+      "givePm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "kaspi-kzt-to-bitcoin-btc": {
+      "givePm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "18",
+        "code": "BTC",
+        "en_name": "bitcoin",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "4",
+          "code": "btc",
+          "accuracy": 3
+        },
+        "icon": {
+          "id": "182",
+          "alternativeText": null,
+          "url": "/uploads/btc_b73e043e56.png"
+        },
+        "color": "orange",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "kaspi-kzt-to-eos-eos": {
+      "givePm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "30",
+        "code": "EOS",
+        "en_name": "EOS",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "22",
+          "code": "eos",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "187",
+          "alternativeText": null,
+          "url": "/uploads/eos_d307e64d67.png"
+        },
+        "color": "dark_gray",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "kaspi-kzt-to-pancake-cake": {
+      "givePm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "29",
+        "code": "CAKE",
+        "en_name": "Pancake",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "20",
+          "code": "cake",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "171",
+          "alternativeText": null,
+          "url": "/uploads/cake_347aa41eb7.png"
+        },
+        "color": "cyan",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "kaspi-kzt-to-polygon-matic": {
+      "givePm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "32",
+        "code": "MATIC",
+        "en_name": "Polygon",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "23",
+          "code": "matic",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "166",
+          "alternativeText": null,
+          "url": "/uploads/matic_aabcabc6be.png"
+        },
+        "color": "purple",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "kaspi-kzt-to-zcash-zec": {
+      "givePm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "34",
+        "code": "ZEC",
+        "en_name": "Zcash",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "9",
+          "code": "zec",
+          "accuracy": 4
+        },
+        "icon": {
+          "id": "224",
+          "alternativeText": null,
+          "url": "/uploads/zec_dd19512c8d.png"
+        },
+        "color": "dark_orange",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "kaspi-kzt-to-stellar-xlm": {
+      "givePm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "27",
+        "code": "XLM",
+        "en_name": "Stellar",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "25",
+          "code": "xlm",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "219",
+          "alternativeText": null,
+          "url": "/uploads/xlm_b8ebda3c45.png"
+        },
+        "color": "cyan",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "kaspi-kzt-to-classic-etc": {
+      "givePm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "28",
+        "code": "ETC",
+        "en_name": "Classic",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "19",
+          "code": "etc",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "190",
+          "alternativeText": null,
+          "url": "/uploads/etc_9af143c410.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "kaspi-kzt-to-ethereum-eth": {
+      "givePm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "10",
+        "code": "ETH",
+        "en_name": "ethereum",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "17",
+          "code": "eth",
+          "accuracy": 3
+        },
+        "icon": {
+          "id": "189",
+          "alternativeText": null,
+          "url": "/uploads/eth_f7f887b322.png"
+        },
+        "color": "dark_gray",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "kaspi-kzt-to-monero-xmr": {
+      "givePm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "25",
+        "code": "XMR",
+        "en_name": "Monero",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "18",
+          "code": "xmr",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "218",
+          "alternativeText": null,
+          "url": "/uploads/xmr_f44605addf.png"
+        },
+        "color": "dark_orange",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "kaspi-kzt-to-tether-usdt-erc20": {
+      "givePm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "12",
+        "code": "USDTERC20",
+        "en_name": "tether",
+        "ru_name": null,
+        "subgroup_name": "ERC20",
+        "currency": {
+          "id": "12",
+          "code": "usdt",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "215",
+          "alternativeText": null,
+          "url": "/uploads/usdt_69caf2e1c8.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "kaspi-kzt-to-tether-usdt-trc20": {
+      "givePm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "12",
+        "code": "USDTTRC20",
+        "en_name": "tether",
+        "ru_name": null,
+        "subgroup_name": "TRC20",
+        "currency": {
+          "id": "12",
+          "code": "usdt",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "215",
+          "alternativeText": null,
+          "url": "/uploads/usdt_69caf2e1c8.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "kaspi-kzt-to-cardano-ada": {
+      "givePm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "11",
+        "code": "ADA",
+        "en_name": "Cardano",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "13",
+          "code": "ada",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "174",
+          "alternativeText": null,
+          "url": "/uploads/ada_18b9f8a3b4.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "kaspi-kzt-to-litecoin-ltc": {
+      "givePm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "24",
+        "code": "LTC",
+        "en_name": "litecoin",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "8",
+          "code": "ltc",
+          "accuracy": 1
+        },
+        "icon": {
+          "id": "201",
+          "alternativeText": null,
+          "url": "/uploads/ltc_6f457a3d27.png"
+        },
+        "color": "gray",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "kaspi-kzt-to-ripple-xrp": {
+      "givePm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "26",
+        "code": "XRP",
+        "en_name": "Ripple",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "7",
+          "code": "xrp",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "216",
+          "alternativeText": null,
+          "url": "/uploads/xrp_aba4748965.png"
+        },
+        "color": "dark_gray",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "kaspi-kzt-to-polkadot-dot": {
+      "givePm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "16",
+        "code": "DOT",
+        "en_name": "polkadot",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "14",
+          "code": "dot",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "165",
+          "alternativeText": null,
+          "url": "/uploads/dot_ff8cb08b5b.png"
+        },
+        "color": "dark_pink",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "kaspi-kzt-to-advcash-usd": {
+      "givePm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "15",
+        "code": "ADVCUSD",
+        "en_name": "Adv Cash",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "1",
+          "code": "usd",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "228",
+          "alternativeText": null,
+          "url": "/uploads/advc_dcf1be13c9.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "digital"
+      }
+    },
+    "kaspi-kzt-to-advcash-rub": {
+      "givePm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "15",
+        "code": "ADVCRUB",
+        "en_name": "Adv Cash",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "228",
+          "alternativeText": null,
+          "url": "/uploads/advc_dcf1be13c9.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "digital"
       }
     },
     "cash-rub-to-sber-rub": {
@@ -1173,7 +3923,7 @@
           "alternativeText": null,
           "url": "/uploads/rub_d29508fc88.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       },
@@ -1215,7 +3965,7 @@
           "alternativeText": null,
           "url": "/uploads/rub_d29508fc88.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       },
@@ -1257,7 +4007,7 @@
           "alternativeText": null,
           "url": "/uploads/rub_d29508fc88.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       },
@@ -1299,7 +4049,7 @@
           "alternativeText": null,
           "url": "/uploads/rub_d29508fc88.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       },
@@ -1341,7 +4091,7 @@
           "alternativeText": null,
           "url": "/uploads/rub_d29508fc88.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       },
@@ -1383,7 +4133,7 @@
           "alternativeText": null,
           "url": "/uploads/rub_d29508fc88.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       },
@@ -1425,7 +4175,7 @@
           "alternativeText": null,
           "url": "/uploads/rub_d29508fc88.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       },
@@ -1467,7 +4217,7 @@
           "alternativeText": null,
           "url": "/uploads/rub_d29508fc88.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       },
@@ -1509,7 +4259,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       },
@@ -1551,7 +4301,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       },
@@ -1593,7 +4343,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       },
@@ -1635,7 +4385,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       },
@@ -1677,7 +4427,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       },
@@ -1719,7 +4469,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       },
@@ -1761,7 +4511,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       },
@@ -1803,7 +4553,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       },
@@ -1845,7 +4595,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       },
@@ -1887,7 +4637,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       },
@@ -1909,7 +4659,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "bitcoin-btc-to-sber-rub": {
@@ -1954,6 +4704,132 @@
         "section": "bank"
       }
     },
+    "bitcoin-btc-to-privat24-uah": {
+      "givePm": {
+        "pm_group_id": "18",
+        "code": "BTC",
+        "en_name": "bitcoin",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "4",
+          "code": "btc",
+          "accuracy": 3
+        },
+        "icon": {
+          "id": "182",
+          "alternativeText": null,
+          "url": "/uploads/btc_b73e043e56.png"
+        },
+        "color": "orange",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "bitcoin-btc-to-gazprom-rub": {
+      "givePm": {
+        "pm_group_id": "18",
+        "code": "BTC",
+        "en_name": "bitcoin",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "4",
+          "code": "btc",
+          "accuracy": 3
+        },
+        "icon": {
+          "id": "182",
+          "alternativeText": null,
+          "url": "/uploads/btc_b73e043e56.png"
+        },
+        "color": "orange",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "bitcoin-btc-to-kaspi-kzt": {
+      "givePm": {
+        "pm_group_id": "18",
+        "code": "BTC",
+        "en_name": "bitcoin",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "4",
+          "code": "btc",
+          "accuracy": 3
+        },
+        "icon": {
+          "id": "182",
+          "alternativeText": null,
+          "url": "/uploads/btc_b73e043e56.png"
+        },
+        "color": "orange",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "bitcoin-btc-to-cash-rub": {
       "givePm": {
         "pm_group_id": "18",
@@ -1991,7 +4867,7 @@
           "alternativeText": null,
           "url": "/uploads/rub_d29508fc88.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -2033,7 +4909,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -2875,7 +5751,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "bitcoin-btc-to-advcash-rub": {
@@ -2917,7 +5793,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "eos-eos-to-sber-rub": {
@@ -2962,6 +5838,132 @@
         "section": "bank"
       }
     },
+    "eos-eos-to-privat24-uah": {
+      "givePm": {
+        "pm_group_id": "30",
+        "code": "EOS",
+        "en_name": "EOS",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "22",
+          "code": "eos",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "187",
+          "alternativeText": null,
+          "url": "/uploads/eos_d307e64d67.png"
+        },
+        "color": "dark_gray",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "eos-eos-to-gazprom-rub": {
+      "givePm": {
+        "pm_group_id": "30",
+        "code": "EOS",
+        "en_name": "EOS",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "22",
+          "code": "eos",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "187",
+          "alternativeText": null,
+          "url": "/uploads/eos_d307e64d67.png"
+        },
+        "color": "dark_gray",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "eos-eos-to-kaspi-kzt": {
+      "givePm": {
+        "pm_group_id": "30",
+        "code": "EOS",
+        "en_name": "EOS",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "22",
+          "code": "eos",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "187",
+          "alternativeText": null,
+          "url": "/uploads/eos_d307e64d67.png"
+        },
+        "color": "dark_gray",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "eos-eos-to-cash-usd": {
       "givePm": {
         "pm_group_id": "30",
@@ -2999,7 +6001,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -3757,7 +6759,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "eos-eos-to-advcash-rub": {
@@ -3799,7 +6801,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "pancake-cake-to-sber-rub": {
@@ -3840,6 +6842,132 @@
           "url": "/uploads/sber_74696b436a.png"
         },
         "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "pancake-cake-to-privat24-uah": {
+      "givePm": {
+        "pm_group_id": "29",
+        "code": "CAKE",
+        "en_name": "Pancake",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "20",
+          "code": "cake",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "171",
+          "alternativeText": null,
+          "url": "/uploads/cake_347aa41eb7.png"
+        },
+        "color": "cyan",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "pancake-cake-to-gazprom-rub": {
+      "givePm": {
+        "pm_group_id": "29",
+        "code": "CAKE",
+        "en_name": "Pancake",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "20",
+          "code": "cake",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "171",
+          "alternativeText": null,
+          "url": "/uploads/cake_347aa41eb7.png"
+        },
+        "color": "cyan",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "pancake-cake-to-kaspi-kzt": {
+      "givePm": {
+        "pm_group_id": "29",
+        "code": "CAKE",
+        "en_name": "Pancake",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "20",
+          "code": "cake",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "171",
+          "alternativeText": null,
+          "url": "/uploads/cake_347aa41eb7.png"
+        },
+        "color": "cyan",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
         "popular_as": null,
         "section": "bank"
       }
@@ -4639,7 +7767,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "icon-icx-to-sber-rub": {
@@ -4684,6 +7812,132 @@
         "section": "bank"
       }
     },
+    "icon-icx-to-privat24-uah": {
+      "givePm": {
+        "pm_group_id": "31",
+        "code": "ICX",
+        "en_name": "Icon",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "21",
+          "code": "icx",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "199",
+          "alternativeText": null,
+          "url": "/uploads/icx_bcdfa33b84.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "icon-icx-to-gazprom-rub": {
+      "givePm": {
+        "pm_group_id": "31",
+        "code": "ICX",
+        "en_name": "Icon",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "21",
+          "code": "icx",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "199",
+          "alternativeText": null,
+          "url": "/uploads/icx_bcdfa33b84.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "icon-icx-to-kaspi-kzt": {
+      "givePm": {
+        "pm_group_id": "31",
+        "code": "ICX",
+        "en_name": "Icon",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "21",
+          "code": "icx",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "199",
+          "alternativeText": null,
+          "url": "/uploads/icx_bcdfa33b84.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "icon-icx-to-cash-usd": {
       "givePm": {
         "pm_group_id": "31",
@@ -4721,7 +7975,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -5479,7 +8733,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "polygon-matic-to-sber-rub": {
@@ -5524,6 +8778,132 @@
         "section": "bank"
       }
     },
+    "polygon-matic-to-privat24-uah": {
+      "givePm": {
+        "pm_group_id": "32",
+        "code": "MATIC",
+        "en_name": "Polygon",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "23",
+          "code": "matic",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "166",
+          "alternativeText": null,
+          "url": "/uploads/matic_aabcabc6be.png"
+        },
+        "color": "purple",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "polygon-matic-to-gazprom-rub": {
+      "givePm": {
+        "pm_group_id": "32",
+        "code": "MATIC",
+        "en_name": "Polygon",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "23",
+          "code": "matic",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "166",
+          "alternativeText": null,
+          "url": "/uploads/matic_aabcabc6be.png"
+        },
+        "color": "purple",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "polygon-matic-to-kaspi-kzt": {
+      "givePm": {
+        "pm_group_id": "32",
+        "code": "MATIC",
+        "en_name": "Polygon",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "23",
+          "code": "matic",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "166",
+          "alternativeText": null,
+          "url": "/uploads/matic_aabcabc6be.png"
+        },
+        "color": "purple",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "polygon-matic-to-cash-usd": {
       "givePm": {
         "pm_group_id": "32",
@@ -5561,7 +8941,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -6403,7 +9783,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "polygon-matic-to-advcash-rub": {
@@ -6445,7 +9825,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "uniswap-uni-to-sber-rub": {
@@ -6490,6 +9870,132 @@
         "section": "bank"
       }
     },
+    "uniswap-uni-to-privat24-uah": {
+      "givePm": {
+        "pm_group_id": "33",
+        "code": "UNI",
+        "en_name": "Uniswap",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "24",
+          "code": "uni",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "157",
+          "alternativeText": null,
+          "url": "/uploads/uni_7f3df12e22.png"
+        },
+        "color": "pink",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "uniswap-uni-to-gazprom-rub": {
+      "givePm": {
+        "pm_group_id": "33",
+        "code": "UNI",
+        "en_name": "Uniswap",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "24",
+          "code": "uni",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "157",
+          "alternativeText": null,
+          "url": "/uploads/uni_7f3df12e22.png"
+        },
+        "color": "pink",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "uniswap-uni-to-kaspi-kzt": {
+      "givePm": {
+        "pm_group_id": "33",
+        "code": "UNI",
+        "en_name": "Uniswap",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "24",
+          "code": "uni",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "157",
+          "alternativeText": null,
+          "url": "/uploads/uni_7f3df12e22.png"
+        },
+        "color": "pink",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "uniswap-uni-to-cash-usd": {
       "givePm": {
         "pm_group_id": "33",
@@ -6527,7 +10033,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -7369,7 +10875,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "uniswap-uni-to-advcash-rub": {
@@ -7411,7 +10917,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "zcash-zec-to-sber-rub": {
@@ -7456,6 +10962,132 @@
         "section": "bank"
       }
     },
+    "zcash-zec-to-privat24-uah": {
+      "givePm": {
+        "pm_group_id": "34",
+        "code": "ZEC",
+        "en_name": "Zcash",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "9",
+          "code": "zec",
+          "accuracy": 4
+        },
+        "icon": {
+          "id": "224",
+          "alternativeText": null,
+          "url": "/uploads/zec_dd19512c8d.png"
+        },
+        "color": "dark_orange",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "zcash-zec-to-gazprom-rub": {
+      "givePm": {
+        "pm_group_id": "34",
+        "code": "ZEC",
+        "en_name": "Zcash",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "9",
+          "code": "zec",
+          "accuracy": 4
+        },
+        "icon": {
+          "id": "224",
+          "alternativeText": null,
+          "url": "/uploads/zec_dd19512c8d.png"
+        },
+        "color": "dark_orange",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "zcash-zec-to-kaspi-kzt": {
+      "givePm": {
+        "pm_group_id": "34",
+        "code": "ZEC",
+        "en_name": "Zcash",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "9",
+          "code": "zec",
+          "accuracy": 4
+        },
+        "icon": {
+          "id": "224",
+          "alternativeText": null,
+          "url": "/uploads/zec_dd19512c8d.png"
+        },
+        "color": "dark_orange",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "zcash-zec-to-cash-usd": {
       "givePm": {
         "pm_group_id": "34",
@@ -7493,7 +11125,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -8335,7 +11967,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "zcash-zec-to-advcash-rub": {
@@ -8377,7 +12009,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "stellar-xlm-to-sber-rub": {
@@ -8422,6 +12054,132 @@
         "section": "bank"
       }
     },
+    "stellar-xlm-to-privat24-uah": {
+      "givePm": {
+        "pm_group_id": "27",
+        "code": "XLM",
+        "en_name": "Stellar",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "25",
+          "code": "xlm",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "219",
+          "alternativeText": null,
+          "url": "/uploads/xlm_b8ebda3c45.png"
+        },
+        "color": "cyan",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "stellar-xlm-to-gazprom-rub": {
+      "givePm": {
+        "pm_group_id": "27",
+        "code": "XLM",
+        "en_name": "Stellar",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "25",
+          "code": "xlm",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "219",
+          "alternativeText": null,
+          "url": "/uploads/xlm_b8ebda3c45.png"
+        },
+        "color": "cyan",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "stellar-xlm-to-kaspi-kzt": {
+      "givePm": {
+        "pm_group_id": "27",
+        "code": "XLM",
+        "en_name": "Stellar",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "25",
+          "code": "xlm",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "219",
+          "alternativeText": null,
+          "url": "/uploads/xlm_b8ebda3c45.png"
+        },
+        "color": "cyan",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "stellar-xlm-to-cash-rub": {
       "givePm": {
         "pm_group_id": "27",
@@ -8459,7 +12217,7 @@
           "alternativeText": null,
           "url": "/uploads/rub_d29508fc88.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -8501,7 +12259,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -9343,7 +13101,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "stellar-xlm-to-advcash-rub": {
@@ -9385,7 +13143,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "classic-etc-to-sber-rub": {
@@ -9426,6 +13184,132 @@
           "url": "/uploads/sber_74696b436a.png"
         },
         "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "classic-etc-to-privat24-uah": {
+      "givePm": {
+        "pm_group_id": "28",
+        "code": "ETC",
+        "en_name": "Classic",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "19",
+          "code": "etc",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "190",
+          "alternativeText": null,
+          "url": "/uploads/etc_9af143c410.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "classic-etc-to-gazprom-rub": {
+      "givePm": {
+        "pm_group_id": "28",
+        "code": "ETC",
+        "en_name": "Classic",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "19",
+          "code": "etc",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "190",
+          "alternativeText": null,
+          "url": "/uploads/etc_9af143c410.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "classic-etc-to-kaspi-kzt": {
+      "givePm": {
+        "pm_group_id": "28",
+        "code": "ETC",
+        "en_name": "Classic",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "19",
+          "code": "etc",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "190",
+          "alternativeText": null,
+          "url": "/uploads/etc_9af143c410.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
         "popular_as": null,
         "section": "bank"
       }
@@ -10267,7 +14151,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "classic-etc-to-advcash-rub": {
@@ -10309,7 +14193,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "ethereum-eth-to-sber-rub": {
@@ -10354,6 +14238,132 @@
         "section": "bank"
       }
     },
+    "ethereum-eth-to-privat24-uah": {
+      "givePm": {
+        "pm_group_id": "10",
+        "code": "ETH",
+        "en_name": "ethereum",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "17",
+          "code": "eth",
+          "accuracy": 3
+        },
+        "icon": {
+          "id": "189",
+          "alternativeText": null,
+          "url": "/uploads/eth_f7f887b322.png"
+        },
+        "color": "dark_gray",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "ethereum-eth-to-gazprom-rub": {
+      "givePm": {
+        "pm_group_id": "10",
+        "code": "ETH",
+        "en_name": "ethereum",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "17",
+          "code": "eth",
+          "accuracy": 3
+        },
+        "icon": {
+          "id": "189",
+          "alternativeText": null,
+          "url": "/uploads/eth_f7f887b322.png"
+        },
+        "color": "dark_gray",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "ethereum-eth-to-kaspi-kzt": {
+      "givePm": {
+        "pm_group_id": "10",
+        "code": "ETH",
+        "en_name": "ethereum",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "17",
+          "code": "eth",
+          "accuracy": 3
+        },
+        "icon": {
+          "id": "189",
+          "alternativeText": null,
+          "url": "/uploads/eth_f7f887b322.png"
+        },
+        "color": "dark_gray",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "ethereum-eth-to-cash-rub": {
       "givePm": {
         "pm_group_id": "10",
@@ -10391,7 +14401,7 @@
           "alternativeText": null,
           "url": "/uploads/rub_d29508fc88.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -10433,7 +14443,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -11275,7 +15285,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "ethereum-eth-to-advcash-rub": {
@@ -11317,7 +15327,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "monero-xmr-to-sber-rub": {
@@ -11362,6 +15372,132 @@
         "section": "bank"
       }
     },
+    "monero-xmr-to-privat24-uah": {
+      "givePm": {
+        "pm_group_id": "25",
+        "code": "XMR",
+        "en_name": "Monero",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "18",
+          "code": "xmr",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "218",
+          "alternativeText": null,
+          "url": "/uploads/xmr_f44605addf.png"
+        },
+        "color": "dark_orange",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "monero-xmr-to-gazprom-rub": {
+      "givePm": {
+        "pm_group_id": "25",
+        "code": "XMR",
+        "en_name": "Monero",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "18",
+          "code": "xmr",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "218",
+          "alternativeText": null,
+          "url": "/uploads/xmr_f44605addf.png"
+        },
+        "color": "dark_orange",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "monero-xmr-to-kaspi-kzt": {
+      "givePm": {
+        "pm_group_id": "25",
+        "code": "XMR",
+        "en_name": "Monero",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "18",
+          "code": "xmr",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "218",
+          "alternativeText": null,
+          "url": "/uploads/xmr_f44605addf.png"
+        },
+        "color": "dark_orange",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "monero-xmr-to-cash-rub": {
       "givePm": {
         "pm_group_id": "25",
@@ -11399,7 +15535,7 @@
           "alternativeText": null,
           "url": "/uploads/rub_d29508fc88.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -11441,7 +15577,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -12283,7 +16419,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "monero-xmr-to-advcash-rub": {
@@ -12325,7 +16461,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "tether-usdt-erc20-to-sber-rub": {
@@ -12370,6 +16506,132 @@
         "section": "bank"
       }
     },
+    "tether-usdt-erc20-to-privat24-uah": {
+      "givePm": {
+        "pm_group_id": "12",
+        "code": "USDTERC20",
+        "en_name": "tether",
+        "ru_name": null,
+        "subgroup_name": "ERC20",
+        "currency": {
+          "id": "12",
+          "code": "usdt",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "215",
+          "alternativeText": null,
+          "url": "/uploads/usdt_69caf2e1c8.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "tether-usdt-erc20-to-gazprom-rub": {
+      "givePm": {
+        "pm_group_id": "12",
+        "code": "USDTERC20",
+        "en_name": "tether",
+        "ru_name": null,
+        "subgroup_name": "ERC20",
+        "currency": {
+          "id": "12",
+          "code": "usdt",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "215",
+          "alternativeText": null,
+          "url": "/uploads/usdt_69caf2e1c8.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "tether-usdt-erc20-to-kaspi-kzt": {
+      "givePm": {
+        "pm_group_id": "12",
+        "code": "USDTERC20",
+        "en_name": "tether",
+        "ru_name": null,
+        "subgroup_name": "ERC20",
+        "currency": {
+          "id": "12",
+          "code": "usdt",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "215",
+          "alternativeText": null,
+          "url": "/uploads/usdt_69caf2e1c8.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "tether-usdt-erc20-to-cash-rub": {
       "givePm": {
         "pm_group_id": "12",
@@ -12407,7 +16669,7 @@
           "alternativeText": null,
           "url": "/uploads/rub_d29508fc88.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -12449,7 +16711,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -13291,7 +17553,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "tether-usdt-erc20-to-advcash-rub": {
@@ -13333,7 +17595,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "tether-usdt-trc20-to-qiwi-rub": {
@@ -13420,6 +17682,132 @@
         "section": "bank"
       }
     },
+    "tether-usdt-trc20-to-privat24-uah": {
+      "givePm": {
+        "pm_group_id": "12",
+        "code": "USDTTRC20",
+        "en_name": "tether",
+        "ru_name": null,
+        "subgroup_name": "TRC20",
+        "currency": {
+          "id": "12",
+          "code": "usdt",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "215",
+          "alternativeText": null,
+          "url": "/uploads/usdt_69caf2e1c8.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "tether-usdt-trc20-to-gazprom-rub": {
+      "givePm": {
+        "pm_group_id": "12",
+        "code": "USDTTRC20",
+        "en_name": "tether",
+        "ru_name": null,
+        "subgroup_name": "TRC20",
+        "currency": {
+          "id": "12",
+          "code": "usdt",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "215",
+          "alternativeText": null,
+          "url": "/uploads/usdt_69caf2e1c8.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "tether-usdt-trc20-to-kaspi-kzt": {
+      "givePm": {
+        "pm_group_id": "12",
+        "code": "USDTTRC20",
+        "en_name": "tether",
+        "ru_name": null,
+        "subgroup_name": "TRC20",
+        "currency": {
+          "id": "12",
+          "code": "usdt",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "215",
+          "alternativeText": null,
+          "url": "/uploads/usdt_69caf2e1c8.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "tether-usdt-trc20-to-cash-rub": {
       "givePm": {
         "pm_group_id": "12",
@@ -13457,7 +17845,7 @@
           "alternativeText": null,
           "url": "/uploads/rub_d29508fc88.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -13499,7 +17887,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -14341,7 +18729,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "tether-usdt-trc20-to-advcash-rub": {
@@ -14383,7 +18771,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "cardano-ada-to-sber-rub": {
@@ -14428,6 +18816,132 @@
         "section": "bank"
       }
     },
+    "cardano-ada-to-privat24-uah": {
+      "givePm": {
+        "pm_group_id": "11",
+        "code": "ADA",
+        "en_name": "Cardano",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "13",
+          "code": "ada",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "174",
+          "alternativeText": null,
+          "url": "/uploads/ada_18b9f8a3b4.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "cardano-ada-to-gazprom-rub": {
+      "givePm": {
+        "pm_group_id": "11",
+        "code": "ADA",
+        "en_name": "Cardano",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "13",
+          "code": "ada",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "174",
+          "alternativeText": null,
+          "url": "/uploads/ada_18b9f8a3b4.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "cardano-ada-to-kaspi-kzt": {
+      "givePm": {
+        "pm_group_id": "11",
+        "code": "ADA",
+        "en_name": "Cardano",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "13",
+          "code": "ada",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "174",
+          "alternativeText": null,
+          "url": "/uploads/ada_18b9f8a3b4.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "cardano-ada-to-cash-rub": {
       "givePm": {
         "pm_group_id": "11",
@@ -14465,7 +18979,7 @@
           "alternativeText": null,
           "url": "/uploads/rub_d29508fc88.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -14507,7 +19021,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -15349,7 +19863,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "cardano-ada-to-advcash-rub": {
@@ -15391,7 +19905,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "binance-bnb-to-sber-rub": {
@@ -15432,6 +19946,90 @@
           "url": "/uploads/sber_74696b436a.png"
         },
         "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "binance-bnb-to-gazprom-rub": {
+      "givePm": {
+        "pm_group_id": "17",
+        "code": "BNB",
+        "en_name": "Binance",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "3",
+          "code": "bnb",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "180",
+          "alternativeText": null,
+          "url": "/uploads/bnb_46e2f4663a.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "binance-bnb-to-kaspi-kzt": {
+      "givePm": {
+        "pm_group_id": "17",
+        "code": "BNB",
+        "en_name": "Binance",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "3",
+          "code": "bnb",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "180",
+          "alternativeText": null,
+          "url": "/uploads/bnb_46e2f4663a.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
         "popular_as": null,
         "section": "bank"
       }
@@ -16147,7 +20745,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "binance-bnb-to-advcash-rub": {
@@ -16189,7 +20787,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "neo-neo-to-sber-rub": {
@@ -16234,6 +20832,132 @@
         "section": "bank"
       }
     },
+    "neo-neo-to-privat24-uah": {
+      "givePm": {
+        "pm_group_id": "20",
+        "code": "NEO",
+        "en_name": "NEO",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "6",
+          "code": "neo",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "169",
+          "alternativeText": null,
+          "url": "/uploads/neo_7f790e0bc8.png"
+        },
+        "color": "teal",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "neo-neo-to-gazprom-rub": {
+      "givePm": {
+        "pm_group_id": "20",
+        "code": "NEO",
+        "en_name": "NEO",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "6",
+          "code": "neo",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "169",
+          "alternativeText": null,
+          "url": "/uploads/neo_7f790e0bc8.png"
+        },
+        "color": "teal",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "neo-neo-to-kaspi-kzt": {
+      "givePm": {
+        "pm_group_id": "20",
+        "code": "NEO",
+        "en_name": "NEO",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "6",
+          "code": "neo",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "169",
+          "alternativeText": null,
+          "url": "/uploads/neo_7f790e0bc8.png"
+        },
+        "color": "teal",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "neo-neo-to-cash-usd": {
       "givePm": {
         "pm_group_id": "20",
@@ -16271,7 +20995,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -17074,6 +21798,132 @@
         "section": "bank"
       }
     },
+    "litecoin-ltc-to-privat24-uah": {
+      "givePm": {
+        "pm_group_id": "24",
+        "code": "LTC",
+        "en_name": "litecoin",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "8",
+          "code": "ltc",
+          "accuracy": 1
+        },
+        "icon": {
+          "id": "201",
+          "alternativeText": null,
+          "url": "/uploads/ltc_6f457a3d27.png"
+        },
+        "color": "gray",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "litecoin-ltc-to-gazprom-rub": {
+      "givePm": {
+        "pm_group_id": "24",
+        "code": "LTC",
+        "en_name": "litecoin",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "8",
+          "code": "ltc",
+          "accuracy": 1
+        },
+        "icon": {
+          "id": "201",
+          "alternativeText": null,
+          "url": "/uploads/ltc_6f457a3d27.png"
+        },
+        "color": "gray",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "litecoin-ltc-to-kaspi-kzt": {
+      "givePm": {
+        "pm_group_id": "24",
+        "code": "LTC",
+        "en_name": "litecoin",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "8",
+          "code": "ltc",
+          "accuracy": 1
+        },
+        "icon": {
+          "id": "201",
+          "alternativeText": null,
+          "url": "/uploads/ltc_6f457a3d27.png"
+        },
+        "color": "gray",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "litecoin-ltc-to-cash-rub": {
       "givePm": {
         "pm_group_id": "24",
@@ -17111,7 +21961,7 @@
           "alternativeText": null,
           "url": "/uploads/rub_d29508fc88.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -17153,7 +22003,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -17995,7 +22845,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "litecoin-ltc-to-advcash-rub": {
@@ -18037,7 +22887,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "ripple-xrp-to-sber-rub": {
@@ -18082,6 +22932,132 @@
         "section": "bank"
       }
     },
+    "ripple-xrp-to-privat24-uah": {
+      "givePm": {
+        "pm_group_id": "26",
+        "code": "XRP",
+        "en_name": "Ripple",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "7",
+          "code": "xrp",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "216",
+          "alternativeText": null,
+          "url": "/uploads/xrp_aba4748965.png"
+        },
+        "color": "dark_gray",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "ripple-xrp-to-gazprom-rub": {
+      "givePm": {
+        "pm_group_id": "26",
+        "code": "XRP",
+        "en_name": "Ripple",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "7",
+          "code": "xrp",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "216",
+          "alternativeText": null,
+          "url": "/uploads/xrp_aba4748965.png"
+        },
+        "color": "dark_gray",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "ripple-xrp-to-kaspi-kzt": {
+      "givePm": {
+        "pm_group_id": "26",
+        "code": "XRP",
+        "en_name": "Ripple",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "7",
+          "code": "xrp",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "216",
+          "alternativeText": null,
+          "url": "/uploads/xrp_aba4748965.png"
+        },
+        "color": "dark_gray",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "ripple-xrp-to-cash-rub": {
       "givePm": {
         "pm_group_id": "26",
@@ -18119,7 +23095,7 @@
           "alternativeText": null,
           "url": "/uploads/rub_d29508fc88.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -18161,7 +23137,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -19003,7 +23979,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "ripple-xrp-to-advcash-rub": {
@@ -19045,7 +24021,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "polkadot-dot-to-sber-rub": {
@@ -19090,6 +24066,132 @@
         "section": "bank"
       }
     },
+    "polkadot-dot-to-privat24-uah": {
+      "givePm": {
+        "pm_group_id": "16",
+        "code": "DOT",
+        "en_name": "polkadot",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "14",
+          "code": "dot",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "165",
+          "alternativeText": null,
+          "url": "/uploads/dot_ff8cb08b5b.png"
+        },
+        "color": "dark_pink",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "polkadot-dot-to-gazprom-rub": {
+      "givePm": {
+        "pm_group_id": "16",
+        "code": "DOT",
+        "en_name": "polkadot",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "14",
+          "code": "dot",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "165",
+          "alternativeText": null,
+          "url": "/uploads/dot_ff8cb08b5b.png"
+        },
+        "color": "dark_pink",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "polkadot-dot-to-kaspi-kzt": {
+      "givePm": {
+        "pm_group_id": "16",
+        "code": "DOT",
+        "en_name": "polkadot",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "14",
+          "code": "dot",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "165",
+          "alternativeText": null,
+          "url": "/uploads/dot_ff8cb08b5b.png"
+        },
+        "color": "dark_pink",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "polkadot-dot-to-cash-usd": {
       "givePm": {
         "pm_group_id": "16",
@@ -19127,7 +24229,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -19969,7 +25071,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "polkadot-dot-to-advcash-rub": {
@@ -20011,7 +25113,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "advcash-usd-to-qiwi-rub": {
@@ -20033,7 +25135,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "14",
@@ -20075,7 +25177,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "13",
@@ -20094,6 +25196,132 @@
           "url": "/uploads/sber_74696b436a.png"
         },
         "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "advcash-usd-to-privat24-uah": {
+      "givePm": {
+        "pm_group_id": "15",
+        "code": "ADVCUSD",
+        "en_name": "Adv Cash",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "1",
+          "code": "usd",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "228",
+          "alternativeText": null,
+          "url": "/uploads/advc_dcf1be13c9.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "digital"
+      },
+      "getPm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "advcash-usd-to-gazprom-rub": {
+      "givePm": {
+        "pm_group_id": "15",
+        "code": "ADVCUSD",
+        "en_name": "Adv Cash",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "1",
+          "code": "usd",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "228",
+          "alternativeText": null,
+          "url": "/uploads/advc_dcf1be13c9.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "digital"
+      },
+      "getPm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "advcash-usd-to-kaspi-kzt": {
+      "givePm": {
+        "pm_group_id": "15",
+        "code": "ADVCUSD",
+        "en_name": "Adv Cash",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "1",
+          "code": "usd",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "228",
+          "alternativeText": null,
+          "url": "/uploads/advc_dcf1be13c9.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "digital"
+      },
+      "getPm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
         "popular_as": null,
         "section": "bank"
       }
@@ -20117,7 +25345,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "21",
@@ -20135,7 +25363,7 @@
           "alternativeText": null,
           "url": "/uploads/usd_b07a10126c.png"
         },
-        "color": "green",
+        "color": "gray",
         "popular_as": null,
         "section": "cash"
       }
@@ -20159,7 +25387,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "18",
@@ -20201,7 +25429,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "30",
@@ -20243,7 +25471,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "32",
@@ -20285,7 +25513,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "33",
@@ -20327,7 +25555,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "34",
@@ -20369,7 +25597,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "27",
@@ -20411,7 +25639,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "28",
@@ -20453,7 +25681,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "10",
@@ -20495,7 +25723,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "25",
@@ -20537,7 +25765,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "12",
@@ -20579,7 +25807,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "12",
@@ -20621,7 +25849,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "11",
@@ -20663,7 +25891,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "17",
@@ -20705,7 +25933,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "20",
@@ -20747,7 +25975,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "24",
@@ -20789,7 +26017,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "26",
@@ -20831,7 +26059,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "16",
@@ -20873,7 +26101,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "15",
@@ -20893,7 +26121,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "advcash-usd-to-advcash-rub": {
@@ -20915,7 +26143,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "15",
@@ -20935,7 +26163,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "advcash-rub-to-sber-rub": {
@@ -20957,7 +26185,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "13",
@@ -20976,6 +26204,132 @@
           "url": "/uploads/sber_74696b436a.png"
         },
         "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "advcash-rub-to-privat24-uah": {
+      "givePm": {
+        "pm_group_id": "15",
+        "code": "ADVCRUB",
+        "en_name": "Adv Cash",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "228",
+          "alternativeText": null,
+          "url": "/uploads/advc_dcf1be13c9.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "digital"
+      },
+      "getPm": {
+        "pm_group_id": "35",
+        "code": "P24UAH",
+        "en_name": "Privat 24",
+        "ru_name": "Приват 24",
+        "subgroup_name": null,
+        "currency": {
+          "id": "26",
+          "code": "uah",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "395",
+          "alternativeText": null,
+          "url": "/uploads/privat_a984655b7c.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "advcash-rub-to-gazprom-rub": {
+      "givePm": {
+        "pm_group_id": "15",
+        "code": "ADVCRUB",
+        "en_name": "Adv Cash",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "228",
+          "alternativeText": null,
+          "url": "/uploads/advc_dcf1be13c9.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "digital"
+      },
+      "getPm": {
+        "pm_group_id": "43",
+        "code": "GPBRUB",
+        "en_name": "gazprom",
+        "ru_name": "газпром",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "393",
+          "alternativeText": null,
+          "url": "/uploads/gazprom_9ca40733ef.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "advcash-rub-to-kaspi-kzt": {
+      "givePm": {
+        "pm_group_id": "15",
+        "code": "ADVCRUB",
+        "en_name": "Adv Cash",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "228",
+          "alternativeText": null,
+          "url": "/uploads/advc_dcf1be13c9.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "digital"
+      },
+      "getPm": {
+        "pm_group_id": "42",
+        "code": "KSPBKZT",
+        "en_name": "kaspi",
+        "ru_name": "Каспи",
+        "subgroup_name": null,
+        "currency": {
+          "id": "31",
+          "code": "kzt",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "392",
+          "alternativeText": null,
+          "url": "/uploads/kaspi_copy_035270ea6f.png"
+        },
+        "color": "dark_red",
         "popular_as": null,
         "section": "bank"
       }
@@ -20999,7 +26353,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "18",
@@ -21041,7 +26395,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "30",
@@ -21083,7 +26437,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "29",
@@ -21125,7 +26479,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "31",
@@ -21167,7 +26521,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "32",
@@ -21209,7 +26563,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "33",
@@ -21251,7 +26605,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "34",
@@ -21293,7 +26647,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "27",
@@ -21335,7 +26689,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "28",
@@ -21377,7 +26731,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "10",
@@ -21419,7 +26773,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "25",
@@ -21461,7 +26815,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "12",
@@ -21503,7 +26857,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "12",
@@ -21545,7 +26899,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "11",
@@ -21587,7 +26941,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "17",
@@ -21629,7 +26983,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "20",
@@ -21671,7 +27025,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "24",
@@ -21713,7 +27067,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "26",
@@ -21755,7 +27109,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "16",
@@ -21797,7 +27151,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "15",
@@ -21817,7 +27171,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     },
     "advcash-rub-to-advcash-rub": {
@@ -21839,7 +27193,7 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       },
       "getPm": {
         "pm_group_id": "15",
@@ -21859,17 +27213,11 @@
         },
         "color": "dark_teal",
         "popular_as": null,
-        "section": "bank"
+        "section": "digital"
       }
     }
   },
   "textLayouts": [
-    {
-      "id": "4",
-      "en_layout": "Found best rates for name1 cur1 to name2 cur2 exchange. Далее доп. текст про все на все",
-      "ru_layout": "Это кастомный текст для направления все на все. Этот текст попадется когда не нашлось иных текстов для конкретных категорий. Найдены лучшие курсы для обмена name1 cur1 на name2 cur2. ",
-      "section_pair": "all_all"
-    },
     {
       "id": "1",
       "en_layout": "Found best rates for name1 cur1 to name2 cur2 exchange . Далее доп. текст про крипту на банки",
@@ -21887,6 +27235,12 @@
       "en_layout": "Best rates for name1 cur1 to name2 cur2 exchange. Далее доп. текст про крипту на все",
       "ru_layout": "Тут будет текст про крипту на все. Обмен name1 cur1 на name2 cur2. ",
       "section_pair": "crypto_all"
+    },
+    {
+      "id": "4",
+      "en_layout": "Found best rates for name1 cur1 to name2 cur2 exchange. Далее доп. текст про все на все",
+      "ru_layout": "Это кастомный текст для направления все на все. Этот текст попадется когда не нашлось иных текстов для конкретных категорий. Найдены лучшие курсы для обмена name1 cur1 на name2 cur2. ",
+      "section_pair": "all_all"
     },
     {
       "id": "5",
