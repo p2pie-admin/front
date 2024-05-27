@@ -59,7 +59,6 @@ function Item({
 
   return (
     <motion.div
-      key={rate.exchangerId}
       style={{
         height: `${itemHeight}px`,
         display: "flex",

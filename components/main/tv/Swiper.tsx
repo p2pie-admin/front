@@ -171,6 +171,7 @@ export const Swiper = (props: {
           >
             {dirRates.map((rate, index) => (
               <Item
+                key={rate.exchangerId + index}
                 rate={rate}
                 y={y}
                 index={index}
