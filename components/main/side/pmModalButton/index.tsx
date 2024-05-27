@@ -15,44 +15,46 @@ import {
 import SelectorModal from "../selector/SelectorModal";
 import PmIcons from "./PmIcons";
 import ModalButton from "./ModalButton";
+import { fetchPossiblePairs } from "../../../../redux/thunks";
 
 const PmModalButton = () => {
   const dispatch = useAppDispatch();
   const p2pIndex = useContext(p2pContext);
   const side = useContext(SideContext) as "give" | "get";
-  const tmp = useAppSelector((state) => {
-    if (p2pIndex !== undefined) return state.main.p2p.dirs[p2pIndex]?.[side];
-    return state.main[`${side}Pm`];
-  });
-  const pms = !tmp ? [] : Array.isArray(tmp) ? [...tmp.slice(0, 3)] : [tmp];
-  const tagBgColor = useColorModeValue("bg.100", "bg.600");
+  const oppositeSide = side === "give" ? "get" : "give";
+  const isP2P = p2pIndex !== undefined;
+  const pms = useAppSelector((state) => {
+    if (isP2P) return state.main.p2p.dirs[p2pIndex]?.[side]?.slice(0, 3);
+    const pm = state.main?.[`${side}Pm`];
+    return pm ? [pm] : [];
+    //      state.main[`${side == "give" ? "get" : "give"}Pm`],
+  }); // либо три в ряд для п2п либо pm и обратная pm
+  const oppositePm = useAppSelector((state) =>
+    isP2P ? undefined : state.main?.[`${oppositeSide}Pm`]
+  );
   const openDialog = () => {
     batch(() => {
+      // берем возможные пары для обратной пм если такая выбрана
+      oppositePm &&
+        dispatch(fetchPossiblePairs({ code: oppositePm.code, side }));
       dispatch(triggerModal(side + p2pIndex || ""));
       dispatch(setSearchBarInputValue(""));
     });
   };
+  const unselectedPmText = capitalize(side === "give" ? "sell" : "buy");
 
-  if (!pms.length)
-    return (
-      <ModalButton openDialog={openDialog}>
-        <SelectorModal id={side + p2pIndex || ""} />
-        <ResponsiveText size="md" variant="primary">
-          {capitalize(side === "give" ? "sell" : "buy")}
-        </ResponsiveText>
-      </ModalButton>
-    );
-
-  const { subgroup_name } = pms[0]; // TAG
-  const currencyCode = pms[0].currency.code.toUpperCase();
+  const currencyCode = pms?.[0].currency.code.toUpperCase();
   return (
-    <ModalButton openDialog={openDialog} leftIcon={<PmIcons pms={pms} />}>
+    <ModalButton
+      openDialog={openDialog}
+      leftIcon={pms && <PmIcons pms={pms} />}
+    >
       <SelectorModal id={side + p2pIndex || ""} />
       <ResponsiveText size="md" variant="primary">
-        {currencyCode}
+        {!pms ? unselectedPmText : currencyCode}
       </ResponsiveText>
 
-      {subgroup_name && (
+      {pms?.[0].subgroup_name && ( // tag
         <Box
           position="absolute"
           zIndex="5"
@@ -61,7 +63,7 @@ const PmModalButton = () => {
           bottom={-3}
         >
           <Tag size="sm" bgColor="blackAlpha.300">
-            <Text variant="contrast">{subgroup_name}</Text>
+            <Text variant="contrast">{pms?.[0].subgroup_name}</Text>
           </Tag>
         </Box>
       )}

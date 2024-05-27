@@ -31,15 +31,18 @@ export async function getStaticProps({
   params: { slug: string; city?: string[] };
 }) {
   const { slug, city } = params;
+
   const cityParam = city ? city[0] : "";
 
   const cachedData = readCache() as ICache;
-  const { givePm, getPm } = cachedData.slugPmsObject[slug];
 
-  if (!cachedData?.slugPmsObject?.[slug] || !givePm || !getPm)
+  const ppp = cachedData?.slugPmsObject?.[slug];
+  if (!ppp || !ppp.givePm || !ppp.getPm)
+    // если нет курсов по таким направлениям
     return {
       notFound: true,
     };
+  const { givePm, getPm } = ppp;
 
   const fullCity = cachedData.cities?.[cityParam];
   const cityName = !fullCity ? "" : locale === "ru" ? fullCity[0] : fullCity[1];
@@ -51,8 +54,6 @@ export async function getStaticProps({
     locale,
   });
 
-  const isMobile = false;
-
   return {
     props: {
       locale,
@@ -60,13 +61,12 @@ export async function getStaticProps({
       defaultDirText,
       givePm,
       getPm,
-      isMobile,
       ...(await serverSideTranslations(locale || "ru", ["home"])),
     },
     revalidate: 6000,
   };
 }
-
+//.....................................................................................................
 export async function getStaticPaths() {
   const possiblePairsFetcher = initParserFetcher();
   const ppRes = (await possiblePairsFetcher("possible_pairs")) as {
@@ -128,7 +128,6 @@ export async function getStaticPaths() {
   );
 
   const locales = ["en", "ru"];
-  writeCache({});
   const cachedData = {} as ICache;
   const cities = convertCities(parserSetting.cities);
   cachedData.slugPmsObject = slugPmsObject;
@@ -170,10 +169,10 @@ export async function getStaticPaths() {
       });
     });
   });
-
-  console.log("total paths: ", paths.length);
+  const slicedPaths = paths.slice(0, 7);
+  console.log("total paths: ", slicedPaths);
   return {
-    paths: paths.slice(0, 12000),
+    paths: slicedPaths,
     fallback: "blocking",
   };
 }

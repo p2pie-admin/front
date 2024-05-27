@@ -35,11 +35,11 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   if (!pms || !pms.length) {
     return <></>;
   }
-  // const possiblePairs = useAppSelector((state) =>
-  //   side
-  //     ? state.main[`${side === "give" ? "get" : "give"}Pm`]?.possible_pairs
-  //     : undefined
-  // );
+  const possiblePairs = useAppSelector((state) =>
+    side
+      ? state.main[`${side === "give" ? "get" : "give"}Pm`]?.possible_pairs
+      : undefined
+  );
   // const router = useRouter();
 
   // const givePm = useAppSelector((state) => state.main.givePm);
@@ -129,12 +129,12 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
         pms={pms}
         color={pm_group.color}
         choosePm={p2pDirIndex !== undefined ? choosePmP2P : choosePm}
-        //possiblePairs={possiblePairs}
+        possiblePairs={possiblePairs}
       />
     ); // pm_id from pm_group_short_name + currency or subitem
   }
 
-  const shadedPm = false; //singlePmHasUnmetPairs(pms[0], possiblePairs);
+  const shadedPm = singlePmHasUnmetPairs(pms[0], possiblePairs);
 
   return (
     // pm_id from pm_group_short_name or currency
