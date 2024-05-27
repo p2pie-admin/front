@@ -128,6 +128,7 @@ export async function getStaticPaths() {
   );
 
   const locales = ["en", "ru"];
+  writeCache({});
   const cachedData = {} as ICache;
   const cities = convertCities(parserSetting.cities);
   cachedData.slugPmsObject = slugPmsObject;
@@ -170,7 +171,7 @@ export async function getStaticPaths() {
     });
   });
   const slicedPaths = paths.slice(0, 7);
-  console.log("total paths: ", slicedPaths);
+  console.log("qiwi-rub-to-bitcoin-btc will be prerendered");
   return {
     paths: slicedPaths,
     fallback: "blocking",
