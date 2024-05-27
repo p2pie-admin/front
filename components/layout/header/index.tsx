@@ -19,7 +19,6 @@ const Header = () => {
       position="sticky"
       top="0"
       bgColor={useColorModeValue("bg.200", "bg.900")}
-      w="100%"
       p={[2, 4]}
       zIndex="modal"
       justifyContent="center"
@@ -32,8 +31,7 @@ const Header = () => {
       <HStack
         justifyContent="space-between"
         alignItems="center"
-        maxW={["100%", "888"]}
-        minW={["100%", "888"]}
+        w={{ base: "100%", md: "888px" }}
       >
         <Logo />
         <Nav />

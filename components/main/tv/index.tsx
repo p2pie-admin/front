@@ -1,5 +1,5 @@
-import React from "react";
-import { useAppSelector } from "../../../redux/hooks";
+import React, { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import useSWR from "swr";
 import { TopParametersQuery, DirectionParametersQuery } from "./queries";
 import ErrorWrapper from "../../shared/ErrorWrapper";
@@ -8,10 +8,16 @@ import { Box } from "@chakra-ui/react";
 import { IParamData, IRate } from "../../../types/rates";
 import Swiper from "./Swiper";
 import { useIsMobile } from "./hooks";
+import { fetchDirRates } from "../../../redux/thunks";
 
 const TV = ({ dir }: { dir: string }) => {
   const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
   const dirRates = useAppSelector((state) => state.main.dirRates) || [];
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchDirRates(dir));
+  }, [dir]);
 
   const isMobile = useIsMobile();
   const itemHeight = isMobile ? 80 : 120; // Height of each text box
