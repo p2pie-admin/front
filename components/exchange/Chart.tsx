@@ -10,7 +10,7 @@ import Shader from "../shared/Shader";
 import { useState } from "react";
 import { useAppSelector } from "../../redux/hooks";
 import { ICurrencyConverterRate } from "../../types/p2p";
-import { localFormat } from "../../redux/amountsHelper";
+import { localFormat, R } from "../../redux/amountsHelper";
 
 const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
   const env = process.env.NODE_ENV;
@@ -70,7 +70,7 @@ const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
         <ResponsiveText
           size="md"
           color={trend > 0 ? "green.500" : "red.500"}
-        >{`${trend > 0 ? "+" : "-"} ${trend}% ${
+        >{`${trend > 0 ? "+" : "-"} ${R(trend, 2)}% ${
           trend > 0 ? "▲" : "▼"
         }`}</ResponsiveText>
       </Box>
