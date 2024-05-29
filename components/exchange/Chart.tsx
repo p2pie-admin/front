@@ -16,8 +16,8 @@ const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
   const env = process.env.NODE_ENV;
   const SRC =
     env === "production"
-      ? process.env.NEXT_PUBLIC_CONVERTER_DEV_URL
-      : process.env.NEXT_PUBLIC_CONVERTER_PROD_URL;
+      ? process.env.NEXT_PUBLIC_CONVERTER_PROD_URL
+      : process.env.NEXT_PUBLIC_CONVERTER_DEV_URL;
 
   const [isLongTimeFrame, setTimeframe] = useState(false);
   const primaryColor = useColorModeValue("violet.600", "peach.200");
