@@ -1,6 +1,11 @@
-import { Text } from "@chakra-ui/react";
+import { Text, Box } from "@chakra-ui/react";
+import { ResponsiveText } from "../../styles/theme/custom";
 const DirText = ({ defaultDirText }: { defaultDirText: string }) => {
-  return <Text>{defaultDirText}</Text>;
+  return (
+    <Box my={["2", "4"]}>
+      <ResponsiveText whiteSpace="unset">{defaultDirText}</ResponsiveText>
+    </Box>
+  );
 };
 
 export default DirText;

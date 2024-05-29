@@ -132,14 +132,12 @@ export const Swiper = (props: {
       gridTemplateColumns="1fr auto"
       gridGap={["2", "4"]}
       transition="width .3s ease"
+      h="100%"
     >
-      <Box3D
-        position="relative"
-        overflow="hidden"
-        variant="extra_contrast"
-        px="2"
-      >
+      <Box3D variant="extra_contrast" px="2">
         <Box
+          position="relative"
+          overflow="hidden"
           h={`${containerHeight + 34}px`}
           bgColor="bg.800"
           px="1"

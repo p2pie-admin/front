@@ -5,6 +5,8 @@ export interface ICurrencyConverterRate {
   rate: number;
   giveToUSD: number;
   getToUSD: number;
+  dayTrend: number;
+  hourTrend: number;
 }
 
 export interface IUsersRate {

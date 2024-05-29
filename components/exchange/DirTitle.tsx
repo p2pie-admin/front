@@ -24,10 +24,9 @@ const DirTitle = ({ slug, locale }: { slug: string; locale: "en" | "ru" }) => {
     <Heading
       textAlign="center"
       as="h1"
-      size="md"
-      noOfLines={2}
-      m="0"
-      mb="3"
+      size={title.length > 34 ? "sm" : "md"}
+      m="2"
+      mb="4"
       color="bg.300"
     >
       <Highlight

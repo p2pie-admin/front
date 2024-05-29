@@ -80,7 +80,6 @@ export async function getStaticPaths() {
     ],
     []
   );
-  console.log(`received ${dirs} dirs`);
 
   const cmsFetcher = initCMSFetcher();
   const { selector } = (await cmsFetcher(selectorQuery)) as {

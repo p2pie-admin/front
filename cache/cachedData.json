@@ -42,6 +42,48 @@
         "section": "bank"
       }
     },
+    "qiwi-rub-to-tinkoff-rub": {
+      "givePm": {
+        "pm_group_id": "14",
+        "code": "QWRUB",
+        "en_name": "QIWI",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "164",
+          "alternativeText": null,
+          "url": "/uploads/qiwi_13a8f320ea.png"
+        },
+        "color": "orange",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "qiwi-rub-to-bitcoin-btc": {
       "givePm": {
         "pm_group_id": "14",
@@ -206,48 +248,6 @@
           "url": "/uploads/qiwi_13a8f320ea.png"
         },
         "color": "orange",
-        "popular_as": null,
-        "section": "bank"
-      }
-    },
-    "sber-rub-to-sber-rub": {
-      "givePm": {
-        "pm_group_id": "13",
-        "code": "SBERRUB",
-        "en_name": "sber",
-        "ru_name": null,
-        "subgroup_name": null,
-        "currency": {
-          "id": "5",
-          "code": "rub",
-          "accuracy": 0
-        },
-        "icon": {
-          "id": "160",
-          "alternativeText": null,
-          "url": "/uploads/sber_74696b436a.png"
-        },
-        "color": "green",
-        "popular_as": null,
-        "section": "bank"
-      },
-      "getPm": {
-        "pm_group_id": "13",
-        "code": "SBERRUB",
-        "en_name": "sber",
-        "ru_name": null,
-        "subgroup_name": null,
-        "currency": {
-          "id": "5",
-          "code": "rub",
-          "accuracy": 0
-        },
-        "icon": {
-          "id": "160",
-          "alternativeText": null,
-          "url": "/uploads/sber_74696b436a.png"
-        },
-        "color": "green",
         "popular_as": null,
         "section": "bank"
       }
@@ -1156,6 +1156,930 @@
         "section": "bank"
       }
     },
+    "tinkoff-rub-to-qiwi-rub": {
+      "givePm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "14",
+        "code": "QWRUB",
+        "en_name": "QIWI",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "164",
+          "alternativeText": null,
+          "url": "/uploads/qiwi_13a8f320ea.png"
+        },
+        "color": "orange",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "tinkoff-rub-to-bitcoin-btc": {
+      "givePm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "18",
+        "code": "BTC",
+        "en_name": "bitcoin",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "4",
+          "code": "btc",
+          "accuracy": 3
+        },
+        "icon": {
+          "id": "182",
+          "alternativeText": null,
+          "url": "/uploads/btc_b73e043e56.png"
+        },
+        "color": "orange",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "tinkoff-rub-to-eos-eos": {
+      "givePm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "30",
+        "code": "EOS",
+        "en_name": "EOS",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "22",
+          "code": "eos",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "187",
+          "alternativeText": null,
+          "url": "/uploads/eos_d307e64d67.png"
+        },
+        "color": "dark_gray",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "tinkoff-rub-to-pancake-cake": {
+      "givePm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "29",
+        "code": "CAKE",
+        "en_name": "Pancake",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "20",
+          "code": "cake",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "171",
+          "alternativeText": null,
+          "url": "/uploads/cake_347aa41eb7.png"
+        },
+        "color": "cyan",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "tinkoff-rub-to-icon-icx": {
+      "givePm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "31",
+        "code": "ICX",
+        "en_name": "Icon",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "21",
+          "code": "icx",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "199",
+          "alternativeText": null,
+          "url": "/uploads/icx_bcdfa33b84.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "tinkoff-rub-to-polygon-matic": {
+      "givePm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "32",
+        "code": "MATIC",
+        "en_name": "Polygon",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "23",
+          "code": "matic",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "166",
+          "alternativeText": null,
+          "url": "/uploads/matic_aabcabc6be.png"
+        },
+        "color": "purple",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "tinkoff-rub-to-uniswap-uni": {
+      "givePm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "33",
+        "code": "UNI",
+        "en_name": "Uniswap",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "24",
+          "code": "uni",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "157",
+          "alternativeText": null,
+          "url": "/uploads/uni_7f3df12e22.png"
+        },
+        "color": "pink",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "tinkoff-rub-to-zcash-zec": {
+      "givePm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "34",
+        "code": "ZEC",
+        "en_name": "Zcash",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "9",
+          "code": "zec",
+          "accuracy": 4
+        },
+        "icon": {
+          "id": "224",
+          "alternativeText": null,
+          "url": "/uploads/zec_dd19512c8d.png"
+        },
+        "color": "dark_orange",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "tinkoff-rub-to-stellar-xlm": {
+      "givePm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "27",
+        "code": "XLM",
+        "en_name": "Stellar",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "25",
+          "code": "xlm",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "219",
+          "alternativeText": null,
+          "url": "/uploads/xlm_b8ebda3c45.png"
+        },
+        "color": "cyan",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "tinkoff-rub-to-classic-etc": {
+      "givePm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "28",
+        "code": "ETC",
+        "en_name": "Classic",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "19",
+          "code": "etc",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "190",
+          "alternativeText": null,
+          "url": "/uploads/etc_9af143c410.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "tinkoff-rub-to-ethereum-eth": {
+      "givePm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "10",
+        "code": "ETH",
+        "en_name": "ethereum",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "17",
+          "code": "eth",
+          "accuracy": 3
+        },
+        "icon": {
+          "id": "189",
+          "alternativeText": null,
+          "url": "/uploads/eth_f7f887b322.png"
+        },
+        "color": "dark_gray",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "tinkoff-rub-to-monero-xmr": {
+      "givePm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "25",
+        "code": "XMR",
+        "en_name": "Monero",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "18",
+          "code": "xmr",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "218",
+          "alternativeText": null,
+          "url": "/uploads/xmr_f44605addf.png"
+        },
+        "color": "dark_orange",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "tinkoff-rub-to-tether-usdt-erc20": {
+      "givePm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "12",
+        "code": "USDTERC20",
+        "en_name": "tether",
+        "ru_name": null,
+        "subgroup_name": "ERC20",
+        "currency": {
+          "id": "12",
+          "code": "usdt",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "215",
+          "alternativeText": null,
+          "url": "/uploads/usdt_69caf2e1c8.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "tinkoff-rub-to-tether-usdt-trc20": {
+      "givePm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "12",
+        "code": "USDTTRC20",
+        "en_name": "tether",
+        "ru_name": null,
+        "subgroup_name": "TRC20",
+        "currency": {
+          "id": "12",
+          "code": "usdt",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "215",
+          "alternativeText": null,
+          "url": "/uploads/usdt_69caf2e1c8.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "tinkoff-rub-to-cardano-ada": {
+      "givePm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "11",
+        "code": "ADA",
+        "en_name": "Cardano",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "13",
+          "code": "ada",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "174",
+          "alternativeText": null,
+          "url": "/uploads/ada_18b9f8a3b4.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "tinkoff-rub-to-binance-bnb": {
+      "givePm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "17",
+        "code": "BNB",
+        "en_name": "Binance",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "3",
+          "code": "bnb",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "180",
+          "alternativeText": null,
+          "url": "/uploads/bnb_46e2f4663a.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "tinkoff-rub-to-neo-neo": {
+      "givePm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "20",
+        "code": "NEO",
+        "en_name": "NEO",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "6",
+          "code": "neo",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "169",
+          "alternativeText": null,
+          "url": "/uploads/neo_7f790e0bc8.png"
+        },
+        "color": "teal",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "tinkoff-rub-to-litecoin-ltc": {
+      "givePm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "24",
+        "code": "LTC",
+        "en_name": "litecoin",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "8",
+          "code": "ltc",
+          "accuracy": 1
+        },
+        "icon": {
+          "id": "201",
+          "alternativeText": null,
+          "url": "/uploads/ltc_6f457a3d27.png"
+        },
+        "color": "gray",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "tinkoff-rub-to-ripple-xrp": {
+      "givePm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "26",
+        "code": "XRP",
+        "en_name": "Ripple",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "7",
+          "code": "xrp",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "216",
+          "alternativeText": null,
+          "url": "/uploads/xrp_aba4748965.png"
+        },
+        "color": "dark_gray",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "tinkoff-rub-to-polkadot-dot": {
+      "givePm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "16",
+        "code": "DOT",
+        "en_name": "polkadot",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "14",
+          "code": "dot",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "165",
+          "alternativeText": null,
+          "url": "/uploads/dot_ff8cb08b5b.png"
+        },
+        "color": "dark_pink",
+        "popular_as": null,
+        "section": "crypto"
+      }
+    },
+    "tinkoff-rub-to-advcash-usd": {
+      "givePm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "15",
+        "code": "ADVCUSD",
+        "en_name": "Adv Cash",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "1",
+          "code": "usd",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "228",
+          "alternativeText": null,
+          "url": "/uploads/advc_dcf1be13c9.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "tinkoff-rub-to-advcash-rub": {
+      "givePm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "15",
+        "code": "ADVCRUB",
+        "en_name": "Adv Cash",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "228",
+          "alternativeText": null,
+          "url": "/uploads/advc_dcf1be13c9.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "cash-rub-to-sber-rub": {
       "givePm": {
         "pm_group_id": "22",
@@ -1950,6 +2874,48 @@
           "url": "/uploads/sber_74696b436a.png"
         },
         "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "bitcoin-btc-to-tinkoff-rub": {
+      "givePm": {
+        "pm_group_id": "18",
+        "code": "BTC",
+        "en_name": "bitcoin",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "4",
+          "code": "btc",
+          "accuracy": 3
+        },
+        "icon": {
+          "id": "182",
+          "alternativeText": null,
+          "url": "/uploads/btc_b73e043e56.png"
+        },
+        "color": "orange",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
         "popular_as": null,
         "section": "bank"
       }
@@ -2962,6 +3928,48 @@
         "section": "bank"
       }
     },
+    "eos-eos-to-tinkoff-rub": {
+      "givePm": {
+        "pm_group_id": "30",
+        "code": "EOS",
+        "en_name": "EOS",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "22",
+          "code": "eos",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "187",
+          "alternativeText": null,
+          "url": "/uploads/eos_d307e64d67.png"
+        },
+        "color": "dark_gray",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "eos-eos-to-cash-usd": {
       "givePm": {
         "pm_group_id": "30",
@@ -3844,6 +4852,48 @@
         "section": "bank"
       }
     },
+    "pancake-cake-to-tinkoff-rub": {
+      "givePm": {
+        "pm_group_id": "29",
+        "code": "CAKE",
+        "en_name": "Pancake",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "20",
+          "code": "cake",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "171",
+          "alternativeText": null,
+          "url": "/uploads/cake_347aa41eb7.png"
+        },
+        "color": "cyan",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "pancake-cake-to-bitcoin-btc": {
       "givePm": {
         "pm_group_id": "29",
@@ -4684,6 +5734,48 @@
         "section": "bank"
       }
     },
+    "icon-icx-to-tinkoff-rub": {
+      "givePm": {
+        "pm_group_id": "31",
+        "code": "ICX",
+        "en_name": "Icon",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "21",
+          "code": "icx",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "199",
+          "alternativeText": null,
+          "url": "/uploads/icx_bcdfa33b84.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "icon-icx-to-cash-usd": {
       "givePm": {
         "pm_group_id": "31",
@@ -5520,6 +6612,48 @@
           "url": "/uploads/sber_74696b436a.png"
         },
         "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "polygon-matic-to-tinkoff-rub": {
+      "givePm": {
+        "pm_group_id": "32",
+        "code": "MATIC",
+        "en_name": "Polygon",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "23",
+          "code": "matic",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "166",
+          "alternativeText": null,
+          "url": "/uploads/matic_aabcabc6be.png"
+        },
+        "color": "purple",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
         "popular_as": null,
         "section": "bank"
       }
@@ -6490,6 +7624,48 @@
         "section": "bank"
       }
     },
+    "uniswap-uni-to-tinkoff-rub": {
+      "givePm": {
+        "pm_group_id": "33",
+        "code": "UNI",
+        "en_name": "Uniswap",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "24",
+          "code": "uni",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "157",
+          "alternativeText": null,
+          "url": "/uploads/uni_7f3df12e22.png"
+        },
+        "color": "pink",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "uniswap-uni-to-cash-usd": {
       "givePm": {
         "pm_group_id": "33",
@@ -7452,6 +8628,48 @@
           "url": "/uploads/sber_74696b436a.png"
         },
         "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "zcash-zec-to-tinkoff-rub": {
+      "givePm": {
+        "pm_group_id": "34",
+        "code": "ZEC",
+        "en_name": "Zcash",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "9",
+          "code": "zec",
+          "accuracy": 4
+        },
+        "icon": {
+          "id": "224",
+          "alternativeText": null,
+          "url": "/uploads/zec_dd19512c8d.png"
+        },
+        "color": "dark_orange",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
         "popular_as": null,
         "section": "bank"
       }
@@ -8422,7 +9640,7 @@
         "section": "bank"
       }
     },
-    "stellar-xlm-to-cash-rub": {
+    "stellar-xlm-to-tinkoff-rub": {
       "givePm": {
         "pm_group_id": "27",
         "code": "XLM",
@@ -8444,10 +9662,10 @@
         "section": "crypto"
       },
       "getPm": {
-        "pm_group_id": "22",
-        "code": "CASHRUB",
-        "en_name": "Cash",
-        "ru_name": "Наличные",
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
         "subgroup_name": null,
         "currency": {
           "id": "5",
@@ -8455,13 +9673,13 @@
           "accuracy": 0
         },
         "icon": {
-          "id": "206",
+          "id": "210",
           "alternativeText": null,
-          "url": "/uploads/rub_d29508fc88.png"
+          "url": "/uploads/tinkoff_89949d6b23.png"
         },
-        "color": "green",
+        "color": "yellow",
         "popular_as": null,
-        "section": "cash"
+        "section": "bank"
       }
     },
     "stellar-xlm-to-cash-usd": {
@@ -9430,6 +10648,48 @@
         "section": "bank"
       }
     },
+    "classic-etc-to-tinkoff-rub": {
+      "givePm": {
+        "pm_group_id": "28",
+        "code": "ETC",
+        "en_name": "Classic",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "19",
+          "code": "etc",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "190",
+          "alternativeText": null,
+          "url": "/uploads/etc_9af143c410.png"
+        },
+        "color": "green",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "classic-etc-to-bitcoin-btc": {
       "givePm": {
         "pm_group_id": "28",
@@ -10350,6 +11610,48 @@
           "url": "/uploads/sber_74696b436a.png"
         },
         "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "ethereum-eth-to-tinkoff-rub": {
+      "givePm": {
+        "pm_group_id": "10",
+        "code": "ETH",
+        "en_name": "ethereum",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "17",
+          "code": "eth",
+          "accuracy": 3
+        },
+        "icon": {
+          "id": "189",
+          "alternativeText": null,
+          "url": "/uploads/eth_f7f887b322.png"
+        },
+        "color": "dark_gray",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
         "popular_as": null,
         "section": "bank"
       }
@@ -11362,6 +12664,48 @@
         "section": "bank"
       }
     },
+    "monero-xmr-to-tinkoff-rub": {
+      "givePm": {
+        "pm_group_id": "25",
+        "code": "XMR",
+        "en_name": "Monero",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "18",
+          "code": "xmr",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "218",
+          "alternativeText": null,
+          "url": "/uploads/xmr_f44605addf.png"
+        },
+        "color": "dark_orange",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "monero-xmr-to-cash-rub": {
       "givePm": {
         "pm_group_id": "25",
@@ -12366,6 +13710,48 @@
           "url": "/uploads/sber_74696b436a.png"
         },
         "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "tether-usdt-erc20-to-tinkoff-rub": {
+      "givePm": {
+        "pm_group_id": "12",
+        "code": "USDTERC20",
+        "en_name": "tether",
+        "ru_name": null,
+        "subgroup_name": "ERC20",
+        "currency": {
+          "id": "12",
+          "code": "usdt",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "215",
+          "alternativeText": null,
+          "url": "/uploads/usdt_69caf2e1c8.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
         "popular_as": null,
         "section": "bank"
       }
@@ -13420,6 +14806,48 @@
         "section": "bank"
       }
     },
+    "tether-usdt-trc20-to-tinkoff-rub": {
+      "givePm": {
+        "pm_group_id": "12",
+        "code": "USDTTRC20",
+        "en_name": "tether",
+        "ru_name": null,
+        "subgroup_name": "TRC20",
+        "currency": {
+          "id": "12",
+          "code": "usdt",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "215",
+          "alternativeText": null,
+          "url": "/uploads/usdt_69caf2e1c8.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "tether-usdt-trc20-to-cash-rub": {
       "givePm": {
         "pm_group_id": "12",
@@ -14424,6 +15852,48 @@
           "url": "/uploads/sber_74696b436a.png"
         },
         "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "cardano-ada-to-tinkoff-rub": {
+      "givePm": {
+        "pm_group_id": "11",
+        "code": "ADA",
+        "en_name": "Cardano",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "13",
+          "code": "ada",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "174",
+          "alternativeText": null,
+          "url": "/uploads/ada_18b9f8a3b4.png"
+        },
+        "color": "dark_blue",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
         "popular_as": null,
         "section": "bank"
       }
@@ -15436,6 +16906,48 @@
         "section": "bank"
       }
     },
+    "binance-bnb-to-tinkoff-rub": {
+      "givePm": {
+        "pm_group_id": "17",
+        "code": "BNB",
+        "en_name": "Binance",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "3",
+          "code": "bnb",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "180",
+          "alternativeText": null,
+          "url": "/uploads/bnb_46e2f4663a.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "binance-bnb-to-bitcoin-btc": {
       "givePm": {
         "pm_group_id": "17",
@@ -16230,6 +17742,48 @@
           "url": "/uploads/sber_74696b436a.png"
         },
         "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "neo-neo-to-tinkoff-rub": {
+      "givePm": {
+        "pm_group_id": "20",
+        "code": "NEO",
+        "en_name": "NEO",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "6",
+          "code": "neo",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "169",
+          "alternativeText": null,
+          "url": "/uploads/neo_7f790e0bc8.png"
+        },
+        "color": "teal",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
         "popular_as": null,
         "section": "bank"
       }
@@ -17070,6 +18624,48 @@
           "url": "/uploads/sber_74696b436a.png"
         },
         "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "litecoin-ltc-to-tinkoff-rub": {
+      "givePm": {
+        "pm_group_id": "24",
+        "code": "LTC",
+        "en_name": "litecoin",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "8",
+          "code": "ltc",
+          "accuracy": 1
+        },
+        "icon": {
+          "id": "201",
+          "alternativeText": null,
+          "url": "/uploads/ltc_6f457a3d27.png"
+        },
+        "color": "gray",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
         "popular_as": null,
         "section": "bank"
       }
@@ -18082,6 +19678,48 @@
         "section": "bank"
       }
     },
+    "ripple-xrp-to-tinkoff-rub": {
+      "givePm": {
+        "pm_group_id": "26",
+        "code": "XRP",
+        "en_name": "Ripple",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "7",
+          "code": "xrp",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "216",
+          "alternativeText": null,
+          "url": "/uploads/xrp_aba4748965.png"
+        },
+        "color": "dark_gray",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "ripple-xrp-to-cash-rub": {
       "givePm": {
         "pm_group_id": "26",
@@ -19086,6 +20724,48 @@
           "url": "/uploads/sber_74696b436a.png"
         },
         "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "polkadot-dot-to-tinkoff-rub": {
+      "givePm": {
+        "pm_group_id": "16",
+        "code": "DOT",
+        "en_name": "polkadot",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "14",
+          "code": "dot",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "165",
+          "alternativeText": null,
+          "url": "/uploads/dot_ff8cb08b5b.png"
+        },
+        "color": "dark_pink",
+        "popular_as": null,
+        "section": "crypto"
+      },
+      "getPm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
         "popular_as": null,
         "section": "bank"
       }
@@ -20098,6 +21778,48 @@
         "section": "bank"
       }
     },
+    "advcash-usd-to-tinkoff-rub": {
+      "givePm": {
+        "pm_group_id": "15",
+        "code": "ADVCUSD",
+        "en_name": "Adv Cash",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "1",
+          "code": "usd",
+          "accuracy": 2
+        },
+        "icon": {
+          "id": "228",
+          "alternativeText": null,
+          "url": "/uploads/advc_dcf1be13c9.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
     "advcash-usd-to-cash-usd": {
       "givePm": {
         "pm_group_id": "15",
@@ -20976,6 +22698,48 @@
           "url": "/uploads/sber_74696b436a.png"
         },
         "color": "green",
+        "popular_as": null,
+        "section": "bank"
+      }
+    },
+    "advcash-rub-to-tinkoff-rub": {
+      "givePm": {
+        "pm_group_id": "15",
+        "code": "ADVCRUB",
+        "en_name": "Adv Cash",
+        "ru_name": null,
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "228",
+          "alternativeText": null,
+          "url": "/uploads/advc_dcf1be13c9.png"
+        },
+        "color": "dark_teal",
+        "popular_as": null,
+        "section": "bank"
+      },
+      "getPm": {
+        "pm_group_id": "23",
+        "code": "TCSBRUB",
+        "en_name": "tinkoff",
+        "ru_name": "тинькофф",
+        "subgroup_name": null,
+        "currency": {
+          "id": "5",
+          "code": "rub",
+          "accuracy": 0
+        },
+        "icon": {
+          "id": "210",
+          "alternativeText": null,
+          "url": "/uploads/tinkoff_89949d6b23.png"
+        },
+        "color": "yellow",
         "popular_as": null,
         "section": "bank"
       }

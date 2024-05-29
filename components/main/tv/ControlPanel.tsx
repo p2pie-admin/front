@@ -25,7 +25,7 @@ const ControlPanel = ({
   const mainColor = useColorModeValue("violet.600", "peach.200");
   const index = useAppSelector((state) => state.main.swiperIdVisible);
   return (
-    <VStack justifyContent="space-between" spacing={["2", "4"]}>
+    <VStack justifyContent="space-between" spacing={["2", "4"]} w="100%">
       <Button
         p={["0.5", "1"]}
         minW={["6", "10"]}
@@ -35,14 +35,14 @@ const ControlPanel = ({
       >
         <IoIosArrowUp size="1rem" />
       </Button>
-      <Box3D h="100%" w={["6", "10"]}>
+      <Box3D w={["6", "10"]} flex="1">
         <VStack
           w="100%"
-          spacing={length > 10 ? "1" : length > 20 ? "0.5" : "5"}
-          py={["1", "2"]}
+          spacing={length > 10 ? "1" : length > 20 ? "0.5" : "3"}
+          py={["2", "4"]}
           px={["0.5", "2"]}
           h="100%"
-          justifyContent="center"
+          justifyContent={length >= 10 ? "space-around" : "center"}
         >
           {Array.from({ length }).map((_, idx) => (
             <Box
@@ -52,8 +52,7 @@ const ControlPanel = ({
               boxShadow={idx === index ? `0 0 10px -2px ${colorKey}` : "unset"}
               borderRadius="sm"
               aspectRatio={["1 / 1", "2 / 1"]}
-              h="100%"
-              maxH={["2", "3"]}
+              h={["2", "3"]}
               maxW={["2", "4"]}
             />
           ))}

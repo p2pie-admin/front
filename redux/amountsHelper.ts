@@ -198,5 +198,5 @@ export const beautifyAmount = (number: number, currency: string) =>
 export const localFormat = (n: number, cur: string) => {
   return `${
     symbols?.[cur.toLocaleLowerCase() as keyof typeof symbols] || ""
-  } ${kFormatter(n)}`;
+  } ${kFormatter(R(n, 2))}`;
 };

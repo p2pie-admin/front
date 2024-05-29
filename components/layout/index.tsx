@@ -70,6 +70,7 @@ const Layout = ({ children }: { children: any }) => {
       <VStack alignItems="center" mt={[2, 4, 8]}>
         {children}
       </VStack>
+      <Footer />
     </Box>
   );
 };

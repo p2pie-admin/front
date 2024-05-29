@@ -71,7 +71,7 @@ export interface MainState {
   popularCompleted?: ISide;
   isScrollLocked: boolean;
   activePetal?: IActivePetal;
-  bestRatesPreview: { [key: string]: string }; // from coingecko
+  bestRatesPreview: { [key: string]: string };
   pendingPopularRates: boolean;
   popularRates?: IPopularDirRates;
   modal?: string;

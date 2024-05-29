@@ -29,9 +29,9 @@ const Header = () => {
       // )}
     >
       <HStack
+        w={{ base: "100%", md: "888px" }}
         justifyContent="space-between"
         alignItems="center"
-        w={{ base: "100%", md: "888px" }}
       >
         <Logo />
         <Nav />
