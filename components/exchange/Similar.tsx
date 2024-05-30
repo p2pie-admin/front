@@ -27,18 +27,21 @@ const Similar = ({ similarPmPairs }: { similarPmPairs: IPm[][] }) => {
       .replaceAll('"', "")}`,
     fetcher
   ) as {
-    data: any;
+    data: [number, number][];
     error: any;
   };
 
-  const renderRate = (pair: IPm[], course: number) => {
+  const renderRate = (
+    pair: IPm[],
+    [course, amountOfCourses]: [number, number]
+  ) => {
     const [giveCur, getCur] = [
       pair[0].currency.code.toUpperCase(),
       pair[1].currency.code.toUpperCase(),
     ];
     const leftSide = course > 1 ? "" : `1 ${giveCur} ~`;
     const rightSide = course > 1 ? `${giveCur} ~ 1 ${getCur}` : getCur;
-    return `Курсы от: ${leftSide} ${
+    return `Курсов ${amountOfCourses}, лучший: ${leftSide} ${
       course > 1 ? format(course, 2) : format(1 / course, 2)
     } ${rightSide}`;
   };
