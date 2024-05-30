@@ -142,9 +142,15 @@ export const mainSlice = createSlice({
     },
     setPm: (
       state: MainState,
-      action: PayloadAction<{ pm?: IPm; side: ISide }>
+      action: PayloadAction<{ pm?: IPm; side: ISide; shaded?: boolean }>
     ) => {
-      const { pm, side } = action.payload;
+      const { pm, side, shaded } = action.payload;
+      if (shaded) {
+        const oppositeSide = side === "get" ? "give" : "get";
+        state[`${oppositeSide}Pm`] = undefined;
+        state.amountInput = undefined;
+        state.amountOutputs = getAmountOutputs(state, 0);
+      }
       state[`${side}Pm`] = pm;
     },
 
@@ -364,10 +370,6 @@ export const mainSlice = createSlice({
       state.dirRatesStatus = "fulfilled";
       state.swiperIdVisible = 1;
     });
-
-    // builder.addCase(fetchFiat.fulfilled, (state, action) => {
-    //   state.bestRatesPreview = action.payload.fiatRates;
-    // });
 
     builder.addCase(fetchPossiblePairs.fulfilled, (state, action) => {
       if (action.payload.side === "give" && state.givePm)

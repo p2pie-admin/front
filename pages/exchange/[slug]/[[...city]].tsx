@@ -12,6 +12,7 @@ import Exchange from "../../../components/exchange";
 import { ICache, IPossiblePmPair, ITextLayout } from "../../../types/exchange";
 import {
   convertCities,
+  findSimilarPmPairs,
   generateText,
 } from "../../../components/exchange/helper";
 import {
@@ -30,42 +31,51 @@ export async function getStaticProps({
   locale: "en" | "ru";
   params: { slug: string; city?: string[] };
 }) {
-  const { slug, city } = params;
+  try {
+    const { slug, city } = params;
+    const cityParam = city ? city[0] : "";
+    const cachedData = readCache() as ICache;
+    const pms = cachedData.pms;
+    const dir = cachedData?.slugToCodes?.[slug];
+    const givePm = pms.find((pm) => pm.code == dir?.split("_")?.[0]);
+    const getPm = pms.find((pm) => pm.code == dir?.split("_")?.[1]);
+    if (!dir || !givePm || !getPm)
+      return {
+        notFound: true,
+      };
+    const similarPmPairs = findSimilarPmPairs(givePm, getPm, pms);
+    const fullCity = cachedData.cities?.[cityParam];
+    const cityName = !fullCity
+      ? ""
+      : locale === "ru"
+      ? fullCity[0]
+      : fullCity[1];
+    const defaultDirText = generateText({
+      givePm,
+      getPm,
+      cityName,
+      textLayouts: cachedData.textLayouts,
+      locale,
+    });
 
-  const cityParam = city ? city[0] : "";
-
-  const cachedData = readCache() as ICache;
-
-  const ppp = cachedData?.slugPmsObject?.[slug];
-  console.log("ppp", ppp);
-  if (!ppp || !ppp.givePm || !ppp.getPm)
-    // если нет курсов по таким направлениям
+    return {
+      props: {
+        locale,
+        slug,
+        defaultDirText,
+        givePm,
+        getPm,
+        similarPmPairs,
+        ...(await serverSideTranslations(locale || "ru", ["home"])),
+      },
+      revalidate: 6000,
+    };
+  } catch (e) {
+    console.error(e);
     return {
       notFound: true,
     };
-  const { givePm, getPm } = ppp;
-
-  const fullCity = cachedData.cities?.[cityParam];
-  const cityName = !fullCity ? "" : locale === "ru" ? fullCity[0] : fullCity[1];
-  const defaultDirText = generateText({
-    givePm,
-    getPm,
-    cityName,
-    textLayouts: cachedData.textLayouts,
-    locale,
-  });
-
-  return {
-    props: {
-      locale,
-      slug,
-      defaultDirText,
-      givePm,
-      getPm,
-      ...(await serverSideTranslations(locale || "ru", ["home"])),
-    },
-    revalidate: 6000,
-  };
+  }
 }
 //.....................................................................................................
 export async function getStaticPaths() {
@@ -115,27 +125,26 @@ export async function getStaticPaths() {
   console.log(`received ${pms.length} pms`);
 
   //console.log(possiblePmPairs.map(pmp => `${pmp.givePm?.code}_${pmp.getPm?.code}`));
-  const slugPmsObject = dirs.reduce(
-    (res: { [key: string]: IPossiblePmPair }, dir) => {
-      const pmPairFromDir = {
-        givePm: pms.find((pm) => pm.code.toUpperCase() === dir.split("_")[0]),
-        getPm: pms.find((pm) => pm.code.toUpperCase() === dir.split("_")[1]),
-      } as IPossiblePmPair;
-      const slug = pmsToSlug(pmPairFromDir);
-      return { ...res, [slug]: pmPairFromDir };
-    },
-    {}
-  );
+  const slugToCodes = dirs.reduce((res: { [key: string]: string }, dir) => {
+    const pmPairFromDir = {
+      givePm: pms.find((pm) => pm.code.toUpperCase() === dir.split("_")[0]),
+      getPm: pms.find((pm) => pm.code.toUpperCase() === dir.split("_")[1]),
+    } as IPossiblePmPair;
+    const slug = pmsToSlug(pmPairFromDir);
+    return { ...res, [slug]: dir };
+  }, {});
 
   const locales = ["en", "ru"];
   const cachedData = {} as ICache;
   const cities = convertCities(parserSetting.cities);
-  cachedData.slugPmsObject = slugPmsObject;
+
+  cachedData.slugToCodes = slugToCodes;
   cachedData.textLayouts = textLayouts;
   cachedData.cities = cities;
+  cachedData.pms = pms;
   writeCache(cachedData); // Save to cache
 
-  const paths = Object.keys(slugPmsObject).reduce(
+  const paths = Object.keys(slugToCodes).reduce(
     (
       res: {
         params: { slug: string; city?: string[] };
@@ -156,7 +165,7 @@ export async function getStaticPaths() {
   );
 
   Object.keys(cities).forEach((city) => {
-    Object.keys(slugPmsObject).forEach((slug) => {
+    Object.keys(slugToCodes).forEach((slug) => {
       locales.forEach((locale) => {
         if (!(slug.startsWith("cash-") || slug.includes("-cash-"))) return;
         paths.push({

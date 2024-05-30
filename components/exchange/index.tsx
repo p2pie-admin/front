@@ -1,5 +1,5 @@
-import { Box, Grid, Heading } from "@chakra-ui/react";
-import { Box3D, RegularBox } from "../../styles/theme/custom";
+import { Box, Grid, Heading, VStack } from "@chakra-ui/react";
+import { Box3D, RegularBox, ResponsiveText } from "../../styles/theme/custom";
 import DirTitle from "./DirTitle";
 import { IPm } from "../../types/selector";
 import LimitsRange from "../main/limits";
@@ -12,6 +12,10 @@ import DirText from "./DirText";
 import useViewportHeight from "../hooks";
 import Chart from "./Chart";
 import { fetchCCRates, fetchCurrencyConverterRates } from "../../redux/thunks";
+import { useEffect } from "react";
+import { dir } from "i18next";
+import { batch } from "react-redux";
+import Similar from "./Similar";
 
 const Exchange = ({
   //article = null,
@@ -20,6 +24,7 @@ const Exchange = ({
   defaultDirText,
   givePm,
   getPm,
+  similarPmPairs,
 }: {
   //article?: IArticle | null;
   locale: "en" | "ru";
@@ -27,18 +32,23 @@ const Exchange = ({
   defaultDirText: string;
   givePm: IPm;
   getPm: IPm;
+  similarPmPairs: IPm[][];
 }) => {
   const dispatch = useAppDispatch();
   const dir = `${givePm.code}_${getPm.code}`;
   const curPair = `${givePm.currency.code}_${getPm.currency.code}`;
   console.log(curPair);
-  dispatch(fetchCurrencyConverterRates({ curPair }));
-  dispatch(
-    setInitialData({
-      givePm,
-      getPm,
-    })
-  );
+  useEffect(() => {
+    batch(() => {
+      dispatch(fetchCurrencyConverterRates({ curPair }));
+      dispatch(
+        setInitialData({
+          givePm,
+          getPm,
+        })
+      );
+    });
+  }, [dir]);
 
   const vh = useViewportHeight();
   const giveCur = givePm.currency.code.toUpperCase();
@@ -47,7 +57,7 @@ const Exchange = ({
 
   if (!slug) return <></>;
   return (
-    <Grid gridTemplateColumns={{ base: "1fr", lg: "432px 432px" }} gridGap="5">
+    <>
       <Box3D variant="no_contrast" p={[2, 3, 4]} w={{ base: "100%", sm: 432 }}>
         <Heading
           textAlign="center"
@@ -59,8 +69,15 @@ const Exchange = ({
         >
           {title}
         </Heading>
+
         <Chart giveCur={giveCur} getCur={getCur} />
-        <DirText defaultDirText={defaultDirText} />
+        <VStack h="478px" overflow="hidden">
+          <DirText defaultDirText={defaultDirText} />
+          <ResponsiveText alignSelf="start" px="1">
+            Похожие направления:
+          </ResponsiveText>
+          <Similar similarPmPairs={similarPmPairs} />
+        </VStack>
       </Box3D>
 
       <Box3D
@@ -76,7 +93,7 @@ const Exchange = ({
         <LimitsRange />
         <TV dir={dir} />
       </Box3D>
-    </Grid>
+    </>
   );
 };
 

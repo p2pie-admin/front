@@ -2,9 +2,6 @@ import { Box } from "@chakra-ui/react";
 import SideContext from "../shared/contexts/SideContext";
 import ReverseButton from "./ReverseButton";
 import Side from "./side";
-import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { fetchCurrencyConverterRates } from "../../redux/thunks";
 
 const Calculator = () => {
   return (

@@ -7,6 +7,7 @@ import {
   Box,
   VStack,
   useColorModeValue,
+  Grid,
 } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 
@@ -66,9 +67,13 @@ const Layout = ({ children }: { children: any }) => {
         bgGradient={`radial-gradient(circle at 50% -10%, ${ambientColor} 0%, transparent 40%)`}
       ></Box>
       <Header />
-
       <VStack alignItems="center" mt={[2, 4, 8]}>
-        {children}
+        <Grid
+          gridTemplateColumns={{ base: "1fr", lg: "432px 432px" }}
+          gridGap="5"
+        >
+          {children}
+        </Grid>
       </VStack>
       <Footer />
     </Box>

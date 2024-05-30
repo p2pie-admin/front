@@ -36,10 +36,10 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
     return <></>;
   }
   const possiblePairs = useAppSelector((state) =>
-    side
-      ? state.main[`${side === "give" ? "get" : "give"}Pm`]?.possible_pairs
-      : undefined
+    side ? state.main[`${side}Pm`]?.possible_pairs : undefined
   );
+
+  const shaded = singlePmHasUnmetPairs(pms[0], possiblePairs);
   // const router = useRouter();
 
   // const givePm = useAppSelector((state) => state.main.givePm);
@@ -87,10 +87,10 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
 
     batch(() => {
       dispatch(triggerModal(undefined));
-      dispatch(setDirRatesStatusPending());
-      dispatch(setPm({ pm, side }));
+      !shaded && dispatch(setDirRatesStatusPending());
+      dispatch(setPm({ pm, side, shaded }));
     });
-    router.push(`/exchange/${slug}`);
+    shaded ? router.push(`/`) : router.push(`/exchange/${slug}`);
 
     // const oppositePm = side === "give" ? getPm : givePm;
     // batch(() => {
@@ -134,8 +134,6 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
     ); // pm_id from pm_group_short_name + currency or subitem
   }
 
-  const shadedPm = singlePmHasUnmetPairs(pms[0], possiblePairs);
-
   return (
     // pm_id from pm_group_short_name or currency
     <PmButton
@@ -144,7 +142,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
       handleToggle={
         p2pDirIndex !== undefined ? () => choosePmP2P(pms[0]) : choosePm
       }
-      shaded={shadedPm}
+      shaded={shaded}
     >
       <Name
         name={name}

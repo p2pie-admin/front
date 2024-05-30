@@ -69,3 +69,35 @@ export const convertCities = (cities: ICities): ICities => {
 
   return newCities;
 };
+
+export const findSimilarPmPairs = (givePm: IPm, getPm: IPm, pms: IPm[]) => {
+  const similar = pms.reduce((res: IPm[][], pm: IPm) => {
+    let [pair1, pair2] = [[], []] as [IPm[], IPm[]];
+    if (
+      pm.currency.code == givePm.currency.code &&
+      (pm.section == givePm.section ||
+        (givePm.section == "cash" && pm.section == "bank"))
+    ) {
+      pair1 = [pm, getPm];
+    }
+    if (
+      pm.currency.code == getPm.currency.code &&
+      (pm.section == getPm.section ||
+        (getPm.section == "cash" && pm.section == "bank"))
+    ) {
+      pair2 = [givePm, pm];
+    }
+    return [
+      ...res,
+      ...(pair1.length ? [pair1] : []),
+      ...(pair2.length ? [pair2] : []),
+    ];
+  }, []);
+
+  const rmInitialPm = similar
+    .filter((pair) => {
+      return pair[0].code !== givePm.code || pair[1].code !== getPm.code;
+    })
+    .slice(0, 3);
+  return rmInitialPm;
+};

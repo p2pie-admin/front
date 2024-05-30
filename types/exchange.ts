@@ -8,7 +8,8 @@ export interface ITextLayout {
 }
 
 export interface ICache {
-  slugPmsObject: { [key: string]: IPossiblePmPair };
+  pms: IPm[];
+  slugToCodes: { [key: string]: string };
   articleCodes: { id: string; code: string }[];
   textLayouts: ITextLayout[];
   cities: {

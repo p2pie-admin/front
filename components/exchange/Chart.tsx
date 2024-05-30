@@ -70,7 +70,7 @@ const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
         <ResponsiveText
           size="md"
           color={trend > 0 ? "green.500" : "red.500"}
-        >{`${trend > 0 ? "+" : "-"} ${R(trend, 2)}% ${
+        >{`${trend > 0 ? "+" : "-"} ${R(Math.abs(trend), 3)}% ${
           trend > 0 ? "▲" : "▼"
         }`}</ResponsiveText>
       </Box>
