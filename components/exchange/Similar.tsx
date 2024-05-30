@@ -38,7 +38,7 @@ const Similar = ({ similarPmPairs }: { similarPmPairs: IPm[][] }) => {
     ];
     const leftSide = course > 1 ? "" : `1 ${giveCur} ~`;
     const rightSide = course > 1 ? `${giveCur} ~ 1 ${getCur}` : getCur;
-    return `${leftSide} ${
+    return `Курсы от: ${leftSide} ${
       course > 1 ? format(course, 2) : format(1 / course, 2)
     } ${rightSide}`;
   };
