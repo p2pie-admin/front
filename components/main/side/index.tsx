@@ -18,7 +18,6 @@ import { useAppSelector } from "../../../redux/hooks";
 
 const Side = () => {
   const side = useContext(SideContext) as "give" | "get";
-  const isEmpty = useAppSelector((state) => !state.main[`${side}Pm`]?.code);
   return (
     <Box3D>
       <Grid
@@ -29,13 +28,9 @@ const Side = () => {
         py={["0.5", "1"]}
         gridAutoFlow=""
       >
-        {isEmpty ? (
-          <Box />
-        ) : (
-          <Text color="bg.500" fontSize="xs">
-            {capitalize(side) + ":"}
-          </Text>
-        )}
+        <Text color="bg.500" fontSize="xs">
+          {capitalize(side) + ":"}
+        </Text>
         <Box />
         <PmModalButton />
 

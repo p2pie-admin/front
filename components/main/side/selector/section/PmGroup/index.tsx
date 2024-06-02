@@ -31,6 +31,9 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   const p2pDirIndex = useContext(P2PContext);
   const dispatch = useAppDispatch();
   const side = useContext(SideContext) as "give" | "get";
+  const oppositePm = useAppSelector(
+    (state) => state.main[`${side === "give" ? "get" : "give"}Pm`]
+  );
   const pms = extractPmsFromPmGroup(pm_group);
   if (!pms || !pms.length) {
     return <></>;
@@ -70,27 +73,36 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
     // });
   };
 
-  const choosePm = () => {
-    const pm = pms[0];
-    const oldSlug = router.query.slug as string;
-    const leftPart =
-      side === "give"
-        ? `${pm.en_name}-${pm.currency.code}`
-        : oldSlug.split("-to-")[0];
-    const rightPart =
-      side === "give"
-        ? oldSlug.split("-to-")[1]
-        : `${pm.en_name}-${pm.currency.code}`;
-    const slug = `${leftPart}-to-${rightPart}`
-      .replaceAll(" ", "")
-      .toLowerCase();
+  const choosePm = (sub?: string) => {
+    const pm =
+      (sub &&
+        pms.find((pm) => pm.subgroup_name == sub || pm.currency.code == sub)) ||
+      pms[0];
 
     batch(() => {
       dispatch(triggerModal(undefined));
       !shaded && dispatch(setDirRatesStatusPending());
       dispatch(setPm({ pm, side, shaded }));
     });
-    shaded ? router.push(`/`) : router.push(`/exchange/${slug}`);
+
+    if (oppositePm?.code) {
+      // const oldSlug = router.query.slug as string;
+      // const leftPart =
+      //   side === "give"
+      //     ? `${pm.en_name}-${pm.currency.code}`
+      //     : oldSlug.split("-to-")[0];
+      // const rightPart =
+      //   side === "give"
+      //     ? oldSlug.split("-to-")[1]
+      //     : `${pm.en_name}-${pm.currency.code}`;
+      const [givePm, getPm] =
+        side === "give" ? [pm, oppositePm] : [oppositePm, pm];
+
+      const slug = pmsToSlug({ givePm, getPm })
+        .replaceAll(" ", "")
+        .toLowerCase();
+      shaded ? router.push(`/`) : router.push(`/exchange/${slug}`);
+    }
 
     // const oppositePm = side === "give" ? getPm : givePm;
     // batch(() => {

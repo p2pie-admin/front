@@ -86,7 +86,7 @@ const initialState: MainState = {
   searchBarInputValue: "",
   dirRatesStatus: "pending",
   amountOutputs: initialAmountOutputs,
-  swiperIdVisible: 0,
+  swiperIdVisible: 1,
   pms: [],
   isScrollLocked: false,
   bestRatesPreview: {},
@@ -149,7 +149,7 @@ export const mainSlice = createSlice({
         const oppositeSide = side === "get" ? "give" : "get";
         state[`${oppositeSide}Pm`] = undefined;
         state.amountInput = undefined;
-        state.amountOutputs = getAmountOutputs(state, 0);
+        state.amountOutputs = getAmountOutputs(state, 1);
       }
       state[`${side}Pm`] = pm;
     },
@@ -173,11 +173,6 @@ export const mainSlice = createSlice({
     triggerP2PDir: (state: MainState, action: PayloadAction<number>) => {
       state.p2p.dirs[action.payload].expanded =
         !state.p2p.dirs[action.payload].expanded;
-    },
-
-    clearPms: (state: MainState) => {
-      state.getPm = undefined;
-      state.givePm = undefined;
     },
 
     // свайпаем
@@ -219,7 +214,7 @@ export const mainSlice = createSlice({
         ];
       }
 
-      state.amountOutputs = getAmountOutputs(state, 0);
+      state.amountOutputs = getAmountOutputs(state, 1);
     },
     updateScrollLock: (state: MainState, action: PayloadAction<boolean>) => {
       state.isScrollLocked = action.payload;
@@ -327,6 +322,15 @@ export const mainSlice = createSlice({
     setDirRatesStatusPending: (state: MainState) => {
       state.dirRatesStatus = "pending";
     },
+
+    clean: (state: MainState) => {
+      state.dirRates = undefined;
+      state.getPm = undefined;
+      state.amountInput = undefined;
+      state.amountOutputs = getAmountOutputs(state, 1);
+      state.dirRatesStatus = "fulfilled";
+      state.swiperIdVisible = 1;
+    },
     setInitialData: (
       state: MainState,
       action: PayloadAction<{
@@ -366,7 +370,7 @@ export const mainSlice = createSlice({
       );
       // cleaning
       state.amountInput = undefined;
-      state.amountOutputs = getAmountOutputs(state, 0);
+      state.amountOutputs = getAmountOutputs(state, 1);
       state.dirRatesStatus = "fulfilled";
       state.swiperIdVisible = 1;
     });
@@ -455,7 +459,6 @@ export const {
   setPm,
   setSearchBarInputValue,
   setSwiperIdVisible,
-  clearPms,
   reverseDir,
   updateScrollLock,
   setActivePetal,
@@ -477,6 +480,7 @@ export const {
   setIP,
   setInitialData,
   setDirRatesStatusPending,
+  clean,
 } = mainSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

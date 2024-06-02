@@ -200,3 +200,7 @@ export const localFormat = (n: number, cur: string) => {
     symbols?.[cur.toLocaleLowerCase() as keyof typeof symbols] || ""
   } ${kFormatter(R(n, 2))}`;
 };
+
+export const curToSymbol = (cur?: string) => {
+  return cur ? symbols?.[cur.toLocaleLowerCase() as keyof typeof symbols] : "";
+};

@@ -1,4 +1,3 @@
-import { Box } from "framer-motion";
 import { Box3D } from "../../styles/theme/custom";
 
 const Column = ({ children }: { children: any }) => {

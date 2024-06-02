@@ -70,6 +70,7 @@ const Similar = ({ similarPmPairs }: { similarPmPairs: IPm[][] }) => {
               <Grid
                 gridTemplateColumns={"40px 1fr 40px 40px 1fr"}
                 color="bg.500"
+                alignItems="center"
               >
                 <CircularIcon
                   icon={pair[0].icon}

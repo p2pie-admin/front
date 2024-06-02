@@ -4,12 +4,12 @@ import { SectionContext } from "../../../../../shared/contexts/SectionContext";
 import { capitalize } from "./helper";
 
 export default function Name({ name, code }: { name: string; code?: string }) {
-  const { currencyVisible } = useContext(SectionContext);
+  const { currencyHidden } = useContext(SectionContext);
   const nameSameAsCurrency = code?.toUpperCase() === name.toUpperCase();
 
   return (
     <>
-      {currencyVisible ? (
+      {!currencyHidden ? (
         <VStack spacing={0} align="start">
           <Text fontSize="sm" color={useColorModeValue("bg.800", "bg.100")}>
             {code?.toUpperCase()}

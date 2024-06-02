@@ -49,7 +49,6 @@ const Layout = ({ children }: { children: any }) => {
       w="100%"
       position="relative"
       fontFamily="Roboto, sans-serif"
-      maxH="-webkit-fill-available"
       sx={{
         "&::WebkitScrollbar": {
           width: "0",
@@ -67,15 +66,15 @@ const Layout = ({ children }: { children: any }) => {
         bgGradient={`radial-gradient(circle at 50% -10%, ${ambientColor} 0%, transparent 40%)`}
       ></Box>
       <Header />
-      <VStack alignItems="center" mt={[2, 4, 8]}>
-        <Grid
-          gridTemplateColumns={{ base: "1fr", lg: "432px 432px" }}
-          gridGap="5"
-        >
-          {children}
-        </Grid>
+      <VStack
+        alignItems="center"
+        justifyContent="space-between"
+        minH="calc(100vh - 56px)"
+      >
+        {children}
+
+        <Footer />
       </VStack>
-      <Footer />
     </Box>
   );
 };

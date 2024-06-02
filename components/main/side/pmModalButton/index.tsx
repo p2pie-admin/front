@@ -1,4 +1,4 @@
-import { Box, Tag, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Center, Tag, Text, useColorModeValue } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import SideContext from "../../../shared/contexts/SideContext";
@@ -16,6 +16,7 @@ import SelectorModal from "../selector/SelectorModal";
 import PmIcons from "./PmIcons";
 import ModalButton from "./ModalButton";
 import { fetchPossiblePairs } from "../../../../redux/thunks";
+import { IoAddOutline } from "react-icons/io5";
 
 const PmModalButton = () => {
   const dispatch = useAppDispatch();
@@ -47,7 +48,21 @@ const PmModalButton = () => {
   return (
     <ModalButton
       openDialog={openDialog}
-      leftIcon={pms && <PmIcons pms={pms} />}
+      leftIcon={
+        pms?.length ? (
+          <PmIcons pms={pms} />
+        ) : (
+          <Center
+            border="2px dashed"
+            borderColor="bg.500"
+            borderRadius="50%"
+            h="6"
+            w="6"
+          >
+            <IoAddOutline size="1rem" />
+          </Center>
+        )
+      }
     >
       <SelectorModal id={side + p2pIndex || ""} />
       <ResponsiveText size="md" variant="primary">

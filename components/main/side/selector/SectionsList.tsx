@@ -27,9 +27,10 @@ const SectionsList = ({ sections }: { sections: ISection[] }) => {
             key={section.id}
             value={{
               columns: section.columns,
-              currencyVisible:
+              currencyHidden: !(
                 section.en_title.toLowerCase().includes("crypto") ||
-                section.en_title.toLowerCase().includes("cash"),
+                section.en_title.toLowerCase().includes("cash")
+              ),
             }}
           >
             <Section

@@ -37,7 +37,7 @@ const Exchange = ({
   const dispatch = useAppDispatch();
   const dir = `${givePm.code}_${getPm.code}`;
   const curPair = `${givePm.currency.code}_${getPm.currency.code}`;
-  console.log(curPair);
+
   useEffect(() => {
     batch(() => {
       dispatch(fetchCurrencyConverterRates({ curPair }));
@@ -57,7 +57,11 @@ const Exchange = ({
 
   if (!slug) return <></>;
   return (
-    <>
+    <Grid
+      gridTemplateColumns={{ base: "1fr", lg: "432px 432px" }}
+      gridGap="5"
+      mt={[2, 4, 8]}
+    >
       <Box3D variant="no_contrast" p={[2, 3, 4]} w={{ base: "100%", sm: 432 }}>
         <Heading
           textAlign="center"
@@ -93,7 +97,7 @@ const Exchange = ({
         <LimitsRange />
         <TV dir={dir} />
       </Box3D>
-    </>
+    </Grid>
   );
 };
 

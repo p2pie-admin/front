@@ -63,7 +63,9 @@ const Subitems = ({
               {pms.map((pm: IPm) => (
                 <SubButton
                   pm={pm}
-                  choosePm={choosePm}
+                  choosePm={() =>
+                    choosePm(pm.subgroup_name || pm.currency.code)
+                  }
                   key={pm.code}
                   shaded={singlePmHasUnmetPairs(pm, possiblePairs)}
                 >

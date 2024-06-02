@@ -50,7 +50,7 @@ const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
       <Image
         w={400}
         h={180}
-        src={`${SRC}/${giveCur}_${getCur}/${isLongTimeFrame ? "day" : "hour"}`}
+        src={`${SRC}/${getCur}_${giveCur}/${isLongTimeFrame ? "day" : "hour"}`}
         alt={`${giveCur} to ${getCur} in last ${
           isLongTimeFrame ? "day" : "hour"
         }`}
@@ -69,9 +69,9 @@ const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
       <Box position="absolute" bottom="2" right="2">
         <ResponsiveText
           size="md"
-          color={trend > 0 ? "green.500" : "red.500"}
-        >{`${trend > 0 ? "+" : "-"} ${R(Math.abs(trend), 3)}% ${
-          trend > 0 ? "▲" : "▼"
+          color={trend > 0 ? "red.500" : "green.500"}
+        >{`${trend > 0 ? "-" : "+"} ${R(Math.abs(trend), 3)}% ${
+          trend > 0 ? "▼" : "▲"
         }`}</ResponsiveText>
       </Box>
       <Shader direction="bottom" />

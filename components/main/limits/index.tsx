@@ -124,7 +124,7 @@ const LimitsRange = () => {
     stickyAmount >= MIN && stickyAmount <= MAX ? mainColor : "bg.600";
 
   const props = { mainCur, stickyAmount, MIN, MAX };
-
+  if (!MIN || !MAX) return <></>;
   return (
     <Box3D py="2" my={[2, 3, 4]} cursor="pointer" display="flex" flexDir="row">
       {/* <Text>highestMax: {highestMax}</Text> */}
@@ -163,60 +163,58 @@ const LimitsRange = () => {
         </Box>
 
         <Box w="98%" pointerEvents="none" color="bg.500">
-          {MIN && MAX && (
-            <CustomRangeSlider resMin={percMin} resMax={percMax}>
-              <RangeSliderTrack bgColor={color1}>
-                <RangeSliderFilledTrack bgColor={color4} />
-              </RangeSliderTrack>
-              {percMax - percMin < 25 ? (
-                <Flex
-                  justifyContent="center"
-                  position="absolute"
-                  minW="100px"
-                  maxW="100px"
-                  minH="20"
-                  left={`calc(${smoothCenter.toFixed(0)}% - 50px)`}
-                >
-                  <Box h="fit-content" zIndex="5" mt="1">
-                    <ResponsiveText size="xs" color="bg.500">
-                      {MIN == MAX
-                        ? localFormat(MIN, mainCur)
-                        : `${localFormat(MIN, mainCur)} — ${localFormat(
-                            MAX,
-                            mainCur
-                          )}`}
-                    </ResponsiveText>
-                  </Box>
-                </Flex>
-              ) : (
-                <>
-                  <RangeSliderThumb boxSize={1} index={0} zIndex="2">
-                    <ResponsiveText
-                      mt="8"
-                      ml={isClose(lowestMin, MIN) ? 6 : 0}
-                      size="xs"
-                      whiteSpace="nowrap"
-                      textAlign="center"
-                    >
-                      {localFormat(MIN, mainCur)}
-                    </ResponsiveText>
-                  </RangeSliderThumb>
+          <CustomRangeSlider resMin={percMin} resMax={percMax}>
+            <RangeSliderTrack bgColor={color1}>
+              <RangeSliderFilledTrack bgColor={color4} />
+            </RangeSliderTrack>
+            {percMax - percMin < 25 ? (
+              <Flex
+                justifyContent="center"
+                position="absolute"
+                minW="100px"
+                maxW="100px"
+                minH="20"
+                left={`calc(${smoothCenter.toFixed(0)}% - 50px)`}
+              >
+                <Box h="fit-content" zIndex="5" mt="1">
+                  <ResponsiveText size="xs" color="bg.500">
+                    {MIN == MAX
+                      ? localFormat(MIN, mainCur)
+                      : `${localFormat(MIN, mainCur)} — ${localFormat(
+                          MAX,
+                          mainCur
+                        )}`}
+                  </ResponsiveText>
+                </Box>
+              </Flex>
+            ) : (
+              <>
+                <RangeSliderThumb boxSize={1} index={0} zIndex="2">
+                  <ResponsiveText
+                    mt="8"
+                    ml={isClose(lowestMin, MIN) ? 6 : 0}
+                    size="xs"
+                    whiteSpace="nowrap"
+                    textAlign="center"
+                  >
+                    {localFormat(MIN, mainCur)}
+                  </ResponsiveText>
+                </RangeSliderThumb>
 
-                  <RangeSliderThumb boxSize={1} index={1} zIndex="1">
-                    <ResponsiveText
-                      mt="8"
-                      mr={isClose(highestMax, MAX) ? 6 : 0}
-                      size="xs"
-                      whiteSpace="nowrap"
-                      textAlign="center"
-                    >
-                      {localFormat(MAX, mainCur)}
-                    </ResponsiveText>
-                  </RangeSliderThumb>
-                </>
-              )}
-            </CustomRangeSlider>
-          )}
+                <RangeSliderThumb boxSize={1} index={1} zIndex="1">
+                  <ResponsiveText
+                    mt="8"
+                    mr={isClose(highestMax, MAX) ? 6 : 0}
+                    size="xs"
+                    whiteSpace="nowrap"
+                    textAlign="center"
+                  >
+                    {localFormat(MAX, mainCur)}
+                  </ResponsiveText>
+                </RangeSliderThumb>
+              </>
+            )}
+          </CustomRangeSlider>
         </Box>
       </Box>
     </Box3D>

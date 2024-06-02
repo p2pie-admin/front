@@ -14,7 +14,7 @@ const fetcher = initParserFetcher();
 const TabSide = () => {
   const side = useContext(SideContext) as "buy" | "sell";
 
-  const { data, error } = useSWR("popular_rates", fetcher);
+  const { data, error } = useSWR("top", fetcher);
   const popularRates = data
     ? Object.entries(data).map(([code, rate]) => [code, rate?.[side]])
     : [];

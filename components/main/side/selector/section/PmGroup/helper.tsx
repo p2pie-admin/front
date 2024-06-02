@@ -141,7 +141,7 @@ export const pmsToSlug = ({
   }-to-${getPm.en_name}-${getPm.currency.code}${
     getPm.subgroup_name ? "-" + getPm.subgroup_name : ""
   }`;
-  return slug.toLowerCase().replaceAll(" ", "");
+  return slug.toLowerCase().replaceAll(" ", "").replaceAll("/", "");
 };
 
 export const pmFromPmGroups = (

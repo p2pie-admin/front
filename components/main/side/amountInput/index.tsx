@@ -27,11 +27,13 @@ const AmountInput = () => {
   const currentRate = useAppSelector(
     (state) => state.main?.dirRates?.[state.main.swiperIdVisible]
   );
+
   const [min, max] = currentRate
     ? [currentRate.min, currentRate.max]
     : [undefined, undefined];
   const stringValue = amountOutputs[side] || "";
   const value = R(+stringValue.replaceAll(" ", ""));
+  console.log(value);
   const outRange = min && max && (value > max[side] || value < min[side]);
 
   return (

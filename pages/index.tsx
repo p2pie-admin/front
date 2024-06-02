@@ -3,15 +3,42 @@ import Head from "next/head";
 import { Box, Text } from "@chakra-ui/react";
 import MainPageContent from "../components/main";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { IPopularDirRates } from "../types/rates";
+import { initParserFetcher } from "../services/fetchers";
+import { readCache } from "../services/cache";
+import { ICache } from "../types/exchange";
+import { IPm } from "../types/selector";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   // must be async
+  try {
+    const possiblePairsFetcher = initParserFetcher();
+    const popularRates = (await possiblePairsFetcher(
+      "top"
+    )) as IPopularDirRates;
+    const cachedData = readCache() as ICache;
+    const pms = cachedData.pms;
 
-  return {
-    props: {
-      ...(await serverSideTranslations(locale || "ru", ["home"])),
-    },
-  };
+    const popularPmCodes = [
+      ...Object.keys(popularRates),
+      ...Object.values(popularRates)[0].buy.map((i) => i.fiat),
+    ];
+    const popularPms = pms.filter((pm) =>
+      popularPmCodes.find((code) => code === pm.code)
+    );
+
+    return {
+      props: {
+        popularPms,
+        popularRates,
+        ...(await serverSideTranslations(locale || "ru", ["home"])),
+      },
+    };
+  } catch (e) {
+    return {
+      notFound: true,
+    };
+  }
 };
 
 // const router = useRouter();
@@ -26,8 +53,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 //   });
 // }
 
-const Home: NextPage = () => {
-  console.log("updated!!");
+const Home = (props: any) => {
   return (
     <>
       <Head>
@@ -49,7 +75,7 @@ const Home: NextPage = () => {
         <meta name="description" content="Monitoring Tool" />
       </Head>
 
-      <MainPageContent />
+      <MainPageContent {...props} />
     </>
   );
 };

@@ -39,6 +39,7 @@ export async function getStaticProps({
     const dir = cachedData?.slugToCodes?.[slug];
     const givePm = pms.find((pm) => pm.code == dir?.split("_")?.[0]);
     const getPm = pms.find((pm) => pm.code == dir?.split("_")?.[1]);
+
     if (!dir || !givePm || !getPm)
       return {
         notFound: true,

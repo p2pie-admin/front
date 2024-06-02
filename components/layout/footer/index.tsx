@@ -8,17 +8,16 @@ const Footer = () => {
       justifyContent="center"
       bgGradient="linear(to-t, rgba(0,0,0,0.3), transparent 30%)"
     >
-      <Box3D
-        w={{ base: "100%", sm: 432, lg: 888 }}
-        mt="5"
+      <VStack
+        justifyContent="center"
+        alignItems="center"
+        minH="40"
         color="bg.500"
-        variant="no_contrast"
+        fontSize="lg"
       >
-        <VStack justifyContent="center" alignItems="center" minH="40">
-          <Text>p2pie.com</Text>
-          <Text>2024</Text>
-        </VStack>
-      </Box3D>
+        <Text>p2pie.com</Text>
+        <Text>2024</Text>
+      </VStack>
     </Flex>
   );
 };
