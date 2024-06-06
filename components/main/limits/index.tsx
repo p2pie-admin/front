@@ -35,6 +35,7 @@ import { RxDragHandleDots2 } from "react-icons/rx";
 import { BsArrowLeftShort, BsArrowRightShort } from "react-icons/bs";
 import Thumb from "./Thumb";
 import side from "../side";
+import { useTranslation } from "react-i18next";
 
 const CustomRangeSlider = ({
   resMin,
@@ -62,6 +63,10 @@ const LimitsRange = () => {
   const currentDirRate = useAppSelector(
     (state) => state.main?.dirRates?.[state.main.swiperIdVisible]
   );
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language as "en" | "ru";
+  const [minWord, maxWord, limitsWord] =
+    lang == "en" ? ["min", "max", "limits"] : ["мин", "макс", "лимиты"];
   // if(!currentDirRate) return <></>
   const [side, setSide]: [side: "give" | "get", setSide: Function] = useState(
     "get" as "give" | "get" // (currentDirRate.course) > 1 ? "give" : "get"
@@ -167,7 +172,7 @@ const LimitsRange = () => {
             <RangeSliderTrack bgColor={color1}>
               <RangeSliderFilledTrack bgColor={color4} />
             </RangeSliderTrack>
-            {percMax - percMin < 25 ? (
+            {percMax - percMin < 35 ? (
               <Flex
                 justifyContent="center"
                 position="absolute"
@@ -176,14 +181,23 @@ const LimitsRange = () => {
                 minH="20"
                 left={`calc(${smoothCenter.toFixed(0)}% - 50px)`}
               >
-                <Box h="fit-content" zIndex="5" mt="1">
-                  <ResponsiveText size="xs" color="bg.500">
+                <Box
+                  h="fit-content"
+                  zIndex="5"
+                  mt="1"
+                  bgColor="blackAlpha.300"
+                  borderRadius="md"
+                  px="1"
+                  py="0.5"
+                >
+                  <ResponsiveText size="xs">
                     {MIN == MAX
-                      ? localFormat(MIN, mainCur)
-                      : `${localFormat(MIN, mainCur)} — ${localFormat(
-                          MAX,
-                          mainCur
-                        )}`}
+                      ? localFormat(MIN, mainCur, lang)
+                      : `${limitsWord}: ${localFormat(
+                          MIN,
+                          mainCur,
+                          lang
+                        )} — ${localFormat(MAX, mainCur, lang)}`}
                   </ResponsiveText>
                 </Box>
               </Flex>
@@ -196,8 +210,12 @@ const LimitsRange = () => {
                     size="xs"
                     whiteSpace="nowrap"
                     textAlign="center"
+                    bgColor="blackAlpha.300"
+                    borderRadius="md"
+                    px="1"
+                    py="0.5"
                   >
-                    {localFormat(MIN, mainCur)}
+                    {`${minWord}: ${localFormat(MIN, mainCur, lang)}`}
                   </ResponsiveText>
                 </RangeSliderThumb>
 
@@ -208,8 +226,12 @@ const LimitsRange = () => {
                     size="xs"
                     whiteSpace="nowrap"
                     textAlign="center"
+                    bgColor="blackAlpha.300"
+                    borderRadius="md"
+                    px="1"
+                    py="0.5"
                   >
-                    {localFormat(MAX, mainCur)}
+                    {`${maxWord}: ${localFormat(MAX, mainCur, lang)}`}
                   </ResponsiveText>
                 </RangeSliderThumb>
               </>

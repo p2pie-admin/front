@@ -2,18 +2,23 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { initCMSFetcher, initParserFetcher } from "../../../services/fetchers";
 import {
   citiesQuery,
+  dirsTextQuery,
+  pmsTextQuery,
   selectorQuery,
-  textLayoutsQuery,
 } from "../../../services/initialQueries";
 import { IPmGroup, IPm, ISelector, ISection } from "../../../types/selector";
 import { readCache, writeCache } from "../../../services/cache";
 import React from "react";
 import Exchange from "../../../components/exchange";
-import { ICache, IPossiblePmPair, ITextLayout } from "../../../types/exchange";
+import {
+  ICache,
+  IDirText,
+  IPmsText,
+  IPossiblePmPair,
+} from "../../../types/exchange";
 import {
   convertCities,
   findSimilarPmPairs,
-  generateText,
 } from "../../../components/exchange/helper";
 import {
   extractPmsFromPmGroup,
@@ -39,6 +44,25 @@ export async function getStaticProps({
     const dir = cachedData?.slugToCodes?.[slug];
     const givePm = pms.find((pm) => pm.code == dir?.split("_")?.[0]);
     const getPm = pms.find((pm) => pm.code == dir?.split("_")?.[1]);
+    const [section_give, section_get] = [givePm?.section, getPm?.section];
+    const cmsFetcherPmsText = initCMSFetcher({
+      locale,
+      sections: [section_give, section_get],
+    });
+    const res = (await cmsFetcherPmsText(pmsTextQuery)) as {
+      pmsTexts: IPmsText[];
+    };
+    const pmsTexts = res?.pmsTexts || null;
+
+    const cmsFetcherDirsText = initCMSFetcher({
+      locale,
+      section_give,
+      section_get,
+    });
+    const { dirsTexts } = (await cmsFetcherDirsText(dirsTextQuery)) as {
+      dirsTexts: [IDirText];
+    };
+    const dirText = dirsTexts[0] || null;
 
     if (!dir || !givePm || !getPm)
       return {
@@ -51,21 +75,16 @@ export async function getStaticProps({
       : locale === "ru"
       ? fullCity[0]
       : fullCity[1];
-    const defaultDirText = generateText({
-      givePm,
-      getPm,
-      cityName,
-      textLayouts: cachedData.textLayouts,
-      locale,
-    });
 
     return {
       props: {
         locale,
         slug,
-        defaultDirText,
+        dirText,
+        pmsTexts,
         givePm,
         getPm,
+        cityName,
         similarPmPairs,
         ...(await serverSideTranslations(locale || "ru", ["home"])),
       },
@@ -110,12 +129,8 @@ export async function getStaticPaths() {
     ],
     []
   );
-  console.log("pmGroups fetched: ", pmGroups.length);
-  const { textLayouts } = (await cmsFetcher(textLayoutsQuery)) as {
-    textLayouts: ITextLayout[];
-  };
 
-  console.log("textLayouts fetched: ", textLayouts.length);
+  console.log("pmGroups fetched: ", pmGroups.length);
   console.log(`extracting pms from  ${pmGroups.length} pmGroups`);
 
   const pms = pmGroups.reduce((res: IPm[], pmGroup: IPmGroup) => {
@@ -136,11 +151,10 @@ export async function getStaticPaths() {
   }, {});
 
   const locales = ["en", "ru"];
-  const cachedData = {} as ICache;
+  const cachedData = readCache() as ICache;
   const cities = convertCities(parserSetting.cities);
 
   cachedData.slugToCodes = slugToCodes;
-  cachedData.textLayouts = textLayouts;
   cachedData.cities = cities;
   cachedData.pms = pms;
   writeCache(cachedData); // Save to cache
@@ -188,27 +202,3 @@ export async function getStaticPaths() {
 }
 
 export default ExchangePage;
-// ДЛЯ КАСТОМНОГО ТЕКСТА
-//let article = null as IArticle | null;
-// if (!cachedData.articleCodes) {
-//   const getAllArticleCodes = initCMSFetcher();
-//   const res = (await getAllArticleCodes(articleCodesQuery)) as {
-//     articles: { id: string; code: string }[];
-//   };
-//   const { articles } = res;
-//   cachedData.articleCodes = articles;
-//   writeCache(cachedData); // Save to cache
-// }
-
-// const articleCode = cachedData.articleCodes?.find(
-//   (a: any) => a.code.toUpperCase() === slug.toUpperCase()
-// )?.code;
-
-// if (articleCode) {
-//   const fetcher = initCMSFetcher({
-//     locale,
-//     code: articleCode,
-//   });
-//   const res = await fetcher(articleQuery);
-//   article = res?.articles[0] ? (res.articles[0] as IArticle) : null;
-// }

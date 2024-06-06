@@ -1,21 +1,28 @@
 import { IPm } from "./selector";
 
-export interface ITextLayout {
+export type ISectionName = "crypto" | "bank" | "cash" | "digital" | "transfer";
+
+export interface IPmsText {
   id: string;
-  en_layout: string;
-  ru_layout: string;
-  section_pair: string;
+  section: ISectionName;
+  description: string;
+  articles: { code: string }[];
+}
+
+export interface IDirText {
+  id: string;
+  section_give: ISectionName;
+  section_get: ISectionName;
+  text: string;
+  title: string;
 }
 
 export interface ICache {
   pms: IPm[];
-  slugToCodes: { [key: string]: string };
-  articleCodes: { id: string; code: string }[];
-  textLayouts: ITextLayout[];
+  slugToCodes: { [key: string]: string }; // для запроса курсов
   cities: {
     [key: string]: [string, string];
   };
-  paths: string[];
 }
 
 export interface IPossiblePmPair {
@@ -25,4 +32,10 @@ export interface IPossiblePmPair {
 
 export interface ICities {
   [key: string]: [string, string];
+}
+
+export interface IPmPairs {
+  slug: string;
+  givePm?: IPm;
+  getPm?: IPm;
 }

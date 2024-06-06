@@ -1,4 +1,4 @@
-import { Box, Grid, Heading, VStack } from "@chakra-ui/react";
+import { Box, Grid, Heading, VStack, Text } from "@chakra-ui/react";
 import { Box3D, RegularBox, ResponsiveText } from "../../styles/theme/custom";
 import DirTitle from "./DirTitle";
 import { IPm } from "../../types/selector";
@@ -16,22 +16,30 @@ import { useEffect } from "react";
 import { dir } from "i18next";
 import { batch } from "react-redux";
 import Similar from "./Similar";
+import { Column } from "../layout/Column";
+import ColumnHeader from "../layout/ColumnHeader";
+import { generateTitle } from "./helper";
+import PmsDescription from "./PmsDescription";
+import { IDirText, IPmsText } from "../../types/exchange";
 
 const Exchange = ({
-  //article = null,
   locale,
   slug,
-  defaultDirText,
+  dirText,
+  pmsTexts,
   givePm,
   getPm,
+  cityName,
   similarPmPairs,
 }: {
   //article?: IArticle | null;
   locale: "en" | "ru";
   slug?: string;
-  defaultDirText: string;
+  dirText?: IDirText;
+  pmsTexts?: IPmsText[];
   givePm: IPm;
   getPm: IPm;
+  cityName: string;
   similarPmPairs: IPm[][];
 }) => {
   const dispatch = useAppDispatch();
@@ -50,54 +58,62 @@ const Exchange = ({
     });
   }, [dir]);
 
-  const vh = useViewportHeight();
+  //const vh = useViewportHeight();
   const giveCur = givePm.currency.code.toUpperCase();
   const getCur = getPm.currency.code.toUpperCase();
-  const title = `Динамика курса ${giveCur}/${getCur}`;
+  const title = `Информация по направлению`;
 
   if (!slug) return <></>;
   return (
-    <Grid
-      gridTemplateColumns={{ base: "1fr", lg: "432px 432px" }}
-      gridGap="5"
-      mt={[2, 4, 8]}
-    >
-      <Box3D variant="no_contrast" p={[2, 3, 4]} w={{ base: "100%", sm: 432 }}>
-        <Heading
-          textAlign="center"
-          as="h2"
-          size={title.length > 34 ? "sm" : "md"}
-          m="2"
-          mb="4"
-          color="bg.300"
-        >
-          {title}
-        </Heading>
-
-        <Chart giveCur={giveCur} getCur={getCur} />
-        <VStack h="478px" overflow="hidden">
-          <DirText defaultDirText={defaultDirText} />
-          <ResponsiveText alignSelf="start" px="1">
-            Похожие направления:
-          </ResponsiveText>
-          <Similar similarPmPairs={similarPmPairs} />
-        </VStack>
-      </Box3D>
-
-      <Box3D
-        variant="no_contrast"
-        p={[2, 3, 4]}
-        gridRow={{ base: "-1", lg: "unset" }}
-        w={{ base: "100%", sm: 432 }}
-        minH={[`calc(${vh}px * 100 - 64px)`, "700px"]}
+    <VStack gap="4">
+      <Grid
+        gridTemplateColumns={{ base: "1fr", lg: "432px 432px" }}
+        gridGap="4"
+        mt={[2, 4, 8]}
+        //minH={[`calc(${vh}px * 100 - 64px)`, "700px"]}
       >
-        <DirTitle slug={slug} locale={locale} />
-        <Calculator />
+        <Column index={0}>
+          <ColumnHeader text={title} as="h2" query={[]} />
+          <Chart giveCur={giveCur} getCur={getCur} />
+          <VStack mt="4" w="100%" gap="4">
+            <Box w="100%">
+              <PmsDescription
+                givePm={givePm}
+                getPm={getPm}
+                pmsTexts={pmsTexts}
+              />
+            </Box>
 
-        <LimitsRange />
-        <TV dir={dir} />
+            <Similar similarPmPairs={similarPmPairs} />
+          </VStack>
+        </Column>
+
+        <Column index={1}>
+          <ColumnHeader
+            text={generateTitle({
+              locale,
+              givePm,
+              getPm,
+            })}
+            as="h1"
+            query={[givePm.currency.code, getPm.currency.code]}
+          />
+          <Calculator />
+
+          <LimitsRange />
+          <TV dir={dir} />
+        </Column>
+      </Grid>
+      <Box3D p="4" variant="no_contrast" w="100%">
+        <DirText
+          dirText={dirText}
+          givePm={givePm}
+          getPm={getPm}
+          locale={locale}
+          cityName={cityName}
+        />
       </Box3D>
-    </Grid>
+    </VStack>
   );
 };
 

@@ -1,5 +1,5 @@
 import Subitems from "./Subitems";
-import PmButton from "./PmButton";
+
 import Name from "./Name";
 import {
   extractPmsFromPmGroup,
@@ -8,16 +8,10 @@ import {
 } from "./helper";
 import { useAppDispatch, useAppSelector } from "../../../../../../redux/hooks";
 import { batch } from "react-redux";
-import {
-  fetchPossiblePairs,
-  fetchCurrencyConverterRates,
-} from "../../../../../../redux/thunks";
 import { IPmGroup, IPm } from "../../../../../../types/selector";
 import {
-  addPmP2P,
   setDirRatesStatusPending,
   setPm,
-  setPmP2P,
   triggerModal,
 } from "../../../../../../redux/mainReducer";
 import { useRouter } from "next/router";
@@ -25,6 +19,7 @@ import { useContext } from "react";
 import P2PContext from "../../../../../shared/contexts/p2pContext";
 
 import SideContext from "../../../../../shared/contexts/SideContext";
+import PmButton from "./PmButton";
 
 const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   const router = useRouter();

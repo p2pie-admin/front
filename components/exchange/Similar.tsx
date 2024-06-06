@@ -1,17 +1,16 @@
 import { Box, Grid, HStack, Text } from "@chakra-ui/react";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
 import { IPm } from "../../types/selector";
-import {
-  capitalize,
-  pmsToSlug,
-} from "../main/side/selector/section/PmGroup/helper";
+import { pmsToSlug } from "../main/side/selector/section/PmGroup/helper";
 import { BsArrowRightShort } from "react-icons/bs";
-import CircularIcon from "../shared/CircularIcon";
 import useSWR from "swr";
 import { initParserFetcher } from "../../services/fetchers";
 import { format } from "../../redux/amountsHelper";
 import { useRouter } from "next/router";
 import Link from "next/link"; // Import Link from next/link
+import PmName from "../shared/PmName";
+import Dir from "../shared/Dir";
+import ErrorWrapper from "../shared/ErrorWrapper";
 
 const Similar = ({ similarPmPairs }: { similarPmPairs: IPm[][] }) => {
   const fetcher = initParserFetcher();
@@ -39,15 +38,29 @@ const Similar = ({ similarPmPairs }: { similarPmPairs: IPm[][] }) => {
       pair[0].currency.code.toUpperCase(),
       pair[1].currency.code.toUpperCase(),
     ];
-    const leftSide = course > 1 ? "" : `1 ${giveCur} ~`;
-    const rightSide = course > 1 ? `${giveCur} ~ 1 ${getCur}` : getCur;
-    return `Курсов ${amountOfCourses}, лучший: ${leftSide} ${
-      course > 1 ? format(course, 2) : format(1 / course, 2)
-    } ${rightSide}`;
+    const rate =
+      course < 1
+        ? `~ ${format(1 / course, 2)} ${getCur} за 1 ${giveCur}`
+        : `~ ${format(course, 2)} ${giveCur} за 1 ${getCur}`;
+
+    return (
+      <HStack mt="3" w="100%" justifyContent="space-between">
+        <ResponsiveText
+          size="sm"
+          variant="no_contrast"
+        >{`Курсов ${amountOfCourses}`}</ResponsiveText>
+        <ResponsiveText size="sm" variant="no_contrast">
+          {rate}
+        </ResponsiveText>
+      </HStack>
+    );
   };
 
   return (
-    <Box3D px="2" mt="auto" flexShrink="0">
+    <Box3D px="2" w="100%" minH="300px">
+      <ResponsiveText fontSize="sm" my="1" variant="no_contrast">
+        Похожие направления:
+      </ResponsiveText>
       {similarPmPairs.map((pair, index) => {
         const slug = pmsToSlug({
           givePm: pair[0],
@@ -55,51 +68,9 @@ const Similar = ({ similarPmPairs }: { similarPmPairs: IPm[][] }) => {
         });
 
         return (
-          <Link href={`/exchange/${slug}`} key={index} passHref>
-            <Box
-              borderRadius="lg"
-              border="1px dashed"
-              borderColor="whiteAlpha.200"
-              p="2"
-              my="2"
-              cursor="pointer"
-              transition="background 0.1s ease-in"
-              _hover={{ bgColor: "whiteAlpha.100" }}
-              minH="80px"
-            >
-              <Grid
-                gridTemplateColumns={"40px 1fr 40px 40px 1fr"}
-                color="bg.500"
-                alignItems="center"
-              >
-                <CircularIcon
-                  icon={pair[0].icon}
-                  color={pair[0].color || "gray"}
-                />
-                <ResponsiveText>{`${capitalize(
-                  pair[0].en_name.slice(0, 12)
-                )} ${pair[0].currency.code.toUpperCase()}`}</ResponsiveText>
-                <BsArrowRightShort size="1.5rem" />
-                <CircularIcon
-                  icon={pair[1].icon}
-                  color={pair[1].color || "gray"}
-                />
-                <ResponsiveText>{`${capitalize(
-                  pair[1].en_name.slice(0, 12)
-                )} ${pair[1].currency.code.toUpperCase()}`}</ResponsiveText>
-              </Grid>
-              {data?.[index] && (
-                <ResponsiveText
-                  size="sm"
-                  mt="3"
-                  variant="no_contrast"
-                  textAlign="end"
-                >
-                  {renderRate(pair, data[index])}
-                </ResponsiveText>
-              )}
-            </Box>
-          </Link>
+          <Dir givePm={pair[0]} getPm={pair[1]} slug={slug}>
+            {data?.[index] && renderRate(pair, data[index])}
+          </Dir>
         );
       })}
     </Box3D>

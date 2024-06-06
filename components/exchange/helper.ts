@@ -1,4 +1,4 @@
-import { ICities, ITextLayout } from "../../types/exchange";
+import { ICities } from "../../types/exchange";
 import { IPm } from "../../types/selector";
 import { capitalize } from "../main/side/selector/section/PmGroup/helper";
 
@@ -7,54 +7,26 @@ export function ifMobile(userAgent: string): boolean {
   return isMobile;
 }
 
-export const generateText = ({
+export const fillWords = ({
   givePm,
   getPm,
   cityName,
-  textLayouts,
-  locale,
+  text,
 }: {
   givePm: IPm;
   getPm: IPm;
   cityName: string;
-  textLayouts: ITextLayout[];
-  locale: "ru" | "en";
-}): string => {
-  const getWeight = (giveSection: string, getSection: string) => {
-    return giveSection === givePm.section && getSection === getPm.section
-      ? 4
-      : giveSection === givePm.section && getSection === "all"
-      ? 3
-      : giveSection === "all" && getSection === getPm.section
-      ? 2
-      : giveSection === "all" && getSection === "all"
-      ? 1
-      : 0;
-  };
-
-  const layoutWeights = textLayouts.map((ly) => {
-    const [giveSection, getSection] = ly.section_pair.split("_");
-    return { weight: getWeight(giveSection, getSection), ly };
-  });
-  let layout = layoutWeights[0];
-
-  for (const lw of layoutWeights) {
-    if (lw.weight > layout.weight) {
-      layout = lw;
-    }
-  }
-
+  text?: string;
+}) => {
   const { en_name: giveName, currency: giveCurrency } = givePm;
   const { en_name: getName, currency: getCurrency } = getPm;
 
-  return layout.ly
-    ? layout.ly[`${locale}_layout`]
-        .replaceAll("name1", capitalize(giveName))
-        .replaceAll("name2", capitalize(getName))
-        .replaceAll("cur1", giveCurrency.code.toUpperCase())
-        .replaceAll("cur2", getCurrency.code.toUpperCase())
-        .replaceAll("cityName", cityName)
-    : "";
+  return (text || "")
+    .replaceAll("give_name", capitalize(giveName))
+    .replaceAll("get_name", capitalize(getName))
+    .replaceAll("give_currency", giveCurrency.code.toUpperCase())
+    .replaceAll("get_currency", getCurrency.code.toUpperCase())
+    .replaceAll("city_name", cityName);
 };
 
 export const convertCities = (cities: ICities): ICities => {
@@ -100,4 +72,27 @@ export const findSimilarPmPairs = (givePm: IPm, getPm: IPm, pms: IPm[]) => {
     })
     .slice(0, 3);
   return rmInitialPm;
+};
+
+export const generateTitle = ({
+  locale,
+  givePm,
+  getPm,
+}: {
+  locale: "en" | "ru";
+  givePm: IPm;
+  getPm: IPm;
+}) => {
+  const U = (str?: string | null) => (str ? str.toUpperCase() : "");
+  return locale === "ru"
+    ? `Обмен ${capitalize(givePm.ru_name)} ${U(givePm.currency.code)} ${U(
+        givePm.subgroup_name
+      )} на ${capitalize(getPm.ru_name)} ${U(getPm.currency.code)} ${U(
+        getPm.subgroup_name
+      )}`
+    : `Exchange ${capitalize(givePm.en_name)} ${U(givePm.currency.code)} ${U(
+        givePm.subgroup_name
+      )} to ${capitalize(getPm.en_name)} ${U(getPm.currency.code)} ${U(
+        getPm.subgroup_name
+      )}`;
 };

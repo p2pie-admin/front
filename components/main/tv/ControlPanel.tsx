@@ -29,7 +29,7 @@ const ControlPanel = ({
       <Button
         p={["0.5", "1"]}
         minW={["6", "10"]}
-        variant="contrast"
+        variant="extra_contrast"
         onClick={() => stepDown()}
         color="whiteAlpha.500"
       >
@@ -61,7 +61,7 @@ const ControlPanel = ({
       <Button
         p={["0.5", "1"]}
         minW={["6", "10"]}
-        variant="contrast"
+        variant="extra_contrast"
         onClick={() => stepUp()}
         color="whiteAlpha.500"
       >

@@ -56,6 +56,13 @@ const initialOrder = {
   dirs: [{ expanded: true, deleted: false }],
 };
 
+const defaultLocation = {
+  en_country_name: "Russia",
+  en_city_name: "Moscow",
+  ru_country_name: "Россия",
+  ru_city_name: "Москва",
+};
+
 export interface MainState {
   searchBarInputValue: string;
   givePm?: IPm;
@@ -92,7 +99,7 @@ const initialState: MainState = {
   bestRatesPreview: {},
   pendingPopularRates: false,
   toast: { title: "", status: "info" },
-  location: { en_country_name: "Russia", en_city_name: "Moscow" },
+  location: defaultLocation,
   p2p: initialOrder,
 };
 
@@ -259,6 +266,11 @@ export const mainSlice = createSlice({
     },
 
     setLocation: (state: MainState, action: PayloadAction<ILocation>) => {
+      const { ip, en_city_name } = action.payload;
+      if (!en_city_name) {
+        state.location = { ...defaultLocation, ip };
+        return;
+      }
       state.location = action.payload;
     },
     addLocation: (state: MainState, action: PayloadAction<ILocation>) => {

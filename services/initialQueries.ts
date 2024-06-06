@@ -67,27 +67,56 @@ export const pmsQuery = gql`
   }
 `;
 
-export const pmGroupsByNamesQuery = gql`
-  query pmGroupsByNames($giveName: String, $getName: String) {
-    pmGroups(
+// export const pmGroupsByNamesQuery = gql`
+//   query pmGroupsByNames($giveName: String, $getName: String) {
+//     pmGroups(
+//       filters: {
+//         or: [{ en_name: { eqi: $giveName } }, { en_name: { eqi: $getName } }]
+//       }
+//     ) {
+//       ${pmGroup}
+//     }
+//   }
+// `;
+export const dirsTextQuery = gql`
+  query dirsText(
+    $locale: I18NLocaleCode
+    $section_give: String
+    $section_get: String
+  ) {
+    dirsTexts(
+      locale: $locale
       filters: {
-        or: [{ en_name: { eqi: $giveName } }, { en_name: { eqi: $getName } }]
+        section_give: { eqi: $section_give }
+        section_get: { eqi: $section_get }
       }
     ) {
-      ${pmGroup}
-    }
-  }
-`;
-
-export const textLayoutsQuery = gql`
-  {
-    textLayouts {
       data {
         id
         attributes {
-          en_layout
-          ru_layout
-          section_pair
+          title
+          text
+        }
+      }
+    }
+  }
+`;
+export const pmsTextQuery = gql`
+  query TextPms($locale: I18NLocaleCode, $sections: [String]) {
+    pmsTexts(locale: $locale, filters: { section: { in: $sections } }) {
+      data {
+        id
+        attributes {
+          section
+          description
+          articles {
+            data {
+              id
+              attributes {
+                code
+              }
+            }
+          }
         }
       }
     }
@@ -134,6 +163,55 @@ export const citiesQuery = gql`
       data {
         attributes {
           cities
+        }
+      }
+    }
+  }
+`;
+
+export const articleCodesQuery = gql`
+  {
+    articles(pagination: { start: 0, limit: 1000 }) {
+      data {
+        id
+        attributes {
+          code
+        }
+      }
+    }
+  }
+`;
+
+export const articleQuery = gql`
+  query GetArticle($locale: I18NLocaleCode, $code: String) {
+    articles(locale: $locale, filters: { code: { eq: $code } }) {
+      data {
+        id
+        attributes {
+          header
+          subheader
+          section
+          updatedAt
+          chapters {
+            ... on ComponentArticleChapter {
+              id
+              title
+              text
+              link {
+                id
+                text
+                href
+                isExternal
+                isBlank
+              }
+              disclaimer {
+                id
+                title
+                text
+                color
+              }
+            }
+          }
         }
       }
     }

@@ -20,7 +20,7 @@ const TV = ({ dir }: { dir: string }) => {
   }, [dir]);
 
   const isMobile = useIsMobile();
-  const itemHeight = isMobile ? 80 : 120; // Height of each text box
+  const itemHeight = isMobile ? 80 : 130; // Height of each text box
   const visibleItems = 3; // Number of items visible in the container
   const containerHeight = itemHeight * visibleItems;
 
@@ -33,7 +33,7 @@ const TV = ({ dir }: { dir: string }) => {
   };
 
   return (
-    <Box h={`${containerHeight + 34}px`}>
+    <Box h={`425px`}>
       <ErrorWrapper
         isError={dirRatesStatus === "rejected"}
         isLoading={!dirRates.length || dirRatesStatus === "pending"}

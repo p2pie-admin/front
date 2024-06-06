@@ -4,13 +4,14 @@ import {
   HStack,
   useColorModeValue,
   Box,
+  Text,
 } from "@chakra-ui/react";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
 import Shader from "../shared/Shader";
 import { useState } from "react";
 import { useAppSelector } from "../../redux/hooks";
 import { ICurrencyConverterRate } from "../../types/p2p";
-import { localFormat, R } from "../../redux/amountsHelper";
+import { format, localFormat, R } from "../../redux/amountsHelper";
 
 const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
   const env = process.env.NODE_ENV;
@@ -18,23 +19,30 @@ const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
     env === "production"
       ? process.env.NEXT_PUBLIC_CONVERTER_PROD_URL
       : process.env.NEXT_PUBLIC_CONVERTER_DEV_URL;
-
-  const [isLongTimeFrame, setTimeframe] = useState(false);
+  const bgColor = useColorModeValue("violet.900", "bg.900");
+  const [isLongTimeFrame, setTimeframe] = useState(true);
   const primaryColor = useColorModeValue("violet.600", "peach.200");
   const ccRates = useAppSelector(
     (state) => state.main.ccRates || ({} as ICurrencyConverterRate)
   );
   const { rate, giveToUSD, getToUSD, dayTrend, hourTrend } = ccRates;
   const trend = isLongTimeFrame ? dayTrend : hourTrend;
-
+  const giveUsdRate =
+    giveToUSD < 1
+      ? `1 ${giveCur} ~ ${format(1 / giveToUSD, 2)} USD`
+      : `1 USD ~ ${format(giveToUSD, 2)} ${giveCur}`;
+  const getUsdRate =
+    getToUSD < 1
+      ? `1 ${getCur} ~ ${format(1 / getToUSD, 2)} USD`
+      : `1 USD ~ ${format(getToUSD, 2)} ${getCur}`;
   return (
-    <Box3D variant="extra_contrast" overflow="hidden" position="relative">
-      <HStack position="absolute" top="2" right="2">
+    <Box3D bgColor={bgColor} overflow="hidden" position="relative">
+      <HStack position="absolute" top="0" right="0">
         <Button
           variant="default"
           size="sm"
           onClick={() => setTimeframe(false)}
-          color={!isLongTimeFrame ? primaryColor : "bg.500"}
+          color={!isLongTimeFrame ? primaryColor : "whiteAlpha.300"}
         >
           1h
         </Button>
@@ -42,7 +50,7 @@ const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
           variant="default"
           size="sm"
           onClick={() => setTimeframe(true)}
-          color={isLongTimeFrame ? primaryColor : "bg.500"}
+          color={isLongTimeFrame ? primaryColor : "whiteAlpha.300"}
         >
           24h
         </Button>
@@ -55,25 +63,29 @@ const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
           isLongTimeFrame ? "day" : "hour"
         }`}
       />
-      <Box position="absolute" bottom="2" left="2">
-        <ResponsiveText size="xs">{`${giveCur} ~ ${localFormat(
-          1 / giveToUSD,
-          "USD"
-        )}`}</ResponsiveText>
-        <ResponsiveText size="xs">{`${getCur} ~ ${localFormat(
-          1 / getToUSD,
-          "USD"
-        )}`}</ResponsiveText>
+      <HStack position="absolute" top="2" left="2" zIndex="35">
+        <Text fontSize="md" fontWeight="bold" color={primaryColor}>
+          {`${giveCur} / ${getCur}`}
+        </Text>
+        <Text fontSize="md" color={trend > 0 ? "red.500" : "green.500"}>{`${
+          trend > 0 ? "-" : "+"
+        } ${format(Math.abs(trend), 3)}% ${trend > 0 ? "▼" : "▲"}`}</Text>
+      </HStack>
+      <Box
+        position="absolute"
+        bottom="2"
+        right="2"
+        zIndex="35"
+        bgColor="blackAlpha.500"
+        borderRadius="lg"
+        px="2"
+        py="1"
+      >
+        <Text fontSize="sm" color="bg.200">
+          {giveUsdRate + " | " + getUsdRate}
+        </Text>
       </Box>
 
-      <Box position="absolute" bottom="2" right="2">
-        <ResponsiveText
-          size="md"
-          color={trend > 0 ? "red.500" : "green.500"}
-        >{`${trend > 0 ? "-" : "+"} ${R(Math.abs(trend), 3)}% ${
-          trend > 0 ? "▼" : "▲"
-        }`}</ResponsiveText>
-      </Box>
       <Shader direction="bottom" />
     </Box3D>
   );

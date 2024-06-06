@@ -130,15 +130,15 @@ export class FeesCalculator {
   };
 }
 
-export const kFormatter = (num: number) => {
+export const kFormatter = (num: number, locale?: "en" | "ru") => {
   if (num < 100 && !(num % 1)) return num + ".00";
   const abs = Math.abs(num);
   return abs > 999999999
     ? "-"
     : abs > 999999
-    ? (num / 1000000).toFixed(0) + "m"
+    ? (num / 1000000).toFixed(0) + (locale == "en" ? " m" : " млн")
     : abs > 999
-    ? (num / 1000).toFixed(0) + "k"
+    ? (num / 1000).toFixed(0) + (locale == "en" ? " k" : " тыс")
     : num;
 };
 
@@ -195,10 +195,10 @@ export const isClose = (a: number, b: number): boolean =>
 export const beautifyAmount = (number: number, currency: string) =>
   addSpaces(R(number) + " " + currency);
 
-export const localFormat = (n: number, cur: string) => {
-  return `${
+export const localFormat = (n: number, cur: string, locale?: "en" | "ru") => {
+  return `${kFormatter(R(n, 2), locale)} ${
     symbols?.[cur.toLocaleLowerCase() as keyof typeof symbols] || ""
-  } ${kFormatter(R(n, 2))}`;
+  }`;
 };
 
 export const curToSymbol = (cur?: string) => {
