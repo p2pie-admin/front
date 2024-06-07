@@ -67,17 +67,17 @@ export const pmsQuery = gql`
   }
 `;
 
-// export const pmGroupsByNamesQuery = gql`
-//   query pmGroupsByNames($giveName: String, $getName: String) {
-//     pmGroups(
-//       filters: {
-//         or: [{ en_name: { eqi: $giveName } }, { en_name: { eqi: $getName } }]
-//       }
-//     ) {
-//       ${pmGroup}
-//     }
-//   }
-// `;
+export const pmGroupsByNamesQuery = gql`
+  query pmGroupsByNames($giveName: String, $getName: String) {
+    pmGroups(
+      filters: {
+        or: [{ en_name: { eqi: $giveName } }, { en_name: { eqi: $getName } }]
+      }
+    ) {
+      ${pmGroup}
+    }
+  }
+`;
 export const dirsTextQuery = gql`
   query dirsText(
     $locale: I18NLocaleCode

@@ -147,6 +147,7 @@ export async function getStaticPaths() {
       getPm: pms.find((pm) => pm.code.toUpperCase() === dir.split("_")[1]),
     } as IPossiblePmPair;
     const slug = pmsToSlug(pmPairFromDir);
+    if (!slug) return res;
     return { ...res, [slug]: dir };
   }, {});
 

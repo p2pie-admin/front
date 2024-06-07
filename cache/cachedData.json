@@ -1,6 +1,5 @@
 {
   "slugToCodes": {
-    "": "ADVCRUB_CARDEUR",
     "sber-rub-to-cash-rub": "SBERRUB_CASHRUB",
     "sber-rub-to-cash-usd": "SBERRUB_CASHUSD",
     "sber-rub-to-bitcoin-btc": "SBERRUB_BTC",
@@ -1316,6 +1315,66 @@
       "section": "bank"
     },
     {
+      "pm_group_id": "23",
+      "code": "TCSBRUB",
+      "en_name": "tinkoff",
+      "ru_name": "тинькофф",
+      "subgroup_name": null,
+      "currency": {
+        "id": "5",
+        "code": "rub",
+        "accuracy": 0
+      },
+      "icon": {
+        "id": "210",
+        "alternativeText": null,
+        "url": "/uploads/tinkoff_89949d6b23.png"
+      },
+      "color": "yellow",
+      "popular_as": null,
+      "section": "bank"
+    },
+    {
+      "pm_group_id": "15",
+      "code": "ADVCUSD",
+      "en_name": "Adv Cash",
+      "ru_name": null,
+      "subgroup_name": null,
+      "currency": {
+        "id": "1",
+        "code": "usd",
+        "accuracy": 2
+      },
+      "icon": {
+        "id": "228",
+        "alternativeText": null,
+        "url": "/uploads/advc_dcf1be13c9.png"
+      },
+      "color": "dark_teal",
+      "popular_as": null,
+      "section": "bank"
+    },
+    {
+      "pm_group_id": "15",
+      "code": "ADVCRUB",
+      "en_name": "Adv Cash",
+      "ru_name": null,
+      "subgroup_name": null,
+      "currency": {
+        "id": "5",
+        "code": "rub",
+        "accuracy": 0
+      },
+      "icon": {
+        "id": "228",
+        "alternativeText": null,
+        "url": "/uploads/advc_dcf1be13c9.png"
+      },
+      "color": "dark_teal",
+      "popular_as": null,
+      "section": "bank"
+    },
+    {
       "pm_group_id": "15",
       "code": "ADVCUSD",
       "en_name": "Adv Cash",
@@ -1376,6 +1435,26 @@
       "section": "bank"
     },
     {
+      "pm_group_id": "13",
+      "code": "SBERRUB",
+      "en_name": "sber",
+      "ru_name": "сбер",
+      "subgroup_name": null,
+      "currency": {
+        "id": "5",
+        "code": "rub",
+        "accuracy": 0
+      },
+      "icon": {
+        "id": "160",
+        "alternativeText": null,
+        "url": "/uploads/sber_74696b436a.png"
+      },
+      "color": "green",
+      "popular_as": null,
+      "section": "bank"
+    },
+    {
       "pm_group_id": "37",
       "code": "HLKTRY",
       "en_name": "Halk Bank",
@@ -1392,6 +1471,46 @@
         "url": "/uploads/hlk_2762af1704.png"
       },
       "color": "dark_blue",
+      "popular_as": null,
+      "section": "bank"
+    },
+    {
+      "pm_group_id": "37",
+      "code": "HLKTRY",
+      "en_name": "Halk Bank",
+      "ru_name": null,
+      "subgroup_name": null,
+      "currency": {
+        "id": "27",
+        "code": "try",
+        "accuracy": 0
+      },
+      "icon": {
+        "id": "329",
+        "alternativeText": null,
+        "url": "/uploads/hlk_2762af1704.png"
+      },
+      "color": "dark_blue",
+      "popular_as": null,
+      "section": "bank"
+    },
+    {
+      "pm_group_id": "36",
+      "code": "ZRTTRY",
+      "en_name": "Ziraat",
+      "ru_name": "Зират",
+      "subgroup_name": null,
+      "currency": {
+        "id": "27",
+        "code": "try",
+        "accuracy": 0
+      },
+      "icon": {
+        "id": "330",
+        "alternativeText": null,
+        "url": "/uploads/zrt_7278354877.png"
+      },
+      "color": "dark_red",
       "popular_as": null,
       "section": "bank"
     },
@@ -1451,7 +1570,7 @@
         "alternativeText": null,
         "url": "/uploads/cashtry_36bc6fb7b4.png"
       },
-      "color": "green",
+      "color": "gray",
       "popular_as": null,
       "section": "cash"
     },
@@ -1471,7 +1590,27 @@
         "alternativeText": null,
         "url": "/uploads/rub_d29508fc88.png"
       },
-      "color": "green",
+      "color": "gray",
+      "popular_as": null,
+      "section": "cash"
+    },
+    {
+      "pm_group_id": "22",
+      "code": "CASHRUB",
+      "en_name": "Cash",
+      "ru_name": "Наличные",
+      "subgroup_name": null,
+      "currency": {
+        "id": "5",
+        "code": "rub",
+        "accuracy": 0
+      },
+      "icon": {
+        "id": "206",
+        "alternativeText": null,
+        "url": "/uploads/rub_d29508fc88.png"
+      },
+      "color": "gray",
       "popular_as": null,
       "section": "cash"
     },
@@ -1491,7 +1630,27 @@
         "alternativeText": null,
         "url": "/uploads/usd_b07a10126c.png"
       },
-      "color": "green",
+      "color": "gray",
+      "popular_as": null,
+      "section": "cash"
+    },
+    {
+      "pm_group_id": "21",
+      "code": "CASHUSD",
+      "en_name": "Cash",
+      "ru_name": "наличные",
+      "subgroup_name": null,
+      "currency": {
+        "id": "1",
+        "code": "usd",
+        "accuracy": 2
+      },
+      "icon": {
+        "id": "211",
+        "alternativeText": null,
+        "url": "/uploads/usd_b07a10126c.png"
+      },
+      "color": "gray",
       "popular_as": null,
       "section": "cash"
     },
@@ -1499,7 +1658,27 @@
       "pm_group_id": "18",
       "code": "BTC",
       "en_name": "bitcoin",
-      "ru_name": "биткойн",
+      "ru_name": "Биткойн",
+      "subgroup_name": null,
+      "currency": {
+        "id": "4",
+        "code": "btc",
+        "accuracy": 3
+      },
+      "icon": {
+        "id": "182",
+        "alternativeText": null,
+        "url": "/uploads/btc_b73e043e56.png"
+      },
+      "color": "orange",
+      "popular_as": null,
+      "section": "crypto"
+    },
+    {
+      "pm_group_id": "18",
+      "code": "BTC",
+      "en_name": "bitcoin",
+      "ru_name": "Биткойн",
       "subgroup_name": null,
       "currency": {
         "id": "4",
@@ -1696,6 +1875,26 @@
       "section": "crypto"
     },
     {
+      "pm_group_id": "10",
+      "code": "ETH",
+      "en_name": "ethereum",
+      "ru_name": null,
+      "subgroup_name": null,
+      "currency": {
+        "id": "17",
+        "code": "eth",
+        "accuracy": 3
+      },
+      "icon": {
+        "id": "189",
+        "alternativeText": null,
+        "url": "/uploads/eth_f7f887b322.png"
+      },
+      "color": "dark_gray",
+      "popular_as": null,
+      "section": "crypto"
+    },
+    {
       "pm_group_id": "25",
       "code": "XMR",
       "en_name": "Monero",
@@ -1712,6 +1911,66 @@
         "url": "/uploads/xmr_f44605addf.png"
       },
       "color": "dark_orange",
+      "popular_as": null,
+      "section": "crypto"
+    },
+    {
+      "pm_group_id": "12",
+      "code": "USDTERC20",
+      "en_name": "tether",
+      "ru_name": null,
+      "subgroup_name": "ERC20",
+      "currency": {
+        "id": "12",
+        "code": "usdt",
+        "accuracy": 0
+      },
+      "icon": {
+        "id": "215",
+        "alternativeText": null,
+        "url": "/uploads/usdt_69caf2e1c8.png"
+      },
+      "color": "dark_teal",
+      "popular_as": null,
+      "section": "crypto"
+    },
+    {
+      "pm_group_id": "12",
+      "code": "USDTTRC20",
+      "en_name": "tether",
+      "ru_name": null,
+      "subgroup_name": "TRC20",
+      "currency": {
+        "id": "12",
+        "code": "usdt",
+        "accuracy": 0
+      },
+      "icon": {
+        "id": "215",
+        "alternativeText": null,
+        "url": "/uploads/usdt_69caf2e1c8.png"
+      },
+      "color": "dark_teal",
+      "popular_as": null,
+      "section": "crypto"
+    },
+    {
+      "pm_group_id": "12",
+      "code": "USDTTRCBLK",
+      "en_name": "tether",
+      "ru_name": null,
+      "subgroup_name": "BLACK",
+      "currency": {
+        "id": "12",
+        "code": "usdt",
+        "accuracy": 0
+      },
+      "icon": {
+        "id": "215",
+        "alternativeText": null,
+        "url": "/uploads/usdt_69caf2e1c8.png"
+      },
+      "color": "dark_teal",
       "popular_as": null,
       "section": "crypto"
     },
@@ -1836,6 +2095,26 @@
       "section": "crypto"
     },
     {
+      "pm_group_id": "20",
+      "code": "NEO",
+      "en_name": "NEO",
+      "ru_name": null,
+      "subgroup_name": null,
+      "currency": {
+        "id": "6",
+        "code": "neo",
+        "accuracy": 0
+      },
+      "icon": {
+        "id": "169",
+        "alternativeText": null,
+        "url": "/uploads/neo_7f790e0bc8.png"
+      },
+      "color": "teal",
+      "popular_as": null,
+      "section": "crypto"
+    },
+    {
       "pm_group_id": "24",
       "code": "LTC",
       "en_name": "litecoin",
@@ -1914,6 +2193,46 @@
       "color": "dark_pink",
       "popular_as": null,
       "section": "crypto"
+    },
+    {
+      "pm_group_id": "15",
+      "code": "ADVCUSD",
+      "en_name": "Adv Cash",
+      "ru_name": null,
+      "subgroup_name": null,
+      "currency": {
+        "id": "1",
+        "code": "usd",
+        "accuracy": 2
+      },
+      "icon": {
+        "id": "228",
+        "alternativeText": null,
+        "url": "/uploads/advc_dcf1be13c9.png"
+      },
+      "color": "dark_teal",
+      "popular_as": null,
+      "section": "digital"
+    },
+    {
+      "pm_group_id": "15",
+      "code": "ADVCRUB",
+      "en_name": "Adv Cash",
+      "ru_name": null,
+      "subgroup_name": null,
+      "currency": {
+        "id": "5",
+        "code": "rub",
+        "accuracy": 0
+      },
+      "icon": {
+        "id": "228",
+        "alternativeText": null,
+        "url": "/uploads/advc_dcf1be13c9.png"
+      },
+      "color": "dark_teal",
+      "popular_as": null,
+      "section": "digital"
     },
     {
       "pm_group_id": "15",
