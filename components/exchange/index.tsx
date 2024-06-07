@@ -69,7 +69,6 @@ const Exchange = ({
       <Grid
         gridTemplateColumns={{ base: "1fr", lg: "432px 432px" }}
         gridGap="4"
-        mt={[2, 4, 8]}
         //minH={[`calc(${vh}px * 100 - 64px)`, "700px"]}
       >
         <Column index={0}>
