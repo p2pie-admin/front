@@ -86,7 +86,7 @@ const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
         </Text>
       </Box>
 
-      <Shader direction="bottom" />
+      <Shader direction="top" />
     </Box3D>
   );
 };

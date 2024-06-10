@@ -22,7 +22,7 @@ const Home: NextPage = () => {
   const libraries = useMemo(() => ["places"], []);
 
   const containerStyle = {
-    width: "90vw",
+    width: "100%",
     height: "80vh",
   };
 

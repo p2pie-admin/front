@@ -8,7 +8,10 @@ import {
   useToken,
 } from "@chakra-ui/react";
 import Logo from "./Logo";
-import Nav from "./nav";
+import CitySelector from "./citySelector";
+import SwipeableDrawer from "./drawer";
+import Nav from "../nav";
+import NavHeading from "../nav/NavHeading";
 
 const Header = () => {
   const [bg200, bg900] = useToken("colors", ["bg.200", "bg.900"]);
@@ -28,13 +31,23 @@ const Header = () => {
       //   `linear(to-t, ${bg900}, rgba(0,0,0,0))`
       // )}
     >
+      <Nav />
       <HStack
         w={{ base: "100%", md: "888px" }}
         justifyContent="space-between"
         alignItems="center"
       >
-        <Logo />
-        <Nav />
+        <HStack>
+          <SwipeableDrawer />
+          <Logo />
+        </HStack>
+
+        <HStack>
+          <CitySelector />
+          <Box display={{ base: "none", xl: "block" }}>
+            <NavHeading />
+          </Box>
+        </HStack>
       </HStack>
     </Flex>
   );

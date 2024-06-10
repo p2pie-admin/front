@@ -15,6 +15,7 @@ import axios from "axios";
 import { setIP, setLocation } from "../../redux/mainReducer";
 import { initCurrencyConverterFetcher } from "../../services/fetchers";
 import { ILocation } from "../../types/shared";
+import Nav from "./nav";
 
 const Layout = ({ children }: { children: any }) => {
   // const maxW = useBreakpointValue({ base: "100%", lg: "980" });
@@ -50,10 +51,12 @@ const Layout = ({ children }: { children: any }) => {
         isClosable: true,
       });
   }, [myToast]);
+
   const ambientColor = useColorModeValue(
     "rgba(143,92,292,0.1)",
     "rgba(247,178,177,0.05)"
   );
+
   return (
     <Box // careful! populars may stop working!
       w="100%"
@@ -82,7 +85,7 @@ const Layout = ({ children }: { children: any }) => {
         gap="4"
         minH="calc(100vh - 56px)"
       >
-        <Box mt={["2", "4"]} w={{ base: "100%", md: "888px" }}>
+        <Box mt={["1", "4"]} w={{ base: "100%", md: "888px" }}>
           {children}
         </Box>
 

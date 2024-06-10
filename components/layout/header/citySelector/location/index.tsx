@@ -85,7 +85,7 @@ const Location = () => {
   );
 
   return (
-    <>
+    <Box>
       <CustomModal
         id={isMultiple ? "locations" : "location"}
         header={"Choose the City"}
@@ -114,7 +114,7 @@ const Location = () => {
           {location.en_city_name || "City"}
         </ResponsiveButton>
       )}
-    </>
+    </Box>
   );
 };
 

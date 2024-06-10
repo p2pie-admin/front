@@ -4,14 +4,20 @@ import { Box, Text } from "@chakra-ui/react";
 import MainPageContent from "../components/main";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IPopularDirRates } from "../types/rates";
-import { initParserFetcher } from "../services/fetchers";
+import { initCMSFetcher, initParserFetcher } from "../services/fetchers";
 import { readCache } from "../services/cache";
 import { ICache } from "../types/exchange";
-import { IPm } from "../types/selector";
+
+import { MainTextsQuery } from "../services/initialQueries";
+import { IMainText } from "../types/pages";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   // must be async
   try {
+    const cmsFetcher = initCMSFetcher({ locale });
+    const { mainTexts } = (await cmsFetcher(MainTextsQuery)) as {
+      mainTexts: IMainText[];
+    };
     const possiblePairsFetcher = initParserFetcher();
     const popularRates = (await possiblePairsFetcher(
       "top"
@@ -29,8 +35,10 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 
     return {
       props: {
-        popularPms,
-        popularRates,
+        popularPms: popularPms || null,
+        popularRates: popularRates || null,
+        mainTexts: mainTexts || null,
+        locale,
         ...(await serverSideTranslations(locale || "ru", ["home"])),
       },
     };

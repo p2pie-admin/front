@@ -217,3 +217,34 @@ export const articleQuery = gql`
     }
   }
 `;
+
+export const MainTextsQuery = gql`
+  query MainTexts($locale: I18NLocaleCode) {
+    mainTexts(locale: $locale, pagination: { start: 0, limit: 24 }) {
+      data {
+        id
+        attributes {
+          title
+          description
+          link {
+            id
+            text
+            href
+            isExternal
+            isBlank
+          }
+          image {
+            data {
+              id
+              attributes {
+                name
+                alternativeText
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;

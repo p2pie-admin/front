@@ -23,7 +23,7 @@ const OtherDirs = ({
           p="2"
           mt="0"
         >
-          {`Купить ${capitalize(code)}:`}
+          {`Продать ${capitalize(code)}:`}
         </Heading>
         <Flex gap="2" w="100%" flexWrap="wrap">
           {otherDirs.buy.map((pmPair) => (
@@ -46,7 +46,7 @@ const OtherDirs = ({
           p="2"
           mt="0"
         >
-          {`Продать ${capitalize(code)}:`}
+          {`Купить ${capitalize(code)}:`}
         </Heading>
         <Flex gap="2" w="100%" flexWrap="wrap">
           {otherDirs.sell.map((pmPair) => (

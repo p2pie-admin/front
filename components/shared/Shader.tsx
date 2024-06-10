@@ -3,14 +3,14 @@ import { Box } from "@chakra-ui/react";
 
 const Shader = ({
   direction = "top",
-  intense = false,
+  no_contrast = false,
 }: {
   direction: "top" | "bottom";
-  intense?: boolean;
+  no_contrast?: boolean;
 }) => {
   const [shaderColor] = useToken(
     "colors",
-    intense
+    no_contrast
       ? useColorModeValue(["bg.100"], ["bg.700"])
       : useColorModeValue(["bg.200"], ["bg.900"])
   );
@@ -18,15 +18,11 @@ const Shader = ({
   return (
     <Box
       w="100%"
-      boxShadow={
-        intense
-          ? `0 0 70px 30px ${shaderColor}`
-          : `0 0 70px 30px ${shaderColor}`
-      }
+      boxShadow={`0 0 70px 30px ${shaderColor}`}
       position="absolute"
       left="0"
-      top={direction === "top" ? "0" : "unset"}
-      bottom={direction === "bottom" ? "0" : "unset"}
+      top={direction === "bottom" ? "0" : "unset"}
+      bottom={direction === "top" ? "0" : "unset"}
       zIndex="10"
     />
   );

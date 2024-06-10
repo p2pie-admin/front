@@ -8,7 +8,7 @@ const CustomImage = ({
   h = "200px",
   shaded = false,
 }: {
-  img: IImage;
+  img?: IImage;
   w?: string;
   h?: string;
   shaded?: boolean;
@@ -21,9 +21,10 @@ const CustomImage = ({
 
   const fallbackSRC =
     "https://static.vecteezy.com/system/resources/thumbnails/011/299/215/small/simple-loading-or-buffering-icon-design-png.png";
+  if (!img) return <></>;
   return (
     <Image
-      objectFit="cover"
+      key={img.id}
       w={w}
       h={h}
       filter={shaded ? "grayscale(0.6) brightness(0.3)" : "none"}

@@ -6,7 +6,7 @@ const ColumnHeader = ({
   query,
 }: {
   text: string;
-  as: "h1" | "h2";
+  as: "h1" | "h2" | "h3";
   query: string[];
 }) => {
   const secondaryColor = useColorModeValue("bg.700", "bg.200");
@@ -17,8 +17,9 @@ const ColumnHeader = ({
       as={as}
       size={text.length > 38 ? "sm" : "md"}
       color={secondaryColor}
-      mb={["2", "4"]}
+      mb="4"
       mt="0"
+      display={as == "h1" ? ["none", "block"] : ["block", "block"]}
     >
       <Highlight query={query} styles={{ color: primaryColor }}>
         {text}

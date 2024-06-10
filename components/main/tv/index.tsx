@@ -33,7 +33,7 @@ const TV = ({ dir }: { dir: string }) => {
   };
 
   return (
-    <Box h={`425px`}>
+    <Box minH={`${itemHeight * visibleItems}`}>
       <ErrorWrapper
         isError={dirRatesStatus === "rejected"}
         isLoading={!dirRates.length || dirRatesStatus === "pending"}

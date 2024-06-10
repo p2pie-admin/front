@@ -1,6 +1,6 @@
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
-import NavButton from "../NavButton";
+import NavButton from "./NavButton";
 
 const Language = () => {
   const router = useRouter();

@@ -1,28 +1,16 @@
-import {
-  Box,
-  Button,
-  useColorMode,
-  Text,
-  Flex,
-  useColorModeValue,
-  HStack,
-} from "@chakra-ui/react";
-import NavButton from "./NavButton";
+import { HStack } from "@chakra-ui/react";
 
 import Location from "./location";
 import MultipleCitiesContext from "./location/MultipleCitiesContext";
 
-import NavMenu from "./drawer";
-
-const Nav = () => {
+const CitySelector = () => {
   return (
     <HStack spacing="2">
       <MultipleCitiesContext.Provider value={false}>
         <Location />
       </MultipleCitiesContext.Provider>
-      <NavMenu />
     </HStack>
   );
 };
 
-export default Nav;
+export default CitySelector;

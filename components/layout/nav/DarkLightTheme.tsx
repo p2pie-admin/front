@@ -1,9 +1,10 @@
-import { useColorMode } from "@chakra-ui/react";
+import { Theme, useColorMode } from "@chakra-ui/react";
 import { WeatherSunny } from "styled-icons/fluentui-system-filled";
-import NavButton from "../NavButton";
-import { TbMoonFilled } from "react-icons/tb";
 
-const Theme = () => {
+import { TbMoonFilled } from "react-icons/tb";
+import NavButton from "./NavButton";
+
+const DarkLightTheme = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <NavButton
@@ -13,4 +14,4 @@ const Theme = () => {
   );
 };
 
-export default Theme;
+export default DarkLightTheme;

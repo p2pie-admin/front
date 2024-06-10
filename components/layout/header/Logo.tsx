@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 const Logo = () => {
   const router = useRouter();
   return (
-    <Flex flexDir="row" onClick={() => router.reload()} cursor="pointer">
+    <Flex flexDir="row" onClick={() => router.push("/")} cursor="pointer">
       <Image alt="logo" src={useColorModeValue(darkPie, lightPie)} width={36} />
 
       <Text

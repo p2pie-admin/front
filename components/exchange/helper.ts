@@ -2,11 +2,6 @@ import { ICities } from "../../types/exchange";
 import { IPm } from "../../types/selector";
 import { capitalize } from "../main/side/selector/section/PmGroup/helper";
 
-export function ifMobile(userAgent: string): boolean {
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(userAgent);
-  return isMobile;
-}
-
 export const fillWords = ({
   givePm,
   getPm,

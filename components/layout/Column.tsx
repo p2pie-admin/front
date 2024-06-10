@@ -13,9 +13,9 @@ export const Column = ({
       key={index}
       variant="no_contrast"
       p="4"
+      overflow="hidden"
       w={{ base: "100%", sm: 432 }}
-      h={["744px", "764px"]}
-      gridRow={index ? { base: "-1", lg: "unset" } : "unset"}
+      gridRow={!index ? { base: "2", lg: "1" } : "unset"}
     >
       {children}
     </Box3D>

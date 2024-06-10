@@ -158,7 +158,7 @@ export const Swiper = (props: {
             setMouseEntered(false);
           }}
         >
-          <Shader direction="bottom" />
+          <Shader direction="top" />
           <motion.div
             drag="y"
             dragConstraints={dragConstraints}
@@ -179,7 +179,7 @@ export const Swiper = (props: {
             ))}
           </motion.div>
 
-          <Shader direction="top" />
+          <Shader direction="bottom" />
         </Box>
         <Box
           position="absolute"

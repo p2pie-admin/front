@@ -1,3 +1,5 @@
+import { IImage } from "./selector";
+
 export interface IArticle {
   id: string;
   header: string;
@@ -20,8 +22,8 @@ export interface ILink {
   id: string;
   text: string;
   href: string;
-  isExternal: string;
-  isBlank: string;
+  isExternal: boolean;
+  isBlank: boolean;
 }
 
 export interface IDisclaimer {
@@ -29,4 +31,12 @@ export interface IDisclaimer {
   title: string;
   text: string;
   color: "green" | "yellow" | "red";
+}
+
+export interface IMainText {
+  id: string;
+  title?: string;
+  description?: string;
+  image?: IImage;
+  link: ILink;
 }

@@ -1,19 +1,18 @@
 import { Box, Grid, Heading, VStack, Text } from "@chakra-ui/react";
-import { Box3D, RegularBox, ResponsiveText } from "../../styles/theme/custom";
-import DirTitle from "./DirTitle";
+import { Box3D } from "../../styles/theme/custom";
+
 import { IPm } from "../../types/selector";
 import LimitsRange from "../main/limits";
 import TV from "../main/tv";
 import Calculator from "../main/Calculator";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setInitialData } from "../../redux/mainReducer";
 import DirText from "./DirText";
 
-import useViewportHeight from "../hooks";
 import Chart from "./Chart";
-import { fetchCCRates, fetchCurrencyConverterRates } from "../../redux/thunks";
+import { fetchCurrencyConverterRates } from "../../redux/thunks";
 import { useEffect } from "react";
-import { dir } from "i18next";
+
 import { batch } from "react-redux";
 import Similar from "./Similar";
 import { Column } from "../layout/Column";
@@ -21,6 +20,7 @@ import ColumnHeader from "../layout/ColumnHeader";
 import { generateTitle } from "./helper";
 import PmsDescription from "./PmsDescription";
 import { IDirText, IPmsText } from "../../types/exchange";
+import ColumnGrid from "../layout/ColumnGrid";
 
 const Exchange = ({
   locale,
@@ -45,6 +45,9 @@ const Exchange = ({
   const dispatch = useAppDispatch();
   const dir = `${givePm.code}_${getPm.code}`;
   const curPair = `${givePm.currency.code}_${getPm.currency.code}`;
+  const ratesFound = useAppSelector(
+    (state) => state.main.dirRates?.length || ""
+  );
 
   useEffect(() => {
     batch(() => {
@@ -61,49 +64,45 @@ const Exchange = ({
   //const vh = useViewportHeight();
   const giveCur = givePm.currency.code.toUpperCase();
   const getCur = getPm.currency.code.toUpperCase();
-  const title = `Информация по направлению`;
+  const title2 = `Найдено обменников: ${ratesFound}`;
+  const title1 = generateTitle({
+    locale,
+    givePm,
+    getPm,
+  });
 
   if (!slug) return <></>;
   return (
-    <VStack gap="4">
-      <Grid
-        gridTemplateColumns={{ base: "1fr", lg: "432px 432px" }}
-        gridGap="4"
-        //minH={[`calc(${vh}px * 100 - 64px)`, "700px"]}
+    <ColumnGrid>
+      <Column index={0}>
+        <ColumnHeader
+          text={title1}
+          as="h2"
+          query={[givePm.currency.code, getPm.currency.code]}
+        />
+        <Chart giveCur={giveCur} getCur={getCur} />
+        <VStack mt="4" w="100%" gap="4">
+          <Box w="100%">
+            <PmsDescription givePm={givePm} getPm={getPm} pmsTexts={pmsTexts} />
+          </Box>
+
+          <Similar similarPmPairs={similarPmPairs} />
+        </VStack>
+      </Column>
+
+      <Column index={1}>
+        <ColumnHeader text={title2} as="h1" query={[String(ratesFound)]} />
+        <Calculator />
+
+        <LimitsRange />
+        <TV dir={dir} />
+      </Column>
+      <Box3D
+        p="4"
+        variant="no_contrast"
+        gridColumn={{ base: "unset", lg: "1/3" }}
+        gridRow={{ base: "3", lg: "2" }}
       >
-        <Column index={0}>
-          <ColumnHeader text={title} as="h2" query={[]} />
-          <Chart giveCur={giveCur} getCur={getCur} />
-          <VStack mt="4" w="100%" gap="4">
-            <Box w="100%">
-              <PmsDescription
-                givePm={givePm}
-                getPm={getPm}
-                pmsTexts={pmsTexts}
-              />
-            </Box>
-
-            <Similar similarPmPairs={similarPmPairs} />
-          </VStack>
-        </Column>
-
-        <Column index={1}>
-          <ColumnHeader
-            text={generateTitle({
-              locale,
-              givePm,
-              getPm,
-            })}
-            as="h1"
-            query={[givePm.currency.code, getPm.currency.code]}
-          />
-          <Calculator />
-
-          <LimitsRange />
-          <TV dir={dir} />
-        </Column>
-      </Grid>
-      <Box3D p="4" variant="no_contrast" w="100%">
         <DirText
           dirText={dirText}
           givePm={givePm}
@@ -112,7 +111,7 @@ const Exchange = ({
           cityName={cityName}
         />
       </Box3D>
-    </VStack>
+    </ColumnGrid>
   );
 };
 

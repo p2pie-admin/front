@@ -69,7 +69,7 @@ const CustomModal = ({
           {children}
           <Box w="100%" h="20" onScroll={(e) => e.preventDefault()} />
         </ModalBody>
-        <Shader direction="bottom" intense />
+        <Shader direction="top" no_contrast />
       </ModalContent>
     </Modal>
   );
