@@ -12,9 +12,12 @@ import { IMainText } from "../../types/pages";
 import Shader from "../shared/Shader";
 import { useState, useEffect } from "react";
 import CustomImage from "../shared/CustomImage";
+import { ResponsiveText } from "../../styles/theme/custom";
 
 const CircularTexts = ({ mainTexts }: { mainTexts?: IMainText[] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const borderColor = useColorModeValue("bg.200", "bg.600");
+  const bgColor = useColorModeValue("bg.100", "bg.700");
   const mainColor = useColorModeValue("violet.600", "peach.200");
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -43,13 +46,15 @@ const CircularTexts = ({ mainTexts }: { mainTexts?: IMainText[] }) => {
             opacity={currentIndex % mainTexts.length === index ? 1 : 0}
             transition="opacity 1s ease-in-out, transform .8s ease-in-out"
           >
-            <Text fontSize="2xl" color="bg.100">
-              {mt.title}
-            </Text>
-            <Divider bgColor="whiteAlpha.100" maxW="60%" my="1" />
-            <Text color="bg.300" maxW="70%">
+            <ResponsiveText fontSize="2xl">{mt.title}</ResponsiveText>
+            <Box h="1px" bgColor={borderColor} w="60%" my="1" />
+            <ResponsiveText
+              whiteSpace="normal"
+              variant="no_contrast"
+              maxW="70%"
+            >
               {mt.description}
-            </Text>
+            </ResponsiveText>
 
             <Link
               href={mt.link?.href}
@@ -64,12 +69,12 @@ const CircularTexts = ({ mainTexts }: { mainTexts?: IMainText[] }) => {
         <Box
           position="absolute"
           top="50%"
-          left="10%"
+          left="12%"
           w="600px"
           h="600px"
           borderRadius="50%"
           border="2px dashed"
-          borderColor="bg.600"
+          borderColor={borderColor}
           transition="transform 1s ease-in-out"
           transform={`translate(-50%, -50%) rotate(${
             (-currentIndex * 360) / mainTexts.length
@@ -85,8 +90,8 @@ const CircularTexts = ({ mainTexts }: { mainTexts?: IMainText[] }) => {
                 h="100px"
                 w="100px"
                 border="2px dashed"
-                borderColor="bg.600"
-                bgColor="bg.700"
+                borderColor={borderColor}
+                bgColor={bgColor}
                 borderRadius="50%"
                 position="absolute"
                 left={`${x}px`}

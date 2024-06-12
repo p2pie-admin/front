@@ -85,7 +85,7 @@ const Layout = ({ children }: { children: any }) => {
         gap="4"
         minH="calc(100vh - 56px)"
       >
-        <Box mt={["1", "4"]} w={{ base: "100%", md: "888px" }}>
+        <Box mt={["1", "4"]} maxW={{ base: "100%", md: "888px" }}>
           {children}
         </Box>
 

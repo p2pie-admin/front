@@ -8,16 +8,21 @@ import { initCMSFetcher, initParserFetcher } from "../services/fetchers";
 import { readCache } from "../services/cache";
 import { ICache } from "../types/exchange";
 
-import { MainTextsQuery } from "../services/initialQueries";
-import { IMainText } from "../types/pages";
+import { MainTextsQuery, RootTextQuery } from "../services/initialQueries";
+import { IMainText, ITextBox } from "../types/pages";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   // must be async
   try {
-    const cmsFetcher = initCMSFetcher({ locale });
-    const { mainTexts } = (await cmsFetcher(MainTextsQuery)) as {
+    const circleTextsFetcher = initCMSFetcher({ locale });
+    const { mainTexts } = (await circleTextsFetcher(MainTextsQuery)) as {
       mainTexts: IMainText[];
     };
+    const rootTextFetcher = initCMSFetcher({ locale, key: "root" });
+    const { textBoxes } = (await rootTextFetcher(RootTextQuery)) as {
+      textBoxes: ITextBox[];
+    };
+    const rootText = textBoxes[0] || null;
     const possiblePairsFetcher = initParserFetcher();
     const popularRates = (await possiblePairsFetcher(
       "top"
@@ -38,6 +43,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
         popularPms: popularPms || null,
         popularRates: popularRates || null,
         mainTexts: mainTexts || null,
+        rootText,
         locale,
         ...(await serverSideTranslations(locale || "ru", ["home"])),
       },

@@ -2,6 +2,7 @@ import { Text, VStack, useColorModeValue } from "@chakra-ui/react";
 import { useContext } from "react";
 import { SectionContext } from "../../../../../shared/contexts/SectionContext";
 import { capitalize } from "./helper";
+import Link from "next/link";
 
 export default function Name({ name, code }: { name: string; code?: string }) {
   const { currencyHidden } = useContext(SectionContext);

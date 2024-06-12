@@ -248,3 +248,18 @@ export const MainTextsQuery = gql`
     }
   }
 `;
+
+export const RootTextQuery = gql`
+  query TextBox($locale: I18NLocaleCode, $key: String) {
+    textBoxes(locale: $locale, filters: { key: { eqi: $key } }) {
+      data {
+        id
+        attributes {
+          title
+          subtitle
+          text
+        }
+      }
+    }
+  }
+`;

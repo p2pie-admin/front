@@ -2,15 +2,16 @@ import { color, Heading, Highlight, useColorModeValue } from "@chakra-ui/react";
 
 const ColumnHeader = ({
   text,
-  as,
+  as = "h3",
   query,
 }: {
-  text: string;
-  as: "h1" | "h2" | "h3";
-  query: string[];
+  text?: string;
+  as?: "h1" | "h2" | "h3";
+  query?: string[];
 }) => {
   const secondaryColor = useColorModeValue("bg.700", "bg.200");
   const primaryColor = useColorModeValue("violet.500", "peach.200");
+  if (!text) return <></>;
   return (
     <Heading
       textAlign="center"
@@ -21,7 +22,7 @@ const ColumnHeader = ({
       mt="0"
       display={as == "h1" ? ["none", "block"] : ["block", "block"]}
     >
-      <Highlight query={query} styles={{ color: primaryColor }}>
+      <Highlight query={query || []} styles={{ color: primaryColor }}>
         {text}
       </Highlight>
     </Heading>
