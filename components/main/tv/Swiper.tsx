@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useState, ReactChildren } from "react";
 import { TbTriangleInvertedFilled } from "react-icons/tb";
 import { motion, useMotionValue, useAnimation } from "framer-motion";
-import { Box, Grid } from "@chakra-ui/react";
+import { Box, Grid, useColorModeValue } from "@chakra-ui/react";
 import Shader from "../../shared/Shader";
 import { Box3D } from "../../../styles/theme/custom";
 import ControlPanel from "./ControlPanel";
@@ -21,7 +21,8 @@ export const Swiper = (props: {
     props;
   const length = dirRates.length;
   const dispatch = useAppDispatch();
-
+  const bgColor = useColorModeValue("bg.50", "bg.800");
+  const triangleColor = useColorModeValue("bg.100", "bg.600");
   const [mouseEntered, setMouseEntered] = useState(false);
 
   const y = useMotionValue(0);
@@ -92,7 +93,6 @@ export const Swiper = (props: {
   const stepUp = () => {
     const currentIndex = getIndex();
     const newIndex = Math.min(currentIndex + 1, length - 1);
-
     dispatch(setSwiperIdVisible(newIndex));
     scrollToItem(newIndex);
   };
@@ -139,7 +139,7 @@ export const Swiper = (props: {
           position="relative"
           overflow="hidden"
           h={`${containerHeight + 34}px`}
-          bgColor="bg.800"
+          bgColor={bgColor}
           px="1"
           py="4"
           borderRadius={`${4}% ${4}% ${4}% ${4}% / 50% 50% 50% 50%`}
@@ -185,7 +185,7 @@ export const Swiper = (props: {
           position="absolute"
           right="0"
           top={`calc(${containerHeight / 2}px )`}
-          color={mouseEntered ? "bg.500" : "bg.600"}
+          color={triangleColor}
           transform="rotate(90deg)"
         >
           <TbTriangleInvertedFilled size="2rem" />

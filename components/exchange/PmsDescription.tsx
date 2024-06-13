@@ -25,8 +25,8 @@ const PmsDescription = ({
         variant="extra_contrast"
         p="2"
         cursor="pointer"
-        transition="background 0.1s ease-in"
-        _hover={{ bgColor: "bg.1000" }}
+        transition="filter 0.2s ease-in"
+        _hover={{ filter: "brightness(1.1)" }}
       >
         <Link href={`/articles/${givePmText?.articles[0]?.code}`} passHref>
           <VStack h="100%" justifyContent="space-around" color="bg.400">
@@ -51,8 +51,8 @@ const PmsDescription = ({
         variant="extra_contrast"
         p="2"
         cursor="pointer"
-        transition="background 0.1s ease-in"
-        _hover={{ bgColor: "bg.1000" }}
+        transition="filter 0.1s ease-in"
+        _hover={{ filter: "brightness(1.1)" }}
       >
         <Link href={`/articles/${getPmText?.articles[0]?.code}`} passHref>
           <VStack h="100%" justifyContent="space-around" color="bg.400">

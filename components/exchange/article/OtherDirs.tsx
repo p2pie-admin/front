@@ -2,7 +2,7 @@ import { Box, Flex, Heading, VStack } from "@chakra-ui/react";
 import { capitalize } from "../../main/side/selector/section/PmGroup/helper";
 import { IPm } from "../../../types/selector";
 import { IPmPairs } from "../../../types/exchange";
-import Dir from "../../shared/Dir";
+import Dir from "../Dir";
 
 const OtherDirs = ({
   code,

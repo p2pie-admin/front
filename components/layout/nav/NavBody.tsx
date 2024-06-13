@@ -7,7 +7,7 @@ const NavBody = () => {
   return (
     <>
       <LinkButton message="Home" href={"/"} CustomIcon={FiHome} />
-      <LinkButton
+      {/* <LinkButton
         message="Suggest Exchange"
         href={"/order"}
         CustomIcon={FiPlusCircle}
@@ -16,7 +16,7 @@ const NavBody = () => {
         message="Create Exchanger"
         href={"/create"}
         CustomIcon={RiTokenSwapLine}
-      />
+      /> */}
       <LinkButton
         message="Exchangers Map"
         href={"/map"}

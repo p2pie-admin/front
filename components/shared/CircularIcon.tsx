@@ -1,4 +1,10 @@
-import { Image, Box, Center, useToken } from "@chakra-ui/react";
+import {
+  Image,
+  Box,
+  Center,
+  useToken,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { IImage } from "../../types/selector";
 
 const CircularIcon = ({
@@ -79,6 +85,11 @@ const CircularIcon = ({
 
   const colorHEX = colors?.[color] || "#aaa";
   const env = process.env.NODE_ENV;
+  const baseColor = "#45ffff";
+  const filter = useColorModeValue(
+    "hue-rotate(70deg) brightness(0.3) opacity(0.8)",
+    "hue-rotate(-140deg) brightness(0.1)"
+  );
   const SRC =
     env === "production"
       ? process.env.NEXT_PUBLIC_STRAPI_PROD_BASE_URL
@@ -86,25 +97,32 @@ const CircularIcon = ({
 
   const size = small ? [5, 6] : [6, 7];
   return (
-    <Center w={size} h={size}>
-      <Center
+    <Center w={size} h={size} position="relative">
+      <Image
+        zIndex="6"
+        filter={filter}
+        // filter={shaded ? "grayscale(0.6) brightness(0.3)" : "none"}
+        // fallbackSrc={fallbackSRC}
+        src={icon ? SRC + icon.url : ""}
+        alt={icon ? icon.alternativeText : ""}
+      />
+
+      <Box
+        position="absolute"
+        zIndex="5"
         borderRadius="50%"
+        w="100%"
+        h="100%"
         boxShadow={
           small
             ? `0px 0px 10px -10px ${colorHEX}`
             : `0px 0px 14px -7px ${colorHEX}`
         }
+        filter="saturate(1.5)"
         bg={`radial-gradient(circle, ${colorHEX} 60%, rgba(0,0,0,0) 70%)`}
-        position="relative"
-      >
-        <Image
-          filter="hue-rotate(-140deg) brightness(0.1)"
-          // filter={shaded ? "grayscale(0.6) brightness(0.3)" : "none"}
-          // fallbackSrc={fallbackSRC}
-          src={icon ? SRC + icon.url : ""}
-          alt={icon ? icon.alternativeText : ""}
-        />
-      </Center>
+        // position="absolute"
+      />
+
       <Box
         position="absolute"
         w="10"

@@ -2,8 +2,9 @@ import { Grid, Box } from "@chakra-ui/react";
 
 import Link from "next/link";
 import { BsArrowRightShort } from "react-icons/bs";
-import PmName from "./PmName";
+import PmName from "../shared/PmName";
 import { IPm } from "../../types/selector";
+import { Box3D } from "../../styles/theme/custom";
 
 const Dir = ({
   children,
@@ -18,15 +19,13 @@ const Dir = ({
 }) => {
   return (
     <Link href={`/exchange/${slug}`} passHref>
-      <Box
-        borderRadius="lg"
-        border="1px dashed"
-        borderColor="whiteAlpha.200"
+      <Box3D
         p="2"
         my="2"
         cursor="pointer"
-        transition="background 0.1s ease-in"
-        _hover={{ bgColor: "bg.1000" }}
+        transition="filter 0.2s ease-in"
+        _hover={{ filter: "brightness(1.1)" }}
+        variant="extra_contrast"
       >
         <Grid
           gridTemplateColumns={"1fr 40px  1fr"}
@@ -39,7 +38,7 @@ const Dir = ({
           <PmName pm={getPm} />
         </Grid>
         {children || ""}
-      </Box>
+      </Box3D>
     </Link>
   );
 };

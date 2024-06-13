@@ -1,4 +1,10 @@
-import { Box, Divider, HStack } from "@chakra-ui/react";
+import {
+  Box,
+  Divider,
+  HStack,
+  useColorMode,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { FaStar } from "react-icons/fa";
@@ -42,7 +48,7 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
   const getCur = useAppSelector(
     (state) => state.main.getPm?.currency.code.toUpperCase() || ""
   );
-
+  const bgColor = useColorModeValue("bg.10", "bg.700");
   const side = course > 1 ? "give" : "get";
   const smallCur = side === "give" ? giveCur : getCur;
   const bigCur = side === "give" ? getCur : giveCur;
@@ -55,7 +61,7 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
       h="100%"
       w="100%"
       borderRadius="inherit"
-      bgColor="bg.700"
+      bgColor={bgColor}
       filter="none"
       transition="filter 200ms linear"
       _hover={{
@@ -67,7 +73,7 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
           size="xl"
           fontWeight="bold"
           transition="color 200ms linear"
-          color={index === activeIndex ? "peach.200" : "bg.300"}
+          variant={index === activeIndex ? "primary" : "no_contrast"}
           cursor="pointer"
           onClick={() => {
             dispatch(redirect());

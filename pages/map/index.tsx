@@ -179,7 +179,13 @@ const Home: NextPage = () => {
   console.log(priceBasis);
 
   return (
-    <Box bgColor="bg.800" borderRadius="lg" p="4">
+    <Box
+      bgColor="bg.800"
+      borderRadius="lg"
+      p="4"
+      w="96vw"
+      minW={{ base: "100%", lg: "888px" }}
+    >
       <GoogleMap
         options={mapOptions}
         zoom={13}

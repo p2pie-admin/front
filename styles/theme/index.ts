@@ -29,7 +29,6 @@ const styles = {
       bg: mode("bg.200", "bg.900")(props),
       color: "bg.100",
     },
-
     h1: {
       fontSize: ["4xl", "3xl"],
       fontWeight: "bold",

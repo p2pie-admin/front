@@ -14,14 +14,16 @@ import { ICurrencyConverterRate } from "../../types/p2p";
 import { format, localFormat, R } from "../../redux/amountsHelper";
 
 const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
+  const color = "bg.10";
+  const bgColor = useColorModeValue("violet.600", "bg.900");
   const env = process.env.NODE_ENV;
   const SRC =
     env === "production"
       ? process.env.NEXT_PUBLIC_CONVERTER_PROD_URL
       : process.env.NEXT_PUBLIC_CONVERTER_DEV_URL;
-  const bgColor = useColorModeValue("violet.900", "bg.900");
+
   const [isLongTimeFrame, setTimeframe] = useState(true);
-  const primaryColor = useColorModeValue("violet.600", "peach.200");
+  const primaryColor = useColorModeValue("bg.800", "peach.200");
   const ccRates = useAppSelector(
     (state) => state.main.ccRates || ({} as ICurrencyConverterRate)
   );
@@ -37,24 +39,6 @@ const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
       : `1 USD ~ ${format(getToUSD, 2)} ${getCur}`;
   return (
     <Box3D bgColor={bgColor} overflow="hidden" position="relative">
-      <HStack position="absolute" top="0" right="0">
-        <Button
-          variant="default"
-          size="sm"
-          onClick={() => setTimeframe(false)}
-          color={!isLongTimeFrame ? primaryColor : "whiteAlpha.300"}
-        >
-          1h
-        </Button>
-        <Button
-          variant="default"
-          size="sm"
-          onClick={() => setTimeframe(true)}
-          color={isLongTimeFrame ? primaryColor : "whiteAlpha.300"}
-        >
-          24h
-        </Button>
-      </HStack>
       <Image
         w={400}
         h={180}
@@ -63,7 +47,7 @@ const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
           isLongTimeFrame ? "day" : "hour"
         }`}
       />
-      <HStack position="absolute" top="2" left="2" zIndex="35">
+      <HStack position="absolute" bottom="1" left="1" zIndex="35" px="2">
         <Text fontSize="md" fontWeight="bold" color={primaryColor}>
           {`${giveCur} / ${getCur}`}
         </Text>
@@ -71,21 +55,40 @@ const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
           trend > 0 ? "-" : "+"
         } ${format(Math.abs(trend), 3)}% ${trend > 0 ? "▼" : "▲"}`}</Text>
       </HStack>
-      <Box
+      <HStack
+        justifyContent="space-between"
         position="absolute"
-        bottom="2"
-        right="2"
+        top="0"
+        right="0"
         zIndex="35"
-        bgColor="blackAlpha.500"
         borderRadius="lg"
         px="2"
-        py="1"
+        w="calc(100% - 8px)"
       >
-        <Text fontSize="sm" color="bg.200">
+        <Text fontSize="sm" color={color}>
           {giveUsdRate + " | " + getUsdRate}
         </Text>
-      </Box>
-
+        <HStack>
+          <Button
+            variant="default"
+            m="0"
+            size="xs"
+            onClick={() => setTimeframe(false)}
+            color={!isLongTimeFrame ? primaryColor : "whiteAlpha.400"}
+          >
+            1h
+          </Button>
+          <Button
+            variant="default"
+            size="xs"
+            m="0"
+            onClick={() => setTimeframe(true)}
+            color={isLongTimeFrame ? primaryColor : "whiteAlpha.400"}
+          >
+            24h
+          </Button>
+        </HStack>
+      </HStack>
       <Shader direction="top" />
     </Box3D>
   );

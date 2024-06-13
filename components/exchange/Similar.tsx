@@ -9,7 +9,7 @@ import { format } from "../../redux/amountsHelper";
 import { useRouter } from "next/router";
 import Link from "next/link"; // Import Link from next/link
 import PmName from "../shared/PmName";
-import Dir from "../shared/Dir";
+import Dir from "./Dir";
 import ErrorWrapper from "../shared/ErrorWrapper";
 
 const Similar = ({ similarPmPairs }: { similarPmPairs: IPm[][] }) => {

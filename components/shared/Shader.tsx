@@ -12,7 +12,7 @@ const Shader = ({
     "colors",
     no_contrast
       ? useColorModeValue(["bg.100"], ["bg.700"])
-      : useColorModeValue(["bg.200"], ["bg.900"])
+      : useColorModeValue(["bg.50"], ["bg.900"])
   );
 
   return (

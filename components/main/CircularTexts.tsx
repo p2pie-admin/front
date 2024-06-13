@@ -36,7 +36,7 @@ const CircularTexts = ({ mainTexts }: { mainTexts?: IMainText[] }) => {
             key={index}
             position="absolute"
             top={currentIndex % mainTexts.length === index ? "50%" : "1020%"}
-            left="52%"
+            left="50%"
             transform={
               currentIndex % mainTexts.length === index
                 ? "translate(-50%, -50%)"
@@ -51,7 +51,7 @@ const CircularTexts = ({ mainTexts }: { mainTexts?: IMainText[] }) => {
             <ResponsiveText
               whiteSpace="normal"
               variant="no_contrast"
-              maxW="70%"
+              maxW="68%"
             >
               {mt.description}
             </ResponsiveText>
@@ -69,7 +69,7 @@ const CircularTexts = ({ mainTexts }: { mainTexts?: IMainText[] }) => {
         <Box
           position="absolute"
           top="50%"
-          left="12%"
+          left="10%"
           w="600px"
           h="600px"
           borderRadius="50%"

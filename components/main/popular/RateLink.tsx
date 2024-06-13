@@ -1,4 +1,4 @@
-import { Box, color, HStack, Text } from "@chakra-ui/react";
+import { Box, color, HStack, Text, useColorModeValue } from "@chakra-ui/react";
 import Link from "next/link";
 import { BiLinkExternal } from "react-icons/bi";
 import { ResponsiveText } from "../../../styles/theme/custom";
@@ -13,13 +13,16 @@ const RateLink = ({
   rateNumber: string;
   side: "buy" | "sell";
 }) => {
+  const green = useColorModeValue("green.700", "green.200");
+  const pink = useColorModeValue("pink.700", "pink.200");
+  const bgColor = useColorModeValue("bg.10", "bg.800");
   return (
     <Link href={`/exchange/${slug}`} passHref>
       <HStack
         px="1"
         borderRadius="md"
-        bgColor="blackAlpha.200"
-        _hover={{ bgColor: "whiteAlpha.100" }}
+        bgColor={bgColor}
+        _hover={{ filter: "brightness(1.1)" }}
         cursor="pointer"
         my="0.5"
         w="100%"
@@ -27,10 +30,7 @@ const RateLink = ({
         filter="opacity(0.8)"
       >
         <Text color="bg.500">{side === "buy" ? "от" : "до"}</Text>
-        <ResponsiveText
-          color={side === "buy" ? "pink.200" : "green.200"}
-          textAlign="end"
-        >
+        <ResponsiveText color={side === "buy" ? pink : green} textAlign="end">
           {rateNumber}
         </ResponsiveText>
       </HStack>

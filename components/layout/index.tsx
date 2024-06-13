@@ -53,8 +53,8 @@ const Layout = ({ children }: { children: any }) => {
   }, [myToast]);
 
   const ambientColor = useColorModeValue(
-    "rgba(143,92,292,0.1)",
-    "rgba(247,178,177,0.05)"
+    "rgba(143,92,292,0.2)",
+    "rgba(247,178,177,0.1)"
   );
 
   return (
@@ -75,7 +75,7 @@ const Layout = ({ children }: { children: any }) => {
       <Box
         position="absolute"
         w="100%"
-        h="50vh"
+        h="80vh"
         bgGradient={`radial-gradient(circle at 50% -10%, ${ambientColor} 0%, transparent 40%)`}
       ></Box>
       <Header />

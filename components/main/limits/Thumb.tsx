@@ -30,8 +30,8 @@ const Thumb = ({
   ]);
 
   const colorKey = useColorModeValue(secondary600, primary300);
-  const color = useColorModeValue("bg.200", "bg.800");
-  const mainColor = useColorModeValue("violet.600", "peach.200");
+  const colorHint = useColorModeValue("bg.10", "bg.800");
+  const mainColor = useColorModeValue("violet.500", "peach.200");
 
   const shake = keyframes`
   from {transform: translateX(-5px)}
@@ -49,30 +49,32 @@ const Thumb = ({
   return (
     <Tooltip
       hasArrow
-      bg={color}
+      bg={colorHint}
       color={mainColor}
       placement="top"
       isOpen={showTooltip}
       label={localFormat(stickyAmount)}
     >
       <SliderThumb
-        boxSize={8}
+        boxSize={9}
         bgColor="transparent"
         position="relative"
         boxShadow="none"
+        top="4"
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
         onTouchStart={() => setShowTooltip(true)}
         onTouchEnd={() => setShowTooltip(false)}
+        zIndex="10"
       >
         <Box
-          w="3"
-          h="4"
+          w="4"
+          h="5"
           position="relative"
           borderRadius="md"
           bgColor={mainColor}
           boxShadow={`0 0 10px -2px ${colorKey}`}
-          color="blackAlpha.500"
+          color={colorHint}
           as={RxDragHandleDots2}
           transform="rotate(90deg)"
         />
@@ -81,15 +83,15 @@ const Thumb = ({
           position="absolute"
           color={mainColor}
           right={stickyAmount <= MAX ? "-5" : "6"}
-          zIndex="5"
+          zIndex="6"
           animation={shakeAnimation}
         >
           {stickyAmount >= MIN && stickyAmount <= MAX ? (
             <></>
           ) : stickyAmount <= MAX ? (
-            <BsArrowRightShort size="1.5rem" />
+            <BsArrowRightShort size="2rem" />
           ) : (
-            <BsArrowLeftShort size="1.5rem" />
+            <BsArrowLeftShort size="2rem" />
           )}
         </Box>
       </SliderThumb>

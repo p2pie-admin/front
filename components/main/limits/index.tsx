@@ -121,12 +121,15 @@ const LimitsRange = () => {
 
   const stickyAmount = stick(amount);
 
-  const mainColor = useColorModeValue("violet.600", "peach.200");
+  const mainColor = useColorModeValue("violet.500", "peach.200");
 
-  const color1 = useColorModeValue("bg.200", "bg.800");
+  const color1 = useColorModeValue("bg.300", "bg.800");
+  const colorTrackInactive = useColorModeValue("bg.300", "bg.600");
+  const colorTrackBG = useColorModeValue("bg.100", "bg.800");
+  const colorHint = useColorModeValue("bg.10", "bg.800");
 
-  const color4 =
-    stickyAmount >= MIN && stickyAmount <= MAX ? mainColor : "bg.600";
+  const colorTrackFilled =
+    stickyAmount >= MIN && stickyAmount <= MAX ? mainColor : colorTrackInactive;
 
   const props = { mainCur, stickyAmount, MIN, MAX };
   if (!MIN || !MAX) return <></>;
@@ -169,8 +172,8 @@ const LimitsRange = () => {
 
         <Box w="98%" pointerEvents="none" color="bg.500">
           <CustomRangeSlider resMin={percMin} resMax={percMax}>
-            <RangeSliderTrack bgColor={color1}>
-              <RangeSliderFilledTrack bgColor={color4} />
+            <RangeSliderTrack bgColor={colorTrackBG}>
+              <RangeSliderFilledTrack bgColor={colorTrackFilled} />
             </RangeSliderTrack>
             {percMax - percMin < 35 ? (
               <Flex
@@ -183,9 +186,9 @@ const LimitsRange = () => {
               >
                 <Box
                   h="fit-content"
-                  zIndex="5"
                   mt="1"
-                  bgColor="blackAlpha.300"
+                  bgColor={colorHint}
+                  boxShadow="lg"
                   borderRadius="md"
                   px="1"
                   py="0.5"
@@ -203,14 +206,20 @@ const LimitsRange = () => {
               </Flex>
             ) : (
               <>
-                <RangeSliderThumb boxSize={1} index={0} zIndex="2">
+                <RangeSliderThumb
+                  boxSize={1}
+                  index={0}
+                  zIndex="2"
+                  bgColor={mainColor}
+                >
                   <ResponsiveText
                     mt="8"
                     ml={isClose(lowestMin, MIN) ? 6 : 0}
                     size="xs"
                     whiteSpace="nowrap"
                     textAlign="center"
-                    bgColor="blackAlpha.300"
+                    bgColor={colorHint}
+                    boxShadow="lg"
                     borderRadius="md"
                     px="1"
                     py="0.5"
@@ -219,14 +228,20 @@ const LimitsRange = () => {
                   </ResponsiveText>
                 </RangeSliderThumb>
 
-                <RangeSliderThumb boxSize={1} index={1} zIndex="1">
+                <RangeSliderThumb
+                  boxSize={1}
+                  index={1}
+                  zIndex="1"
+                  bgColor={mainColor}
+                >
                   <ResponsiveText
                     mt="8"
                     mr={isClose(highestMax, MAX) ? 6 : 0}
                     size="xs"
                     whiteSpace="nowrap"
                     textAlign="center"
-                    bgColor="blackAlpha.300"
+                    bgColor={colorHint}
+                    boxShadow="lg"
                     borderRadius="md"
                     px="1"
                     py="0.5"

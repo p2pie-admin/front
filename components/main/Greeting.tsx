@@ -16,12 +16,13 @@ const Greeting = () => {
 
   const [peripheryColor, centerColor] = useToken(
     "colors",
-    useColorModeValue(["bg.700", "violet.800"], ["bg.400", "peach.200"])
+    useColorModeValue(["bg.500", "violet.600"], ["bg.400", "peach.200"])
   );
 
   return (
     <Box
-      my={[4, 6]}
+      mt={[4, 6]}
+      mb={[6, 10]}
       bgGradient={`radial-gradient(circle at 50% -10%, ${centerColor} 0%, ${peripheryColor} 60%)`}
       bgClip="text"
     >
