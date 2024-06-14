@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState, ReactChildren } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import { TbTriangleInvertedFilled } from "react-icons/tb";
 import { motion, useMotionValue, useAnimation } from "framer-motion";
 import { Box, Grid, useColorModeValue } from "@chakra-ui/react";
@@ -127,6 +127,22 @@ export const Swiper = (props: {
     };
   }, [handleWheel, handleKeyDown]);
 
+  const handleMouseEnter = () => {
+    if (isMobile) return;
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.overflow = "hidden";
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
+    setMouseEntered(true);
+  };
+
+  const handleMouseLeave = () => {
+    if (isMobile) return;
+    document.body.style.overflow = "auto";
+    document.body.style.paddingRight = "0px";
+    setMouseEntered(false);
+  };
+
   return (
     <Grid
       gridTemplateColumns="1fr auto"
@@ -143,20 +159,8 @@ export const Swiper = (props: {
           px="1"
           py="4"
           borderRadius={`${4}% ${4}% ${4}% ${4}% / 50% 50% 50% 50%`}
-          onMouseEnter={() => {
-            if (isMobile) return;
-            const scrollbarWidth =
-              window.innerWidth - document.documentElement.clientWidth;
-            document.body.style.overflow = "hidden";
-            document.body.style.paddingRight = `${scrollbarWidth}px`;
-            setMouseEntered(true);
-          }}
-          onMouseLeave={() => {
-            if (isMobile) return;
-            document.body.style.overflow = "auto";
-            document.body.style.paddingRight = "0px";
-            setMouseEntered(false);
-          }}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
         >
           <Shader direction="top" />
           <motion.div

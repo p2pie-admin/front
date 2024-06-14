@@ -21,22 +21,13 @@ export interface IRate {
   ref_link?: string;
 }
 
-export interface IParam {
-  id: string;
-  ru_description?: string;
-  en_description?: string;
-  code: string;
-  en_name?: string;
-  ru_name?: string;
-  icon: IImage;
-}
-
-export interface IParamData {
+export interface IParameter {
   id: string;
   code: string;
-  parameter: IParam;
-  en_name?: string;
-  ru_name?: string;
+  icon?: IImage;
+  title?: string;
+  color?: string;
+  description?: string;
 }
 
 export type ExchangerId = string;

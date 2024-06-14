@@ -5,14 +5,26 @@ import { TopParametersQuery, DirectionParametersQuery } from "./queries";
 import ErrorWrapper from "../../shared/ErrorWrapper";
 import { initCMSFetcher } from "../../../services/fetchers";
 import { Box } from "@chakra-ui/react";
-import { IParamData, IRate } from "../../../types/rates";
+import { IParameter, IRate } from "../../../types/rates";
 import Swiper from "./Swiper";
 import { useIsMobile } from "./hooks";
 import { fetchDirRates } from "../../../redux/thunks";
+import CustomModal from "../../shared/CustomModal";
+import RateDetails from "../../shared/RateDetails";
+import { ParametersQuery } from "../../../services/initialQueries";
 
 const TV = ({ dir }: { dir: string }) => {
   const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
   const dirRates = useAppSelector((state) => state.main.dirRates) || [];
+  const fetcher = initCMSFetcher();
+  const { data, error } = useSWR(ParametersQuery, fetcher) as {
+    data: {
+      parameters: { parameters: IParameter[] };
+    };
+    error: boolean;
+  };
+
+  console.log(data);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -34,6 +46,9 @@ const TV = ({ dir }: { dir: string }) => {
 
   return (
     <Box minH={`${itemHeight * visibleItems}`}>
+      <CustomModal id="rate-details" header="Exchanger details">
+        <RateDetails />
+      </CustomModal>
       <ErrorWrapper
         isError={dirRatesStatus === "rejected"}
         isLoading={!dirRates.length || dirRatesStatus === "pending"}

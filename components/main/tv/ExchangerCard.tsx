@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Divider,
   HStack,
   useColorMode,
@@ -12,10 +13,13 @@ import { capitalize } from "../side/selector/section/PmGroup/helper";
 import { addSpaces, localFormat, R } from "../../../redux/amountsHelper";
 import { redirect } from "../../../redux/thunks";
 import { IRate } from "../../../types/rates";
+import { triggerModal } from "../../../redux/mainReducer";
+import { GrCircleInformation } from "react-icons/gr";
 
 const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
   const dispatch = useAppDispatch();
   const activeIndex = useAppSelector((state) => state.main.swiperIdVisible);
+  rate.parameterCodes?.map((p) => console.log(p));
 
   if (!rate) return <></>;
 
@@ -49,6 +53,8 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
     (state) => state.main.getPm?.currency.code.toUpperCase() || ""
   );
   const bgColor = useColorModeValue("bg.10", "bg.700");
+  const colorActive = useColorModeValue("bg.700", "bg.200");
+  const colorInactive = useColorModeValue("bg.600", "bg.300");
   const side = course > 1 ? "give" : "get";
   const smallCur = side === "give" ? giveCur : getCur;
   const bigCur = side === "give" ? getCur : giveCur;
@@ -68,35 +74,51 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
         filter: "brightness(1.05)",
       }}
     >
-      <HStack spacing="1" alignItems="center">
-        <ResponsiveText
-          size="xl"
-          fontWeight="bold"
-          transition="color 200ms linear"
-          variant={index === activeIndex ? "primary" : "no_contrast"}
+      <HStack>
+        <HStack alignItems="center">
+          <ResponsiveText
+            size={name.length > 12 ? "md" : name.length > 8 ? "lg" : "xl"}
+            fontWeight="bold"
+            transition="color 200ms linear"
+            variant={index === activeIndex ? "primary" : "no_contrast"}
+            cursor="pointer"
+            onClick={() => {
+              dispatch(redirect());
+              window.open(ref_link, "_blank");
+            }}
+          >
+            {capitalize(name)}
+          </ResponsiveText>
+          <Box
+            color={index === activeIndex ? ratingColor : colorInactive}
+            mb="1"
+          >
+            <FaStar size="1rem" />
+          </Box>
+          <ResponsiveText
+            size="lg"
+            color={index === activeIndex ? ratingColor : colorInactive}
+          >
+            {rating}
+          </ResponsiveText>
+        </HStack>
+        <Box
           cursor="pointer"
-          onClick={() => {
-            dispatch(redirect());
-            window.open(ref_link, "_blank");
-          }}
+          onClick={() => dispatch(triggerModal("rate-details"))}
+          color={index === activeIndex ? colorActive : colorInactive}
         >
-          {capitalize(name)}
-        </ResponsiveText>
-        <Box mx="1" w="1px" h="5" bgColor="bg.500" />
-        <ResponsiveText size="sm" color={ratingColor}>
-          {rating}
-        </ResponsiveText>
-        <Box color={ratingColor} mb="0.5">
-          <FaStar size="1rem" />
+          <GrCircleInformation size="1.2rem" />
         </Box>
       </HStack>
-      <ResponsiveText size="sm">{`Курс: 1 ${bigCur} ≈ ${
-        course < 1 ? addSpaces(R(1 / course, 1)) : addSpaces(R(course, 1))
-      } ${smallCur}`}</ResponsiveText>
-      <ResponsiveText size="sm">{`Лимиты: ${localFormat(
-        MIN,
-        smallCur
-      )} — ${localFormat(MAX, smallCur)}`}</ResponsiveText>
+      <Box color={index === activeIndex ? colorActive : colorInactive}>
+        <ResponsiveText size="sm" color="inherit">{`Курс: 1 ${bigCur} ≈ ${
+          course < 1 ? addSpaces(R(1 / course, 1)) : addSpaces(R(course, 1))
+        } ${smallCur}`}</ResponsiveText>
+        <ResponsiveText size="sm" color="inherit">{`Лимиты: ${localFormat(
+          MIN,
+          smallCur
+        )} — ${localFormat(MAX, smallCur)}`}</ResponsiveText>
+      </Box>
     </Box>
   );
 };

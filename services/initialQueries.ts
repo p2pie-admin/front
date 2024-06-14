@@ -263,3 +263,29 @@ export const RootTextQuery = gql`
     }
   }
 `;
+
+export const ParametersQuery = gql`
+  {
+    parameters(pagination: { limit: 200 }) {
+      data {
+        id
+        attributes {
+          code
+          icon {
+            data {
+              id
+              attributes {
+                name
+                alternativeText
+                url
+              }
+            }
+          }
+          title
+          description
+          color
+        }
+      }
+    }
+  }
+`;

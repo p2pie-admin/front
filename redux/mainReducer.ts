@@ -242,11 +242,11 @@ export const mainSlice = createSlice({
     incrementSwiper: (state: MainState) => {
       const length = state.dirRates?.length || 0;
       if (!length) return;
-      if (state.swiperIdVisible == length - 1) {
-        state.swiperIdVisible = 0;
-        state.amountOutputs = getAmountOutputs(state, 0);
-        return;
-      }
+      // if (state.swiperIdVisible == length - 1) {
+      //   state.swiperIdVisible = 0;
+      //   state.amountOutputs = getAmountOutputs(state, 0);
+      //   return;
+      // }
       const newSwiperId = state.swiperIdVisible + 1;
       state.swiperIdVisible = newSwiperId;
       state.amountOutputs = getAmountOutputs(state, newSwiperId);
@@ -255,11 +255,11 @@ export const mainSlice = createSlice({
     decrementSwiper: (state: MainState) => {
       const length = state.dirRates?.length || 0;
       if (!length) return;
-      if (state.swiperIdVisible == 0) {
-        state.swiperIdVisible = length - 1;
-        state.amountOutputs = getAmountOutputs(state, length - 1);
-        return;
-      }
+      // if (state.swiperIdVisible == 0) {
+      //   state.swiperIdVisible = length - 1;
+      //   state.amountOutputs = getAmountOutputs(state, length - 1);
+      //   return;
+      // }
       const newSwiperId = state.swiperIdVisible - 1;
       state.swiperIdVisible = newSwiperId;
       state.amountOutputs = getAmountOutputs(state, newSwiperId);
@@ -353,6 +353,9 @@ export const mainSlice = createSlice({
       state.dirRatesStatus = "pending";
       state.givePm = action.payload.givePm;
       state.getPm = action.payload.getPm;
+    },
+    sendToast: (state: MainState, action: PayloadAction<IToast>) => {
+      state.toast = action.payload;
     },
   },
 
@@ -493,6 +496,7 @@ export const {
   setInitialData,
   setDirRatesStatusPending,
   clean,
+  sendToast,
 } = mainSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

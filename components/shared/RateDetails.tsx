@@ -3,6 +3,7 @@ import { IRate } from "../../types/rates";
 import {
   Box,
   Button,
+  Flex,
   Grid,
   HStack,
   Table,
@@ -18,21 +19,23 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { beautifyAmount, addSpaces, R } from "../../redux/amountsHelper";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { IoWarningOutline } from "react-icons/io5";
 import { MdOutlineNotifications } from "react-icons/md";
+import { sendToast } from "../../redux/mainReducer";
 
-const Layer = ({ title, value }: { title: string; value: string }) => (
-  <HStack justifyContent="space-between" fontSize="sm">
-    <Text>{title}</Text>
-    <Text>{value}</Text>
-  </HStack>
-);
+// const Layer = ({ title, value }: { title: string; value: string }) => (
+//   <HStack justifyContent="space-between" fontSize="sm">
+//     <Text>{title}</Text>
+//     <Text>{value}</Text>
+//   </HStack>
+// );
 
 const RateDetails = () => {
   const rate = useAppSelector(
     (state) => state.main.dirRates?.[state.main.swiperIdVisible]
   );
+  const dispatch = useAppDispatch();
   const giveCurrency = useAppSelector((state) =>
     state.main.givePm?.currency.code.toUpperCase()
   );
@@ -97,18 +100,39 @@ const RateDetails = () => {
           </Tbody>
         </Table>
       </TableContainer>
-      <HStack spacing="2" mt="4" justifyContent="end">
+      <Flex flexDir={{ base: "column", md: "row" }} justifyContent="end" mt="2">
         <Button
+          m="2"
           disabled
           variant="contrast"
           rightIcon={<MdOutlineNotifications />}
+          onClick={() =>
+            dispatch(
+              sendToast({
+                status: "info",
+                title: "Будет вскоре доступно",
+              })
+            )
+          }
         >
-          Notify Change
+          Оповестить о улучшении курса
         </Button>
-        <Button variant="error" rightIcon={<IoWarningOutline />}>
-          Report Rate
+        <Button
+          m="2"
+          variant="error"
+          rightIcon={<IoWarningOutline />}
+          onClick={() =>
+            dispatch(
+              sendToast({
+                status: "warning",
+                title: "Пожалуйста свяжитесь с нами t.me/p2pie",
+              })
+            )
+          }
+        >
+          Неверный курс
         </Button>
-      </HStack>
+      </Flex>
     </CustomBox3D>
   );
 };
