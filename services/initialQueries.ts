@@ -265,8 +265,8 @@ export const RootTextQuery = gql`
 `;
 
 export const ParametersQuery = gql`
-  {
-    parameters(pagination: { limit: 200 }) {
+  query Parameters($locale: I18NLocaleCode) {
+    parameters(locale: $locale, pagination: { limit: 200 }) {
       data {
         id
         attributes {

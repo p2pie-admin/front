@@ -1,7 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IPopularDirRates, IRate } from "../types/rates";
 import axios from "axios";
-import { pmGroupsByNamesQuery, pmsQuery } from "../services/initialQueries";
+import {
+  ParametersQuery,
+  pmGroupsByNamesQuery,
+  pmsQuery,
+} from "../services/initialQueries";
 import {
   initCMSFetcher,
   initCurrencyConverterFetcher,
@@ -66,6 +70,14 @@ const _fetchRates = async (dir: string) => {
 export const fetchDirRates = createAsyncThunk(
   "rates/fetchDirRates",
   _fetchRates
+);
+
+export const fetchParameters = createAsyncThunk(
+  "rates/fetchParameters",
+  async (locale: string) => {
+    const fetcher = initCMSFetcher({ locale });
+    return await fetcher(ParametersQuery);
+  }
 );
 
 export const fetchCCRates = async ({

@@ -5,7 +5,7 @@ import {
   IP2PRegulationGroup,
   IUsersRate,
 } from "./../types/p2p";
-import { IPopularDirRates, IRate } from "./../types/rates";
+import { IParameter, IPopularDirRates, IRate } from "./../types/rates";
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 
 import { AmountOutputs, AmountInput } from "../types/amount";
@@ -19,6 +19,7 @@ import {
   fetchCurrencyConverterRates,
   submitOrder,
   getOrderByUID,
+  fetchParameters,
 } from "./thunks";
 import { IPm, IPmGroup } from "../types/selector";
 import { IActivePetal, IDir } from "../types/dir";
@@ -87,6 +88,7 @@ export interface MainState {
   ccRates?: ICurrencyConverterRate;
   p2p: IOrder;
   fingerprint?: IFingerprint;
+  parameters: IParameter[];
 }
 
 const initialState: MainState = {
@@ -101,6 +103,7 @@ const initialState: MainState = {
   toast: { title: "", status: "info" },
   location: defaultLocation,
   p2p: initialOrder,
+  parameters: [],
 };
 
 export const mainSlice = createSlice({
@@ -443,6 +446,10 @@ export const mainSlice = createSlice({
 
     builder.addCase(submitOrder.fulfilled, (state, action) => {
       state.toast = action.payload;
+    });
+
+    builder.addCase(fetchParameters.fulfilled, (state, action) => {
+      state.parameters = action.payload?.parameters || [];
     });
 
     builder.addCase(getOrderByUID.fulfilled, (state, action) => {

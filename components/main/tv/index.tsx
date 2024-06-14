@@ -8,28 +8,26 @@ import { Box } from "@chakra-ui/react";
 import { IParameter, IRate } from "../../../types/rates";
 import Swiper from "./Swiper";
 import { useIsMobile } from "./hooks";
-import { fetchDirRates } from "../../../redux/thunks";
+import { fetchDirRates, fetchParameters } from "../../../redux/thunks";
 import CustomModal from "../../shared/CustomModal";
 import RateDetails from "../../shared/RateDetails";
 import { ParametersQuery } from "../../../services/initialQueries";
+import { useTranslation } from "react-i18next";
 
 const TV = ({ dir }: { dir: string }) => {
   const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
   const dirRates = useAppSelector((state) => state.main.dirRates) || [];
-  const fetcher = initCMSFetcher();
-  const { data, error } = useSWR(ParametersQuery, fetcher) as {
-    data: {
-      parameters: { parameters: IParameter[] };
-    };
-    error: boolean;
-  };
+  const { t, i18n } = useTranslation();
 
-  console.log(data);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchDirRates(dir));
   }, [dir]);
+
+  useEffect(() => {
+    dispatch(fetchParameters("ru"));
+  }, []);
 
   const isMobile = useIsMobile();
   const itemHeight = isMobile ? 80 : 130; // Height of each text box
