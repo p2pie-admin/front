@@ -16,7 +16,7 @@ export interface IRate {
   min: ILimit;
   max: ILimit;
   reserve: ILimit;
-  parameterCodes: string[];
+  parameterCodes?: string[];
   cities?: { [key: string]: string[] };
   ref_link?: string;
 }

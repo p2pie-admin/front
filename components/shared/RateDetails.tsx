@@ -17,12 +17,14 @@ import {
   Tr,
   useColorModeValue,
   VStack,
+  Wrap,
 } from "@chakra-ui/react";
 import { beautifyAmount, addSpaces, R } from "../../redux/amountsHelper";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { IoWarningOutline } from "react-icons/io5";
 import { MdOutlineNotifications } from "react-icons/md";
 import { sendToast } from "../../redux/mainReducer";
+import Parameter from "../main/tv/Parameter";
 
 // const Layer = ({ title, value }: { title: string; value: string }) => (
 //   <HStack justifyContent="space-between" fontSize="sm">
@@ -75,7 +77,6 @@ const RateDetails = () => {
       <Text color="bg.500" mb="2">
         Exchange details
       </Text>
-
       <TableContainer>
         <Table size="sm" colorScheme="bg">
           <Thead>
@@ -133,6 +134,12 @@ const RateDetails = () => {
           Неверный курс
         </Button>
       </Flex>
+      <Wrap p="2" gap="2">
+        {rate.parameterCodes &&
+          rate.parameterCodes.map((code, i) => (
+            <Parameter code={code} key={rate.exchangerId + code + i} />
+          ))}
+      </Wrap>
     </CustomBox3D>
   );
 };

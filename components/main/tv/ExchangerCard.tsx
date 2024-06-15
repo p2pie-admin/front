@@ -5,6 +5,7 @@ import {
   HStack,
   useColorMode,
   useColorModeValue,
+  VStack,
 } from "@chakra-ui/react";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
@@ -15,6 +16,24 @@ import { redirect } from "../../../redux/thunks";
 import { IRate } from "../../../types/rates";
 import { triggerModal } from "../../../redux/mainReducer";
 import { GrCircleInformation } from "react-icons/gr";
+import Parameter from "./Parameter";
+
+const Parameters = ({ parameterCodes }: { parameterCodes?: string[] }) => {
+  if (!parameterCodes) return <></>;
+  return (
+    <HStack justifyContent="end" mb="1" alignSelf="end">
+      {parameterCodes.map((code, i) => (
+        <Parameter
+          isExtended={
+            parameterCodes.length < 3 || (parameterCodes.length < 4 && i < 3)
+          }
+          code={code}
+          key={code + i}
+        />
+      ))}
+    </HStack>
+  );
+};
 
 const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
   const dispatch = useAppDispatch();
@@ -62,8 +81,12 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
   const [MIN, MAX] =
     min?.[side] && max?.[side] ? [R(min[side], 2), R(max[side], 2)] : [0, 0];
   return (
-    <Box
-      p="2"
+    <VStack
+      alignItems="start"
+      py="1"
+      px="2"
+      gap="0"
+      justifyContent="space-between"
       h="100%"
       w="100%"
       borderRadius="inherit"
@@ -74,52 +97,55 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
         filter: "brightness(1.05)",
       }}
     >
-      <HStack>
-        <HStack alignItems="center">
-          <ResponsiveText
-            size={name.length > 12 ? "md" : name.length > 8 ? "lg" : "xl"}
-            fontWeight="bold"
-            transition="color 200ms linear"
-            variant={index === activeIndex ? "primary" : "no_contrast"}
-            cursor="pointer"
-            onClick={() => {
-              dispatch(redirect());
-              window.open(ref_link, "_blank");
-            }}
-          >
-            {capitalize(name)}
-          </ResponsiveText>
+      <Box w="100%">
+        <HStack justifyContent="space-between">
+          <HStack alignItems="center">
+            <ResponsiveText
+              size={name.length > 12 ? "md" : name.length > 8 ? "lg" : "xl"}
+              fontWeight="bold"
+              transition="color 200ms linear"
+              variant={index === activeIndex ? "primary" : "no_contrast"}
+              cursor="pointer"
+              onClick={() => {
+                dispatch(redirect());
+                window.open(ref_link, "_blank");
+              }}
+            >
+              {capitalize(name)}
+            </ResponsiveText>
+            <Box
+              color={index === activeIndex ? ratingColor : colorInactive}
+              mb="1"
+            >
+              <FaStar size="1rem" />
+            </Box>
+            <ResponsiveText
+              size="lg"
+              color={index === activeIndex ? ratingColor : colorInactive}
+            >
+              {rating}
+            </ResponsiveText>
+          </HStack>
           <Box
-            color={index === activeIndex ? ratingColor : colorInactive}
-            mb="1"
+            cursor="pointer"
+            onClick={() => dispatch(triggerModal("rate-details"))}
+            color={index === activeIndex ? colorActive : colorInactive}
           >
-            <FaStar size="1rem" />
+            <GrCircleInformation size="1.2rem" />
           </Box>
-          <ResponsiveText
-            size="lg"
-            color={index === activeIndex ? ratingColor : colorInactive}
-          >
-            {rating}
-          </ResponsiveText>
         </HStack>
-        <Box
-          cursor="pointer"
-          onClick={() => dispatch(triggerModal("rate-details"))}
-          color={index === activeIndex ? colorActive : colorInactive}
-        >
-          <GrCircleInformation size="1.2rem" />
+        <Box color={index === activeIndex ? colorActive : colorInactive}>
+          <ResponsiveText size="sm" color="inherit">{`Курс: 1 ${bigCur} ≈ ${
+            course < 1 ? addSpaces(R(1 / course, 1)) : addSpaces(R(course, 1))
+          } ${smallCur}`}</ResponsiveText>
+          <ResponsiveText size="sm" color="inherit">{`Лимиты: ${localFormat(
+            MIN,
+            smallCur
+          )} — ${localFormat(MAX, smallCur)}`}</ResponsiveText>
         </Box>
-      </HStack>
-      <Box color={index === activeIndex ? colorActive : colorInactive}>
-        <ResponsiveText size="sm" color="inherit">{`Курс: 1 ${bigCur} ≈ ${
-          course < 1 ? addSpaces(R(1 / course, 1)) : addSpaces(R(course, 1))
-        } ${smallCur}`}</ResponsiveText>
-        <ResponsiveText size="sm" color="inherit">{`Лимиты: ${localFormat(
-          MIN,
-          smallCur
-        )} — ${localFormat(MAX, smallCur)}`}</ResponsiveText>
       </Box>
-    </Box>
+      <Parameters parameterCodes={rate.parameterCodes} />
+    </VStack>
   );
 };
 
