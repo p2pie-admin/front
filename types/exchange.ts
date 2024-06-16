@@ -17,12 +17,20 @@ export interface IDirText {
   title: string;
 }
 
+export interface IPath {
+  params: {
+    slug: string;
+    city?: string[];
+  };
+  locale: string;
+}
 export interface ICache {
   pms: IPm[];
   slugToCodes: { [key: string]: string }; // для запроса курсов
   cities: {
     [key: string]: [string, string];
   };
+  exchangePaths: IPath[];
 }
 
 export interface IPossiblePmPair {

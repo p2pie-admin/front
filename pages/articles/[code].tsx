@@ -1,4 +1,4 @@
-import { readCache, writeCache } from "../../services/cache";
+import { readCache, writeCache } from "../../cache";
 import { initCMSFetcher } from "../../services/fetchers";
 import { IArticle } from "../../types/pages";
 import { Text } from "@chakra-ui/react";

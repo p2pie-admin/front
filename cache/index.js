@@ -1,9 +1,9 @@
-import fs from "fs";
-import path from "path";
+const fs = require("fs");
+const path = require("path");
 
 const cacheFilePath = path.resolve(process.cwd(), "cache", "cachedData.json");
 
-export const readCache = () => {
+const readCache = () => {
   try {
     if (fs.existsSync(cacheFilePath)) {
       const data = fs.readFileSync(cacheFilePath, "utf8");
@@ -15,7 +15,7 @@ export const readCache = () => {
   return {};
 };
 
-export const writeCache = (data: any) => {
+const writeCache = (data) => {
   try {
     fs.mkdirSync(path.dirname(cacheFilePath), { recursive: true });
     fs.writeFileSync(cacheFilePath, JSON.stringify(data, null, 2), "utf8");
@@ -23,3 +23,5 @@ export const writeCache = (data: any) => {
     console.error("Error writing cache file", err);
   }
 };
+
+module.exports = { writeCache, readCache };

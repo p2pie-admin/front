@@ -5,7 +5,7 @@ import MainPageContent from "../components/main";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IPopularDirRates } from "../types/rates";
 import { initCMSFetcher, initParserFetcher } from "../services/fetchers";
-import { readCache } from "../services/cache";
+import { readCache } from "../cache";
 import { ICache } from "../types/exchange";
 
 import { MainTextsQuery, RootTextQuery } from "../services/initialQueries";

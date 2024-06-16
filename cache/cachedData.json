@@ -49,6 +49,7 @@
     "advcash-rub-to-bitcoin-btc": "ADVCRUB_BTC",
     "advcash-rub-to-eos-eos": "ADVCRUB_EOS",
     "advcash-rub-to-pancake-cake": "ADVCRUB_CAKE",
+    "advcash-rub-to-icon-icx": "ADVCRUB_ICX",
     "advcash-rub-to-polygon-matic": "ADVCRUB_MATIC",
     "advcash-rub-to-uniswap-uni": "ADVCRUB_UNI",
     "advcash-rub-to-zcash-zec": "ADVCRUB_ZEC",
@@ -88,24 +89,16 @@
     "sber-rub-to-polkadot-dot": "SBERRUB_DOT",
     "cash-rub-to-sber-rub": "CASHRUB_SBERRUB",
     "cash-rub-to-bitcoin-btc": "CASHRUB_BTC",
-    "cash-rub-to-polygon-matic": "CASHRUB_MATIC",
-    "cash-rub-to-zcash-zec": "CASHRUB_ZEC",
-    "cash-rub-to-classic-etc": "CASHRUB_ETC",
     "cash-rub-to-ethereum-eth": "CASHRUB_ETH",
     "cash-rub-to-monero-xmr": "CASHRUB_XMR",
     "cash-rub-to-tether-usdt-erc20": "CASHRUB_USDTERC20",
     "cash-rub-to-tether-usdt-trc20": "CASHRUB_USDTTRC20",
     "cash-rub-to-cardano-ada": "CASHRUB_ADA",
     "cash-rub-to-litecoin-ltc": "CASHRUB_LTC",
-    "cash-rub-to-ripple-xrp": "CASHRUB_XRP",
-    "cash-rub-to-polkadot-dot": "CASHRUB_DOT",
-    "cash-usd-to-advcash-usd": "CASHUSD_ADVCUSD",
     "cash-usd-to-sber-rub": "CASHUSD_SBERRUB",
     "cash-usd-to-bitcoin-btc": "CASHUSD_BTC",
-    "cash-usd-to-polygon-matic": "CASHUSD_MATIC",
     "cash-usd-to-uniswap-uni": "CASHUSD_UNI",
     "cash-usd-to-zcash-zec": "CASHUSD_ZEC",
-    "cash-usd-to-classic-etc": "CASHUSD_ETC",
     "cash-usd-to-ethereum-eth": "CASHUSD_ETH",
     "cash-usd-to-monero-xmr": "CASHUSD_XMR",
     "cash-usd-to-tether-usdt-erc20": "CASHUSD_USDTERC20",
@@ -143,7 +136,6 @@
     "eos-eos-to-sber-rub": "EOS_SBERRUB",
     "eos-eos-to-cash-usd": "EOS_CASHUSD",
     "eos-eos-to-bitcoin-btc": "EOS_BTC",
-    "eos-eos-to-eos-eos": "EOS_EOS",
     "eos-eos-to-pancake-cake": "EOS_CAKE",
     "eos-eos-to-icon-icx": "EOS_ICX",
     "eos-eos-to-polygon-matic": "EOS_MATIC",
@@ -166,7 +158,6 @@
     "pancake-cake-to-sber-rub": "CAKE_SBERRUB",
     "pancake-cake-to-bitcoin-btc": "CAKE_BTC",
     "pancake-cake-to-eos-eos": "CAKE_EOS",
-    "pancake-cake-to-pancake-cake": "CAKE_CAKE",
     "pancake-cake-to-icon-icx": "CAKE_ICX",
     "pancake-cake-to-polygon-matic": "CAKE_MATIC",
     "pancake-cake-to-uniswap-uni": "CAKE_UNI",
@@ -183,12 +174,12 @@
     "pancake-cake-to-ripple-xrp": "CAKE_XRP",
     "pancake-cake-to-polkadot-dot": "CAKE_DOT",
     "icon-icx-to-tinkoff-rub": "ICX_TCSBRUB",
+    "icon-icx-to-advcash-rub": "ICX_ADVCRUB",
     "icon-icx-to-sber-rub": "ICX_SBERRUB",
     "icon-icx-to-cash-usd": "ICX_CASHUSD",
     "icon-icx-to-bitcoin-btc": "ICX_BTC",
     "icon-icx-to-eos-eos": "ICX_EOS",
     "icon-icx-to-pancake-cake": "ICX_CAKE",
-    "icon-icx-to-icon-icx": "ICX_ICX",
     "icon-icx-to-polygon-matic": "ICX_MATIC",
     "icon-icx-to-uniswap-uni": "ICX_UNI",
     "icon-icx-to-zcash-zec": "ICX_ZEC",
@@ -199,7 +190,6 @@
     "icon-icx-to-tether-usdt-erc20": "ICX_USDTERC20",
     "icon-icx-to-tether-usdt-trc20": "ICX_USDTTRC20",
     "icon-icx-to-cardano-ada": "ICX_ADA",
-    "icon-icx-to-neo-neo": "ICX_NEO",
     "icon-icx-to-litecoin-ltc": "ICX_LTC",
     "icon-icx-to-ripple-xrp": "ICX_XRP",
     "icon-icx-to-polkadot-dot": "ICX_DOT",
@@ -236,7 +226,6 @@
     "uniswap-uni-to-pancake-cake": "UNI_CAKE",
     "uniswap-uni-to-icon-icx": "UNI_ICX",
     "uniswap-uni-to-polygon-matic": "UNI_MATIC",
-    "uniswap-uni-to-uniswap-uni": "UNI_UNI",
     "uniswap-uni-to-zcash-zec": "UNI_ZEC",
     "uniswap-uni-to-stellar-xlm": "UNI_XLM",
     "uniswap-uni-to-classic-etc": "UNI_ETC",
@@ -276,7 +265,6 @@
     "stellar-xlm-to-advcash-usd": "XLM_ADVCUSD",
     "stellar-xlm-to-advcash-rub": "XLM_ADVCRUB",
     "stellar-xlm-to-sber-rub": "XLM_SBERRUB",
-    "stellar-xlm-to-cash-rub": "XLM_CASHRUB",
     "stellar-xlm-to-cash-usd": "XLM_CASHUSD",
     "stellar-xlm-to-bitcoin-btc": "XLM_BTC",
     "stellar-xlm-to-eos-eos": "XLM_EOS",
@@ -300,8 +288,6 @@
     "classic-etc-to-advcash-usd": "ETC_ADVCUSD",
     "classic-etc-to-advcash-rub": "ETC_ADVCRUB",
     "classic-etc-to-sber-rub": "ETC_SBERRUB",
-    "classic-etc-to-cash-rub": "ETC_CASHRUB",
-    "classic-etc-to-cash-usd": "ETC_CASHUSD",
     "classic-etc-to-bitcoin-btc": "ETC_BTC",
     "classic-etc-to-eos-eos": "ETC_EOS",
     "classic-etc-to-pancake-cake": "ETC_CAKE",
@@ -1296,6 +1282,66 @@
       "section": "bank"
     },
     {
+      "pm_group_id": "23",
+      "code": "TCSBRUB",
+      "en_name": "tinkoff",
+      "ru_name": "тинькофф",
+      "subgroup_name": null,
+      "currency": {
+        "id": "5",
+        "code": "rub",
+        "accuracy": 0
+      },
+      "icon": {
+        "id": "210",
+        "alternativeText": null,
+        "url": "/uploads/tinkoff_89949d6b23.png"
+      },
+      "color": "yellow",
+      "popular_as": null,
+      "section": "bank"
+    },
+    {
+      "pm_group_id": "15",
+      "code": "ADVCUSD",
+      "en_name": "Adv Cash",
+      "ru_name": null,
+      "subgroup_name": null,
+      "currency": {
+        "id": "1",
+        "code": "usd",
+        "accuracy": 2
+      },
+      "icon": {
+        "id": "228",
+        "alternativeText": null,
+        "url": "/uploads/advc_dcf1be13c9.png"
+      },
+      "color": "dark_teal",
+      "popular_as": null,
+      "section": "bank"
+    },
+    {
+      "pm_group_id": "15",
+      "code": "ADVCRUB",
+      "en_name": "Adv Cash",
+      "ru_name": null,
+      "subgroup_name": null,
+      "currency": {
+        "id": "5",
+        "code": "rub",
+        "accuracy": 0
+      },
+      "icon": {
+        "id": "228",
+        "alternativeText": null,
+        "url": "/uploads/advc_dcf1be13c9.png"
+      },
+      "color": "dark_teal",
+      "popular_as": null,
+      "section": "bank"
+    },
+    {
       "pm_group_id": "15",
       "code": "ADVCUSD",
       "en_name": "Adv Cash",
@@ -1356,6 +1402,26 @@
       "section": "bank"
     },
     {
+      "pm_group_id": "13",
+      "code": "SBERRUB",
+      "en_name": "sber",
+      "ru_name": "сбер",
+      "subgroup_name": null,
+      "currency": {
+        "id": "5",
+        "code": "rub",
+        "accuracy": 0
+      },
+      "icon": {
+        "id": "160",
+        "alternativeText": null,
+        "url": "/uploads/sber_74696b436a.png"
+      },
+      "color": "green",
+      "popular_as": null,
+      "section": "bank"
+    },
+    {
       "pm_group_id": "37",
       "code": "HLKTRY",
       "en_name": "Halk Bank",
@@ -1372,6 +1438,46 @@
         "url": "/uploads/hlk_2762af1704.png"
       },
       "color": "dark_blue",
+      "popular_as": null,
+      "section": "bank"
+    },
+    {
+      "pm_group_id": "37",
+      "code": "HLKTRY",
+      "en_name": "Halk Bank",
+      "ru_name": null,
+      "subgroup_name": null,
+      "currency": {
+        "id": "27",
+        "code": "try",
+        "accuracy": 0
+      },
+      "icon": {
+        "id": "329",
+        "alternativeText": null,
+        "url": "/uploads/hlk_2762af1704.png"
+      },
+      "color": "dark_blue",
+      "popular_as": null,
+      "section": "bank"
+    },
+    {
+      "pm_group_id": "36",
+      "code": "ZRTTRY",
+      "en_name": "Ziraat",
+      "ru_name": "Зират",
+      "subgroup_name": null,
+      "currency": {
+        "id": "27",
+        "code": "try",
+        "accuracy": 0
+      },
+      "icon": {
+        "id": "330",
+        "alternativeText": null,
+        "url": "/uploads/zrt_7278354877.png"
+      },
+      "color": "dark_red",
       "popular_as": null,
       "section": "bank"
     },
@@ -1431,7 +1537,7 @@
         "alternativeText": null,
         "url": "/uploads/cashtry_36bc6fb7b4.png"
       },
-      "color": "green",
+      "color": "gray",
       "popular_as": null,
       "section": "cash"
     },
@@ -1451,7 +1557,27 @@
         "alternativeText": null,
         "url": "/uploads/rub_d29508fc88.png"
       },
-      "color": "green",
+      "color": "gray",
+      "popular_as": null,
+      "section": "cash"
+    },
+    {
+      "pm_group_id": "22",
+      "code": "CASHRUB",
+      "en_name": "Cash",
+      "ru_name": "Наличные",
+      "subgroup_name": null,
+      "currency": {
+        "id": "5",
+        "code": "rub",
+        "accuracy": 0
+      },
+      "icon": {
+        "id": "206",
+        "alternativeText": null,
+        "url": "/uploads/rub_d29508fc88.png"
+      },
+      "color": "gray",
       "popular_as": null,
       "section": "cash"
     },
@@ -1471,7 +1597,27 @@
         "alternativeText": null,
         "url": "/uploads/usd_b07a10126c.png"
       },
-      "color": "green",
+      "color": "gray",
+      "popular_as": null,
+      "section": "cash"
+    },
+    {
+      "pm_group_id": "21",
+      "code": "CASHUSD",
+      "en_name": "Cash",
+      "ru_name": "наличные",
+      "subgroup_name": null,
+      "currency": {
+        "id": "1",
+        "code": "usd",
+        "accuracy": 2
+      },
+      "icon": {
+        "id": "211",
+        "alternativeText": null,
+        "url": "/uploads/usd_b07a10126c.png"
+      },
+      "color": "gray",
       "popular_as": null,
       "section": "cash"
     },
@@ -1479,7 +1625,27 @@
       "pm_group_id": "18",
       "code": "BTC",
       "en_name": "bitcoin",
-      "ru_name": "биткойн",
+      "ru_name": "Биткойн",
+      "subgroup_name": null,
+      "currency": {
+        "id": "4",
+        "code": "btc",
+        "accuracy": 3
+      },
+      "icon": {
+        "id": "182",
+        "alternativeText": null,
+        "url": "/uploads/btc_b73e043e56.png"
+      },
+      "color": "orange",
+      "popular_as": null,
+      "section": "crypto"
+    },
+    {
+      "pm_group_id": "18",
+      "code": "BTC",
+      "en_name": "bitcoin",
+      "ru_name": "Биткойн",
       "subgroup_name": null,
       "currency": {
         "id": "4",
@@ -1676,6 +1842,26 @@
       "section": "crypto"
     },
     {
+      "pm_group_id": "10",
+      "code": "ETH",
+      "en_name": "ethereum",
+      "ru_name": null,
+      "subgroup_name": null,
+      "currency": {
+        "id": "17",
+        "code": "eth",
+        "accuracy": 3
+      },
+      "icon": {
+        "id": "189",
+        "alternativeText": null,
+        "url": "/uploads/eth_f7f887b322.png"
+      },
+      "color": "dark_gray",
+      "popular_as": null,
+      "section": "crypto"
+    },
+    {
       "pm_group_id": "25",
       "code": "XMR",
       "en_name": "Monero",
@@ -1692,6 +1878,66 @@
         "url": "/uploads/xmr_f44605addf.png"
       },
       "color": "dark_orange",
+      "popular_as": null,
+      "section": "crypto"
+    },
+    {
+      "pm_group_id": "12",
+      "code": "USDTERC20",
+      "en_name": "tether",
+      "ru_name": null,
+      "subgroup_name": "ERC20",
+      "currency": {
+        "id": "12",
+        "code": "usdt",
+        "accuracy": 0
+      },
+      "icon": {
+        "id": "215",
+        "alternativeText": null,
+        "url": "/uploads/usdt_69caf2e1c8.png"
+      },
+      "color": "dark_teal",
+      "popular_as": null,
+      "section": "crypto"
+    },
+    {
+      "pm_group_id": "12",
+      "code": "USDTTRC20",
+      "en_name": "tether",
+      "ru_name": null,
+      "subgroup_name": "TRC20",
+      "currency": {
+        "id": "12",
+        "code": "usdt",
+        "accuracy": 0
+      },
+      "icon": {
+        "id": "215",
+        "alternativeText": null,
+        "url": "/uploads/usdt_69caf2e1c8.png"
+      },
+      "color": "dark_teal",
+      "popular_as": null,
+      "section": "crypto"
+    },
+    {
+      "pm_group_id": "12",
+      "code": "USDTTRCBLK",
+      "en_name": "tether",
+      "ru_name": null,
+      "subgroup_name": "BLACK",
+      "currency": {
+        "id": "12",
+        "code": "usdt",
+        "accuracy": 0
+      },
+      "icon": {
+        "id": "215",
+        "alternativeText": null,
+        "url": "/uploads/usdt_69caf2e1c8.png"
+      },
+      "color": "dark_teal",
       "popular_as": null,
       "section": "crypto"
     },
@@ -1792,6 +2038,26 @@
         "url": "/uploads/bnb_46e2f4663a.png"
       },
       "color": "yellow",
+      "popular_as": null,
+      "section": "crypto"
+    },
+    {
+      "pm_group_id": "20",
+      "code": "NEO",
+      "en_name": "NEO",
+      "ru_name": null,
+      "subgroup_name": null,
+      "currency": {
+        "id": "6",
+        "code": "neo",
+        "accuracy": 0
+      },
+      "icon": {
+        "id": "169",
+        "alternativeText": null,
+        "url": "/uploads/neo_7f790e0bc8.png"
+      },
+      "color": "teal",
       "popular_as": null,
       "section": "crypto"
     },
@@ -1934,6 +2200,167 @@
       "color": "dark_teal",
       "popular_as": null,
       "section": "digital"
+    },
+    {
+      "pm_group_id": "15",
+      "code": "ADVCUSD",
+      "en_name": "Adv Cash",
+      "ru_name": null,
+      "subgroup_name": null,
+      "currency": {
+        "id": "1",
+        "code": "usd",
+        "accuracy": 2
+      },
+      "icon": {
+        "id": "228",
+        "alternativeText": null,
+        "url": "/uploads/advc_dcf1be13c9.png"
+      },
+      "color": "dark_teal",
+      "popular_as": null,
+      "section": "digital"
+    },
+    {
+      "pm_group_id": "15",
+      "code": "ADVCRUB",
+      "en_name": "Adv Cash",
+      "ru_name": null,
+      "subgroup_name": null,
+      "currency": {
+        "id": "5",
+        "code": "rub",
+        "accuracy": 0
+      },
+      "icon": {
+        "id": "228",
+        "alternativeText": null,
+        "url": "/uploads/advc_dcf1be13c9.png"
+      },
+      "color": "dark_teal",
+      "popular_as": null,
+      "section": "digital"
+    }
+  ],
+  "exchangePaths": [
+    {
+      "params": {
+        "slug": "tinkoff-rub-to-advcash-usd",
+        "city": []
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "slug": "tinkoff-rub-to-advcash-usd",
+        "city": []
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "slug": "tinkoff-rub-to-advcash-rub",
+        "city": []
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "slug": "tinkoff-rub-to-advcash-rub",
+        "city": []
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "slug": "tinkoff-rub-to-bitcoin-btc",
+        "city": []
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "slug": "tinkoff-rub-to-bitcoin-btc",
+        "city": []
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "slug": "tinkoff-rub-to-eos-eos",
+        "city": []
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "slug": "tinkoff-rub-to-eos-eos",
+        "city": []
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "slug": "tinkoff-rub-to-pancake-cake",
+        "city": []
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "slug": "tinkoff-rub-to-pancake-cake",
+        "city": []
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "slug": "tinkoff-rub-to-icon-icx",
+        "city": []
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "slug": "tinkoff-rub-to-icon-icx",
+        "city": []
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "slug": "tinkoff-rub-to-polygon-matic",
+        "city": []
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "slug": "tinkoff-rub-to-polygon-matic",
+        "city": []
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "slug": "tinkoff-rub-to-uniswap-uni",
+        "city": []
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "slug": "tinkoff-rub-to-uniswap-uni",
+        "city": []
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "slug": "tinkoff-rub-to-zcash-zec",
+        "city": []
+      },
+      "locale": "en"
     }
   ]
 }

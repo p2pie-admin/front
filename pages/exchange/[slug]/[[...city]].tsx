@@ -7,7 +7,7 @@ import {
   selectorQuery,
 } from "../../../services/initialQueries";
 import { IPmGroup, IPm, ISelector, ISection } from "../../../types/selector";
-import { readCache, writeCache } from "../../../services/cache";
+import { readCache, writeCache } from "../../../cache";
 import React from "react";
 import Exchange from "../../../components/exchange";
 import {
@@ -152,13 +152,10 @@ export async function getStaticPaths() {
   }, {});
 
   const locales = ["en", "ru"];
-  const cachedData = readCache() as ICache;
   const cities = convertCities(parserSetting.cities);
-
-  cachedData.slugToCodes = slugToCodes;
-  cachedData.cities = cities;
-  cachedData.pms = pms;
-  writeCache(cachedData); // Save to cache
+  console.log(`received ${Object.keys(cities).length} cities`);
+  console.log(`received ${dirs.length} dirs`);
+  console.log(`received ${Object.keys(slugToCodes).length} slugToCodes`);
 
   const paths = Object.keys(slugToCodes).reduce(
     (
@@ -194,7 +191,15 @@ export async function getStaticPaths() {
       });
     });
   });
-  const slicedPaths = paths.slice(0, 7);
+  const slicedPaths = paths.slice(0, 17);
+
+  const cachedData = readCache() as ICache;
+  cachedData.slugToCodes = slugToCodes;
+  cachedData.cities = cities;
+  cachedData.pms = pms;
+  cachedData.exchangePaths = slicedPaths;
+  // console.log("slicedPaths", slicedPaths);
+  writeCache(cachedData); // Save to cache
 
   return {
     paths: slicedPaths,

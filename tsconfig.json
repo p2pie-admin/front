@@ -18,6 +18,14 @@
       "react": ["./node_modules/@types/react"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "next-i18next.config.js"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "next-i18next.config.js",
+    "next-seo.config.ts",
+    "next-sitemap.config.js",
+    "cache/index.js"
+  ],
   "exclude": ["node_modules"]
 }
