@@ -37,7 +37,7 @@ const PmsDescription = ({
             <Box>
               {givePmText?.description.split("\n").map((text, index) => (
                 <Text key={index} w="100%" whiteSpace="nowrap">
-                  {`• ${text}`}
+                  {`• ${text.replace("\x03", "")}`}
                 </Text>
               ))}
             </Box>

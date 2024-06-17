@@ -98,40 +98,42 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
       }}
     >
       <Box w="100%">
-        <HStack alignItems="center">
-          <ResponsiveText
-            size={name.length > 12 ? "md" : name.length > 8 ? "lg" : "xl"}
-            fontWeight="bold"
-            transition="color 200ms linear"
-            variant={index === activeIndex ? "primary" : "no_contrast"}
-            cursor="pointer"
-            onClick={() => {
-              dispatch(redirect());
-              window.open(ref_link, "_blank");
-            }}
-          >
-            {capitalize(name)}
-          </ResponsiveText>
+        <HStack justifyContent="space-between">
+          <HStack alignItems="center">
+            <ResponsiveText
+              size={name.length > 12 ? "md" : name.length > 8 ? "lg" : "xl"}
+              fontWeight="bold"
+              transition="color 200ms linear"
+              variant={index === activeIndex ? "primary" : "no_contrast"}
+              cursor="pointer"
+              onClick={() => {
+                dispatch(redirect());
+                window.open(ref_link, "_blank");
+              }}
+            >
+              {capitalize(name)}
+            </ResponsiveText>
+            <Box
+              color={index === activeIndex ? ratingColor : colorInactive}
+              mb="1"
+            >
+              <FaStar size="1rem" />
+            </Box>
+            <ResponsiveText
+              size="lg"
+              color={index === activeIndex ? ratingColor : colorInactive}
+            >
+              {rating}
+            </ResponsiveText>
+          </HStack>
           <Box
-            color={index === activeIndex ? ratingColor : colorInactive}
-            mb="1"
+            cursor="pointer"
+            onClick={() => dispatch(triggerModal("rate-details"))}
+            color={index === activeIndex ? colorActive : colorInactive}
           >
-            <FaStar size="1rem" />
+            <GrCircleInformation size="1.2rem" />
           </Box>
-          <ResponsiveText
-            size="lg"
-            color={index === activeIndex ? ratingColor : colorInactive}
-          >
-            {rating}
-          </ResponsiveText>
         </HStack>
-        <Box
-          cursor="pointer"
-          onClick={() => dispatch(triggerModal("rate-details"))}
-          color={index === activeIndex ? colorActive : colorInactive}
-        >
-          <GrCircleInformation size="1.2rem" />
-        </Box>
 
         <Box color={index === activeIndex ? colorActive : colorInactive}>
           <ResponsiveText size="sm" color="inherit">{`Курс: 1 ${bigCur} ≈ ${
