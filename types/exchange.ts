@@ -19,8 +19,7 @@ export interface IDirText {
 
 export interface IPath {
   params: {
-    slug: string;
-    city?: string[];
+    exchange: string;
   };
   locale: string;
 }

@@ -1,29 +1,24 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { initCMSFetcher, initParserFetcher } from "../../../services/fetchers";
+import { initCMSFetcher, initParserFetcher } from "../services/fetchers";
 import {
   citiesQuery,
   dirsTextQuery,
   pmsTextQuery,
   selectorQuery,
-} from "../../../services/initialQueries";
-import { IPmGroup, IPm, ISelector, ISection } from "../../../types/selector";
-import { readCache, writeCache } from "../../../cache";
+} from "../services/initialQueries";
+import { IPmGroup, IPm, ISelector, ISection } from "../types/selector";
+import { readCache, writeCache } from "../cache";
 import React from "react";
-import Exchange from "../../../components/exchange";
-import {
-  ICache,
-  IDirText,
-  IPmsText,
-  IPossiblePmPair,
-} from "../../../types/exchange";
+import Exchange from "../components/exchange";
+import { ICache, IDirText, IPmsText, IPossiblePmPair } from "../types/exchange";
 import {
   convertCities,
   findSimilarPmPairs,
-} from "../../../components/exchange/helper";
+} from "../components/exchange/helper";
 import {
   extractPmsFromPmGroup,
   pmsToSlug,
-} from "../../../components/main/side/selector/section/PmGroup/helper";
+} from "../components/main/side/selector/section/PmGroup/helper";
 
 const ExchangePage = (props: any) => {
   return <Exchange {...props} />;
@@ -34,11 +29,16 @@ export async function getStaticProps({
   params,
 }: {
   locale: "en" | "ru";
-  params: { slug: string; city?: string[] };
+  params: { exchange: string };
 }) {
   try {
-    const { slug, city } = params;
-    const cityParam = city ? city[0] : "";
+    const { exchange } = params;
+
+    const [slug, cityParam] = exchange.includes("-in-")
+      ? [exchange.split("-in-")[0], exchange.split("-in-")[1]]
+      : [exchange, ""];
+
+    console.log(slug, cityParam);
     const cachedData = readCache() as ICache;
     const pms = cachedData.pms;
     const dir = cachedData?.slugToCodes?.[slug];
@@ -160,17 +160,14 @@ export async function getStaticPaths() {
   const paths = Object.keys(slugToCodes).reduce(
     (
       res: {
-        params: { slug: string; city?: string[] };
+        params: { exchange: string };
         locale: string;
       }[],
       slug: string
     ) => [
       ...res,
       ...locales.map((locale) => ({
-        params: {
-          slug,
-          city: [],
-        },
+        params: { exchange: slug },
         locale,
       })),
     ],
@@ -183,8 +180,7 @@ export async function getStaticPaths() {
         if (!(slug.startsWith("cash-") || slug.includes("-cash-"))) return;
         paths.push({
           params: {
-            slug,
-            city: [city.replaceAll(" ", "-")],
+            exchange: `${slug}-in-${[city.replaceAll(" ", "-")]}`,
           },
           locale,
         });

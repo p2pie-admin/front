@@ -6,7 +6,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postbuild": "next-sitemap"
+    "1postbuild": "next-sitemap"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.0",
