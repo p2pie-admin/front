@@ -10,6 +10,7 @@ import { IoInformation } from "react-icons/io5";
 import { IParameter } from "../../../types/rates";
 import CustomImage from "../../shared/CustomImage";
 import { useAppSelector } from "../../../redux/hooks";
+import MyTooltip from "../../shared/MyTooltip";
 
 const Parameter = ({
   code,
@@ -30,20 +31,13 @@ const Parameter = ({
   )} hue-rotate(${rotationColor}deg)`;
 
   return (
-    <Tooltip
-      hasArrow
-      label={description || ""}
-      bg="bg.800"
-      borderRadius="2xl"
-      color="pink.100"
-      openDelay={500}
-    >
+    <MyTooltip label={description} placement="left">
       <HStack
         filter={filter}
         zIndex="4"
         w="fit-content"
         position="relative"
-        px={isExtended && title ? ["1", "2"] : "1"}
+        px={["0.2", "1"]}
         py={["0.2", "0.5"]}
         justifyContent="center"
         cursor="pointer"
@@ -71,7 +65,7 @@ const Parameter = ({
         )}
         {isExtended && title && <Text fontSize={["xs", "sm"]}>{title}</Text>}
       </HStack>
-    </Tooltip>
+    </MyTooltip>
   );
 };
 

@@ -31,7 +31,7 @@ const CryptoRates = ({
           const pm = popularPms.find((pm) => pm.code == rate.fiat);
           const slug = pmsToSlug({ givePm: cryptoPm, getPm: pm });
           return (
-            <Link key={index + "bank"} href={`/exchange/${slug}`} passHref>
+            <Link key={index + "bank"} href={`/${slug}`} passHref>
               <ResponsiveText size="sm" _hover={{ color: "bg.200" }} my="1">
                 {`${capitalize(pm?.ru_name)}`}
               </ResponsiveText>

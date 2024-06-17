@@ -2,10 +2,12 @@ import {
   Box,
   Button,
   Divider,
+  Grid,
   HStack,
   useColorMode,
   useColorModeValue,
   VStack,
+  Wrap,
 } from "@chakra-ui/react";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
@@ -17,8 +19,13 @@ import { IRate } from "../../../types/rates";
 import { triggerModal } from "../../../redux/mainReducer";
 import { GrCircleInformation } from "react-icons/gr";
 import Parameter from "./Parameter";
+import { useIsMobile } from "./hooks";
 
-const Parameters = ({ parameterCodes }: { parameterCodes?: string[] }) => {
+const DesktopParameters = ({
+  parameterCodes,
+}: {
+  parameterCodes?: string[];
+}) => {
   if (!parameterCodes) return <></>;
   return (
     <HStack justifyContent="end" mb="1" alignSelf="end">
@@ -33,10 +40,35 @@ const Parameters = ({ parameterCodes }: { parameterCodes?: string[] }) => {
   );
 };
 
+const MobileParameters = ({
+  parameterCodes,
+}: {
+  parameterCodes?: string[];
+}) => {
+  if (!parameterCodes) return <></>;
+  return (
+    <Grid
+      position="absolute"
+      top="1"
+      right="1"
+      alignItems="end"
+      templateRows="repeat(2, 1fr)"
+      gridAutoFlow="column"
+      gap="1"
+      dir="rtl"
+    >
+      {parameterCodes.map((code, i) => (
+        <Parameter isExtended={false} code={code} key={code + i + "mobile"} />
+      ))}
+    </Grid>
+  );
+};
+
 const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
   const dispatch = useAppDispatch();
   const activeIndex = useAppSelector((state) => state.main.swiperIdVisible);
   rate.parameterCodes?.map((p) => console.log(p));
+  const isMobile = useIsMobile();
 
   if (!rate) return <></>;
 
@@ -81,6 +113,7 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
   return (
     <VStack
       alignItems="start"
+      position="relative"
       py="1"
       px="2"
       gap="0"
@@ -96,7 +129,7 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
       }}
     >
       <Box w="100%">
-        <HStack justifyContent="space-between">
+        <HStack justifyContent={isMobile ? "start" : "space-between"}>
           <HStack alignItems="center">
             <ResponsiveText
               size={name.length > 12 ? "md" : name.length > 8 ? "lg" : "xl"}
@@ -143,7 +176,11 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
           )} — ${localFormat(MAX, smallCur)}`}</ResponsiveText>
         </Box>
       </Box>
-      <Parameters parameterCodes={rate.parameterCodes} />
+      {isMobile ? (
+        <MobileParameters parameterCodes={rate.parameterCodes} />
+      ) : (
+        <DesktopParameters parameterCodes={rate.parameterCodes} />
+      )}
     </VStack>
   );
 };

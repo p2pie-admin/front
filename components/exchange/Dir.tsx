@@ -18,7 +18,7 @@ const Dir = ({
   children?: any;
 }) => {
   return (
-    <Link href={`/exchange/${slug}`} passHref>
+    <Link href={`/${slug}`} passHref>
       <Box3D
         p="2"
         my="2"

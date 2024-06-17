@@ -13,6 +13,7 @@ import Exchange from "../components/exchange";
 import { ICache, IDirText, IPmsText, IPossiblePmPair } from "../types/exchange";
 import {
   convertCities,
+  exchangeToSlugCity,
   findSimilarPmPairs,
 } from "../components/exchange/helper";
 import {
@@ -34,11 +35,8 @@ export async function getStaticProps({
   try {
     const { exchange } = params;
 
-    const [slug, cityParam] = exchange.includes("-in-")
-      ? [exchange.split("-in-")[0], exchange.split("-in-")[1]]
-      : [exchange, ""];
+    const [slug, cityParam] = exchangeToSlugCity(exchange);
 
-    console.log(slug, cityParam);
     const cachedData = readCache() as ICache;
     const pms = cachedData.pms;
     const dir = cachedData?.slugToCodes?.[slug];
@@ -194,7 +192,7 @@ export async function getStaticPaths() {
   cachedData.cities = cities;
   cachedData.pms = pms;
   cachedData.exchangePaths = slicedPaths;
-  // console.log("slicedPaths", slicedPaths);
+
   writeCache(cachedData); // Save to cache
 
   return {

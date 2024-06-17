@@ -214,7 +214,7 @@ const LimitsRange = () => {
                 >
                   <ResponsiveText
                     mt="8"
-                    ml={isClose(lowestMin, MIN) ? 6 : 0}
+                    ml={isClose(lowestMin, MIN) ? 10 : 0}
                     size="xs"
                     whiteSpace="nowrap"
                     textAlign="center"
@@ -236,7 +236,7 @@ const LimitsRange = () => {
                 >
                   <ResponsiveText
                     mt="8"
-                    mr={isClose(highestMax, MAX) ? 6 : 0}
+                    mr={isClose(highestMax, MAX) ? 10 : 0}
                     size="xs"
                     whiteSpace="nowrap"
                     textAlign="center"

@@ -17,7 +17,7 @@ const RateLink = ({
   const pink = useColorModeValue("pink.700", "pink.200");
   const bgColor = useColorModeValue("bg.10", "bg.800");
   return (
-    <Link href={`/exchange/${slug}`} passHref>
+    <Link href={`/${slug}`} passHref>
       <HStack
         px="1"
         borderRadius="md"

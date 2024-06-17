@@ -91,3 +91,19 @@ export const generateTitle = ({
         getPm.subgroup_name
       )}`;
 };
+
+export const exchangeToSlugCity = (exchange: string) => {
+  return exchange.includes("-in-")
+    ? [exchange.split("-in-")[0], exchange.split("-in-")[1]]
+    : [exchange, ""];
+};
+
+export const slugCityToExchange = (slug: string, city?: string) => {
+  return `${slug}${city ? "-in-" + city : ""}`;
+};
+
+// const createURL = ({slug, locale, city}: {slug: string, locale: "en" | "ru", city: string}) => {
+//   const startWord = locale == "ru" ? "obmen" : "exchange"
+//   const middleWord = locale == "ru" ? "na" : "to"
+//   return `${locale}/${startWord}-${slug}`
+// }

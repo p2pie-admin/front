@@ -10,6 +10,7 @@ import { CgArrowsExchange } from "react-icons/cg";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { reverseDir, setDirRatesStatusPending } from "../../redux/mainReducer";
 import { useRouter } from "next/router";
+import { exchangeToSlugCity, slugCityToExchange } from "../exchange/helper";
 
 const Patch = () => {
   const [bg10, bg900] = useToken("colors", ["bg.10", "bg.900"]);
@@ -46,15 +47,17 @@ const ReverseButton = () => {
     (state) => state.main.givePm?.code && state.main.getPm?.code
   );
   const router = useRouter();
-  const { slug, city } = router.query as { slug: string; city: string };
-  let reversed_slug = "";
-  if (slug && slug.length) {
+  const { exchange } = router.query as { exchange: string };
+  let reversedExchange = "";
+  if (exchange && exchange.length) {
+    const [slug, city] = exchangeToSlugCity(exchange);
     const [leftPart, rightPart] = slug.split("-to-");
-    reversed_slug = `${rightPart}-to-${leftPart}`;
+    const reversed_slug = `${rightPart}-to-${leftPart}`;
+    reversedExchange = slugCityToExchange(reversed_slug, city);
   }
 
   const handleReverseDir = () => {
-    router.push(`/exchange/${reversed_slug}${city ? "/" + city : ""}`);
+    router.push(`/${reversedExchange}`);
     dispatch(setDirRatesStatusPending());
   };
 

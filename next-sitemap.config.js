@@ -12,13 +12,8 @@ const config = {
     const cachedData = readCache();
     let paths = [];
     cachedData.exchangePaths.forEach(({ params, locale }) => {
-      const cityPath = params.city ? params.city.join("/") : "";
-      const fullPath = cityPath
-        ? `/exchange/${cityPath}/${params.slug}`
-        : `/exchange/${params.slug}`;
-
       paths.push({
-        loc: `/${locale}${fullPath}`,
+        loc: `/${locale}${`/${params.exchange}`}`,
         lastmod: new Date().toISOString(),
       });
     });

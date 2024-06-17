@@ -1,5 +1,5 @@
 import { HStack, Text, VStack, Box } from "@chakra-ui/react";
-import { Box3D } from "../../styles/theme/custom";
+import { Box3D, ResponsiveText } from "../../styles/theme/custom";
 import { IPm } from "../../types/selector";
 import PmName from "../shared/PmName";
 import { IPmsText } from "../../types/exchange";
@@ -15,7 +15,6 @@ const PmsDescription = ({
   getPm: IPm;
   pmsTexts?: IPmsText[];
 }) => {
-  console.log(pmsTexts);
   const givePmText = pmsTexts?.find((t) => t.section == givePm.section);
   const getPmText = pmsTexts?.find((t) => t.section == getPm.section);
   return (
@@ -36,9 +35,15 @@ const PmsDescription = ({
             </HStack>
             <Box>
               {givePmText?.description.split("\n").map((text, index) => (
-                <Text key={index} w="100%" whiteSpace="nowrap">
+                <ResponsiveText
+                  size="sm"
+                  key={"give" + index}
+                  w="100%"
+                  variant="no_contrast"
+                  whiteSpace="nowrap"
+                >
                   {`• ${text.replace("\x03", "")}`}
-                </Text>
+                </ResponsiveText>
               ))}
             </Box>
           </VStack>
@@ -62,9 +67,15 @@ const PmsDescription = ({
             </HStack>
             <Box>
               {getPmText?.description.split("\n").map((text, index) => (
-                <Text key={index} w="100%" whiteSpace="nowrap">
-                  {`• ${text}`}
-                </Text>
+                <ResponsiveText
+                  size="sm"
+                  key={"get" + index}
+                  w="100%"
+                  variant="no_contrast"
+                  whiteSpace="nowrap"
+                >
+                  {`• ${text.replace("\x03", "")}`}
+                </ResponsiveText>
               ))}
             </Box>
           </VStack>

@@ -45,9 +45,6 @@ const Exchange = ({
   const dispatch = useAppDispatch();
   const dir = `${givePm.code}_${getPm.code}`;
   const curPair = `${givePm.currency.code}_${getPm.currency.code}`;
-  const ratesFound = useAppSelector(
-    (state) => state.main.dirRates?.length || ""
-  );
 
   useEffect(() => {
     batch(() => {
@@ -64,7 +61,7 @@ const Exchange = ({
   //const vh = useViewportHeight();
   const giveCur = givePm.currency.code.toUpperCase();
   const getCur = getPm.currency.code.toUpperCase();
-  const title2 = `Найдено обменников: ${ratesFound}`;
+  const title2 = "Лучшие предложения обмена:";
   const title1 = generateTitle({
     locale,
     givePm,
@@ -91,7 +88,7 @@ const Exchange = ({
       </Column>
 
       <Column index={1}>
-        <ColumnHeader text={title2} as="h1" query={[String(ratesFound)]} />
+        <ColumnHeader text={title2} as="h1" query={[]} />
         <Calculator />
 
         <LimitsRange />

@@ -96,7 +96,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
       const slug = pmsToSlug({ givePm, getPm })
         .replaceAll(" ", "")
         .toLowerCase();
-      shaded ? router.push(`/`) : router.push(`/exchange/${slug}`);
+      shaded ? router.push(`/`) : router.push(`/${slug}`);
     }
 
     // const oppositePm = side === "give" ? getPm : givePm;

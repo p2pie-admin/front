@@ -188,11 +188,11 @@ export const Swiper = (props: {
         <Box
           position="absolute"
           right="0"
-          top={`calc(${containerHeight / 2}px )`}
+          top={`calc(${containerHeight / 2}px + 0.5rem)`}
           color={triangleColor}
           transform="rotate(90deg)"
         >
-          <TbTriangleInvertedFilled size="2rem" />
+          <TbTriangleInvertedFilled size="1.2rem" />
         </Box>
       </Box3D>
 
