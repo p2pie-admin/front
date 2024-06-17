@@ -24,9 +24,7 @@ const Parameters = ({ parameterCodes }: { parameterCodes?: string[] }) => {
     <HStack justifyContent="end" mb="1" alignSelf="end">
       {parameterCodes.map((code, i) => (
         <Parameter
-          isExtended={
-            parameterCodes.length < 3 || (parameterCodes.length < 4 && i < 3)
-          }
+          isExtended={parameterCodes.length < 3}
           code={code}
           key={code + i}
         />
