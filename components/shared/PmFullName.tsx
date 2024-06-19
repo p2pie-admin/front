@@ -8,7 +8,7 @@ const PmFullName = ({ pm }: { pm: IPm }) => {
   const name = pm.en_name;
   return (
     <HStack>
-      <CircularIcon icon={pm.icon} color={pm.color} />
+      <CircularIcon iconAlt={name} icon={pm.icon} color={pm.color} />
       <Text color={color} fontSize="md" fontWeight="bold">{`${capitalize(
         name
       )} ${pm.currency.code.toUpperCase()}`}</Text>

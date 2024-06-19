@@ -32,7 +32,6 @@ export interface ILocation {
   en_city_name: string;
   ru_city_name?: string;
   code?: string;
-  ip?: string;
 }
 export interface IFingerprint {
   ip: string;

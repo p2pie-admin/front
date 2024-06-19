@@ -13,6 +13,7 @@ import Exchange from "../components/exchange";
 import { ICache, IDirText, IPmsText, IPossiblePmPair } from "../types/exchange";
 import {
   convertCities,
+  createLocation,
   exchangeToSlugCity,
   findSimilarPmPairs,
 } from "../components/exchange/helper";
@@ -20,8 +21,19 @@ import {
   extractPmsFromPmGroup,
   pmsToSlug,
 } from "../components/main/side/selector/section/PmGroup/helper";
+import { ILocation } from "../types/shared";
 
-const ExchangePage = (props: any) => {
+const ExchangePage = (props: {
+  //article?: IArticle | null;
+  locale: "en" | "ru";
+  slug?: string;
+  dirText?: IDirText;
+  pmsTexts?: IPmsText[];
+  givePm: IPm;
+  getPm: IPm;
+  location: ILocation;
+  similarPmPairs: IPm[][];
+}) => {
   return <Exchange {...props} />;
 };
 
@@ -68,11 +80,7 @@ export async function getStaticProps({
       };
     const similarPmPairs = findSimilarPmPairs(givePm, getPm, pms);
     const fullCity = cachedData.cities?.[cityParam];
-    const cityName = !fullCity
-      ? ""
-      : locale === "ru"
-      ? fullCity[0]
-      : fullCity[1];
+    const location = createLocation(fullCity);
 
     return {
       props: {
@@ -82,7 +90,7 @@ export async function getStaticProps({
         pmsTexts,
         givePm,
         getPm,
-        cityName,
+        location,
         similarPmPairs,
         ...(await serverSideTranslations(locale || "ru", ["home"])),
       },

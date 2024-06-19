@@ -7,12 +7,14 @@ export default function PmButton({
   icon,
   handleToggle,
   shaded,
+  iconAlt,
 }: {
   children: JSX.Element | JSX.Element[];
   color: string;
   icon?: any;
   handleToggle: any;
   shaded: boolean;
+  iconAlt?: string;
 }) {
   return (
     <Button
@@ -22,7 +24,7 @@ export default function PmButton({
       filter={shaded ? "opacity(0.3) grayscale(0.8)" : "none"}
       justifyContent="start"
       onClick={handleToggle} // works as choosePm or as open subitems
-      leftIcon={<CircularIcon icon={icon} color={color} />}
+      leftIcon={<CircularIcon iconAlt={iconAlt} icon={icon} color={color} />}
       color="transparent"
       transition="all 0.3s ease"
       _hover={{

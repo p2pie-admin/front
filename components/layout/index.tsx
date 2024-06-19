@@ -16,6 +16,7 @@ import { setIP, setLocation } from "../../redux/mainReducer";
 import { initCurrencyConverterFetcher } from "../../services/fetchers";
 import { ILocation } from "../../types/shared";
 import Nav from "./nav";
+import { batch } from "react-redux";
 
 const Layout = ({ children }: { children: any }) => {
   // const maxW = useBreakpointValue({ base: "100%", lg: "980" });
@@ -30,8 +31,11 @@ const Layout = ({ children }: { children: any }) => {
     fetcher().then((resp) => {
       console.log(resp);
       if (resp.data) {
-        const location = resp.data as ILocation;
-        dispatch(setLocation(location));
+        const { ip, ...location } = resp.data as ILocation & { ip: string };
+        batch(() => {
+          dispatch(setLocation(location));
+          dispatch(setIP(ip));
+        });
       }
     });
     // const url = "https://ip.nf/me.json";

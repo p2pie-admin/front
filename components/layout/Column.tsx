@@ -15,7 +15,6 @@ export const Column = ({
       key={index}
       variant="no_contrast"
       p="4"
-      overflow="hidden"
       gridRow={{ base: index, lg: "unset" }}
       gridColumn={{ base: "unset", lg: isFullWidth ? "1/3" : "unset" }}
     >

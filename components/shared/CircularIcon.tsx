@@ -11,10 +11,12 @@ const CircularIcon = ({
   icon,
   color,
   small,
+  iconAlt,
 }: {
   color: string;
   icon?: IImage;
   small?: boolean;
+  iconAlt?: string;
 }) => {
   const [
     gray,
@@ -104,7 +106,7 @@ const CircularIcon = ({
         // filter={shaded ? "grayscale(0.6) brightness(0.3)" : "none"}
         // fallbackSrc={fallbackSRC}
         src={icon ? SRC + icon.url : ""}
-        alt={icon ? icon.alternativeText : ""}
+        alt={icon ? icon.alternativeText : iconAlt}
       />
 
       <Box

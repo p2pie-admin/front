@@ -204,3 +204,12 @@ export const localFormat = (n: number, cur: string, locale?: "en" | "ru") => {
 export const curToSymbol = (cur?: string) => {
   return cur ? symbols?.[cur.toLocaleLowerCase() as keyof typeof symbols] : "";
 };
+
+export function powerOfTenOrder(num?: number): number {
+  if (!num || num === 0) return 0;
+
+  const absoluteNum = Math.abs(num);
+  const exponent = Math.floor(Math.log10(absoluteNum));
+
+  return Math.pow(10, exponent);
+}

@@ -4,7 +4,7 @@ import { IArticle } from "../../types/pages";
 import { Text } from "@chakra-ui/react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import {
-  articleCodesQuery,
+  ArticleCodesQuery,
   articleQuery,
   dirsTextQuery,
 } from "../../services/initialQueries";
@@ -12,13 +12,61 @@ import Article from "../../components/exchange/article";
 import { ICache, IPmPairs } from "../../types/exchange";
 import { destructureDirSlug } from "../../redux/helper";
 import { IPm } from "../../types/selector";
+import { NextSeo, BreadcrumbJsonLd } from "next-seo";
 
 const ArticlePage = (props: {
+  locale: "en" | "ru";
   article: IArticle | null;
   code: string;
   otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] };
 }) => {
-  return <Article {...props} />; ///<Article article={article} />;
+  const { article, code, locale } = props;
+  if (!article) return <></>;
+  return (
+    <>
+      <NextSeo
+        title={article.header}
+        description={article.subheader}
+        canonical={`www.p2pie.com/articles/${code}`}
+        additionalLinkTags={[
+          {
+            rel: "alternate",
+            href: `www.p2pie.com/en/articles/${code}`,
+            hrefLang: "en",
+          },
+          {
+            rel: "alternate",
+            href: `www.p2pie.com/ru/articles/${code}`,
+            hrefLang: "ru",
+          },
+        ]}
+        openGraph={{
+          type: "article",
+          article: {
+            publishedTime: article.updatedAt,
+            modifiedTime: article.updatedAt,
+          },
+          url: `www.p2pie.com/${locale}/articles/${code}`,
+          site_name: article.header,
+        }}
+      />
+      <BreadcrumbJsonLd
+        itemListElements={[
+          {
+            position: 1,
+            name: locale == "en" ? "Home" : "Главная",
+            item: `https://www.p2pie.com/${locale}`,
+          },
+          {
+            position: 2,
+            name: article.header,
+            item: `https://www.p2pie.com/${locale}/articles/${code}`,
+          },
+        ]}
+      />
+      <Article {...props} />
+    </>
+  ); ///<Article article={article} />;
 };
 
 export async function getStaticProps({
@@ -99,7 +147,7 @@ export async function getStaticProps({
 export async function getStaticPaths() {
   const locales = ["en", "ru"];
   const cmsFetcher = initCMSFetcher();
-  const { articles } = (await cmsFetcher(articleCodesQuery)) as {
+  const { articles } = (await cmsFetcher(ArticleCodesQuery)) as {
     articles: { code: string }[];
   };
   const articleCodes = articles.map((a) => a.code);

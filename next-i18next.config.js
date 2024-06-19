@@ -3,6 +3,7 @@ const i18Config = {
     defaultLocale: "ru",
     locales: ["en", "ru"],
   },
+  localeDetection: true,
 };
 
 module.exports = i18Config;

@@ -8,7 +8,11 @@ const PmName = ({ pm }: { pm?: IPm }) => {
   if (!pm) return <></>;
   return (
     <HStack gap="2" w="100%">
-      <CircularIcon icon={pm.icon} color={pm.color || "gray"} />
+      <CircularIcon
+        iconAlt={pm.en_name}
+        icon={pm.icon}
+        color={pm.color || "gray"}
+      />
       <ResponsiveText>{`${capitalize(
         pm.en_name.slice(0, 12)
       )} ${pm.currency.code.toUpperCase()}`}</ResponsiveText>

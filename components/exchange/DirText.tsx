@@ -9,13 +9,11 @@ const DirText = ({
   givePm,
   getPm,
   locale,
-  cityName,
 }: {
   dirText?: IDirText;
   givePm: IPm;
   getPm: IPm;
   locale: "en" | "ru";
-  cityName: string;
 }) => {
   const userLocation = useAppSelector(
     (state) =>
@@ -23,7 +21,7 @@ const DirText = ({
       " / " +
       state.main.location[`${locale}_country_name`]
   );
-  const city = cityName ? cityName : userLocation || "";
+  const city = userLocation || "";
   if (!dirText) return <></>;
   const { text, title } = dirText;
   return (

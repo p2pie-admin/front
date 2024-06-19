@@ -269,9 +269,10 @@ export const mainSlice = createSlice({
     },
 
     setLocation: (state: MainState, action: PayloadAction<ILocation>) => {
-      const { ip, en_city_name } = action.payload;
+      if (state.location) return;
+      const { en_city_name } = action.payload;
       if (!en_city_name) {
-        state.location = { ...defaultLocation, ip };
+        state.location = defaultLocation;
         return;
       }
       state.location = action.payload;
@@ -351,11 +352,14 @@ export const mainSlice = createSlice({
       action: PayloadAction<{
         givePm: IPm;
         getPm: IPm;
+        location: ILocation;
       }>
     ) => {
       state.dirRatesStatus = "pending";
-      state.givePm = action.payload.givePm;
-      state.getPm = action.payload.getPm;
+      const { givePm, getPm, location } = action.payload;
+      state.givePm = givePm;
+      state.getPm = getPm;
+      if (location) state.location = location;
     },
     sendToast: (state: MainState, action: PayloadAction<IToast>) => {
       state.toast = action.payload;
@@ -394,6 +398,7 @@ export const mainSlice = createSlice({
     });
 
     builder.addCase(fetchPossiblePairs.fulfilled, (state, action) => {
+      if (!action.payload) return;
       if (action.payload.side === "give" && state.givePm)
         state.givePm.possible_pairs = action.payload.possiblePairs;
       if (action.payload.side === "get" && state.getPm)

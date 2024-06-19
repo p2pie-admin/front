@@ -11,13 +11,10 @@ import { useIsMobile } from "./hooks";
 import { fetchDirRates, fetchParameters } from "../../../redux/thunks";
 import CustomModal from "../../shared/CustomModal";
 import RateDetails from "../../shared/RateDetails";
-import { ParametersQuery } from "../../../services/initialQueries";
-import { useTranslation } from "react-i18next";
 
 const TV = ({ dir }: { dir: string }) => {
   const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
   const dirRates = useAppSelector((state) => state.main.dirRates) || [];
-  const { t, i18n } = useTranslation();
 
   const dispatch = useAppDispatch();
 
@@ -30,7 +27,7 @@ const TV = ({ dir }: { dir: string }) => {
   }, []);
 
   const isMobile = useIsMobile();
-  const itemHeight = isMobile ? 80 : 140; // Height of each text box
+  const itemHeight = isMobile ? 80 : 130; // Height of each text box
   const visibleItems = 3; // Number of items visible in the container
   const containerHeight = itemHeight * visibleItems;
 

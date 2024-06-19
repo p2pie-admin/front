@@ -5,15 +5,15 @@ import theme from "../styles/theme";
 import Layout from "../components/layout";
 import store from "../redux/store";
 import { Provider } from "react-redux";
-import { appWithTranslation } from "next-i18next";
+import { appWithTranslation, useTranslation } from "next-i18next";
 import HeadHTML from "../components/layout/HeadHTML";
 import { DefaultSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { defaultConfig } from "../next-seo.config";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const { locale } = useRouter();
-  const seoConfig = defaultConfig[(locale as "en" | "ru") || "ru"];
+  const { locale } = useRouter() as { locale: "en" | "ru" };
+  const seoConfig = defaultConfig[locale || "ru"];
   return (
     <ChakraProvider theme={theme}>
       <Provider store={store}>

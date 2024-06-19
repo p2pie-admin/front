@@ -30,14 +30,11 @@ const PmModalButton = () => {
     return pm ? [pm] : [];
     //      state.main[`${side == "give" ? "get" : "give"}Pm`],
   }); // либо три в ряд для п2п либо pm и обратная pm
-  const oppositePm = useAppSelector((state) =>
-    isP2P ? undefined : state.main?.[`${oppositeSide}Pm`]
-  );
+
   const openDialog = () => {
     batch(() => {
       // берем возможные пары для обратной пм если такая выбрана
-      oppositePm &&
-        dispatch(fetchPossiblePairs({ code: oppositePm.code, side }));
+      dispatch(fetchPossiblePairs());
       dispatch(triggerModal(side + p2pIndex || ""));
       dispatch(setSearchBarInputValue(""));
     });

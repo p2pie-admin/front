@@ -20,6 +20,7 @@ const ModalButton = ({
         openDialog();
         e.stopPropagation();
       }}
+      px="0 !important"
       position="relative"
       variant="default"
       color={color}

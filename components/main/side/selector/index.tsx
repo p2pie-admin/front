@@ -37,10 +37,9 @@ import { memo } from "react";
 import { selectorQuery } from "../../../../services/initialQueries";
 
 //const gqlFetcher = new GraphQLFetcher(); // may pass variables here
-const fetcher = initCMSFetcher();
+const fetcher = initCMSFetcher({ countries: ["turkey"] });
 
 const Selector = function Selector() {
-  //const { data, error } = useSWR(selectorQuery, gqlFetcher.fetcher);
   const { data, error } = useSWR(selectorQuery, fetcher) as {
     data: { selector: ISelector };
     error: any;

@@ -57,7 +57,7 @@ const Similar = ({ similarPmPairs }: { similarPmPairs: IPm[][] }) => {
   };
 
   return (
-    <Box3D px="2" w="100%" minH="300px">
+    <Box3D px="2" w="100%" minH="304px">
       <ResponsiveText fontSize="sm" my="1" variant="no_contrast">
         Похожие направления:
       </ResponsiveText>
@@ -68,7 +68,7 @@ const Similar = ({ similarPmPairs }: { similarPmPairs: IPm[][] }) => {
         });
 
         return (
-          <Dir givePm={pair[0]} getPm={pair[1]} slug={slug}>
+          <Dir key={slug} givePm={pair[0]} getPm={pair[1]} slug={slug}>
             {data?.[index] && renderRate(pair, data[index])}
           </Dir>
         );

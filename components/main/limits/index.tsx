@@ -36,6 +36,7 @@ import { BsArrowLeftShort, BsArrowRightShort } from "react-icons/bs";
 import Thumb from "./Thumb";
 import side from "../side";
 import { useTranslation } from "react-i18next";
+import { useRouter } from "next/router";
 
 const CustomRangeSlider = ({
   resMin,
@@ -63,10 +64,10 @@ const LimitsRange = () => {
   const currentDirRate = useAppSelector(
     (state) => state.main?.dirRates?.[state.main.swiperIdVisible]
   );
-  const { t, i18n } = useTranslation();
-  const lang = i18n.language as "en" | "ru";
+  const { locale } = useRouter() as { locale: "en" | "ru" };
+
   const [minWord, maxWord, limitsWord] =
-    lang == "en" ? ["min", "max", "limits"] : ["мин", "макс", "лимиты"];
+    locale == "en" ? ["min", "max", "limits"] : ["мин", "макс", "лимиты"];
   // if(!currentDirRate) return <></>
   const [side, setSide]: [side: "give" | "get", setSide: Function] = useState(
     "get" as "give" | "get" // (currentDirRate.course) > 1 ? "give" : "get"
@@ -186,7 +187,7 @@ const LimitsRange = () => {
               >
                 <Box
                   h="fit-content"
-                  mt="1"
+                  mt="3"
                   bgColor={colorHint}
                   boxShadow="lg"
                   borderRadius="md"
@@ -195,12 +196,12 @@ const LimitsRange = () => {
                 >
                   <ResponsiveText size="xs">
                     {MIN == MAX
-                      ? localFormat(MIN, mainCur, lang)
+                      ? localFormat(MIN, mainCur, locale)
                       : `${limitsWord}: ${localFormat(
                           MIN,
                           mainCur,
-                          lang
-                        )} — ${localFormat(MAX, mainCur, lang)}`}
+                          locale
+                        )} — ${localFormat(MAX, mainCur, locale)}`}
                   </ResponsiveText>
                 </Box>
               </Flex>
@@ -213,8 +214,8 @@ const LimitsRange = () => {
                   bgColor={mainColor}
                 >
                   <ResponsiveText
-                    mt="8"
-                    ml={isClose(lowestMin, MIN) ? 10 : 0}
+                    mt="12"
+                    ml={isClose(lowestMin, MIN) ? 6 : 0}
                     size="xs"
                     whiteSpace="nowrap"
                     textAlign="center"
@@ -224,7 +225,7 @@ const LimitsRange = () => {
                     px="1"
                     py="0.5"
                   >
-                    {`${minWord}: ${localFormat(MIN, mainCur, lang)}`}
+                    {`${minWord}: ${localFormat(MIN, mainCur, locale)}`}
                   </ResponsiveText>
                 </RangeSliderThumb>
 
@@ -235,8 +236,8 @@ const LimitsRange = () => {
                   bgColor={mainColor}
                 >
                   <ResponsiveText
-                    mt="8"
-                    mr={isClose(highestMax, MAX) ? 10 : 0}
+                    mt="12"
+                    mr={isClose(highestMax, MAX) ? 6 : 0}
                     size="xs"
                     whiteSpace="nowrap"
                     textAlign="center"
@@ -246,7 +247,7 @@ const LimitsRange = () => {
                     px="1"
                     py="0.5"
                   >
-                    {`${maxWord}: ${localFormat(MAX, mainCur, lang)}`}
+                    {`${maxWord}: ${localFormat(MAX, mainCur, locale)}`}
                   </ResponsiveText>
                 </RangeSliderThumb>
               </>

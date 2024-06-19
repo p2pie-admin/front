@@ -21,6 +21,7 @@ import { generateTitle } from "./helper";
 import PmsDescription from "./PmsDescription";
 import { IDirText, IPmsText } from "../../types/exchange";
 import ColumnGrid from "../layout/ColumnGrid";
+import { ILocation } from "../../types/shared";
 
 const Exchange = ({
   locale,
@@ -29,7 +30,7 @@ const Exchange = ({
   pmsTexts,
   givePm,
   getPm,
-  cityName,
+  location,
   similarPmPairs,
 }: {
   //article?: IArticle | null;
@@ -39,7 +40,7 @@ const Exchange = ({
   pmsTexts?: IPmsText[];
   givePm: IPm;
   getPm: IPm;
-  cityName: string;
+  location: ILocation;
   similarPmPairs: IPm[][];
 }) => {
   const dispatch = useAppDispatch();
@@ -53,6 +54,7 @@ const Exchange = ({
         setInitialData({
           givePm,
           getPm,
+          location,
         })
       );
     });
@@ -105,7 +107,6 @@ const Exchange = ({
           givePm={givePm}
           getPm={getPm}
           locale={locale}
-          cityName={cityName}
         />
       </Box3D>
     </ColumnGrid>

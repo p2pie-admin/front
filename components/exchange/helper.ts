@@ -1,5 +1,6 @@
 import { ICities } from "../../types/exchange";
 import { IPm } from "../../types/selector";
+import { ILocation } from "../../types/shared";
 import { capitalize } from "../main/side/selector/section/PmGroup/helper";
 
 export const fillWords = ({
@@ -100,6 +101,17 @@ export const exchangeToSlugCity = (exchange: string) => {
 
 export const slugCityToExchange = (slug: string, city?: string) => {
   return `${slug}${city ? "-in-" + city : ""}`;
+};
+
+export const createLocation = (fullCity?: [string, string]) => {
+  if (!fullCity || !fullCity.length) return null;
+  const location = {
+    en_city_name: fullCity[1].split(", ")[0],
+    en_country_name: fullCity[1].split(", ")[1],
+    ru_city_name: fullCity[0].split(", ")[0],
+    ru_country_name: fullCity[0].split(", ")[1],
+  } as ILocation;
+  return location;
 };
 
 // const createURL = ({slug, locale, city}: {slug: string, locale: "en" | "ru", city: string}) => {

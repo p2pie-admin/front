@@ -3,12 +3,11 @@ import { ResponsiveText } from "../../../styles/theme/custom";
 import { IOrderIntro } from "../../../types/p2p";
 
 import CustomImage from "../../shared/CustomImage";
-import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
 
 const IntroItem = ({ introItem }: { introItem: IOrderIntro }) => {
   const { id, image } = introItem;
-  const { t, i18n } = useTranslation();
-  const lang = i18n.language as "en" | "ru";
+  const { locale } = useRouter() as { locale: "en" | "ru" };
   return (
     <Flex flexDir={["row", "column"]} key={id} justifyContent="start">
       <Center>
@@ -26,11 +25,11 @@ const IntroItem = ({ introItem }: { introItem: IOrderIntro }) => {
           size="lg"
           fontWeight="bold"
         >
-          {introItem[`${lang}_header`]}
+          {introItem[`${locale}_header`]}
         </ResponsiveText>
         <Box h="100%" px={[0, 2]}>
           <ResponsiveText whiteSpace="normal" w="100%">
-            {introItem[`${lang}_description`]}
+            {introItem[`${locale}_description`]}
           </ResponsiveText>
         </Box>
       </VStack>

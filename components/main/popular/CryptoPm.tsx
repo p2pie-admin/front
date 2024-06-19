@@ -17,7 +17,12 @@ const CryptoPm = ({ cryptoPm }: { cryptoPm: IPm }) => {
   return (
     <Link href={`/articles/${cryptoPm.en_name.toLowerCase()}`} passHref>
       <HStack alignItems="center">
-        <CircularIcon small color={cryptoPm.color} icon={cryptoPm.icon} />
+        <CircularIcon
+          iconAlt={cryptoPm.en_name}
+          small
+          color={cryptoPm.color}
+          icon={cryptoPm.icon}
+        />
         <Box position="relative">
           <ResponsiveText size="sm" variant="primary" fontWeight="bold">
             {`${cryptoPm.currency.code.toUpperCase()}`}

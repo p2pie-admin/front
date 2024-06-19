@@ -14,7 +14,7 @@ import { ICurrencyConverterRate } from "../../types/p2p";
 import { format, localFormat, R } from "../../redux/amountsHelper";
 
 const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
-  const color = "bg.10";
+  const color = useColorModeValue("bg.200", "bg.500");
   const bgColor = useColorModeValue("violet.600", "bg.900");
   const env = process.env.NODE_ENV;
   const SRC =
@@ -23,7 +23,7 @@ const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
       : process.env.NEXT_PUBLIC_CONVERTER_DEV_URL;
 
   const [isLongTimeFrame, setTimeframe] = useState(true);
-  const primaryColor = useColorModeValue("bg.800", "peach.200");
+  const primaryColor = useColorModeValue("bg.100", "peach.200");
   const ccRates = useAppSelector(
     (state) => state.main.ccRates || ({} as ICurrencyConverterRate)
   );
@@ -47,7 +47,7 @@ const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
           isLongTimeFrame ? "day" : "hour"
         }`}
       />
-      <HStack position="absolute" bottom="1" left="1" zIndex="35" px="2">
+      <HStack position="absolute" top="1" left="1" zIndex="35" px="2">
         <Text fontSize="md" fontWeight="bold" color={primaryColor}>
           {`${giveCur} / ${getCur}`}
         </Text>
@@ -55,19 +55,14 @@ const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
           trend > 0 ? "-" : "+"
         } ${format(Math.abs(trend), 3)}% ${trend > 0 ? "▼" : "▲"}`}</Text>
       </HStack>
-      <HStack
-        justifyContent="space-between"
+      <Box
         position="absolute"
         top="0"
         right="0"
         zIndex="35"
         borderRadius="lg"
         px="2"
-        w="calc(100% - 8px)"
       >
-        <Text fontSize="sm" color={color}>
-          {giveUsdRate + " | " + getUsdRate}
-        </Text>
         <HStack>
           <Button
             variant="default"
@@ -88,8 +83,10 @@ const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
             24h
           </Button>
         </HStack>
-      </HStack>
-      <Shader direction="top" />
+      </Box>
+      <Text fontSize="sm" color={color} position="absolute" bottom="1" left="1">
+        {giveUsdRate + " | " + getUsdRate}
+      </Text>
     </Box3D>
   );
 };

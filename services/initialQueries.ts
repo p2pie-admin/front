@@ -7,6 +7,7 @@ const pmGroup = gql`
       attributes {
         en_name
         ru_name
+        countries
         prefix
         options {
           ... on ComponentSelectorSubgroup {
@@ -124,7 +125,7 @@ export const pmsTextQuery = gql`
 `;
 
 export const selectorQuery = gql`
-  query Selector {
+   query Selector {
     selector {
       data {
         id
@@ -147,16 +148,16 @@ export const selectorQuery = gql`
             columns
             ru_title
             en_title
-            pm_groups(pagination: { start: 0, limit: 1000 }) {
+            pm_groups(pagination: { start: 0, limit: 1000 } ) {
               ${pmGroup}
-            }
           }
         }
       }
     }
   }
+   }
 `;
-
+//filters: { or: [ {countries: { containsi: $countries} }, {countries: {eq: null} }]}
 export const citiesQuery = gql`
   {
     parserSetting {
@@ -169,7 +170,7 @@ export const citiesQuery = gql`
   }
 `;
 
-export const articleCodesQuery = gql`
+export const ArticleCodesQuery = gql`
   {
     articles(pagination: { start: 0, limit: 1000 }) {
       data {

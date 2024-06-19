@@ -101,9 +101,23 @@ const RateDetails = () => {
           </Tbody>
         </Table>
       </TableContainer>
-      <Flex flexDir={{ base: "column", md: "row" }} justifyContent="end" mt="2">
+      <Wrap p="2" gap="2" my="1">
+        {rate.parameterCodes &&
+          rate.parameterCodes.map((code, i) => (
+            <Parameter
+              isExtended
+              code={code}
+              key={rate.exchangerId + code + i}
+            />
+          ))}
+      </Wrap>
+      <Flex
+        flexDir={{ base: "column", md: "row" }}
+        justifyContent="space-between"
+      >
         <Button
           m="2"
+          size="sm"
           disabled
           variant="contrast"
           rightIcon={<MdOutlineNotifications />}
@@ -119,6 +133,7 @@ const RateDetails = () => {
           Оповестить о улучшении курса
         </Button>
         <Button
+          size="sm"
           m="2"
           variant="error"
           rightIcon={<IoWarningOutline />}
@@ -134,12 +149,6 @@ const RateDetails = () => {
           Неверный курс
         </Button>
       </Flex>
-      <Wrap p="2" gap="2">
-        {rate.parameterCodes &&
-          rate.parameterCodes.map((code, i) => (
-            <Parameter code={code} key={rate.exchangerId + code + i} />
-          ))}
-      </Wrap>
     </CustomBox3D>
   );
 };

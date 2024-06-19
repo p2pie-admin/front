@@ -6,6 +6,24 @@ import { IPmsText } from "../../types/exchange";
 import Link from "next/link";
 import { RiInformationLine } from "react-icons/ri";
 
+const LinkWrapper = ({
+  url,
+  articleExists,
+  children,
+}: {
+  children: any;
+  articleExists: boolean;
+  url: string;
+}) => {
+  if (articleExists)
+    return (
+      <Link href={url} passHref>
+        {children}
+      </Link>
+    );
+  return <>{children}</>;
+};
+
 const PmsDescription = ({
   givePm,
   getPm,
@@ -17,17 +35,31 @@ const PmsDescription = ({
 }) => {
   const givePmText = pmsTexts?.find((t) => t.section == givePm.section);
   const getPmText = pmsTexts?.find((t) => t.section == getPm.section);
+  const giveArticleExists =
+    !!givePmText?.articles &&
+    !!Object.values(givePmText.articles).find(
+      (a) => a.code.toLowerCase() == givePm.en_name.toLowerCase()
+    );
+  const getArticleExists =
+    !!getPmText?.articles &&
+    !!Object.values(getPmText.articles).find(
+      (a) => a.code.toLowerCase() == getPm.en_name.toLowerCase()
+    );
+
   return (
     <HStack gap="4" w="100%" mb="0">
       <Box3D
         w="100%"
         variant="extra_contrast"
         p="2"
-        cursor="pointer"
+        cursor={giveArticleExists ? "pointer" : "unset"}
         transition="filter 0.2s ease-in"
         _hover={{ filter: "brightness(1.1)" }}
       >
-        <Link href={`/articles/${givePmText?.articles[0]?.code}`} passHref>
+        <LinkWrapper
+          url={`/articles/${givePmText?.articles[0]?.code}`}
+          articleExists={giveArticleExists}
+        >
           <VStack h="100%" justifyContent="space-around" color="bg.400">
             <HStack justifyContent="space-between" w="100%">
               <PmName pm={givePm} />
@@ -47,7 +79,7 @@ const PmsDescription = ({
               ))}
             </Box>
           </VStack>
-        </Link>
+        </LinkWrapper>
       </Box3D>
 
       <Box3D
@@ -55,11 +87,14 @@ const PmsDescription = ({
         h="100%"
         variant="extra_contrast"
         p="2"
-        cursor="pointer"
+        cursor={getArticleExists ? "pointer" : "unset"}
         transition="filter 0.1s ease-in"
         _hover={{ filter: "brightness(1.1)" }}
       >
-        <Link href={`/articles/${getPmText?.articles[0]?.code}`} passHref>
+        <LinkWrapper
+          url={`/articles/${getPmText?.articles[0]?.code}`}
+          articleExists={getArticleExists}
+        >
           <VStack h="100%" justifyContent="space-around" color="bg.400">
             <HStack justifyContent="space-between" w="100%">
               <PmName pm={getPm} />
@@ -79,7 +114,7 @@ const PmsDescription = ({
               ))}
             </Box>
           </VStack>
-        </Link>
+        </LinkWrapper>
       </Box3D>
     </HStack>
   );

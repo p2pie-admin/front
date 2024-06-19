@@ -1,17 +1,11 @@
 import { Highlight, useColorModeValue } from "@chakra-ui/react";
-import { useTranslation } from "next-i18next";
-import { useContext } from "react";
-import useSWR from "swr";
-import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 
-import { initCMSFetcher } from "../../../../services/fetchers";
-import { ISelector } from "../../../../types/selector";
-import P2PContext from "../../../shared/contexts/p2pContext";
+import { useContext } from "react";
+
 import SideContext from "../../../shared/contexts/SideContext";
 import CustomModal from "../../../shared/CustomModal";
 
 import Selector from ".";
-import { selectorQuery } from "./SelectorQuery";
 
 const SelectorModal = ({ id }: { id: string }) => {
   const side = useContext(SideContext) as "give" | "get";

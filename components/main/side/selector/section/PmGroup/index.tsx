@@ -20,6 +20,7 @@ import P2PContext from "../../../../../shared/contexts/p2pContext";
 
 import SideContext from "../../../../../shared/contexts/SideContext";
 import PmButton from "./PmButton";
+import { fetchPossiblePairs } from "../../../../../../redux/thunks";
 
 const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   const router = useRouter();
@@ -33,10 +34,11 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   if (!pms || !pms.length) {
     return <></>;
   }
-  const possiblePairs = useAppSelector((state) =>
-    side ? state.main[`${side}Pm`]?.possible_pairs : undefined
-  );
+  const possiblePairs = oppositePm?.possible_pairs;
 
+  // console.log("pm_group", pm_group.en_name);
+  // console.log("side", side);
+  // console.log("possiblePairs", possiblePairs);
   const shaded = singlePmHasUnmetPairs(pms[0], possiblePairs);
   // const router = useRouter();
 
@@ -75,6 +77,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
       pms[0];
 
     batch(() => {
+      dispatch(fetchPossiblePairs({ code: pm.code, side }));
       dispatch(triggerModal(undefined));
       !shaded && dispatch(setDirRatesStatusPending());
       dispatch(setPm({ pm, side, shaded }));
@@ -146,6 +149,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
     <PmButton
       color={pm_group.color}
       icon={pm_group.icon}
+      iconAlt={name}
       handleToggle={
         p2pDirIndex !== undefined ? () => choosePmP2P(pms[0]) : choosePm
       }

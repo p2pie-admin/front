@@ -166,7 +166,9 @@ export const restorePmsFromSlug = createAsyncThunk(
 
 export const fetchPossiblePairs = createAsyncThunk(
   "currencies/fetchPossiblePairs",
-  async ({ code, side }: { code: string; side: ISide }) => {
+  async ({ code, side }: { code: string; side: ISide }, thunkAPI) => {
+    const { main } = thunkAPI.getState() as { main: MainState };
+    if (main[`${side}Pm`]?.possible_pairs?.length) return;
     const response = await axios
       .get(`${courseFilterLink}/possible_pairs/code=${code}`)
       .catch((err) => console.error(err));

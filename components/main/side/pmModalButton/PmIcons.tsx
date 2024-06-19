@@ -15,7 +15,11 @@ const PmIcons = ({ pms }: { pms: IPm[] }) => {
             position="absolute"
             right={`${index * 10}px`}
           >
-            <CircularIcon icon={pm.icon} color={pm.color || "gray"} />
+            <CircularIcon
+              iconAlt={pm.en_name}
+              icon={pm.icon}
+              color={pm.color || "gray"}
+            />
           </Box>
         ))}
       </HStack>
