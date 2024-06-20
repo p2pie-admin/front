@@ -3,6 +3,7 @@ import { capitalize } from "../../main/side/selector/section/PmGroup/helper";
 import { IPm } from "../../../types/selector";
 import { IPmPairs } from "../../../types/exchange";
 import Dir from "../Dir";
+import { useTranslation } from "next-i18next";
 
 const OtherDirs = ({
   code,
@@ -11,6 +12,7 @@ const OtherDirs = ({
   code: string;
   otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] };
 }) => {
+  const { t } = useTranslation();
   if (!otherDirs.buy.length) return <></>;
   return (
     <VStack mt="4" w="100%" gap="4">
@@ -23,7 +25,7 @@ const OtherDirs = ({
           p="2"
           mt="0"
         >
-          {`Продать ${capitalize(code)}:`}
+          {`${t("main:toSell")} ${capitalize(code)}:`}
         </Heading>
         <Flex gap="2" w="100%" flexWrap="wrap">
           {otherDirs.buy.map((pmPair) => (
@@ -46,7 +48,7 @@ const OtherDirs = ({
           p="2"
           mt="0"
         >
-          {`Купить ${capitalize(code)}:`}
+          {`${t("main:toBuy")} ${capitalize(code)}:`}
         </Heading>
         <Flex gap="2" w="100%" flexWrap="wrap">
           {otherDirs.sell.map((pmPair) => (

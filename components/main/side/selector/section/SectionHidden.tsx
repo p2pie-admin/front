@@ -1,6 +1,5 @@
 import React, { ReactChildren, useContext, useEffect } from "react";
 
-import { withTranslation } from "react-i18next";
 import {
   Grid,
   Button,

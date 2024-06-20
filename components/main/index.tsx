@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { VStack } from "@chakra-ui/react";
+import { VStack, Text } from "@chakra-ui/react";
 import Greeting from "./Greeting";
 import Calculator from "./Calculator";
 import { useAppDispatch } from "../../redux/hooks";
@@ -14,6 +14,7 @@ import { IPopularDirRates } from "../../types/rates";
 import { IPm } from "../../types/selector";
 import CircularTexts from "./CircularTexts";
 import Popular from "./popular";
+import { useTranslation } from "next-i18next";
 
 const MainPageContent = ({
   popularPms,
@@ -28,6 +29,7 @@ const MainPageContent = ({
   rootText: ITextBox;
   locale: "en" | "ru";
 }) => {
+  const { t } = useTranslation();
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { slug } = router.query;
@@ -41,14 +43,15 @@ const MainPageContent = ({
   return (
     <VStack>
       <Greeting />
+
       <ColumnGrid>
         <Column index={2}>
           <CircularTexts mainTexts={mainTexts} />
         </Column>
         <Column index={1}>
           <ColumnHeader
-            text="Что отдаем, что получаем?"
-            query={["отдаем", "получаем"]}
+            text={t("main:sellBuy")}
+            query={["отдаете", "получаете", "exchange"]}
           />
           <Calculator />
         </Column>
@@ -62,7 +65,7 @@ const MainPageContent = ({
           </ResponsiveText>
         </Column>
         <Column index={3}>
-          <ColumnHeader text="Популярные курсы обмена" as="h3" />
+          <ColumnHeader text={t("main:popularTitle")} as="h3" />
           <Popular popularRates={popularRates} popularPms={popularPms} />
         </Column>
       </ColumnGrid>

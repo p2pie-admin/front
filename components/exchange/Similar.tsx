@@ -11,9 +11,11 @@ import Link from "next/link"; // Import Link from next/link
 import PmName from "../shared/PmName";
 import Dir from "./Dir";
 import ErrorWrapper from "../shared/ErrorWrapper";
+import { useTranslation } from "next-i18next";
 
 const Similar = ({ similarPmPairs }: { similarPmPairs: IPm[][] }) => {
   const fetcher = initParserFetcher();
+  const { t } = useTranslation();
   const dirs = similarPmPairs.reduce(
     (res: string[], pair: IPm[]) => [...res, `${pair[0].code}_${pair[1].code}`],
     []
@@ -40,15 +42,14 @@ const Similar = ({ similarPmPairs }: { similarPmPairs: IPm[][] }) => {
     ];
     const rate =
       course < 1
-        ? `~ ${format(1 / course, 2)} ${getCur} за 1 ${giveCur}`
-        : `~ ${format(course, 2)} ${giveCur} за 1 ${getCur}`;
+        ? `1 ${giveCur} ~ ${format(1 / course, 2)} ${getCur}`
+        : `1 ${getCur} ~ ${format(course, 2)} ${giveCur}`;
 
     return (
       <HStack mt="3" w="100%" justifyContent="space-between">
-        <ResponsiveText
-          size="sm"
-          variant="no_contrast"
-        >{`Курсов ${amountOfCourses}`}</ResponsiveText>
+        <ResponsiveText size="sm" variant="no_contrast">{`${t(
+          "main:exchangers"
+        )} ${amountOfCourses}`}</ResponsiveText>
         <ResponsiveText size="sm" variant="no_contrast">
           {rate}
         </ResponsiveText>
@@ -59,7 +60,7 @@ const Similar = ({ similarPmPairs }: { similarPmPairs: IPm[][] }) => {
   return (
     <Box3D px="2" w="100%" minH="304px">
       <ResponsiveText fontSize="sm" my="1" variant="no_contrast">
-        Похожие направления:
+        {t("main:similarDirs")}
       </ResponsiveText>
       {similarPmPairs.map((pair, index) => {
         const slug = pmsToSlug({

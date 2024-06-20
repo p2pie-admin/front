@@ -21,8 +21,12 @@ import {
 } from "../../../../../styles/theme/custom";
 import { AiOutlinePlus } from "react-icons/ai";
 import Arrow from "../../../../shared/Arrow";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 
 const Location = () => {
+  const { locale } = useRouter() as { locale: "en" | "ru" };
+  const { t } = useTranslation();
   const locations = useAppSelector((state) => state.main.p2p.locations);
   const location = useAppSelector((state) => state.main.location);
   const citiesSelectedLength = useAppSelector(
@@ -75,7 +79,7 @@ const Location = () => {
               onClick={() => dispatch(addLocation(l))}
               cursor="pointer"
             >
-              <TagLabel>{l.en_city_name}</TagLabel>
+              <TagLabel>{l[`${locale}_city_name`]}</TagLabel>
               <TagCloseButton />
             </Tag>
           ))}
@@ -88,7 +92,7 @@ const Location = () => {
     <Box>
       <CustomModal
         id={isMultiple ? "locations" : "location"}
-        header={"Choose the City"}
+        header={t("main:chooseCity")}
       >
         <>
           <CountryListWrapper />
@@ -111,7 +115,7 @@ const Location = () => {
           }
           onClick={() => dispatch(triggerModal("location"))}
         >
-          {location.en_city_name || "City"}
+          {location[`${locale}_city_name`] || "City"}
         </ResponsiveButton>
       )}
     </Box>

@@ -11,6 +11,7 @@ import { RegularBox } from "../../../../../styles/theme/custom";
 import { ICity, IFormattedCountry } from "../../../../../types/shared";
 import { popularCityNames, popularCountryNames } from "./helper";
 import MultipleCitiesContext from "./MultipleCitiesContext";
+import { useRouter } from "next/router";
 
 const Country = ({
   country,
@@ -20,6 +21,7 @@ const Country = ({
   highlightedCities: string[];
 }) => {
   const [opened, setOpened] = useState(false);
+  const { locale } = useRouter() as { locale: "en" | "ru" };
   const countryName = country.en_name.toLowerCase() as
     | keyof typeof popularCountryNames;
   const isPopular = popularCountryNames?.[countryName] || "";
@@ -50,7 +52,7 @@ const Country = ({
         cursor="pointer"
         onClick={() => setOpened(!opened)}
       >
-        {country.en_name}
+        {country[`${locale}_name`]}
       </Text>
       <Collapse in={opened}>
         {country.cities.map((city) => {
@@ -71,7 +73,7 @@ const Country = ({
               }
               onClick={() => handleChooseCity(city)}
             >
-              {bullet} {city.en_name}
+              {bullet} {city[`${locale}_name`]}
             </Text>
           );
         })}

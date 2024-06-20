@@ -26,6 +26,7 @@ import { IDirText, IPmsText } from "../../types/exchange";
 import ColumnGrid from "../layout/ColumnGrid";
 import { ILocation } from "../../types/shared";
 import { NextSeo, BreadcrumbJsonLd } from "next-seo";
+import { useTranslation } from "next-i18next";
 
 const Exchange = ({
   locale,
@@ -50,7 +51,7 @@ const Exchange = ({
   const dispatch = useAppDispatch();
   const dir = `${givePm.code}_${getPm.code}`;
   const curPair = `${givePm.currency.code}_${getPm.currency.code}`;
-
+  const { t } = useTranslation();
   useEffect(() => {
     batch(() => {
       dispatch(fetchCurrencyConverterRates({ curPair }));
@@ -69,7 +70,7 @@ const Exchange = ({
   //const vh = useViewportHeight();
   const giveCur = givePm.currency.code.toUpperCase();
   const getCur = getPm.currency.code.toUpperCase();
-  const title2 = "Лучшие предложения обмена:";
+  const title2 = t("main:bestSuggestions");
   const title1 = generateTitle({
     locale,
     givePm,

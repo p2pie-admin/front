@@ -4,11 +4,13 @@ import { RiTokenSwapLine, RiMapPinLine, RiRobot2Line } from "react-icons/ri";
 import LinkButton from "../../shared/LinkButton";
 import { Box } from "@chakra-ui/react";
 import { useAppDispatch } from "../../../redux/hooks";
+import { useTranslation } from "next-i18next";
 
 const NavBody = () => {
+  const { t } = useTranslation();
   return (
     <>
-      <LinkButton message="Home" href={"/"} CustomIcon={FiHome} />
+      <LinkButton message={t("main:homePage")} href={"/"} CustomIcon={FiHome} />
 
       {/* <LinkButton
         message="Suggest Exchange"
@@ -21,18 +23,18 @@ const NavBody = () => {
         CustomIcon={RiTokenSwapLine}
       /> */}
       <LinkButton
-        message="Exchangers Map"
+        message={t("main:mapPage")}
         href={"/map"}
         CustomIcon={RiMapPinLine}
       />
 
       <LinkButton
-        message="Contact Support"
+        message={t("main:contactsPage")}
         href={"https://t.me/p2pie"}
         CustomIcon={LiaTelegramPlane}
       />
       <LinkButton
-        message="Telegram Bot"
+        message={t("main:botPage")}
         href={"https://t.me/p2pie_bot"}
         CustomIcon={RiRobot2Line}
       />

@@ -5,6 +5,7 @@ import CryptoRates from "./CryptoRates";
 import { Box, Divider, Grid, Text, useColorModeValue } from "@chakra-ui/react";
 import CryptoPm from "./CryptoPm";
 import { ResponsiveText } from "../../../styles/theme/custom";
+import { useTranslation } from "next-i18next";
 
 const Popular = ({
   popularRates,
@@ -13,6 +14,7 @@ const Popular = ({
   popularRates?: IPopularDirRates;
   popularPms?: IPm[];
 }) => {
+  const { t } = useTranslation();
   const borderColor = useColorModeValue("bg.200", "bg.600");
   if (!popularRates || !popularPms) return <></>;
 
@@ -33,10 +35,10 @@ const Popular = ({
               <CryptoPm cryptoPm={cryptoPm} />
             </Box>
             <ResponsiveText size="sm" fontWeight="bold" textAlign="end">
-              Покупка
+              {t("main:buyRate")}
             </ResponsiveText>
             <ResponsiveText size="sm" fontWeight="bold" textAlign="end">
-              Продажа
+              {t("main:sellRate")}
             </ResponsiveText>
             <CryptoRates
               key={index + "cr"}

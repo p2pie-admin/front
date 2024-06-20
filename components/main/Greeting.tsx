@@ -31,10 +31,10 @@ const Greeting = () => {
         fontWeight="bold"
         fontSize={{ base: "3xl", md: "5xl" }}
       >
-        {t("home:title")}
+        {t("main:title")}
       </Text>
       <Text textAlign="center" fontSize={{ base: "lg", md: "3xl" }}>
-        {t("home:subtitle")}
+        {t("main:subtitle")}
       </Text>
     </Box>
   );

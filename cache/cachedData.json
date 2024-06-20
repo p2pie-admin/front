@@ -1,7 +1,5 @@
 {
   "slugToCodes": {
-    "tinkoff-rub-to-tinkoff-rub": "TCSBRUB_TCSBRUB",
-    "tinkoff-rub-to-sber-rub": "TCSBRUB_SBERRUB",
     "tinkoff-rub-to-bitcoin-btc": "TCSBRUB_BTC",
     "tinkoff-rub-to-eos-eos": "TCSBRUB_EOS",
     "tinkoff-rub-to-pancake-cake": "TCSBRUB_CAKE",
@@ -22,8 +20,6 @@
     "tinkoff-rub-to-polkadot-dot": "TCSBRUB_DOT",
     "tinkoff-rub-to-advcash-usd": "TCSBRUB_ADVCUSD",
     "tinkoff-rub-to-advcash-rub": "TCSBRUB_ADVCRUB",
-    "sber-rub-to-tinkoff-rub": "SBERRUB_TCSBRUB",
-    "sber-rub-to-sber-rub": "SBERRUB_SBERRUB",
     "sber-rub-to-bitcoin-btc": "SBERRUB_BTC",
     "sber-rub-to-eos-eos": "SBERRUB_EOS",
     "sber-rub-to-pancake-cake": "SBERRUB_CAKE",
@@ -64,7 +60,6 @@
     "cash-usd-to-cardano-ada": "CASHUSD_ADA",
     "cash-usd-to-litecoin-ltc": "CASHUSD_LTC",
     "cash-usd-to-ripple-xrp": "CASHUSD_XRP",
-    "cash-usd-to-advcash-usd": "CASHUSD_ADVCUSD",
     "bitcoin-btc-to-tinkoff-rub": "BTC_TCSBRUB",
     "bitcoin-btc-to-sber-rub": "BTC_SBERRUB",
     "bitcoin-btc-to-cash-rub": "BTC_CASHRUB",
@@ -391,15 +386,12 @@
     "cardano-ada-to-polkadot-dot": "ADA_DOT",
     "cardano-ada-to-advcash-usd": "ADA_ADVCUSD",
     "cardano-ada-to-advcash-rub": "ADA_ADVCRUB",
-    "binance-bnb-to-bitcoin-btc": "BNB_BTC",
-    "binance-bnb-to-ethereum-eth": "BNB_ETH",
     "neo-neo-to-tinkoff-rub": "NEO_TCSBRUB",
     "neo-neo-to-sber-rub": "NEO_SBERRUB",
     "neo-neo-to-cash-usd": "NEO_CASHUSD",
     "neo-neo-to-bitcoin-btc": "NEO_BTC",
     "neo-neo-to-eos-eos": "NEO_EOS",
     "neo-neo-to-pancake-cake": "NEO_CAKE",
-    "neo-neo-to-icon-icx": "NEO_ICX",
     "neo-neo-to-polygon-matic": "NEO_MATIC",
     "neo-neo-to-uniswap-uni": "NEO_UNI",
     "neo-neo-to-zcash-zec": "NEO_ZEC",
@@ -1933,30 +1925,6 @@
   "exchangePaths": [
     {
       "params": {
-        "exchange": "tinkoff-rub-to-tinkoff-rub"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tinkoff-rub-to-tinkoff-rub"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "tinkoff-rub-to-sber-rub"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tinkoff-rub-to-sber-rub"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tinkoff-rub-to-bitcoin-btc"
       },
       "locale": "en"
@@ -2030,6 +1998,30 @@
     {
       "params": {
         "exchange": "tinkoff-rub-to-zcash-zec"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "tinkoff-rub-to-zcash-zec"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "tinkoff-rub-to-stellar-xlm"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "tinkoff-rub-to-stellar-xlm"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "tinkoff-rub-to-classic-etc"
       },
       "locale": "en"
     }

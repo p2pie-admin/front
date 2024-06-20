@@ -15,9 +15,11 @@ import { useContext } from "react";
 import SideContext from "../../shared/contexts/SideContext";
 import { capitalize } from "./selector/section/PmGroup/helper";
 import { useAppSelector } from "../../../redux/hooks";
+import { useTranslation } from "next-i18next";
 
 const Side = () => {
   const side = useContext(SideContext) as "give" | "get";
+  const { t } = useTranslation();
   return (
     <Box3D>
       <Grid
@@ -29,7 +31,7 @@ const Side = () => {
         gridAutoFlow=""
       >
         <Text color="bg.500" fontSize="xs">
-          {capitalize(side) + ":"}
+          {t(`main:${side}Title`)}
         </Text>
         <Box />
         <PmModalButton />

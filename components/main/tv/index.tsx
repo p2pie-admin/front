@@ -11,8 +11,10 @@ import { useIsMobile } from "./hooks";
 import { fetchDirRates, fetchParameters } from "../../../redux/thunks";
 import CustomModal from "../../shared/CustomModal";
 import RateDetails from "../../shared/RateDetails";
+import { useRouter } from "next/router";
 
 const TV = ({ dir }: { dir: string }) => {
+  const { locale } = useRouter() as { locale: "en" | "ru" };
   const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
   const dirRates = useAppSelector((state) => state.main.dirRates) || [];
 
@@ -23,7 +25,7 @@ const TV = ({ dir }: { dir: string }) => {
   }, [dir]);
 
   useEffect(() => {
-    dispatch(fetchParameters("ru"));
+    dispatch(fetchParameters(locale));
   }, []);
 
   const isMobile = useIsMobile();

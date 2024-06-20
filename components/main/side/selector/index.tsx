@@ -36,6 +36,8 @@ import { initCMSFetcher } from "../../../../services/fetchers";
 import { memo } from "react";
 import { selectorQuery } from "../../../../services/initialQueries";
 
+import { useTranslation } from "next-i18next";
+
 //const gqlFetcher = new GraphQLFetcher(); // may pass variables here
 const fetcher = initCMSFetcher({ countries: ["turkey"] });
 
@@ -44,6 +46,8 @@ const Selector = function Selector() {
     data: { selector: ISelector };
     error: any;
   };
+
+  const { t } = useTranslation();
 
   const searchBarInputValue = useAppSelector(
     (state) => state.main.searchBarInputValue
@@ -77,12 +81,12 @@ const Selector = function Selector() {
 
         <SectionsList sections={sections} />
 
-        <Text mt="5" color="bg.300">
-          Haven't found what were looking for?
+        <Text fontSize="2xl" mt="5" color="bg.500">
+          {t("main:notFound")}
         </Text>
 
         <LinkButton
-          message="CONTACT SUPPORT"
+          message={t("main:contactSupport")}
           href={String(process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT)}
           CustomIcon={BsTelegram}
         />

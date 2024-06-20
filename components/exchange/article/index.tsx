@@ -49,8 +49,9 @@ const Article = ({
       <Box3D
         variant="contrast"
         w="100%"
-        px={["2", "4", "8"]}
-        py={["4", "8", "12"]}
+        mt={["2", "8"]}
+        px={["2", "8"]}
+        py={["4", "8"]}
       >
         <HStack>
           <FaExpandArrowsAlt size="2.5rem" />

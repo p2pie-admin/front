@@ -17,9 +17,11 @@ import PmIcons from "./PmIcons";
 import ModalButton from "./ModalButton";
 import { fetchPossiblePairs } from "../../../../redux/thunks";
 import { IoAddOutline } from "react-icons/io5";
+import { useTranslation } from "next-i18next";
 
 const PmModalButton = () => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
   const p2pIndex = useContext(p2pContext);
   const side = useContext(SideContext) as "give" | "get";
   const isP2P = p2pIndex !== undefined;
@@ -37,7 +39,7 @@ const PmModalButton = () => {
       dispatch(setSearchBarInputValue(""));
     });
   };
-  const unselectedPmText = capitalize(side === "give" ? "sell" : "buy");
+  const unselectedPmText = t(`main:${side}`);
 
   const currencyCode = pms?.[0]?.currency.code.toUpperCase();
   return (
