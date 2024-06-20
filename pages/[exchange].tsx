@@ -193,13 +193,13 @@ export async function getStaticPaths() {
       });
     });
   });
-  const slicedPaths = paths.slice(0, 17);
+  const slicedPaths = paths.filter((p) => p.locale !== "en");
 
   const cachedData = readCache() as ICache;
   cachedData.slugToCodes = slugToCodes;
   cachedData.cities = cities;
   cachedData.pms = pms;
-  cachedData.exchangePaths = slicedPaths;
+  cachedData.exchangePaths = paths;
 
   writeCache(cachedData); // Save to cache
 

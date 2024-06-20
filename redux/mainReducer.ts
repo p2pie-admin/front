@@ -161,6 +161,7 @@ export const mainSlice = createSlice({
         state.amountInput = undefined;
         state.amountOutputs = getAmountOutputs(state, 1);
       }
+      state.dirRates = undefined;
       state[`${side}Pm`] = pm;
     },
 
