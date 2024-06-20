@@ -17,6 +17,13 @@ const config = {
         lastmod: new Date().toISOString(),
       });
     });
+
+    cachedData.articleCodes.forEach((code) =>
+      paths.push({
+        loc: `/ru/articles/${`/${code}`}`,
+        lastmod: new Date().toISOString(),
+      })
+    );
     console.log("paths for sitemap collected: ", paths);
     return paths;
   },

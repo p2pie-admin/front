@@ -2,11 +2,14 @@ import { FiHome, FiPlusCircle } from "react-icons/fi";
 import { LiaTelegramPlane } from "react-icons/lia";
 import { RiTokenSwapLine, RiMapPinLine, RiRobot2Line } from "react-icons/ri";
 import LinkButton from "../../shared/LinkButton";
+import { Box } from "@chakra-ui/react";
+import { useAppDispatch } from "../../../redux/hooks";
 
 const NavBody = () => {
   return (
     <>
       <LinkButton message="Home" href={"/"} CustomIcon={FiHome} />
+
       {/* <LinkButton
         message="Suggest Exchange"
         href={"/order"}

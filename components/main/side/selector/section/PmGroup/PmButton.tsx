@@ -26,7 +26,7 @@ export default function PmButton({
       onClick={handleToggle} // works as choosePm or as open subitems
       leftIcon={<CircularIcon iconAlt={iconAlt} icon={icon} color={color} />}
       color="transparent"
-      transition="all 0.3s ease"
+      transition="filter 0.5s ease"
       _hover={{
         color: "bg.300",
         filter: shaded ? "opacity(0.1) grayscale(1)" : "brightness(1.2)",

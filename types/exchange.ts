@@ -15,6 +15,7 @@ export interface IDirText {
   section_get: ISectionName;
   text: string;
   title: string;
+  updatedAt: string;
 }
 
 export interface IPath {

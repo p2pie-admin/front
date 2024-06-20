@@ -4,11 +4,21 @@ import darkPie from "../../../public/darkPie.svg";
 import lightPie from "../../../public/lightPie.svg";
 import { useColorModeValue } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import { useAppDispatch } from "../../../redux/hooks";
+import { clean } from "../../../redux/mainReducer";
 
 const Logo = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   return (
-    <Flex flexDir="row" onClick={() => router.push("/")} cursor="pointer">
+    <Flex
+      flexDir="row"
+      onClick={() => {
+        dispatch(clean());
+        router.push("/");
+      }}
+      cursor="pointer"
+    >
       <Image alt="logo" src={useColorModeValue(darkPie, lightPie)} width={36} />
 
       <Text
@@ -16,6 +26,7 @@ const Logo = () => {
         fontSize="2xl"
         fontFamily="Zen Maru Gothic, sans-serif"
         mx="2"
+        mt="1"
         pb="2"
       >
         p2pie

@@ -16,7 +16,7 @@ const ColumnHeader = ({
     <Heading
       textAlign="center"
       as={as}
-      size={text.length > 32 ? "sm" : "md"}
+      fontSize={"18px"}
       color={secondaryColor}
       mb="4"
       mt="0"

@@ -335,16 +335,17 @@ export const mainSlice = createSlice({
       if (action.payload)
         state.fingerprint = { ...state.fingerprint, ip: action.payload };
     },
-    setDirRatesStatusPending: (state: MainState) => {
-      state.dirRatesStatus = "pending";
+    clearDirRates: (state: MainState) => {
+      state.dirRates = [];
     },
 
     clean: (state: MainState) => {
+      // когда уходим на главную
       state.dirRates = undefined;
+      state.givePm = undefined;
       state.getPm = undefined;
       state.amountInput = undefined;
       state.amountOutputs = getAmountOutputs(state, 1);
-      state.dirRatesStatus = "fulfilled";
       state.swiperIdVisible = 1;
     },
     setInitialData: (
@@ -398,7 +399,6 @@ export const mainSlice = createSlice({
     });
 
     builder.addCase(fetchPossiblePairs.fulfilled, (state, action) => {
-      if (!action.payload) return;
       if (action.payload.side === "give" && state.givePm)
         state.givePm.possible_pairs = action.payload.possiblePairs;
       if (action.payload.side === "get" && state.getPm)
@@ -506,7 +506,7 @@ export const {
   getSavedOrders,
   setIP,
   setInitialData,
-  setDirRatesStatusPending,
+  clearDirRates,
   clean,
   sendToast,
 } = mainSlice.actions;

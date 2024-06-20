@@ -100,7 +100,11 @@ export const exchangeToSlugCity = (exchange: string) => {
 };
 
 export const slugCityToExchange = (slug: string, city?: string) => {
-  return `${slug}${city ? "-in-" + city : ""}`;
+  return `${slug}${
+    (slug.startsWith("cash-") || slug.includes("-cash-")) && city
+      ? "-in-" + city.toLowerCase()
+      : ""
+  }`;
 };
 
 export const createLocation = (fullCity?: [string, string]) => {

@@ -10,7 +10,7 @@ import {
 import { IRate } from "../types/rates";
 import { IPm } from "../types/selector";
 import { IFingerprint } from "../types/shared";
-import { FeesCalculator, powerOfTenOrder } from "./amountsHelper";
+import { FeesCalculator } from "./amountsHelper";
 import { MainState } from "./mainReducer";
 
 export const initialAmountOutputs = { give: "", get: "" };

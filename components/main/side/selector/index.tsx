@@ -80,6 +80,7 @@ const Selector = function Selector() {
         <Text mt="5" color="bg.300">
           Haven't found what were looking for?
         </Text>
+
         <LinkButton
           message="CONTACT SUPPORT"
           href={String(process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT)}

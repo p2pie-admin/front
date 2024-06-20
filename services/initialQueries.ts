@@ -97,6 +97,7 @@ export const dirsTextQuery = gql`
         attributes {
           title
           text
+          updatedAt
         }
       }
     }

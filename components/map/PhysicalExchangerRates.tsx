@@ -1,5 +1,5 @@
 import { Grid, Text } from "@chakra-ui/react";
-import { IPhysicalExchanger, IPhysicalRate } from "../../../types/exchanger";
+import { IPhysicalExchanger, IPhysicalRate } from "../../types/exchanger";
 
 const PhysicalExchangerRates = ({ rates }: { rates?: IPhysicalRate[] }) => {
   return (

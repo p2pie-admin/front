@@ -92,7 +92,7 @@ export async function getStaticProps({
         getPm,
         location,
         similarPmPairs,
-        ...(await serverSideTranslations(locale || "ru", ["home"])),
+        ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
       revalidate: 6000,
     };

@@ -6,7 +6,7 @@ import { Box, Text, useToken } from "@chakra-ui/react";
 import { initCMSFetcher } from "../../services/fetchers";
 import useSWR from "swr";
 import { IPhysicalExchanger } from "../../types/exchanger";
-import CustomMarker from "../../components/map/marker";
+import CustomMarker from "../../components/map";
 import { getPricesUSD } from "../../components/map/helper";
 import { PhysicalExchangersQuery } from "../../components/map/queries";
 
@@ -24,11 +24,6 @@ const Home: NextPage = () => {
   const containerStyle = {
     width: "100%",
     height: "80vh",
-  };
-
-  const center = {
-    lat: 41.02571061642778,
-    lng: 28.974107139116633,
   };
 
   const [peach200, bg100, bg300, bg500, bg600, bg700, bg800, bg900] = useToken(
@@ -176,20 +171,22 @@ const Home: NextPage = () => {
   }
 
   const priceBasis = getPricesUSD(data.physicalExchangers);
-  console.log(priceBasis);
 
   return (
     <Box
       bgColor="bg.800"
       borderRadius="lg"
       p="4"
-      w="96vw"
+      w={{ base: "100%", md: "888px" }}
       minW={{ base: "100%", lg: "888px" }}
     >
       <GoogleMap
         options={mapOptions}
         zoom={13}
-        center={center}
+        center={{
+          lat: 41.02571061642778,
+          lng: 28.974107139116633,
+        }}
         mapContainerStyle={containerStyle}
       >
         {data.physicalExchangers.map((physicalExchanger) => {

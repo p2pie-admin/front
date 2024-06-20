@@ -9,11 +9,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../../../../../../redux/hooks";
 import { batch } from "react-redux";
 import { IPmGroup, IPm } from "../../../../../../types/selector";
-import {
-  setDirRatesStatusPending,
-  setPm,
-  triggerModal,
-} from "../../../../../../redux/mainReducer";
+import { setPm, triggerModal } from "../../../../../../redux/mainReducer";
 import { useRouter } from "next/router";
 import { useContext } from "react";
 import P2PContext from "../../../../../shared/contexts/p2pContext";
@@ -21,6 +17,7 @@ import P2PContext from "../../../../../shared/contexts/p2pContext";
 import SideContext from "../../../../../shared/contexts/SideContext";
 import PmButton from "./PmButton";
 import { fetchPossiblePairs } from "../../../../../../redux/thunks";
+import { slugCityToExchange } from "../../../../../exchange/helper";
 
 const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   const router = useRouter();
@@ -30,6 +27,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   const oppositePm = useAppSelector(
     (state) => state.main[`${side === "give" ? "get" : "give"}Pm`]
   );
+  const cityName = useAppSelector((state) => state.main.location?.en_city_name);
   const pms = extractPmsFromPmGroup(pm_group);
   if (!pms || !pms.length) {
     return <></>;
@@ -79,7 +77,6 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
     batch(() => {
       dispatch(fetchPossiblePairs({ code: pm.code, side }));
       dispatch(triggerModal(undefined));
-      !shaded && dispatch(setDirRatesStatusPending());
       dispatch(setPm({ pm, side, shaded }));
     });
 
@@ -99,7 +96,9 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
       const slug = pmsToSlug({ givePm, getPm })
         .replaceAll(" ", "")
         .toLowerCase();
-      shaded ? router.push(`/`) : router.push(`/${slug}`);
+      shaded
+        ? router.push(`/`)
+        : router.push(`/${slugCityToExchange(slug, cityName)}`);
     }
 
     // const oppositePm = side === "give" ? getPm : givePm;

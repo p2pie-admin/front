@@ -8,9 +8,9 @@ import {
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { FaLocationPin } from "react-icons/fa6";
-import { IPhysicalExchanger } from "../../../types/exchanger";
+import { IPhysicalExchanger } from "../../types/exchanger";
 import PhysicalExchangerCard from "./PhysicalExchangerCard";
-import { getDollars } from "../helper";
+import { getDollars } from "./helper";
 
 const CustomMarker = ({
   physicalExchanger,

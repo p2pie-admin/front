@@ -132,7 +132,7 @@ export async function getStaticProps({
         article,
         otherDirs,
         code,
-        ...(await serverSideTranslations(locale || "ru", ["home"])),
+        ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
       revalidate: 6000,
     };
@@ -155,7 +155,7 @@ export async function getStaticPaths() {
   const paths = Object.keys(articleCodes).reduce(
     (
       res: {
-        params: { code: string; city?: string[] };
+        params: { code: string };
         locale: string;
       }[],
       code: string
@@ -164,7 +164,6 @@ export async function getStaticPaths() {
       ...locales.map((locale) => ({
         params: {
           code,
-          city: [],
         },
         locale,
       })),

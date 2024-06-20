@@ -1,5 +1,7 @@
 {
   "slugToCodes": {
+    "tinkoff-rub-to-tinkoff-rub": "TCSBRUB_TCSBRUB",
+    "tinkoff-rub-to-sber-rub": "TCSBRUB_SBERRUB",
     "tinkoff-rub-to-bitcoin-btc": "TCSBRUB_BTC",
     "tinkoff-rub-to-eos-eos": "TCSBRUB_EOS",
     "tinkoff-rub-to-pancake-cake": "TCSBRUB_CAKE",
@@ -20,6 +22,8 @@
     "tinkoff-rub-to-polkadot-dot": "TCSBRUB_DOT",
     "tinkoff-rub-to-advcash-usd": "TCSBRUB_ADVCUSD",
     "tinkoff-rub-to-advcash-rub": "TCSBRUB_ADVCRUB",
+    "sber-rub-to-tinkoff-rub": "SBERRUB_TCSBRUB",
+    "sber-rub-to-sber-rub": "SBERRUB_SBERRUB",
     "sber-rub-to-bitcoin-btc": "SBERRUB_BTC",
     "sber-rub-to-eos-eos": "SBERRUB_EOS",
     "sber-rub-to-pancake-cake": "SBERRUB_CAKE",
@@ -52,6 +56,7 @@
     "cash-usd-to-bitcoin-btc": "CASHUSD_BTC",
     "cash-usd-to-uniswap-uni": "CASHUSD_UNI",
     "cash-usd-to-zcash-zec": "CASHUSD_ZEC",
+    "cash-usd-to-classic-etc": "CASHUSD_ETC",
     "cash-usd-to-ethereum-eth": "CASHUSD_ETH",
     "cash-usd-to-monero-xmr": "CASHUSD_XMR",
     "cash-usd-to-tether-usdt-erc20": "CASHUSD_USDTERC20",
@@ -88,6 +93,7 @@
     "eos-eos-to-sber-rub": "EOS_SBERRUB",
     "eos-eos-to-cash-usd": "EOS_CASHUSD",
     "eos-eos-to-bitcoin-btc": "EOS_BTC",
+    "eos-eos-to-eos-eos": "EOS_EOS",
     "eos-eos-to-pancake-cake": "EOS_CAKE",
     "eos-eos-to-icon-icx": "EOS_ICX",
     "eos-eos-to-polygon-matic": "EOS_MATIC",
@@ -110,6 +116,7 @@
     "pancake-cake-to-sber-rub": "CAKE_SBERRUB",
     "pancake-cake-to-bitcoin-btc": "CAKE_BTC",
     "pancake-cake-to-eos-eos": "CAKE_EOS",
+    "pancake-cake-to-pancake-cake": "CAKE_CAKE",
     "pancake-cake-to-icon-icx": "CAKE_ICX",
     "pancake-cake-to-polygon-matic": "CAKE_MATIC",
     "pancake-cake-to-uniswap-uni": "CAKE_UNI",
@@ -125,6 +132,7 @@
     "pancake-cake-to-litecoin-ltc": "CAKE_LTC",
     "pancake-cake-to-ripple-xrp": "CAKE_XRP",
     "pancake-cake-to-polkadot-dot": "CAKE_DOT",
+    "pancake-cake-to-advcash-usd": "CAKE_ADVCUSD",
     "pancake-cake-to-advcash-rub": "CAKE_ADVCRUB",
     "icon-icx-to-tinkoff-rub": "ICX_TCSBRUB",
     "icon-icx-to-sber-rub": "ICX_SBERRUB",
@@ -132,6 +140,7 @@
     "icon-icx-to-bitcoin-btc": "ICX_BTC",
     "icon-icx-to-eos-eos": "ICX_EOS",
     "icon-icx-to-pancake-cake": "ICX_CAKE",
+    "icon-icx-to-icon-icx": "ICX_ICX",
     "icon-icx-to-polygon-matic": "ICX_MATIC",
     "icon-icx-to-uniswap-uni": "ICX_UNI",
     "icon-icx-to-zcash-zec": "ICX_ZEC",
@@ -146,7 +155,6 @@
     "icon-icx-to-litecoin-ltc": "ICX_LTC",
     "icon-icx-to-ripple-xrp": "ICX_XRP",
     "icon-icx-to-polkadot-dot": "ICX_DOT",
-    "icon-icx-to-advcash-rub": "ICX_ADVCRUB",
     "polygon-matic-to-tinkoff-rub": "MATIC_TCSBRUB",
     "polygon-matic-to-sber-rub": "MATIC_SBERRUB",
     "polygon-matic-to-cash-usd": "MATIC_CASHUSD",
@@ -242,6 +250,7 @@
     "stellar-xlm-to-advcash-rub": "XLM_ADVCRUB",
     "classic-etc-to-tinkoff-rub": "ETC_TCSBRUB",
     "classic-etc-to-sber-rub": "ETC_SBERRUB",
+    "classic-etc-to-cash-usd": "ETC_CASHUSD",
     "classic-etc-to-bitcoin-btc": "ETC_BTC",
     "classic-etc-to-eos-eos": "ETC_EOS",
     "classic-etc-to-pancake-cake": "ETC_CAKE",
@@ -405,6 +414,7 @@
     "neo-neo-to-ripple-xrp": "NEO_XRP",
     "neo-neo-to-polkadot-dot": "NEO_DOT",
     "neo-neo-to-advcash-usd": "NEO_ADVCUSD",
+    "neo-neo-to-advcash-rub": "NEO_ADVCRUB",
     "litecoin-ltc-to-tinkoff-rub": "LTC_TCSBRUB",
     "litecoin-ltc-to-sber-rub": "LTC_SBERRUB",
     "litecoin-ltc-to-cash-rub": "LTC_CASHRUB",
@@ -481,7 +491,9 @@
     "advcash-usd-to-cash-usd": "ADVCUSD_CASHUSD",
     "advcash-usd-to-bitcoin-btc": "ADVCUSD_BTC",
     "advcash-usd-to-eos-eos": "ADVCUSD_EOS",
+    "advcash-usd-to-pancake-cake": "ADVCUSD_CAKE",
     "advcash-usd-to-polygon-matic": "ADVCUSD_MATIC",
+    "advcash-usd-to-uniswap-uni": "ADVCUSD_UNI",
     "advcash-usd-to-zcash-zec": "ADVCUSD_ZEC",
     "advcash-usd-to-stellar-xlm": "ADVCUSD_XLM",
     "advcash-usd-to-classic-etc": "ADVCUSD_ETC",
@@ -490,6 +502,7 @@
     "advcash-usd-to-tether-usdt-erc20": "ADVCUSD_USDTERC20",
     "advcash-usd-to-tether-usdt-trc20": "ADVCUSD_USDTTRC20",
     "advcash-usd-to-cardano-ada": "ADVCUSD_ADA",
+    "advcash-usd-to-neo-neo": "ADVCUSD_NEO",
     "advcash-usd-to-litecoin-ltc": "ADVCUSD_LTC",
     "advcash-usd-to-ripple-xrp": "ADVCUSD_XRP",
     "advcash-usd-to-polkadot-dot": "ADVCUSD_DOT",
@@ -500,7 +513,6 @@
     "advcash-rub-to-bitcoin-btc": "ADVCRUB_BTC",
     "advcash-rub-to-eos-eos": "ADVCRUB_EOS",
     "advcash-rub-to-pancake-cake": "ADVCRUB_CAKE",
-    "advcash-rub-to-icon-icx": "ADVCRUB_ICX",
     "advcash-rub-to-polygon-matic": "ADVCRUB_MATIC",
     "advcash-rub-to-uniswap-uni": "ADVCRUB_UNI",
     "advcash-rub-to-zcash-zec": "ADVCRUB_ZEC",
@@ -511,6 +523,7 @@
     "advcash-rub-to-tether-usdt-erc20": "ADVCRUB_USDTERC20",
     "advcash-rub-to-tether-usdt-trc20": "ADVCRUB_USDTTRC20",
     "advcash-rub-to-cardano-ada": "ADVCRUB_ADA",
+    "advcash-rub-to-neo-neo": "ADVCRUB_NEO",
     "advcash-rub-to-litecoin-ltc": "ADVCRUB_LTC",
     "advcash-rub-to-ripple-xrp": "ADVCRUB_XRP",
     "advcash-rub-to-polkadot-dot": "ADVCRUB_DOT",
@@ -1920,6 +1933,30 @@
   "exchangePaths": [
     {
       "params": {
+        "exchange": "tinkoff-rub-to-tinkoff-rub"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "tinkoff-rub-to-tinkoff-rub"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "tinkoff-rub-to-sber-rub"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "tinkoff-rub-to-sber-rub"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
         "exchange": "tinkoff-rub-to-bitcoin-btc"
       },
       "locale": "en"
@@ -1993,30 +2030,6 @@
     {
       "params": {
         "exchange": "tinkoff-rub-to-zcash-zec"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tinkoff-rub-to-zcash-zec"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "tinkoff-rub-to-stellar-xlm"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tinkoff-rub-to-stellar-xlm"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "tinkoff-rub-to-classic-etc"
       },
       "locale": "en"
     }

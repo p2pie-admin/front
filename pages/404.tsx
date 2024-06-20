@@ -2,23 +2,31 @@ import React from "react";
 import { Back } from "@styled-icons/entypo/Back";
 import { Box, Button, Center, Flex, Text } from "@chakra-ui/react";
 import Link from "next/link";
-import { RegularBox } from "../styles/theme/custom";
+import { Box3D, RegularBox } from "../styles/theme/custom";
+import { useAppDispatch } from "../redux/hooks";
+import { clean } from "../redux/mainReducer";
+import ErrorWrapper from "../components/shared/ErrorWrapper";
 
 function NotFound() {
+  const dispatch = useAppDispatch();
   return (
     <Flex width="100%" justifyContent="center" alignItems="center">
-      <Center w="100px" h="100%">
-        <RegularBox display="flex" alignItems="center" flexDir="column">
-          <Text fontSize="6xl" fontWeight="bold" textAlign="center">
-            404
-          </Text>
+      <Box3D minW="400px" minH="200px" variant="no_contrast">
+        <ErrorWrapper
+          isError={true}
+          primaryMessage="404"
+          secondaryMessage="Страницы пока не существует"
+        >
+          <Box />
+        </ErrorWrapper>
+        <Center w="100%" h="20">
           <Link href={`/`}>
-            <Button boxShadow="lg">
+            <Button boxShadow="lg" onClick={() => dispatch(clean())}>
               <Back size={30} style={{ margin: 5 }} />
             </Button>
           </Link>
-        </RegularBox>
-      </Center>
+        </Center>
+      </Box3D>
     </Flex>
   );
 }

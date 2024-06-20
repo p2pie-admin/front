@@ -22,7 +22,6 @@ const PmModalButton = () => {
   const dispatch = useAppDispatch();
   const p2pIndex = useContext(p2pContext);
   const side = useContext(SideContext) as "give" | "get";
-  const oppositeSide = side === "give" ? "get" : "give";
   const isP2P = p2pIndex !== undefined;
   const pms = useAppSelector((state) => {
     if (isP2P) return state.main.p2p.dirs[p2pIndex]?.[side]?.slice(0, 3);
@@ -34,7 +33,6 @@ const PmModalButton = () => {
   const openDialog = () => {
     batch(() => {
       // берем возможные пары для обратной пм если такая выбрана
-      dispatch(fetchPossiblePairs());
       dispatch(triggerModal(side + p2pIndex || ""));
       dispatch(setSearchBarInputValue(""));
     });
