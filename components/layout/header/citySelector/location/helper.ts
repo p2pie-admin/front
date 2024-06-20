@@ -15,7 +15,7 @@ export const popularCountryNames = {
 };
 
 export const popularCityNames = {
-  "st. petersburg": "lg",
+  "saint petersburg": "lg",
   moscow: "xl",
   minsk: "xl",
   kyiv: "xl",

@@ -22,6 +22,7 @@ import {
   pmsToSlug,
 } from "../components/main/side/selector/section/PmGroup/helper";
 import { ILocation } from "../types/shared";
+import { popularCityNames } from "../components/layout/header/citySelector/location/helper";
 
 const ExchangePage = (props: {
   //article?: IArticle | null;
@@ -193,8 +194,16 @@ export async function getStaticPaths() {
       });
     });
   });
-  const slicedPaths = paths.filter((p) => p.locale !== "en");
 
+  const isPopularCity = (exchangePath: string) =>
+    Object.keys(popularCityNames).find((city) => exchangePath.includes(city));
+  const slicedPaths = paths
+    .filter(
+      (p) =>
+        isPopularCity(p.params.exchange) || !p.params.exchange.includes("-in-")
+    )
+    .slice(0, 2000);
+  console.log(slicedPaths);
   const cachedData = readCache() as ICache;
   cachedData.slugToCodes = slugToCodes;
   cachedData.cities = cities;
