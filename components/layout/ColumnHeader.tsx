@@ -16,11 +16,11 @@ const ColumnHeader = ({
     <Heading
       textAlign="center"
       as={as}
-      fontSize={"18px"}
+      fontSize={{ base: "15px", md: "18px" }}
       color={secondaryColor}
       mb="4"
       mt="0"
-      display={as == "h1" ? ["none", "block"] : ["block", "block"]}
+      display={as == "h2" ? ["none", "block"] : ["block", "block"]}
     >
       <Highlight query={query || []} styles={{ color: primaryColor }}>
         {text}

@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://www.p2pie.com
+Host: https://p2pie.com
 
 # Sitemaps
-Sitemap: https://www.p2pie.com/sitemap.xml
+Sitemap: https://p2pie.com/sitemap.xml

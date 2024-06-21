@@ -13,6 +13,8 @@ import { useAppSelector } from "../../redux/hooks";
 import { ICurrencyConverterRate } from "../../types/p2p";
 import { format, localFormat, R } from "../../redux/amountsHelper";
 
+const fallbackSRC = "https://i.ibb.co/74jyjr2/fb2.png";
+
 const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
   const color = useColorModeValue("bg.200", "bg.500");
   const bgColor = useColorModeValue("violet.600", "bg.900");
@@ -42,6 +44,8 @@ const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
       <Image
         w={400}
         h={180}
+        objectFit="cover"
+        fallbackSrc={fallbackSRC}
         src={`${SRC}/${getCur}_${giveCur}/${isLongTimeFrame ? "day" : "hour"}`}
         alt={`${giveCur} to ${getCur} in last ${
           isLongTimeFrame ? "day" : "hour"

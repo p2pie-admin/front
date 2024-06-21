@@ -14,6 +14,7 @@ export const Column = ({
     <Box3D
       key={index}
       variant="no_contrast"
+      overflowY="none"
       p="4"
       gridRow={{ base: index, lg: "unset" }}
       gridColumn={{ base: "unset", lg: isFullWidth ? "1/3" : "unset" }}

@@ -131,12 +131,12 @@ const Exchange = ({
           {
             position: 1,
             name: locale == "en" ? "Home" : "Главная",
-            item: `https://www.p2pie.com/${locale}`,
+            item: `https://p2pie.com/${locale}`,
           },
           {
             position: 2,
             name: { title1 },
-            item: `https://www.p2pie.com/${locale}/${slugCityToExchange(
+            item: `https://p2pie.com/${locale}/${slugCityToExchange(
               slug,
               location?.en_city_name
             )}`,
@@ -147,7 +147,7 @@ const Exchange = ({
         <Column index={0}>
           <ColumnHeader
             text={title1}
-            as="h2"
+            as="h1"
             query={[givePm.currency.code, getPm.currency.code]}
           />
           <Chart giveCur={giveCur} getCur={getCur} />
@@ -165,7 +165,7 @@ const Exchange = ({
         </Column>
 
         <Column index={1}>
-          <ColumnHeader text={title2} as="h1" query={[]} />
+          <ColumnHeader text={title2} as="h2" query={[]} />
           <Calculator />
 
           <LimitsRange />

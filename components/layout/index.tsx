@@ -67,6 +67,7 @@ const Layout = ({ children }: { children: any }) => {
       <HeadHTML />
       <Box // careful! populars may stop working!
         w="100%"
+        overflowX="hidden"
         position="relative"
         fontFamily="Roboto, sans-serif"
         sx={{

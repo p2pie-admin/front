@@ -56,6 +56,7 @@ const MobileParameters = ({
       gridAutoFlow="column"
       gap="1"
       dir="rtl"
+      zIndex="1"
     >
       {parameterCodes.map((code, i) => (
         <Parameter isExtended={false} code={code} key={code + i + "mobile"} />

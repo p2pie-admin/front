@@ -5,7 +5,7 @@ export const defaultConfig = {
     openGraph: {
       type: "website",
       locale: "en_US",
-      url: "https://www.p2pie.com/en",
+      url: "https://p2pie.com/en",
       site_name: "p2pie",
     },
     twitter: {
@@ -15,13 +15,13 @@ export const defaultConfig = {
     },
   },
   ru: {
-    title: "Поиск обменников валют",
+    title: "Поиск выгодных курсов валют",
     description:
-      "Найдите лучшие курсы обмена криптовалюты, наличных и банкинга",
+      "Агрегатор обменных пунктов. Инструмент поиска лучших предложений обмена электронных, наличных и криптовалют",
     openGraph: {
       type: "website",
       locale: "ru_RU",
-      url: "https://www.p2pie.com/ru",
+      url: "https://p2pie.com/ru",
       site_name: "p2pie",
     },
     twitter: {

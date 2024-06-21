@@ -46,9 +46,12 @@ const CircularTexts = ({ mainTexts }: { mainTexts?: IMainText[] }) => {
             opacity={currentIndex % mainTexts.length === index ? 1 : 0}
             transition="opacity 1s ease-in-out, transform .8s ease-in-out"
           >
-            <ResponsiveText fontSize="2xl">{mt.title}</ResponsiveText>
+            <ResponsiveText as="h4" fontSize="2xl">
+              {mt.title}
+            </ResponsiveText>
             <Box h="1px" bgColor={borderColor} w="60%" my="1" />
             <ResponsiveText
+              as="h5"
               whiteSpace="normal"
               variant="no_contrast"
               maxW="68%"

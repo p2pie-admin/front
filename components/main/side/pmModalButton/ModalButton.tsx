@@ -22,7 +22,7 @@ const ModalButton = ({
       }}
       position="relative"
       variant="default"
-      p="0 !important"
+      px={["2", "0 !important"]}
       color={color}
       display="flex"
       justifyContent="space-between"

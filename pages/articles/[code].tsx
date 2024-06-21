@@ -55,12 +55,12 @@ const ArticlePage = (props: {
           {
             position: 1,
             name: locale == "en" ? "Home" : "Главная",
-            item: `https://www.p2pie.com/${locale}`,
+            item: `https://p2pie.com/${locale}`,
           },
           {
             position: 2,
             name: article.header,
-            item: `https://www.p2pie.com/${locale}/articles/${code}`,
+            item: `https://p2pie.com/${locale}/articles/${code}`,
           },
         ]}
       />

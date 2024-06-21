@@ -1,6 +1,6 @@
 const { readCache } = require("./cache"); // Adjust the path as necessary
 
-const siteUrl = "https://www.p2pie.com";
+const siteUrl = "https://p2pie.com";
 
 const config = {
   siteUrl,

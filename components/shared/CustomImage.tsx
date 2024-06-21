@@ -19,8 +19,7 @@ const CustomImage = ({
       ? process.env.NEXT_PUBLIC_STRAPI_PROD_BASE_URL
       : process.env.NEXT_PUBLIC_STRAPI_DEV_BASE_URL;
 
-  const fallbackSRC =
-    "https://static.vecteezy.com/system/resources/thumbnails/011/299/215/small/simple-loading-or-buffering-icon-design-png.png";
+  const fallbackSRC = "https://i.ibb.co/74jyjr2/fb2.png";
   if (!img) return <></>;
   return (
     <Image

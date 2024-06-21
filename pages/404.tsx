@@ -10,7 +10,7 @@ import ErrorWrapper from "../components/shared/ErrorWrapper";
 function NotFound() {
   const dispatch = useAppDispatch();
   return (
-    <Flex width="100%" justifyContent="center" alignItems="center">
+    <Flex width="100%" justifyContent="center" alignItems="center" mt="5">
       <Box3D minW="400px" minH="200px" variant="no_contrast">
         <ErrorWrapper
           isError={true}

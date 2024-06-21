@@ -3,6 +3,7 @@ import {
   Center,
   Collapse,
   Flex,
+  Heading,
   SlideFade,
   Text,
   useColorModeValue,
@@ -26,16 +27,23 @@ const Greeting = () => {
       bgGradient={`radial-gradient(circle at 50% -10%, ${centerColor} 0%, ${peripheryColor} 60%)`}
       bgClip="text"
     >
-      <Text
+      <Heading
+        as="h1"
         textAlign="center"
         fontWeight="bold"
+        color="inherit"
         fontSize={{ base: "3xl", md: "5xl" }}
       >
         {t("main:title")}
-      </Text>
-      <Text textAlign="center" fontSize={{ base: "lg", md: "3xl" }}>
+      </Heading>
+      <Heading
+        color="inherit"
+        as="h2"
+        textAlign="center"
+        fontSize={{ base: "lg", md: "3xl" }}
+      >
         {t("main:subtitle")}
-      </Text>
+      </Heading>
     </Box>
   );
 };

@@ -58,7 +58,7 @@ const Similar = ({ similarPmPairs }: { similarPmPairs: IPm[][] }) => {
   };
 
   return (
-    <Box3D px="2" w="100%" minH="304px">
+    <Box3D px="2" w="100%" minH={{ base: "unset", lg: "304px" }}>
       <ResponsiveText fontSize="sm" my="1" variant="no_contrast">
         {t("main:similarDirs")}
       </ResponsiveText>

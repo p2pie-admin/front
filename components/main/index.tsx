@@ -50,6 +50,7 @@ const MainPageContent = ({
         </Column>
         <Column index={1}>
           <ColumnHeader
+            as="h3"
             text={t("main:sellBuy")}
             query={["отдаете", "получаете", "exchange"]}
           />
@@ -65,7 +66,7 @@ const MainPageContent = ({
           </ResponsiveText>
         </Column>
         <Column index={3}>
-          <ColumnHeader text={t("main:popularTitle")} as="h3" />
+          <ColumnHeader text={t("main:popularTitle")} />
           <Popular popularRates={popularRates} popularPms={popularPms} />
         </Column>
       </ColumnGrid>

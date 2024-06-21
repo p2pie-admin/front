@@ -49,7 +49,7 @@ const Section = ({
         boxShadow="0 10px 15px -6px rgba(0,0,0,0.45)"
         borderBottomRadius={isHidden ? "2xl" : "0"}
         variant="extra_contrast"
-        zIndex="1"
+        zIndex="10"
         w="100%"
         justifyContent="start"
         onClick={() =>
