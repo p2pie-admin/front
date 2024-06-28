@@ -13,7 +13,7 @@ import { useAppSelector } from "../../redux/hooks";
 import { ICurrencyConverterRate } from "../../types/p2p";
 import { format, localFormat, R } from "../../redux/amountsHelper";
 
-const fallbackSRC = "https://i.ibb.co/74jyjr2/fb2.png";
+const fallbackSRC = "https://i.ibb.co/fpSb8gZ/fallback.png";
 
 const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
   const color = useColorModeValue("bg.200", "bg.500");

@@ -7,7 +7,6 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import Swiper from "../main/tv/swiper/_index";
 
 import useSWR from "swr";
 import { useAppSelector } from "../../redux/hooks";
@@ -28,8 +27,6 @@ const ExchangerDetails = () => {
     data: { exchanger: IExchangerData };
     error: any;
   };
-
-  console.log(data);
 
   if (!exchangerId || !data?.exchanger) return <></>;
 

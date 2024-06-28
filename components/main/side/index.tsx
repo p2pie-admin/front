@@ -27,7 +27,6 @@ const Side = () => {
         gridTemplateColumns="auto 1fr"
         alignItems="center"
         px={["2", "4"]}
-        py={["0.5", "1"]}
         gridAutoFlow=""
       >
         <Text color="bg.500" fontSize="xs">

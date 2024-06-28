@@ -50,7 +50,6 @@ const MainPageContent = ({
         </Column>
         <Column index={1}>
           <ColumnHeader
-            as="h3"
             text={t("main:sellBuy")}
             query={["отдаете", "получаете", "exchange"]}
           />

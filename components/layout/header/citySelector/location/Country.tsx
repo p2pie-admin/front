@@ -1,7 +1,8 @@
 import { Box, Text, Collapse, Highlight } from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import { batch } from "react-redux";
-import { useAppDispatch } from "../../../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
+import Link from "next/link";
 import {
   addLocation,
   setLocation,
@@ -12,6 +13,9 @@ import { ICity, IFormattedCountry } from "../../../../../types/shared";
 import { popularCityNames, popularCountryNames } from "./helper";
 import MultipleCitiesContext from "./MultipleCitiesContext";
 import { useRouter } from "next/router";
+import { slugCityToExchange } from "../../../../exchange/helper";
+import exchange from "../../../../exchange";
+import { pmsToSlug } from "../../../../main/side/selector/section/PmGroup/helper";
 
 const Country = ({
   country,
@@ -21,11 +25,16 @@ const Country = ({
   highlightedCities: string[];
 }) => {
   const [opened, setOpened] = useState(false);
-  const { locale } = useRouter() as { locale: "en" | "ru" };
+  const { locale } = useRouter();
+  const slug = useAppSelector((state) =>
+    pmsToSlug({ givePm: state.main.givePm, getPm: state.main.getPm })
+  );
   const countryName = country.en_name.toLowerCase() as
     | keyof typeof popularCountryNames;
   const isPopular = popularCountryNames?.[countryName] || "";
+
   const dispatch = useAppDispatch();
+
   const isMultiple = useContext(MultipleCitiesContext);
   const handleChooseCity = (city: ICity) => {
     const location = {
@@ -52,29 +61,32 @@ const Country = ({
         cursor="pointer"
         onClick={() => setOpened(!opened)}
       >
-        {country[`${locale}_name`]}
+        {country[`${locale as "en" | "ru"}_name`]}
       </Text>
       <Collapse in={opened}>
         {country.cities.map((city) => {
-          const cityName =
+          const popularCityName =
             city.en_name.toLowerCase() as keyof typeof popularCityNames;
-          const isPopular = popularCityNames?.[cityName] || "";
+          const isPopular = popularCityNames?.[popularCityName] || "";
           const selected = highlightedCities.find((c) => c == city.en_name);
-          const bullet = !isMultiple ? "" : selected ? "•" : "◦";
+
+          //const bullet = !isMultiple ? "" : selected ? "•" : "◦";
           return (
-            <Text
-              ml="1"
-              key={city.code}
-              cursor="pointer"
-              fontWeight={isPopular ? "bold" : "normal"}
-              fontSize={isPopular}
-              variant={
-                selected ? "primary" : isPopular ? "constrast" : "no_contrast"
-              }
-              onClick={() => handleChooseCity(city)}
-            >
-              {bullet} {city[`${locale}_name`]}
-            </Text>
+            <Link href={`/${slugCityToExchange(slug, city.en_name)}`} passHref>
+              <Text
+                ml="1"
+                key={city.code}
+                cursor="pointer"
+                fontWeight={isPopular ? "bold" : "normal"}
+                fontSize={isPopular}
+                variant={
+                  selected ? "primary" : isPopular ? "constrast" : "no_contrast"
+                }
+                onClick={() => handleChooseCity(city)}
+              >
+                {city[`${locale as "en" | "ru"}_name`]}
+              </Text>
+            </Link>
           );
         })}
       </Collapse>

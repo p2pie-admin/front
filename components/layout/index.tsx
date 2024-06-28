@@ -30,7 +30,6 @@ const Layout = ({ children }: { children: any }) => {
   useEffect(() => {
     const fetcher = initCurrencyConverterFetcher();
     fetcher().then((resp) => {
-      console.log(resp);
       if (resp.data) {
         const { ip, ...location } = resp.data as ILocation & { ip: string };
         batch(() => {
@@ -63,44 +62,41 @@ const Layout = ({ children }: { children: any }) => {
   );
 
   return (
-    <>
-      <HeadHTML />
-      <Box // careful! populars may stop working!
-        w="100%"
-        overflowX="hidden"
-        position="relative"
-        fontFamily="Roboto, sans-serif"
-        sx={{
-          "&::WebkitScrollbar": {
-            width: "0",
-          },
-          "&::WebkitOverflowScrolling": "touch",
-        }}
-      >
-        {/* <Box minH="-webkit-fill-available" p="1" w="100%" bgColor="red.500">
+    <Box // careful! populars may stop working!
+      w="100%"
+      overflowX="hidden"
+      position="relative"
+      fontFamily="Roboto, sans-serif"
+      sx={{
+        "&::WebkitScrollbar": {
+          width: "0",
+        },
+        "&::WebkitOverflowScrolling": "touch",
+      }}
+    >
+      {/* <Box minH="-webkit-fill-available" p="1" w="100%" bgColor="red.500">
        
       </Box> */}
-        <Box
-          position="absolute"
-          w="100%"
-          h="80vh"
-          bgGradient={`radial-gradient(circle at 50% -10%, ${ambientColor} 0%, transparent 40%)`}
-        ></Box>
-        <Header />
-        <VStack
-          alignItems="center"
-          justifyContent="space-between"
-          gap="4"
-          minH="calc(100vh - 56px)"
-        >
-          <Box mt={["1", "4"]} maxW={{ base: "100%", md: "888px" }}>
-            {children}
-          </Box>
+      <Box
+        position="absolute"
+        w="100%"
+        h="80vh"
+        bgGradient={`radial-gradient(circle at 50% -10%, ${ambientColor} 0%, transparent 40%)`}
+      ></Box>
+      <Header />
+      <VStack
+        alignItems="center"
+        justifyContent="space-between"
+        gap="4"
+        minH="calc(100vh - 56px)"
+      >
+        <Box mt={["1", "4"]} maxW={{ base: "100%", md: "888px" }}>
+          {children}
+        </Box>
 
-          <Footer />
-        </VStack>
-      </Box>
-    </>
+        <Footer />
+      </VStack>
+    </Box>
   );
 };
 

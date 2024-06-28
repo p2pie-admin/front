@@ -68,7 +68,7 @@ const MobileParameters = ({
 const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
   const dispatch = useAppDispatch();
   const activeIndex = useAppSelector((state) => state.main.swiperIdVisible);
-  rate.parameterCodes?.map((p) => console.log(p));
+
   const isMobile = useIsMobile();
 
   if (!rate) return <></>;
