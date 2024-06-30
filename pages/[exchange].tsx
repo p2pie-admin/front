@@ -102,7 +102,7 @@ export async function getStaticProps({
         getPm,
         location,
         similarPmPairs,
-        ...(await serverSideTranslations(locale || "ru", ["main"])),
+        ...(await serverSideTranslations(locale || "ru", ["common"])),
       },
       revalidate: 6000,
     };
@@ -156,7 +156,6 @@ export async function getStaticPaths() {
   }, []);
   console.log(`received ${pms.length} pms`);
 
-  //console.log(possiblePmPairs.map(pmp => `${pmp.givePm?.code}_${pmp.getPm?.code}`));
   const slugToCodes = dirs.reduce((res: { [key: string]: string }, dir) => {
     const pmPairFromDir = {
       givePm: pms.find((pm) => pm.code.toUpperCase() === dir.split("_")[0]),
@@ -212,7 +211,7 @@ export async function getStaticPaths() {
         isPopularCity(p.params.exchange) || !p.params.exchange.includes("-in-")
     )
     .slice(0, 20);
-  console.log(slicedPaths);
+  console.log("slicedPaths: ", slicedPaths);
   const cachedData = readCache() as ICache;
   cachedData.slugToCodes = slugToCodes;
   cachedData.cities = cities;

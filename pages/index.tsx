@@ -45,7 +45,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
         mainTexts: mainTexts || null,
         rootText,
         locale,
-        ...(await serverSideTranslations(locale || "ru", ["main"])),
+        ...(await serverSideTranslations(locale || "ru", ["common"])),
       },
     };
   } catch (e) {
@@ -54,18 +54,6 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     };
   }
 };
-
-// const router = useRouter();
-// console.log(router.query);
-// const { dir, pm_groups } = router.query;
-
-// if (typeof dir === "string" && typeof pm_groups === "string") {
-//   console.log("main triggered");
-//   batch(() => {
-//     dispatch(restorePmsFromSlug({ dir, pm_groups }));
-//     dispatch(fetchDirRates({ dir }));
-//   });
-// }
 
 const Home = (props: any) => {
   return <MainPageContent {...props} />;
