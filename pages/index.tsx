@@ -45,7 +45,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
         mainTexts: mainTexts || null,
         rootText,
         locale,
-        ...(await serverSideTranslations(locale || "ru", ["common"])),
+        ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
     };
   } catch (e) {

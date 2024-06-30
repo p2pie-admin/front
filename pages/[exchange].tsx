@@ -102,7 +102,7 @@ export async function getStaticProps({
         getPm,
         location,
         similarPmPairs,
-        ...(await serverSideTranslations(locale || "ru", ["common"])),
+        ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
       revalidate: 6000,
     };
@@ -211,7 +211,7 @@ export async function getStaticPaths() {
         isPopularCity(p.params.exchange) || !p.params.exchange.includes("-in-")
     )
     .slice(0, 20);
-  console.log("slicedPaths: ", slicedPaths);
+
   const cachedData = readCache() as ICache;
   cachedData.slugToCodes = slugToCodes;
   cachedData.cities = cities;

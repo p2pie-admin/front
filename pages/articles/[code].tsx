@@ -132,7 +132,7 @@ export async function getStaticProps({
         article,
         otherDirs,
         code,
-        ...(await serverSideTranslations(locale || "ru", ["common"])),
+        ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
       revalidate: 6000,
     };
