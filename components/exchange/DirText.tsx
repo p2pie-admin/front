@@ -21,7 +21,7 @@ const DirText = ({
       " / " +
       state.main.location[`${locale}_country_name`]
   );
-  const city = userLocation || "";
+  const cityCountry = userLocation || "";
   if (!dirText) return <></>;
   const { text, title } = dirText;
   return (
@@ -30,7 +30,7 @@ const DirText = ({
         {title}
       </Heading>
       <ResponsiveText whiteSpace="unset" variant="no_contrast">
-        {fillWords({ text, givePm, getPm, cityName: city })}
+        {fillWords({ text, givePm, getPm, cityCountry: cityCountry })}
       </ResponsiveText>
     </Box>
   );

@@ -19,13 +19,16 @@ import Nav from "./nav";
 import { batch } from "react-redux";
 import HeadHTML from "./HeadHTML";
 import { ICities } from "../../types/exchange";
+import { useRouter } from "next/router";
 
 const Layout = ({ children }: { children: any }) => {
   // const maxW = useBreakpointValue({ base: "100%", lg: "980" });
   //const isScrollLocked = useAppSelector((state) => state.main.isScrollLocked);
   const myToast = useAppSelector((state) => state.main.toast);
   const toast = useToast();
-
+  const { query } = useRouter();
+  const cityInSlugExists = query?.exchange && query.exchange.includes("-in-");
+  console.log(query?.exchange);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -34,7 +37,7 @@ const Layout = ({ children }: { children: any }) => {
       if (resp.data) {
         const { ip, ...location } = resp.data as ILocation & { ip: string };
         batch(() => {
-          dispatch(setLocation(location));
+          !cityInSlugExists && dispatch(setLocation(location));
           dispatch(setIP(ip));
         });
       }

@@ -25,7 +25,7 @@ const Dir = ({
         cursor="pointer"
         transition="filter 0.2s ease-in"
         _hover={{ filter: "brightness(1.1)" }}
-        variant="extra_contrast"
+        variant="contrast"
       >
         <Grid
           gridTemplateColumns={"1fr 40px  1fr"}

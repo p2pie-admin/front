@@ -272,7 +272,6 @@ export const mainSlice = createSlice({
     },
 
     setLocation: (state: MainState, action: PayloadAction<ILocation>) => {
-      if (state.location) return;
       const { en_city_name } = action.payload;
       if (!en_city_name) {
         state.location = defaultLocation;

@@ -43,7 +43,7 @@ const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
     <Box3D bgColor={bgColor} overflow="hidden" position="relative">
       <Image
         w={400}
-        h={180}
+        h={164}
         objectFit="cover"
         fallbackSrc={fallbackSRC}
         src={`${SRC}/${getCur}_${giveCur}/${isLongTimeFrame ? "day" : "hour"}`}

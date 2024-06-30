@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { ICities } from "../../types/exchange";
 import { IPm } from "../../types/selector";
 import { ILocation } from "../../types/shared";
@@ -6,23 +7,31 @@ import { capitalize } from "../main/side/selector/section/PmGroup/helper";
 export const fillWords = ({
   givePm,
   getPm,
-  cityName,
+  cityCountry,
   text,
 }: {
   givePm: IPm;
   getPm: IPm;
-  cityName: string;
+  cityCountry: string;
   text?: string;
 }) => {
-  const { en_name: giveName, currency: giveCurrency } = givePm;
-  const { en_name: getName, currency: getCurrency } = getPm;
+  const { locale } = useRouter() as { locale: "en" | "ru" };
 
   return (text || "")
-    .replaceAll("give_name", capitalize(giveName))
-    .replaceAll("get_name", capitalize(getName))
-    .replaceAll("give_currency", giveCurrency.code.toUpperCase())
-    .replaceAll("get_currency", getCurrency.code.toUpperCase())
-    .replaceAll("city_name", cityName);
+    .replaceAll(
+      "give_name",
+      capitalize(givePm[`${locale}_name`] || givePm.en_name)
+    )
+    .replaceAll(
+      "get_name",
+      capitalize(getPm[`${locale}_name`] || getPm.en_name)
+    )
+    .replaceAll("give_currency", givePm.currency.code.toUpperCase())
+    .replaceAll("get_currency", getPm.currency.code.toUpperCase())
+    .replaceAll(
+      "city_name",
+      `${cityCountry.split(" / ")[0]}, ${cityCountry.split(" / ")[1]}`
+    );
 };
 
 export const convertCities = (cities: ICities): ICities => {
@@ -39,19 +48,17 @@ export const convertCities = (cities: ICities): ICities => {
 };
 
 export const findSimilarPmPairs = (givePm: IPm, getPm: IPm, pms: IPm[]) => {
-  const similar = pms.reduce((res: IPm[][], pm: IPm) => {
+  const similarLevel1 = pms.reduce((res: IPm[][], pm: IPm) => {
     let [pair1, pair2] = [[], []] as [IPm[], IPm[]];
     if (
       pm.currency.code == givePm.currency.code &&
-      (pm.section == givePm.section ||
-        (givePm.section == "cash" && pm.section == "bank"))
+      pm.section == givePm.section
     ) {
       pair1 = [pm, getPm];
     }
     if (
       pm.currency.code == getPm.currency.code &&
-      (pm.section == getPm.section ||
-        (getPm.section == "cash" && pm.section == "bank"))
+      pm.section == getPm.section
     ) {
       pair2 = [givePm, pm];
     }
@@ -62,12 +69,59 @@ export const findSimilarPmPairs = (givePm: IPm, getPm: IPm, pms: IPm[]) => {
     ];
   }, []);
 
-  const rmInitialPm = similar
-    .filter((pair) => {
-      return pair[0].code !== givePm.code || pair[1].code !== getPm.code;
-    })
+  const similarLevel2 = pms.reduce((res: IPm[][], pm: IPm) => {
+    let [pair1, pair2] = [[], []] as [IPm[], IPm[]];
+    if (pm.currency.code == givePm.currency.code) {
+      pair1 = [pm, getPm];
+    }
+    if (pm.currency.code == getPm.currency.code) {
+      pair2 = [givePm, pm];
+    }
+    return [
+      ...res,
+      ...(pair1.length ? [pair1] : []),
+      ...(pair2.length ? [pair2] : []),
+    ];
+  }, []);
+
+  const similarLevel3 = pms.reduce((res: IPm[][], pm: IPm) => {
+    let [pair1, pair2] = [[], []] as [IPm[], IPm[]];
+    if (pm.section == givePm.section) {
+      pair1 = [pm, getPm];
+    }
+    if (pm.section == getPm.section) {
+      pair2 = [givePm, pm];
+    }
+    return [
+      ...res,
+      ...(pair1.length ? [pair1] : []),
+      ...(pair2.length ? [pair2] : []),
+    ];
+  }, []);
+  const allPairs = [...similarLevel1, ...similarLevel2, ...similarLevel3];
+  const uniquePairs = allPairs.filter((pair, index, self) => {
+    // Remove pairs with identical elements or already present pairs in reverse
+    return (
+      index ===
+      self.findIndex(
+        (otherPair) =>
+          (pair[0].code === otherPair[0].code &&
+            pair[1].code === otherPair[1].code) ||
+          (pair[0].code === otherPair[1].code &&
+            pair[1].code === otherPair[0].code)
+      )
+    );
+  });
+
+  return uniquePairs
+    .filter(
+      (pair) =>
+        !(
+          (pair[0].code == givePm.code && pair[1].code == getPm.code) ||
+          pair[0].code == pair[1].code
+        )
+    )
     .slice(0, 3);
-  return rmInitialPm;
 };
 
 export const generateTitle = ({
@@ -102,7 +156,7 @@ export const exchangeToSlugCity = (exchange: string) => {
 export const slugCityToExchange = (slug: string, city?: string) => {
   return `${slug}${
     (slug.startsWith("cash-") || slug.includes("-cash-")) && city
-      ? "-in-" + city.toLowerCase()
+      ? "-in-" + city.replaceAll(" ", "-").toLowerCase()
       : ""
   }`;
 };
