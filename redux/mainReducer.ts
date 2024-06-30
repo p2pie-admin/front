@@ -48,6 +48,7 @@ import {
   readLocalOrder,
   writeLocalOrder,
 } from "../components/order/localStorageHandler";
+import { ICities } from "../types/exchange";
 
 type ISide = "give" | "get";
 
@@ -89,6 +90,7 @@ export interface MainState {
   p2p: IOrder;
   fingerprint?: IFingerprint;
   parameters: IParameter[];
+  cities?: ICities;
 }
 
 const initialState: MainState = {
@@ -366,6 +368,9 @@ export const mainSlice = createSlice({
     sendToast: (state: MainState, action: PayloadAction<IToast>) => {
       state.toast = action.payload;
     },
+    setCities: (state: MainState, action: PayloadAction<ICities>) => {
+      state.cities = action.payload;
+    },
   },
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -510,6 +515,7 @@ export const {
   clearDirRates,
   clean,
   sendToast,
+  setCities,
 } = mainSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

@@ -11,7 +11,7 @@ import {
 import { useAppSelector, useAppDispatch } from "../../../../../redux/hooks";
 import { addLocation, triggerModal } from "../../../../../redux/mainReducer";
 import CustomModal from "../../../../shared/CustomModal";
-import CountryListWrapper from "./CountryListWrapper";
+
 import MultipleCitiesContext from "./MultipleCitiesContext";
 import { useContext } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
@@ -23,6 +23,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import Arrow from "../../../../shared/Arrow";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
+import CountryList from "./CountryList";
 
 const Location = () => {
   const { locale } = useRouter() as { locale: "en" | "ru" };
@@ -33,6 +34,8 @@ const Location = () => {
     (state) => state.main.p2p.locations.length || 0
   );
   const dispatch = useAppDispatch();
+  const cities = useAppSelector((state) => state.main.cities);
+
   const isMultiple = useContext(MultipleCitiesContext);
   const color = useColorModeValue("bg.600", "bg.200");
 
@@ -87,7 +90,7 @@ const Location = () => {
       </HStack>
     </RegularBox>
   );
-
+  if (!cities || !!cities.length) return <></>;
   return (
     <Box>
       <CustomModal
@@ -95,7 +98,7 @@ const Location = () => {
         header={t("main:chooseCity")}
       >
         <>
-          <CountryListWrapper />
+          <CountryList cityCodesList={cities} />
           {isMultiple && <SelectButton />}
         </>
       </CustomModal>

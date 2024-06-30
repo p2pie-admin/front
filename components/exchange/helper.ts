@@ -26,7 +26,7 @@ export const fillWords = ({
 };
 
 export const convertCities = (cities: ICities): ICities => {
-  const newCities = {} as ICities;
+  const newCities = {} as ICities; //changes key from BTM -> batumi
 
   for (const key in cities) {
     if (cities.hasOwnProperty(key)) {

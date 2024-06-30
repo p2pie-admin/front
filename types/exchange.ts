@@ -28,9 +28,7 @@ export interface ICache {
   pms: IPm[];
   slugToCodes: { [key: string]: string }; // для запроса курсов
   articleCodes: string[];
-  cities: {
-    [key: string]: [string, string];
-  };
+  cities: ICities;
   exchangePaths: IPath[];
 }
 

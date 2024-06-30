@@ -18,6 +18,7 @@ import { ILocation } from "../../types/shared";
 import Nav from "./nav";
 import { batch } from "react-redux";
 import HeadHTML from "./HeadHTML";
+import { ICities } from "../../types/exchange";
 
 const Layout = ({ children }: { children: any }) => {
   // const maxW = useBreakpointValue({ base: "100%", lg: "980" });

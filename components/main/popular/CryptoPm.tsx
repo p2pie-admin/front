@@ -6,9 +6,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { capitalize } from "../side/selector/section/PmGroup/helper";
-import Name from "../side/selector/section/PmGroup/Name";
-import PmButton from "../side/selector/section/PmGroup/PmButton";
+
 import { IPm } from "../../../types/selector";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import CircularIcon from "../../shared/CircularIcon";

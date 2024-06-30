@@ -23,7 +23,7 @@ const CountryList = ({ cityCodesList }: { cityCodesList?: ICityCodesList }) => {
     list.splice(-threePartIndex),
     list,
   ].reverse();
-
+  console.log("cityCodesList", cityCodesList);
   return (
     <Grid gridTemplateColumns="1fr 1fr 1fr" mt="4" p="4">
       {parts.map((part, index) => (

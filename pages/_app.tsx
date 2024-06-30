@@ -9,10 +9,14 @@ import { appWithTranslation, useTranslation } from "next-i18next";
 import { DefaultSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { defaultConfig } from "../next-seo.config";
+import { initCMSFetcher } from "../services/fetchers";
+import { citiesQuery } from "../services/initialQueries";
+import { ICities } from "../types/exchange";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { locale } = useRouter() as { locale: "en" | "ru" };
   const seoConfig = defaultConfig[locale || "ru"];
+
   return (
     <ChakraProvider theme={theme}>
       <Provider store={store}>

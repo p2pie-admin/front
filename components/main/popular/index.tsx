@@ -19,17 +19,18 @@ const Popular = ({
   if (!popularRates || !popularPms) return <></>;
 
   return (
-    <Grid
-      gridTemplateColumns="auto 1fr 1fr"
-      gridGap="2"
-      alignItems="center"
-      color="bg.200"
-    >
+    <Box>
       {Object.entries(popularRates).map(([cryptoCode, buySell], index) => {
         const cryptoPm = popularPms.find((pm) => pm.code == cryptoCode);
         if (!cryptoPm) return <></>;
         return (
-          <>
+          <Grid
+            gridTemplateColumns="auto 1fr 1fr"
+            gridGap="2"
+            alignItems="center"
+            color="bg.200"
+            key={cryptoCode + index}
+          >
             <Box h="1px" bgColor={borderColor} gridColumn="1/4" />
             <Box>
               <CryptoPm cryptoPm={cryptoPm} />
@@ -41,15 +42,14 @@ const Popular = ({
               {t("main:sellRate")}
             </ResponsiveText>
             <CryptoRates
-              key={index + "cr"}
               popularPms={popularPms}
               cryptoPm={cryptoPm}
               buySell={buySell}
             />
-          </>
+          </Grid>
         );
       })}
-    </Grid>
+    </Box>
   );
 };
 

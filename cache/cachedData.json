@@ -14,7 +14,6 @@
     "tinkoff-rub-to-tether-usdt-erc20": "TCSBRUB_USDTERC20",
     "tinkoff-rub-to-tether-usdt-trc20": "TCSBRUB_USDTTRC20",
     "tinkoff-rub-to-cardano-ada": "TCSBRUB_ADA",
-    "tinkoff-rub-to-neo-neo": "TCSBRUB_NEO",
     "tinkoff-rub-to-litecoin-ltc": "TCSBRUB_LTC",
     "tinkoff-rub-to-ripple-xrp": "TCSBRUB_XRP",
     "tinkoff-rub-to-polkadot-dot": "TCSBRUB_DOT",
@@ -34,7 +33,6 @@
     "sber-rub-to-tether-usdt-erc20": "SBERRUB_USDTERC20",
     "sber-rub-to-tether-usdt-trc20": "SBERRUB_USDTTRC20",
     "sber-rub-to-cardano-ada": "SBERRUB_ADA",
-    "sber-rub-to-neo-neo": "SBERRUB_NEO",
     "sber-rub-to-litecoin-ltc": "SBERRUB_LTC",
     "sber-rub-to-ripple-xrp": "SBERRUB_XRP",
     "sber-rub-to-polkadot-dot": "SBERRUB_DOT",
@@ -43,7 +41,6 @@
     "cash-rub-to-bitcoin-btc": "CASHRUB_BTC",
     "cash-rub-to-ethereum-eth": "CASHRUB_ETH",
     "cash-rub-to-monero-xmr": "CASHRUB_XMR",
-    "cash-rub-to-tether-usdt-erc20": "CASHRUB_USDTERC20",
     "cash-rub-to-tether-usdt-trc20": "CASHRUB_USDTTRC20",
     "cash-rub-to-cardano-ada": "CASHRUB_ADA",
     "cash-rub-to-litecoin-ltc": "CASHRUB_LTC",
@@ -98,7 +95,6 @@
     "eos-eos-to-tether-usdt-erc20": "EOS_USDTERC20",
     "eos-eos-to-tether-usdt-trc20": "EOS_USDTTRC20",
     "eos-eos-to-cardano-ada": "EOS_ADA",
-    "eos-eos-to-neo-neo": "EOS_NEO",
     "eos-eos-to-litecoin-ltc": "EOS_LTC",
     "eos-eos-to-ripple-xrp": "EOS_XRP",
     "eos-eos-to-polkadot-dot": "EOS_DOT",
@@ -119,11 +115,9 @@
     "pancake-cake-to-tether-usdt-erc20": "CAKE_USDTERC20",
     "pancake-cake-to-tether-usdt-trc20": "CAKE_USDTTRC20",
     "pancake-cake-to-cardano-ada": "CAKE_ADA",
-    "pancake-cake-to-neo-neo": "CAKE_NEO",
     "pancake-cake-to-litecoin-ltc": "CAKE_LTC",
     "pancake-cake-to-ripple-xrp": "CAKE_XRP",
     "pancake-cake-to-polkadot-dot": "CAKE_DOT",
-    "pancake-cake-to-advcash-usd": "CAKE_ADVCUSD",
     "pancake-cake-to-advcash-rub": "CAKE_ADVCRUB",
     "icon-icx-to-tinkoff-rub": "ICX_TCSBRUB",
     "icon-icx-to-sber-rub": "ICX_SBERRUB",
@@ -162,7 +156,6 @@
     "polygon-matic-to-tether-usdt-erc20": "MATIC_USDTERC20",
     "polygon-matic-to-tether-usdt-trc20": "MATIC_USDTTRC20",
     "polygon-matic-to-cardano-ada": "MATIC_ADA",
-    "polygon-matic-to-neo-neo": "MATIC_NEO",
     "polygon-matic-to-litecoin-ltc": "MATIC_LTC",
     "polygon-matic-to-ripple-xrp": "MATIC_XRP",
     "polygon-matic-to-polkadot-dot": "MATIC_DOT",
@@ -184,11 +177,9 @@
     "uniswap-uni-to-tether-usdt-erc20": "UNI_USDTERC20",
     "uniswap-uni-to-tether-usdt-trc20": "UNI_USDTTRC20",
     "uniswap-uni-to-cardano-ada": "UNI_ADA",
-    "uniswap-uni-to-neo-neo": "UNI_NEO",
     "uniswap-uni-to-litecoin-ltc": "UNI_LTC",
     "uniswap-uni-to-ripple-xrp": "UNI_XRP",
     "uniswap-uni-to-polkadot-dot": "UNI_DOT",
-    "uniswap-uni-to-advcash-usd": "UNI_ADVCUSD",
     "uniswap-uni-to-advcash-rub": "UNI_ADVCRUB",
     "zcash-zec-to-tinkoff-rub": "ZEC_TCSBRUB",
     "zcash-zec-to-sber-rub": "ZEC_SBERRUB",
@@ -308,7 +299,6 @@
     "monero-xmr-to-advcash-rub": "XMR_ADVCRUB",
     "tether-usdt-erc20-to-tinkoff-rub": "USDTERC20_TCSBRUB",
     "tether-usdt-erc20-to-sber-rub": "USDTERC20_SBERRUB",
-    "tether-usdt-erc20-to-cash-rub": "USDTERC20_CASHRUB",
     "tether-usdt-erc20-to-cash-usd": "USDTERC20_CASHUSD",
     "tether-usdt-erc20-to-bitcoin-btc": "USDTERC20_BTC",
     "tether-usdt-erc20-to-eos-eos": "USDTERC20_EOS",
@@ -378,17 +368,10 @@
     "cardano-ada-to-polkadot-dot": "ADA_DOT",
     "cardano-ada-to-advcash-usd": "ADA_ADVCUSD",
     "cardano-ada-to-advcash-rub": "ADA_ADVCRUB",
-    "binance-bnb-to-bitcoin-btc": "BNB_BTC",
-    "binance-bnb-to-ethereum-eth": "BNB_ETH",
-    "neo-neo-to-tinkoff-rub": "NEO_TCSBRUB",
-    "neo-neo-to-sber-rub": "NEO_SBERRUB",
     "neo-neo-to-cash-usd": "NEO_CASHUSD",
     "neo-neo-to-bitcoin-btc": "NEO_BTC",
     "neo-neo-to-eos-eos": "NEO_EOS",
-    "neo-neo-to-pancake-cake": "NEO_CAKE",
     "neo-neo-to-icon-icx": "NEO_ICX",
-    "neo-neo-to-polygon-matic": "NEO_MATIC",
-    "neo-neo-to-uniswap-uni": "NEO_UNI",
     "neo-neo-to-zcash-zec": "NEO_ZEC",
     "neo-neo-to-stellar-xlm": "NEO_XLM",
     "neo-neo-to-classic-etc": "NEO_ETC",
@@ -401,7 +384,6 @@
     "neo-neo-to-ripple-xrp": "NEO_XRP",
     "neo-neo-to-polkadot-dot": "NEO_DOT",
     "neo-neo-to-advcash-usd": "NEO_ADVCUSD",
-    "neo-neo-to-advcash-rub": "NEO_ADVCRUB",
     "litecoin-ltc-to-tinkoff-rub": "LTC_TCSBRUB",
     "litecoin-ltc-to-sber-rub": "LTC_SBERRUB",
     "litecoin-ltc-to-cash-rub": "LTC_CASHRUB",
@@ -477,9 +459,7 @@
     "advcash-usd-to-cash-usd": "ADVCUSD_CASHUSD",
     "advcash-usd-to-bitcoin-btc": "ADVCUSD_BTC",
     "advcash-usd-to-eos-eos": "ADVCUSD_EOS",
-    "advcash-usd-to-pancake-cake": "ADVCUSD_CAKE",
     "advcash-usd-to-polygon-matic": "ADVCUSD_MATIC",
-    "advcash-usd-to-uniswap-uni": "ADVCUSD_UNI",
     "advcash-usd-to-zcash-zec": "ADVCUSD_ZEC",
     "advcash-usd-to-stellar-xlm": "ADVCUSD_XLM",
     "advcash-usd-to-classic-etc": "ADVCUSD_ETC",
@@ -488,7 +468,6 @@
     "advcash-usd-to-tether-usdt-erc20": "ADVCUSD_USDTERC20",
     "advcash-usd-to-tether-usdt-trc20": "ADVCUSD_USDTTRC20",
     "advcash-usd-to-cardano-ada": "ADVCUSD_ADA",
-    "advcash-usd-to-neo-neo": "ADVCUSD_NEO",
     "advcash-usd-to-litecoin-ltc": "ADVCUSD_LTC",
     "advcash-usd-to-ripple-xrp": "ADVCUSD_XRP",
     "advcash-usd-to-polkadot-dot": "ADVCUSD_DOT",
@@ -510,7 +489,6 @@
     "advcash-rub-to-tether-usdt-erc20": "ADVCRUB_USDTERC20",
     "advcash-rub-to-tether-usdt-trc20": "ADVCRUB_USDTTRC20",
     "advcash-rub-to-cardano-ada": "ADVCRUB_ADA",
-    "advcash-rub-to-neo-neo": "ADVCRUB_NEO",
     "advcash-rub-to-litecoin-ltc": "ADVCRUB_LTC",
     "advcash-rub-to-ripple-xrp": "ADVCRUB_XRP",
     "advcash-rub-to-polkadot-dot": "ADVCRUB_DOT",
@@ -2088,18 +2066,6 @@
     },
     {
       "params": {
-        "exchange": "tinkoff-rub-to-neo-neo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tinkoff-rub-to-neo-neo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tinkoff-rub-to-litecoin-ltc"
       },
       "locale": "en"
@@ -2328,18 +2294,6 @@
     },
     {
       "params": {
-        "exchange": "sber-rub-to-neo-neo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "sber-rub-to-neo-neo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "sber-rub-to-litecoin-ltc"
       },
       "locale": "en"
@@ -2431,18 +2385,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20"
       },
       "locale": "ru"
     },
@@ -3096,18 +3038,6 @@
     },
     {
       "params": {
-        "exchange": "eos-eos-to-neo-neo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "eos-eos-to-neo-neo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "eos-eos-to-litecoin-ltc"
       },
       "locale": "en"
@@ -3348,18 +3278,6 @@
     },
     {
       "params": {
-        "exchange": "pancake-cake-to-neo-neo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "pancake-cake-to-neo-neo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "pancake-cake-to-litecoin-ltc"
       },
       "locale": "en"
@@ -3391,18 +3309,6 @@
     {
       "params": {
         "exchange": "pancake-cake-to-polkadot-dot"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "pancake-cake-to-advcash-usd"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "pancake-cake-to-advcash-usd"
       },
       "locale": "ru"
     },
@@ -3864,18 +3770,6 @@
     },
     {
       "params": {
-        "exchange": "polygon-matic-to-neo-neo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "polygon-matic-to-neo-neo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "polygon-matic-to-litecoin-ltc"
       },
       "locale": "en"
@@ -4128,18 +4022,6 @@
     },
     {
       "params": {
-        "exchange": "uniswap-uni-to-neo-neo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "uniswap-uni-to-neo-neo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "uniswap-uni-to-litecoin-ltc"
       },
       "locale": "en"
@@ -4171,18 +4053,6 @@
     {
       "params": {
         "exchange": "uniswap-uni-to-polkadot-dot"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "uniswap-uni-to-advcash-usd"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "uniswap-uni-to-advcash-usd"
       },
       "locale": "ru"
     },
@@ -5616,18 +5486,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd"
       },
       "locale": "en"
@@ -6456,54 +6314,6 @@
     },
     {
       "params": {
-        "exchange": "binance-bnb-to-bitcoin-btc"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "binance-bnb-to-bitcoin-btc"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "binance-bnb-to-ethereum-eth"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "binance-bnb-to-ethereum-eth"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "neo-neo-to-tinkoff-rub"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "neo-neo-to-tinkoff-rub"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "neo-neo-to-sber-rub"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "neo-neo-to-sber-rub"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "neo-neo-to-cash-usd"
       },
       "locale": "en"
@@ -6540,18 +6350,6 @@
     },
     {
       "params": {
-        "exchange": "neo-neo-to-pancake-cake"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "neo-neo-to-pancake-cake"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "neo-neo-to-icon-icx"
       },
       "locale": "en"
@@ -6559,30 +6357,6 @@
     {
       "params": {
         "exchange": "neo-neo-to-icon-icx"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "neo-neo-to-polygon-matic"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "neo-neo-to-polygon-matic"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "neo-neo-to-uniswap-uni"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "neo-neo-to-uniswap-uni"
       },
       "locale": "ru"
     },
@@ -6727,18 +6501,6 @@
     {
       "params": {
         "exchange": "neo-neo-to-advcash-usd"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "neo-neo-to-advcash-rub"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "neo-neo-to-advcash-rub"
       },
       "locale": "ru"
     },
@@ -7644,18 +7406,6 @@
     },
     {
       "params": {
-        "exchange": "advcash-usd-to-pancake-cake"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "advcash-usd-to-pancake-cake"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "advcash-usd-to-polygon-matic"
       },
       "locale": "en"
@@ -7663,18 +7413,6 @@
     {
       "params": {
         "exchange": "advcash-usd-to-polygon-matic"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "advcash-usd-to-uniswap-uni"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "advcash-usd-to-uniswap-uni"
       },
       "locale": "ru"
     },
@@ -7771,18 +7509,6 @@
     {
       "params": {
         "exchange": "advcash-usd-to-cardano-ada"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "advcash-usd-to-neo-neo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "advcash-usd-to-neo-neo"
       },
       "locale": "ru"
     },
@@ -8040,18 +7766,6 @@
     },
     {
       "params": {
-        "exchange": "advcash-rub-to-neo-neo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "advcash-rub-to-neo-neo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "advcash-rub-to-litecoin-ltc"
       },
       "locale": "en"
@@ -8143,18 +7857,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-aktobe"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-aktobe"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-aktobe"
       },
       "locale": "ru"
     },
@@ -8472,18 +8174,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-aktobe"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-aktobe"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-aktobe"
       },
       "locale": "en"
@@ -8647,18 +8337,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-alma-ata"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-alma-ata"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-alma-ata"
       },
       "locale": "ru"
     },
@@ -8976,18 +8654,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-alma-ata"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-alma-ata"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-alma-ata"
       },
       "locale": "en"
@@ -9151,18 +8817,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-athens"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-athens"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-athens"
       },
       "locale": "ru"
     },
@@ -9480,18 +9134,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-athens"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-athens"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-athens"
       },
       "locale": "en"
@@ -9655,18 +9297,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-berlin"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-berlin"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-berlin"
       },
       "locale": "ru"
     },
@@ -9984,18 +9614,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-berlin"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-berlin"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-berlin"
       },
       "locale": "en"
@@ -10159,18 +9777,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-bryansk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-bryansk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-bryansk"
       },
       "locale": "ru"
     },
@@ -10488,18 +10094,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-bryansk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-bryansk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-bryansk"
       },
       "locale": "en"
@@ -10663,18 +10257,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-batumi"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-batumi"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-batumi"
       },
       "locale": "ru"
     },
@@ -10992,18 +10574,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-batumi"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-batumi"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-batumi"
       },
       "locale": "en"
@@ -11167,18 +10737,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-budapest"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-budapest"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-budapest"
       },
       "locale": "ru"
     },
@@ -11496,18 +11054,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-budapest"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-budapest"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-budapest"
       },
       "locale": "en"
@@ -11671,18 +11217,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-donetsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-donetsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-donetsk"
       },
       "locale": "ru"
     },
@@ -12000,18 +11534,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-donetsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-donetsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-donetsk"
       },
       "locale": "en"
@@ -12175,18 +11697,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-yekaterinburg"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-yekaterinburg"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-yekaterinburg"
       },
       "locale": "ru"
     },
@@ -12504,18 +12014,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-yekaterinburg"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-yekaterinburg"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-yekaterinburg"
       },
       "locale": "en"
@@ -12679,18 +12177,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-grozny"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-grozny"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-grozny"
       },
       "locale": "ru"
     },
@@ -13008,18 +12494,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-grozny"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-grozny"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-grozny"
       },
       "locale": "en"
@@ -13183,18 +12657,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-kharkiv"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kharkiv"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kharkiv"
       },
       "locale": "ru"
     },
@@ -13512,18 +12974,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kharkiv"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kharkiv"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-kharkiv"
       },
       "locale": "en"
@@ -13687,18 +13137,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-irkutsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-irkutsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-irkutsk"
       },
       "locale": "ru"
     },
@@ -14016,18 +13454,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-irkutsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-irkutsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-irkutsk"
       },
       "locale": "en"
@@ -14191,18 +13617,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-istanbul"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-istanbul"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-istanbul"
       },
       "locale": "ru"
     },
@@ -14520,18 +13934,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-istanbul"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-istanbul"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-istanbul"
       },
       "locale": "en"
@@ -14695,18 +14097,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-kemerovo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kemerovo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kemerovo"
       },
       "locale": "ru"
     },
@@ -15024,18 +14414,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kemerovo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kemerovo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-kemerovo"
       },
       "locale": "en"
@@ -15199,18 +14577,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-kaluga"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kaluga"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kaluga"
       },
       "locale": "ru"
     },
@@ -15528,18 +14894,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kaluga"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kaluga"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-kaluga"
       },
       "locale": "en"
@@ -15703,18 +15057,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-kosice"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kosice"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kosice"
       },
       "locale": "ru"
     },
@@ -16032,18 +15374,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kosice"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kosice"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-kosice"
       },
       "locale": "en"
@@ -16207,18 +15537,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-kostanay"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kostanay"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kostanay"
       },
       "locale": "ru"
     },
@@ -16536,18 +15854,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kostanay"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kostanay"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-kostanay"
       },
       "locale": "en"
@@ -16711,18 +16017,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-kazan"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kazan"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kazan"
       },
       "locale": "ru"
     },
@@ -17040,18 +16334,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kazan"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kazan"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-kazan"
       },
       "locale": "en"
@@ -17215,18 +16497,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-lipetsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-lipetsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-lipetsk"
       },
       "locale": "ru"
     },
@@ -17544,18 +16814,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-lipetsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-lipetsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-lipetsk"
       },
       "locale": "en"
@@ -17719,18 +16977,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-lugansk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-lugansk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-lugansk"
       },
       "locale": "ru"
     },
@@ -18048,18 +17294,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-lugansk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-lugansk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-lugansk"
       },
       "locale": "en"
@@ -18223,18 +17457,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-mogilev"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-mogilev"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-mogilev"
       },
       "locale": "ru"
     },
@@ -18552,18 +17774,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-mogilev"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-mogilev"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-mogilev"
       },
       "locale": "en"
@@ -18727,18 +17937,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-malaga"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-malaga"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-malaga"
       },
       "locale": "ru"
     },
@@ -19056,18 +18254,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-malaga"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-malaga"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-malaga"
       },
       "locale": "en"
@@ -19231,18 +18417,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-monaco"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-monaco"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-monaco"
       },
       "locale": "ru"
     },
@@ -19560,18 +18734,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-monaco"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-monaco"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-monaco"
       },
       "locale": "en"
@@ -19735,18 +18897,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-moscow"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-moscow"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-moscow"
       },
       "locale": "ru"
     },
@@ -20064,18 +19214,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-moscow"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-moscow"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-moscow"
       },
       "locale": "en"
@@ -20239,18 +19377,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-munich"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-munich"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-munich"
       },
       "locale": "ru"
     },
@@ -20568,18 +19694,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-munich"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-munich"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-munich"
       },
       "locale": "en"
@@ -20743,18 +19857,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-novosibirsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-novosibirsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-novosibirsk"
       },
       "locale": "ru"
     },
@@ -21072,18 +20174,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-novosibirsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-novosibirsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-novosibirsk"
       },
       "locale": "en"
@@ -21247,18 +20337,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-new-york"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-new-york"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-new-york"
       },
       "locale": "ru"
     },
@@ -21576,18 +20654,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-new-york"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-new-york"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-new-york"
       },
       "locale": "en"
@@ -21751,18 +20817,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-odessa"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-odessa"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-odessa"
       },
       "locale": "ru"
     },
@@ -22080,18 +21134,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-odessa"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-odessa"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-odessa"
       },
       "locale": "en"
@@ -22255,18 +21297,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-ryazan"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-ryazan"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-ryazan"
       },
       "locale": "ru"
     },
@@ -22584,18 +21614,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-ryazan"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-ryazan"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-ryazan"
       },
       "locale": "en"
@@ -22759,18 +21777,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-surgut"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-surgut"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-surgut"
       },
       "locale": "ru"
     },
@@ -23088,18 +22094,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-surgut"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-surgut"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-surgut"
       },
       "locale": "en"
@@ -23263,18 +22257,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-slaviansk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-slaviansk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-slaviansk"
       },
       "locale": "ru"
     },
@@ -23592,18 +22574,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-slaviansk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-slaviansk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-slaviansk"
       },
       "locale": "en"
@@ -23767,18 +22737,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-samara"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-samara"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-samara"
       },
       "locale": "ru"
     },
@@ -24096,18 +23054,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-samara"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-samara"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-samara"
       },
       "locale": "en"
@@ -24271,18 +23217,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-saint-petersburg"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-saint-petersburg"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-saint-petersburg"
       },
       "locale": "ru"
     },
@@ -24600,18 +23534,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-saint-petersburg"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-saint-petersburg"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-saint-petersburg"
       },
       "locale": "en"
@@ -24775,18 +23697,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-saransk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-saransk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-saransk"
       },
       "locale": "ru"
     },
@@ -25104,18 +24014,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-saransk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-saransk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-saransk"
       },
       "locale": "en"
@@ -25279,18 +24177,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-saratov"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-saratov"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-saratov"
       },
       "locale": "ru"
     },
@@ -25608,18 +24494,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-saratov"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-saratov"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-saratov"
       },
       "locale": "en"
@@ -25783,18 +24657,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-taganrog"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-taganrog"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-taganrog"
       },
       "locale": "ru"
     },
@@ -26112,18 +24974,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-taganrog"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-taganrog"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-taganrog"
       },
       "locale": "en"
@@ -26287,18 +25137,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-ufa"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-ufa"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-ufa"
       },
       "locale": "ru"
     },
@@ -26616,18 +25454,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-ufa"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-ufa"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-ufa"
       },
       "locale": "en"
@@ -26791,18 +25617,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-vitebsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-vitebsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-vitebsk"
       },
       "locale": "ru"
     },
@@ -27120,18 +25934,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-vitebsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-vitebsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-vitebsk"
       },
       "locale": "en"
@@ -27295,18 +26097,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-vladivostok"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-vladivostok"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-vladivostok"
       },
       "locale": "ru"
     },
@@ -27624,18 +26414,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-vladivostok"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-vladivostok"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-vladivostok"
       },
       "locale": "en"
@@ -27799,18 +26577,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-zaporozhye"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-zaporozhye"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-zaporozhye"
       },
       "locale": "ru"
     },
@@ -28128,18 +26894,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-zaporozhye"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-zaporozhye"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-zaporozhye"
       },
       "locale": "en"
@@ -28303,18 +27057,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-agarak"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-agarak"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-agarak"
       },
       "locale": "ru"
     },
@@ -28632,18 +27374,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-agarak"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-agarak"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-agarak"
       },
       "locale": "en"
@@ -28807,18 +27537,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-amsterdam"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-amsterdam"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-amsterdam"
       },
       "locale": "ru"
     },
@@ -29136,18 +27854,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-amsterdam"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-amsterdam"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-amsterdam"
       },
       "locale": "en"
@@ -29311,18 +28017,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-ankara"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-ankara"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-ankara"
       },
       "locale": "ru"
     },
@@ -29640,18 +28334,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-ankara"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-ankara"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-ankara"
       },
       "locale": "en"
@@ -29815,18 +28497,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-antalya"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-antalya"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-antalya"
       },
       "locale": "ru"
     },
@@ -30144,18 +28814,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-antalya"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-antalya"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-antalya"
       },
       "locale": "en"
@@ -30319,18 +28977,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-anthracite"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-anthracite"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-anthracite"
       },
       "locale": "ru"
     },
@@ -30648,18 +29294,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-anthracite"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-anthracite"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-anthracite"
       },
       "locale": "en"
@@ -30823,18 +29457,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-antwerp"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-antwerp"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-antwerp"
       },
       "locale": "ru"
     },
@@ -31152,18 +29774,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-antwerp"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-antwerp"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-antwerp"
       },
       "locale": "en"
@@ -31327,18 +29937,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-arkhangelsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-arkhangelsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-arkhangelsk"
       },
       "locale": "ru"
     },
@@ -31656,18 +30254,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-arkhangelsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-arkhangelsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-arkhangelsk"
       },
       "locale": "en"
@@ -31831,18 +30417,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-nur-sultan"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-nur-sultan"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-nur-sultan"
       },
       "locale": "ru"
     },
@@ -32160,18 +30734,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-nur-sultan"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-nur-sultan"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-nur-sultan"
       },
       "locale": "en"
@@ -32335,18 +30897,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-baku"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-baku"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-baku"
       },
       "locale": "ru"
     },
@@ -32664,18 +31214,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-baku"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-baku"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-baku"
       },
       "locale": "en"
@@ -32839,18 +31377,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-barcelona"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-barcelona"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-barcelona"
       },
       "locale": "ru"
     },
@@ -33168,18 +31694,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-barcelona"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-barcelona"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-barcelona"
       },
       "locale": "en"
@@ -33343,18 +31857,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-beijing"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-beijing"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-beijing"
       },
       "locale": "ru"
     },
@@ -33672,18 +32174,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-beijing"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-beijing"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-beijing"
       },
       "locale": "en"
@@ -33847,18 +32337,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-belgorod"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-belgorod"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-belgorod"
       },
       "locale": "ru"
     },
@@ -34176,18 +32654,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-belgorod"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-belgorod"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-belgorod"
       },
       "locale": "en"
@@ -34351,18 +32817,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-bratislava"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-bratislava"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-bratislava"
       },
       "locale": "ru"
     },
@@ -34680,18 +33134,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-bratislava"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-bratislava"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-bratislava"
       },
       "locale": "en"
@@ -34855,18 +33297,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-brussels"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-brussels"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-brussels"
       },
       "locale": "ru"
     },
@@ -35184,18 +33614,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-brussels"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-brussels"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-brussels"
       },
       "locale": "en"
@@ -35359,18 +33777,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-bishkek"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-bishkek"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-bishkek"
       },
       "locale": "ru"
     },
@@ -35688,18 +34094,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-bishkek"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-bishkek"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-bishkek"
       },
       "locale": "en"
@@ -35863,18 +34257,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-mexico-city"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-mexico-city"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-mexico-city"
       },
       "locale": "ru"
     },
@@ -36192,18 +34574,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-mexico-city"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-mexico-city"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-mexico-city"
       },
       "locale": "en"
@@ -36367,18 +34737,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-chicago"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-chicago"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-chicago"
       },
       "locale": "ru"
     },
@@ -36696,18 +35054,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-chicago"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-chicago"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-chicago"
       },
       "locale": "en"
@@ -36871,18 +35217,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-cheboksary"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-cheboksary"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-cheboksary"
       },
       "locale": "ru"
     },
@@ -37200,18 +35534,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-cheboksary"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-cheboksary"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-cheboksary"
       },
       "locale": "en"
@@ -37375,18 +35697,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-chelyabinsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-chelyabinsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-chelyabinsk"
       },
       "locale": "ru"
     },
@@ -37704,18 +36014,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-chelyabinsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-chelyabinsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-chelyabinsk"
       },
       "locale": "en"
@@ -37879,18 +36177,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-chernihiv"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-chernihiv"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-chernihiv"
       },
       "locale": "ru"
     },
@@ -38208,18 +36494,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-chernihiv"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-chernihiv"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-chernihiv"
       },
       "locale": "en"
@@ -38383,18 +36657,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-cherepovets"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-cherepovets"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-cherepovets"
       },
       "locale": "ru"
     },
@@ -38712,18 +36974,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-cherepovets"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-cherepovets"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-cherepovets"
       },
       "locale": "en"
@@ -38887,18 +37137,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-copenhagen"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-copenhagen"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-copenhagen"
       },
       "locale": "ru"
     },
@@ -39216,18 +37454,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-copenhagen"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-copenhagen"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-copenhagen"
       },
       "locale": "en"
@@ -39391,18 +37617,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-djerba"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-djerba"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-djerba"
       },
       "locale": "ru"
     },
@@ -39720,18 +37934,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-djerba"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-djerba"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-djerba"
       },
       "locale": "en"
@@ -39895,18 +38097,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-dnepr"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-dnepr"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-dnepr"
       },
       "locale": "ru"
     },
@@ -40224,18 +38414,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-dnepr"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-dnepr"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-dnepr"
       },
       "locale": "en"
@@ -40399,18 +38577,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-dresden"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-dresden"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-dresden"
       },
       "locale": "ru"
     },
@@ -40728,18 +38894,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-dresden"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-dresden"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-dresden"
       },
       "locale": "en"
@@ -40903,18 +39057,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-ekibastuz"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-ekibastuz"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-ekibastuz"
       },
       "locale": "ru"
     },
@@ -41232,18 +39374,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-ekibastuz"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-ekibastuz"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-ekibastuz"
       },
       "locale": "en"
@@ -41407,18 +39537,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-yerevan"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-yerevan"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-yerevan"
       },
       "locale": "ru"
     },
@@ -41736,18 +39854,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-yerevan"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-yerevan"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-yerevan"
       },
       "locale": "en"
@@ -41911,18 +40017,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-frankfurt-am-main"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-frankfurt-am-main"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-frankfurt-am-main"
       },
       "locale": "ru"
     },
@@ -42240,18 +40334,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-frankfurt-am-main"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-frankfurt-am-main"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-frankfurt-am-main"
       },
       "locale": "en"
@@ -42415,18 +40497,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-gelendzhik"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-gelendzhik"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-gelendzhik"
       },
       "locale": "ru"
     },
@@ -42744,18 +40814,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-gelendzhik"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-gelendzhik"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-gelendzhik"
       },
       "locale": "en"
@@ -42919,18 +40977,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-grodno"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-grodno"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-grodno"
       },
       "locale": "ru"
     },
@@ -43248,18 +41294,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-grodno"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-grodno"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-grodno"
       },
       "locale": "en"
@@ -43423,18 +41457,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-guangzhou"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-guangzhou"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-guangzhou"
       },
       "locale": "ru"
     },
@@ -43752,18 +41774,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-guangzhou"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-guangzhou"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-guangzhou"
       },
       "locale": "en"
@@ -43927,18 +41937,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-guayaquil"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-guayaquil"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-guayaquil"
       },
       "locale": "ru"
     },
@@ -44256,18 +42254,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-guayaquil"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-guayaquil"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-guayaquil"
       },
       "locale": "en"
@@ -44431,18 +42417,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-hamburg"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-hamburg"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-hamburg"
       },
       "locale": "ru"
     },
@@ -44760,18 +42734,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-hamburg"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-hamburg"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-hamburg"
       },
       "locale": "en"
@@ -44935,18 +42897,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-hong-kong"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-hong-kong"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-hong-kong"
       },
       "locale": "ru"
     },
@@ -45264,18 +43214,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-hong-kong"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-hong-kong"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-hong-kong"
       },
       "locale": "en"
@@ -45439,18 +43377,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-khmelnitsky"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-khmelnitsky"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-khmelnitsky"
       },
       "locale": "ru"
     },
@@ -45768,18 +43694,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-khmelnitsky"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-khmelnitsky"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-khmelnitsky"
       },
       "locale": "en"
@@ -45943,18 +43857,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-ivano-frankivsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-ivano-frankivsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-ivano-frankivsk"
       },
       "locale": "ru"
     },
@@ -46272,18 +44174,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-ivano-frankivsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-ivano-frankivsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-ivano-frankivsk"
       },
       "locale": "en"
@@ -46447,18 +44337,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-izhevsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-izhevsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-izhevsk"
       },
       "locale": "ru"
     },
@@ -46776,18 +44654,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-izhevsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-izhevsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-izhevsk"
       },
       "locale": "en"
@@ -46951,18 +44817,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-khabarovsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-khabarovsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-khabarovsk"
       },
       "locale": "ru"
     },
@@ -47280,18 +45134,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-khabarovsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-khabarovsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-khabarovsk"
       },
       "locale": "en"
@@ -47455,18 +45297,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-kyiv"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kyiv"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kyiv"
       },
       "locale": "ru"
     },
@@ -47784,18 +45614,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kyiv"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kyiv"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-kyiv"
       },
       "locale": "en"
@@ -47959,18 +45777,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-chisinau"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-chisinau"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-chisinau"
       },
       "locale": "ru"
     },
@@ -48288,18 +46094,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-chisinau"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-chisinau"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-chisinau"
       },
       "locale": "en"
@@ -48463,18 +46257,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-kaliningrad"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kaliningrad"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kaliningrad"
       },
       "locale": "ru"
     },
@@ -48792,18 +46574,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kaliningrad"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kaliningrad"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-kaliningrad"
       },
       "locale": "en"
@@ -48967,18 +46737,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-kostroma"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kostroma"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kostroma"
       },
       "locale": "ru"
     },
@@ -49296,18 +47054,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kostroma"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kostroma"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-kostroma"
       },
       "locale": "en"
@@ -49471,18 +47217,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-kramatorsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kramatorsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kramatorsk"
       },
       "locale": "ru"
     },
@@ -49800,18 +47534,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kramatorsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kramatorsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-kramatorsk"
       },
       "locale": "en"
@@ -49975,18 +47697,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-karaganda"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-karaganda"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-karaganda"
       },
       "locale": "ru"
     },
@@ -50304,18 +48014,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-karaganda"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-karaganda"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-karaganda"
       },
       "locale": "en"
@@ -50479,18 +48177,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-kremenchuk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kremenchuk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kremenchuk"
       },
       "locale": "ru"
     },
@@ -50808,18 +48494,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kremenchuk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kremenchuk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-kremenchuk"
       },
       "locale": "en"
@@ -50983,18 +48657,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-kropyvnytskyi"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kropyvnytskyi"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kropyvnytskyi"
       },
       "locale": "ru"
     },
@@ -51312,18 +48974,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kropyvnytskyi"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kropyvnytskyi"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-kropyvnytskyi"
       },
       "locale": "en"
@@ -51487,18 +49137,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-krasnoyarsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-krasnoyarsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-krasnoyarsk"
       },
       "locale": "ru"
     },
@@ -51816,18 +49454,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-krasnoyarsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-krasnoyarsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-krasnoyarsk"
       },
       "locale": "en"
@@ -51991,18 +49617,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-krivoy-rog"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-krivoy-rog"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-krivoy-rog"
       },
       "locale": "ru"
     },
@@ -52320,18 +49934,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-krivoy-rog"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-krivoy-rog"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-krivoy-rog"
       },
       "locale": "en"
@@ -52495,18 +50097,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-larnaca"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-larnaca"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-larnaca"
       },
       "locale": "ru"
     },
@@ -52824,18 +50414,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-larnaca"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-larnaca"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-larnaca"
       },
       "locale": "en"
@@ -52999,18 +50577,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-london"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-london"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-london"
       },
       "locale": "ru"
     },
@@ -53328,18 +50894,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-london"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-london"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-london"
       },
       "locale": "en"
@@ -53503,18 +51057,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-lviv"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-lviv"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-lviv"
       },
       "locale": "ru"
     },
@@ -53832,18 +51374,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-lviv"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-lviv"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-lviv"
       },
       "locale": "en"
@@ -54007,18 +51537,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-leipzig"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-leipzig"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-leipzig"
       },
       "locale": "ru"
     },
@@ -54336,18 +51854,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-leipzig"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-leipzig"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-leipzig"
       },
       "locale": "en"
@@ -54511,18 +52017,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-madrid"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-madrid"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-madrid"
       },
       "locale": "ru"
     },
@@ -54840,18 +52334,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-madrid"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-madrid"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-madrid"
       },
       "locale": "en"
@@ -55015,18 +52497,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-magnitogorsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-magnitogorsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-magnitogorsk"
       },
       "locale": "ru"
     },
@@ -55344,18 +52814,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-magnitogorsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-magnitogorsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-magnitogorsk"
       },
       "locale": "en"
@@ -55519,18 +52977,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-makhachkala"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-makhachkala"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-makhachkala"
       },
       "locale": "ru"
     },
@@ -55848,18 +53294,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-makhachkala"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-makhachkala"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-makhachkala"
       },
       "locale": "en"
@@ -56023,18 +53457,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-mukachevo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-mukachevo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-mukachevo"
       },
       "locale": "ru"
     },
@@ -56352,18 +53774,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-mukachevo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-mukachevo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-mukachevo"
       },
       "locale": "en"
@@ -56527,18 +53937,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-murmansk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-murmansk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-murmansk"
       },
       "locale": "ru"
     },
@@ -56856,18 +54254,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-murmansk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-murmansk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-murmansk"
       },
       "locale": "en"
@@ -57031,18 +54417,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-mariupol"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-mariupol"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-mariupol"
       },
       "locale": "ru"
     },
@@ -57360,18 +54734,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-mariupol"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-mariupol"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-mariupol"
       },
       "locale": "en"
@@ -57535,18 +54897,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-nikolaev"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-nikolaev"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-nikolaev"
       },
       "locale": "ru"
     },
@@ -57864,18 +55214,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-nikolaev"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-nikolaev"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-nikolaev"
       },
       "locale": "en"
@@ -58039,18 +55377,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-nice"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-nice"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-nice"
       },
       "locale": "ru"
     },
@@ -58368,18 +55694,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-nice"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-nice"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-nice"
       },
       "locale": "en"
@@ -58543,18 +55857,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-nizhny-novgorod"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-nizhny-novgorod"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-nizhny-novgorod"
       },
       "locale": "ru"
     },
@@ -58872,18 +56174,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-nizhny-novgorod"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-nizhny-novgorod"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-nizhny-novgorod"
       },
       "locale": "en"
@@ -59047,18 +56337,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-norduz"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-norduz"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-norduz"
       },
       "locale": "ru"
     },
@@ -59376,18 +56654,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-norduz"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-norduz"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-norduz"
       },
       "locale": "en"
@@ -59551,18 +56817,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-omsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-omsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-omsk"
       },
       "locale": "ru"
     },
@@ -59880,18 +57134,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-omsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-omsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-omsk"
       },
       "locale": "en"
@@ -60055,18 +57297,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-orenburg"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-orenburg"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-orenburg"
       },
       "locale": "ru"
     },
@@ -60384,18 +57614,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-orenburg"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-orenburg"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-orenburg"
       },
       "locale": "en"
@@ -60559,18 +57777,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-oslo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-oslo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-oslo"
       },
       "locale": "ru"
     },
@@ -60888,18 +58094,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-oslo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-oslo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-oslo"
       },
       "locale": "en"
@@ -61063,18 +58257,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-paphos"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-paphos"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-paphos"
       },
       "locale": "ru"
     },
@@ -61392,18 +58574,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-paphos"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-paphos"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-paphos"
       },
       "locale": "en"
@@ -61567,18 +58737,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-perm"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-perm"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-perm"
       },
       "locale": "ru"
     },
@@ -61896,18 +59054,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-perm"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-perm"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-perm"
       },
       "locale": "en"
@@ -62071,18 +59217,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-poltava"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-poltava"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-poltava"
       },
       "locale": "ru"
     },
@@ -62400,18 +59534,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-poltava"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-poltava"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-poltava"
       },
       "locale": "en"
@@ -62575,18 +59697,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-prague"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-prague"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-prague"
       },
       "locale": "ru"
     },
@@ -62904,18 +60014,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-prague"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-prague"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-prague"
       },
       "locale": "en"
@@ -63079,18 +60177,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-pyatigorsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-pyatigorsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-pyatigorsk"
       },
       "locale": "ru"
     },
@@ -63408,18 +60494,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-pyatigorsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-pyatigorsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-pyatigorsk"
       },
       "locale": "en"
@@ -63583,18 +60657,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-riga"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-riga"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-riga"
       },
       "locale": "ru"
     },
@@ -63912,18 +60974,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-riga"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-riga"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-riga"
       },
       "locale": "en"
@@ -64087,18 +61137,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-rome"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-rome"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-rome"
       },
       "locale": "ru"
     },
@@ -64416,18 +61454,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-rome"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-rome"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-rome"
       },
       "locale": "en"
@@ -64591,18 +61617,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-rostov-on-don"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-rostov-on-don"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-rostov-on-don"
       },
       "locale": "ru"
     },
@@ -64920,18 +61934,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-rostov-on-don"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-rostov-on-don"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-rostov-on-don"
       },
       "locale": "en"
@@ -65095,18 +62097,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-rostov"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-rostov"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-rostov"
       },
       "locale": "ru"
     },
@@ -65424,18 +62414,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-rostov"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-rostov"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-rostov"
       },
       "locale": "en"
@@ -65599,18 +62577,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-rotterdam"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-rotterdam"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-rotterdam"
       },
       "locale": "ru"
     },
@@ -65928,18 +62894,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-rotterdam"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-rotterdam"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-rotterdam"
       },
       "locale": "en"
@@ -66103,18 +63057,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-shymkent"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-shymkent"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-shymkent"
       },
       "locale": "ru"
     },
@@ -66432,18 +63374,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-shymkent"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-shymkent"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-shymkent"
       },
       "locale": "en"
@@ -66607,18 +63537,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-simferopol"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-simferopol"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-simferopol"
       },
       "locale": "ru"
     },
@@ -66936,18 +63854,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-simferopol"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-simferopol"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-simferopol"
       },
       "locale": "en"
@@ -67111,18 +64017,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-stavropol"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-stavropol"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-stavropol"
       },
       "locale": "ru"
     },
@@ -67440,18 +64334,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-stavropol"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-stavropol"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-stavropol"
       },
       "locale": "en"
@@ -67615,18 +64497,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-stary-oskol"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-stary-oskol"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-stary-oskol"
       },
       "locale": "ru"
     },
@@ -67944,18 +64814,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-stary-oskol"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-stary-oskol"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-stary-oskol"
       },
       "locale": "en"
@@ -68119,18 +64977,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-sumy"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-sumy"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-sumy"
       },
       "locale": "ru"
     },
@@ -68448,18 +65294,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-sumy"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-sumy"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-sumy"
       },
       "locale": "en"
@@ -68623,18 +65457,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-severodonetsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-severodonetsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-severodonetsk"
       },
       "locale": "ru"
     },
@@ -68952,18 +65774,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-severodonetsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-severodonetsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-severodonetsk"
       },
       "locale": "en"
@@ -69127,18 +65937,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-severodvinsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-severodvinsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-severodvinsk"
       },
       "locale": "ru"
     },
@@ -69456,18 +66254,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-severodvinsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-severodvinsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-severodvinsk"
       },
       "locale": "en"
@@ -69631,18 +66417,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-tambov"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-tambov"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-tambov"
       },
       "locale": "ru"
     },
@@ -69960,18 +66734,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-tambov"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-tambov"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-tambov"
       },
       "locale": "en"
@@ -70135,18 +66897,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-tbilisi"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-tbilisi"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-tbilisi"
       },
       "locale": "ru"
     },
@@ -70464,18 +67214,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-tbilisi"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-tbilisi"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-tbilisi"
       },
       "locale": "en"
@@ -70639,18 +67377,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-tehran"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-tehran"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-tehran"
       },
       "locale": "ru"
     },
@@ -70968,18 +67694,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-tehran"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-tehran"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-tehran"
       },
       "locale": "en"
@@ -71143,18 +67857,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-tripoli"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-tripoli"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-tripoli"
       },
       "locale": "ru"
     },
@@ -71472,18 +68174,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-tripoli"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-tripoli"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-tripoli"
       },
       "locale": "en"
@@ -71647,18 +68337,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-tula"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-tula"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-tula"
       },
       "locale": "ru"
     },
@@ -71976,18 +68654,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-tula"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-tula"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-tula"
       },
       "locale": "en"
@@ -72151,18 +68817,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-tver"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-tver"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-tver"
       },
       "locale": "ru"
     },
@@ -72480,18 +69134,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-tver"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-tver"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-tver"
       },
       "locale": "en"
@@ -72655,18 +69297,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-tyumen"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-tyumen"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-tyumen"
       },
       "locale": "ru"
     },
@@ -72984,18 +69614,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-tyumen"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-tyumen"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-tyumen"
       },
       "locale": "en"
@@ -73159,18 +69777,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-uzhhorod"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-uzhhorod"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-uzhhorod"
       },
       "locale": "ru"
     },
@@ -73488,18 +70094,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-uzhhorod"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-uzhhorod"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-uzhhorod"
       },
       "locale": "en"
@@ -73663,18 +70257,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-vilnius"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-vilnius"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-vilnius"
       },
       "locale": "ru"
     },
@@ -73992,18 +70574,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-vilnius"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-vilnius"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-vilnius"
       },
       "locale": "en"
@@ -74167,18 +70737,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-vinnytsia"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-vinnytsia"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-vinnytsia"
       },
       "locale": "ru"
     },
@@ -74496,18 +71054,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-vinnytsia"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-vinnytsia"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-vinnytsia"
       },
       "locale": "en"
@@ -74671,18 +71217,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-vladimir"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-vladimir"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-vladimir"
       },
       "locale": "ru"
     },
@@ -75000,18 +71534,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-vladimir"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-vladimir"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-vladimir"
       },
       "locale": "en"
@@ -75175,18 +71697,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-volgograd"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-volgograd"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-volgograd"
       },
       "locale": "ru"
     },
@@ -75504,18 +72014,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-volgograd"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-volgograd"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-volgograd"
       },
       "locale": "en"
@@ -75679,18 +72177,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-warsaw"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-warsaw"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-warsaw"
       },
       "locale": "ru"
     },
@@ -76008,18 +72494,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-warsaw"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-warsaw"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-warsaw"
       },
       "locale": "en"
@@ -76183,18 +72657,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-vienna"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-vienna"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-vienna"
       },
       "locale": "ru"
     },
@@ -76512,18 +72974,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-vienna"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-vienna"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-vienna"
       },
       "locale": "en"
@@ -76687,18 +73137,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-yaroslavl"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-yaroslavl"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-yaroslavl"
       },
       "locale": "ru"
     },
@@ -77016,18 +73454,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-yaroslavl"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-yaroslavl"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-yaroslavl"
       },
       "locale": "en"
@@ -77191,18 +73617,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-yoshkar-ola"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-yoshkar-ola"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-yoshkar-ola"
       },
       "locale": "ru"
     },
@@ -77520,18 +73934,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-yoshkar-ola"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-yoshkar-ola"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-yoshkar-ola"
       },
       "locale": "en"
@@ -77695,18 +74097,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-adler"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-adler"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-adler"
       },
       "locale": "ru"
     },
@@ -78024,18 +74414,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-adler"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-adler"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-adler"
       },
       "locale": "en"
@@ -78199,18 +74577,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-anapa"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-anapa"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-anapa"
       },
       "locale": "ru"
     },
@@ -78528,18 +74894,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-anapa"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-anapa"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-anapa"
       },
       "locale": "en"
@@ -78703,18 +75057,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-astrakhan"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-astrakhan"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-astrakhan"
       },
       "locale": "ru"
     },
@@ -79032,18 +75374,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-astrakhan"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-astrakhan"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-astrakhan"
       },
       "locale": "en"
@@ -79207,18 +75537,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-brest"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-brest"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-brest"
       },
       "locale": "ru"
     },
@@ -79536,18 +75854,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-brest"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-brest"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-brest"
       },
       "locale": "en"
@@ -79711,18 +76017,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-budva"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-budva"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-budva"
       },
       "locale": "ru"
     },
@@ -80040,18 +76334,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-budva"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-budva"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-budva"
       },
       "locale": "en"
@@ -80215,18 +76497,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-cherkasy"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-cherkasy"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-cherkasy"
       },
       "locale": "ru"
     },
@@ -80544,18 +76814,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-cherkasy"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-cherkasy"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-cherkasy"
       },
       "locale": "en"
@@ -80719,18 +76977,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-chernivtsi"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-chernivtsi"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-chernivtsi"
       },
       "locale": "ru"
     },
@@ -81048,18 +77294,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-chernivtsi"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-chernivtsi"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-chernivtsi"
       },
       "locale": "en"
@@ -81223,18 +77457,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-dubai"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-dubai"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-dubai"
       },
       "locale": "ru"
     },
@@ -81552,18 +77774,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-dubai"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-dubai"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-dubai"
       },
       "locale": "en"
@@ -81727,18 +77937,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-gomel"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-gomel"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-gomel"
       },
       "locale": "ru"
     },
@@ -82056,18 +78254,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-gomel"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-gomel"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-gomel"
       },
       "locale": "en"
@@ -82231,18 +78417,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-isfahan"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-isfahan"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-isfahan"
       },
       "locale": "ru"
     },
@@ -82560,18 +78734,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-isfahan"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-isfahan"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-isfahan"
       },
       "locale": "en"
@@ -82735,18 +78897,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-kherson"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kherson"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kherson"
       },
       "locale": "ru"
     },
@@ -83064,18 +79214,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kherson"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kherson"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-kherson"
       },
       "locale": "en"
@@ -83239,18 +79377,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-kirov"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kirov"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kirov"
       },
       "locale": "ru"
     },
@@ -83568,18 +79694,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kirov"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kirov"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-kirov"
       },
       "locale": "en"
@@ -83743,18 +79857,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-krasnodar"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-krasnodar"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-krasnodar"
       },
       "locale": "ru"
     },
@@ -84072,18 +80174,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-krasnodar"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-krasnodar"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-krasnodar"
       },
       "locale": "en"
@@ -84247,18 +80337,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-kursk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kursk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-kursk"
       },
       "locale": "ru"
     },
@@ -84576,18 +80654,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kursk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-kursk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-kursk"
       },
       "locale": "en"
@@ -84751,18 +80817,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-limassol"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-limassol"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-limassol"
       },
       "locale": "ru"
     },
@@ -85080,18 +81134,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-limassol"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-limassol"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-limassol"
       },
       "locale": "en"
@@ -85255,18 +81297,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-los-angeles"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-los-angeles"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-los-angeles"
       },
       "locale": "ru"
     },
@@ -85584,18 +81614,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-los-angeles"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-los-angeles"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-los-angeles"
       },
       "locale": "en"
@@ -85759,18 +81777,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-lutsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-lutsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-lutsk"
       },
       "locale": "ru"
     },
@@ -86088,18 +82094,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-lutsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-lutsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-lutsk"
       },
       "locale": "en"
@@ -86263,18 +82257,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-manama"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-manama"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-manama"
       },
       "locale": "ru"
     },
@@ -86592,18 +82574,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-manama"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-manama"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-manama"
       },
       "locale": "en"
@@ -86767,18 +82737,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-melitopol"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-melitopol"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-melitopol"
       },
       "locale": "ru"
     },
@@ -87096,18 +83054,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-melitopol"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-melitopol"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-melitopol"
       },
       "locale": "en"
@@ -87271,18 +83217,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-miami"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-miami"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-miami"
       },
       "locale": "ru"
     },
@@ -87600,18 +83534,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-miami"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-miami"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-miami"
       },
       "locale": "en"
@@ -87775,18 +83697,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-milan"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-milan"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-milan"
       },
       "locale": "ru"
     },
@@ -88104,18 +84014,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-milan"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-milan"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-milan"
       },
       "locale": "en"
@@ -88279,18 +84177,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-minsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-minsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-minsk"
       },
       "locale": "ru"
     },
@@ -88608,18 +84494,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-minsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-minsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-minsk"
       },
       "locale": "en"
@@ -88783,18 +84657,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-naberezhnye-chelny"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-naberezhnye-chelny"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-naberezhnye-chelny"
       },
       "locale": "ru"
     },
@@ -89112,18 +84974,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-naberezhnye-chelny"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-naberezhnye-chelny"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-naberezhnye-chelny"
       },
       "locale": "en"
@@ -89287,18 +85137,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-novorossiysk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-novorossiysk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-novorossiysk"
       },
       "locale": "ru"
     },
@@ -89616,18 +85454,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-novorossiysk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-novorossiysk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-novorossiysk"
       },
       "locale": "en"
@@ -89791,18 +85617,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-novokuznetsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-novokuznetsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-novokuznetsk"
       },
       "locale": "ru"
     },
@@ -90120,18 +85934,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-novokuznetsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-novokuznetsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-novokuznetsk"
       },
       "locale": "en"
@@ -90295,18 +86097,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-orlando"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-orlando"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-orlando"
       },
       "locale": "ru"
     },
@@ -90624,18 +86414,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-orlando"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-orlando"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-orlando"
       },
       "locale": "en"
@@ -90799,18 +86577,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-orel"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-orel"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-orel"
       },
       "locale": "ru"
     },
@@ -91128,18 +86894,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-orel"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-orel"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-orel"
       },
       "locale": "en"
@@ -91303,18 +87057,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-paris"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-paris"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-paris"
       },
       "locale": "ru"
     },
@@ -91632,18 +87374,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-paris"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-paris"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-paris"
       },
       "locale": "en"
@@ -91807,18 +87537,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-penza"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-penza"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-penza"
       },
       "locale": "ru"
     },
@@ -92136,18 +87854,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-penza"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-penza"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-penza"
       },
       "locale": "en"
@@ -92311,18 +88017,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-quito"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-quito"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-quito"
       },
       "locale": "ru"
     },
@@ -92640,18 +88334,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-quito"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-quito"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-quito"
       },
       "locale": "en"
@@ -92815,18 +88497,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-rivne"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-rivne"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-rivne"
       },
       "locale": "ru"
     },
@@ -93144,18 +88814,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-rivne"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-rivne"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-rivne"
       },
       "locale": "en"
@@ -93319,18 +88977,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-santo-domingo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-santo-domingo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-santo-domingo"
       },
       "locale": "ru"
     },
@@ -93648,18 +89294,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-santo-domingo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-santo-domingo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-santo-domingo"
       },
       "locale": "en"
@@ -93823,18 +89457,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-santiago"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-santiago"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-santiago"
       },
       "locale": "ru"
     },
@@ -94152,18 +89774,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-santiago"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-santiago"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-santiago"
       },
       "locale": "en"
@@ -94327,18 +89937,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-sochi"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-sochi"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-sochi"
       },
       "locale": "ru"
     },
@@ -94656,18 +90254,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-sochi"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-sochi"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-sochi"
       },
       "locale": "en"
@@ -94831,18 +90417,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-stockholm"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-stockholm"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-stockholm"
       },
       "locale": "ru"
     },
@@ -95160,18 +90734,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-stockholm"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-stockholm"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-stockholm"
       },
       "locale": "en"
@@ -95335,18 +90897,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-stepanakert"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-stepanakert"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-stepanakert"
       },
       "locale": "ru"
     },
@@ -95664,18 +91214,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-stepanakert"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-stepanakert"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-stepanakert"
       },
       "locale": "en"
@@ -95839,18 +91377,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-sevastopol"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-sevastopol"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-sevastopol"
       },
       "locale": "ru"
     },
@@ -96168,18 +91694,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-sevastopol"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-sevastopol"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-sevastopol"
       },
       "locale": "en"
@@ -96343,18 +91857,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-tallinn"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-tallinn"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-tallinn"
       },
       "locale": "ru"
     },
@@ -96672,18 +92174,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-tallinn"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-tallinn"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-tallinn"
       },
       "locale": "en"
@@ -96847,18 +92337,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-tashkent"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-tashkent"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-tashkent"
       },
       "locale": "ru"
     },
@@ -97176,18 +92654,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-tashkent"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-tashkent"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-tashkent"
       },
       "locale": "en"
@@ -97351,18 +92817,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-ternopil"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-ternopil"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-ternopil"
       },
       "locale": "ru"
     },
@@ -97680,18 +93134,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-ternopil"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-ternopil"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-ternopil"
       },
       "locale": "en"
@@ -97855,18 +93297,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-tirana"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-tirana"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-tirana"
       },
       "locale": "ru"
     },
@@ -98184,18 +93614,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-tirana"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-tirana"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-tirana"
       },
       "locale": "en"
@@ -98359,18 +93777,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-tiraspol"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-tiraspol"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-tiraspol"
       },
       "locale": "ru"
     },
@@ -98688,18 +94094,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-tiraspol"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-tiraspol"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-tiraspol"
       },
       "locale": "en"
@@ -98863,18 +94257,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-tunisia"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-tunisia"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-tunisia"
       },
       "locale": "ru"
     },
@@ -99192,18 +94574,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-tunisia"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-tunisia"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-tunisia"
       },
       "locale": "en"
@@ -99367,18 +94737,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-valencia"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-valencia"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-valencia"
       },
       "locale": "ru"
     },
@@ -99696,18 +95054,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-valencia"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-valencia"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-valencia"
       },
       "locale": "en"
@@ -99871,18 +95217,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-voronezh"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-voronezh"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-voronezh"
       },
       "locale": "ru"
     },
@@ -100200,18 +95534,6 @@
     },
     {
       "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-voronezh"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-voronezh"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tether-usdt-erc20-to-cash-usd-in-voronezh"
       },
       "locale": "en"
@@ -100375,18 +95697,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-monero-xmr-in-zhytomyr"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-zhytomyr"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc20-in-zhytomyr"
       },
       "locale": "ru"
     },
@@ -100699,18 +96009,6 @@
     {
       "params": {
         "exchange": "monero-xmr-to-cash-usd-in-zhytomyr"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-zhytomyr"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc20-to-cash-rub-in-zhytomyr"
       },
       "locale": "ru"
     },

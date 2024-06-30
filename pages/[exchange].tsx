@@ -10,7 +10,13 @@ import { IPmGroup, IPm, ISelector, ISection } from "../types/selector";
 import { readCache, writeCache } from "../cache";
 import React from "react";
 import Exchange from "../components/exchange";
-import { ICache, IDirText, IPmsText, IPossiblePmPair } from "../types/exchange";
+import {
+  ICache,
+  ICities,
+  IDirText,
+  IPmsText,
+  IPossiblePmPair,
+} from "../types/exchange";
 import {
   convertCities,
   createLocation,
@@ -26,6 +32,7 @@ import { popularCityNames } from "../components/layout/header/citySelector/locat
 
 const ExchangePage = (props: {
   //article?: IArticle | null;
+  cities: ICities;
   locale: "en" | "ru";
   slug?: string;
   dirText?: IDirText;
@@ -52,6 +59,7 @@ export async function getStaticProps({
 
     const cachedData = readCache() as ICache;
     const pms = cachedData.pms;
+    const cities = cachedData.cities;
     const dir = cachedData?.slugToCodes?.[slug];
     const givePm = pms.find((pm) => pm.code == dir?.split("_")?.[0]);
     const getPm = pms.find((pm) => pm.code == dir?.split("_")?.[1]);
@@ -87,6 +95,7 @@ export async function getStaticProps({
       props: {
         locale,
         slug,
+        cities,
         dirText,
         pmsTexts,
         givePm,
@@ -123,7 +132,7 @@ export async function getStaticPaths() {
     selector: ISelector;
   };
   const { parserSetting } = (await cmsFetcher(citiesQuery)) as {
-    parserSetting: { cities: { [key: string]: [string, string] } };
+    parserSetting: { cities: ICities };
   };
 
   const pmGroups = selector.sections.reduce(
@@ -202,7 +211,7 @@ export async function getStaticPaths() {
       (p) =>
         isPopularCity(p.params.exchange) || !p.params.exchange.includes("-in-")
     )
-    .slice(0, 2000);
+    .slice(0, 20);
   console.log(slicedPaths);
   const cachedData = readCache() as ICache;
   cachedData.slugToCodes = slugToCodes;

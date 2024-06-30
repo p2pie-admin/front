@@ -6,7 +6,7 @@ import LimitsRange from "../main/limits";
 import TV from "../main/tv";
 import Calculator from "../main/Calculator";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { setInitialData } from "../../redux/mainReducer";
+import { setCities, setInitialData } from "../../redux/mainReducer";
 import DirText from "./DirText";
 
 import Chart from "./Chart";
@@ -22,13 +22,14 @@ import { Column } from "../layout/Column";
 import ColumnHeader from "../layout/ColumnHeader";
 import { generateTitle, slugCityToExchange } from "./helper";
 import PmsDescription from "./PmsDescription";
-import { IDirText, IPmsText } from "../../types/exchange";
+import { ICities, IDirText, IPmsText } from "../../types/exchange";
 import ColumnGrid from "../layout/ColumnGrid";
 import { ILocation } from "../../types/shared";
 import { NextSeo, BreadcrumbJsonLd } from "next-seo";
 import { useTranslation } from "next-i18next";
 
 const Exchange = ({
+  cities,
   locale,
   slug,
   dirText,
@@ -39,6 +40,7 @@ const Exchange = ({
   similarPmPairs,
 }: {
   //article?: IArticle | null;
+  cities: ICities;
   locale: "en" | "ru";
   slug?: string;
   dirText?: IDirText;
@@ -54,6 +56,7 @@ const Exchange = ({
   const { t } = useTranslation();
   useEffect(() => {
     batch(() => {
+      dispatch(setCities(cities));
       dispatch(fetchCurrencyConverterRates({ curPair }));
       dispatch(fetchPossiblePairs({ code: givePm.code, side: "give" }));
       dispatch(fetchPossiblePairs({ code: getPm.code, side: "get" }));
