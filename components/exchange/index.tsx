@@ -94,14 +94,14 @@ const Exchange = ({
       <NextSeo
         title={title1}
         description={description + cityAddon}
-        canonical={`www.p2pie.com/${slugCityToExchange(
+        canonical={`https://p2pie.com/${slugCityToExchange(
           slug,
           location?.en_city_name
         )}`}
         additionalLinkTags={[
           {
             rel: "alternate",
-            href: `www.p2pie.com/ru/${slugCityToExchange(
+            href: `https://p2pie.com/ru/${slugCityToExchange(
               slug,
               location?.en_city_name
             )}`,
@@ -109,7 +109,7 @@ const Exchange = ({
           },
           {
             rel: "alternate",
-            href: `www.p2pie.com/en/${slugCityToExchange(
+            href: `https://p2pie.com/en/${slugCityToExchange(
               slug,
               location?.en_city_name
             )}`,
@@ -122,7 +122,7 @@ const Exchange = ({
             publishedTime: dirText?.updatedAt,
             modifiedTime: dirText?.updatedAt,
           },
-          url: `www.p2pie.com/${locale}/${slugCityToExchange(
+          url: `https://p2pie.com/${locale}/${slugCityToExchange(
             slug,
             location?.en_city_name
           )}`,

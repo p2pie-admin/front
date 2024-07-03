@@ -27,16 +27,16 @@ const ArticlePage = (props: {
       <NextSeo
         title={article.header}
         description={article.subheader}
-        canonical={`www.p2pie.com/articles/${code}`}
+        canonical={`https://p2pie.com/articles/${code}`}
         additionalLinkTags={[
           {
             rel: "alternate",
-            href: `www.p2pie.com/en/articles/${code}`,
+            href: `https://p2pie.com/en/articles/${code}`,
             hrefLang: "en",
           },
           {
             rel: "alternate",
-            href: `www.p2pie.com/ru/articles/${code}`,
+            href: `https://p2pie.com/ru/articles/${code}`,
             hrefLang: "ru",
           },
         ]}
@@ -46,7 +46,7 @@ const ArticlePage = (props: {
             publishedTime: article.updatedAt,
             modifiedTime: article.updatedAt,
           },
-          url: `www.p2pie.com/${locale}/articles/${code}`,
+          url: `https://p2pie.com/${locale}/articles/${code}`,
           site_name: article.header,
         }}
       />
