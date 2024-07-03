@@ -58,8 +58,8 @@ export async function getStaticProps({
     const [slug, cityParam] = exchangeToSlugCity(exchange);
 
     const cachedData = readCache() as ICache;
-    const pms = cachedData.pms;
-    const cities = cachedData.cities;
+    const { pms, slugToCodes, cities } = cachedData;
+
     const dir = cachedData?.slugToCodes?.[slug];
     const givePm = pms.find((pm) => pm.code == dir?.split("_")?.[0]);
     const getPm = pms.find((pm) => pm.code == dir?.split("_")?.[1]);
@@ -87,7 +87,12 @@ export async function getStaticProps({
       return {
         notFound: true,
       };
-    const similarPmPairs = findSimilarPmPairs(givePm, getPm, pms);
+    const similarPmPairs = findSimilarPmPairs(
+      givePm,
+      getPm,
+      pms,
+      Object.values(slugToCodes)
+    );
     const fullCity = cachedData.cities?.[cityParam];
     const location = createLocation(fullCity);
 

@@ -47,18 +47,25 @@ export const convertCities = (cities: ICities): ICities => {
   return newCities;
 };
 
-export const findSimilarPmPairs = (givePm: IPm, getPm: IPm, pms: IPm[]) => {
+export const findSimilarPmPairs = (
+  givePm: IPm,
+  getPm: IPm,
+  pms: IPm[],
+  dirs: string[]
+) => {
   const similarLevel1 = pms.reduce((res: IPm[][], pm: IPm) => {
     let [pair1, pair2] = [[], []] as [IPm[], IPm[]];
     if (
       pm.currency.code == givePm.currency.code &&
-      pm.section == givePm.section
+      pm.section == givePm.section &&
+      dirs.find((dir) => dir === `${pm.code}_${getPm.code}`)
     ) {
       pair1 = [pm, getPm];
     }
     if (
       pm.currency.code == getPm.currency.code &&
-      pm.section == getPm.section
+      pm.section == getPm.section &&
+      dirs.find((dir) => dir === `${givePm.code}_${pm.code}`)
     ) {
       pair2 = [givePm, pm];
     }
@@ -71,10 +78,16 @@ export const findSimilarPmPairs = (givePm: IPm, getPm: IPm, pms: IPm[]) => {
 
   const similarLevel2 = pms.reduce((res: IPm[][], pm: IPm) => {
     let [pair1, pair2] = [[], []] as [IPm[], IPm[]];
-    if (pm.currency.code == givePm.currency.code) {
+    if (
+      pm.currency.code == givePm.currency.code &&
+      dirs.find((dir) => dir === `${pm.code}_${getPm.code}`)
+    ) {
       pair1 = [pm, getPm];
     }
-    if (pm.currency.code == getPm.currency.code) {
+    if (
+      pm.currency.code == getPm.currency.code &&
+      dirs.find((dir) => dir === `${givePm.code}_${pm.code}`)
+    ) {
       pair2 = [givePm, pm];
     }
     return [
@@ -86,10 +99,16 @@ export const findSimilarPmPairs = (givePm: IPm, getPm: IPm, pms: IPm[]) => {
 
   const similarLevel3 = pms.reduce((res: IPm[][], pm: IPm) => {
     let [pair1, pair2] = [[], []] as [IPm[], IPm[]];
-    if (pm.section == givePm.section) {
+    if (
+      pm.section == givePm.section &&
+      dirs.find((dir) => dir === `${pm.code}_${getPm.code}`)
+    ) {
       pair1 = [pm, getPm];
     }
-    if (pm.section == getPm.section) {
+    if (
+      pm.section == getPm.section &&
+      dirs.find((dir) => dir === `${givePm.code}_${pm.code}`)
+    ) {
       pair2 = [givePm, pm];
     }
     return [

@@ -14,7 +14,7 @@ import { popularCityNames, popularCountryNames } from "./helper";
 import MultipleCitiesContext from "./MultipleCitiesContext";
 import { useRouter } from "next/router";
 import { slugCityToExchange } from "../../../../exchange/helper";
-import exchange from "../../../../exchange";
+
 import { pmsToSlug } from "../../../../main/side/selector/section/PmGroup/helper";
 
 const Country = ({

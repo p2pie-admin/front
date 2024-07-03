@@ -17,7 +17,6 @@ const SectionsList = ({ sections }: { sections: ISection[] }) => {
     base: true,
     sm: false,
   });
-  //console.log(sections && _findAllByKey(sections, "name"));
 
   return (
     <Box w="100%" borderRadius="lg">

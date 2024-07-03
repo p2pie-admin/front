@@ -33,7 +33,6 @@ const AmountInput = () => {
     : [undefined, undefined];
   const stringValue = amountOutputs[side] || "";
   const value = R(+stringValue.replaceAll(" ", ""));
-  console.log(value);
   const outRange = min && max && (value > max[side] || value < min[side]);
 
   return (

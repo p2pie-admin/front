@@ -34,9 +34,6 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   }
   const possiblePairs = oppositePm?.possible_pairs;
 
-  // console.log("pm_group", pm_group.en_name);
-  // console.log("side", side);
-  // console.log("possiblePairs", possiblePairs);
   const shaded = singlePmHasUnmetPairs(pms[0], possiblePairs);
   // const router = useRouter();
 
