@@ -6,7 +6,7 @@ const config = {
   siteUrl,
   generateRobotsTxt: true,
   robotsTxtOptions: {
-    policies: [{ userAgent: "*", allow: "/" }],
+    policies: [{ userAgent: "*", disallow: "/" }],
   },
   additionalPaths: async (config) => {
     const cachedData = readCache();

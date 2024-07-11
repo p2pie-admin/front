@@ -210,12 +210,14 @@ export async function getStaticPaths() {
 
   const isPopularCity = (exchangePath: string) =>
     Object.keys(popularCityNames).find((city) => exchangePath.includes(city));
+
   const slicedPaths = paths
     .filter(
       (p) =>
         isPopularCity(p.params.exchange) || !p.params.exchange.includes("-in-")
     )
     .slice(0, 20);
+  console.log(slicedPaths);
 
   const cachedData = readCache() as ICache;
   cachedData.slugToCodes = slugToCodes;
