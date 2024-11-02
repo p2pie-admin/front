@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { ICities } from "../../types/exchange";
 import { IPm } from "../../types/selector";
-import { ILocation } from "../../types/shared";
+import { ICity } from "../../types/shared";
 import { capitalize } from "../main/side/selector/section/PmGroup/helper";
 
 export const fillWords = ({
@@ -36,7 +36,7 @@ export const fillWords = ({
 
 export const convertCities = (cities: ICities): ICities => {
   const newCities = {} as ICities; //changes key from BTM -> batumi
-
+  console.log(cities);
   for (const key in cities) {
     if (cities.hasOwnProperty(key)) {
       const newKey = cities[key][1].toLowerCase().split(", ")[0];
@@ -180,16 +180,16 @@ export const slugCityToExchange = (slug: string, city?: string) => {
   }`;
 };
 
-export const createLocation = (fullCity?: [string, string]) => {
-  if (!fullCity || !fullCity.length) return null;
-  const location = {
-    en_city_name: fullCity[1].split(", ")[0],
-    en_country_name: fullCity[1].split(", ")[1],
-    ru_city_name: fullCity[0].split(", ")[0],
-    ru_country_name: fullCity[0].split(", ")[1],
-  } as ILocation;
-  return location;
-};
+// export const createLocation = (fullCity?: [string, string]) => {
+//   if (!fullCity || !fullCity.length) return null;
+//   const location = {
+//     en_city_name: fullCity[1].split(", ")[0],
+//     en_country_name: fullCity[1].split(", ")[1],
+//     ru_city_name: fullCity[0].split(", ")[0],
+//     ru_country_name: fullCity[0].split(", ")[1],
+//   } as ICity;
+//   return location;
+// };
 
 // const createURL = ({slug, locale, city}: {slug: string, locale: "en" | "ru", city: string}) => {
 //   const startWord = locale == "ru" ? "obmen" : "exchange"

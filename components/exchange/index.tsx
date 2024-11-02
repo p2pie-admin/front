@@ -6,7 +6,7 @@ import LimitsRange from "../main/limits";
 import TV from "../main/tv";
 import Calculator from "../main/Calculator";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { setCities, setInitialData } from "../../redux/mainReducer";
+import { setInitialData } from "../../redux/mainReducer";
 import DirText from "./DirText";
 
 import Chart from "./Chart";
@@ -22,32 +22,30 @@ import { Column } from "../layout/Column";
 import ColumnHeader from "../layout/ColumnHeader";
 import { generateTitle, slugCityToExchange } from "./helper";
 import PmsDescription from "./PmsDescription";
-import { ICities, IDirText, IPmsText } from "../../types/exchange";
+import { ICity, IDirText, IPmsText } from "../../types/exchange";
 import ColumnGrid from "../layout/ColumnGrid";
-import { ILocation } from "../../types/shared";
+
 import { NextSeo, BreadcrumbJsonLd } from "next-seo";
 import { useTranslation } from "next-i18next";
 
 const Exchange = ({
-  cities,
   locale,
   slug,
   dirText,
   pmsTexts,
   givePm,
   getPm,
-  location,
+  city,
   similarPmPairs,
 }: {
   //article?: IArticle | null;
-  cities: ICities;
   locale: "en" | "ru";
   slug?: string;
   dirText?: IDirText;
   pmsTexts?: IPmsText[];
   givePm: IPm;
   getPm: IPm;
-  location: ILocation;
+  city: ICity;
   similarPmPairs: IPm[][];
 }) => {
   const dispatch = useAppDispatch();
@@ -56,7 +54,7 @@ const Exchange = ({
   const { t } = useTranslation();
   useEffect(() => {
     batch(() => {
-      dispatch(setCities(cities));
+      // dispatch(setCities(cities));
       dispatch(fetchCurrencyConverterRates({ curPair }));
       dispatch(fetchPossiblePairs({ code: givePm.code, side: "give" }));
       dispatch(fetchPossiblePairs({ code: getPm.code, side: "get" }));
@@ -64,13 +62,12 @@ const Exchange = ({
         setInitialData({
           givePm,
           getPm,
-          location,
+          city,
         })
       );
     });
   }, [dir]);
 
-  //const vh = useViewportHeight();
   const giveCur = givePm.currency.code.toUpperCase();
   const getCur = getPm.currency.code.toUpperCase();
   const title2 = t("main:bestSuggestions");
@@ -79,14 +76,16 @@ const Exchange = ({
     givePm,
     getPm,
   });
-  const description = "Поиску лучших предложений обмена";
-  const cityAddon = location
-    ? ` в ${location.ru_city_name}, ${location.ru_country_name}`
-    : "";
-  const site_name =
-    locale == "en"
-      ? "P2PIE Exchange Monitoring"
-      : "P2PIE мониторинг обменников";
+  let [description, cityAddon, site_name] = ["", "", ""];
+  if (locale == "ru") {
+    description = "Поиску лучших предложений обмена";
+    cityAddon = ` в ${city.ru_name}, ${city.ru_country_name}`;
+    site_name = "P2Pie мониторинг обменников";
+  } else {
+    description = "Finding the best exchange offers";
+    cityAddon = ` в ${city.en_name}, ${city.en_country_name}`;
+    site_name = "P2Pie Exchange Monitoring";
+  }
 
   if (!slug) return <></>;
   return (
@@ -96,14 +95,14 @@ const Exchange = ({
         description={description + cityAddon}
         canonical={`https://p2pie.com/${slugCityToExchange(
           slug,
-          location?.en_city_name
+          city?.en_name
         )}`}
         additionalLinkTags={[
           {
             rel: "alternate",
             href: `https://p2pie.com/ru/${slugCityToExchange(
               slug,
-              location?.en_city_name
+              city?.en_name
             )}`,
             hrefLang: "en",
           },
@@ -111,7 +110,7 @@ const Exchange = ({
             rel: "alternate",
             href: `https://p2pie.com/en/${slugCityToExchange(
               slug,
-              location?.en_city_name
+              city?.en_name
             )}`,
             hrefLang: "ru",
           },
@@ -124,7 +123,7 @@ const Exchange = ({
           },
           url: `https://p2pie.com/${locale}/${slugCityToExchange(
             slug,
-            location?.en_city_name
+            city?.en_name
           )}`,
           site_name: site_name,
         }}
@@ -141,7 +140,7 @@ const Exchange = ({
             name: { title1 },
             item: `https://p2pie.com/${locale}/${slugCityToExchange(
               slug,
-              location?.en_city_name
+              city?.en_name
             )}`,
           },
         ]}

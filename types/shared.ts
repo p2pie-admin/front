@@ -26,7 +26,7 @@ export interface IFormattedCountry {
   en_name: string;
 }
 
-export interface ILocation {
+export interface ICity {
   en_country_name: string;
   ru_country_name?: string;
   en_city_name: string;

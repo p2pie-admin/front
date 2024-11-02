@@ -34,6 +34,10 @@ const MainPageContent = ({
   const dispatch = useAppDispatch();
   const { slug } = router.query;
 
+  console.log("popularPms.length", popularPms?.length);
+  console.log("popularPmCodes.length", mainTexts?.length);
+  console.log("pms.length", rootText);
+
   useEffect(() => {
     if (!slug) {
       dispatch(clean());

@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
 import Link from "next/link";
 import {
   addLocation,
-  setLocation,
+  setCity,
   triggerModal,
 } from "../../../../../redux/mainReducer";
 import { RegularBox } from "../../../../../styles/theme/custom";
@@ -47,7 +47,7 @@ const Country = ({
     isMultiple
       ? dispatch(addLocation(location))
       : batch(() => {
-          dispatch(setLocation(location));
+          dispatch(setCity(location));
           dispatch(triggerModal(undefined));
         });
   };

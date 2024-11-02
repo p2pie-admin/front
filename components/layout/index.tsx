@@ -12,13 +12,13 @@ import {
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 
 import axios from "axios";
-import { setIP, setLocation } from "../../redux/mainReducer";
+import { setIP, setCity } from "../../redux/mainReducer";
 import { initCurrencyConverterFetcher } from "../../services/fetchers";
-import { ILocation } from "../../types/shared";
+import { ICity } from "../../types/shared";
 import Nav from "./nav";
 import { batch } from "react-redux";
 import HeadHTML from "./HeadHTML";
-import { ICities } from "../../types/exchange";
+
 import { useRouter } from "next/router";
 
 const Layout = ({ children }: { children: any }) => {
@@ -35,9 +35,9 @@ const Layout = ({ children }: { children: any }) => {
     const fetcher = initCurrencyConverterFetcher();
     fetcher().then((resp) => {
       if (resp.data) {
-        const { ip, ...location } = resp.data as ILocation & { ip: string };
+        const { ip, ...city } = resp.data as ICity & { ip: string };
         batch(() => {
-          !cityInSlugExists && dispatch(setLocation(location));
+          !cityInSlugExists && dispatch(setCity(city));
           dispatch(setIP(ip));
         });
       }

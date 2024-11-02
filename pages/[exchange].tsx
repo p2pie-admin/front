@@ -12,14 +12,12 @@ import React from "react";
 import Exchange from "../components/exchange";
 import {
   ICache,
-  ICities,
+  ICity,
   IDirText,
   IPmsText,
   IPossiblePmPair,
 } from "../types/exchange";
 import {
-  convertCities,
-  createLocation,
   exchangeToSlugCity,
   findSimilarPmPairs,
 } from "../components/exchange/helper";
@@ -27,19 +25,19 @@ import {
   extractPmsFromPmGroup,
   pmsToSlug,
 } from "../components/main/side/selector/section/PmGroup/helper";
-import { ILocation } from "../types/shared";
+
 import { popularCityNames } from "../components/layout/header/citySelector/location/helper";
 
 const ExchangePage = (props: {
   //article?: IArticle | null;
-  cities: ICities;
+  //cities: ICity[];
   locale: "en" | "ru";
   slug?: string;
   dirText?: IDirText;
   pmsTexts?: IPmsText[];
   givePm: IPm;
   getPm: IPm;
-  location: ILocation;
+  city: ICity;
   similarPmPairs: IPm[][];
 }) => {
   return <Exchange {...props} />;
@@ -61,6 +59,10 @@ export async function getStaticProps({
     const { pms, slugToCodes, cities } = cachedData;
 
     const dir = cachedData?.slugToCodes?.[slug];
+    if (!dir)
+      return {
+        notFound: true,
+      };
     const givePm = pms.find((pm) => pm.code == dir?.split("_")?.[0]);
     const getPm = pms.find((pm) => pm.code == dir?.split("_")?.[1]);
     const [section_give, section_get] = [givePm?.section, getPm?.section];
@@ -93,8 +95,9 @@ export async function getStaticProps({
       pms,
       Object.values(slugToCodes)
     );
-    const fullCity = cachedData.cities?.[cityParam];
-    const location = createLocation(fullCity);
+    const city = cachedData.cities.find(
+      (c) => c.en_name.toLowerCase() == cityParam
+    );
 
     return {
       props: {
@@ -105,7 +108,7 @@ export async function getStaticProps({
         pmsTexts,
         givePm,
         getPm,
-        location,
+        city,
         similarPmPairs,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
@@ -137,7 +140,7 @@ export async function getStaticPaths() {
     selector: ISelector;
   };
   const { parserSetting } = (await cmsFetcher(citiesQuery)) as {
-    parserSetting: { cities: ICities };
+    parserSetting: { cities: ICity[] };
   };
 
   const pmGroups = selector.sections.reduce(
@@ -172,11 +175,12 @@ export async function getStaticPaths() {
   }, {});
 
   const locales = ["en", "ru"];
-  const cities = convertCities(parserSetting.cities);
+  const cities = parserSetting.cities as ICity[];
   console.log(`received ${Object.keys(cities).length} cities`);
   console.log(`received ${dirs.length} dirs`);
   console.log(`received ${Object.keys(slugToCodes).length} slugToCodes`);
 
+  // сперва обычные направления добавляем
   const paths = Object.keys(slugToCodes).reduce(
     (
       res: {
@@ -194,13 +198,13 @@ export async function getStaticPaths() {
     []
   );
 
-  Object.keys(cities).forEach((city) => {
+  cities.map((city) => {
     Object.keys(slugToCodes).forEach((slug) => {
       locales.forEach((locale) => {
         if (!(slug.startsWith("cash-") || slug.includes("-cash-"))) return;
         paths.push({
           params: {
-            exchange: `${slug}-in-${[city.replaceAll(" ", "-")]}`,
+            exchange: `${slug}-in-${[city.en_name.toLowerCase()]}`,
           },
           locale,
         });
@@ -215,7 +219,7 @@ export async function getStaticPaths() {
     .filter(
       (p) =>
         isPopularCity(p.params.exchange) || !p.params.exchange.includes("-in-")
-    )
+    ) // фигачим только популярные города или направления без городов
     .slice(0, 20);
   console.log(slicedPaths);
 

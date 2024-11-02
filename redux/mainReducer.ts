@@ -39,7 +39,7 @@ import {
 import Side from "../components/main/side";
 
 import { getPmByCode } from "../components/main/side/selector/section/PmGroup/helper";
-import { IFingerprint, ILocation } from "../types/shared";
+import { IFingerprint } from "../types/shared";
 import { ICurrencyConverterRate } from "../types/p2p";
 import { format, R } from "./amountsHelper";
 
@@ -48,7 +48,7 @@ import {
   readLocalOrder,
   writeLocalOrder,
 } from "../components/order/localStorageHandler";
-import { ICities } from "../types/exchange";
+import { ICity } from "../types/exchange";
 
 type ISide = "give" | "get";
 
@@ -58,12 +58,17 @@ const initialOrder = {
   dirs: [{ expanded: true, deleted: false }],
 };
 
-const defaultLocation = {
+const defaultCity = {
+  codes: ["MOS", "MOW"],
+  en_name: "Moscow",
+  ru_name: "Москва",
+  population: 6,
+  coordinates: [55.7558, 37.6176],
+  preposition: "Москве",
+  closest_cities: ["MSK", "MTY", "LUB"],
   en_country_name: "Russia",
-  en_city_name: "Moscow",
   ru_country_name: "Россия",
-  ru_city_name: "Москва",
-};
+} as ICity;
 
 export interface MainState {
   searchBarInputValue: string;
@@ -85,12 +90,11 @@ export interface MainState {
   popularRates?: IPopularDirRates;
   modal?: string;
   toast: IToast;
-  location: ILocation;
+  city: ICity;
   ccRates?: ICurrencyConverterRate;
   p2p: IOrder;
   fingerprint?: IFingerprint;
   parameters: IParameter[];
-  cities?: ICities;
 }
 
 const initialState: MainState = {
@@ -103,7 +107,7 @@ const initialState: MainState = {
   bestRatesPreview: {},
   pendingPopularRates: false,
   toast: { title: "", status: "info" },
-  location: defaultLocation,
+  city: defaultCity,
   p2p: initialOrder,
   parameters: [],
 };
@@ -271,23 +275,23 @@ export const mainSlice = createSlice({
       state.amountOutputs = getAmountOutputs(state, newSwiperId);
     },
 
-    setLocation: (state: MainState, action: PayloadAction<ILocation>) => {
-      const { en_city_name } = action.payload;
-      if (!en_city_name) {
-        state.location = defaultLocation;
+    setCity: (state: MainState, action: PayloadAction<ICity>) => {
+      const { en_name } = action.payload;
+      if (!en_name) {
+        state.city = defaultCity;
         return;
       }
-      state.location = action.payload;
+      state.city = action.payload;
     },
-    addLocation: (state: MainState, action: PayloadAction<ILocation>) => {
-      if (state.p2p.locations.find((l) => l.code == action.payload.code)) {
-        state.p2p.locations = state.p2p.locations.filter(
-          (l) => l.code !== action.payload.code
-        );
-        return;
-      }
-      state.p2p.locations = [...state.p2p.locations, action.payload];
-    },
+    // addLocation: (state: MainState, action: PayloadAction<ILocation>) => {
+    //   if (state.p2p.locations.find((l) => l.code == action.payload.code)) {
+    //     state.p2p.locations = state.p2p.locations.filter(
+    //       (l) => l.code !== action.payload.code
+    //     );
+    //     return;
+    //   }
+    //   state.p2p.locations = [...state.p2p.locations, action.payload];
+    // },
 
     setCurrencyConverterRate: (
       state: MainState,
@@ -355,21 +359,21 @@ export const mainSlice = createSlice({
       action: PayloadAction<{
         givePm: IPm;
         getPm: IPm;
-        location: ILocation;
+        city: ICity;
       }>
     ) => {
       state.dirRatesStatus = "pending";
-      const { givePm, getPm, location } = action.payload;
+      const { givePm, getPm, city } = action.payload;
       state.givePm = givePm;
       state.getPm = getPm;
-      if (location) state.location = location;
+      if (city) state.city = city;
     },
     sendToast: (state: MainState, action: PayloadAction<IToast>) => {
       state.toast = action.payload;
     },
-    setCities: (state: MainState, action: PayloadAction<ICities>) => {
-      state.cities = action.payload;
-    },
+    // setCities: (state: MainState, action: PayloadAction<ICities>) => {
+    //   state.cities = action.payload;
+    // },
   },
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -498,8 +502,8 @@ export const {
   triggerModal,
   incrementSwiper,
   decrementSwiper,
-  setLocation,
-  addLocation,
+  setCity,
+  // addLocation,
   setCurrencyConverterRate,
   addPmP2P,
   addEmptyDir,

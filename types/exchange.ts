@@ -28,7 +28,7 @@ export interface ICache {
   pms: IPm[];
   slugToCodes: { [key: string]: string }; // для запроса курсов
   articleCodes: string[];
-  cities: ICities;
+  cities: ICity[];
   exchangePaths: IPath[];
 }
 
@@ -37,8 +37,19 @@ export interface IPossiblePmPair {
   getPm?: IPm;
 }
 
-export interface ICities {
-  [key: string]: [string, string];
+// export interface ICities {
+//   [key: string]: [string, string];
+// }
+export interface ICity {
+  codes: string[];
+  en_name: string;
+  ru_name: string;
+  population: number;
+  coordinates: number[];
+  preposition: string;
+  closest_cities: string[];
+  en_country_name: string;
+  ru_country_name: string;
 }
 
 export interface IPmPairs {

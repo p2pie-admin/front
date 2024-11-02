@@ -1,5 +1,5 @@
 import { IImage, IPm } from "./selector";
-import { ILocation } from "./shared";
+import { ICity } from "./shared";
 
 export interface ICurrencyConverterRate {
   rate: number;
@@ -65,7 +65,7 @@ export interface IOrder {
   id?: string;
   dirs: IP2PDir[];
   regulationCodes?: IP2PRegulationCodes;
-  locations: ILocation[];
+  locations: ICity[];
   name?: string;
   status?: "active" | "suspended" | "disabled";
   info?: string;
