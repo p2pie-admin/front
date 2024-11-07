@@ -45,7 +45,7 @@ const Exchange = ({
   pmsTexts?: IPmsText[];
   givePm: IPm;
   getPm: IPm;
-  city: ICity;
+  city?: ICity;
   similarPmPairs: IPm[][];
 }) => {
   const dispatch = useAppDispatch();
@@ -79,11 +79,11 @@ const Exchange = ({
   let [description, cityAddon, site_name] = ["", "", ""];
   if (locale == "ru") {
     description = "Поиску лучших предложений обмена";
-    cityAddon = ` в ${city.ru_name}, ${city.ru_country_name}`;
+    if (city) cityAddon = ` в ${city.ru_name}, ${city.ru_country_name}`;
     site_name = "P2Pie мониторинг обменников";
   } else {
     description = "Finding the best exchange offers";
-    cityAddon = ` в ${city.en_name}, ${city.en_country_name}`;
+    if (city) cityAddon = ` в ${city.en_name}, ${city.en_country_name}`;
     site_name = "P2Pie Exchange Monitoring";
   }
 

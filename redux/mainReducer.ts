@@ -359,7 +359,7 @@ export const mainSlice = createSlice({
       action: PayloadAction<{
         givePm: IPm;
         getPm: IPm;
-        city: ICity;
+        city?: ICity;
       }>
     ) => {
       state.dirRatesStatus = "pending";
@@ -518,7 +518,6 @@ export const {
   clearDirRates,
   clean,
   sendToast,
-  setCities,
 } = mainSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

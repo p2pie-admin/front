@@ -15,13 +15,13 @@ const DirText = ({
   getPm: IPm;
   locale: "en" | "ru";
 }) => {
-  const userLocation = useAppSelector(
+  const cityCountry = useAppSelector(
     (state) =>
-      state.main.location[`${locale}_city_name`] +
+      state.main.city[`${locale}_name`] +
       " / " +
-      state.main.location[`${locale}_country_name`]
+      state.main.city[`${locale}_country_name`]
   );
-  const cityCountry = userLocation || "";
+
   if (!dirText) return <></>;
   const { text, title } = dirText;
   return (
@@ -30,7 +30,7 @@ const DirText = ({
         {title}
       </Heading>
       <ResponsiveText whiteSpace="unset" variant="no_contrast">
-        {fillWords({ text, givePm, getPm, cityCountry: cityCountry })}
+        {fillWords({ text, givePm, getPm, cityCountry })}
       </ResponsiveText>
     </Box>
   );

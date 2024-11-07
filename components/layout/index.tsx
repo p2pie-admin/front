@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import axios from "axios";
 import { setIP, setCity } from "../../redux/mainReducer";
 import { initCurrencyConverterFetcher } from "../../services/fetchers";
-import { ICity } from "../../types/shared";
+
 import Nav from "./nav";
 import { batch } from "react-redux";
 import HeadHTML from "./HeadHTML";

@@ -62,7 +62,7 @@ const courseFilterLink =
 
 const _fetchRates = async (dir: string) => {
   const response = await axios
-    .get(`${courseFilterLink}/dir=${dir}/type=tops+p2p`)
+    .get(`${courseFilterLink}/dir=${dir}`)
     .catch((err) => console.error("could not fetch, ", err));
   return response?.data as IRate[];
 };

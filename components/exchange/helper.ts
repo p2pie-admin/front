@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
-import { ICities } from "../../types/exchange";
+
 import { IPm } from "../../types/selector";
-import { ICity } from "../../types/shared";
+
 import { capitalize } from "../main/side/selector/section/PmGroup/helper";
 
 export const fillWords = ({
@@ -12,7 +12,7 @@ export const fillWords = ({
 }: {
   givePm: IPm;
   getPm: IPm;
-  cityCountry: string;
+  cityCountry?: string;
   text?: string;
 }) => {
   const { locale } = useRouter() as { locale: "en" | "ru" };
@@ -30,22 +30,24 @@ export const fillWords = ({
     .replaceAll("get_currency", getPm.currency.code.toUpperCase())
     .replaceAll(
       "city_name",
-      `${cityCountry.split(" / ")[0]}, ${cityCountry.split(" / ")[1]}`
+      cityCountry
+        ? `${cityCountry.split(" / ")[0]}, ${cityCountry.split(" / ")[1]}`
+        : ""
     );
 };
 
-export const convertCities = (cities: ICities): ICities => {
-  const newCities = {} as ICities; //changes key from BTM -> batumi
-  console.log(cities);
-  for (const key in cities) {
-    if (cities.hasOwnProperty(key)) {
-      const newKey = cities[key][1].toLowerCase().split(", ")[0];
-      newCities[newKey] = cities[key];
-    }
-  }
+// export const convertCities = (cities: ICity[]): ICities => {
+//   const newCities = {} as ICities; //changes key from BTM -> batumi
+//   console.log(cities);
+//   for (const key in cities) {
+//     if (cities.hasOwnProperty(key)) {
+//       const newKey = cities[key][1].toLowerCase().split(", ")[0];
+//       newCities[newKey] = cities[key];
+//     }
+//   }
 
-  return newCities;
-};
+//   return newCities;
+// };
 
 export const findSimilarPmPairs = (
   givePm: IPm,

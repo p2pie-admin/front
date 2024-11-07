@@ -44,7 +44,7 @@ const Header = () => {
         </HStack>
 
         <HStack>
-          <CitySelector />
+          {/* <CitySelector /> */}
           <Box display={{ base: "none", xl: "block" }}>
             <NavHeading />
           </Box>

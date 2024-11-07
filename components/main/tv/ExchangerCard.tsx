@@ -133,7 +133,7 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
         <HStack justifyContent={isMobile ? "start" : "space-between"}>
           <HStack alignItems="center">
             <ResponsiveText
-              size={name.length > 12 ? "md" : name.length > 8 ? "lg" : "xl"}
+              size={name.length > 15 ? "md" : "lg"}
               fontWeight="bold"
               transition="color 200ms linear"
               variant={index === activeIndex ? "primary" : "no_contrast"}

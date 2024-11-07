@@ -37,7 +37,7 @@ const ExchangePage = (props: {
   pmsTexts?: IPmsText[];
   givePm: IPm;
   getPm: IPm;
-  city: ICity;
+  city?: ICity;
   similarPmPairs: IPm[][];
 }) => {
   return <Exchange {...props} />;
@@ -95,9 +95,9 @@ export async function getStaticProps({
       pms,
       Object.values(slugToCodes)
     );
-    const city = cachedData.cities.find(
-      (c) => c.en_name.toLowerCase() == cityParam
-    );
+    const city = cityParam
+      ? cachedData.cities.find((c) => c.en_name.toLowerCase() == cityParam)
+      : null;
 
     return {
       props: {
