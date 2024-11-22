@@ -13,7 +13,7 @@ const OtherDirs = ({
   otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] };
 }) => {
   const { t } = useTranslation();
-  if (!otherDirs.buy.length) return <></>;
+  if (!otherDirs?.buy.length) return <></>;
   return (
     <VStack mt="4" w="100%" gap="4">
       <Box borderRadius="lg" bgColor="bg.900">

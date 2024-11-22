@@ -28,13 +28,13 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
       "top"
     )) as IPopularDirRates;
     const cachedData = readCache() as ICache;
-    const pms = cachedData.pms;
+    const pms = cachedData?.pms;
 
     const popularPmCodes = [
       ...Object.keys(popularRates),
-      ...Object.values(popularRates)[0].buy.map((i) => i.fiat),
+      ...Object.values(popularRates)[0]?.buy.map((i) => i.fiat),
     ];
-    const popularPms = pms.filter((pm) =>
+    const popularPms = pms?.filter((pm) =>
       popularPmCodes.find((code) => code === pm.code)
     );
 
