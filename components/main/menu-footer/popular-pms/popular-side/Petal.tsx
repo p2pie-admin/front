@@ -125,9 +125,9 @@
 //           onClick={() => openPmModal()}
 //           p="1"
 //           borderRadius="50%"
-//           color={useColorModeValue("violet.600", "peach.300")}
+//           color={useColorModeValue("violet.700", "peach.300")}
 //           border="1px solid"
-//           borderColor={useColorModeValue("violet.600", "peach.300")}
+//           borderColor={useColorModeValue("violet.700", "peach.300")}
 //         >
 //           <FiMoreHorizontal size="1rem" />
 //         </RegularBox>

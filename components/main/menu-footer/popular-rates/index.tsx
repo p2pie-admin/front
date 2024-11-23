@@ -112,7 +112,7 @@ export default function BestRates() {
             color={index % 2 ? "green.500" : "red.500"}
             fontSize={index % 2 ? "sm" : "xs"}
           >
-            <Text color={useColorModeValue("violet.600", "peach.300")}>
+            <Text color={useColorModeValue("violet.700", "peach.300")}>
               {String(ratePair[0]).toUpperCase()}
             </Text>
 

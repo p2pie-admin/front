@@ -26,12 +26,12 @@ const Thumb = ({
 }) => {
   const [primary300, secondary600] = useToken("colors", [
     "peach.400",
-    "violet.600",
+    "violet.700",
   ]);
 
   const colorKey = useColorModeValue(secondary600, primary300);
   const colorHint = useColorModeValue("bg.10", "bg.800");
-  const mainColor = useColorModeValue("violet.500", "peach.300");
+  const mainColor = useColorModeValue("violet.600", "peach.300");
 
   const shake = keyframes`
   from {transform: translateX(-5px)}

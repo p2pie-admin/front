@@ -10,7 +10,7 @@ const ColumnHeader = ({
   query?: string[];
 }) => {
   const secondaryColor = useColorModeValue("bg.700", "bg.200");
-  const primaryColor = useColorModeValue("violet.500", "peach.300");
+  const primaryColor = useColorModeValue("violet.600", "peach.300");
   if (!text) return <></>;
   return (
     <Heading

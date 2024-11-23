@@ -71,7 +71,7 @@ export const ShadedButton = (props: any) => {
         bgColor: "transparent",
       }}
       _active={{
-        color: useColorModeValue("violet.600", "peach.400"),
+        color: useColorModeValue("violet.700", "peach.400"),
       }}
       borderRadius="2xl"
       {...chakraProps}

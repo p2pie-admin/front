@@ -64,7 +64,7 @@ function PopularSide() {
               bgColor: "transparent",
             }}
             _active={{
-              color: useColorModeValue("violet.600", "peach.400"),
+              color: useColorModeValue("violet.700", "peach.400"),
             }}
             p="1"
             borderRadius="50%"

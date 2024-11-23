@@ -39,7 +39,7 @@ const InputWithSlider = ({
   const trackColor = useColorModeValue("bg.300", "bg.900");
   const contrastColor = useColorModeValue("bg.900", "bg.100");
 
-  const primaryColor = useColorModeValue("violet.600", "peach.300");
+  const primaryColor = useColorModeValue("violet.700", "peach.300");
 
   const p2pDirIndex = useContext(P2PContext)!;
   const dispatch = useAppDispatch();

@@ -122,7 +122,7 @@ const LimitsRange = () => {
 
   const stickyAmount = stick(amount);
 
-  const mainColor = useColorModeValue("violet.500", "peach.300");
+  const mainColor = useColorModeValue("violet.600", "peach.300");
 
   const color1 = useColorModeValue("bg.300", "bg.800");
   const colorTrackInactive = useColorModeValue("bg.300", "bg.600");

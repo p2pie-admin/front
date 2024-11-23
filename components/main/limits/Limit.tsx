@@ -40,13 +40,13 @@ const Limit = ({
       >{`${label.toUpperCase()}: ${kFormatter(R(value, 2))}`}</Text>
       <Text
         mx="2px !important"
-        color={useColorModeValue("violet.600", "peach.300")}
+        color={useColorModeValue("violet.700", "peach.300")}
       >
         {pmCurrencyName}
       </Text>
       <Box
         mx="0 !important"
-        color={useColorModeValue("violet.600", "peach.300")}
+        color={useColorModeValue("violet.700", "peach.300")}
       >
         <CgSync size="0.8rem" />
       </Box>

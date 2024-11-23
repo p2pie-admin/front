@@ -9,7 +9,7 @@ import Selector from ".";
 
 const SelectorModal = ({ id }: { id: string }) => {
   const side = useContext(SideContext) as "give" | "get";
-  const primary = useColorModeValue("violet.600", "peach.300");
+  const primary = useColorModeValue("violet.700", "peach.300");
 
   const header =
     side === "give" ? (

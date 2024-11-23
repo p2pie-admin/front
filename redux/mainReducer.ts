@@ -43,7 +43,7 @@ import { IFingerprint } from "../types/shared";
 import { ICurrencyConverterRate } from "../types/p2p";
 import { format, R } from "./amountsHelper";
 
-import { IToast } from "../types/general";
+import { IDirRatesStatus, IToast } from "../types/general";
 import {
   readLocalOrder,
   writeLocalOrder,
@@ -75,7 +75,7 @@ export interface MainState {
   givePm?: IPm;
   getPm?: IPm;
   dirRates?: IRate[]; //  uniqueRates + bestRates
-  dirRatesStatus: "fulfilled" | "rejected" | "pending";
+  dirRatesStatus: IDirRatesStatus;
   amountInput?: AmountInput;
   amountOutputs: AmountOutputs;
   swiperIdVisible: number;
@@ -99,7 +99,7 @@ export interface MainState {
 
 const initialState: MainState = {
   searchBarInputValue: "",
-  dirRatesStatus: "pending",
+  dirRatesStatus: "fulfilled",
   amountOutputs: initialAmountOutputs,
   swiperIdVisible: 1,
   pms: [],
@@ -343,6 +343,7 @@ export const mainSlice = createSlice({
     },
     clearDirRates: (state: MainState) => {
       state.dirRates = [];
+      state.dirRatesStatus = "pending";
     },
 
     clean: (state: MainState) => {
@@ -370,6 +371,12 @@ export const mainSlice = createSlice({
     },
     sendToast: (state: MainState, action: PayloadAction<IToast>) => {
       state.toast = action.payload;
+    },
+    setDirRatesStatus: (
+      state: MainState,
+      action: PayloadAction<IDirRatesStatus>
+    ) => {
+      state.dirRatesStatus = action.payload;
     },
     // setCities: (state: MainState, action: PayloadAction<ICities>) => {
     //   state.cities = action.payload;
@@ -518,6 +525,7 @@ export const {
   clearDirRates,
   clean,
   sendToast,
+  setDirRatesStatus,
 } = mainSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

@@ -17,7 +17,7 @@ const fallbackSRC = "https://i.ibb.co/fpSb8gZ/fallback.png";
 
 const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
   const color = useColorModeValue("bg.200", "bg.500");
-  const bgColor = useColorModeValue("violet.600", "bg.900");
+  const bgColor = useColorModeValue("violet.700", "bg.900");
   const env = process.env.NODE_ENV;
   const SRC =
     env === "production"

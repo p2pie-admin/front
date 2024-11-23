@@ -13,11 +13,7 @@ export default function HeadHTML() {
       />
 
       <link
-        href="https://fonts.googleapis.com/css?family=Inconsolata&text=1234567890,.-+"
-        rel="stylesheet"
-      />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&display=swap&text=p2ie"
+        href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@900&display=swap&text=p2ie"
         rel="stylesheet"
       />
       <meta name="google" content="notranslate" />
@@ -25,10 +21,7 @@ export default function HeadHTML() {
         name="viewport"
         content="width=device-width, initial-scale=1 , maximum-scale=1, user-scalable=no"
       />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&display=swap&text=p2ie"
-        rel="stylesheet"
-      />
+
       <link
         href="https://fonts.googleapis.com/css?family=Inconsolata&text=1234567890,.-+"
         rel="stylesheet"

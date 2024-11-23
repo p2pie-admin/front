@@ -9,7 +9,11 @@ import {
 import { useAppDispatch, useAppSelector } from "../../../../../../redux/hooks";
 import { batch } from "react-redux";
 import { IPmGroup, IPm } from "../../../../../../types/selector";
-import { setPm, triggerModal } from "../../../../../../redux/mainReducer";
+import {
+  setDirRatesStatus,
+  setPm,
+  triggerModal,
+} from "../../../../../../redux/mainReducer";
 import { useRouter } from "next/router";
 import { useContext } from "react";
 import P2PContext from "../../../../../shared/contexts/p2pContext";
@@ -89,7 +93,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
       //     : `${pm.en_name}-${pm.currency.code}`;
       const [givePm, getPm] =
         side === "give" ? [pm, oppositePm] : [oppositePm, pm];
-
+      dispatch(setDirRatesStatus("pending"));
       const slug = pmsToSlug({ givePm, getPm })
         .replaceAll(" ", "")
         .toLowerCase();

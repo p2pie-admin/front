@@ -55,25 +55,16 @@
     "sber-rub-to-tether-usdt-trc-20": "SBERRUB_USDTTRC20",
     "sber-rub-to-tether-usdt-erc-20": "SBERRUB_USDTERC20",
     "sber-rub-to-solana-sol": "SBERRUB_SOL",
-    "sber-rub-to-sber-rub": "SBERRUB_SBERRUB",
-    "sber-rub-to-tinkoff-rub": "SBERRUB_TCSBRUB",
-    "sber-rub-to-gazprom-rub": "SBERRUB_GPBRUB",
     "tinkoff-rub-to-bitcoin-btc": "TCSBRUB_BTC",
     "tinkoff-rub-to-ethereum-eth": "TCSBRUB_ETH",
     "tinkoff-rub-to-tether-usdt-trc-20": "TCSBRUB_USDTTRC20",
     "tinkoff-rub-to-tether-usdt-erc-20": "TCSBRUB_USDTERC20",
     "tinkoff-rub-to-solana-sol": "TCSBRUB_SOL",
-    "tinkoff-rub-to-sber-rub": "TCSBRUB_SBERRUB",
-    "tinkoff-rub-to-tinkoff-rub": "TCSBRUB_TCSBRUB",
-    "tinkoff-rub-to-gazprom-rub": "TCSBRUB_GPBRUB",
     "gazprom-rub-to-bitcoin-btc": "GPBRUB_BTC",
     "gazprom-rub-to-ethereum-eth": "GPBRUB_ETH",
     "gazprom-rub-to-tether-usdt-trc-20": "GPBRUB_USDTTRC20",
     "gazprom-rub-to-tether-usdt-erc-20": "GPBRUB_USDTERC20",
     "gazprom-rub-to-solana-sol": "GPBRUB_SOL",
-    "gazprom-rub-to-sber-rub": "GPBRUB_SBERRUB",
-    "gazprom-rub-to-tinkoff-rub": "GPBRUB_TCSBRUB",
-    "gazprom-rub-to-gazprom-rub": "GPBRUB_GPBRUB",
     "cash-usd-to-bitcoin-btc": "CASHUSD_BTC",
     "cash-usd-to-ethereum-eth": "CASHUSD_ETH",
     "cash-usd-to-tether-usdt-trc-20": "CASHUSD_USDTTRC20",
@@ -6900,42 +6891,6 @@
     },
     {
       "params": {
-        "exchange": "sber-rub-to-sber-rub"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "sber-rub-to-sber-rub"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "sber-rub-to-tinkoff-rub"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "sber-rub-to-tinkoff-rub"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "sber-rub-to-gazprom-rub"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "sber-rub-to-gazprom-rub"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "tinkoff-rub-to-bitcoin-btc"
       },
       "locale": "en"
@@ -6996,42 +6951,6 @@
     },
     {
       "params": {
-        "exchange": "tinkoff-rub-to-sber-rub"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tinkoff-rub-to-sber-rub"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "tinkoff-rub-to-tinkoff-rub"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tinkoff-rub-to-tinkoff-rub"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "tinkoff-rub-to-gazprom-rub"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tinkoff-rub-to-gazprom-rub"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "gazprom-rub-to-bitcoin-btc"
       },
       "locale": "en"
@@ -7087,42 +7006,6 @@
     {
       "params": {
         "exchange": "gazprom-rub-to-solana-sol"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "gazprom-rub-to-sber-rub"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "gazprom-rub-to-sber-rub"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "gazprom-rub-to-tinkoff-rub"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "gazprom-rub-to-tinkoff-rub"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "gazprom-rub-to-gazprom-rub"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "gazprom-rub-to-gazprom-rub"
       },
       "locale": "ru"
     },

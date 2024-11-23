@@ -22,12 +22,12 @@ const Logo = () => {
       <Image alt="logo" src={useColorModeValue(darkPie, lightPie)} width={36} />
 
       <Text
+        as="h1"
         color={useColorModeValue("violet.900", "peach.300")}
         fontSize="2xl"
         fontFamily="Zen Maru Gothic, sans-serif"
         mx="2"
-        mt="1"
-        pb="2"
+        mt="2"
       >
         p2pie
       </Text>

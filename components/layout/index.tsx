@@ -8,6 +8,7 @@ import {
   VStack,
   useColorModeValue,
   Grid,
+  Progress,
 } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 
@@ -60,7 +61,7 @@ const Layout = ({ children }: { children: any }) => {
         isClosable: true,
       });
   }, [myToast]);
-
+  const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
   const ambientColor = useColorModeValue(
     "rgba(143,92,292,0.2)",
     "rgba(247,178,177,0.1)"
@@ -100,6 +101,12 @@ const Layout = ({ children }: { children: any }) => {
           <Box w="10" h="10" bg={v} />
         ))}
       </Box> */}
+      {/* <Box
+        w="10"
+        h="10"
+        bg={dirRatesStatus !== "fulfilled" ? "red.500" : "green.500"}
+      /> */}
+
       <Box
         position="absolute"
         w="100%"
@@ -107,6 +114,11 @@ const Layout = ({ children }: { children: any }) => {
         bgGradient={`radial-gradient(circle at 50% -10%, ${ambientColor} 0%, transparent 40%)`}
       ></Box>
       <Header />
+      {dirRatesStatus !== "fulfilled" ? (
+        <Progress size="xs" isIndeterminate colorScheme="peach" />
+      ) : (
+        <Box h="1" />
+      )}
       <VStack
         alignItems="center"
         justifyContent="space-between"

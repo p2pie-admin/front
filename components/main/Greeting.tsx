@@ -17,7 +17,7 @@ const Greeting = () => {
 
   const [peripheryColor, centerColor] = useToken(
     "colors",
-    useColorModeValue(["bg.500", "violet.600"], ["bg.400", "peach.300"])
+    useColorModeValue(["bg.500", "violet.700"], ["bg.400", "peach.300"])
   );
 
   return (
