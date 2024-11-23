@@ -16,7 +16,7 @@ const LinkButton = ({
 }) => {
   const dispatch = useAppDispatch();
   const color = useColorModeValue("bg.700", "bg.300");
-  const iconColor = useColorModeValue("violet.600", "peach.200");
+  const iconColor = useColorModeValue("violet.600", "peach.300");
 
   const MyButton = ({ handleClick }: { handleClick: Function }) => (
     <Button

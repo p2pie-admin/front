@@ -11,7 +11,7 @@ const Popular = () => {
       <HStack
         justifyContent="center"
         gap="12"
-        color={useColorModeValue("violet.600", "peach.200")}
+        color={useColorModeValue("violet.600", "peach.300")}
       >
         <SideContext.Provider value={"give"}>
           <PopularSide />

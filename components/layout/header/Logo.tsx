@@ -22,7 +22,7 @@ const Logo = () => {
       <Image alt="logo" src={useColorModeValue(darkPie, lightPie)} width={36} />
 
       <Text
-        color={useColorModeValue("violet.900", "peach.200")}
+        color={useColorModeValue("violet.900", "peach.300")}
         fontSize="2xl"
         fontFamily="Zen Maru Gothic, sans-serif"
         mx="2"

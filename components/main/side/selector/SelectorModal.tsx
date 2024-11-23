@@ -9,16 +9,15 @@ import Selector from ".";
 
 const SelectorModal = ({ id }: { id: string }) => {
   const side = useContext(SideContext) as "give" | "get";
-  const pink = useColorModeValue("pink.400", "pink.200");
-  const green = useColorModeValue("green.400", "green.200");
+  const primary = useColorModeValue("violet.600", "peach.300");
 
   const header =
     side === "give" ? (
-      <Highlight query="sell" styles={{ color: pink }}>
+      <Highlight query="sell" styles={{ color: primary }}>
         {`What do you sell?`}
       </Highlight>
     ) : (
-      <Highlight query="buy" styles={{ color: green }}>
+      <Highlight query="buy" styles={{ color: primary }}>
         {`What do you buy?`}
       </Highlight>
     );

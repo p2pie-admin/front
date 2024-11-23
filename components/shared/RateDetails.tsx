@@ -46,7 +46,7 @@ const RateDetails = () => {
   );
   const course = rate?.course;
   const amounts = !course ? [0, 0] : course < 1 ? [1, 1 / course] : [course, 1];
-  const mainColor = useColorModeValue("violet.600", "peach.200");
+  const mainColor = useColorModeValue("violet.600", "peach.300");
 
   //   const renderCourse = () =>  <Text>{`1 ${giveCurrency} = ${} ${getCurrency}`}</Text>
   if (!rate || !giveCurrency || !getCurrency) return <></>;

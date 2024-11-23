@@ -25,13 +25,13 @@ const Thumb = ({
   stickyAmount: number;
 }) => {
   const [primary300, secondary600] = useToken("colors", [
-    "peach.300",
+    "peach.400",
     "violet.600",
   ]);
 
   const colorKey = useColorModeValue(secondary600, primary300);
   const colorHint = useColorModeValue("bg.10", "bg.800");
-  const mainColor = useColorModeValue("violet.500", "peach.200");
+  const mainColor = useColorModeValue("violet.500", "peach.300");
 
   const shake = keyframes`
   from {transform: translateX(-5px)}

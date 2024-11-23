@@ -29,7 +29,7 @@ const Home: NextPage = () => {
   const [peach200, bg100, bg300, bg500, bg600, bg700, bg800, bg900] = useToken(
     "colors",
     [
-      "peach.200",
+      "peach.300",
       "bg.100",
       "bg.300",
       "bg.500",

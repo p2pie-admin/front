@@ -45,7 +45,7 @@ const RateLayer = ({
     pms.find((pm) => pm.code.toUpperCase() === c);
   const cryptoPm = findPmByCode(code);
   const side = useContext(SideContext) as "buy" | "sell";
-  const mainColor = useColorModeValue("violet.600", "peach.200");
+  const mainColor = useColorModeValue("violet.600", "peach.300");
 
   if (!cryptoPm) return <></>;
   return (

@@ -25,7 +25,7 @@ const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
       : process.env.NEXT_PUBLIC_CONVERTER_DEV_URL;
 
   const [isLongTimeFrame, setTimeframe] = useState(true);
-  const primaryColor = useColorModeValue("bg.100", "peach.200");
+  const primaryColor = useColorModeValue("bg.100", "peach.300");
   const ccRates = useAppSelector(
     (state) => state.main.ccRates || ({} as ICurrencyConverterRate)
   );

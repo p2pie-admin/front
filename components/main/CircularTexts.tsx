@@ -18,7 +18,7 @@ const CircularTexts = ({ mainTexts }: { mainTexts?: IMainText[] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const borderColor = useColorModeValue("bg.200", "bg.600");
   const bgColor = useColorModeValue("bg.100", "bg.700");
-  const mainColor = useColorModeValue("violet.600", "peach.200");
+  const mainColor = useColorModeValue("violet.600", "peach.300");
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentIndex((prevIndex) => prevIndex + 1);

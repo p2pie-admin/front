@@ -12,7 +12,7 @@ const ModalButton = ({
   leftIcon?: ReactElement;
   openDialog: Function;
 }) => {
-  const color = useColorModeValue("violet.600", "peach.200");
+  const color = useColorModeValue("violet.600", "peach.300");
 
   return (
     <ResponsiveButton

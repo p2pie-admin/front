@@ -39,13 +39,13 @@ const components: Record<string, StyleConfig> = {
     variants: {
       primary_bright: (props: any) => ({
         bgGradient: mode(
-          "linear(to-br, peach.100, peach.200)",
+          "linear(to-br, peach.100, peach.300)",
           "linear(to-br, bg.300, bg.400)"
         )(props),
       }),
       primary_regular: (props: any) => ({
         bgGradient: mode(
-          "linear(to-br, peach.200, peach.300)",
+          "linear(to-br, peach.300, peach.400)",
           "linear(to-br, bg.400, bg.500)"
         )(props),
       }),
@@ -64,7 +64,7 @@ const components: Record<string, StyleConfig> = {
         color: mode("bg.1000", "bg.50")(props),
       }),
       primary: (props: any) => ({
-        color: mode("violet.700", "peach.200")(props),
+        color: mode("violet.700", "peach.300")(props),
       }),
     },
   },

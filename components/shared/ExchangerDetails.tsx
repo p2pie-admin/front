@@ -57,7 +57,7 @@ const ExchangerDetails = () => {
     "peach.500",
     "red.400",
   ];
-  const mainColor = useColorModeValue("violet.600", "peach.200");
+  const mainColor = useColorModeValue("violet.600", "peach.300");
 
   return (
     <CustomBox3D>

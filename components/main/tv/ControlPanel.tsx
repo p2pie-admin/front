@@ -20,9 +20,9 @@ const ControlPanel = ({
   stepDown: any;
   length: number;
 }) => {
-  const [peach300, violet600] = useToken("colors", ["peach.300", "violet.600"]);
+  const [peach300, violet600] = useToken("colors", ["peach.400", "violet.600"]);
   const colorKey = useColorModeValue(violet600, peach300);
-  const mainColor = useColorModeValue("violet.600", "peach.200");
+  const mainColor = useColorModeValue("violet.600", "peach.300");
   const secondaryColor = useColorModeValue("bg.100", "bg.800");
   const index = useAppSelector((state) => state.main.swiperIdVisible);
   return (

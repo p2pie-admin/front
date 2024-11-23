@@ -33,7 +33,7 @@ const RegulationGroup = ({
       p="2"
     >
       <HStack
-        color="peach.200"
+        color="peach.300"
         onClick={() => setOpened(!opened)}
         cursor="pointer"
       >

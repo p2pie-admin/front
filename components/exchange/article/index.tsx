@@ -74,7 +74,7 @@ const Article = ({
               cursor="pointer"
               fontWeight="bold"
               size="xl"
-              color="peach.200"
+              color="peach.300"
               _hover={{
                 color: "peach.50",
               }}
@@ -91,7 +91,7 @@ const Article = ({
             return (
               <Box key={"text:" + chapter.id + chapter.title + idx}>
                 <HStack fontSize="lg" fontWeight="bold" mt="4">
-                  <Text color="peach.200">#</Text>
+                  <Text color="peach.300">#</Text>
                   <Text ref={chapter.ref}>{chapter.title || ""}</Text>
                 </HStack>
 

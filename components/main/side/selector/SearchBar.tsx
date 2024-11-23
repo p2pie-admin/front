@@ -61,7 +61,7 @@ const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {
           borderRadius="2xl"
         >
           <Input
-            color={useColorModeValue("violet.600", "peach.200")}
+            color={useColorModeValue("violet.600", "peach.300")}
             border="none"
             boxShadow="none !important"
             placeholder={placeholder}

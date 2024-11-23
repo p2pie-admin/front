@@ -29,7 +29,7 @@ export default function BestRates() {
   //   const padding = 8;
 
   //   const [primary200, primary500, bg700, bg900] = useToken("colors", [
-  //     "peach.200",
+  //     "peach.300",
   //     "peach.500",
   //     "bg.700",
   //     "bg.900",
@@ -112,7 +112,7 @@ export default function BestRates() {
             color={index % 2 ? "green.500" : "red.500"}
             fontSize={index % 2 ? "sm" : "xs"}
           >
-            <Text color={useColorModeValue("violet.600", "peach.200")}>
+            <Text color={useColorModeValue("violet.600", "peach.300")}>
               {String(ratePair[0]).toUpperCase()}
             </Text>
 
