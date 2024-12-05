@@ -55,16 +55,25 @@
     "sber-rub-to-tether-usdt-trc-20": "SBERRUB_USDTTRC20",
     "sber-rub-to-tether-usdt-erc-20": "SBERRUB_USDTERC20",
     "sber-rub-to-solana-sol": "SBERRUB_SOL",
+    "sber-rub-to-sber-rub": "SBERRUB_SBERRUB",
+    "sber-rub-to-tinkoff-rub": "SBERRUB_TCSBRUB",
+    "sber-rub-to-gazprom-rub": "SBERRUB_GPBRUB",
     "tinkoff-rub-to-bitcoin-btc": "TCSBRUB_BTC",
     "tinkoff-rub-to-ethereum-eth": "TCSBRUB_ETH",
     "tinkoff-rub-to-tether-usdt-trc-20": "TCSBRUB_USDTTRC20",
     "tinkoff-rub-to-tether-usdt-erc-20": "TCSBRUB_USDTERC20",
     "tinkoff-rub-to-solana-sol": "TCSBRUB_SOL",
+    "tinkoff-rub-to-sber-rub": "TCSBRUB_SBERRUB",
+    "tinkoff-rub-to-tinkoff-rub": "TCSBRUB_TCSBRUB",
+    "tinkoff-rub-to-gazprom-rub": "TCSBRUB_GPBRUB",
     "gazprom-rub-to-bitcoin-btc": "GPBRUB_BTC",
     "gazprom-rub-to-ethereum-eth": "GPBRUB_ETH",
     "gazprom-rub-to-tether-usdt-trc-20": "GPBRUB_USDTTRC20",
     "gazprom-rub-to-tether-usdt-erc-20": "GPBRUB_USDTERC20",
     "gazprom-rub-to-solana-sol": "GPBRUB_SOL",
+    "gazprom-rub-to-sber-rub": "GPBRUB_SBERRUB",
+    "gazprom-rub-to-tinkoff-rub": "GPBRUB_TCSBRUB",
+    "gazprom-rub-to-gazprom-rub": "GPBRUB_GPBRUB",
     "cash-usd-to-bitcoin-btc": "CASHUSD_BTC",
     "cash-usd-to-ethereum-eth": "CASHUSD_ETH",
     "cash-usd-to-tether-usdt-trc-20": "CASHUSD_USDTTRC20",
@@ -1414,8 +1423,8 @@
         "MANAM",
         "ISFHN"
       ],
-      "en_country_name": "United Arab Emirates",
-      "ru_country_name": "Объединенные Арабские Эмираты"
+      "en_country_name": "UAE",
+      "ru_country_name": "ОАЭ"
     },
     {
       "codes": [
@@ -1711,6 +1720,7 @@
     },
     {
       "codes": [
+        "NNOV",
         "GOJ",
         "NNG"
       ],
@@ -4743,26 +4753,6 @@
     },
     {
       "codes": [
-        "SANTD"
-      ],
-      "en_name": "Santo-Domingo",
-      "ru_name": "Санто-Доминго",
-      "population": 4,
-      "coordinates": [
-        18.4861,
-        -69.9312
-      ],
-      "preposition": "Санто-Доминго",
-      "closest_cities": [
-        "SANTG",
-        "CARC",
-        "MIA"
-      ],
-      "en_country_name": "Dominican Republic",
-      "ru_country_name": "Доминиканская республика"
-    },
-    {
-      "codes": [
         "SAO"
       ],
       "en_name": "Sao-Paulo",
@@ -6891,6 +6881,42 @@
     },
     {
       "params": {
+        "exchange": "sber-rub-to-sber-rub"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "sber-rub-to-sber-rub"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "sber-rub-to-tinkoff-rub"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "sber-rub-to-tinkoff-rub"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "sber-rub-to-gazprom-rub"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "sber-rub-to-gazprom-rub"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
         "exchange": "tinkoff-rub-to-bitcoin-btc"
       },
       "locale": "en"
@@ -6951,6 +6977,42 @@
     },
     {
       "params": {
+        "exchange": "tinkoff-rub-to-sber-rub"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "tinkoff-rub-to-sber-rub"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "tinkoff-rub-to-tinkoff-rub"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "tinkoff-rub-to-tinkoff-rub"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "tinkoff-rub-to-gazprom-rub"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "tinkoff-rub-to-gazprom-rub"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
         "exchange": "gazprom-rub-to-bitcoin-btc"
       },
       "locale": "en"
@@ -7006,6 +7068,42 @@
     {
       "params": {
         "exchange": "gazprom-rub-to-solana-sol"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "gazprom-rub-to-sber-rub"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "gazprom-rub-to-sber-rub"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "gazprom-rub-to-tinkoff-rub"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "gazprom-rub-to-tinkoff-rub"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "gazprom-rub-to-gazprom-rub"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "gazprom-rub-to-gazprom-rub"
       },
       "locale": "ru"
     },
@@ -66814,270 +66912,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-sber-rub-in-santiago"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "bitcoin-btc-to-cash-usd-in-santo-domingo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "bitcoin-btc-to-cash-usd-in-santo-domingo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "bitcoin-btc-to-cash-rub-in-santo-domingo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "bitcoin-btc-to-cash-rub-in-santo-domingo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "ethereum-eth-to-cash-usd-in-santo-domingo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "ethereum-eth-to-cash-usd-in-santo-domingo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "ethereum-eth-to-cash-rub-in-santo-domingo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "ethereum-eth-to-cash-rub-in-santo-domingo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-trc-20-to-cash-usd-in-santo-domingo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-trc-20-to-cash-usd-in-santo-domingo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-trc-20-to-cash-rub-in-santo-domingo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-trc-20-to-cash-rub-in-santo-domingo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc-20-to-cash-usd-in-santo-domingo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc-20-to-cash-usd-in-santo-domingo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc-20-to-cash-rub-in-santo-domingo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "tether-usdt-erc-20-to-cash-rub-in-santo-domingo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "solana-sol-to-cash-usd-in-santo-domingo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "solana-sol-to-cash-usd-in-santo-domingo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "solana-sol-to-cash-rub-in-santo-domingo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "solana-sol-to-cash-rub-in-santo-domingo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-usd-to-bitcoin-btc-in-santo-domingo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-usd-to-bitcoin-btc-in-santo-domingo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-usd-to-ethereum-eth-in-santo-domingo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-usd-to-ethereum-eth-in-santo-domingo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-usd-to-tether-usdt-trc-20-in-santo-domingo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-usd-to-tether-usdt-trc-20-in-santo-domingo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-usd-to-tether-usdt-erc-20-in-santo-domingo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-usd-to-tether-usdt-erc-20-in-santo-domingo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-usd-to-solana-sol-in-santo-domingo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-usd-to-solana-sol-in-santo-domingo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-usd-to-sber-rub-in-santo-domingo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-usd-to-sber-rub-in-santo-domingo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-bitcoin-btc-in-santo-domingo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-bitcoin-btc-in-santo-domingo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-santo-domingo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-santo-domingo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-trc-20-in-santo-domingo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-trc-20-in-santo-domingo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc-20-in-santo-domingo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-tether-usdt-erc-20-in-santo-domingo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-solana-sol-in-santo-domingo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-solana-sol-in-santo-domingo"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-sber-rub-in-santo-domingo"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-sber-rub-in-santo-domingo"
       },
       "locale": "ru"
     },

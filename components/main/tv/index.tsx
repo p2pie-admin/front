@@ -14,14 +14,18 @@ import RateDetails from "../../shared/RateDetails";
 import { useRouter } from "next/router";
 
 const TV = ({ dir }: { dir: string }) => {
-  const { locale } = useRouter() as { locale: "en" | "ru" };
+  const router = useRouter();
+  const { locale } = router as { locale: "en" | "ru" };
+  const { exchange } = router.query as { exchange: string };
   const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
   const dirRates = useAppSelector((state) => state.main.dirRates) || [];
+  const cityName = useAppSelector((state) => state.main.city.en_name);
+  const isCash = exchange.startsWith("cash-") || exchange.includes("-cash-");
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchDirRates(dir));
+    dispatch(fetchDirRates({ dir, cityName: isCash ? cityName : "" }));
   }, [dir]);
 
   useEffect(() => {
@@ -47,8 +51,8 @@ const TV = ({ dir }: { dir: string }) => {
         <RateDetails />
       </CustomModal>
       <ErrorWrapper
-        isError={dirRatesStatus === "rejected"}
-        isLoading={!dirRates.length}
+        isError={dirRatesStatus === "rejected" || !dirRates.length}
+        isLoading={dirRatesStatus === "pending"}
         primaryMessage="No rates available!"
         secondaryMessage="check your network connection"
       >

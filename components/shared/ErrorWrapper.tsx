@@ -54,7 +54,7 @@ const ErrorWrapper = (props: {
   secondaryMessage?: string;
 }) => {
   const { isError, isLoading, children } = props;
-  if (isError) return <Error {...props} />;
+
   if (isLoading)
     return (
       <Center
@@ -68,6 +68,7 @@ const ErrorWrapper = (props: {
         <Spinner size="xl" color="bg.500" />
       </Center>
     );
+  if (isError) return <Error {...props} />;
 
   return <>{children}</>;
 };

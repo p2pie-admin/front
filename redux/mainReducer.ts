@@ -20,6 +20,7 @@ import {
   submitOrder,
   getOrderByUID,
   fetchParameters,
+  fetchCity,
 } from "./thunks";
 import { IPm, IPmGroup } from "../types/selector";
 import { IActivePetal, IDir } from "../types/dir";
@@ -99,7 +100,7 @@ export interface MainState {
 
 const initialState: MainState = {
   searchBarInputValue: "",
-  dirRatesStatus: "fulfilled",
+  dirRatesStatus: "pending",
   amountOutputs: initialAmountOutputs,
   swiperIdVisible: 1,
   pms: [],
@@ -392,6 +393,11 @@ export const mainSlice = createSlice({
       }, []);
     });
 
+    builder.addCase(fetchCity.fulfilled, (state, action) => {
+      state.city = action.payload;
+      state.modal = undefined;
+    });
+
     builder.addCase(fetchDirRates.rejected, (state) => {
       state.dirRatesStatus = "rejected";
     });
@@ -510,7 +516,7 @@ export const {
   incrementSwiper,
   decrementSwiper,
   setCity,
-  // addLocation,
+
   setCurrencyConverterRate,
   addPmP2P,
   addEmptyDir,

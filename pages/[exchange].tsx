@@ -26,7 +26,7 @@ import {
   pmsToSlug,
 } from "../components/main/side/selector/section/PmGroup/helper";
 
-import { popularCityNames } from "../components/layout/header/citySelector/location/helper";
+const prerenderCountries = ["ukraine", "russia", "belarus"];
 
 const ExchangePage = (props: {
   //article?: IArticle | null;
@@ -123,8 +123,8 @@ export async function getStaticProps({
 }
 //.....................................................................................................
 export async function getStaticPaths() {
-  const possiblePairsFetcher = initParserFetcher();
-  const ppRes = (await possiblePairsFetcher("possible_pairs")) as {
+  const parserFetcher = initParserFetcher();
+  const ppRes = (await parserFetcher("possible_pairs")) as {
     [key: string]: string[];
   };
   const dirs = Object.entries(ppRes).reduce(
@@ -212,14 +212,18 @@ export async function getStaticPaths() {
     });
   });
 
-  const isPopularCity = (exchangePath: string) =>
-    Object.keys(popularCityNames).find((city) => exchangePath.includes(city));
+  const needPrerender = (exchangePath: string) => {
+    if (!exchangePath.includes("-in-")) return true;
+    const city = cities.find((city) =>
+      exchangePath.includes(city.en_name.toLowerCase())
+    );
+    if (!city?.en_name) return false;
+    const countryName = city?.en_country_name?.toLowerCase();
+    return city?.population > 2 && prerenderCountries.includes(countryName);
+  };
 
   const slicedPaths = paths
-    .filter(
-      (p) =>
-        isPopularCity(p.params.exchange) || !p.params.exchange.includes("-in-")
-    ) // фигачим только популярные города или направления без городов
+    .filter((p) => needPrerender(p.params.exchange)) // фигачим только популярные города или направления без городов
     .slice(0, 20);
   console.log(slicedPaths);
 

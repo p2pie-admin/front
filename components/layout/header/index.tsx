@@ -8,10 +8,11 @@ import {
   useToken,
 } from "@chakra-ui/react";
 import Logo from "./Logo";
-import CitySelector from "./citySelector";
+
 import SwipeableDrawer from "./drawer";
 import Nav from "../nav";
 import NavHeading from "../nav/NavHeading";
+import CitySelector from "./city";
 
 const Header = () => {
   const [bg100, bg900] = useToken("colors", ["bg.100", "bg.1000"]);
@@ -44,7 +45,7 @@ const Header = () => {
         </HStack>
 
         <HStack>
-          {/* <CitySelector /> */}
+          <CitySelector />
           <Box display={{ base: "none", xl: "block" }}>
             <NavHeading />
           </Box>

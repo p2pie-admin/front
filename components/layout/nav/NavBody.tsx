@@ -22,22 +22,22 @@ const NavBody = () => {
         href={"/create"}
         CustomIcon={RiTokenSwapLine}
       /> */}
-      <LinkButton
+      {/* <LinkButton
         message={t("main:mapPage")}
         href={"/map"}
         CustomIcon={RiMapPinLine}
-      />
+      /> */}
 
       <LinkButton
         message={t("main:contactsPage")}
         href={"https://t.me/p2pie"}
         CustomIcon={LiaTelegramPlane}
       />
-      <LinkButton
+      {/* <LinkButton
         message={t("main:botPage")}
         href={"https://t.me/p2pie_bot"}
         CustomIcon={RiRobot2Line}
-      />
+      /> */}
     </>
   );
 };

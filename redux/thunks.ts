@@ -9,6 +9,7 @@ import {
 import {
   initCMSFetcher,
   initCurrencyConverterFetcher,
+  initParserFetcher,
 } from "../services/fetchers";
 import { MainState } from "./mainReducer";
 import { IPm, IPmGroup, IPmPointer } from "../types/selector";
@@ -27,6 +28,7 @@ import {
 
 import { pmFromPmGroups } from "../components/main/side/selector/section/PmGroup/helper";
 import { CreateRedirectMutation } from "../components/main/tv/queries";
+import { ICity } from "../types/exchange";
 //import { redirect } from "next/navigation";
 
 // export async function navigate() {
@@ -60,9 +62,15 @@ const courseFilterLink =
 //   }
 // );
 
-const _fetchRates = async (dir: string) => {
+const _fetchRates = async ({
+  dir,
+  cityName,
+}: {
+  dir: string;
+  cityName?: string;
+}) => {
   const response = await axios
-    .get(`${courseFilterLink}/dir=${dir}`)
+    .get(`${courseFilterLink}/dir=${dir}/${cityName?.toLowerCase()}`)
     .catch((err) => console.error("could not fetch, ", err));
   return response?.data as IRate[];
 };
@@ -183,6 +191,15 @@ export const fetchPms = createAsyncThunk("initial/fetchPms", async () => {
   const response = await fetcher(pmsQuery);
   return response?.pms as IPmPointer[];
 });
+
+export const fetchCity = createAsyncThunk(
+  "initial/fetchCity",
+  async (en_name: string) => {
+    const fetcher = initParserFetcher();
+    const response = await fetcher(`city=${en_name}`);
+    return response as ICity;
+  }
+);
 
 export const submitOrder = createAsyncThunk(
   "order/submitOrder",
