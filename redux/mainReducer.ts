@@ -100,7 +100,7 @@ export interface MainState {
 
 const initialState: MainState = {
   searchBarInputValue: "",
-  dirRatesStatus: "pending",
+  dirRatesStatus: "fulfilled",
   amountOutputs: initialAmountOutputs,
   swiperIdVisible: 1,
   pms: [],

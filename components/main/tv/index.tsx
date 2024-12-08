@@ -20,7 +20,8 @@ const TV = ({ dir }: { dir: string }) => {
   const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
   const dirRates = useAppSelector((state) => state.main.dirRates) || [];
   const cityName = useAppSelector((state) => state.main.city.en_name);
-  const isCash = exchange.startsWith("cash-") || exchange.includes("-cash-");
+  const isCash =
+    (exchange && exchange.startsWith("cash-")) || exchange.includes("-cash-");
 
   const dispatch = useAppDispatch();
 

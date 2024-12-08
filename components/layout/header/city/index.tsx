@@ -20,7 +20,10 @@ const CitySelector = () => {
   );
 
   const dispatch = useAppDispatch();
-  if (!(exchange.startsWith("cash-") || exchange.includes("-cash-")))
+  if (
+    !exchange ||
+    !(exchange.startsWith("cash-") || exchange.includes("-cash-"))
+  )
     return <></>;
   return (
     <Box>
