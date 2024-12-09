@@ -17,9 +17,11 @@ const DirText = ({
 }) => {
   const cityCountry = useAppSelector(
     (state) =>
-      state.main.city[`${locale}_name`] +
-      " / " +
-      state.main.city[`${locale}_country_name`]
+      `${
+        locale === "ru"
+          ? state.main.city.preposition
+          : state.main.city[`${locale}_name`]
+      } / ${state.main.city[`${locale}_country_name`]}`
   );
 
   if (!dirText) return <></>;
