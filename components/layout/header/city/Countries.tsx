@@ -5,26 +5,33 @@ import useSWR from "swr";
 import { ISelectorCountry } from "../../../../types/city";
 import ErrorWrapper from "../../../shared/ErrorWrapper";
 import Country from "./Country";
+import { useAppSelector } from "../../../../redux/hooks";
 
 export default function Countries() {
   const fetcher = initParserFetcher();
-
-  const { data, error } = useSWR("city_selector", fetcher) as {
+  const dir = useAppSelector((state) => {
+    const [givePm, getPm] = [state.main.givePm, state.main.getPm];
+    if (givePm && getPm) return `${givePm.code}_${getPm.code}`;
+    return undefined;
+  });
+  const { data, error } = useSWR(`city_selector=${dir}`, fetcher) as {
     data: ISelectorCountry[];
     error: boolean;
   };
-  console.log("data", data);
+  if (!dir) return <></>;
 
   return (
     <ErrorWrapper isError={error} isLoading={!data}>
-      <Grid gridTemplateColumns="1fr 1fr 1fr" mt="4" p="4">
+      <Box p="2">
         {data &&
           data.map((country, index) => (
-            <Box key={index}>
-              <Country key={country.en_country_name} country={country} />
-            </Box>
+            <Country
+              key={country.en_country_name}
+              country={country}
+              dir={dir}
+            />
           ))}
-      </Grid>
+      </Box>
     </ErrorWrapper>
   );
 }

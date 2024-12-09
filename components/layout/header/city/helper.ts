@@ -12,7 +12,7 @@ export const weights = [
   {
     fontWeight: "bold",
     fontSize: "lg",
-    variant: "contrast",
+    variant: "extra_contrast",
   },
   {
     fontWeight: "bold",
@@ -22,16 +22,16 @@ export const weights = [
   {
     fontWeight: "bold",
     fontSize: "xl",
-    variant: "extra_contrast",
+    variant: "primary",
   },
   {
     fontWeight: "bold",
     fontSize: "2xl",
-    variant: "extra_contrast",
+    variant: "primary",
   },
   {
     fontWeight: "bold",
     fontSize: "3xl",
-    variant: "extra_contrast",
+    variant: "primary",
   },
 ];

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ISelectorCountry } from "../../../../types/city";
-import { Box, Text, Collapse } from "@chakra-ui/react";
+import { Box, Text, Collapse, Grid } from "@chakra-ui/react";
 import Link from "next/link";
 import { slugCityToExchange } from "../../../exchange/helper";
 import { useRouter } from "next/router";
@@ -13,24 +13,27 @@ import { fetchCity } from "../../../../redux/thunks";
 import { weights } from "./helper";
 import City from "./City";
 
-export default function Country({ country }: { country: ISelectorCountry }) {
-  const [opened, setOpened] = useState(false);
+export default function Country({
+  country,
+  dir,
+}: {
+  country: ISelectorCountry;
+  dir: string;
+}) {
   const { locale } = useRouter();
 
-  const weight = weights[country.weight || 0];
   return (
-    <Box>
+    <>
       <Text
         my="1"
-        fontWeight={weight?.fontWeight || "bold"}
-        fontSize={weight?.fontSize || "2xl"}
-        variant={weight?.variant || "extra_contrast"}
+        fontWeight={"bold"}
+        fontSize={"2xl"}
+        variant={"extra_contrast"}
         cursor="pointer"
-        onClick={() => setOpened(!opened)}
       >
         {country[`${locale as "en" | "ru"}_country_name`]}
       </Text>
-      <Collapse in={opened}>
+      <Grid gridTemplateColumns="1fr 1fr 1fr" mt="4" p="4">
         {country.cities.map((city) => {
           // const popularCityName =
           // city.en_name.toLowerCase() as keyof typeof popularCityNames;
@@ -38,9 +41,9 @@ export default function Country({ country }: { country: ISelectorCountry }) {
           // const selected = highlightedCities.find((c) => c == city.en_name);
 
           //const bullet = !isMultiple ? "" : selected ? "•" : "◦";
-          return <City city={city} />;
+          return <City city={city} dir={dir} />;
         })}
-      </Collapse>
-    </Box>
+      </Grid>
+    </>
   );
 }

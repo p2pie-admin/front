@@ -10,17 +10,17 @@ import { weights } from "./helper";
 import { setDirRatesStatus } from "../../../../redux/mainReducer";
 import { batch } from "react-redux";
 
-export default function City({ city }: { city?: ISelectorCity }) {
+export default function City({
+  city,
+  dir,
+}: {
+  city?: ISelectorCity;
+  dir: string;
+}) {
   const { locale } = useRouter();
   const slug = useAppSelector((state) =>
     pmsToSlug({ givePm: state.main.givePm, getPm: state.main.getPm })
   );
-
-  const dir = useAppSelector((state) => {
-    const [givePm, getPm] = [state.main.givePm, state.main.getPm];
-    if (givePm && getPm) return `${givePm.code}_${getPm.code}`;
-    return undefined;
-  });
 
   const dispatch = useAppDispatch();
 
@@ -41,7 +41,7 @@ export default function City({ city }: { city?: ISelectorCity }) {
         key={city.en_name}
         cursor="pointer"
         fontWeight={weight?.fontWeight || "bold"}
-        fontSize={weight?.fontSize || "xl"}
+        fontSize={city.en_name.length < 10 ? weight?.fontSize : "lg"}
         variant={weight?.variant || "extra_contrast"}
         onClick={() => handleChooseCity(city.en_name)}
       >
