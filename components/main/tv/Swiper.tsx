@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect, useCallback, useState, useMemo } from "react";
 import { TbTriangleInvertedFilled } from "react-icons/tb";
 import { motion, useMotionValue, useAnimation } from "framer-motion";
 import { Box, Grid, useColorModeValue } from "@chakra-ui/react";
@@ -9,6 +9,7 @@ import { useAppDispatch } from "../../../redux/hooks";
 import { setSwiperIdVisible } from "../../../redux/mainReducer";
 import { IRate } from "../../../types/rates";
 import Item from "./Item";
+import debounce from "./utils/debounce";
 
 export const Swiper = (props: {
   isMobile: boolean;
@@ -27,20 +28,12 @@ export const Swiper = (props: {
 
   const y = useMotionValue(0);
   const controls = useAnimation();
+
   const getIndex = () => {
     const index = Math.round(
       (-y.get() + (containerHeight / 2 - itemHeight / 2)) / itemHeight
     );
-
     return Math.min(length - 1, Math.max(0, index));
-  };
-
-  const dragConstraints = {
-    top:
-      -itemHeight * (length - visibleItems) +
-      containerHeight / 2 -
-      itemHeight * 3,
-    bottom: containerHeight / 2,
   };
 
   const snapToNearest = useCallback(
@@ -61,45 +54,30 @@ export const Swiper = (props: {
     });
   };
 
-  const onDragEnd = () => {
-    dispatch(setSwiperIdVisible(getIndex()));
-    move(snapToNearest(y.get()));
-  };
-
-  useEffect(() => {
-    const unsubscribe = y.onChange(() => {
-      controls.start({
-        transition: { staggerChildren: 0.1 },
-      });
-    });
-
-    return () => unsubscribe();
-  }, [y, controls]);
-
-  const scrollToItem = (index: number) => {
-    const targetY =
-      -(itemHeight * index) + containerHeight / 2 - itemHeight / 2;
-    move(targetY);
-  };
+  const debouncedSetSwiperIdVisible = useMemo(
+    () =>
+      debounce(300, (index: number) => {
+        dispatch(setSwiperIdVisible(index));
+      }),
+    [dispatch]
+  );
 
   const stepDown = () => {
     const currentIndex = getIndex();
     const newIndex = Math.max(currentIndex - 1, 0);
-
-    dispatch(setSwiperIdVisible(newIndex));
+    debouncedSetSwiperIdVisible(newIndex);
     scrollToItem(newIndex);
   };
 
   const stepUp = () => {
     const currentIndex = getIndex();
     const newIndex = Math.min(currentIndex + 1, length - 1);
-    dispatch(setSwiperIdVisible(newIndex));
+    debouncedSetSwiperIdVisible(newIndex);
     scrollToItem(newIndex);
   };
 
   const handleWheel = (event: any) => {
-    if (isMobile) return;
-    if (!mouseEntered) return;
+    if (isMobile || !mouseEntered) return;
     if (event.deltaY < 0) {
       stepDown();
     } else if (event.deltaY > 0) {
@@ -127,6 +105,12 @@ export const Swiper = (props: {
     };
   }, [handleWheel, handleKeyDown]);
 
+  const scrollToItem = (index: number) => {
+    const targetY =
+      -(itemHeight * index) + containerHeight / 2 - itemHeight / 2;
+    move(targetY);
+  };
+
   const handleMouseEnter = () => {
     if (isMobile) return;
     const scrollbarWidth =
@@ -142,7 +126,7 @@ export const Swiper = (props: {
     document.body.style.paddingRight = "0px";
     setMouseEntered(false);
   };
-
+  if (!length) return <></>;
   return (
     <Grid gridTemplateColumns="1fr auto" gridGap={["2", "4"]} h="100%">
       <Box3D variant="extra_contrast" px="2">
@@ -160,10 +144,19 @@ export const Swiper = (props: {
           <Shader direction="top" />
           <motion.div
             drag="y"
-            dragConstraints={dragConstraints}
+            dragConstraints={{
+              top:
+                -itemHeight * (length - visibleItems) +
+                containerHeight / 2 -
+                itemHeight * 3,
+              bottom: containerHeight / 2,
+            }}
             style={{ y, width: "100%" }}
             dragElastic={0.2}
-            onDragEnd={onDragEnd}
+            onDragEnd={() => {
+              debouncedSetSwiperIdVisible(getIndex());
+              move(snapToNearest(y.get()));
+            }}
             animate={controls}
           >
             {dirRates.map((rate, index) => (
@@ -177,7 +170,6 @@ export const Swiper = (props: {
               />
             ))}
           </motion.div>
-
           <Shader direction="bottom" />
         </Box>
         <Box
@@ -190,7 +182,6 @@ export const Swiper = (props: {
           <TbTriangleInvertedFilled size="1.2rem" />
         </Box>
       </Box3D>
-
       <ControlPanel length={length} stepUp={stepUp} stepDown={stepDown} />
     </Grid>
   );

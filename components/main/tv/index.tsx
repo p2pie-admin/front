@@ -52,8 +52,8 @@ const TV = ({ dir }: { dir: string }) => {
         <RateDetails />
       </CustomModal>
       <ErrorWrapper
-        isError={dirRatesStatus === "rejected" || !dirRates.length}
-        isLoading={dirRatesStatus === "pending"}
+        isError={dirRatesStatus === "rejected"}
+        isLoading={dirRatesStatus === "pending" || !dirRates.length}
         primaryMessage="No rates available!"
         secondaryMessage="check your network connection"
       >

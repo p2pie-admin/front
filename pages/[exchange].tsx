@@ -222,9 +222,8 @@ export async function getStaticPaths() {
     return city?.population > 2 && prerenderCountries.includes(countryName);
   };
 
-  const slicedPaths = paths
-    .filter((p) => needPrerender(p.params.exchange)) // фигачим только популярные города или направления без городов
-    .slice(0, 20);
+  const slicedPaths = paths.filter((p) => needPrerender(p.params.exchange)); // фигачим только популярные города или направления без городов
+  // .slice(0, 20);
   console.log(slicedPaths);
 
   const cachedData = readCache() as ICache;

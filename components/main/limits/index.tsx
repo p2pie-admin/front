@@ -83,8 +83,8 @@ const LimitsRange = () => {
   const mainCur = side === "give" ? giveCur : getCur;
 
   const dirRates = useAppSelector((state) => state.main.dirRates || []);
-  const allMins = dirRates.map((r) => R(r.min?.[side], 2));
-  const allMaxes = dirRates.map((r) => R(r.max?.[side], 2));
+  const allMins = dirRates?.map((r) => R(r.min?.[side], 2));
+  const allMaxes = dirRates?.map((r) => R(r.max?.[side], 2));
   const [highestMax, lowestMin] = [Math.max(...allMaxes), Math.min(...allMins)];
 
   const amount =

@@ -52,9 +52,8 @@ const ControlPanel = ({
               bgColor={idx === index ? mainColor : secondaryColor}
               boxShadow={idx === index ? `0 0 10px -2px ${colorKey}` : "unset"}
               borderRadius="sm"
-              aspectRatio={["1 / 1", "2 / 1"]}
-              h={["2", "3"]}
-              maxW={["2", "4"]}
+              aspectRatio={length >= 10 ? "8 / 1" : ["1 / 1", "2 / 1"]}
+              h={length >= 10 ? "0.5" : ["2", "3"]}
             />
           ))}
         </VStack>
