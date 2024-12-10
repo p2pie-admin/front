@@ -152,7 +152,7 @@ export const Swiper = (props: {
               bottom: containerHeight / 2,
             }}
             style={{ y, width: "100%" }}
-            dragElastic={0.2}
+            dragElastic={0.7}
             onDragEnd={() => {
               debouncedSetSwiperIdVisible(getIndex());
               move(snapToNearest(y.get()));
