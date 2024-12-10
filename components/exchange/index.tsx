@@ -27,6 +27,7 @@ import ColumnGrid from "../layout/ColumnGrid";
 
 import { NextSeo, BreadcrumbJsonLd } from "next-seo";
 import { useTranslation } from "next-i18next";
+import NoiseLayer from "../shared/NoiseLayer";
 
 const Exchange = ({
   locale,
@@ -145,6 +146,7 @@ const Exchange = ({
           },
         ]}
       />
+
       <ColumnGrid>
         <Column index={0}>
           <ColumnHeader

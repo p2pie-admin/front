@@ -34,7 +34,7 @@ const TV = ({ dir }: { dir: string }) => {
   }, []);
 
   const isMobile = useIsMobile();
-  const itemHeight = isMobile ? 80 : 130; // Height of each text box
+  const itemHeight = isMobile ? 100 : 130; // Height of each text box
   const visibleItems = 3; // Number of items visible in the container
   const containerHeight = itemHeight * visibleItems;
 

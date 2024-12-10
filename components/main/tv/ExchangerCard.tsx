@@ -67,7 +67,7 @@ const MobileParameters = ({
 
 const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
   const dispatch = useAppDispatch();
-  const activeIndex = useAppSelector((state) => state.main.swiperIdVisible);
+  //const activeIndex = useAppSelector((state) => state.main.swiperIdVisible);
 
   const isMobile = useIsMobile();
 
@@ -136,7 +136,7 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
               size={name.length > 15 ? "md" : "lg"}
               fontWeight="bold"
               transition="color 200ms linear"
-              variant={index === activeIndex ? "primary" : "no_contrast"}
+              variant={"primary"}
               cursor="pointer"
               onClick={() => {
                 dispatch(redirect());
@@ -145,29 +145,23 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
             >
               {capitalize(name)}
             </ResponsiveText>
-            <Box
-              color={index === activeIndex ? ratingColor : colorInactive}
-              mb="1"
-            >
+            <Box color={ratingColor} mb="1">
               <FaStar size="1rem" />
             </Box>
-            <ResponsiveText
-              size="lg"
-              color={index === activeIndex ? ratingColor : colorInactive}
-            >
+            <ResponsiveText size="lg" color={ratingColor}>
               {rating}
             </ResponsiveText>
           </HStack>
           <Box
             cursor="pointer"
             onClick={() => dispatch(triggerModal("rate-details"))}
-            color={index === activeIndex ? colorActive : colorInactive}
+            color={colorActive}
           >
             <GrCircleInformation size="1.2rem" />
           </Box>
         </HStack>
 
-        <Box color={index === activeIndex ? colorActive : colorInactive}>
+        <Box color={colorActive}>
           <ResponsiveText size="sm" color="inherit">{`Курс: 1 ${bigCur} ≈ ${
             course < 1 ? addSpaces(R(1 / course, 1)) : addSpaces(R(course, 1))
           } ${smallCur}`}</ResponsiveText>

@@ -11,6 +11,8 @@ import { IRate } from "../../../types/rates";
 import Item from "./Item";
 import debounce from "./utils/debounce";
 
+const [elastic, stiffness, damping, debounceTime] = [0.2, 60, 10, 300];
+
 export const Swiper = (props: {
   isMobile: boolean;
   itemHeight: number;
@@ -23,7 +25,7 @@ export const Swiper = (props: {
   const length = dirRates.length;
   const dispatch = useAppDispatch();
   const bgColor = useColorModeValue("bg.50", "bg.800");
-  const triangleColor = useColorModeValue("bg.100", "bg.600");
+  const triangleColor = useColorModeValue("violet.200", "peach.600");
   const [mouseEntered, setMouseEntered] = useState(false);
 
   const y = useMotionValue(0);
@@ -50,13 +52,13 @@ export const Swiper = (props: {
   const move = (y: number) => {
     controls.start({
       y,
-      transition: { type: "spring", stiffness: 700, damping: 36 },
+      transition: { type: "spring", stiffness, damping },
     });
   };
 
   const debouncedSetSwiperIdVisible = useMemo(
     () =>
-      debounce(300, (index: number) => {
+      debounce(debounceTime, (index: number) => {
         dispatch(setSwiperIdVisible(index));
       }),
     [dispatch]
@@ -152,8 +154,11 @@ export const Swiper = (props: {
               bottom: containerHeight / 2,
             }}
             style={{ y, width: "100%" }}
-            dragElastic={0.7}
-            onDragEnd={() => {
+            dragElastic={elastic}
+            onDragEnd={async () => {
+              await new Promise((r) =>
+                setTimeout(r, Math.abs(y.getVelocity() / 2))
+              );
               debouncedSetSwiperIdVisible(getIndex());
               move(snapToNearest(y.get()));
             }}

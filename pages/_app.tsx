@@ -9,9 +9,7 @@ import { appWithTranslation, useTranslation } from "next-i18next";
 import { DefaultSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { defaultConfig } from "../next-seo.config";
-import { initCMSFetcher } from "../services/fetchers";
-import { citiesQuery } from "../services/initialQueries";
-import { ICities } from "../types/exchange";
+import NoiseLayer from "../components/shared/NoiseLayer";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { locale } = useRouter() as { locale: "en" | "ru" };
@@ -22,6 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Provider store={store}>
         <Layout>
           <DefaultSeo {...seoConfig} />
+          <NoiseLayer />
           <Component {...pageProps} />
         </Layout>
       </Provider>
