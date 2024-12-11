@@ -204,8 +204,7 @@ export async function getStaticPaths() {
 
   cities.map(async (city) => {
     Object.entries(slugToCodes).forEach(([slug, dir]) => {
-      if (nonEmpty?.[city.en_name.toLowerCase()]?.[dir] < 10) return;
-
+      if (nonEmpty?.[city.en_name.toLowerCase()]?.[dir] < 2) return;
       locales.forEach((locale) => {
         if (!(slug.startsWith("cash-") || slug.includes("-cash-"))) return;
         paths.push({
@@ -228,8 +227,7 @@ export async function getStaticPaths() {
     return city?.population > 2 && prerenderCountries.includes(countryName);
   };
 
-  const slicedPaths = paths;
-  //.filter((p) => needPrerender(p.params.exchange))
+  const slicedPaths = paths.filter((p) => needPrerender(p.params.exchange));
   //.slice(0, 1000000); // фигачим только популярные города или направления без городов
 
   const cachedData = readCache() as ICache;
