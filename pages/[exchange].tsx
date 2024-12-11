@@ -204,7 +204,7 @@ export async function getStaticPaths() {
 
   cities.map(async (city) => {
     Object.entries(slugToCodes).forEach(([slug, dir]) => {
-      if (nonEmpty?.[city.en_name.toLowerCase()]?.[dir] < 5) return;
+      if (nonEmpty?.[city.en_name.toLowerCase()]?.[dir] < 10) return;
 
       locales.forEach((locale) => {
         if (!(slug.startsWith("cash-") || slug.includes("-cash-"))) return;
