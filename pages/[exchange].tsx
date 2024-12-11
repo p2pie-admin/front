@@ -112,7 +112,7 @@ export async function getStaticProps({
         similarPmPairs,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
-      revalidate: 6000,
+      revalidate: 60000,
     };
   } catch (e) {
     console.error(e);
@@ -198,8 +198,14 @@ export async function getStaticPaths() {
     []
   );
 
-  cities.map((city) => {
-    Object.keys(slugToCodes).forEach((slug) => {
+  const nonEmpty = (await parserFetcher(`non_empty_cities`)) as {
+    [key: string]: { [key: string]: number };
+  };
+
+  cities.map(async (city) => {
+    Object.entries(slugToCodes).forEach(([slug, dir]) => {
+      if (!nonEmpty?.[city.en_name.toLowerCase()]?.[dir]) return;
+
       locales.forEach((locale) => {
         if (!(slug.startsWith("cash-") || slug.includes("-cash-"))) return;
         paths.push({
@@ -222,11 +228,9 @@ export async function getStaticPaths() {
     return city?.population > 2 && prerenderCountries.includes(countryName);
   };
 
-  const slicedPaths = paths
-    .filter((p) => needPrerender(p.params.exchange))
-    .slice(0, 10); // фигачим только популярные города или направления без городов
-
-  console.log(slicedPaths);
+  const slicedPaths = paths;
+  //.filter((p) => needPrerender(p.params.exchange))
+  //.slice(0, 1000000); // фигачим только популярные города или направления без городов
 
   const cachedData = readCache() as ICache;
   cachedData.slugToCodes = slugToCodes;

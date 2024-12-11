@@ -25,7 +25,7 @@ export const Swiper = (props: {
   const length = dirRates.length;
   const dispatch = useAppDispatch();
   const bgColor = useColorModeValue("bg.50", "bg.800");
-  const triangleColor = useColorModeValue("violet.200", "peach.600");
+  const triangleColor = useColorModeValue("violet.700", "peach.600");
   const [mouseEntered, setMouseEntered] = useState(false);
 
   const y = useMotionValue(0);

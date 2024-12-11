@@ -135,10 +135,14 @@ export const kFormatter = (num: number, locale?: "en" | "ru") => {
   const abs = Math.abs(num);
   return abs > 999999999
     ? "-"
-    : abs > 999999
+    : abs > 9999999
     ? (num / 1000000).toFixed(0) + (locale == "en" ? " m" : " млн")
-    : abs > 999
+    : abs > 999999
+    ? (num / 1000000).toFixed(1) + (locale == "en" ? " m" : " млн")
+    : abs > 9999
     ? (num / 1000).toFixed(0) + (locale == "en" ? " k" : " тыс")
+    : abs > 999
+    ? (num / 1000).toFixed(1) + (locale == "en" ? " k" : " тыс")
     : num;
 };
 
