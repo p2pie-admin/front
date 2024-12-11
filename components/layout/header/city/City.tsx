@@ -4,10 +4,10 @@ import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { slugCityToExchange } from "../../../exchange/helper";
 import { pmsToSlug } from "../../../main/side/selector/section/PmGroup/helper";
 import { fetchCity, fetchDirRates } from "../../../../redux/thunks";
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 import { ISelectorCity } from "../../../../types/city";
 import { weights } from "./helper";
-import { setDirRatesStatus } from "../../../../redux/mainReducer";
+import { setDirRatesStatus, triggerModal } from "../../../../redux/mainReducer";
 import { batch } from "react-redux";
 
 export default function City({
@@ -23,27 +23,33 @@ export default function City({
   );
 
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
-  const handleChooseCity = (en_name: string) => {
-    batch(() => {
-      dispatch(fetchCity(en_name));
-      dir && dispatch(fetchDirRates({ dir, cityName: en_name }));
-      dir && dispatch(setDirRatesStatus("pending"));
-    });
+  const handleChooseCity = () => {
+    // router.push(`/${slugCityToExchange(slug, en_name)}`);
+    // batch(() => {
+    //   dispatch(fetchCity(en_name));
+    //   dir && dispatch(fetchDirRates({ dir, cityName: en_name }));
+    //   dir && dispatch(setDirRatesStatus("pending"));
+    // });
   };
   if (!dir || !city) return <></>;
   const weight = weights[city.population || 0];
   return (
-    <Link href={`/${slugCityToExchange(slug, city.en_name)}`} passHref>
+    <Link
+      onClick={() => dispatch(triggerModal(undefined))}
+      href={`/${slugCityToExchange(slug, city.en_name)}`}
+      passHref
+    >
       <Text
         ml="1"
         mt="1"
+        // onClick={() => handleChooseCity(city.en_name)}
         key={city.en_name}
         cursor="pointer"
         fontWeight={weight?.fontWeight || "bold"}
         fontSize={city.en_name.length < 10 ? weight?.fontSize : "lg"}
         variant={weight?.variant || "extra_contrast"}
-        onClick={() => handleChooseCity(city.en_name)}
       >
         {city[`${locale as "en" | "ru"}_name`]}
       </Text>

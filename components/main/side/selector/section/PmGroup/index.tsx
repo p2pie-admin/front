@@ -31,7 +31,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   const oppositePm = useAppSelector(
     (state) => state.main[`${side === "give" ? "get" : "give"}Pm`]
   );
-  const cityName = useAppSelector((state) => state.main.location?.en_city_name);
+  const cityName = useAppSelector((state) => state.main.city?.en_name);
   const pms = extractPmsFromPmGroup(pm_group);
   if (!pms || !pms.length) {
     return <></>;
@@ -39,35 +39,6 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   const possiblePairs = oppositePm?.possible_pairs;
 
   const shaded = singlePmHasUnmetPairs(pms[0], possiblePairs);
-  // const router = useRouter();
-
-  // const givePm = useAppSelector((state) => state.main.givePm);
-  // const getPm = useAppSelector((state) => state.main.getPm);
-  // const p2pGivePm = useAppSelector(
-  //   (state) => state.main.p2p.dirs[p2pDirIndex || 0].give
-  // );
-  // const p2pGetPm = useAppSelector(
-  //   (state) => state.main.p2p.dirs[p2pDirIndex || 0].get
-  // );
-  // const isAddPm = useAppSelector((state) => state.main.modal?.includes("+"));
-
-  const choosePmP2P = (selectedPm: IPm) => {
-    // для странички ордеров
-    // const oppositePm = side === "give" ? p2pGetPm?.[0] : p2pGivePm?.[0];
-    // batch(() => {
-    //   isAddPm
-    //     ? dispatch(addPmP2P({ pm: selectedPm, side, index: p2pDirIndex || 0 }))
-    //     : dispatch(setPmP2P({ pm: selectedPm, side, index: p2pDirIndex || 0 }));
-    //   dispatch(triggerModal(undefined));
-    //   if (oppositePm?.code) {
-    //     const curPair =
-    //       side === "get"
-    //         ? `${oppositePm.currency.code}_${selectedPm.currency.code}`
-    //         : `${selectedPm.currency.code}_${oppositePm.currency.code}`;
-    //     dispatch(fetchCurrencyConverterRates({ curPair, p2pDirIndex }));
-    //   }
-    // });
-  };
 
   const choosePm = (sub?: string) => {
     const pm =
@@ -138,7 +109,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
         pmGroupName={name}
         pms={pms}
         color={pm_group.color}
-        choosePm={p2pDirIndex !== undefined ? choosePmP2P : choosePm}
+        choosePm={choosePm}
         possiblePairs={possiblePairs}
       />
     ); // pm_id from pm_group_short_name + currency or subitem
@@ -150,9 +121,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
       color={pm_group.color}
       icon={pm_group.icon}
       iconAlt={name}
-      handleToggle={
-        p2pDirIndex !== undefined ? () => choosePmP2P(pms[0]) : choosePm
-      }
+      handleToggle={choosePm}
       shaded={shaded}
     >
       <Name

@@ -1,20 +1,26 @@
-import { Text, Box, Heading } from "@chakra-ui/react";
+import { Text, Box, Heading, Link } from "@chakra-ui/react";
 import { ResponsiveText } from "../../styles/theme/custom";
 import { fillWords } from "./helper";
 import { IPm } from "../../types/selector";
 import { useAppSelector } from "../../redux/hooks";
-import { IDirText } from "../../types/exchange";
+import { ICity, IDirText } from "../../types/exchange";
+import { useTranslation } from "react-i18next";
 const DirText = ({
   dirText,
   givePm,
   getPm,
   locale,
+  slug,
+  city,
 }: {
   dirText?: IDirText;
   givePm: IPm;
   getPm: IPm;
   locale: "en" | "ru";
+  slug: string;
+  city?: ICity;
 }) => {
+  const { t } = useTranslation();
   const cityCountry = useAppSelector(
     (state) =>
       `${
@@ -26,6 +32,7 @@ const DirText = ({
 
   if (!dirText) return <></>;
   const { text, title } = dirText;
+
   return (
     <Box p="2">
       <Heading as="h2" fontSize="3xl">

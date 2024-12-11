@@ -2,6 +2,9 @@ import { IPm } from "./selector";
 
 export type ISectionName = "crypto" | "bank" | "cash" | "digital" | "transfer";
 
+export type IDonors = { [key: string]: { [key: string]: string } };
+// {BTC_CASHRUB: {samara: "moscow"}}
+
 export interface IPmsText {
   id: string;
   section: ISectionName;
@@ -30,6 +33,7 @@ export interface ICache {
   articleCodes: string[];
   cities: ICity[];
   exchangePaths: IPath[];
+  donors: IDonors;
 }
 
 export interface IPossiblePmPair {
@@ -47,7 +51,7 @@ export interface ICity {
   population: number;
   coordinates: number[];
   preposition: string;
-  closest_cities: string[];
+  closest_cities: { en_name: string; ru_name: string }[];
   en_country_name: string;
   ru_country_name: string;
 }

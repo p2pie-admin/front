@@ -26,14 +26,15 @@ export default function Country({
     <>
       <Text
         my="1"
+        p="1"
         fontWeight={"bold"}
-        fontSize={"2xl"}
+        fontSize={"4xl"}
         variant={"extra_contrast"}
         cursor="pointer"
       >
-        {country[`${locale as "en" | "ru"}_country_name`]}
+        {country[`${locale as "en" | "ru"}_country_name`] + ":"}
       </Text>
-      <Grid gridTemplateColumns="1fr 1fr 1fr" mt="4" p="4">
+      <Grid gridTemplateColumns="1fr  1fr" mt="2" p="2">
         {country.cities.map((city) => {
           // const popularCityName =
           // city.en_name.toLowerCase() as keyof typeof popularCityNames;

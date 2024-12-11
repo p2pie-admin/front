@@ -177,7 +177,7 @@ export const exchangeToSlugCity = (exchange: string) => {
 export const slugCityToExchange = (slug: string, city?: string) => {
   return `${slug}${
     (slug.startsWith("cash-") || slug.includes("-cash-")) && city
-      ? "-in-" + city.replaceAll(" ", "-").toLowerCase()
+      ? "-in-" + city?.replaceAll(" ", "-").toLowerCase()
       : ""
   }`;
 };

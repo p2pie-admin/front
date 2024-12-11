@@ -1,22 +1,22 @@
 export const weights = [
   {
-    fontWeight: "unset",
-    fontSize: "md",
-    variant: "contrast",
-  },
-  {
-    fontWeight: "unset",
-    fontSize: "md",
-    variant: "contrast",
-  },
-  {
     fontWeight: "bold",
-    fontSize: "lg",
+    fontSize: "xl",
     variant: "extra_contrast",
   },
   {
     fontWeight: "bold",
-    fontSize: "lg",
+    fontSize: "xl",
+    variant: "extra_contrast",
+  },
+  {
+    fontWeight: "bold",
+    fontSize: "xl",
+    variant: "extra_contrast",
+  },
+  {
+    fontWeight: "bold",
+    fontSize: "xl",
     variant: "extra_contrast",
   },
   {
@@ -26,12 +26,12 @@ export const weights = [
   },
   {
     fontWeight: "bold",
-    fontSize: "2xl",
+    fontSize: "xl",
     variant: "primary",
   },
   {
     fontWeight: "bold",
-    fontSize: "3xl",
+    fontSize: "xl",
     variant: "primary",
   },
 ];

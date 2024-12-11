@@ -66,7 +66,7 @@ const defaultCity = {
   population: 6,
   coordinates: [55.7558, 37.6176],
   preposition: "Москве",
-  closest_cities: ["MSK", "MTY", "LUB"],
+  closest_cities: [{ en_name: "Saint-Petersburg", ru_name: "Санкт-Петербург" }],
   en_country_name: "Russia",
   ru_country_name: "Россия",
 } as ICity;

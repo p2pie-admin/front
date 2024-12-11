@@ -16,7 +16,7 @@ const CitySelector = () => {
   const { locale } = router as { locale: "en" | "ru" };
   const { exchange } = router.query as { exchange: string };
   const currentCity = useAppSelector(
-    (state) => state.main.city[`${locale}_name`]
+    (state) => state.main?.city[`${locale}_name`]
   );
 
   const dispatch = useAppDispatch();

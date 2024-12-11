@@ -21,5 +21,6 @@
   "city": "Город",
   "toSell": "Продать",
   "toBuy": "Купить",
-  "exchangers": "Обменников:"
+  "exchangers": "Обменников:",
+  "closest_cities": "Ближайшие города: "
 }

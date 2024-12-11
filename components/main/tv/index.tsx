@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import useSWR from "swr";
 import { TopParametersQuery, DirectionParametersQuery } from "./queries";
 import ErrorWrapper from "../../shared/ErrorWrapper";
 import { initCMSFetcher } from "../../../services/fetchers";
-import { Box } from "@chakra-ui/react";
+import { Box, HStack, Link } from "@chakra-ui/react";
 import { IParameter, IRate } from "../../../types/rates";
 import Swiper from "./Swiper";
 import { useIsMobile } from "./hooks";
@@ -12,25 +12,46 @@ import { fetchDirRates, fetchParameters } from "../../../redux/thunks";
 import CustomModal from "../../shared/CustomModal";
 import RateDetails from "../../shared/RateDetails";
 import { useRouter } from "next/router";
+import { ICity } from "../../../types/exchange";
+import NextLink from "next/link";
+import { slugCityToExchange } from "../../exchange/helper";
+import { capitalize } from "../side/selector/section/PmGroup/helper";
+import { ResponsiveText } from "../../../styles/theme/custom";
+import { useTranslation } from "react-i18next";
 
-const TV = ({ dir }: { dir: string }) => {
+const TV = ({
+  dir,
+  city,
+  donorCity,
+  slug,
+}: {
+  dir: string;
+  city?: ICity;
+  donorCity?: ICity;
+  slug: string;
+}) => {
+  const [initial, setInitial] = useState(true);
   const router = useRouter();
+  const { t } = useTranslation();
   const { locale } = router as { locale: "en" | "ru" };
   const { exchange } = router.query as { exchange: string };
   const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
   const dirRates = useAppSelector((state) => state.main.dirRates) || [];
-  const cityName = useAppSelector((state) => state.main.city.en_name);
+  // const cityName = useAppSelector((state) => state.main.city.en_name);
   const isCash =
     (exchange && exchange.startsWith("cash-")) || exchange.includes("-cash-");
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchDirRates({ dir, cityName: isCash ? cityName : "" }));
-  }, [dir]);
+    dispatch(
+      fetchDirRates({ dir, cityName: city && isCash ? city.en_name : "" })
+    );
+  }, [dir, city]);
 
   useEffect(() => {
     dispatch(fetchParameters(locale));
+    setInitial(false);
   }, []);
 
   const isMobile = useIsMobile();
@@ -46,19 +67,39 @@ const TV = ({ dir }: { dir: string }) => {
     dirRates,
   };
 
+  const isError =
+    dirRatesStatus === "rejected" || (!initial && !dirRates.length);
+  const isLoading = dirRatesStatus === "pending";
+
   return (
     <Box minH={`${itemHeight * visibleItems}`}>
       <CustomModal id="rate-details" header="Exchanger details">
         <RateDetails />
       </CustomModal>
       <ErrorWrapper
-        isError={dirRatesStatus === "rejected"}
-        isLoading={dirRatesStatus === "pending" || !dirRates.length}
+        isError={isError}
+        isLoading={isLoading}
         primaryMessage="No rates available!"
         secondaryMessage="check your network connection"
       >
         <Swiper {...props} />
       </ErrorWrapper>
+      {!isLoading && isError && donorCity && (
+        <HStack justifyContent="center">
+          <ResponsiveText fontSize="2xl" variant="primary">
+            {t("main:closest_cities")}{" "}
+            {city?.closest_cities.map((c, index) => (
+              <Link
+                as={NextLink}
+                href={`/${slugCityToExchange(slug, c.en_name)}`}
+                fontWeight="bold"
+              >
+                {`${index ? "," : ""} ${capitalize(c[`${locale}_name`])}`}
+              </Link>
+            ))}
+          </ResponsiveText>
+        </HStack>
+      )}
     </Box>
   );
 };

@@ -38,6 +38,7 @@ const Exchange = ({
   getPm,
   city,
   similarPmPairs,
+  donorCity,
 }: {
   //article?: IArticle | null;
   locale: "en" | "ru";
@@ -48,6 +49,7 @@ const Exchange = ({
   getPm: IPm;
   city?: ICity;
   similarPmPairs: IPm[][];
+  donorCity?: ICity;
 }) => {
   const dispatch = useAppDispatch();
   const dir = `${givePm.code}_${getPm.code}`;
@@ -67,7 +69,7 @@ const Exchange = ({
         })
       );
     });
-  }, [dir]);
+  }, [dir, city]);
 
   const giveCur = givePm.currency.code.toUpperCase();
   const getCur = getPm.currency.code.toUpperCase();
@@ -173,7 +175,7 @@ const Exchange = ({
           <Calculator />
 
           <LimitsRange />
-          <TV dir={dir} />
+          <TV dir={dir} city={city} donorCity={donorCity} slug={slug} />
         </Column>
         <Box3D
           p="4"
@@ -186,6 +188,8 @@ const Exchange = ({
             givePm={givePm}
             getPm={getPm}
             locale={locale}
+            slug={slug}
+            city={city}
           />
         </Box3D>
       </ColumnGrid>

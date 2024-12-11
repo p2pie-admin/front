@@ -14,6 +14,7 @@ import {
   ICache,
   ICity,
   IDirText,
+  IDonors,
   IPmsText,
   IPossiblePmPair,
 } from "../types/exchange";
@@ -39,6 +40,7 @@ const ExchangePage = (props: {
   getPm: IPm;
   city?: ICity;
   similarPmPairs: IPm[][];
+  donorCity?: ICity;
 }) => {
   return <Exchange {...props} />;
 };
@@ -99,6 +101,14 @@ export async function getStaticProps({
       ? cachedData.cities.find((c) => c.en_name.toLowerCase() == cityParam)
       : null;
 
+    const donorName =
+      (city?.en_name && cachedData.donors[dir][city?.en_name]) || null;
+    const donorCity = donorName
+      ? cachedData.cities.find(
+          (c) => c.en_name.toLowerCase() == donorName.toLowerCase()
+        ) || null
+      : null;
+
     return {
       props: {
         locale,
@@ -110,6 +120,7 @@ export async function getStaticProps({
         getPm,
         city,
         similarPmPairs,
+        donorCity,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
       revalidate: 60000,
@@ -181,7 +192,7 @@ export async function getStaticPaths() {
   console.log(`received ${Object.keys(slugToCodes).length} slugToCodes`);
 
   // сперва обычные направления добавляем
-  const paths = Object.keys(slugToCodes).reduce(
+  const allPaths = Object.keys(slugToCodes).reduce(
     (
       res: {
         params: { exchange: string };
@@ -202,12 +213,30 @@ export async function getStaticPaths() {
     [key: string]: { [key: string]: number };
   };
 
+  const tryDonor = (city: ICity) => {
+    return city.closest_cities.find((c) =>
+      Object.keys(nonEmpty).find(
+        (nnc) => nnc.toLowerCase() == c.en_name.toLowerCase()
+      )
+    )?.en_name;
+  };
+
+  let donors = {} as IDonors;
+
   cities.map(async (city) => {
     Object.entries(slugToCodes).forEach(([slug, dir]) => {
-      if (nonEmpty?.[city.en_name.toLowerCase()]?.[dir] < 2) return;
+      // если направление не кэш или город имеет меньше 2 курсов  - скипаем его
+      if (!(slug.startsWith("cash-") || slug.includes("-cash-"))) return;
+      const rateIsEmpty = nonEmpty?.[city?.en_name.toLowerCase()]?.[dir] < 2;
+      const donorName = tryDonor(city);
+      if (rateIsEmpty && !donorName) return;
+      if (rateIsEmpty && donorName && dir) {
+        donors[dir] = donors[dir] || {};
+        donors[dir][donorName] = city.en_name;
+      }
+
       locales.forEach((locale) => {
-        if (!(slug.startsWith("cash-") || slug.includes("-cash-"))) return;
-        paths.push({
+        allPaths.push({
           params: {
             exchange: `${slug}-in-${[city.en_name.toLowerCase()]}`,
           },
@@ -216,6 +245,7 @@ export async function getStaticPaths() {
       });
     });
   });
+  console.log(JSON.stringify(donors, undefined, 4));
 
   const needPrerender = (exchangePath: string) => {
     if (!exchangePath.includes("-in-")) return true;
@@ -224,17 +254,21 @@ export async function getStaticPaths() {
     );
     if (!city?.en_name) return false;
     const countryName = city?.en_country_name?.toLowerCase();
-    return city?.population > 2 && prerenderCountries.includes(countryName);
+    return city?.population > 3 && prerenderCountries.includes(countryName);
   };
 
-  const slicedPaths = paths.filter((p) => needPrerender(p.params.exchange));
-  //.slice(0, 1000000); // фигачим только популярные города или направления без городов
+  const slicedPaths = allPaths
+    .filter((p) => needPrerender(p.params.exchange))
+    .slice(0, 2000);
+  // срезаем 2к
 
+  // ПУТИ ЕСТЬ ПОЛНЫЕ ДЛЯ САЙТМАП ЕСТЬ ДЛЯ ПРЕРЕНДЕРИНГА
   const cachedData = readCache() as ICache;
   cachedData.slugToCodes = slugToCodes;
   cachedData.cities = cities;
   cachedData.pms = pms;
-  cachedData.exchangePaths = paths;
+  cachedData.exchangePaths = allPaths;
+  cachedData.donors = donors;
 
   writeCache(cachedData); // Save to cache
 
