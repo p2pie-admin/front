@@ -10309,13 +10309,13 @@
     },
     {
       "params": {
-        "exchange": "cash-usd-to-bitcoin-btc-in-antalya"
+        "exchange": "cash-usd-to-ethereum-eth-in-antalya"
       },
       "locale": "en"
     },
     {
       "params": {
-        "exchange": "cash-usd-to-bitcoin-btc-in-antalya"
+        "exchange": "cash-usd-to-ethereum-eth-in-antalya"
       },
       "locale": "ru"
     },
@@ -19681,13 +19681,13 @@
     },
     {
       "params": {
-        "exchange": "cash-usd-to-ethereum-eth-in-chelyabinsk"
+        "exchange": "cash-usd-to-bitcoin-btc-in-chelyabinsk"
       },
       "locale": "en"
     },
     {
       "params": {
-        "exchange": "cash-usd-to-ethereum-eth-in-chelyabinsk"
+        "exchange": "cash-usd-to-bitcoin-btc-in-chelyabinsk"
       },
       "locale": "ru"
     },
@@ -27517,13 +27517,13 @@
     },
     {
       "params": {
-        "exchange": "cash-usd-to-ethereum-eth-in-nizhny-novgorod"
+        "exchange": "cash-usd-to-bitcoin-btc-in-nizhny-novgorod"
       },
       "locale": "en"
     },
     {
       "params": {
-        "exchange": "cash-usd-to-ethereum-eth-in-nizhny-novgorod"
+        "exchange": "cash-usd-to-bitcoin-btc-in-nizhny-novgorod"
       },
       "locale": "ru"
     },
@@ -33217,13 +33217,13 @@
     },
     {
       "params": {
-        "exchange": "cash-usd-to-ethereum-eth-in-izhevsk"
+        "exchange": "cash-usd-to-bitcoin-btc-in-izhevsk"
       },
       "locale": "en"
     },
     {
       "params": {
-        "exchange": "cash-usd-to-ethereum-eth-in-izhevsk"
+        "exchange": "cash-usd-to-bitcoin-btc-in-izhevsk"
       },
       "locale": "ru"
     },
@@ -33937,13 +33937,13 @@
     },
     {
       "params": {
-        "exchange": "cash-usd-to-bitcoin-btc-in-istanbul"
+        "exchange": "cash-usd-to-ethereum-eth-in-istanbul"
       },
       "locale": "en"
     },
     {
       "params": {
-        "exchange": "cash-usd-to-bitcoin-btc-in-istanbul"
+        "exchange": "cash-usd-to-ethereum-eth-in-istanbul"
       },
       "locale": "ru"
     },
@@ -35413,13 +35413,13 @@
     },
     {
       "params": {
-        "exchange": "cash-usd-to-ethereum-eth-in-kaliningrad"
+        "exchange": "cash-usd-to-bitcoin-btc-in-kaliningrad"
       },
       "locale": "en"
     },
     {
       "params": {
-        "exchange": "cash-usd-to-ethereum-eth-in-kaliningrad"
+        "exchange": "cash-usd-to-bitcoin-btc-in-kaliningrad"
       },
       "locale": "ru"
     },
@@ -40321,13 +40321,13 @@
     },
     {
       "params": {
-        "exchange": "cash-usd-to-ethereum-eth-in-samara"
+        "exchange": "cash-usd-to-bitcoin-btc-in-samara"
       },
       "locale": "en"
     },
     {
       "params": {
-        "exchange": "cash-usd-to-ethereum-eth-in-samara"
+        "exchange": "cash-usd-to-bitcoin-btc-in-samara"
       },
       "locale": "ru"
     },
@@ -57529,13 +57529,13 @@
     },
     {
       "params": {
-        "exchange": "cash-usd-to-ethereum-eth-in-omsk"
+        "exchange": "cash-usd-to-bitcoin-btc-in-omsk"
       },
       "locale": "en"
     },
     {
       "params": {
-        "exchange": "cash-usd-to-ethereum-eth-in-omsk"
+        "exchange": "cash-usd-to-bitcoin-btc-in-omsk"
       },
       "locale": "ru"
     },
@@ -60097,13 +60097,13 @@
     },
     {
       "params": {
-        "exchange": "cash-usd-to-ethereum-eth-in-perm"
+        "exchange": "cash-usd-to-bitcoin-btc-in-perm"
       },
       "locale": "en"
     },
     {
       "params": {
-        "exchange": "cash-usd-to-ethereum-eth-in-perm"
+        "exchange": "cash-usd-to-bitcoin-btc-in-perm"
       },
       "locale": "ru"
     },
@@ -60337,13 +60337,13 @@
     },
     {
       "params": {
-        "exchange": "cash-usd-to-ethereum-eth-in-penza"
+        "exchange": "cash-usd-to-bitcoin-btc-in-penza"
       },
       "locale": "en"
     },
     {
       "params": {
-        "exchange": "cash-usd-to-ethereum-eth-in-penza"
+        "exchange": "cash-usd-to-bitcoin-btc-in-penza"
       },
       "locale": "ru"
     },
@@ -70489,13 +70489,13 @@
     },
     {
       "params": {
-        "exchange": "cash-usd-to-ethereum-eth-in-stavropol"
+        "exchange": "cash-usd-to-bitcoin-btc-in-stavropol"
       },
       "locale": "en"
     },
     {
       "params": {
-        "exchange": "cash-usd-to-ethereum-eth-in-stavropol"
+        "exchange": "cash-usd-to-bitcoin-btc-in-stavropol"
       },
       "locale": "ru"
     },
@@ -81930,10 +81930,10 @@
     "SOL_CASHRUB": {
       "Saint-Petersburg": "Moscow"
     },
-    "CASHUSD_ETH": {
+    "CASHUSD_BTC": {
       "Saint-Petersburg": "Moscow"
     },
-    "CASHUSD_BTC": {
+    "CASHUSD_ETH": {
       "Khabarovsk": "Vladivostok"
     }
   }

@@ -102,7 +102,7 @@ export async function getStaticProps({
       : null;
 
     const donorName =
-      (city?.en_name && cachedData.donors[dir][city?.en_name]) || null;
+      (city?.en_name && cachedData.donors[dir]?.[city?.en_name]) || null;
     const donorCity = donorName
       ? cachedData.cities.find(
           (c) => c.en_name.toLowerCase() == donorName.toLowerCase()
@@ -245,7 +245,6 @@ export async function getStaticPaths() {
       });
     });
   });
-  console.log(JSON.stringify(donors, undefined, 4));
 
   const needPrerender = (exchangePath: string) => {
     if (!exchangePath.includes("-in-")) return true;

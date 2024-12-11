@@ -4,7 +4,7 @@ import { fillWords } from "./helper";
 import { IPm } from "../../types/selector";
 import { useAppSelector } from "../../redux/hooks";
 import { ICity, IDirText } from "../../types/exchange";
-import { useTranslation } from "react-i18next";
+
 const DirText = ({
   dirText,
   givePm,
@@ -20,7 +20,6 @@ const DirText = ({
   slug: string;
   city?: ICity;
 }) => {
-  const { t } = useTranslation();
   const cityCountry = useAppSelector(
     (state) =>
       `${

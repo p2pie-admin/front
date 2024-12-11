@@ -42,7 +42,7 @@ export default function Country({
           // const selected = highlightedCities.find((c) => c == city.en_name);
 
           //const bullet = !isMultiple ? "" : selected ? "•" : "◦";
-          return <City city={city} dir={dir} />;
+          return <City key={city.en_name} city={city} dir={dir} />;
         })}
       </Grid>
     </>
