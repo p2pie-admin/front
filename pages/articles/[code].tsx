@@ -89,7 +89,7 @@ export async function getStaticProps({
       sell: IPmPairs[];
     };
     const cachedData = readCache() as ICache;
-    if (article.section && cachedData.pms.length) {
+    if (article?.section == "pm" && cachedData.pms.length) {
       const { pms, slugToCodes } = cachedData;
 
       const articlePms = pms.filter(
