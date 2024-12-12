@@ -11,6 +11,7 @@ import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { clearDirRates, reverseDir } from "../../redux/mainReducer";
 import { useRouter } from "next/router";
 import { exchangeToSlugCity, slugCityToExchange } from "../exchange/helper";
+import NextLink from "next/link";
 
 const Patch = () => {
   const [bg10, bg900] = useToken("colors", ["bg.10", "bg.900"]);
@@ -56,29 +57,26 @@ const ReverseButton = () => {
     reversedExchange = slugCityToExchange(reversed_slug, city);
   }
 
-  const handleReverseDir = () => {
-    router.push(`/${reversedExchange}`);
-    dispatch(clearDirRates());
-  };
-
   return (
     <Center position="relative" w="100%" minH="5">
       <Box position="absolute">
-        <Button
-          w="4"
-          p="0"
-          variant="extra_contrast"
-          onClick={handleReverseDir}
-          color={bothPmsSelected ? color2 : "bg.500"}
-          zIndex="3"
-          aria-label="Reverse direction"
-        >
-          {bothPmsSelected ? (
-            <BiRefresh size="2rem" />
-          ) : (
-            <CgArrowsExchange size="2rem" />
-          )}
-        </Button>
+        <NextLink href={`/${reversedExchange}`}>
+          <Button
+            w="4"
+            p="0"
+            variant="extra_contrast"
+            onClick={() => dispatch(clearDirRates())}
+            color={bothPmsSelected ? color2 : "bg.500"}
+            zIndex="3"
+            aria-label="Reverse direction"
+          >
+            {bothPmsSelected ? (
+              <BiRefresh size="2rem" />
+            ) : (
+              <CgArrowsExchange size="2rem" />
+            )}
+          </Button>
+        </NextLink>
       </Box>
       <Patch />
     </Center>

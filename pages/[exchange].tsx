@@ -123,7 +123,7 @@ export async function getStaticProps({
         donorCity,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
-      revalidate: 60000,
+      revalidate: 6000,
     };
   } catch (e) {
     console.error(e);
