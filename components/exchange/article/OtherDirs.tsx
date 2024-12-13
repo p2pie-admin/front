@@ -52,7 +52,7 @@ const OtherDirs = ({
         </Heading>
         <Flex gap="2" w="100%" flexWrap="wrap">
           {otherDirs.sell.map((pmPair) => (
-            <Box m="1">
+            <Box m="1" key={pmPair.slug}>
               <Dir
                 givePm={pmPair.givePm}
                 getPm={pmPair.getPm}

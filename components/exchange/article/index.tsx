@@ -7,7 +7,7 @@ import { IArticle } from "../../../types/pages";
 import ReactMarkdown from "react-markdown";
 import { FaExpandArrowsAlt } from "react-icons/fa";
 import { BsTelegram } from "react-icons/bs";
-import LinkButton from "../../shared/LinkButton";
+
 import FoundError from "./FoundError";
 import OtherDirs from "./OtherDirs";
 import { IPm } from "../../../types/selector";
