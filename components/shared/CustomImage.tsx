@@ -28,6 +28,7 @@ const CustomImage = ({
       h={h}
       filter={shaded ? "grayscale(0.6) brightness(0.3)" : "none"}
       fallbackSrc={fallbackSRC}
+      fetchPriority="low"
       src={img ? SRC + img.url : ""}
       alt={img ? img.alternativeText : ""}
     />

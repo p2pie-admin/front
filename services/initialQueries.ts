@@ -79,18 +79,13 @@ export const pmGroupsByNamesQuery = gql`
     }
   }
 `;
-export const dirsTextQuery = gql`
+
+export const dirsTextsQuery = gql`
   query dirsText(
-    $locale: I18NLocaleCode
-    $section_give: String
-    $section_get: String
+    $locale: I18NLocaleCode # $section_give: String # $section_get: String
   ) {
     dirsTexts(
-      locale: $locale
-      filters: {
-        section_give: { eqi: $section_give }
-        section_get: { eqi: $section_get }
-      }
+      locale: $locale # filters: { #   section_give: { eqi: $section_give } #   section_get: { eqi: $section_get } # }
     ) {
       data {
         id
@@ -103,27 +98,45 @@ export const dirsTextQuery = gql`
     }
   }
 `;
-export const pmsTextQuery = gql`
-  query TextPms($locale: I18NLocaleCode, $sections: [String]) {
-    pmsTexts(locale: $locale, filters: { section: { in: $sections } }) {
+
+export const pmLayoutsQuery = gql`
+  query pmLayout($locale: I18NLocaleCode) {
+    pmLayouts(locale: $locale) {
       data {
         id
         attributes {
           section
           description
-          articles {
-            data {
-              id
-              attributes {
-                code
-              }
-            }
-          }
         }
       }
     }
   }
 `;
+
+export const articleCodesQuery = gql`
+  query Articles($locale: I18NLocaleCode) {
+    articles(locale: $locale, pagination: { start: 0, limit: 10000 }) {
+      data {
+        attributes {
+          code
+        }
+      }
+    }
+  }
+`;
+// export const pmLayoutsQuery = gql`
+//   query pmLayout($locale: I18NLocaleCode, $sections: [String]) {
+//     pmLayouts(locale: $locale, filters: { section: { in: $sections } }) {
+//       data {
+//         id
+//         attributes {
+//           section
+//           description
+//         }
+//       }
+//     }
+//   }
+// `;
 
 export const selectorQuery = gql`
    query Selector {
@@ -171,22 +184,9 @@ export const citiesQuery = gql`
   }
 `;
 
-export const ArticleCodesQuery = gql`
-  {
-    articles(pagination: { start: 0, limit: 1000 }) {
-      data {
-        id
-        attributes {
-          code
-        }
-      }
-    }
-  }
-`;
-
 export const articleQuery = gql`
   query GetArticle($locale: I18NLocaleCode, $code: String) {
-    articles(locale: $locale, filters: { code: { eq: $code } }) {
+    articles(locale: $locale, filters: { code: { eqi: $code } }) {
       data {
         id
         attributes {

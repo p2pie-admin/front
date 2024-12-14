@@ -1,9 +1,10 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { initCMSFetcher, initParserFetcher } from "../services/fetchers";
 import {
+  articleCodesQuery,
   citiesQuery,
-  dirsTextQuery,
-  pmsTextQuery,
+  dirsTextsQuery,
+  pmLayoutsQuery,
   selectorQuery,
 } from "../services/initialQueries";
 import { IPmGroup, IPm, ISelector, ISection } from "../types/selector";
@@ -15,7 +16,8 @@ import {
   ICity,
   IDirText,
   IDonors,
-  IPmsText,
+  IPmData,
+  IPmLayout,
   IPossiblePmPair,
 } from "../types/exchange";
 import {
@@ -32,12 +34,11 @@ const prerenderCountries = ["ukraine", "russia", "belarus"];
 const ExchangePage = (props: {
   //article?: IArticle | null;
   //cities: ICity[];
+  givePmData: IPmData;
+  getPmData: IPmData;
   locale: "en" | "ru";
   slug?: string;
   dirText?: IDirText;
-  pmsTexts?: IPmsText[];
-  givePm: IPm;
-  getPm: IPm;
   city?: ICity;
   similarPmPairs: IPm[][];
   donorCity?: ICity;
@@ -58,8 +59,7 @@ export async function getStaticProps({
     const [slug, cityParam] = exchangeToSlugCity(exchange);
 
     const cachedData = readCache() as ICache;
-    const { pms, slugToCodes, cities } = cachedData;
-
+    const { pms, slugToCodes, cities, ruData, enData } = cachedData;
     const dir = cachedData?.slugToCodes?.[slug];
     if (!dir)
       return {
@@ -67,25 +67,6 @@ export async function getStaticProps({
       };
     const givePm = pms.find((pm) => pm.code == dir?.split("_")?.[0]);
     const getPm = pms.find((pm) => pm.code == dir?.split("_")?.[1]);
-    const [section_give, section_get] = [givePm?.section, getPm?.section];
-    const cmsFetcherPmsText = initCMSFetcher({
-      locale,
-      sections: [section_give, section_get],
-    });
-    const res = (await cmsFetcherPmsText(pmsTextQuery)) as {
-      pmsTexts: IPmsText[];
-    };
-    const pmsTexts = res?.pmsTexts || null;
-
-    const cmsFetcherDirsText = initCMSFetcher({
-      locale,
-      section_give,
-      section_get,
-    });
-    const { dirsTexts } = (await cmsFetcherDirsText(dirsTextQuery)) as {
-      dirsTexts: [IDirText];
-    };
-    const dirText = dirsTexts[0] || null;
 
     if (!dir || !givePm || !getPm)
       return {
@@ -97,10 +78,14 @@ export async function getStaticProps({
       pms,
       Object.values(slugToCodes)
     );
+
+    // обработка городов
+
     const city = cityParam
       ? cachedData.cities.find((c) => c.en_name.toLowerCase() == cityParam)
       : null;
 
+    // города доноры это те, у которых нет курса по нарпавлению но есть в соседнем
     const donorName =
       (city?.en_name && cachedData.donors[dir]?.[city?.en_name]) || null;
     const donorCity = donorName
@@ -109,15 +94,54 @@ export async function getStaticProps({
         ) || null
       : null;
 
+    // обработка текстов
+
+    const localData = locale == "en" ? enData : ruData;
+    // первое : достаем коробки описания секций пм, это также ссылки на артиклы пм
+    // и втрое : достаем шаблоны для направления с местами для вставки
+    const { pmLayouts, dirsTexts, articleCodes } = localData;
+
+    const givePmLayout =
+      pmLayouts.find((l) => l.section == givePm.section) || null;
+    const getPmLayout =
+      pmLayouts.find((l) => l.section == getPm?.section) || null;
+
+    const dirText =
+      dirsTexts.find(
+        (t) =>
+          t.section_give == givePm.section && t.section_get == getPm?.section
+      ) || null;
+
+    let [giveArticleExists, getArticleExists] = [false, false];
+    if (articleCodes.length) {
+      giveArticleExists = !!articleCodes.find(
+        (ac) => ac?.toUpperCase() == givePm.code.toUpperCase()
+      );
+      getArticleExists = !!articleCodes.find(
+        (ac) => ac?.toUpperCase() == getPm.code.toUpperCase()
+      );
+    }
+
+    const givePmData = {
+      pm: givePm,
+      pmLayout: givePmLayout,
+      articleExists: giveArticleExists,
+    } as IPmData;
+
+    const getPmData = {
+      pm: getPm,
+      pmLayout: getPmLayout,
+      articleExists: getArticleExists,
+    } as IPmData;
+
     return {
       props: {
         locale,
         slug,
         cities,
+        givePmData,
+        getPmData,
         dirText,
-        pmsTexts,
-        givePm,
-        getPm,
         city,
         similarPmPairs,
         donorCity,
@@ -132,6 +156,7 @@ export async function getStaticProps({
     };
   }
 }
+
 //.....................................................................................................
 export async function getStaticPaths() {
   const parserFetcher = initParserFetcher();
@@ -146,6 +171,7 @@ export async function getStaticPaths() {
     []
   );
 
+  // забираем все необходимое
   const cmsFetcher = initCMSFetcher();
   const { selector } = (await cmsFetcher(selectorQuery)) as {
     selector: ISelector;
@@ -261,13 +287,45 @@ export async function getStaticPaths() {
     .slice(0, 20);
   // срезаем 2к
 
-  // ПУТИ ЕСТЬ ПОЛНЫЕ ДЛЯ САЙТМАП ЕСТЬ ДЛЯ ПРЕРЕНДЕРИНГА
+  // ПУТИ ЕСТЬ ПОЛНЫЕ ДЛЯ САЙТМАП, А  ЕСТЬ ДЛЯ ПРЕРЕНДЕРИНГА
+
+  // ДАЛЕЕ СОХРАНЯЕМ ДАННЫЕ ДЛЯ getStaticProps
+  const ruCmsFetcher = initCMSFetcher({ locale: "ru" });
+  const enCmsFetcher = initCMSFetcher({ locale: "en" });
+
+  const ruPmLayouts = (await ruCmsFetcher(pmLayoutsQuery)) as {
+    pmLayouts: IPmLayout[];
+  };
+  const enPmLayouts = (await enCmsFetcher(pmLayoutsQuery)) as {
+    pmLayouts: IPmLayout[];
+  };
+  const ruDirsTexts = (await ruCmsFetcher(dirsTextsQuery)) as {
+    dirsTexts: IDirText[];
+  };
+  const enDirsTexts = (await ruCmsFetcher(dirsTextsQuery)) as {
+    dirsTexts: IDirText[];
+  };
+  const enArticleCodes = (await ruCmsFetcher(articleCodesQuery)) as {
+    articles: { code: string }[];
+  };
+  const ruArticleCodes = (await enCmsFetcher(articleCodesQuery)) as {
+    articles: { code: string }[];
+  };
+
   const cachedData = readCache() as ICache;
+  cachedData.enData = {} as any;
+  cachedData.ruData = {} as any;
   cachedData.slugToCodes = slugToCodes;
   cachedData.cities = cities;
   cachedData.pms = pms;
   cachedData.exchangePaths = allPaths;
   cachedData.donors = donors;
+  cachedData.enData.pmLayouts = enPmLayouts.pmLayouts;
+  cachedData.ruData.pmLayouts = ruPmLayouts.pmLayouts;
+  cachedData.enData.dirsTexts = enDirsTexts.dirsTexts;
+  cachedData.ruData.dirsTexts = ruDirsTexts.dirsTexts;
+  cachedData.enData.articleCodes = enArticleCodes.articles?.map((a) => a.code);
+  cachedData.ruData.articleCodes = ruArticleCodes.articles?.map((a) => a.code);
 
   writeCache(cachedData); // Save to cache
 

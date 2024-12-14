@@ -19,7 +19,12 @@ const Logo = () => {
       }}
       cursor="pointer"
     >
-      <Image alt="logo" src={useColorModeValue(darkPie, lightPie)} width={36} />
+      <Image
+        alt="logo"
+        src={useColorModeValue(darkPie, lightPie)}
+        width={36}
+        fetchPriority="low"
+      />
 
       <Text
         as="h1"

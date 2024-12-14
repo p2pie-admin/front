@@ -1,17 +1,11 @@
 import { readCache, writeCache } from "../../cache";
 import { initCMSFetcher } from "../../services/fetchers";
 import { IArticle } from "../../types/pages";
-import { Text } from "@chakra-ui/react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import {
-  ArticleCodesQuery,
-  articleQuery,
-  dirsTextQuery,
-} from "../../services/initialQueries";
+import { articleCodesQuery, articleQuery } from "../../services/initialQueries";
 import Article from "../../components/exchange/article";
 import { ICache, IPmPairs } from "../../types/exchange";
-import { destructureDirSlug } from "../../redux/helper";
-import { IPm } from "../../types/selector";
+
 import { NextSeo, BreadcrumbJsonLd } from "next-seo";
 
 const ArticlePage = (props: {
@@ -78,16 +72,22 @@ export async function getStaticProps({
 }) {
   try {
     const { code } = params;
+
     const cmsFetcher = initCMSFetcher({ code, locale });
     const { articles } = (await cmsFetcher(articleQuery)) as {
       articles: IArticle[];
     };
     const article = articles?.[0] || null;
+    if (!article)
+      return {
+        notFound: true,
+      };
 
     let otherDirs = { buy: [], sell: [] } as {
       buy: IPmPairs[];
       sell: IPmPairs[];
     };
+
     const cachedData = readCache() as ICache;
     if (article?.section == "pm" && cachedData.pms.length) {
       const { pms, slugToCodes } = cachedData;
@@ -95,6 +95,7 @@ export async function getStaticProps({
       const articlePms = pms.filter(
         (pm) => pm.en_name.toLowerCase() == code.toLowerCase()
       );
+      // берем только те направления, что имеют или give или get pm
       const filteredDirs = Object.values(slugToCodes).filter((dir) => {
         const [giveCode, getCode] = dir.split("_");
         return (
@@ -102,6 +103,7 @@ export async function getStaticProps({
           articlePms.find((pm) => pm.code === getCode)
         );
       });
+      //  создаем альтернативные предложения
       otherDirs = filteredDirs.reduce(
         (res: { buy: IPmPairs[]; sell: IPmPairs[] }, dir: string) => {
           const slug = Object.keys(slugToCodes).find(
@@ -147,7 +149,7 @@ export async function getStaticProps({
 export async function getStaticPaths() {
   const locales = ["en", "ru"];
   const cmsFetcher = initCMSFetcher();
-  const { articles } = (await cmsFetcher(ArticleCodesQuery)) as {
+  const { articles } = (await cmsFetcher(articleCodesQuery)) as {
     articles: { code: string }[];
   };
   const articleCodes = articles.map((a) => a.code);

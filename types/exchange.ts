@@ -5,11 +5,17 @@ export type ISectionName = "crypto" | "bank" | "cash" | "digital" | "transfer";
 export type IDonors = { [key: string]: { [key: string]: string } };
 // {BTC_CASHRUB: {samara: "moscow"}}
 
-export interface IPmsText {
+export interface IPmLayout {
   id: string;
   section: ISectionName;
   description: string;
-  articles: { code: string }[];
+}
+
+export interface IPmLayoutsData {
+  givePmLayout: IPmLayout;
+  getPmLayout: IPmLayout;
+  giveArticleExists: boolean;
+  getArticleExists: boolean;
 }
 
 export interface IDirText {
@@ -27,6 +33,19 @@ export interface IPath {
   };
   locale: string;
 }
+
+export type ICachedData = {
+  pmLayouts: IPmLayout[];
+  dirsTexts: IDirText[];
+  articleCodes: string[];
+};
+
+export type IPmData = {
+  pm: IPm;
+  pmLayout?: IPmLayout;
+  articleExists: boolean;
+};
+
 export interface ICache {
   pms: IPm[];
   slugToCodes: { [key: string]: string }; // для запроса курсов
@@ -34,6 +53,8 @@ export interface ICache {
   cities: ICity[];
   exchangePaths: IPath[];
   donors: IDonors;
+  enData: ICachedData;
+  ruData: ICachedData;
 }
 
 export interface IPossiblePmPair {

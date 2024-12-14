@@ -1,4 +1,4 @@
-import { Box, Grid, Heading, VStack, Text } from "@chakra-ui/react";
+import { Box, Grid, Heading, VStack, Text, HStack } from "@chakra-ui/react";
 import { Box3D } from "../../styles/theme/custom";
 
 import { IPm } from "../../types/selector";
@@ -21,21 +21,20 @@ import Similar from "./Similar";
 import { Column } from "../layout/Column";
 import ColumnHeader from "../layout/ColumnHeader";
 import { generateTitle, slugCityToExchange } from "./helper";
-import PmsDescription from "./PmsDescription";
-import { ICity, IDirText, IPmsText } from "../../types/exchange";
+
+import { ICity, IDirText, IPmData, IPmLayout } from "../../types/exchange";
 import ColumnGrid from "../layout/ColumnGrid";
 
 import { NextSeo, BreadcrumbJsonLd } from "next-seo";
 import { useTranslation } from "next-i18next";
-import NoiseLayer from "../shared/NoiseLayer";
+import PmLayout from "./pmLayout";
 
 const Exchange = ({
   locale,
   slug,
   dirText,
-  pmsTexts,
-  givePm,
-  getPm,
+  givePmData,
+  getPmData,
   city,
   similarPmPairs,
   donorCity,
@@ -43,21 +42,20 @@ const Exchange = ({
   //article?: IArticle | null;
   locale: "en" | "ru";
   slug?: string;
+  givePmData: IPmData;
+  getPmData: IPmData;
   dirText?: IDirText;
-  pmsTexts?: IPmsText[];
-  givePm: IPm;
-  getPm: IPm;
   city?: ICity;
   similarPmPairs: IPm[][];
   donorCity?: ICity;
 }) => {
   const dispatch = useAppDispatch();
+  const [givePm, getPm] = [givePmData.pm, getPmData.pm];
   const dir = `${givePm.code}_${getPm.code}`;
   const curPair = `${givePm.currency.code}_${getPm.currency.code}`;
   const { t } = useTranslation();
   useEffect(() => {
     batch(() => {
-      // dispatch(setCities(cities));
       dispatch(fetchCurrencyConverterRates({ curPair }));
       dispatch(fetchPossiblePairs({ code: givePm.code, side: "give" }));
       dispatch(fetchPossiblePairs({ code: getPm.code, side: "get" }));
@@ -158,13 +156,15 @@ const Exchange = ({
           />
           <Chart giveCur={giveCur} getCur={getCur} />
           <VStack mt="4" w="100%" gap="4">
-            <Box w="100%">
-              <PmsDescription
+            <HStack gap="4" w="100%" mb="0">
+              <PmLayout pmData={givePmData} />
+              <PmLayout pmData={getPmData} />
+              {/* <PmsDescription
                 givePm={givePm}
                 getPm={getPm}
-                pmsTexts={pmsTexts}
-              />
-            </Box>
+                pmLayouts={pmLayouts}
+              /> */}
+            </HStack>
 
             <Similar similarPmPairs={similarPmPairs} />
           </VStack>
@@ -183,14 +183,14 @@ const Exchange = ({
           gridColumn={{ base: "unset", lg: "1/3" }}
           gridRow={{ base: "3", lg: "2" }}
         >
-          <DirText
+          {/* <DirText
             dirText={dirText}
-            givePm={givePm}
-            getPm={getPm}
+            giveData={givePm}
+            getData={getPm}
             locale={locale}
             slug={slug}
             city={city}
-          />
+          /> */}
         </Box3D>
       </ColumnGrid>
     </>
