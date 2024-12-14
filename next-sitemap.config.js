@@ -18,9 +18,16 @@ const config = {
       });
     });
 
-    cachedData.articleCodes.forEach((code) =>
+    cachedData.enData.articleCodes.forEach((code) =>
       paths.push({
-        loc: `/ru/articles/${`/${code}`}`,
+        loc: `/${locale}/articles/${`/${code}`}`,
+        lastmod: new Date().toISOString(),
+      })
+    );
+
+    cachedData.ruData.articleCodes.forEach((code) =>
+      paths.push({
+        loc: `/${locale}/articles/${`/${code}`}`,
         lastmod: new Date().toISOString(),
       })
     );
