@@ -42,6 +42,8 @@ const Article = ({
     0
   );
 
+  console.log("otherDirs", otherDirs);
+
   const minToRead = Math.round(symbols / 1000);
 
   return (

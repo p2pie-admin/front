@@ -7,6 +7,9 @@ import Article from "../../components/exchange/article";
 import { ICache, IPmPairs } from "../../types/exchange";
 
 import { NextSeo, BreadcrumbJsonLd } from "next-seo";
+import { useAppDispatch } from "../../redux/hooks";
+import { useEffect } from "react";
+import { setDirRatesStatus } from "../../redux/mainReducer";
 
 const ArticlePage = (props: {
   locale: "en" | "ru";
@@ -15,6 +18,10 @@ const ArticlePage = (props: {
   otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] };
 }) => {
   const { article, code, locale } = props;
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(setDirRatesStatus("fulfilled"));
+  }, []);
   if (!article) return <></>;
   return (
     <>
@@ -93,8 +100,9 @@ export async function getStaticProps({
       const { pms, slugToCodes } = cachedData;
 
       const articlePms = pms.filter(
-        (pm) => pm.en_name.toLowerCase() == code.toLowerCase()
+        (pm) => pm.code.toLowerCase() == code.toLowerCase()
       );
+
       // берем только те направления, что имеют или give или get pm
       const filteredDirs = Object.values(slugToCodes).filter((dir) => {
         const [giveCode, getCode] = dir.split("_");
