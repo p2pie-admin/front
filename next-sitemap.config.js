@@ -20,14 +20,14 @@ const config = {
 
     cachedData.enData.articleCodes.forEach((code) =>
       paths.push({
-        loc: `/${locale}/articles/${`/${code}`}`,
+        loc: `/ru/articles/${`/${code}`}`,
         lastmod: new Date().toISOString(),
       })
     );
 
     cachedData.ruData.articleCodes.forEach((code) =>
       paths.push({
-        loc: `/${locale}/articles/${`/${code}`}`,
+        loc: `/en/articles/${`/${code}`}`,
         lastmod: new Date().toISOString(),
       })
     );
