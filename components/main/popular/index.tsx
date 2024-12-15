@@ -29,7 +29,7 @@ const Popular = ({
             gridGap="2"
             alignItems="center"
             color="bg.200"
-            key={cryptoCode + index}
+            key={cryptoCode + index + "popular"}
           >
             <Box h="1px" bgColor={borderColor} gridColumn="1/4" />
             <Box>
