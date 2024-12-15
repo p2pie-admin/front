@@ -28,7 +28,7 @@ const CryptoRates = ({
     <>
       <Box>
         {buySell.buy.map((rate, index) => {
-          const pm = popularPms.find((pm) => pm.code == rate.fiat);
+          const pm = popularPms?.find((pm) => pm?.code == rate?.fiat);
           const slug = pmsToSlug({ givePm: cryptoPm, getPm: pm });
           return (
             <Link key={index + "bank"} href={`/${slug}`} passHref>
@@ -41,11 +41,11 @@ const CryptoRates = ({
       </Box>
       <Box>
         {buySell.buy.map((rate, index) => {
-          const pm = popularPms.find((pm) => pm.code == rate.fiat);
+          const pm = popularPms?.find((pm) => pm?.code == rate?.fiat);
           const slug = pmsToSlug({ givePm: pm, getPm: cryptoPm });
           const rateNumber = `${curToSymbol(
             pm?.currency.code.toUpperCase()
-          )} ${format(rate.course, 2)} `;
+          )} ${format(rate?.course, 2)} `;
           return (
             <RateLink
               key={index + "buy"}
@@ -58,11 +58,11 @@ const CryptoRates = ({
       </Box>
       <Box>
         {buySell.sell.map((rate, index) => {
-          const pm = popularPms.find((pm) => pm.code == rate.fiat);
+          const pm = popularPms?.find((pm) => pm?.code == rate?.fiat);
           const slug = pmsToSlug({ givePm: cryptoPm, getPm: pm });
           const rateNumber = `${curToSymbol(
             pm?.currency.code.toUpperCase()
-          )} ${format(rate.course, 2)} `;
+          )} ${format(rate?.course, 2)} `;
           return (
             <RateLink
               key={index + "sell"}

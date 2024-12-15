@@ -43,40 +43,59 @@ const Patch = () => {
 const ReverseButton = () => {
   const dispatch = useAppDispatch();
 
-  const color2 = useColorModeValue("bg.700", "bg.200");
+  const color = useColorModeValue("bg.700", "bg.200");
   const bothPmsSelected = useAppSelector(
     (state) => state.main.givePm?.code && state.main.getPm?.code
+  );
+  const oppositeDirExists = useAppSelector((state) =>
+    state.main?.getPm?.possible_pairs?.find(
+      (c) => c == state.main?.givePm?.code
+    )
   );
   const router = useRouter();
   const { exchange } = router.query as { exchange: string };
   let reversedExchange = "";
   if (exchange && exchange.length) {
-    const [slug, city] = exchangeToSlugCity(exchange);
-    const [leftPart, rightPart] = slug.split("-to-");
-    const reversed_slug = `${rightPart}-to-${leftPart}`;
-    reversedExchange = slugCityToExchange(reversed_slug, city);
+    try {
+      const [slug, city] = exchangeToSlugCity(exchange);
+      const [leftPart, rightPart] = slug.split("-to-");
+      const reversed_slug = `${rightPart}-to-${leftPart}`;
+      reversedExchange = slugCityToExchange(reversed_slug, city);
+    } catch (e) {}
   }
 
   return (
     <Center position="relative" w="100%" minH="5">
       <Box position="absolute">
-        <NextLink href={`/${reversedExchange}`}>
+        {bothPmsSelected && oppositeDirExists ? (
+          <NextLink href={`/${reversedExchange}`}>
+            <Button
+              w="4"
+              p="0"
+              variant="no_contrast"
+              onClick={() => dispatch(clearDirRates())}
+              color={color}
+              zIndex="3"
+              aria-label="Reverse direction"
+              transform={"rotate(90deg)"}
+            >
+              <CgArrowsExchange size="2rem" />
+            </Button>
+          </NextLink>
+        ) : (
           <Button
             w="4"
             p="0"
             variant="extra_contrast"
-            onClick={() => dispatch(clearDirRates())}
-            color={bothPmsSelected ? color2 : "bg.500"}
+            color={"bg.500"}
+            disabled
             zIndex="3"
+            transform={"rotate(90deg)"}
             aria-label="Reverse direction"
           >
-            {bothPmsSelected ? (
-              <BiRefresh size="2rem" />
-            ) : (
-              <CgArrowsExchange size="2rem" />
-            )}
+            <CgArrowsExchange size="2rem" />
           </Button>
-        </NextLink>
+        )}
       </Box>
       <Patch />
     </Center>

@@ -20,7 +20,7 @@ export const SubButton = ({
       pm.subgroup_name && pm.subgroup_name.length > 4 ? 2 : 1
     }`}
     variant="extra_contrast"
-    onClick={() => choosePm(pm, shaded)}
+    onClick={shaded ? () => {} : () => choosePm(pm, shaded)}
   >
     {children}
   </Button>
