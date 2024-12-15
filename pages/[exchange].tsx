@@ -114,6 +114,7 @@ export async function getStaticProps({
       ) || null;
 
     let [giveArticleExists, getArticleExists] = [false, false];
+    console.log("articleCodes", articleCodes);
     if (articleCodes.length) {
       giveArticleExists = !!articleCodes.find(
         (ac) => ac?.toUpperCase() == givePm.code.toUpperCase()
@@ -314,6 +315,9 @@ export async function getStaticPaths() {
   const ruArticleCodes = (await enCmsFetcher(articleCodesQuery)) as {
     articles: { code: string }[];
   };
+
+  console.log("enArticleCodes", enArticleCodes.articles.length);
+  console.log("ruArticleCodes", ruArticleCodes.articles.length);
 
   const cachedData = {} as ICache;
   cachedData.enData = {} as any;
