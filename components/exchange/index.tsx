@@ -6,7 +6,7 @@ import LimitsRange from "../main/limits";
 import TV from "../main/tv";
 import Calculator from "../main/Calculator";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { setInitialData } from "../../redux/mainReducer";
+import { setDirRatesStatus, setInitialData } from "../../redux/mainReducer";
 import DirText from "./DirText";
 
 import Chart from "./Chart";
@@ -59,6 +59,7 @@ const Exchange = ({
       dispatch(fetchCurrencyConverterRates({ curPair }));
       dispatch(fetchPossiblePairs({ code: givePm.code, side: "give" }));
       dispatch(fetchPossiblePairs({ code: getPm.code, side: "get" }));
+      dispatch(setDirRatesStatus("fulfilled"));
       dispatch(
         setInitialData({
           givePm,

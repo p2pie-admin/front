@@ -38,7 +38,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   }
   const possiblePairs = oppositePm?.possible_pairs;
 
-  const shaded = oppositePm && singlePmHasUnmetPairs(pms[0], possiblePairs);
+  const shaded = !!oppositePm && singlePmHasUnmetPairs(pms[0], possiblePairs);
 
   const choosePm = (sub?: string) => {
     const pm =
