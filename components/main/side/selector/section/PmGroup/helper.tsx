@@ -37,8 +37,7 @@ export const allPmsHaveUnmetPairs = (pms: IPm[], possiblePairs?: string[]) => {
 };
 
 export const singlePmHasUnmetPairs = (pm: IPm, possiblePairs?: string[]) => {
-  if (!possiblePairs || !possiblePairs.length) return false;
-  if (possiblePairs.find((pair) => pm.code === pair)) return false;
+  if (possiblePairs?.find((pair) => pm.code === pair)) return false;
   return true;
 };
 
