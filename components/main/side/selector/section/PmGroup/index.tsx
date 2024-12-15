@@ -31,6 +31,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   const oppositePm = useAppSelector(
     (state) => state.main[`${side === "give" ? "get" : "give"}Pm`]
   );
+  const currentPm = useAppSelector((state) => state.main[`${side}Pm`]);
   const cityName = useAppSelector((state) => state.main.city?.en_name);
   const pms = extractPmsFromPmGroup(pm_group);
   if (!pms || !pms.length) {
@@ -45,7 +46,10 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
       (sub &&
         pms.find((pm) => pm.subgroup_name == sub || pm.currency.code == sub)) ||
       pms[0];
-
+    if (!pm || pm?.code == currentPm?.code) {
+      dispatch(triggerModal(undefined));
+      return;
+    }
     batch(() => {
       dispatch(fetchPossiblePairs({ code: pm.code, side }));
       dispatch(triggerModal(undefined));

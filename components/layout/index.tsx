@@ -30,7 +30,7 @@ const Layout = ({ children }: { children: any }) => {
   const toast = useToast();
   const { query } = useRouter();
   const cityInSlugExists = query?.exchange && query.exchange.includes("-in-");
-  console.log(query?.exchange);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -61,6 +61,7 @@ const Layout = ({ children }: { children: any }) => {
         isClosable: true,
       });
   }, [myToast]);
+
   const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
   const ambientColor = useColorModeValue(
     "rgba(143,92,292,0.2)",

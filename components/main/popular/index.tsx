@@ -21,7 +21,7 @@ const Popular = ({
   return (
     <Box>
       {Object.entries(popularRates).map(([cryptoCode, buySell], index) => {
-        const cryptoPm = popularPms.find((pm) => pm.code == cryptoCode);
+        const cryptoPm = popularPms?.find((pm) => pm?.code == cryptoCode);
         if (!cryptoPm) return <></>;
         return (
           <Grid

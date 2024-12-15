@@ -34,6 +34,7 @@ const prerenderCountries = ["ukraine", "russia", "belarus"];
 const ExchangePage = (props: {
   //article?: IArticle | null;
   //cities: ICity[];
+  possiblePairs: { [key: string]: string[] };
   givePmData: IPmData;
   getPmData: IPmData;
   locale: "en" | "ru";
@@ -126,12 +127,14 @@ export async function getStaticProps({
       pm: givePm,
       pmLayout: givePmLayout,
       articleExists: giveArticleExists,
+      // possiblePairs: possiblePairs[givePm.code],
     } as IPmData;
 
     const getPmData = {
       pm: getPm,
       pmLayout: getPmLayout,
       articleExists: getArticleExists,
+      // possiblePairs: possiblePairs[getPm.code],
     } as IPmData;
 
     return {
@@ -147,7 +150,7 @@ export async function getStaticProps({
         donorCity,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
-      revalidate: 6000,
+      revalidate: 600,
     };
   } catch (e) {
     console.error(e);
@@ -160,10 +163,10 @@ export async function getStaticProps({
 //.....................................................................................................
 export async function getStaticPaths() {
   const parserFetcher = initParserFetcher();
-  const ppRes = (await parserFetcher("possible_pairs")) as {
+  const possiblePairs = (await parserFetcher("possible_pairs")) as {
     [key: string]: string[];
   };
-  const dirs = Object.entries(ppRes).reduce(
+  const dirs = Object.entries(possiblePairs).reduce(
     (res: string[], [code, pairs]) => [
       ...res,
       ...pairs.map((pair) => `${code}_${pair}`),
@@ -312,12 +315,13 @@ export async function getStaticPaths() {
     articles: { code: string }[];
   };
 
-  const cachedData = readCache() as ICache;
+  const cachedData = {} as ICache;
   cachedData.enData = {} as any;
   cachedData.ruData = {} as any;
   cachedData.slugToCodes = slugToCodes;
   cachedData.cities = cities;
   cachedData.pms = pms;
+  //cachedData.possiblePairs = possiblePairs;
   cachedData.exchangePaths = allPaths;
   cachedData.donors = donors;
   cachedData.enData.pmLayouts = enPmLayouts.pmLayouts;

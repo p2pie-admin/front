@@ -51,6 +51,7 @@ export interface ICache {
   slugToCodes: { [key: string]: string }; // для запроса курсов
   articleCodes: string[];
   cities: ICity[];
+  //possiblePairs?: { [key: string]: string[] };
   exchangePaths: IPath[];
   donors: IDonors;
   enData: ICachedData;

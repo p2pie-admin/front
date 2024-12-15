@@ -1,4 +1,300 @@
 {
+  "enData": {
+    "pmLayouts": [
+      {
+        "id": "3",
+        "section": "bank",
+        "description": "Создание banks\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
+      },
+      {
+        "id": "4",
+        "section": "crypto",
+        "description": "Создание crypto\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
+      },
+      {
+        "id": "6",
+        "section": "cash",
+        "description": "Создание cash\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
+      },
+      {
+        "id": "8",
+        "section": "transfer",
+        "description": "Создание кошелька\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
+      },
+      {
+        "id": "10",
+        "section": "digital",
+        "description": "Создание digital\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
+      }
+    ],
+    "dirsTexts": [
+      {
+        "id": "1",
+        "title": "крипта банки",
+        "text": "крипта give_name give_currency на банки get_name get_currency",
+        "updatedAt": "2024-11-22T20:50:46.629Z"
+      },
+      {
+        "id": "3",
+        "title": "Обмен кривтопалюты на нал",
+        "text": "Купить give_name give_currency за get_name get_currency в city_name",
+        "updatedAt": "2024-11-22T20:50:46.644Z"
+      },
+      {
+        "id": "5",
+        "title": "тут кэш на крипту ",
+        "text": "кэш на крипту",
+        "updatedAt": "2024-11-22T20:50:46.659Z"
+      },
+      {
+        "id": "7",
+        "title": "тут крипта на трансфер",
+        "text": "крипта на трансфер",
+        "updatedAt": "2024-11-22T20:50:46.678Z"
+      },
+      {
+        "id": "9",
+        "title": "тут диджитал на крипту",
+        "text": "диджитал на крипту",
+        "updatedAt": "2024-11-22T20:50:46.693Z"
+      }
+    ],
+    "articleCodes": [
+      "APT",
+      "APE",
+      "ALGO",
+      "AAVE",
+      "BIT",
+      "BTC",
+      "BCH",
+      "BNB",
+      "ARB",
+      "BSV",
+      "AXS",
+      "BGB",
+      "AVAX",
+      "BUSD",
+      "ATOM",
+      "CRO",
+      "ADA",
+      "STX",
+      "CETH",
+      "GMX",
+      "GALA",
+      "LINK",
+      "GT",
+      "CRV",
+      "EGLD",
+      "DOGE",
+      "MANA",
+      "XEC",
+      "EOS",
+      "DAI",
+      "USDP",
+      "SNX",
+      "GUSD",
+      "IMX",
+      "FLOW",
+      "TUSD",
+      "INJ",
+      "FIL",
+      "SHIB",
+      "ETC",
+      "FTM",
+      "FRAX",
+      "ETH",
+      "QNT",
+      "LEO",
+      "KCS",
+      "NEAR",
+      "ICP",
+      "HBAR",
+      "STETH",
+      "USDT",
+      "XMR",
+      "LDO",
+      "KAVA",
+      "OKB",
+      "KLAY",
+      "LTC",
+      "RPL",
+      "MIOTA",
+      "RETH",
+      "NEO",
+      "XTZ",
+      "SOL",
+      "TRX",
+      "LUNC",
+      "UNI",
+      "SAND",
+      "PEPE",
+      "OP",
+      "MKR",
+      "DOT",
+      "GRT",
+      "XRD",
+      "MATIC",
+      "RNDR",
+      "XLM",
+      "VET",
+      "THETA",
+      "XRP",
+      "WBT",
+      "USDC",
+      "TON",
+      "WBTC",
+      "ZEC",
+      "USDD"
+    ]
+  },
+  "ruData": {
+    "pmLayouts": [
+      {
+        "id": "1",
+        "section": "crypto",
+        "description": "Создание  крипта\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
+      },
+      {
+        "id": "2",
+        "section": "bank",
+        "description": "Создание банки\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
+      },
+      {
+        "id": "5",
+        "section": "cash",
+        "description": "Создание нал\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
+      },
+      {
+        "id": "7",
+        "section": "transfer",
+        "description": "Создание кошелька\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
+      },
+      {
+        "id": "9",
+        "section": "digital",
+        "description": "Создание диджитал\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
+      }
+    ],
+    "dirsTexts": [
+      {
+        "id": "1",
+        "title": "крипта банки",
+        "text": "крипта give_name give_currency на банки get_name get_currency",
+        "updatedAt": "2024-11-22T20:50:46.629Z"
+      },
+      {
+        "id": "3",
+        "title": "Обмен кривтопалюты на нал",
+        "text": "Купить give_name give_currency за get_name get_currency в city_name",
+        "updatedAt": "2024-11-22T20:50:46.644Z"
+      },
+      {
+        "id": "5",
+        "title": "тут кэш на крипту ",
+        "text": "кэш на крипту",
+        "updatedAt": "2024-11-22T20:50:46.659Z"
+      },
+      {
+        "id": "7",
+        "title": "тут крипта на трансфер",
+        "text": "крипта на трансфер",
+        "updatedAt": "2024-11-22T20:50:46.678Z"
+      },
+      {
+        "id": "9",
+        "title": "тут диджитал на крипту",
+        "text": "диджитал на крипту",
+        "updatedAt": "2024-11-22T20:50:46.693Z"
+      }
+    ],
+    "articleCodes": [
+      "AAVE",
+      "ARB",
+      "APE",
+      "BNB",
+      "AXS",
+      "AVAX",
+      "ALGO",
+      "APT",
+      "BCH",
+      "BIT",
+      "BUSD",
+      "BGB",
+      "CRV",
+      "CETH",
+      "BSV",
+      "BTC",
+      "ADA",
+      "ATOM",
+      "CRO",
+      "LINK",
+      "DAI",
+      "XEC",
+      "STX",
+      "DOGE",
+      "EOS",
+      "INJ",
+      "EGLD",
+      "MANA",
+      "GUSD",
+      "FLOW",
+      "GT",
+      "KCS",
+      "KLAY",
+      "FRAX",
+      "FTM",
+      "GALA",
+      "IMX",
+      "LEO",
+      "KAVA",
+      "FIL",
+      "GMX",
+      "ETC",
+      "MATIC",
+      "HBAR",
+      "ETH",
+      "SNX",
+      "ICP",
+      "USDD",
+      "UNI",
+      "PEPE",
+      "XMR",
+      "RPL",
+      "LDO",
+      "LTC",
+      "MIOTA",
+      "USDT",
+      "XRP",
+      "VET",
+      "XLM",
+      "TUSD",
+      "NEO",
+      "USDP",
+      "WBT",
+      "USDC",
+      "DOT",
+      "MKR",
+      "XRD",
+      "QNT",
+      "SHIB",
+      "LUNC",
+      "OP",
+      "RETH",
+      "STETH",
+      "RNDR",
+      "TRX",
+      "WBTC",
+      "SAND",
+      "XTZ",
+      "GRT",
+      "NEAR",
+      "SOL",
+      "OKB",
+      "TON",
+      "THETA",
+      "ZEC"
+    ]
+  },
   "slugToCodes": {
     "bitcoin-btc-to-bitcoin-btc": "BTC_BTC",
     "bitcoin-btc-to-ethereum-eth": "BTC_ETH",
@@ -42615,18 +42911,6 @@
     },
     {
       "params": {
-        "exchange": "bitcoin-btc-to-cash-try-in-chelyabinsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "bitcoin-btc-to-cash-try-in-chelyabinsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "bitcoin-btc-to-cash-gbp-in-chelyabinsk"
       },
       "locale": "en"
@@ -42778,18 +43062,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-bitcoin-btc-in-chelyabinsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-chelyabinsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-chelyabinsk"
       },
       "locale": "ru"
     },
@@ -56667,18 +56939,6 @@
     },
     {
       "params": {
-        "exchange": "bitcoin-btc-to-cash-try-in-nizhny-novgorod"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "bitcoin-btc-to-cash-try-in-nizhny-novgorod"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "bitcoin-btc-to-cash-gbp-in-nizhny-novgorod"
       },
       "locale": "en"
@@ -56787,18 +57047,6 @@
     },
     {
       "params": {
-        "exchange": "cash-usd-to-ethereum-eth-in-nizhny-novgorod"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-usd-to-ethereum-eth-in-nizhny-novgorod"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "cash-rub-to-bitcoin-btc-in-nizhny-novgorod"
       },
       "locale": "en"
@@ -56806,18 +57054,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-bitcoin-btc-in-nizhny-novgorod"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-nizhny-novgorod"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-nizhny-novgorod"
       },
       "locale": "ru"
     },
@@ -58342,18 +58578,6 @@
     {
       "params": {
         "exchange": "bitcoin-btc-to-cash-usd-in-grozny"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "bitcoin-btc-to-cash-rub-in-grozny"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "bitcoin-btc-to-cash-rub-in-grozny"
       },
       "locale": "ru"
     },
@@ -67335,6 +67559,18 @@
     },
     {
       "params": {
+        "exchange": "cash-rub-to-ethereum-eth-in-izhevsk"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "cash-rub-to-ethereum-eth-in-izhevsk"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
         "exchange": "cash-rub-to-litecoin-ltc-in-izhevsk"
       },
       "locale": "en"
@@ -68098,18 +68334,6 @@
     {
       "params": {
         "exchange": "bitcoin-btc-to-cash-uah-in-istanbul"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "bitcoin-btc-to-cash-try-in-istanbul"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "bitcoin-btc-to-cash-try-in-istanbul"
       },
       "locale": "ru"
     },
@@ -70515,61 +70739,289 @@
     },
     {
       "params": {
-        "exchange": "monero-xmr-to-cash-rub-in-kemerovo"
+        "exchange": "solana-sol-to-cash-rub-in-kemerovo"
       },
       "locale": "en"
     },
     {
       "params": {
-        "exchange": "monero-xmr-to-cash-rub-in-kemerovo"
+        "exchange": "solana-sol-to-cash-rub-in-kemerovo"
       },
       "locale": "ru"
     },
     {
       "params": {
-        "exchange": "litecoin-ltc-to-cash-rub-in-kemerovo"
+        "exchange": "zcash-zec-to-cash-usd-in-kemerovo"
       },
       "locale": "en"
     },
     {
       "params": {
-        "exchange": "litecoin-ltc-to-cash-rub-in-kemerovo"
+        "exchange": "zcash-zec-to-cash-usd-in-kemerovo"
       },
       "locale": "ru"
     },
     {
       "params": {
-        "exchange": "cash-rub-to-bitcoin-btc-in-kemerovo"
+        "exchange": "monero-xmr-to-cash-usd-in-kemerovo"
       },
       "locale": "en"
     },
     {
       "params": {
-        "exchange": "cash-rub-to-bitcoin-btc-in-kemerovo"
+        "exchange": "monero-xmr-to-cash-usd-in-kemerovo"
       },
       "locale": "ru"
     },
     {
       "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-kemerovo"
+        "exchange": "toncoin-ton-to-cash-usd-in-kemerovo"
       },
       "locale": "en"
     },
     {
       "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-kemerovo"
+        "exchange": "toncoin-ton-to-cash-usd-in-kemerovo"
       },
       "locale": "ru"
     },
     {
       "params": {
-        "exchange": "cash-rub-to-monero-xmr-in-kemerovo"
+        "exchange": "tron-trx-to-cash-usd-in-kemerovo"
       },
       "locale": "en"
     },
     {
       "params": {
-        "exchange": "cash-rub-to-monero-xmr-in-kemerovo"
+        "exchange": "tron-trx-to-cash-usd-in-kemerovo"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "litecoin-ltc-to-cash-usd-in-kemerovo"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "litecoin-ltc-to-cash-usd-in-kemerovo"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "cardano-ada-to-cash-usd-in-kemerovo"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "cardano-ada-to-cash-usd-in-kemerovo"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "ripple-xrp-to-cash-usd-in-kemerovo"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "ripple-xrp-to-cash-usd-in-kemerovo"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "uniswap-uni-to-cash-usd-in-kemerovo"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "uniswap-uni-to-cash-usd-in-kemerovo"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "classic-etc-to-cash-usd-in-kemerovo"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "classic-etc-to-cash-usd-in-kemerovo"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "classic-etc-to-cash-rub-in-kemerovo"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "classic-etc-to-cash-rub-in-kemerovo"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "dash-dash-to-cash-usd-in-kemerovo"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "dash-dash-to-cash-usd-in-kemerovo"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "dash-dash-to-cash-rub-in-kemerovo"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "dash-dash-to-cash-rub-in-kemerovo"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-bitcoin-btc-in-kemerovo"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-bitcoin-btc-in-kemerovo"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-ethereum-eth-in-kemerovo"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-ethereum-eth-in-kemerovo"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-zcash-zec-in-kemerovo"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-zcash-zec-in-kemerovo"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-monero-xmr-in-kemerovo"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-monero-xmr-in-kemerovo"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-tron-trx-in-kemerovo"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-tron-trx-in-kemerovo"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-litecoin-ltc-in-kemerovo"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-litecoin-ltc-in-kemerovo"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-ripple-xrp-in-kemerovo"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-ripple-xrp-in-kemerovo"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-uniswap-uni-in-kemerovo"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-uniswap-uni-in-kemerovo"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-classic-etc-in-kemerovo"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-classic-etc-in-kemerovo"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-dash-dash-in-kemerovo"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-dash-dash-in-kemerovo"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "cash-rub-to-litecoin-ltc-in-kemerovo"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "cash-rub-to-litecoin-ltc-in-kemerovo"
       },
       "locale": "ru"
     },
@@ -70630,18 +71082,6 @@
     {
       "params": {
         "exchange": "bitcoin-btc-to-cash-uah-in-kaliningrad"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "bitcoin-btc-to-cash-try-in-kaliningrad"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "bitcoin-btc-to-cash-try-in-kaliningrad"
       },
       "locale": "ru"
     },
@@ -70755,13 +71195,25 @@
     },
     {
       "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-kaliningrad"
+        "exchange": "cash-usd-to-ethereum-eth-in-kaliningrad"
       },
       "locale": "en"
     },
     {
       "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-kaliningrad"
+        "exchange": "cash-usd-to-ethereum-eth-in-kaliningrad"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "cash-rub-to-bitcoin-btc-in-kaliningrad"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "cash-rub-to-bitcoin-btc-in-kaliningrad"
       },
       "locale": "ru"
     },
@@ -74602,18 +75054,6 @@
     {
       "params": {
         "exchange": "bitcoin-btc-to-cash-uah-in-krasnodar"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "bitcoin-btc-to-cash-try-in-krasnodar"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "bitcoin-btc-to-cash-try-in-krasnodar"
       },
       "locale": "ru"
     },
@@ -78615,18 +79055,6 @@
     },
     {
       "params": {
-        "exchange": "bitcoin-btc-to-cash-try-in-samara"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "bitcoin-btc-to-cash-try-in-samara"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "bitcoin-btc-to-cash-gbp-in-samara"
       },
       "locale": "en"
@@ -80842,18 +81270,6 @@
     {
       "params": {
         "exchange": "bitcoin-btc-to-cash-uah-in-kazan"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "bitcoin-btc-to-cash-try-in-kazan"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "bitcoin-btc-to-cash-try-in-kazan"
       },
       "locale": "ru"
     },
@@ -110295,18 +110711,6 @@
     },
     {
       "params": {
-        "exchange": "bitcoin-btc-to-cash-try-in-omsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "bitcoin-btc-to-cash-try-in-omsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "bitcoin-btc-to-cash-gbp-in-omsk"
       },
       "locale": "en"
@@ -110434,18 +110838,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-bitcoin-btc-in-omsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-omsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-omsk"
       },
       "locale": "ru"
     },
@@ -115035,18 +115427,6 @@
     },
     {
       "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-perm"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-perm"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "cash-rub-to-monero-xmr-in-perm"
       },
       "locale": "en"
@@ -115462,6 +115842,18 @@
     {
       "params": {
         "exchange": "cash-usd-to-dash-dash-in-penza"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "cash-rub-to-ethereum-eth-in-penza"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "cash-rub-to-ethereum-eth-in-penza"
       },
       "locale": "ru"
     },
@@ -133503,18 +133895,6 @@
     },
     {
       "params": {
-        "exchange": "bitcoin-btc-to-cash-try-in-stavropol"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "bitcoin-btc-to-cash-try-in-stavropol"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "bitcoin-btc-to-cash-gbp-in-stavropol"
       },
       "locale": "en"
@@ -133642,18 +134022,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-bitcoin-btc-in-stavropol"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-stavropol"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-stavropol"
       },
       "locale": "ru"
     },
@@ -154033,12 +154401,6 @@
       },
       "locale": "ru"
     }
-  ],
-  "articleCodes": [
-    "bitcoin-btc-to-sber-rub",
-    "tinkoff",
-    "cash",
-    "bitcoin"
   ],
   "donors": {
     "LTC_CASHRUB": {
@@ -154187,6 +154549,7 @@
     },
     "CASHRUB_ETH": {
       "Yoshkar-Ola": "Cheboksary",
+      "Saint-Petersburg": "Moscow",
       "Donetsk": "Mariupol",
       "Khabarovsk": "Vladivostok"
     },
@@ -154231,6 +154594,10 @@
     "CASHRUB_XMR": {
       "Yoshkar-Ola": "Kirov",
       "Moscow": "Saint-Petersburg",
+      "Donetsk": "Mariupol"
+    },
+    "ETH_CASHRUB": {
+      "Stary-Oskol": "Kursk",
       "Donetsk": "Mariupol"
     },
     "SOL_CASHRUB": {
@@ -154287,310 +154654,14 @@
     "BTC_CASHRUB": {
       "Donetsk": "Mariupol"
     },
-    "ETH_CASHRUB": {
-      "Donetsk": "Mariupol"
-    },
     "CASHUSD_BTC": {
       "Donetsk": "Mariupol"
     },
     "CASHUSD_ETH": {
       "Donetsk": "Mariupol"
+    },
+    "BTC_CASHTRY": {
+      "Khabarovsk": "Vladivostok"
     }
-  },
-  "enData": {
-    "pmLayouts": [
-      {
-        "id": "3",
-        "section": "bank",
-        "description": "Создание banks\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
-      },
-      {
-        "id": "4",
-        "section": "crypto",
-        "description": "Создание crypto\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
-      },
-      {
-        "id": "6",
-        "section": "cash",
-        "description": "Создание cash\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
-      },
-      {
-        "id": "8",
-        "section": "transfer",
-        "description": "Создание кошелька\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
-      },
-      {
-        "id": "10",
-        "section": "digital",
-        "description": "Создание digital\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
-      }
-    ],
-    "dirsTexts": [
-      {
-        "id": "1",
-        "title": "крипта банки",
-        "text": "крипта give_name give_currency на банки get_name get_currency",
-        "updatedAt": "2024-11-22T20:50:46.629Z"
-      },
-      {
-        "id": "3",
-        "title": "Обмен кривтопалюты на нал",
-        "text": "Купить give_name give_currency за get_name get_currency в city_name",
-        "updatedAt": "2024-11-22T20:50:46.644Z"
-      },
-      {
-        "id": "5",
-        "title": "тут кэш на крипту ",
-        "text": "кэш на крипту",
-        "updatedAt": "2024-11-22T20:50:46.659Z"
-      },
-      {
-        "id": "7",
-        "title": "тут крипта на трансфер",
-        "text": "крипта на трансфер",
-        "updatedAt": "2024-11-22T20:50:46.678Z"
-      },
-      {
-        "id": "9",
-        "title": "тут диджитал на крипту",
-        "text": "диджитал на крипту",
-        "updatedAt": "2024-11-22T20:50:46.693Z"
-      }
-    ],
-    "articleCodes": [
-      "APT",
-      "APE",
-      "ALGO",
-      "AAVE",
-      "BIT",
-      "BTC",
-      "BCH",
-      "BNB",
-      "ARB",
-      "BSV",
-      "AXS",
-      "BGB",
-      "AVAX",
-      "BUSD",
-      "ATOM",
-      "CRO",
-      "ADA",
-      "STX",
-      "CETH",
-      "GMX",
-      "GALA",
-      "LINK",
-      "GT",
-      "CRV",
-      "EGLD",
-      "DOGE",
-      "MANA",
-      "XEC",
-      "EOS",
-      "DAI",
-      "USDP",
-      "SNX",
-      "GUSD",
-      "IMX",
-      "FLOW",
-      "TUSD",
-      "INJ",
-      "FIL",
-      "SHIB",
-      "ETC",
-      "FTM",
-      "FRAX",
-      "ETH",
-      "QNT",
-      "LEO",
-      "KCS",
-      "NEAR",
-      "ICP",
-      "HBAR",
-      "STETH",
-      "USDT",
-      "XMR",
-      "LDO",
-      "KAVA",
-      "OKB",
-      "KLAY",
-      "LTC",
-      "RPL",
-      "MIOTA",
-      "RETH",
-      "NEO",
-      "XTZ",
-      "SOL",
-      "TRX",
-      "LUNC",
-      "UNI",
-      "SAND",
-      "PEPE",
-      "OP",
-      "MKR",
-      "DOT",
-      "GRT",
-      "XRD",
-      "MATIC",
-      "RNDR",
-      "XLM",
-      "VET",
-      "THETA",
-      "XRP",
-      "WBT",
-      "USDC",
-      "TON",
-      "WBTC",
-      "ZEC",
-      "USDD"
-    ]
-  },
-  "ruData": {
-    "pmLayouts": [
-      {
-        "id": "1",
-        "section": "crypto",
-        "description": "Создание  крипта\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
-      },
-      {
-        "id": "2",
-        "section": "bank",
-        "description": "Создание банки\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
-      },
-      {
-        "id": "5",
-        "section": "cash",
-        "description": "Создание нал\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
-      },
-      {
-        "id": "7",
-        "section": "transfer",
-        "description": "Создание кошелька\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
-      },
-      {
-        "id": "9",
-        "section": "digital",
-        "description": "Создание диджитал\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
-      }
-    ],
-    "dirsTexts": [
-      {
-        "id": "1",
-        "title": "крипта банки",
-        "text": "крипта give_name give_currency на банки get_name get_currency",
-        "updatedAt": "2024-11-22T20:50:46.629Z"
-      },
-      {
-        "id": "3",
-        "title": "Обмен кривтопалюты на нал",
-        "text": "Купить give_name give_currency за get_name get_currency в city_name",
-        "updatedAt": "2024-11-22T20:50:46.644Z"
-      },
-      {
-        "id": "5",
-        "title": "тут кэш на крипту ",
-        "text": "кэш на крипту",
-        "updatedAt": "2024-11-22T20:50:46.659Z"
-      },
-      {
-        "id": "7",
-        "title": "тут крипта на трансфер",
-        "text": "крипта на трансфер",
-        "updatedAt": "2024-11-22T20:50:46.678Z"
-      },
-      {
-        "id": "9",
-        "title": "тут диджитал на крипту",
-        "text": "диджитал на крипту",
-        "updatedAt": "2024-11-22T20:50:46.693Z"
-      }
-    ],
-    "articleCodes": [
-      "AAVE",
-      "ARB",
-      "APE",
-      "BNB",
-      "AXS",
-      "AVAX",
-      "ALGO",
-      "APT",
-      "BCH",
-      "BIT",
-      "BUSD",
-      "BGB",
-      "CRV",
-      "CETH",
-      "BSV",
-      "BTC",
-      "ADA",
-      "ATOM",
-      "CRO",
-      "LINK",
-      "DAI",
-      "XEC",
-      "STX",
-      "DOGE",
-      "EOS",
-      "INJ",
-      "EGLD",
-      "MANA",
-      "GUSD",
-      "FLOW",
-      "GT",
-      "KCS",
-      "KLAY",
-      "FRAX",
-      "FTM",
-      "GALA",
-      "IMX",
-      "LEO",
-      "KAVA",
-      "FIL",
-      "GMX",
-      "ETC",
-      "MATIC",
-      "HBAR",
-      "ETH",
-      "SNX",
-      "ICP",
-      "USDD",
-      "UNI",
-      "PEPE",
-      "XMR",
-      "RPL",
-      "LDO",
-      "LTC",
-      "MIOTA",
-      "USDT",
-      "XRP",
-      "VET",
-      "XLM",
-      "TUSD",
-      "NEO",
-      "USDP",
-      "WBT",
-      "USDC",
-      "DOT",
-      "MKR",
-      "XRD",
-      "QNT",
-      "SHIB",
-      "LUNC",
-      "OP",
-      "RETH",
-      "STETH",
-      "RNDR",
-      "TRX",
-      "WBTC",
-      "SAND",
-      "XTZ",
-      "GRT",
-      "NEAR",
-      "SOL",
-      "OKB",
-      "TON",
-      "THETA",
-      "ZEC"
-    ]
   }
 }
