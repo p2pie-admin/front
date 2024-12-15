@@ -60,48 +60,67 @@
       }
     ],
     "articleCodes": [
-      "DASH",
-      "BNB",
-      "ACRUB",
-      "SBERRUB",
-      "PSBRUB",
-      "USDTTRC20",
-      "BTG",
-      "TCSBRUB",
-      "USDTERC20",
-      "RSHBRUB",
-      "BCH",
-      "GPBRUB",
-      "P24USD",
-      "KSPBUSD",
-      "KSPBKZT",
-      "KSPBEUR",
-      "DOT",
-      "BCH",
-      "ZEC",
-      "USDP",
-      "XMR",
-      "TON",
-      "BCH",
-      "SHIB",
-      "ADA",
+      "BTC",
       "ETH",
       "SOL",
-      "TRX",
-      "ETC",
-      "EOS",
       "ZRX",
-      "UNI",
+      "ZEC",
+      "XMR",
+      "XLM",
+      "TON",
+      "TRX",
+      "SHIB",
+      "TUSD",
+      "USDC",
       "LTC",
-      "CASHTRY",
-      "BTC",
-      "MGUSD",
-      "WUUSD",
-      "WUEUR",
-      "CASHUAH",
+      "USDP",
+      "NEO",
+      "ADA",
+      "EOS",
+      "XRP",
+      "UNI",
+      "DOT",
+      "BCH",
+      "ETC",
+      "BCH",
+      "BNB",
+      "DASH",
+      "USDTERC20",
+      "USDTTRC20",
+      "SBERRUB",
+      "TCSBRUB",
+      "GPBRUB",
+      "SBPRUB",
+      "ACRUB",
+      "PSBRUB",
+      "POSTBRUB",
+      "RSHBRUB",
+      "ROSRUB",
+      "HLKBKZT",
+      "KSPBKZT",
+      "KSPBUSD",
+      "KSPBEUR",
+      "P24UAH",
+      "P24USD",
+      "OSDBUAH",
+      "OSDBUSD",
+      "OSDBEUR",
+      "PMBBUAH",
+      "PMBBUSD",
+      "PMBBEUR",
+      "RNKBRUB",
+      "CASHUSD",
       "CASHRUB",
+      "CASHCNY",
+      "CASHUAH",
+      "CASHAZN",
+      "CASHGEL",
+      "CASHTRY",
+      "CASHGBP",
+      "MGUSD",
       "MGEUR",
-      "CASHAZN"
+      "RMTFUSD",
+      "RMTFEUR"
     ]
   },
   "ruData": {
@@ -165,69 +184,67 @@
       }
     ],
     "articleCodes": [
+      "BTC",
+      "ETH",
       "SOL",
       "ZRX",
-      "EOS",
-      "ETH",
-      "TON",
-      "SHIB",
-      "USDP",
-      "XLM",
-      "LTC",
-      "TRX",
-      "TUSD",
+      "ZEC",
       "XMR",
+      "XLM",
+      "TON",
+      "TRX",
+      "SHIB",
+      "TUSD",
+      "USDC",
+      "LTC",
+      "USDP",
       "NEO",
-      "ETC",
-      "SBERRUB",
-      "BNB",
+      "ADA",
+      "EOS",
       "XRP",
-      "DOT",
-      "ACRUB",
-      "BCH",
-      "GPBRUB",
-      "BCH",
       "UNI",
+      "DOT",
       "BCH",
-      "BTG",
-      "OSDBEUR",
-      "USDTTRC20",
-      "HLKBKZT",
-      "P24UAH",
+      "ETC",
+      "BCH",
+      "BNB",
+      "DASH",
       "USDTERC20",
-      "OSDBUAH",
-      "SBPRUB",
-      "ROSRUB",
-      "KSPBEUR",
-      "CASHUSD",
+      "USDTTRC20",
+      "SBERRUB",
       "TCSBRUB",
-      "OSDBUSD",
+      "GPBRUB",
+      "SBPRUB",
+      "ACRUB",
+      "PSBRUB",
       "POSTBRUB",
-      "CASHCNY",
+      "RSHBRUB",
+      "ROSRUB",
+      "HLKBKZT",
+      "KSPBKZT",
+      "KSPBUSD",
+      "KSPBEUR",
+      "P24UAH",
+      "P24USD",
+      "OSDBUAH",
+      "OSDBUSD",
+      "OSDBEUR",
+      "PMBBUAH",
       "PMBBUSD",
       "PMBBEUR",
       "RNKBRUB",
-      "PMBBUAH",
+      "CASHUSD",
       "CASHRUB",
-      "USDC",
-      "ZEC",
-      "BTC",
-      "ADA",
-      "P24USD",
-      "KSPBKZT",
-      "DASH",
-      "RSHBRUB",
+      "CASHCNY",
+      "CASHUAH",
+      "CASHAZN",
+      "CASHGEL",
       "CASHTRY",
       "CASHGBP",
-      "CASHUAH",
-      "CASHGEL",
-      "KSPBUSD",
-      "CASHAZN",
-      "WUEUR",
-      "RMTFUSD",
       "MGUSD",
-      "RMTFEUR",
-      "WUUSD"
+      "MGEUR",
+      "RMTFUSD",
+      "RMTFEUR"
     ]
   },
   "slugToCodes": {
@@ -7867,13 +7884,13 @@
     },
     {
       "pm_group_id": "51",
-      "code": "BCH",
+      "code": "DAI",
       "en_name": "DAI",
       "ru_name": "DAI",
       "subgroup_name": null,
       "currency": {
-        "id": "41",
-        "code": "bch",
+        "id": "45",
+        "code": "dai",
         "accuracy": 2
       },
       "icon": null,
@@ -30961,18 +30978,6 @@
     },
     {
       "params": {
-        "exchange": "cash-usd-to-bitcoin-btc-in-antalya"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-usd-to-bitcoin-btc-in-antalya"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "cash-usd-to-ethereum-eth-in-antalya"
       },
       "locale": "en"
@@ -55909,18 +55914,6 @@
     },
     {
       "params": {
-        "exchange": "cash-usd-to-bitcoin-btc-in-chelyabinsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-usd-to-bitcoin-btc-in-chelyabinsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "cash-usd-to-ethereum-eth-in-chelyabinsk"
       },
       "locale": "en"
@@ -55964,18 +55957,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-bitcoin-btc-in-chelyabinsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-chelyabinsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-chelyabinsk"
       },
       "locale": "ru"
     },
@@ -76621,18 +76602,6 @@
     },
     {
       "params": {
-        "exchange": "cash-usd-to-bitcoin-btc-in-nizhny-novgorod"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-usd-to-bitcoin-btc-in-nizhny-novgorod"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "cash-usd-to-ethereum-eth-in-nizhny-novgorod"
       },
       "locale": "en"
@@ -76652,18 +76621,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-bitcoin-btc-in-nizhny-novgorod"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-nizhny-novgorod"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-nizhny-novgorod"
       },
       "locale": "ru"
     },
@@ -87025,6 +86982,18 @@
     },
     {
       "params": {
+        "exchange": "cash-usd-to-bitcoin-btc-in-kharkiv"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-bitcoin-btc-in-kharkiv"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
         "exchange": "cash-usd-to-ethereum-eth-in-kharkiv"
       },
       "locale": "en"
@@ -91921,6 +91890,18 @@
     },
     {
       "params": {
+        "exchange": "cash-usd-to-bitcoin-btc-in-izhevsk"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-bitcoin-btc-in-izhevsk"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
         "exchange": "cash-usd-to-zcash-zec-in-izhevsk"
       },
       "locale": "en"
@@ -92036,6 +92017,18 @@
     {
       "params": {
         "exchange": "cash-usd-to-tether-usdt-trc20-in-izhevsk"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "cash-rub-to-ethereum-eth-in-izhevsk"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "cash-rub-to-ethereum-eth-in-izhevsk"
       },
       "locale": "ru"
     },
@@ -97585,18 +97578,6 @@
     },
     {
       "params": {
-        "exchange": "cash-usd-to-bitcoin-btc-in-kaliningrad"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-usd-to-bitcoin-btc-in-kaliningrad"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "cash-usd-to-ethereum-eth-in-kaliningrad"
       },
       "locale": "en"
@@ -97616,18 +97597,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-bitcoin-btc-in-kaliningrad"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-kaliningrad"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-kaliningrad"
       },
       "locale": "ru"
     },
@@ -109760,30 +109729,6 @@
     {
       "params": {
         "exchange": "tether-usdt-trc20-to-cash-gbp-in-samara"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-usd-to-bitcoin-btc-in-samara"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-usd-to-bitcoin-btc-in-samara"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-usd-to-ethereum-eth-in-samara"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-usd-to-ethereum-eth-in-samara"
       },
       "locale": "ru"
     },
@@ -156277,18 +156222,6 @@
     },
     {
       "params": {
-        "exchange": "cash-usd-to-bitcoin-btc-in-omsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-usd-to-bitcoin-btc-in-omsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "cash-usd-to-ethereum-eth-in-omsk"
       },
       "locale": "en"
@@ -156308,18 +156241,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-bitcoin-btc-in-omsk"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-omsk"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-omsk"
       },
       "locale": "ru"
     },
@@ -163093,18 +163014,6 @@
     },
     {
       "params": {
-        "exchange": "cash-usd-to-bitcoin-btc-in-perm"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-usd-to-bitcoin-btc-in-perm"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
         "exchange": "cash-usd-to-ethereum-eth-in-perm"
       },
       "locale": "en"
@@ -163124,18 +163033,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-bitcoin-btc-in-perm"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-perm"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-perm"
       },
       "locale": "ru"
     },
@@ -163657,6 +163554,18 @@
     },
     {
       "params": {
+        "exchange": "cash-usd-to-bitcoin-btc-in-penza"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-bitcoin-btc-in-penza"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
         "exchange": "cash-usd-to-zcash-zec-in-penza"
       },
       "locale": "en"
@@ -163772,6 +163681,18 @@
     {
       "params": {
         "exchange": "cash-usd-to-tether-usdt-trc20-in-penza"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "cash-rub-to-ethereum-eth-in-penza"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "cash-rub-to-ethereum-eth-in-penza"
       },
       "locale": "ru"
     },
@@ -190597,13 +190518,13 @@
     },
     {
       "params": {
-        "exchange": "cash-usd-to-bitcoin-btc-in-stavropol"
+        "exchange": "cash-usd-to-ethereum-eth-in-stavropol"
       },
       "locale": "en"
     },
     {
       "params": {
-        "exchange": "cash-usd-to-bitcoin-btc-in-stavropol"
+        "exchange": "cash-usd-to-ethereum-eth-in-stavropol"
       },
       "locale": "ru"
     },
@@ -190616,18 +190537,6 @@
     {
       "params": {
         "exchange": "cash-rub-to-bitcoin-btc-in-stavropol"
-      },
-      "locale": "ru"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-stavropol"
-      },
-      "locale": "en"
-    },
-    {
-      "params": {
-        "exchange": "cash-rub-to-ethereum-eth-in-stavropol"
       },
       "locale": "ru"
     },
@@ -193208,6 +193117,18 @@
     {
       "params": {
         "exchange": "tether-usdt-trc20-to-cash-gbp-in-sumy"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-bitcoin-btc-in-sumy"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-bitcoin-btc-in-sumy"
       },
       "locale": "ru"
     },
@@ -219176,6 +219097,18 @@
     {
       "params": {
         "exchange": "tether-usdt-trc20-to-cash-gbp-in-zaporozhye"
+      },
+      "locale": "ru"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-bitcoin-btc-in-zaporozhye"
+      },
+      "locale": "en"
+    },
+    {
+      "params": {
+        "exchange": "cash-usd-to-bitcoin-btc-in-zaporozhye"
       },
       "locale": "ru"
     },
@@ -220831,12 +220764,13 @@
     },
     "CASHRUB_BTC": {
       "Yoshkar-Ola": "Cheboksary",
-      "Donetsk": "Mariupol",
-      "Khabarovsk": "Vladivostok"
+      "Donetsk": "Mariupol"
     },
     "CASHRUB_ETH": {
       "Yoshkar-Ola": "Cheboksary",
-      "Donetsk": "Mariupol"
+      "Saint-Petersburg": "Moscow",
+      "Donetsk": "Mariupol",
+      "Khabarovsk": "Vladivostok"
     },
     "CASHRUB_USDTERC20": {
       "Yoshkar-Ola": "Cheboksary",
@@ -220856,11 +220790,6 @@
       "Moscow": "Saint-Petersburg",
       "Donetsk": "Mariupol",
       "Khabarovsk": "Vladivostok"
-    },
-    "CASHUSD_BTC": {
-      "Kropyvnytskyi": "Kremenchuk",
-      "Ivano-Frankivsk": "Ternopil",
-      "Donetsk": "Mariupol"
     },
     "CASHUSD_LTC": {
       "Kropyvnytskyi": "Cherkasy",
@@ -220955,6 +220884,11 @@
     },
     "CASHUSD_DASH": {
       "Moscow": "Saint-Petersburg",
+      "Donetsk": "Mariupol",
+      "Khabarovsk": "Vladivostok"
+    },
+    "CASHUSD_BTC": {
+      "Saint-Petersburg": "Moscow",
       "Donetsk": "Mariupol",
       "Khabarovsk": "Vladivostok"
     },

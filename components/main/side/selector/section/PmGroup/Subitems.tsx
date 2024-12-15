@@ -11,11 +11,13 @@ import {
 } from "@chakra-ui/react";
 import Name from "./Name";
 import PmButton from "./PmButton";
-import React from "react";
+import React, { useContext } from "react";
 import Arrow from "../../../../../shared/Arrow";
 import { SubButton } from "./SubButton";
 import { IPm } from "../../../../../../types/selector";
 import { allPmsHaveUnmetPairs, singlePmHasUnmetPairs } from "./helper";
+import { useAppSelector } from "../../../../../../redux/hooks";
+import SideContext from "../../../../../shared/contexts/SideContext";
 
 const Subitems = ({
   pmGroupName,
@@ -30,11 +32,17 @@ const Subitems = ({
   possiblePairs?: string[];
   color: string;
 }) => {
+  const side = useContext(SideContext) as "give" | "get";
+  const oppositePm = useAppSelector(
+    (state) => state.main[`${side === "give" ? "get" : "give"}Pm`]
+  );
   const [folded, setFolded] = React.useState(true);
   const [mounted, setMounted] = React.useState(false);
   const mount = () => setMounted(true);
   const unmount = () => setTimeout(() => setMounted(!mounted), 300);
-
+  const shaded = !!oppositePm && allPmsHaveUnmetPairs(pms, possiblePairs);
+  const subShaded = (pm: IPm) =>
+    !!oppositePm && singlePmHasUnmetPairs(pm, possiblePairs);
   return (
     // сама обложка раскрывалки
     <VStack>
@@ -45,7 +53,7 @@ const Subitems = ({
           setFolded(!folded);
           mounted ? unmount() : mount();
         }}
-        shaded={allPmsHaveUnmetPairs(pms, possiblePairs)}
+        shaded={shaded}
       >
         <Name
           name={pmGroupName}
@@ -67,7 +75,7 @@ const Subitems = ({
                     choosePm(pm.subgroup_name || pm.currency.code)
                   }
                   key={pm.code}
-                  shaded={singlePmHasUnmetPairs(pm, possiblePairs)}
+                  shaded={subShaded(pm)}
                 >
                   {pm.subgroup_name || pm.currency.code.toUpperCase()}
                 </SubButton>
