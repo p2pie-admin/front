@@ -32,7 +32,6 @@ import PmLayout from "./pmLayout";
 const Exchange = ({
   locale,
   slug,
-  possiblePairs,
   dirText,
   givePmData,
   getPmData,
@@ -43,7 +42,6 @@ const Exchange = ({
   //article?: IArticle | null;
   locale: "en" | "ru";
   slug?: string;
-  possiblePairs: string[];
   givePmData: IPmData;
   getPmData: IPmData;
   dirText?: IDirText;

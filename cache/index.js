@@ -17,8 +17,14 @@ const readCache = () => {
 
 const writeCache = (data) => {
   try {
+    const currentCache = readCache(); // Read existing cache
+    const mergedCache = { ...currentCache, ...data }; // Merge with new data
     fs.mkdirSync(path.dirname(cacheFilePath), { recursive: true });
-    fs.writeFileSync(cacheFilePath, JSON.stringify(data, null, 2), "utf8");
+    fs.writeFileSync(
+      cacheFilePath,
+      JSON.stringify(mergedCache, null, 2),
+      "utf8"
+    );
   } catch (err) {
     console.error("Error writing cache file", err);
   }

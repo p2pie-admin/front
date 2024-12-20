@@ -1,3 +1,4 @@
+import { IExchanger } from "./general";
 import { IPm } from "./selector";
 
 export type ISectionName = "crypto" | "bank" | "cash" | "digital" | "transfer";
@@ -56,6 +57,7 @@ export interface ICache {
   donors: IDonors;
   enData: ICachedData;
   ruData: ICachedData;
+  exchangers: IExchanger[];
 }
 
 export interface IPossiblePmPair {

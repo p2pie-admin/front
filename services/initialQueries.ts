@@ -113,9 +113,30 @@ export const pmLayoutsQuery = gql`
   }
 `;
 
+export const exchangersQuery = gql`
+  {
+    exchangers(
+      pagination: { start: 0, limit: 1000 }
+      filters: { status: { eq: "active" } }
+    ) {
+      data {
+        id
+        attributes {
+          name
+          description
+          ref_link
+          rates_link
+          tag
+          admin_rating
+        }
+      }
+    }
+  }
+`;
+
 export const articleCodesQuery = gql`
   query Articles($locale: I18NLocaleCode) {
-    articles(locale: $locale, pagination: { start: 0, limit: 10000 }) {
+    articles(locale: $locale, pagination: { start: 0, limit: 1000 }) {
       data {
         attributes {
           code

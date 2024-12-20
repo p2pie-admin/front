@@ -6,6 +6,8 @@ import { Box } from "@chakra-ui/react";
 import { useAppDispatch } from "../../../redux/hooks";
 import { useTranslation } from "next-i18next";
 
+import { LiaExchangeAltSolid } from "react-icons/lia";
+
 const NavBody = () => {
   const { t } = useTranslation();
   return (
@@ -22,11 +24,11 @@ const NavBody = () => {
         href={"/create"}
         CustomIcon={RiTokenSwapLine}
       /> */}
-      {/* <LinkButton
-        message={t("main:mapPage")}
-        href={"/map"}
-        CustomIcon={RiMapPinLine}
-      /> */}
+      <LinkButton
+        message={t("main:exchangersPage")}
+        href={"/exchangers"}
+        CustomIcon={LiaExchangeAltSolid}
+      />
 
       <LinkButton
         message={t("main:contactsPage")}
