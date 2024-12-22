@@ -1,6 +1,7 @@
 const { readCache } = require("./cache"); // Adjust the path as necessary
 
 const siteUrl = "https://p2pie.com";
+const locales = ["en", "ru"];
 
 const config = {
   siteUrl,
@@ -11,10 +12,12 @@ const config = {
   additionalPaths: async (config) => {
     const cachedData = readCache();
     let paths = [];
-    cachedData.exchangePaths.forEach(({ params, locale }) => {
-      paths.push({
-        loc: `/${locale}${`/${params.exchange}`}`,
-        lastmod: new Date().toISOString(),
+    Object.keys(cachedData.slugToCodes).forEach((path) => {
+      locales.forEach((locale) => {
+        paths.push({
+          loc: `/${locale}${`/${path}`}`,
+          lastmod: new Date().toISOString(),
+        });
       });
     });
 
@@ -31,7 +34,7 @@ const config = {
         lastmod: new Date().toISOString(),
       })
     );
-    console.log("paths for sitemap collected: ", paths);
+    console.log("paths for sitemap collected: ", paths.length);
     return paths;
   },
 };

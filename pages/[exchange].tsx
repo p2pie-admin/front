@@ -326,7 +326,7 @@ export async function getStaticPaths() {
   cachedData.cities = cities;
   cachedData.pms = pms;
   //cachedData.possiblePairs = possiblePairs;
-  cachedData.exchangePaths = allPaths;
+  //cachedData.exchangePaths = allPaths;
   cachedData.donors = donors;
   cachedData.enData.pmLayouts = enPmLayouts.pmLayouts;
   cachedData.ruData.pmLayouts = ruPmLayouts.pmLayouts;
