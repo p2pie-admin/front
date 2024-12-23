@@ -4,22 +4,22 @@ import { fillWords } from "./helper";
 import { IPm } from "../../types/selector";
 import { useAppSelector } from "../../redux/hooks";
 import { ICity, IDirText } from "../../types/exchange";
+import { useRouter } from "next/router";
 
 const DirText = ({
   dirText,
   givePm,
   getPm,
-  locale,
   slug,
   city,
 }: {
   dirText?: IDirText;
   givePm: IPm;
   getPm: IPm;
-  locale: "en" | "ru";
   slug: string;
   city?: ICity;
 }) => {
+  const { locale } = useRouter() as { locale: "en" | "ru" };
   const cityCountry = useAppSelector(
     (state) =>
       `${
@@ -35,10 +35,10 @@ const DirText = ({
   return (
     <Box p="2">
       <Heading as="h2" fontSize="3xl">
-        {title}
+        {fillWords({ title, givePm, getPm, cityCountry })}
       </Heading>
       <ResponsiveText whiteSpace="unset" variant="no_contrast">
-        {fillWords({ text, givePm, getPm, cityCountry })}
+        {text}
       </ResponsiveText>
     </Box>
   );

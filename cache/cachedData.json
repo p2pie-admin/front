@@ -4,17 +4,17 @@
       {
         "id": "3",
         "section": "bank",
-        "description": "Создание banks\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
+        "description": "Card limits\nVerification\nCard blocking\nBank advantages\nЗагруженность сети"
       },
       {
         "id": "4",
         "section": "crypto",
-        "description": "Создание crypto\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
+        "description": "Wallet creation\nSecure exchange\nTransaction verification\nBenefits"
       },
       {
         "id": "6",
         "section": "cash",
-        "description": "Создание cash\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
+        "description": "\nOffices and cities\nExchange regulations\nCash delivery\nAdvantages"
       },
       {
         "id": "8",
@@ -29,34 +29,44 @@
     ],
     "dirsTexts": [
       {
-        "id": "1",
-        "title": "крипта банки",
-        "text": "крипта give_name give_currency на банки get_name get_currency",
-        "updatedAt": "2024-11-22T20:50:46.629Z"
+        "id": "10",
+        "section_give": "crypto",
+        "section_get": "cash",
+        "title": "Sell give_name give_currency and receive get_name get_currency.",
+        "text": "Select the best rate and go to the exchanger's website. Then, choose the exchange direction, create a request, and arrange delivery or an office meeting with the operator via chat.",
+        "updatedAt": "2024-12-23T03:28:50.861Z"
       },
       {
-        "id": "3",
-        "title": "Обмен кривтопалюты на нал",
-        "text": "Купить give_name give_currency за get_name get_currency в city_name",
-        "updatedAt": "2024-11-22T20:50:46.644Z"
+        "id": "11",
+        "section_give": "cash",
+        "section_get": "crypto",
+        "title": "cash to crypto",
+        "text": "cash to crypto",
+        "updatedAt": "2024-11-22T20:50:46.778Z"
       },
       {
-        "id": "5",
-        "title": "тут кэш на крипту ",
-        "text": "кэш на крипту",
-        "updatedAt": "2024-11-22T20:50:46.659Z"
+        "id": "12",
+        "section_give": "digital",
+        "section_get": "crypto",
+        "title": "digital -> crypto here tiitle",
+        "text": "digital -> crypto",
+        "updatedAt": "2024-11-22T20:50:46.794Z"
       },
       {
-        "id": "7",
-        "title": "тут крипта на трансфер",
-        "text": "крипта на трансфер",
-        "updatedAt": "2024-11-22T20:50:46.678Z"
+        "id": "13",
+        "section_give": "crypto",
+        "section_get": "bank",
+        "title": "Sell give_name give_currency and receive get_name get_currency",
+        "text": "To do this, select a suitable exchanger and follow the instructions on the exchanger's website.\nFirst, choose the exchange direction, then provide your banking details and create a request.\nYou will be given a crypto wallet address either automatically or manually via a chat with the operator. Once the cryptocurrency is credited, you will receive your funds in your bank account.",
+        "updatedAt": "2024-12-23T02:26:07.306Z"
       },
       {
-        "id": "9",
-        "title": "тут диджитал на крипту",
-        "text": "диджитал на крипту",
-        "updatedAt": "2024-11-22T20:50:46.693Z"
+        "id": "15",
+        "section_give": "cash",
+        "section_get": "crypto",
+        "title": "Buy get_name get_currency for give_name give_currency",
+        "text": "Select the best rate and go to the exchanger's website. Then, choose the exchange direction, create a request, and arrange delivery or an office meeting with the operator via chat.",
+        "updatedAt": "2024-12-23T03:59:22.938Z"
       }
     ],
     "articleCodes": [
@@ -128,17 +138,17 @@
       {
         "id": "1",
         "section": "crypto",
-        "description": "Создание  крипта\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
+        "description": "Создание  кошелька\u0003\nСтоимость транзакции\nПроверка транзакции\u0003\nПреимущества\u0003"
       },
       {
         "id": "2",
         "section": "bank",
-        "description": "Создание банки\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
+        "description": "Лимиты карт\nВерификация\nБлокировка карт\nПреимущества банка\n"
       },
       {
         "id": "5",
         "section": "cash",
-        "description": "Создание нал\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
+        "description": "Офисы и города\nРегламент обмена\nДоставка наличных\nПреимущества"
       },
       {
         "id": "7",
@@ -154,33 +164,43 @@
     "dirsTexts": [
       {
         "id": "1",
-        "title": "крипта банки",
-        "text": "крипта give_name give_currency на банки get_name get_currency",
-        "updatedAt": "2024-11-22T20:50:46.629Z"
+        "section_give": "crypto",
+        "section_get": "bank",
+        "title": "Продайте give_name give_currency и получите get_name get_currency",
+        "text": "Для этого выберите подходящий обменник и следуйте инструкции на сайте обменника.\nСперва выберите направление обмена, затем предоставьте свои банковские реквизиты и создайте заявку.\nВам будет предоставлен адрес кошелька для отправки криптовалюты. Адрес появится на сайте автоматически или будет отправлен оператором в чате.  После зачисления криптовалюты вы получите свои средства на банковский счет.  Все обменники проходят тщательную верификацию, поэтому сделка абсолютно безопасна при соблюдении правил обменника. Наша команда всегда готова помочь.\n",
+        "updatedAt": "2024-12-23T02:26:07.283Z"
       },
       {
         "id": "3",
-        "title": "Обмен кривтопалюты на нал",
-        "text": "Купить give_name give_currency за get_name get_currency в city_name",
-        "updatedAt": "2024-11-22T20:50:46.644Z"
-      },
-      {
-        "id": "5",
-        "title": "тут кэш на крипту ",
-        "text": "кэш на крипту",
-        "updatedAt": "2024-11-22T20:50:46.659Z"
+        "section_give": "crypto",
+        "section_get": "cash",
+        "title": "Продайте give_name give_currency за наличные get_name get_currency",
+        "text": "Выберите подходящий курс и перейдите на сайт обменника. Далее выберите направление обмена, создайте заявку и договитесь о доставке или встрече в офисе с оператором через чат. Заберите наличные после отправки криптовалюты на выданный оператором адрес кошелька.",
+        "updatedAt": "2024-12-23T03:28:50.814Z"
       },
       {
         "id": "7",
+        "section_give": "crypto",
+        "section_get": "transfer",
         "title": "тут крипта на трансфер",
         "text": "крипта на трансфер",
         "updatedAt": "2024-11-22T20:50:46.678Z"
       },
       {
         "id": "9",
+        "section_give": "digital",
+        "section_get": "crypto",
         "title": "тут диджитал на крипту",
         "text": "диджитал на крипту",
         "updatedAt": "2024-11-22T20:50:46.693Z"
+      },
+      {
+        "id": "14",
+        "section_give": "cash",
+        "section_get": "crypto",
+        "title": "Купите get_name get_currency за наличные  give_name give_currency ",
+        "text": "Выберите подходящий курс и перейдите на сайт обменника. Далее выберите направление обмена, создайте заявку и договитесь о доставке или встрече в офисе с оператором через чат.",
+        "updatedAt": "2024-12-23T03:59:22.921Z"
       }
     ],
     "articleCodes": [
@@ -339,6 +359,7 @@
     "ethereum-eth-to-rnkb-rub": "ETH_RNKBRUB",
     "ethereum-eth-to-cash-usd": "ETH_CASHUSD",
     "ethereum-eth-to-cash-rub": "ETH_CASHRUB",
+    "ethereum-eth-to-cash-uah": "ETH_CASHUAH",
     "ethereum-eth-to-cash-try": "ETH_CASHTRY",
     "ethereum-eth-to-cash-gbp": "ETH_CASHGBP",
     "solana-sol-to-bitcoin-btc": "SOL_BTC",
@@ -378,6 +399,7 @@
     "solana-sol-to-oschadbank-uah": "SOL_OSDBUAH",
     "solana-sol-to-fuib-uah": "SOL_PMBBUAH",
     "solana-sol-to-rnkb-rub": "SOL_RNKBRUB",
+    "solana-sol-to-cash-rub": "SOL_CASHRUB",
     "0x-zrx-to-bitcoin-btc": "ZRX_BTC",
     "0x-zrx-to-ethereum-eth": "ZRX_ETH",
     "0x-zrx-to-solana-sol": "ZRX_SOL",
@@ -450,6 +472,7 @@
     "zcash-zec-to-oschadbank-uah": "ZEC_OSDBUAH",
     "zcash-zec-to-fuib-uah": "ZEC_PMBBUAH",
     "zcash-zec-to-rnkb-rub": "ZEC_RNKBRUB",
+    "zcash-zec-to-cash-usd": "ZEC_CASHUSD",
     "monero-xmr-to-bitcoin-btc": "XMR_BTC",
     "monero-xmr-to-ethereum-eth": "XMR_ETH",
     "monero-xmr-to-solana-sol": "XMR_SOL",
@@ -459,8 +482,6 @@
     "monero-xmr-to-stellar-xlm": "XMR_XLM",
     "monero-xmr-to-toncoin-ton": "XMR_TON",
     "monero-xmr-to-tron-trx": "XMR_TRX",
-    "monero-xmr-to-shibainu-shib": "XMR_SHIB",
-    "monero-xmr-to-trueusd-tusd": "XMR_TUSD",
     "monero-xmr-to-usdcoin-usdc": "XMR_USDC",
     "monero-xmr-to-litecoin-ltc": "XMR_LTC",
     "monero-xmr-to-paxos-usdp": "XMR_USDP",
@@ -576,6 +597,7 @@
     "tron-trx-to-toncoin-ton": "TRX_TON",
     "tron-trx-to-tron-trx": "TRX_TRX",
     "tron-trx-to-shibainu-shib": "TRX_SHIB",
+    "tron-trx-to-trueusd-tusd": "TRX_TUSD",
     "tron-trx-to-litecoin-ltc": "TRX_LTC",
     "tron-trx-to-neo-neo": "TRX_NEO",
     "tron-trx-to-cardano-ada": "TRX_ADA",
@@ -778,7 +800,6 @@
     "ripple-xrp-to-toncoin-ton": "XRP_TON",
     "ripple-xrp-to-tron-trx": "XRP_TRX",
     "ripple-xrp-to-shibainu-shib": "XRP_SHIB",
-    "ripple-xrp-to-trueusd-tusd": "XRP_TUSD",
     "ripple-xrp-to-litecoin-ltc": "XRP_LTC",
     "ripple-xrp-to-neo-neo": "XRP_NEO",
     "ripple-xrp-to-cardano-ada": "XRP_ADA",
@@ -885,7 +906,6 @@
     "dogecoin-doge-to-toncoin-ton": "DOGE_TON",
     "dogecoin-doge-to-tron-trx": "DOGE_TRX",
     "dogecoin-doge-to-shibainu-shib": "DOGE_SHIB",
-    "dogecoin-doge-to-trueusd-tusd": "DOGE_TUSD",
     "dogecoin-doge-to-litecoin-ltc": "DOGE_LTC",
     "dogecoin-doge-to-cardano-ada": "DOGE_ADA",
     "dogecoin-doge-to-eos-eos": "DOGE_EOS",
@@ -1071,6 +1091,7 @@
     "dash-dash-to-oschadbank-uah": "DASH_OSDBUAH",
     "dash-dash-to-fuib-uah": "DASH_PMBBUAH",
     "dash-dash-to-rnkb-rub": "DASH_RNKBRUB",
+    "dash-dash-to-cash-usd": "DASH_CASHUSD",
     "tether-usdt-erc20-to-bitcoin-btc": "USDTERC20_BTC",
     "tether-usdt-erc20-to-ethereum-eth": "USDTERC20_ETH",
     "tether-usdt-erc20-to-solana-sol": "USDTERC20_SOL",
@@ -1156,6 +1177,7 @@
     "tether-usdt-trc20-to-rnkb-rub": "USDTTRC20_RNKBRUB",
     "tether-usdt-trc20-to-cash-usd": "USDTTRC20_CASHUSD",
     "tether-usdt-trc20-to-cash-rub": "USDTTRC20_CASHRUB",
+    "tether-usdt-trc20-to-cash-cny": "USDTTRC20_CASHCNY",
     "tether-usdt-trc20-to-cash-uah": "USDTTRC20_CASHUAH",
     "tether-usdt-trc20-to-cash-try": "USDTTRC20_CASHTRY",
     "tether-usdt-trc20-to-cash-gbp": "USDTTRC20_CASHGBP",
@@ -1344,12 +1366,7 @@
     "kaspi-kzt-to-tether-usdt-erc20": "KSPBKZT_USDTERC20",
     "kaspi-kzt-to-tether-usdt-trc20": "KSPBKZT_USDTTRC20",
     "privat24-uah-to-bitcoin-btc": "P24UAH_BTC",
-    "privat24-uah-to-ethereum-eth": "P24UAH_ETH",
-    "privat24-uah-to-tron-trx": "P24UAH_TRX",
     "privat24-uah-to-tether-usdt-trc20": "P24UAH_USDTTRC20",
-    "fuib-uah-to-bitcoin-btc": "PMBBUAH_BTC",
-    "fuib-uah-to-ethereum-eth": "PMBBUAH_ETH",
-    "fuib-uah-to-litecoin-ltc": "PMBBUAH_LTC",
     "fuib-uah-to-tether-usdt-trc20": "PMBBUAH_USDTTRC20",
     "rnkb-rub-to-bitcoin-btc": "RNKBRUB_BTC",
     "rnkb-rub-to-ethereum-eth": "RNKBRUB_ETH",
@@ -1378,14 +1395,21 @@
     "cash-usd-to-tron-trx": "CASHUSD_TRX",
     "cash-usd-to-litecoin-ltc": "CASHUSD_LTC",
     "cash-usd-to-ripple-xrp": "CASHUSD_XRP",
+    "cash-usd-to-dash-dash": "CASHUSD_DASH",
     "cash-usd-to-tether-usdt-erc20": "CASHUSD_USDTERC20",
     "cash-usd-to-tether-usdt-trc20": "CASHUSD_USDTTRC20",
     "cash-rub-to-bitcoin-btc": "CASHRUB_BTC",
     "cash-rub-to-ethereum-eth": "CASHRUB_ETH",
+    "cash-rub-to-litecoin-ltc": "CASHRUB_LTC",
     "cash-rub-to-tether-usdt-erc20": "CASHRUB_USDTERC20",
     "cash-rub-to-tether-usdt-trc20": "CASHRUB_USDTTRC20",
     "cash-uah-to-bitcoin-btc": "CASHUAH_BTC",
-    "cash-uah-to-ethereum-eth": "CASHUAH_ETH"
+    "cash-uah-to-ethereum-eth": "CASHUAH_ETH",
+    "cash-uah-to-zcash-zec": "CASHUAH_ZEC",
+    "cash-uah-to-litecoin-ltc": "CASHUAH_LTC",
+    "cash-uah-to-dash-dash": "CASHUAH_DASH",
+    "cash-uah-to-tether-usdt-erc20": "CASHUAH_USDTERC20",
+    "cash-uah-to-tether-usdt-trc20": "CASHUAH_USDTTRC20"
   },
   "cities": [
     {
@@ -7492,7 +7516,11 @@
         "code": "btc",
         "accuracy": 3
       },
-      "icon": null,
+      "icon": {
+        "id": "107",
+        "alternativeText": null,
+        "url": "/uploads/btc_1df366f4b2.png"
+      },
       "color": "dark_yellow",
       "popular_as": null,
       "section": "crypto"
@@ -7508,7 +7536,11 @@
         "code": "eth",
         "accuracy": 3
       },
-      "icon": null,
+      "icon": {
+        "id": "127",
+        "alternativeText": null,
+        "url": "/uploads/eth_1b16a41767.png"
+      },
       "color": "dark_gray",
       "popular_as": null,
       "section": "crypto"
@@ -7524,7 +7556,11 @@
         "code": "sol",
         "accuracy": 3
       },
-      "icon": null,
+      "icon": {
+        "id": "165",
+        "alternativeText": null,
+        "url": "/uploads/sol_a2e838843e.png"
+      },
       "color": "dark_purple",
       "popular_as": null,
       "section": "crypto"
@@ -7540,7 +7576,11 @@
         "code": "zrx",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "182",
+        "alternativeText": null,
+        "url": "/uploads/zrx_da0bc46e6e.png"
+      },
       "color": "dark_gray",
       "popular_as": null,
       "section": "crypto"
@@ -7556,7 +7596,11 @@
         "code": "zec",
         "accuracy": 4
       },
-      "icon": null,
+      "icon": {
+        "id": "173",
+        "alternativeText": null,
+        "url": "/uploads/zec_32edc84bb6.png"
+      },
       "color": "yellow",
       "popular_as": null,
       "section": "crypto"
@@ -7572,7 +7616,11 @@
         "code": "xmr",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "180",
+        "alternativeText": null,
+        "url": "/uploads/xmr_945ff1588c.png"
+      },
       "color": "dark_orange",
       "popular_as": null,
       "section": "crypto"
@@ -7588,7 +7636,11 @@
         "code": "xlm",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "178",
+        "alternativeText": null,
+        "url": "/uploads/xlm_5637e5c2b3.png"
+      },
       "color": "gray",
       "popular_as": null,
       "section": "crypto"
@@ -7604,7 +7656,11 @@
         "code": "ton",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "159",
+        "alternativeText": null,
+        "url": "/uploads/ton_842f53f4ef.png"
+      },
       "color": "blue",
       "popular_as": null,
       "section": "crypto"
@@ -7620,7 +7676,11 @@
         "code": "trx",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "158",
+        "alternativeText": null,
+        "url": "/uploads/trx_fe3ae04bc7.png"
+      },
       "color": "dark_red",
       "popular_as": null,
       "section": "crypto"
@@ -7636,7 +7696,11 @@
         "code": "shib",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "157",
+        "alternativeText": null,
+        "url": "/uploads/shib_2209eaf439.png"
+      },
       "color": "orange",
       "popular_as": null,
       "section": "crypto"
@@ -7652,7 +7716,11 @@
         "code": "tusd",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "156",
+        "alternativeText": null,
+        "url": "/uploads/tusd_268dd5ce53.png"
+      },
       "color": "dark_blue",
       "popular_as": null,
       "section": "crypto"
@@ -7668,7 +7736,11 @@
         "code": "usdc",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "171",
+        "alternativeText": null,
+        "url": "/uploads/usdc_f5c5d70d81.png"
+      },
       "color": "dark_blue",
       "popular_as": null,
       "section": "crypto"
@@ -7684,7 +7756,11 @@
         "code": "ltc",
         "accuracy": 1
       },
-      "icon": null,
+      "icon": {
+        "id": "146",
+        "alternativeText": null,
+        "url": "/uploads/ltc_72306a5804.png"
+      },
       "color": "dark_gray",
       "popular_as": null,
       "section": "crypto"
@@ -7700,7 +7776,11 @@
         "code": "usdp",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "153",
+        "alternativeText": null,
+        "url": "/uploads/paxos_a83e7627cf.png"
+      },
       "color": "green",
       "popular_as": null,
       "section": "crypto"
@@ -7716,7 +7796,11 @@
         "code": "neo",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "136",
+        "alternativeText": null,
+        "url": "/uploads/neo_a986e204f2.png"
+      },
       "color": "teal",
       "popular_as": null,
       "section": "crypto"
@@ -7732,7 +7816,11 @@
         "code": "ada",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "104",
+        "alternativeText": null,
+        "url": "/uploads/ada_45c5e888e3.png"
+      },
       "color": "dark_blue",
       "popular_as": null,
       "section": "crypto"
@@ -7748,7 +7836,11 @@
         "code": "eos",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "120",
+        "alternativeText": null,
+        "url": "/uploads/eos_705556fada.png"
+      },
       "color": "dark_gray",
       "popular_as": null,
       "section": "crypto"
@@ -7764,7 +7856,11 @@
         "code": "xrp",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "181",
+        "alternativeText": null,
+        "url": "/uploads/xrp_d46f9d1917.png"
+      },
       "color": "gray",
       "popular_as": null,
       "section": "crypto"
@@ -7780,7 +7876,11 @@
         "code": "uni",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "174",
+        "alternativeText": null,
+        "url": "/uploads/uni_985268cae2.png"
+      },
       "color": "dark_pink",
       "popular_as": null,
       "section": "crypto"
@@ -7796,7 +7896,11 @@
         "code": "dot",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "115",
+        "alternativeText": null,
+        "url": "/uploads/dot_1cfe63ad2a.png"
+      },
       "color": "dark_pink",
       "popular_as": null,
       "section": "crypto"
@@ -7812,7 +7916,11 @@
         "code": "doge",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "167",
+        "alternativeText": null,
+        "url": "/uploads/xdg_afeba9b6ae.png"
+      },
       "color": "orange",
       "popular_as": null,
       "section": "crypto"
@@ -7828,7 +7936,11 @@
         "code": "etc",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "110",
+        "alternativeText": null,
+        "url": "/uploads/etc_f5689a9149.png"
+      },
       "color": "green",
       "popular_as": null,
       "section": "crypto"
@@ -7844,7 +7956,11 @@
         "code": "dai",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "119",
+        "alternativeText": null,
+        "url": "/uploads/dai_c9dbbd14fc.png"
+      },
       "color": "orange",
       "popular_as": null,
       "section": "crypto"
@@ -7860,7 +7976,11 @@
         "code": "bnb",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "101",
+        "alternativeText": null,
+        "url": "/uploads/bnb_0a2c42bbe1.png"
+      },
       "color": "dark_yellow",
       "popular_as": null,
       "section": "crypto"
@@ -7876,7 +7996,11 @@
         "code": "bch",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "108",
+        "alternativeText": null,
+        "url": "/uploads/bch_440b9c1f0a.png"
+      },
       "color": "green",
       "popular_as": null,
       "section": "crypto"
@@ -7892,7 +8016,11 @@
         "code": "btg",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "109",
+        "alternativeText": null,
+        "url": "/uploads/btg_d60ff943da.png"
+      },
       "color": "dark_blue",
       "popular_as": null,
       "section": "crypto"
@@ -7908,7 +8036,11 @@
         "code": "dash",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "117",
+        "alternativeText": null,
+        "url": "/uploads/dash_99b0f9b88a.png"
+      },
       "color": "dark_blue",
       "popular_as": null,
       "section": "crypto"
@@ -7924,7 +8056,11 @@
         "code": "usdt",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "168",
+        "alternativeText": null,
+        "url": "/uploads/usdt_fef4058e01.png"
+      },
       "color": "dark_teal",
       "popular_as": null,
       "section": "crypto"
@@ -7940,7 +8076,11 @@
         "code": "usdt",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "168",
+        "alternativeText": null,
+        "url": "/uploads/usdt_fef4058e01.png"
+      },
       "color": "dark_teal",
       "popular_as": null,
       "section": "crypto"
@@ -7956,7 +8096,11 @@
         "code": "rub",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "177",
+        "alternativeText": null,
+        "url": "/uploads/sber_e137396006.png"
+      },
       "color": "green",
       "popular_as": null,
       "section": "bank"
@@ -7972,7 +8116,11 @@
         "code": "rub",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "166",
+        "alternativeText": null,
+        "url": "/uploads/tcsb_f978136f39.png"
+      },
       "color": "yellow",
       "popular_as": null,
       "section": "bank"
@@ -7988,7 +8136,11 @@
         "code": "rub",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "123",
+        "alternativeText": null,
+        "url": "/uploads/gazprom_06a792b98b.png"
+      },
       "color": "dark_blue",
       "popular_as": null,
       "section": "bank"
@@ -8004,7 +8156,11 @@
         "code": "rub",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "148",
+        "alternativeText": null,
+        "url": "/uploads/sbp_94d7a16051.png"
+      },
       "color": "blue",
       "popular_as": null,
       "section": "bank"
@@ -8013,14 +8169,18 @@
       "pm_group_id": "12",
       "code": "ACRUB",
       "en_name": "Alfa-Bank",
-      "ru_name": "Альфв-банк",
+      "ru_name": "Альфа-банк",
       "subgroup_name": null,
       "currency": {
         "id": "2",
         "code": "rub",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "105",
+        "alternativeText": null,
+        "url": "/uploads/ac_e0d3d3330a.png"
+      },
       "color": "dark_red",
       "popular_as": null,
       "section": "bank"
@@ -8036,7 +8196,11 @@
         "code": "rub",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "143",
+        "alternativeText": null,
+        "url": "/uploads/psb_9aa393241c.png"
+      },
       "color": "dark_blue",
       "popular_as": null,
       "section": "bank"
@@ -8052,7 +8216,11 @@
         "code": "rub",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "145",
+        "alternativeText": null,
+        "url": "/uploads/postb_bcb78ec801.png"
+      },
       "color": "pink",
       "popular_as": null,
       "section": "bank"
@@ -8068,8 +8236,12 @@
         "code": "rub",
         "accuracy": 0
       },
-      "icon": null,
-      "color": "dark_yellow",
+      "icon": {
+        "id": "187",
+        "alternativeText": null,
+        "url": "/uploads/RSHB_77f7b388a5.png"
+      },
+      "color": "dark_green",
       "popular_as": null,
       "section": "bank"
     },
@@ -8084,7 +8256,11 @@
         "code": "rub",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "152",
+        "alternativeText": null,
+        "url": "/uploads/ros_3e7c7ec9b7.png"
+      },
       "color": "dark_pink",
       "popular_as": null,
       "section": "bank"
@@ -8100,7 +8276,11 @@
         "code": "kzt",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "122",
+        "alternativeText": null,
+        "url": "/uploads/halyk_a097d658bd.png"
+      },
       "color": "green",
       "popular_as": null,
       "section": "bank"
@@ -8116,7 +8296,11 @@
         "code": "kzt",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "129",
+        "alternativeText": null,
+        "url": "/uploads/kspb_334077f464.png"
+      },
       "color": "dark_red",
       "popular_as": null,
       "section": "bank"
@@ -8132,7 +8316,11 @@
         "code": "usd",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "129",
+        "alternativeText": null,
+        "url": "/uploads/kspb_334077f464.png"
+      },
       "color": "dark_red",
       "popular_as": null,
       "section": "bank"
@@ -8148,7 +8336,11 @@
         "code": "eur",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "129",
+        "alternativeText": null,
+        "url": "/uploads/kspb_334077f464.png"
+      },
       "color": "dark_red",
       "popular_as": null,
       "section": "bank"
@@ -8164,7 +8356,11 @@
         "code": "uah",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "147",
+        "alternativeText": null,
+        "url": "/uploads/p24_6531958ea9.png"
+      },
       "color": "dark_green",
       "popular_as": null,
       "section": "bank"
@@ -8180,7 +8376,11 @@
         "code": "usd",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "147",
+        "alternativeText": null,
+        "url": "/uploads/p24_6531958ea9.png"
+      },
       "color": "dark_green",
       "popular_as": null,
       "section": "bank"
@@ -8196,7 +8396,11 @@
         "code": "uah",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "140",
+        "alternativeText": null,
+        "url": "/uploads/oshad_5925ab26e0.png"
+      },
       "color": "dark_green",
       "popular_as": null,
       "section": "bank"
@@ -8212,7 +8416,11 @@
         "code": "usd",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "140",
+        "alternativeText": null,
+        "url": "/uploads/oshad_5925ab26e0.png"
+      },
       "color": "dark_green",
       "popular_as": null,
       "section": "bank"
@@ -8228,7 +8436,11 @@
         "code": "eur",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "140",
+        "alternativeText": null,
+        "url": "/uploads/oshad_5925ab26e0.png"
+      },
       "color": "dark_green",
       "popular_as": null,
       "section": "bank"
@@ -8244,7 +8456,11 @@
         "code": "uah",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "141",
+        "alternativeText": null,
+        "url": "/uploads/pumb_80c09b8914.png"
+      },
       "color": "dark_red",
       "popular_as": null,
       "section": "bank"
@@ -8260,7 +8476,11 @@
         "code": "usd",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "141",
+        "alternativeText": null,
+        "url": "/uploads/pumb_80c09b8914.png"
+      },
       "color": "dark_red",
       "popular_as": null,
       "section": "bank"
@@ -8276,7 +8496,11 @@
         "code": "eur",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "141",
+        "alternativeText": null,
+        "url": "/uploads/pumb_80c09b8914.png"
+      },
       "color": "dark_red",
       "popular_as": null,
       "section": "bank"
@@ -8292,7 +8516,11 @@
         "code": "rub",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "155",
+        "alternativeText": null,
+        "url": "/uploads/rnkb_582ee084c5.png"
+      },
       "color": "dark_cyan",
       "popular_as": null,
       "section": "bank"
@@ -8308,7 +8536,11 @@
         "code": "usd",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "172",
+        "alternativeText": null,
+        "url": "/uploads/usd_476c2d0355.png"
+      },
       "color": "dark_cyan",
       "popular_as": null,
       "section": "cash"
@@ -8324,7 +8556,11 @@
         "code": "rub",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "149",
+        "alternativeText": null,
+        "url": "/uploads/rub_51241f3c58.png"
+      },
       "color": "dark_cyan",
       "popular_as": null,
       "section": "cash"
@@ -8340,7 +8576,11 @@
         "code": "cny",
         "accuracy": null
       },
-      "icon": null,
+      "icon": {
+        "id": "175",
+        "alternativeText": null,
+        "url": "/uploads/yuan_d6b30cebae.png"
+      },
       "color": "dark_cyan",
       "popular_as": null,
       "section": "cash"
@@ -8356,7 +8596,11 @@
         "code": "uah",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "134",
+        "alternativeText": null,
+        "url": "/uploads/hryvnia_e91300f6f3.png"
+      },
       "color": "dark_cyan",
       "popular_as": null,
       "section": "cash"
@@ -8372,7 +8616,11 @@
         "code": "azn",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "103",
+        "alternativeText": null,
+        "url": "/uploads/azn_9232a0db5f.png"
+      },
       "color": "dark_cyan",
       "popular_as": null,
       "section": "cash"
@@ -8388,7 +8636,11 @@
         "code": "gel",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "128",
+        "alternativeText": null,
+        "url": "/uploads/lari_63d47fdf7e.png"
+      },
       "color": "dark_cyan",
       "popular_as": null,
       "section": "cash"
@@ -8404,7 +8656,11 @@
         "code": "try",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "113",
+        "alternativeText": null,
+        "url": "/uploads/cashtry_747c796a9e.png"
+      },
       "color": "dark_cyan",
       "popular_as": null,
       "section": "cash"
@@ -8420,7 +8676,11 @@
         "code": "gbp",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "131",
+        "alternativeText": null,
+        "url": "/uploads/gbp_43a1ba45ac.png"
+      },
       "color": "dark_cyan",
       "popular_as": null,
       "section": "cash"
@@ -8436,7 +8696,11 @@
         "code": "usd",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "169",
+        "alternativeText": null,
+        "url": "/uploads/wu_2adcddb53f.png"
+      },
       "color": "dark_yellow",
       "popular_as": null,
       "section": "transfer"
@@ -8452,7 +8716,11 @@
         "code": "eur",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "169",
+        "alternativeText": null,
+        "url": "/uploads/wu_2adcddb53f.png"
+      },
       "color": "dark_yellow",
       "popular_as": null,
       "section": "transfer"
@@ -8468,7 +8736,11 @@
         "code": "usd",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "138",
+        "alternativeText": null,
+        "url": "/uploads/mg_3743d8aff9.png"
+      },
       "color": "dark_red",
       "popular_as": null,
       "section": "transfer"
@@ -8484,7 +8756,11 @@
         "code": "eur",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "138",
+        "alternativeText": null,
+        "url": "/uploads/mg_3743d8aff9.png"
+      },
       "color": "dark_red",
       "popular_as": null,
       "section": "transfer"
@@ -8500,7 +8776,11 @@
         "code": "usd",
         "accuracy": 2
       },
-      "icon": null,
+      "icon": {
+        "id": "154",
+        "alternativeText": null,
+        "url": "/uploads/RMTF_5ff1bf9369.png"
+      },
       "color": "dark_orange",
       "popular_as": null,
       "section": "transfer"
@@ -8516,7 +8796,11 @@
         "code": "eur",
         "accuracy": 0
       },
-      "icon": null,
+      "icon": {
+        "id": "154",
+        "alternativeText": null,
+        "url": "/uploads/RMTF_5ff1bf9369.png"
+      },
       "color": "dark_orange",
       "popular_as": null,
       "section": "transfer"
@@ -149901,7 +150185,6 @@
     "USDTTRC20_CASHUSD": {
       "Gelendzhik": "Anapa",
       "Stary-Oskol": "Kursk",
-      "New-York": "Boston",
       "Kyiv": "Chernihiv",
       "Kropyvnytskyi": "Kremenchuk",
       "Guayaquil": "Quito",
@@ -149929,6 +150212,11 @@
       "Ternopil": "Ivano-Frankivsk",
       "Guayaquil": "Quito",
       "Taganrog": "Rostov"
+    },
+    "CASHUSD_USDTTRC20": {
+      "Istanbul": "Ankara",
+      "Quito": "Guayaquil",
+      "Saint-Petersburg": "Moscow"
     },
     "BTC_CASHUSD": {
       "New-York": "Boston",
@@ -149965,6 +150253,13 @@
       "Kyiv": "Chernihiv",
       "Ivano-Frankivsk": "Ternopil",
       "Cherkasy": "Kropyvnytskyi"
+    },
+    "ETH_CASHUAH": {
+      "Kyiv": "Chernihiv",
+      "Kropyvnytskyi": "Cherkasy",
+      "Ternopil": "Ivano-Frankivsk",
+      "Cherkasy": "Kropyvnytskyi",
+      "Ivano-Frankivsk": "Ternopil"
     },
     "USDTERC20_CASHUAH": {
       "Kyiv": "Chernihiv",
@@ -150003,6 +150298,20 @@
       "Cherkasy": "Kropyvnytskyi",
       "Ivano-Frankivsk": "Ternopil"
     },
+    "CASHUAH_USDTERC20": {
+      "Kyiv": "Chernihiv",
+      "Kropyvnytskyi": "Cherkasy",
+      "Ternopil": "Ivano-Frankivsk",
+      "Cherkasy": "Kropyvnytskyi",
+      "Ivano-Frankivsk": "Ternopil"
+    },
+    "CASHUAH_USDTTRC20": {
+      "Kyiv": "Chernihiv",
+      "Kropyvnytskyi": "Cherkasy",
+      "Ternopil": "Ivano-Frankivsk",
+      "Cherkasy": "Kropyvnytskyi",
+      "Ivano-Frankivsk": "Ternopil"
+    },
     "CASHUSD_LTC": {
       "Kropyvnytskyi": "Cherkasy",
       "Ivano-Frankivsk": "Ternopil",
@@ -150011,26 +150320,32 @@
       "Saint-Petersburg": "Moscow"
     },
     "CASHUSD_USDTERC20": {
+      "Kropyvnytskyi": "Kremenchuk",
       "Quito": "Guayaquil",
-      "Saint-Petersburg": "Moscow"
+      "Saint-Petersburg": "Moscow",
+      "Ivano-Frankivsk": "Ternopil"
     },
-    "CASHUSD_USDTTRC20": {
-      "Quito": "Guayaquil",
-      "Saint-Petersburg": "Moscow"
+    "CASHUSD_BTC": {
+      "Moscow": "Saint-Petersburg",
+      "Khabarovsk": "Vladivostok"
     },
-    "CASHRUB_ETH": {
-      "Moscow": "Saint-Petersburg"
+    "CASHRUB_LTC": {
+      "Moscow": "Saint-Petersburg",
+      "Saint-Petersburg": "Moscow"
     },
     "CASHRUB_USDTTRC20": {
       "Moscow": "Saint-Petersburg"
     },
-    "CASHUSD_BTC": {
-      "Khabarovsk": "Vladivostok"
+    "SOL_CASHRUB": {
+      "Saint-Petersburg": "Moscow"
     },
     "CASHUSD_ETH": {
       "Khabarovsk": "Vladivostok"
     },
     "CASHRUB_BTC": {
+      "Khabarovsk": "Vladivostok"
+    },
+    "CASHRUB_ETH": {
       "Khabarovsk": "Vladivostok"
     }
   },

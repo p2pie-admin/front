@@ -110,7 +110,7 @@ export async function getStaticProps({
     const dirText =
       dirsTexts.find(
         (t) =>
-          t.section_give == givePm.section && t.section_get == getPm?.section
+          t?.section_give == givePm.section && t?.section_get == getPm?.section
       ) || null;
 
     let [giveArticleExists, getArticleExists] = [false, false];
@@ -306,7 +306,7 @@ export async function getStaticPaths() {
   const ruDirsTexts = (await ruCmsFetcher(dirsTextsQuery)) as {
     dirsTexts: IDirText[];
   };
-  const enDirsTexts = (await ruCmsFetcher(dirsTextsQuery)) as {
+  const enDirsTexts = (await enCmsFetcher(dirsTextsQuery)) as {
     dirsTexts: IDirText[];
   };
   const enArticleCodes = (await ruCmsFetcher(articleCodesQuery)) as {

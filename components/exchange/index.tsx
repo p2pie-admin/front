@@ -184,14 +184,13 @@ const Exchange = ({
           gridColumn={{ base: "unset", lg: "1/3" }}
           gridRow={{ base: "3", lg: "2" }}
         >
-          {/* <DirText
+          <DirText
             dirText={dirText}
-            giveData={givePm}
-            getData={getPm}
-            locale={locale}
+            givePm={givePmData.pm}
+            getPm={getPmData.pm}
             slug={slug}
             city={city}
-          /> */}
+          />
         </Box3D>
       </ColumnGrid>
     </>

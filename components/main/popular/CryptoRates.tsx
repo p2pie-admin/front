@@ -11,6 +11,7 @@ import { IPopularRate } from "../../../types/rates";
 import { IPm } from "../../../types/selector";
 import RateLink from "./RateLink";
 import { ResponsiveText } from "../../../styles/theme/custom";
+import { useRouter } from "next/router";
 
 const CryptoRates = ({
   cryptoPm,
@@ -24,6 +25,7 @@ const CryptoRates = ({
     sell: IPopularRate[];
   };
 }) => {
+  const { locale } = useRouter() as { locale: "en" | "ru" };
   return (
     <>
       <Box>
@@ -33,7 +35,7 @@ const CryptoRates = ({
           return (
             <Link key={index + "bank"} href={`/${slug}`} passHref>
               <ResponsiveText size="sm" _hover={{ color: "bg.200" }} my="1">
-                {`${capitalize(pm?.ru_name)}`}
+                {`${capitalize(pm?.[`${locale}_name`])}`}
               </ResponsiveText>
             </Link>
           );

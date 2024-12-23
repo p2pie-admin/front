@@ -8,16 +8,16 @@ export const fillWords = ({
   givePm,
   getPm,
   cityCountry,
-  text,
+  title,
 }: {
   givePm: IPm;
   getPm: IPm;
   cityCountry?: string;
-  text?: string;
+  title?: string;
 }) => {
   const { locale } = useRouter() as { locale: "en" | "ru" };
 
-  return (text || "")
+  return (title || "")
     .replaceAll(
       "give_name",
       capitalize(givePm[`${locale}_name`] || givePm.en_name)

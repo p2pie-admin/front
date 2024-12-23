@@ -34,9 +34,9 @@ const MainPageContent = ({
   const dispatch = useAppDispatch();
   const { slug } = router.query;
 
-  console.log("popularPms.length", popularPms?.length);
-  console.log("popularPmCodes.length", mainTexts?.length);
-  console.log("pms.length", rootText);
+  // console.log("popularPms.length", popularPms?.length);
+  // console.log("popularPmCodes.length", mainTexts?.length);
+  // console.log("pms.length", rootText);
 
   useEffect(() => {
     if (!slug) {
@@ -55,12 +55,12 @@ const MainPageContent = ({
         <Column index={1}>
           <ColumnHeader
             text={t("main:sellBuy")}
-            query={["отдаете", "получаете", "exchange"]}
+            query={["отдаете", "получаете", "sell", "buy"]}
           />
           <Calculator />
         </Column>
         <Column index={4}>
-          <ColumnHeader text={rootText?.title} />
+          <ColumnHeader text={rootText?.title} query={["p2pie"]} />
           <ResponsiveText variant="contrast">
             {rootText?.subtitle || ""}
           </ResponsiveText>

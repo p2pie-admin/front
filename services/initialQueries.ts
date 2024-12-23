@@ -90,6 +90,8 @@ export const dirsTextsQuery = gql`
       data {
         id
         attributes {
+          section_give
+          section_get
           title
           text
           updatedAt
