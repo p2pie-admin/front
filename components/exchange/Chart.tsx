@@ -39,17 +39,19 @@ const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
     getToUSD < 1
       ? `1 ${getCur} ~ ${format(1 / getToUSD, 2)} USD`
       : `1 USD ~ ${format(getToUSD, 2)} ${getCur}`;
+
+  const alt = `${giveCur} to ${getCur} in last ${
+    isLongTimeFrame ? "day" : "hour"
+  }`;
   return (
     <Box3D bgColor={bgColor} overflow="hidden" position="relative">
       <Image
         w={400}
         h={164}
         objectFit="cover"
-        fallbackSrc={fallbackSRC}
+        fallback={<img src={fallbackSRC} alt={alt} />}
         src={`${SRC}/${getCur}_${giveCur}/${isLongTimeFrame ? "day" : "hour"}`}
-        alt={`${giveCur} to ${getCur} in last ${
-          isLongTimeFrame ? "day" : "hour"
-        }`}
+        alt={alt}
       />
       <HStack position="absolute" top="1" left="1" zIndex="35" px="2">
         <Text fontSize="md" fontWeight="bold" color={primaryColor}>

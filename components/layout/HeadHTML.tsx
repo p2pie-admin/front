@@ -12,10 +12,10 @@ export default function HeadHTML() {
         rel="stylesheet"
       />
 
-      <link
+      {/* <link
         href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@900&display=swap&text=p2ie"
         rel="stylesheet"
-      />
+      /> */}
       <meta name="google" content="notranslate" />
       <meta
         name="viewport"

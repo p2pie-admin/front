@@ -6,6 +6,7 @@ import { useColorModeValue } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useAppDispatch } from "../../../redux/hooks";
 import { clean } from "../../../redux/mainReducer";
+import { ResponsiveText } from "../../../styles/theme/custom";
 
 const Logo = () => {
   const router = useRouter();
@@ -26,15 +27,9 @@ const Logo = () => {
         fetchPriority="low"
       />
 
-      <Text
-        color={useColorModeValue("violet.900", "peach.300")}
-        fontSize="2xl"
-        fontFamily="Zen Maru Gothic, sans-serif"
-        mx="2"
-        mt="2"
-      >
+      <ResponsiveText variant="primary" fontSize="2xl" fontWeight="bold" mx="2">
         p2pie
-      </Text>
+      </ResponsiveText>
     </Flex>
   );
 };

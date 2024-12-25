@@ -150482,9 +150482,6 @@
       "Saint-Petersburg": "Moscow",
       "Khabarovsk": "Vladivostok"
     },
-    "ETH_CASHRUB": {
-      "Stary-Oskol": "Belgorod"
-    },
     "BTC_CASHUSD": {
       "New-York": "Boston",
       "Kyiv": "Chernihiv",
@@ -150602,7 +150599,8 @@
       "Yoshkar-Ola": "Kirov"
     },
     "CASHRUB_ETH": {
-      "Yoshkar-Ola": "Cheboksary"
+      "Yoshkar-Ola": "Cheboksary",
+      "Khabarovsk": "Vladivostok"
     },
     "CASHRUB_DAI": {
       "Yoshkar-Ola": "Cheboksary",
@@ -150612,7 +150610,6 @@
     "CASHRUB_USDTERC20": {
       "Yoshkar-Ola": "Cheboksary",
       "Moscow": "Saint-Petersburg",
-      "Saint-Petersburg": "Moscow",
       "Khabarovsk": "Vladivostok"
     },
     "CASHRUB_USDTTRC20": {
@@ -150772,20 +150769,18 @@
       "Moscow": "Saint-Petersburg",
       "Khabarovsk": "Vladivostok"
     },
-    "CASHUSD_BTC": {
-      "Saint-Petersburg": "Moscow",
-      "Khabarovsk": "Vladivostok"
-    },
-    "CASHUSD_ETH": {
-      "Saint-Petersburg": "Moscow",
-      "Khabarovsk": "Vladivostok"
-    },
     "CASHRUB_TRX": {
       "Saint-Petersburg": "Moscow",
       "Khabarovsk": "Vladivostok"
     },
     "CASHRUB_LTC": {
       "Saint-Petersburg": "Moscow",
+      "Khabarovsk": "Vladivostok"
+    },
+    "ETH_CASHTRY": {
+      "Khabarovsk": "Vladivostok"
+    },
+    "CASHUSD_BTC": {
       "Khabarovsk": "Vladivostok"
     }
   },

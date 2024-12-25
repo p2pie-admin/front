@@ -33,6 +33,11 @@ module.exports = {
         destination: "",
         permanent: true,
       },
+      {
+        source: "/ru/:path*", // Matches any path under /ru/
+        destination: "/:path*", // Redirects to the same path without /ru/
+        permanent: true, // Indicates a permanent redirect (301)
+      },
     ];
   },
 };

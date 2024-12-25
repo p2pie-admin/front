@@ -10,6 +10,9 @@ import { ICache } from "../types/exchange";
 
 import { MainTextsQuery, RootTextQuery } from "../services/initialQueries";
 import { IMainText, ITextBox } from "../types/pages";
+import { NextSeo, BreadcrumbJsonLd } from "next-seo";
+import article from "next-seo/lib/jsonld/article";
+import { useTranslation } from "react-i18next";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   // must be async
@@ -57,7 +60,45 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 };
 
 const Home = (props: any) => {
-  return <MainPageContent {...props} />;
+  const { t } = useTranslation();
+  return (
+    <>
+      <NextSeo
+        title={t("main:meta-title")}
+        description={t("main:meta-description")}
+        canonical={`https://p2pie.com`}
+        additionalLinkTags={[
+          {
+            rel: "alternate",
+            href: `https://p2pie.com/en`,
+            hrefLang: "en",
+          },
+          {
+            rel: "alternate",
+            href: `https://p2pie.com/ru`,
+            hrefLang: "ru",
+          },
+        ]}
+        openGraph={{
+          type: "website", // Use "website" for the homepage instead of "article".
+          url: "https://p2pie.com",
+          site_name: "p2pie",
+          title: t("main:meta-title"),
+          description: t("main:meta-description"),
+        }}
+      />
+      <BreadcrumbJsonLd
+        itemListElements={[
+          {
+            position: 1,
+            name: "Home",
+            item: `https://p2pie.com`,
+          },
+        ]}
+      />
+      <MainPageContent {...props} />
+    </>
+  );
 };
 
 export default Home;
