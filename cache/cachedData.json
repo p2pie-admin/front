@@ -150769,6 +150769,10 @@
       "Moscow": "Saint-Petersburg",
       "Khabarovsk": "Vladivostok"
     },
+    "CASHUSD_BTC": {
+      "Saint-Petersburg": "Moscow",
+      "Khabarovsk": "Vladivostok"
+    },
     "CASHRUB_TRX": {
       "Saint-Petersburg": "Moscow",
       "Khabarovsk": "Vladivostok"
@@ -150778,9 +150782,6 @@
       "Khabarovsk": "Vladivostok"
     },
     "ETH_CASHTRY": {
-      "Khabarovsk": "Vladivostok"
-    },
-    "CASHUSD_BTC": {
       "Khabarovsk": "Vladivostok"
     }
   },
