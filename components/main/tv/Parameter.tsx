@@ -59,7 +59,7 @@ const Parameter = ({
         }}
       >
         {icon ? (
-          <CustomImage w="5" h="5" img={icon} />
+          <CustomImage w="5" h="5" img={icon} customAlt={parameter.title} />
         ) : (
           <IoInformation size="1rem" />
         )}

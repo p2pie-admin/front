@@ -1,6 +1,6 @@
 export const defaultConfig = {
   en: {
-    title: "Exchangers Search Tool",
+    title: "Search for the Best Exchange Rates of Crypto, Banks and Cash",
     description: "Find the best exchange rates for crypto, cash and banking",
     openGraph: {
       type: "website",
@@ -15,7 +15,7 @@ export const defaultConfig = {
     },
   },
   ru: {
-    title: "Поиск выгодных курсов валют",
+    title: "Поиск выгодных курсов обмена криптовалют, банков и наличных",
     description:
       "Агрегатор обменных пунктов. Инструмент поиска лучших предложений обмена электронных, наличных и криптовалют",
     openGraph: {

@@ -1,8 +1,8 @@
-import { color, Heading, Highlight, useColorModeValue } from "@chakra-ui/react";
+import { Heading, Highlight, useColorModeValue } from "@chakra-ui/react";
 
 const ColumnHeader = ({
   text,
-  as = "h4",
+  as = "h2",
   query,
 }: {
   text?: string;
@@ -12,10 +12,14 @@ const ColumnHeader = ({
   const secondaryColor = useColorModeValue("bg.700", "bg.200");
   const primaryColor = useColorModeValue("violet.600", "peach.300");
   if (!text) return <></>;
+  const isLong = text.length > 36;
   return (
     <Heading
       as={as}
-      fontSize={{ base: "15px", md: "18px" }}
+      fontSize={{
+        base: isLong ? "15px" : "17px",
+        md: isLong ? "18px" : "22px",
+      }}
       color={secondaryColor}
       mb="4"
       mt="0"

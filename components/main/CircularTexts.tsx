@@ -110,7 +110,12 @@ const CircularTexts = ({ mainTexts }: { mainTexts?: IMainText[] }) => {
                 <Box
                   transform={`rotate(${(index * 360) / mainTexts.length}deg)`}
                 >
-                  <CustomImage img={mt.image} w="60px" h="60px" />
+                  <CustomImage
+                    img={mt.image}
+                    w="60px"
+                    h="60px"
+                    customAlt={mt.title}
+                  />
                 </Box>
               </Center>
             );

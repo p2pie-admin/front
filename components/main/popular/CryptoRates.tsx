@@ -33,7 +33,11 @@ const CryptoRates = ({
           const pm = popularPms?.find((pm) => pm?.code == rate?.fiat);
           const slug = pmsToSlug({ givePm: cryptoPm, getPm: pm });
           return (
-            <Link key={index + "bank"} href={`/${slug}`} passHref>
+            <Link
+              key={rate.exchangerId + "bank" + index}
+              href={`/${slug}`}
+              passHref
+            >
               <ResponsiveText size="sm" _hover={{ color: "bg.200" }} my="1">
                 {`${capitalize(pm?.[`${locale}_name`])}`}
               </ResponsiveText>
@@ -50,7 +54,7 @@ const CryptoRates = ({
           )} ${format(rate?.course, 2)} `;
           return (
             <RateLink
-              key={index + "buy"}
+              key={rate.exchangerId + "buy" + index}
               slug={slug}
               rateNumber={rateNumber}
               side="buy"
@@ -67,7 +71,7 @@ const CryptoRates = ({
           )} ${format(rate?.course, 2)} `;
           return (
             <RateLink
-              key={index + "sell"}
+              key={rate.exchangerId + "sell" + index}
               slug={slug}
               rateNumber={rateNumber}
               side="sell"

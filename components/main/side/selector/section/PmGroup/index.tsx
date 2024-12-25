@@ -29,7 +29,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   const dispatch = useAppDispatch();
   const side = useContext(SideContext) as "give" | "get";
   const oppositePm = useAppSelector(
-    (state) => state.main[`${side === "give" ? "get" : "give"}Pm`]
+    (state) => state.main?.[`${side === "give" ? "get" : "give"}Pm`]
   );
   const currentPm = useAppSelector((state) => state.main[`${side}Pm`]);
   const cityName = useAppSelector((state) => state.main.city?.en_name);

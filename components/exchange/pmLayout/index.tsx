@@ -26,7 +26,7 @@ export default function pmLayout({ pmData }: { pmData: IPmData }) {
 
             <RiInformationLine size="1.5rem" />
           </HStack>
-          <Box>
+          <Box w="100%">
             {pmData.pmLayout?.description.split("\n").map((text, index) => (
               <ResponsiveText
                 size="sm"

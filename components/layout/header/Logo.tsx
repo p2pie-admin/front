@@ -20,14 +20,13 @@ const Logo = () => {
       cursor="pointer"
     >
       <Image
-        alt="logo"
+        alt="p2pie logo"
         src={useColorModeValue(darkPie, lightPie)}
         width={36}
         fetchPriority="low"
       />
 
       <Text
-        as="h1"
         color={useColorModeValue("violet.900", "peach.300")}
         fontSize="2xl"
         fontFamily="Zen Maru Gothic, sans-serif"

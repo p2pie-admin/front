@@ -28,31 +28,23 @@ const Layout = ({ children }: { children: any }) => {
   //const isScrollLocked = useAppSelector((state) => state.main.isScrollLocked);
   const myToast = useAppSelector((state) => state.main.toast);
   const toast = useToast();
-  const { query } = useRouter();
-  const cityInSlugExists = query?.exchange && query.exchange.includes("-in-");
+  //const { query } = useRouter();
+  //const cityInSlugExists = query?.exchange && query.exchange.includes("-in-");
 
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    const fetcher = initCurrencyConverterFetcher();
-    fetcher().then((resp) => {
-      if (resp.data) {
-        const { ip, ...city } = resp.data as ICity & { ip: string };
-        batch(() => {
-          !cityInSlugExists && dispatch(setCity(city));
-          dispatch(setIP(ip));
-        });
-      }
-    });
-    // const url = "https://ip.nf/me.json";
-    // axios.get(url).then((resp) => {
-    //   if (resp.data?.ip) {
-    //     const { country, city, ip } = resp.data?.ip;
-    //     dispatch(setLocation({ en_country_name: country, en_city_name: city }));
-    //     dispatch(setIP(ip?.split(".").slice(0, -1).join("."))); // берем только часть IP
-    //   }
-    // });
-  }, []);
+  // useEffect(() => {
+  //   const fetcher = initCurrencyConverterFetcher();
+  //   fetcher().then((resp) => {
+  //     if (resp.data) {
+  //       const { ip, ...city } = resp.data as ICity & { ip: string };
+  //       batch(() => {
+  //         !cityInSlugExists && dispatch(setCity(city));
+  //         dispatch(setIP(ip));
+  //       });
+  //     }
+  //   });
+  // }, []);
 
   useEffect(() => {
     myToast.title &&
@@ -112,6 +104,7 @@ const Layout = ({ children }: { children: any }) => {
         position="absolute"
         w="100%"
         h="80vh"
+        zIndex={-1}
         bgGradient={`radial-gradient(circle at 50% -10%, ${ambientColor} 0%, transparent 40%)`}
       ></Box>
       <Header />

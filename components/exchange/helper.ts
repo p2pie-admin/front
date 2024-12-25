@@ -156,12 +156,12 @@ export const generateTitle = ({
 }) => {
   const U = (str?: string | null) => (str ? str.toUpperCase() : "");
   return locale === "ru"
-    ? `Обмен ${capitalize(givePm.ru_name)} ${U(givePm.currency.code)} ${U(
+    ? `${capitalize(givePm.ru_name)} ${U(givePm.currency.code)} ${U(
         givePm.subgroup_name
       )} на ${capitalize(getPm.ru_name)} ${U(getPm.currency.code)} ${U(
         getPm.subgroup_name
       )}`
-    : `Exchange ${capitalize(givePm.en_name)} ${U(givePm.currency.code)} ${U(
+    : `${capitalize(givePm.en_name)} ${U(givePm.currency.code)} ${U(
         givePm.subgroup_name
       )} to ${capitalize(getPm.en_name)} ${U(getPm.currency.code)} ${U(
         getPm.subgroup_name

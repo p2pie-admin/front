@@ -22,14 +22,16 @@ const CryptoPm = ({ cryptoPm }: { cryptoPm: IPm }) => {
           icon={cryptoPm.icon}
         />
         <Box position="relative">
-          <ResponsiveText size="sm" variant="primary" fontWeight="bold">
+          {/* <ResponsiveText size="sm" variant="primary" fontWeight="bold">
             {`${cryptoPm.currency.code.toUpperCase()}`}
-          </ResponsiveText>
+          </ResponsiveText> */}
           <ResponsiveText
-            size="xs"
+            fontSize="10px"
+            fontWeight="bold"
             position="absolute"
-            top="2px"
-            right="-12"
+            top="2"
+            right="-5"
+            variant="no_contrast"
           >{`${cryptoPm.subgroup_name?.toUpperCase() || ""}`}</ResponsiveText>
         </Box>
       </HStack>

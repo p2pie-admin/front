@@ -20,4 +20,20 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
 
+module.exports = {
+  async redirects() {
+    return [
+      {
+        source: "/:path*/",
+        destination: "/:path*",
+        permanent: true,
+      },
+      {
+        source: "/",
+        destination: "",
+        permanent: true,
+      },
+    ];
+  },
+};
 module.exports = withBundleAnalyzer(nextConfig);

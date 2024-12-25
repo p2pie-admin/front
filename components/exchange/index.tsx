@@ -1,4 +1,14 @@
-import { Box, Grid, Heading, VStack, Text, HStack } from "@chakra-ui/react";
+import {
+  Box,
+  Grid,
+  Heading,
+  VStack,
+  Text,
+  HStack,
+  Center,
+  useColorModeValue,
+  useToken,
+} from "@chakra-ui/react";
 import { Box3D } from "../../styles/theme/custom";
 
 import { IPm } from "../../types/selector";
@@ -70,6 +80,11 @@ const Exchange = ({
     });
   }, [dir, city]);
 
+  const [peripheryColor, centerColor] = useToken(
+    "colors",
+    useColorModeValue(["bg.500", "violet.700"], ["bg.400", "peach.300"])
+  );
+
   const giveCur = givePm.currency.code.toUpperCase();
   const getCur = getPm.currency.code.toUpperCase();
   const title2 = t("main:bestSuggestions");
@@ -78,6 +93,7 @@ const Exchange = ({
     givePm,
     getPm,
   });
+  const isLong = title1.length > 40;
   let [description, cityAddon, site_name] = ["", "", ""];
   if (locale == "ru") {
     description = "Поиску лучших предложений обмена";
@@ -91,7 +107,7 @@ const Exchange = ({
 
   if (!slug) return <></>;
   return (
-    <>
+    <VStack>
       <NextSeo
         title={title1}
         description={description + cityAddon}
@@ -147,14 +163,27 @@ const Exchange = ({
           },
         ]}
       />
+      <Box
+        bgGradient={`radial-gradient(circle at 50% -10%, ${centerColor} 0%, ${peripheryColor} 60%)`}
+        bgClip="text"
+      >
+        <Heading
+          fontSize={{ base: isLong ? "lg" : "xl", md: isLong ? "3xl" : "4xl" }}
+          as="h1"
+          fontWeight="bold"
+          color="inherit"
+        >
+          {title1}
+        </Heading>
+      </Box>
 
       <ColumnGrid>
         <Column index={0}>
-          <ColumnHeader
+          {/* <ColumnHeader
             text={title1}
             as="h1"
             query={[givePm.currency.code, getPm.currency.code]}
-          />
+          /> */}
           <Chart giveCur={giveCur} getCur={getCur} />
           <VStack mt="4" w="100%" gap="4">
             <HStack gap="4" w="100%" mb="0">
@@ -172,7 +201,7 @@ const Exchange = ({
         </Column>
 
         <Column index={1}>
-          <ColumnHeader text={title2} as="h2" query={[]} />
+          {/* <ColumnHeader text={title2} as="h2" query={[]} /> */}
           <Calculator />
 
           <LimitsRange />
@@ -193,7 +222,7 @@ const Exchange = ({
           />
         </Box3D>
       </ColumnGrid>
-    </>
+    </VStack>
   );
 };
 

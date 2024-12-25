@@ -7,11 +7,13 @@ const CustomImage = ({
   w = "200px",
   h = "200px",
   shaded = false,
+  customAlt = "",
 }: {
   img?: IImage;
   w?: string;
   h?: string;
   shaded?: boolean;
+  customAlt?: string;
 }) => {
   const env = process.env.NODE_ENV;
   const SRC =
@@ -30,7 +32,7 @@ const CustomImage = ({
       fallbackSrc={fallbackSRC}
       fetchPriority="low"
       src={img ? SRC + img.url : ""}
-      alt={img ? img.alternativeText : ""}
+      alt={img ? img.alternativeText : customAlt}
     />
   );
 };

@@ -52,6 +52,7 @@ const MainPageContent = ({
         <Column index={2}>
           <CircularTexts mainTexts={mainTexts} />
         </Column>
+
         <Column index={1}>
           <ColumnHeader
             text={t("main:sellBuy")}
@@ -59,9 +60,10 @@ const MainPageContent = ({
           />
           <Calculator />
         </Column>
+
         <Column index={4}>
           <ColumnHeader text={rootText?.title} query={["p2pie"]} />
-          <ResponsiveText variant="contrast">
+          <ResponsiveText variant="contrast" as="h3">
             {rootText?.subtitle || ""}
           </ResponsiveText>
           <ResponsiveText variant="no_contrast" whiteSpace="normal">
