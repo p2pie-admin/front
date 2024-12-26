@@ -4,7 +4,7 @@ import { useRef } from "react";
 import Disclaimer from "../../shared/article/Disclaimer";
 import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
 import { IArticle } from "../../../types/pages";
-import ReactMarkdown from "react-markdown";
+//import ReactMarkdown from "react-markdown";
 import { FaExpandArrowsAlt } from "react-icons/fa";
 import { BsTelegram } from "react-icons/bs";
 
@@ -14,6 +14,8 @@ import { IPm } from "../../../types/selector";
 import { IPmPairs } from "../../../types/exchange";
 import { BreadcrumbJsonLd, NextSeo } from "next-seo";
 import { useRouter } from "next/router";
+import RichText from "../../shared/article/RichText";
+import header from "../../layout/header";
 
 const Article = ({
   article,
@@ -42,8 +44,6 @@ const Article = ({
     0
   );
 
-  console.log("otherDirs", otherDirs);
-
   const minToRead = Math.round(symbols / 1000);
 
   return (
@@ -58,7 +58,7 @@ const Article = ({
         <HStack>
           <FaExpandArrowsAlt size="2.5rem" />
           <Heading as="h1" fontSize="5xl">
-            {article.header}
+            {"Что такое " + article.header + "?"}
           </Heading>
         </HStack>
         <Heading as="h2" fontSize="2xl">
@@ -97,7 +97,8 @@ const Article = ({
                   <Text ref={chapter.ref}>{chapter.title || ""}</Text>
                 </HStack>
 
-                <ReactMarkdown>{chapter.text}</ReactMarkdown>
+                <RichText sanitizedHTML={chapter.text} />
+                {/* <ReactMarkdown></ReactMarkdown> */}
 
                 {chapter.disclaimer && (
                   <Disclaimer disclaimer={chapter.disclaimer} />
@@ -107,7 +108,7 @@ const Article = ({
           })}
         </Box>
         {article.section == "pm" && (
-          <OtherDirs code={code} otherDirs={otherDirs} />
+          <OtherDirs code={article.header} otherDirs={otherDirs} />
         )}
 
         <FoundError />

@@ -10,6 +10,7 @@ import { NextSeo, BreadcrumbJsonLd } from "next-seo";
 import { useAppDispatch } from "../../redux/hooks";
 import { useEffect } from "react";
 import { setDirRatesStatus } from "../../redux/mainReducer";
+import { sanitizeArticle } from "./helper";
 
 const ArticlePage = (props: {
   locale: "en" | "ru";
@@ -84,7 +85,7 @@ export async function getStaticProps({
     const { articles } = (await cmsFetcher(articleQuery)) as {
       articles: IArticle[];
     };
-    const article = articles?.[0] || null;
+    const article = sanitizeArticle(articles?.[0]);
     if (!article)
       return {
         notFound: true,
