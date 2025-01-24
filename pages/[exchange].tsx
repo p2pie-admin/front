@@ -62,16 +62,16 @@ export async function getStaticProps({
     const cachedData = readCache() as ICache;
     const { pms, slugToCodes, cities, ruData, enData } = cachedData;
     const dir = cachedData?.slugToCodes?.[slug];
-    if (!dir)
-      return {
-        notFound: true,
-      };
+
     const givePm = pms.find((pm) => pm.code == dir?.split("_")?.[0]);
     const getPm = pms.find((pm) => pm.code == dir?.split("_")?.[1]);
 
     if (!dir || !givePm || !getPm)
       return {
-        notFound: true,
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
       };
     const similarPmPairs = findSimilarPmPairs(
       givePm,
@@ -288,7 +288,7 @@ export async function getStaticPaths() {
 
   const slicedPaths = allPaths
     .filter((p) => needPrerender(p.params.exchange))
-    .slice(0, 2000);
+    .slice(0, 20);
   // срезаем 2к
 
   // ПУТИ ЕСТЬ ПОЛНЫЕ ДЛЯ САЙТМАП, А  ЕСТЬ ДЛЯ ПРЕРЕНДЕРИНГА
