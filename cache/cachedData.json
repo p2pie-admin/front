@@ -147605,38 +147605,11 @@
     {
       "id": "856",
       "name": "BitStore",
-      "description": "It is a long established fact that a reader will be distracted by the readable conten",
+      "description": null,
       "ref_link": "https://bitstore.ws/?refer_id=104868",
       "rates_link": "https://api.bitstore.ws/xrates/export/bestchange",
       "tag": null,
       "admin_rating": 4.4
-    },
-    {
-      "id": "858",
-      "name": "InternetMoney",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://internetmoney.exchange/exportxml.xml",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "860",
-      "name": "Exwp",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "http://exwp.com/estandards/kurs_xml.html",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "861",
-      "name": "CryptoHonest",
-      "description": "The most powerful exchanger",
-      "ref_link": null,
-      "rates_link": "https://cryptohonest.ru/request-exportxml.xml?lang=ru",
-      "tag": "pro",
-      "admin_rating": 3.7
     },
     {
       "id": "862",
@@ -147646,15 +147619,6 @@
       "rates_link": "https://coco-pay.com/request-exportxml.xml?lang=ru",
       "tag": null,
       "admin_rating": null
-    },
-    {
-      "id": "863",
-      "name": "Belqi",
-      "description": "Наш пункт обмена электронных валют – система, созданная на базе современного программного обеспечения и содержащая весь набор необходимых функций для удобной и безопасной конвертации наиболее распространенных видов электронных денег.",
-      "ref_link": "https://belqi.net/?rid=3769",
-      "rates_link": "https://belqi.net/request-exportxml.xml",
-      "tag": null,
-      "admin_rating": 3.9
     },
     {
       "id": "867",
@@ -147684,13 +147648,13 @@
       "admin_rating": null
     },
     {
-      "id": "874",
-      "name": "Money-Office",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://money-office.com/request-exportxml.xml",
+      "id": "876",
+      "name": "5Минут",
+      "description": "Рады предложить Вам наиболее выгодные курсы обмена в системах: WebMoney, Яндекс.Денег, Приват24, Сбербанк Онлайн. Обработка заявки происходит обычно не более 5 минут.",
+      "ref_link": "https://5min.su/?rid=30297",
+      "rates_link": "https://5min.su/request-exportxml.xml",
       "tag": null,
-      "admin_rating": null
+      "admin_rating": 4.22
     },
     {
       "id": "879",
@@ -147711,15 +147675,6 @@
       "admin_rating": null
     },
     {
-      "id": "885",
-      "name": "Treddr",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://treddr.org/request-exportxml.xml?lang=ru",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
       "id": "886",
       "name": "Биток777",
       "description": null,
@@ -147727,24 +147682,6 @@
       "rates_link": "https://bitok777.net/request-exportxml.xml",
       "tag": null,
       "admin_rating": null
-    },
-    {
-      "id": "893",
-      "name": "WmMoney",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://wm.money/request-exportxml.xml?lang=ru",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "894",
-      "name": "AcryptoExchange",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://acryptoexchange.com/request-exportxml.xml?lang=ru",
-      "tag": null,
-      "admin_rating": 4.58
     },
     {
       "id": "897",
@@ -147765,15 +147702,6 @@
       "admin_rating": 3.9
     },
     {
-      "id": "908",
-      "name": "365Cash",
-      "description": "365CASH.CO работает для Вас 24/7, каждый день подтверждая свою безупречную репутацию\nне словами, а делом с 2015 года.",
-      "ref_link": "https://365cash.co/?rid=87978",
-      "rates_link": "https://365cash.co/bestchange.xml",
-      "tag": null,
-      "admin_rating": 4.55
-    },
-    {
       "id": "909",
       "name": "Bchange",
       "description": "Заявка обрабатывается в ручном режиме, курс плавающий. Фиксация курса происходит в момент получения 2 подтверждений сетью и покупки монет по маркету.",
@@ -147792,6 +147720,15 @@
       "admin_rating": null
     },
     {
+      "id": "917",
+      "name": "КриптоРай",
+      "description": null,
+      "ref_link": null,
+      "rates_link": "https://cryptor.ai/request-exportxml.xml?lang=ru",
+      "tag": null,
+      "admin_rating": null
+    },
+    {
       "id": "918",
       "name": "WMT",
       "description": null,
@@ -147801,20 +147738,20 @@
       "admin_rating": null
     },
     {
+      "id": "919",
+      "name": "ОбменОМ",
+      "description": null,
+      "ref_link": null,
+      "rates_link": "http://obmenom.com/rates.xml",
+      "tag": null,
+      "admin_rating": null
+    },
+    {
       "id": "920",
       "name": "RealExchange",
       "description": null,
       "ref_link": null,
       "rates_link": "https://real-exchange.ru/request-exportxml.xml?lang=ru",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "921",
-      "name": "YoChange",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://yochange.com/courses.xml",
       "tag": null,
       "admin_rating": null
     },
@@ -147846,6 +147783,15 @@
       "admin_rating": null
     },
     {
+      "id": "928",
+      "name": "4ange",
+      "description": "Обменный сервис 4ange.me обеспечивает высокую безопасность всех проводимых операций. ",
+      "ref_link": "https://4ange.me/?R=17115750428810",
+      "rates_link": "https://4ange.me/valuta.xml",
+      "tag": null,
+      "admin_rating": 4.11
+    },
+    {
       "id": "929",
       "name": "Alfa-Trades",
       "description": "Мы работаем для того, чтобы сделать обменные операции с криповалютами быстрыми, безопасными и выгодными для людей и стремимся, чтобы blockchain технологии стали неотъемлемой частью жизни нашего общества!",
@@ -147853,15 +147799,6 @@
       "rates_link": "https://alfa-trades.com/request-exportxml.xml?lang=ru",
       "tag": null,
       "admin_rating": 4.19
-    },
-    {
-      "id": "930",
-      "name": "ElectronBank",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://electronbank.ru/request-exportxml.xml",
-      "tag": null,
-      "admin_rating": null
     },
     {
       "id": "934",
@@ -147873,20 +147810,11 @@
       "admin_rating": null
     },
     {
-      "id": "938",
-      "name": "ExLine",
+      "id": "937",
+      "name": "Ex-Money",
       "description": null,
       "ref_link": null,
-      "rates_link": "https://exline.pro/request-exportxml.xml?lang=ru",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "942",
-      "name": "CoinStart",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://coinstart.cc/valuta.xml",
+      "rates_link": "https://ex-money.cc/valuta.xml",
       "tag": null,
       "admin_rating": null
     },
@@ -147914,15 +147842,6 @@
       "description": null,
       "ref_link": null,
       "rates_link": "https://haschange.com/monitor.xml",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "948",
-      "name": "RuChange",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://ru-change.cc/request-exportxml.xml?lang=ru",
       "tag": null,
       "admin_rating": null
     },
@@ -147963,11 +147882,11 @@
       "admin_rating": null
     },
     {
-      "id": "974",
-      "name": "Delets",
+      "id": "968",
+      "name": "ExMoney",
       "description": null,
       "ref_link": null,
-      "rates_link": "https://delets.online/site/rates",
+      "rates_link": "https://exmoney.me/exportxml.xml",
       "tag": null,
       "admin_rating": null
     },
@@ -147981,6 +147900,15 @@
       "admin_rating": null
     },
     {
+      "id": "985",
+      "name": "Ex-code",
+      "description": null,
+      "ref_link": null,
+      "rates_link": "https://ex-code.ru/request-exportxml.xml",
+      "tag": null,
+      "admin_rating": null
+    },
+    {
       "id": "986",
       "name": "WMCash",
       "description": null,
@@ -147990,11 +147918,11 @@
       "admin_rating": null
     },
     {
-      "id": "987",
-      "name": "BroExchange",
+      "id": "989",
+      "name": "Obmenka24",
       "description": null,
       "ref_link": null,
-      "rates_link": "https://bro.exchange/request-exportxml.xml",
+      "rates_link": "https://obmenka24.ru/exchange-rates-xml",
       "tag": null,
       "admin_rating": null
     },
@@ -148017,29 +147945,11 @@
       "admin_rating": null
     },
     {
-      "id": "1001",
-      "name": "Vip-Obmen",
+      "id": "1014",
+      "name": "FlyChange",
       "description": null,
       "ref_link": null,
-      "rates_link": "https://vip-obmen.money/request-exportxml.xml?lang=ru",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "1004",
-      "name": "CoinPayMaster",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://coinpaymaster.com/API/GetCoursesWP",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "1006",
-      "name": "Echange",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://echange.su/request-exportxml.xml?lang=ru",
+      "rates_link": "https://api.flychange.net/xrates/export/bestchange",
       "tag": null,
       "admin_rating": null
     },
@@ -148049,51 +147959,6 @@
       "description": null,
       "ref_link": null,
       "rates_link": "https://coinguru.pw/request-exportxml.xml?lang=ru",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "1017",
-      "name": "ArmChange",
-      "description": "Наш Online сервис предназначен для тех, кто хочет быстро, безопасно и по выгодному курсу обменять такие виды электронных валют: Webmoney, Perfect Money, Bitcoin, Яндекс.Деньги, Идрам, Telcell, Payeer.",
-      "ref_link": "https://armchange.ru/?rid=3050",
-      "rates_link": "https://armchange.ru/request-exportxml.xml",
-      "tag": null,
-      "admin_rating": 3.78
-    },
-    {
-      "id": "1021",
-      "name": "Ru-Bas",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://www.ru-bas.ru/service/export/xml",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "1031",
-      "name": "Changelly",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://api.changelly.com/public/currencies-rates",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "1035",
-      "name": "Flash-Cache",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://flash-cache.com/request-exportxml.xml?lang=ru",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "1040",
-      "name": "Perfect-Change",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://perfect-change.com/exportxml.xml",
       "tag": null,
       "admin_rating": null
     },
@@ -148125,20 +147990,11 @@
       "admin_rating": 3.95
     },
     {
-      "id": "1051",
-      "name": "AlfaExchange",
-      "description": "Alfa.Exchange — это онлайн-пункт обмена электронных и криптовалют. Наша миссия — предоставить нашим пользователям максимально простой инструмент для оперативного, выгодного и безопасного обмена.",
-      "ref_link": "https://alfa.exchange/en/?profit=2964",
-      "rates_link": "https://alfa.exchange/request-exportxml.xml?lang=en",
-      "tag": null,
-      "admin_rating": 4.24
-    },
-    {
-      "id": "1056",
-      "name": "PAY2DAY.TOP",
+      "id": "1060",
+      "name": "Меняйко",
       "description": null,
       "ref_link": null,
-      "rates_link": "https://pay2day.top/request-exportxml.xml",
+      "rates_link": "https://xn--e1aidfgi0j.com.ua/rate.xml",
       "tag": null,
       "admin_rating": null
     },
@@ -148170,24 +148026,6 @@
       "admin_rating": null
     },
     {
-      "id": "1075",
-      "name": "Xchange-24",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://xchange-24.com/export2.php?f=xml&amp;s=short",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "1076",
-      "name": "4money",
-      "description": "4money.me— это безопасный сервис для быстрого и удобного обмена: BTC, ETH, LTC, USDT, TUSD, USDC, Альфа-Банк, Сбер, Тинькофф и многого другого.",
-      "ref_link": "https://4money.me/?rid=809",
-      "rates_link": "https://4money.me/request-exportxml.xml",
-      "tag": null,
-      "admin_rating": 4.78
-    },
-    {
       "id": "1078",
       "name": "Cashex",
       "description": null,
@@ -148215,15 +148053,6 @@
       "admin_rating": null
     },
     {
-      "id": "1085",
-      "name": "Alfabit",
-      "description": "Лидер рынка обмена\nцифровых валют",
-      "ref_link": "https://alfabit.org?rid=1024745",
-      "rates_link": "https://alfabit.org/api/exchage.xml",
-      "tag": null,
-      "admin_rating": 4.81
-    },
-    {
       "id": "1088",
       "name": "BuyBank",
       "description": null,
@@ -148233,13 +148062,13 @@
       "admin_rating": null
     },
     {
-      "id": "1090",
-      "name": "Bitality",
-      "description": "Наш сервис предназначен для людей, которые ценят скорость и эффективность при обмене валют. Безопасность, темп, качество - все это очень важно для нашего сервиса.",
-      "ref_link": "https://bitality.cc?r=66923",
-      "rates_link": "https://bitality.cc/API/GetCoursesWP",
+      "id": "1089",
+      "name": "El-Change",
+      "description": null,
+      "ref_link": null,
+      "rates_link": "https://el-change.com/request-exportxml.xml",
       "tag": null,
-      "admin_rating": 4.4
+      "admin_rating": null
     },
     {
       "id": "1092",
@@ -148278,11 +148107,20 @@
       "admin_rating": null
     },
     {
-      "id": "1120",
-      "name": "Auto.cashout",
+      "id": "1105",
+      "name": "Биткоин24",
       "description": null,
       "ref_link": null,
-      "rates_link": "https://cashout.biz/request-exportxml.xml?lang=ru",
+      "rates_link": "https://bitcoin24.com.ua/ajax/cours.xml",
+      "tag": null,
+      "admin_rating": null
+    },
+    {
+      "id": "1106",
+      "name": "Micro-exchange",
+      "description": null,
+      "ref_link": null,
+      "rates_link": "https://micro-exchange.ru/request-exportxml.xml",
       "tag": null,
       "admin_rating": null
     },
@@ -148296,13 +148134,13 @@
       "admin_rating": null
     },
     {
-      "id": "1136",
-      "name": "CATBIT",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://catbit.io/api/public/bestchange",
+      "id": "1125",
+      "name": "24Обмен",
+      "description": "ОБМЕННИК Работает. АВТОМАТИЧЕСКИ 24/7.",
+      "ref_link": "http://24obmen.org/?ref=32229",
+      "rates_link": "http://24obmen.org/rates.xml",
       "tag": null,
-      "admin_rating": null
+      "admin_rating": 4.51
     },
     {
       "id": "1140",
@@ -148323,11 +148161,11 @@
       "admin_rating": null
     },
     {
-      "id": "1151",
-      "name": "TraiderIdeal",
+      "id": "1153",
+      "name": "Platov",
       "description": null,
       "ref_link": null,
-      "rates_link": "https://traiderideal.ru/request-exportxml.xml",
+      "rates_link": "https://platov.cc/site/rates",
       "tag": null,
       "admin_rating": null
     },
@@ -148368,51 +148206,6 @@
       "admin_rating": null
     },
     {
-      "id": "1163",
-      "name": "WikiPays",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://wikipays.com/request-exportxml.xml",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "1168",
-      "name": "100Bitcoins",
-      "description": "Наш пункт обмена электронных валют – система, созданная на базе современного программного обеспечения и содержащая весь набор необходимых функций для удобной и безопасной конвертации наиболее распространенных видов электронных денег.",
-      "ref_link": "https://100bitcoins.com/?rid=1025",
-      "rates_link": "https://100bitcoins.com/request-exportxml.xml",
-      "tag": null,
-      "admin_rating": 3.9
-    },
-    {
-      "id": "1170",
-      "name": "MegaChange",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://www.megachange.ru/exportxml.xml",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "1175",
-      "name": "Zombie.cash",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://zombie.cash/service/export/xml",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "1176",
-      "name": "Crybex",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://crybex.com/request-exportxml.xml?lang=ru",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
       "id": "1178",
       "name": "BazarMoney",
       "description": "Наш Online сервис предназначен для тех, кто хочет быстро, безопасно и по выгодному курсу обменять такие виды электронных валют: Webmoney, USDT TRC20, Visa/Master Card/МИР RUB, Юмани, Беларусбанк, Белоруские Банки.",
@@ -148420,15 +148213,6 @@
       "rates_link": "https://bazarmoney.ru/request-exportxml.xml",
       "tag": null,
       "admin_rating": 3.5
-    },
-    {
-      "id": "1181",
-      "name": "E-Scrooge",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://e-scrooge.is/export/kurses.xml",
-      "tag": null,
-      "admin_rating": null
     },
     {
       "id": "1184",
@@ -148449,24 +148233,6 @@
       "admin_rating": null
     },
     {
-      "id": "1193",
-      "name": "WMZ",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://wmz.one/request-exportxml.xml?lang=ru",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "1198",
-      "name": "XbitMoney",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://xbit.money/request-exportxml.xml",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
       "id": "1200",
       "name": "Coins.Black",
       "description": null,
@@ -148476,65 +148242,11 @@
       "admin_rating": null
     },
     {
-      "id": "1201",
-      "name": "СosmoChanger",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://cosmochanger.cc/Api/GetCoursesWP",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "1202",
-      "name": "BSEIT.com",
-      "description": "Легкий способ обмена электронных денег! BSEIT.com (означает Kупить, Продать или Обменить это). Основано в 2018 году.",
-      "ref_link": "https://bseit.com/?ref=l3L7",
-      "rates_link": "https://bseit.com/bseit-rates.xml",
-      "tag": "pro",
-      "admin_rating": 4.13
-    },
-    {
       "id": "1203",
       "name": "Ферма",
       "description": null,
       "ref_link": null,
       "rates_link": "https://ferma.cc/valuta.xml",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "1208",
-      "name": "24BestEx",
-      "description": null,
-      "ref_link": "https://24bestex.com/en/?rid=34495",
-      "rates_link": "https://24bestex.com/request-exportxml.xml?lang=ru",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "1211",
-      "name": "ChangeAM",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://www.change.am/request-exportxml.xml?lang=ru",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "1214",
-      "name": "Onemoment",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://onemoment.cc/valuta.xml",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "1215",
-      "name": "ObmenMoney",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://obmen.money/request-exportxml.xml",
       "tag": null,
       "admin_rating": null
     },
@@ -148548,38 +148260,11 @@
       "admin_rating": null
     },
     {
-      "id": "1220",
-      "name": "Ex-Bank",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://ex-bank.cc/assets/rates.xml",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "1222",
-      "name": "Paytiz",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://paytiz.com/request-exportxml.xml?lang=ru",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
       "id": "1223",
       "name": "Матби",
       "description": null,
       "ref_link": null,
       "rates_link": "https://matbea.com/xml/bestchange.xml",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "1225",
-      "name": "Coin-Bank",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://coin-bank.co/request-exportxml.xml?lang=ru",
       "tag": null,
       "admin_rating": null
     },
@@ -148602,11 +148287,20 @@
       "admin_rating": null
     },
     {
-      "id": "1243",
-      "name": "MyChanger",
+      "id": "1244",
+      "name": "QuickChange",
       "description": null,
       "ref_link": null,
-      "rates_link": "https://mychanger.biz/feed.xml",
+      "rates_link": "https://api.quickchange.cc/xrates/export/bestchange",
+      "tag": null,
+      "admin_rating": null
+    },
+    {
+      "id": "1249",
+      "name": "RoyalCash",
+      "description": null,
+      "ref_link": null,
+      "rates_link": "https://royal.cash/valuta.xml",
       "tag": null,
       "admin_rating": null
     },
@@ -148638,15 +148332,6 @@
       "admin_rating": null
     },
     {
-      "id": "1262",
-      "name": "My-Xchange",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://api.my-xchange.com/ru/export/xml",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
       "id": "1263",
       "name": "BuyBit",
       "description": null,
@@ -148665,6 +148350,15 @@
       "admin_rating": null
     },
     {
+      "id": "1266",
+      "name": "24Zone",
+      "description": null,
+      "ref_link": null,
+      "rates_link": "https://24.zone/request-exportxml.xml",
+      "tag": null,
+      "admin_rating": null
+    },
+    {
       "id": "1268",
       "name": "BitPayes",
       "description": "Битпейс - это современная платформа, которая использует передовые технологии шифрования и многоуровневую систему защиты данных, что позволяет избежать мошенничества и несанкционированного доступа к средствам пользователей.",
@@ -148672,33 +148366,6 @@
       "rates_link": "https://bitpayes.com/exportxml.htm",
       "tag": null,
       "admin_rating": 3.7
-    },
-    {
-      "id": "1271",
-      "name": "Cripthub",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://cripthub.ru/request-exportxml.xml",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "1272",
-      "name": "Itez",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://api.itez.com/api/public/exchange/bestchange.xml",
-      "tag": null,
-      "admin_rating": null
-    },
-    {
-      "id": "1276",
-      "name": "CoinCat",
-      "description": null,
-      "ref_link": null,
-      "rates_link": "https://coincat.in/monitoring-export/estandarts.xml",
-      "tag": null,
-      "admin_rating": null
     },
     {
       "id": "1277",

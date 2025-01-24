@@ -1,6 +1,6 @@
 import { readCache, writeCache } from "../../cache";
 import { initCMSFetcher } from "../../services/fetchers";
-import { IArticle } from "../../types/pages";
+
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { articleCodesQuery, articleQuery } from "../../services/initialQueries";
 import Article from "../../components/exchange/article";
@@ -10,7 +10,32 @@ import { NextSeo, BreadcrumbJsonLd } from "next-seo";
 import { useAppDispatch } from "../../redux/hooks";
 import { useEffect } from "react";
 import { setDirRatesStatus } from "../../redux/mainReducer";
-import { sanitizeArticle } from "./helper";
+
+import { IArticle, IChapter } from "../../types/pages";
+import { marked } from "marked";
+import DOMPurify from "isomorphic-dompurify";
+
+export const textToHTML = (text: string): string => {
+  // only for SSR
+  const rawHTML = marked(text) as string; // Convert Markdown to HTML
+  const sanitizedHTML = DOMPurify.sanitize(rawHTML); // Sanitize HTML
+  return sanitizedHTML.replace(/\n/g, "<br>");
+};
+
+export function sanitizeArticle(article?: IArticle): IArticle | null {
+  if (!article) return null;
+  return {
+    ...article,
+    chapters: article.chapters.map((chapter) => sanitizeChapter(chapter)),
+  };
+}
+
+export function sanitizeChapter(chapter: IChapter): IChapter {
+  return {
+    ...chapter,
+    text: textToHTML(chapter.text), // Sanitize `text`
+  };
+}
 
 const ArticlePage = (props: {
   locale: "en" | "ru";
