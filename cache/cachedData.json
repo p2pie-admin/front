@@ -2,1513 +2,347 @@
   "enData": {
     "pmLayouts": [
       {
-        "id": "3",
-        "section": "bank",
-        "description": "Card limits\nVerification\nCard blocking\nBank advantages"
+        "id": "1",
+        "section": "crypto",
+        "description": "• Wallet creation\n• Secure exchange\n• Transaction verification\n• Benefits"
       },
       {
-        "id": "4",
-        "section": "crypto",
-        "description": "Wallet creation\nSecure exchange\nTransaction verification\nBenefits"
+        "id": "5",
+        "section": "bank",
+        "description": "• Card limits\n• Verification\n• Card blocking\n• Bank specifics"
       },
       {
         "id": "6",
         "section": "cash",
-        "description": "\nOffices and cities\nExchange regulations\nCash delivery\nAdvantages"
-      },
-      {
-        "id": "8",
-        "section": "transfer",
-        "description": "Создание кошелька\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
-      },
-      {
-        "id": "10",
-        "section": "digital",
-        "description": "Создание digital\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
+        "description": "• Offices and cities\n• Exchange regulations\n• Cash delivery\n• Advantages"
       }
     ],
     "dirsTexts": [
       {
-        "id": "10",
+        "id": "1",
         "section_give": "crypto",
         "section_get": "cash",
         "title": "Sell give_name give_currency and receive get_name get_currency in city_name",
         "text": "Select the best rate and go to the exchanger's website. Then, choose the exchange direction, create a request, and arrange delivery or an office meeting with the operator via chat.",
-        "updatedAt": "2024-12-23T04:50:43.811Z"
-      },
-      {
-        "id": "11",
-        "section_give": "cash",
-        "section_get": "crypto",
-        "title": "cash to crypto",
-        "text": "cash to crypto",
-        "updatedAt": "2024-11-22T20:50:46.778Z"
-      },
-      {
-        "id": "12",
-        "section_give": "digital",
-        "section_get": "crypto",
-        "title": "digital -> crypto here tiitle",
-        "text": "digital -> crypto",
-        "updatedAt": "2024-11-22T20:50:46.794Z"
-      },
-      {
-        "id": "13",
-        "section_give": "crypto",
-        "section_get": "bank",
-        "title": "Sell give_name give_currency and receive get_name get_currency",
-        "text": "To do this, select a suitable exchanger and follow the instructions on the exchanger's website.\nFirst, choose the exchange direction, then provide your banking details and create a request.\nYou will be given a crypto wallet address either automatically or manually via a chat with the operator. Once the cryptocurrency is credited, you will receive your funds in your bank account.",
-        "updatedAt": "2024-12-23T02:26:07.306Z"
-      },
-      {
-        "id": "15",
-        "section_give": "cash",
-        "section_get": "crypto",
-        "title": "Buy get_name get_currency for give_name give_currency in city_name",
-        "text": "Select the best rate and go to the exchanger's website. Then, choose the exchange direction, create a request, and arrange delivery or an office meeting with the operator via chat.",
-        "updatedAt": "2024-12-23T04:48:45.806Z"
-      },
-      {
-        "id": "17",
-        "section_give": "bank",
-        "section_get": "crypto",
-        "title": "Buy get_name get_currency for give_name give_currency",
-        "text": "To complete the exchange, select a suitable service and follow the instructions on its website. First, specify the exchange direction, then provide your banking details and crypto wallet address. Create a request. In some cases, the exchanger may request a photo of your bank card against the background of the screen showing the request number for verification. After verification, you will be provided with the card details for transferring funds, which will appear on the website automatically or be sent by the operator via chat. Once the transaction is confirmed, the operator will send the cryptocurrency to the address you provided. All exchangers undergo thorough verification, ensuring the transaction is completely secure if you follow the exchanger's rules. Our team is always ready to assist you if you have any questions.",
-        "updatedAt": "2024-12-23T04:29:35.874Z"
-      }
-    ],
-    "articleCodes": [
-      "BTC",
-      "ETH",
-      "SOL",
-      "ZRX",
-      "ZEC",
-      "XMR",
-      "XLM",
-      "TON",
-      "TRX",
-      "SHIB",
-      "TUSD",
-      "USDC",
-      "LTC",
-      "USDP",
-      "NEO",
-      "ADA",
-      "EOS",
-      "XRP",
-      "UNI",
-      "DOT",
-      "BCH",
-      "ETC",
-      "BCH",
-      "BNB",
-      "DASH",
-      "USDTERC20",
-      "USDTTRC20",
-      "SBERRUB",
-      "TCSBRUB",
-      "GPBRUB",
-      "SBPRUB",
-      "ACRUB",
-      "PSBRUB",
-      "POSTBRUB",
-      "RSHBRUB",
-      "ROSRUB",
-      "HLKBKZT",
-      "KSPBKZT",
-      "KSPBUSD",
-      "KSPBEUR",
-      "P24UAH",
-      "P24USD",
-      "OSDBUAH",
-      "OSDBUSD",
-      "OSDBEUR",
-      "PMBBUAH",
-      "PMBBUSD",
-      "PMBBEUR",
-      "RNKBRUB",
-      "CASHUSD",
-      "CASHRUB",
-      "CASHCNY",
-      "CASHUAH",
-      "CASHAZN",
-      "CASHGEL",
-      "CASHTRY",
-      "CASHGBP",
-      "MGUSD",
-      "MGEUR",
-      "RMTFUSD",
-      "RMTFEUR"
-    ]
-  },
-  "ruData": {
-    "pmLayouts": [
-      {
-        "id": "1",
-        "section": "crypto",
-        "description": "Создание  кошелька\u0003\nСтоимость транзакции\nПроверка транзакции\u0003\nПреимущества\u0003"
+        "updatedAt": "2025-01-24T07:14:12.494Z"
       },
       {
         "id": "2",
-        "section": "bank",
-        "description": "Лимиты карт\nВерификация\nБлокировка карт\nПреимущества банка"
-      },
-      {
-        "id": "5",
-        "section": "cash",
-        "description": "Офисы и города\nРегламент обмена\nДоставка наличных\nПреимущества"
-      },
-      {
-        "id": "7",
-        "section": "transfer",
-        "description": "Создание кошелька\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
-      },
-      {
-        "id": "9",
-        "section": "digital",
-        "description": "Создание диджитал\u0003\nБезопасный обмен\u0003\nПреимущества\u0003\nПроверка транзакции\u0003\nЗагруженность сети"
-      }
-    ],
-    "dirsTexts": [
-      {
-        "id": "1",
-        "section_give": "crypto",
-        "section_get": "bank",
-        "title": "Продайте give_name give_currency и получите get_name get_currency",
-        "text": "Для этого выберите подходящий обменник и следуйте инструкции на сайте обменника.\nСперва выберите направление обмена, затем предоставьте свои банковские реквизиты и создайте заявку.\nВам будет предоставлен адрес кошелька для отправки криптовалюты. Адрес появится на сайте автоматически или будет отправлен оператором в чате.  После зачисления криптовалюты вы получите свои средства на банковский счет.  Все обменники проходят тщательную верификацию, поэтому сделка абсолютно безопасна при соблюдении правил обменника. Наша команда всегда готова помочь.\n",
-        "updatedAt": "2024-12-23T02:26:07.283Z"
+        "section_give": "cash",
+        "section_get": "crypto",
+        "title": "Buy  get_name get_currency for give_name give_currency in city_name",
+        "text": "Pick the most favorable rate and visit the exchanger's site. From there, select the desired exchange direction, submit a request, and coordinate delivery or schedule an in-office meeting with the operator through chat.",
+        "updatedAt": "2025-01-24T07:10:20.312Z"
       },
       {
         "id": "3",
         "section_give": "crypto",
+        "section_get": "crypto",
+        "title": "Sell give_name give_currency and receive get_name get_currency",
+        "text": "Select the best rate and go to the exchanger's website. Then, choose the exchange direction to swap cryptocurrency",
+        "updatedAt": "2025-01-24T07:12:48.973Z"
+      },
+      {
+        "id": "4",
+        "section_give": "crypto",
+        "section_get": "bank",
+        "title": "Sell give_name give_currency and receive get_name get_currency in city_name",
+        "text": "Choose the optimal rate and visit the exchanger's website. Next, select the exchange direction, place a bid, and follow the provided instructions.",
+        "updatedAt": "2025-01-24T07:15:09.902Z"
+      },
+      {
+        "id": "5",
+        "section_give": "bank",
+        "section_get": "crypto",
+        "title": "Buy  get_name get_currency for give_name give_currency in city_name",
+        "text": "Select the best rate and go to the exchanger's website. Then, choose the exchange direction, create a bid and follow instructions",
+        "updatedAt": "2025-01-24T07:16:04.161Z"
+      }
+    ],
+    "articleCodes": []
+  },
+  "ruData": {
+    "pmLayouts": [
+      {
+        "id": "2",
+        "section": "crypto",
+        "description": "• Создание кошелька\n• Стоимость транзакции\n• Проверка транзакции\n• Преимущества"
+      },
+      {
+        "id": "3",
+        "section": "cash",
+        "description": "• Офисы и города\n• Регламент обмена\n• Доставка наличных\n• Преимущества"
+      },
+      {
+        "id": "4",
+        "section": "bank",
+        "description": "• Лимиты карт\n• Верификация\n• Блокировка карт\n• Особенности\n"
+      }
+    ],
+    "dirsTexts": [
+      {
+        "id": "6",
+        "section_give": "crypto",
         "section_get": "cash",
-        "title": "Продайте give_name give_currency за наличные get_name get_currency в city_name",
-        "text": "Выберите подходящий курс и перейдите на сайт обменника. Далее выберите направление обмена, создайте заявку и договитесь о доставке или встрече в офисе с оператором через чат. Заберите наличные после отправки криптовалюты на выданный оператором адрес кошелька.",
-        "updatedAt": "2024-12-23T04:50:43.837Z"
+        "title": "Продать give_name give_currency и получить get_name get_currency в city_name",
+        "text": "Выберите лучший курс и перейдите на сайт обменника. Затем выберите направление обмена, создайте заявку и договоритесь о доставке или встрече в офисе с оператором через чат.",
+        "updatedAt": "2025-01-24T07:25:06.838Z"
       },
       {
         "id": "7",
+        "section_give": "cash",
+        "section_get": "crypto",
+        "title": "Купить get_name get_currency за give_name give_currency в city_name",
+        "text": "Выберите наиболее выгодный курс и перейдите на сайт обменника. Затем выберите нужное направление обмена, подайте заявку и договоритесь о доставке или встрече в офисе через чат.",
+        "updatedAt": "2025-01-24T07:25:06.859Z"
+      },
+      {
+        "id": "8",
         "section_give": "crypto",
-        "section_get": "transfer",
-        "title": "тут крипта на трансфер",
-        "text": "крипта на трансфер",
-        "updatedAt": "2024-11-22T20:50:46.678Z"
+        "section_get": "crypto",
+        "title": "Продать give_name give_currency и получить get_name get_currency",
+        "text": "Выберите лучший курс и перейдите на сайт обменника. Затем выберите направление обмена для обмена криптовалюты.",
+        "updatedAt": "2025-01-24T07:25:06.874Z"
       },
       {
         "id": "9",
-        "section_give": "digital",
-        "section_get": "crypto",
-        "title": "тут диджитал на крипту",
-        "text": "диджитал на крипту",
-        "updatedAt": "2024-11-22T20:50:46.693Z"
+        "section_give": "crypto",
+        "section_get": "bank",
+        "title": "Продать give_name give_currency и получить get_name get_currency в city_name",
+        "text": "Выберите оптимальный курс и перейдите на сайт обменника. Затем выберите направление обмена, подайте заявку и следуйте предоставленным инструкциям.",
+        "updatedAt": "2025-01-24T07:25:06.893Z"
       },
       {
-        "id": "14",
-        "section_give": "cash",
-        "section_get": "crypto",
-        "title": "Купите get_name get_currency за наличные  give_name give_currency в city_name",
-        "text": "Выберите подходящий курс и перейдите на сайт обменника. Далее выберите направление обмена, создайте заявку и договитесь о доставке или встрече в офисе с оператором через чат.",
-        "updatedAt": "2024-12-23T04:48:45.848Z"
-      },
-      {
-        "id": "16",
+        "id": "10",
         "section_give": "bank",
         "section_get": "crypto",
-        "title": "Купите  get_name get_currency за give_name give_currency",
-        "text": "Для выполнения обмена выберите подходящий обменник и следуйте инструкциям на его сайте. Сначала укажите направление обмена, затем внесите данные своих банковских реквизитов и адрес крипто-кошелька. Создайте заявку. В некоторых случаях обменник может запросить фото вашей банковской карты на фоне экрана с номером заявки для подтверждения. После проверки вам предоставят реквизиты карты для перевода средств, которые появятся на сайте автоматически или будут отправлены оператором в чате. После подтверждения транзакции оператор переведет криптовалюту на указанный вами адрес. Все обменники проходят строгую проверку, что гарантирует безопасность сделки при соблюдении их правил. Наша команда всегда готова помочь, если у вас возникнут вопросы.",
-        "updatedAt": "2024-12-23T04:29:35.966Z"
+        "title": "Купить get_name get_currency за give_name give_currency в city_name",
+        "text": "Выберите лучший курс и перейдите на сайт обменника. Затем выберите направление обмена, создайте заявку и следуйте инструкциям.",
+        "updatedAt": "2025-01-24T07:25:06.918Z"
       }
     ],
-    "articleCodes": [
-      "BTC",
-      "ETH",
-      "SOL",
-      "ZRX",
-      "ZEC",
-      "XMR",
-      "XLM",
-      "TON",
-      "TRX",
-      "SHIB",
-      "TUSD",
-      "USDC",
-      "LTC",
-      "USDP",
-      "NEO",
-      "ADA",
-      "EOS",
-      "XRP",
-      "UNI",
-      "DOT",
-      "BCH",
-      "ETC",
-      "BCH",
-      "BNB",
-      "DASH",
-      "USDTERC20",
-      "USDTTRC20",
-      "SBERRUB",
-      "TCSBRUB",
-      "GPBRUB",
-      "SBPRUB",
-      "ACRUB",
-      "PSBRUB",
-      "POSTBRUB",
-      "RSHBRUB",
-      "ROSRUB",
-      "HLKBKZT",
-      "KSPBKZT",
-      "KSPBUSD",
-      "KSPBEUR",
-      "P24UAH",
-      "P24USD",
-      "OSDBUAH",
-      "OSDBUSD",
-      "OSDBEUR",
-      "PMBBUAH",
-      "PMBBUSD",
-      "PMBBEUR",
-      "RNKBRUB",
-      "CASHUSD",
-      "CASHRUB",
-      "CASHCNY",
-      "CASHUAH",
-      "CASHAZN",
-      "CASHGEL",
-      "CASHTRY",
-      "CASHGBP",
-      "MGUSD",
-      "MGEUR",
-      "RMTFUSD",
-      "RMTFEUR"
-    ]
+    "articleCodes": []
   },
   "slugToCodes": {
     "bitcoin-btc-to-bitcoin-btc": "BTC_BTC",
     "bitcoin-btc-to-ethereum-eth": "BTC_ETH",
-    "bitcoin-btc-to-solana-sol": "BTC_SOL",
-    "bitcoin-btc-to-0x-zrx": "BTC_ZRX",
-    "bitcoin-btc-to-zcash-zec": "BTC_ZEC",
-    "bitcoin-btc-to-monero-xmr": "BTC_XMR",
-    "bitcoin-btc-to-stellar-xlm": "BTC_XLM",
-    "bitcoin-btc-to-toncoin-ton": "BTC_TON",
-    "bitcoin-btc-to-tron-trx": "BTC_TRX",
-    "bitcoin-btc-to-shibainu-shib": "BTC_SHIB",
-    "bitcoin-btc-to-trueusd-tusd": "BTC_TUSD",
-    "bitcoin-btc-to-usdcoin-usdc": "BTC_USDC",
     "bitcoin-btc-to-litecoin-ltc": "BTC_LTC",
-    "bitcoin-btc-to-paxos-usdp": "BTC_USDP",
+    "bitcoin-btc-to-monero-xmr": "BTC_XMR",
     "bitcoin-btc-to-neo-neo": "BTC_NEO",
-    "bitcoin-btc-to-cardano-ada": "BTC_ADA",
-    "bitcoin-btc-to-eos-eos": "BTC_EOS",
-    "bitcoin-btc-to-ripple-xrp": "BTC_XRP",
-    "bitcoin-btc-to-uniswap-uni": "BTC_UNI",
-    "bitcoin-btc-to-polkadot-dot": "BTC_DOT",
-    "bitcoin-btc-to-dogecoin-doge": "BTC_DOGE",
-    "bitcoin-btc-to-classic-etc": "BTC_ETC",
+    "bitcoin-btc-to-solana-sol": "BTC_SOL",
+    "bitcoin-btc-to-tron-trx": "BTC_TRX",
     "bitcoin-btc-to-dai-dai": "BTC_DAI",
-    "bitcoin-btc-to-bitcoincash-bch": "BTC_BCH",
-    "bitcoin-btc-to-dash-dash": "BTC_DASH",
+    "bitcoin-btc-to-0x-zrx": "BTC_ZRX",
     "bitcoin-btc-to-tether-usdt-erc20": "BTC_USDTERC20",
     "bitcoin-btc-to-tether-usdt-trc20": "BTC_USDTTRC20",
+    "bitcoin-btc-to-cash-rub": "BTC_CASHRUB",
+    "bitcoin-btc-to-cash-usd": "BTC_CASHUSD",
     "bitcoin-btc-to-sber-rub": "BTC_SBERRUB",
     "bitcoin-btc-to-t-bank-rub": "BTC_TCSBRUB",
-    "bitcoin-btc-to-gazprom-rub": "BTC_GPBRUB",
-    "bitcoin-btc-to-sbp-rub": "BTC_SBPRUB",
-    "bitcoin-btc-to-alfa-bank-rub": "BTC_ACRUB",
-    "bitcoin-btc-to-psb-rub": "BTC_PSBRUB",
-    "bitcoin-btc-to-pochtabank-rub": "BTC_POSTBRUB",
-    "bitcoin-btc-to-rosselhoz-rub": "BTC_RSHBRUB",
-    "bitcoin-btc-to-halyk-kzt": "BTC_HLKBKZT",
-    "bitcoin-btc-to-kaspi-kzt": "BTC_KSPBKZT",
-    "bitcoin-btc-to-privat24-uah": "BTC_P24UAH",
-    "bitcoin-btc-to-privat24-usd": "BTC_P24USD",
-    "bitcoin-btc-to-oschadbank-uah": "BTC_OSDBUAH",
-    "bitcoin-btc-to-fuib-uah": "BTC_PMBBUAH",
-    "bitcoin-btc-to-rnkb-rub": "BTC_RNKBRUB",
-    "bitcoin-btc-to-cash-usd": "BTC_CASHUSD",
-    "bitcoin-btc-to-cash-rub": "BTC_CASHRUB",
-    "bitcoin-btc-to-cash-uah": "BTC_CASHUAH",
-    "bitcoin-btc-to-cash-try": "BTC_CASHTRY",
-    "bitcoin-btc-to-cash-gbp": "BTC_CASHGBP",
+    "bitcoin-btc-to-alpha-bank-rub": "BTC_ACRUB",
     "ethereum-eth-to-bitcoin-btc": "ETH_BTC",
     "ethereum-eth-to-ethereum-eth": "ETH_ETH",
-    "ethereum-eth-to-solana-sol": "ETH_SOL",
-    "ethereum-eth-to-0x-zrx": "ETH_ZRX",
-    "ethereum-eth-to-zcash-zec": "ETH_ZEC",
-    "ethereum-eth-to-monero-xmr": "ETH_XMR",
-    "ethereum-eth-to-stellar-xlm": "ETH_XLM",
-    "ethereum-eth-to-toncoin-ton": "ETH_TON",
-    "ethereum-eth-to-tron-trx": "ETH_TRX",
-    "ethereum-eth-to-shibainu-shib": "ETH_SHIB",
-    "ethereum-eth-to-trueusd-tusd": "ETH_TUSD",
-    "ethereum-eth-to-usdcoin-usdc": "ETH_USDC",
     "ethereum-eth-to-litecoin-ltc": "ETH_LTC",
-    "ethereum-eth-to-paxos-usdp": "ETH_USDP",
+    "ethereum-eth-to-monero-xmr": "ETH_XMR",
     "ethereum-eth-to-neo-neo": "ETH_NEO",
-    "ethereum-eth-to-cardano-ada": "ETH_ADA",
-    "ethereum-eth-to-eos-eos": "ETH_EOS",
-    "ethereum-eth-to-ripple-xrp": "ETH_XRP",
-    "ethereum-eth-to-uniswap-uni": "ETH_UNI",
-    "ethereum-eth-to-polkadot-dot": "ETH_DOT",
-    "ethereum-eth-to-dogecoin-doge": "ETH_DOGE",
-    "ethereum-eth-to-classic-etc": "ETH_ETC",
+    "ethereum-eth-to-solana-sol": "ETH_SOL",
+    "ethereum-eth-to-tron-trx": "ETH_TRX",
     "ethereum-eth-to-dai-dai": "ETH_DAI",
-    "ethereum-eth-to-bitcoincash-bch": "ETH_BCH",
-    "ethereum-eth-to-dash-dash": "ETH_DASH",
+    "ethereum-eth-to-0x-zrx": "ETH_ZRX",
     "ethereum-eth-to-tether-usdt-erc20": "ETH_USDTERC20",
     "ethereum-eth-to-tether-usdt-trc20": "ETH_USDTTRC20",
+    "ethereum-eth-to-cash-rub": "ETH_CASHRUB",
+    "ethereum-eth-to-cash-usd": "ETH_CASHUSD",
     "ethereum-eth-to-sber-rub": "ETH_SBERRUB",
     "ethereum-eth-to-t-bank-rub": "ETH_TCSBRUB",
-    "ethereum-eth-to-gazprom-rub": "ETH_GPBRUB",
-    "ethereum-eth-to-sbp-rub": "ETH_SBPRUB",
-    "ethereum-eth-to-alfa-bank-rub": "ETH_ACRUB",
-    "ethereum-eth-to-psb-rub": "ETH_PSBRUB",
-    "ethereum-eth-to-pochtabank-rub": "ETH_POSTBRUB",
-    "ethereum-eth-to-rosselhoz-rub": "ETH_RSHBRUB",
-    "ethereum-eth-to-halyk-kzt": "ETH_HLKBKZT",
-    "ethereum-eth-to-kaspi-kzt": "ETH_KSPBKZT",
-    "ethereum-eth-to-privat24-uah": "ETH_P24UAH",
-    "ethereum-eth-to-privat24-usd": "ETH_P24USD",
-    "ethereum-eth-to-oschadbank-uah": "ETH_OSDBUAH",
-    "ethereum-eth-to-fuib-uah": "ETH_PMBBUAH",
-    "ethereum-eth-to-rnkb-rub": "ETH_RNKBRUB",
-    "ethereum-eth-to-cash-usd": "ETH_CASHUSD",
-    "ethereum-eth-to-cash-rub": "ETH_CASHRUB",
-    "ethereum-eth-to-cash-uah": "ETH_CASHUAH",
-    "ethereum-eth-to-cash-try": "ETH_CASHTRY",
-    "ethereum-eth-to-cash-gbp": "ETH_CASHGBP",
+    "ethereum-eth-to-alpha-bank-rub": "ETH_ACRUB",
+    "litecoin-ltc-to-bitcoin-btc": "LTC_BTC",
+    "litecoin-ltc-to-ethereum-eth": "LTC_ETH",
+    "litecoin-ltc-to-litecoin-ltc": "LTC_LTC",
+    "litecoin-ltc-to-monero-xmr": "LTC_XMR",
+    "litecoin-ltc-to-neo-neo": "LTC_NEO",
+    "litecoin-ltc-to-solana-sol": "LTC_SOL",
+    "litecoin-ltc-to-tron-trx": "LTC_TRX",
+    "litecoin-ltc-to-dai-dai": "LTC_DAI",
+    "litecoin-ltc-to-0x-zrx": "LTC_ZRX",
+    "litecoin-ltc-to-tether-usdt-erc20": "LTC_USDTERC20",
+    "litecoin-ltc-to-tether-usdt-trc20": "LTC_USDTTRC20",
+    "litecoin-ltc-to-cash-rub": "LTC_CASHRUB",
+    "litecoin-ltc-to-cash-usd": "LTC_CASHUSD",
+    "litecoin-ltc-to-sber-rub": "LTC_SBERRUB",
+    "litecoin-ltc-to-t-bank-rub": "LTC_TCSBRUB",
+    "litecoin-ltc-to-alpha-bank-rub": "LTC_ACRUB",
+    "monero-xmr-to-bitcoin-btc": "XMR_BTC",
+    "monero-xmr-to-ethereum-eth": "XMR_ETH",
+    "monero-xmr-to-litecoin-ltc": "XMR_LTC",
+    "monero-xmr-to-monero-xmr": "XMR_XMR",
+    "monero-xmr-to-neo-neo": "XMR_NEO",
+    "monero-xmr-to-solana-sol": "XMR_SOL",
+    "monero-xmr-to-tron-trx": "XMR_TRX",
+    "monero-xmr-to-dai-dai": "XMR_DAI",
+    "monero-xmr-to-0x-zrx": "XMR_ZRX",
+    "monero-xmr-to-tether-usdt-erc20": "XMR_USDTERC20",
+    "monero-xmr-to-tether-usdt-trc20": "XMR_USDTTRC20",
+    "monero-xmr-to-cash-rub": "XMR_CASHRUB",
+    "monero-xmr-to-cash-usd": "XMR_CASHUSD",
+    "monero-xmr-to-sber-rub": "XMR_SBERRUB",
+    "monero-xmr-to-t-bank-rub": "XMR_TCSBRUB",
+    "monero-xmr-to-alpha-bank-rub": "XMR_ACRUB",
+    "neo-neo-to-bitcoin-btc": "NEO_BTC",
+    "neo-neo-to-ethereum-eth": "NEO_ETH",
+    "neo-neo-to-litecoin-ltc": "NEO_LTC",
+    "neo-neo-to-monero-xmr": "NEO_XMR",
+    "neo-neo-to-tron-trx": "NEO_TRX",
+    "neo-neo-to-dai-dai": "NEO_DAI",
+    "neo-neo-to-0x-zrx": "NEO_ZRX",
+    "neo-neo-to-tether-usdt-erc20": "NEO_USDTERC20",
+    "neo-neo-to-tether-usdt-trc20": "NEO_USDTTRC20",
+    "neo-neo-to-sber-rub": "NEO_SBERRUB",
+    "neo-neo-to-t-bank-rub": "NEO_TCSBRUB",
+    "neo-neo-to-alpha-bank-rub": "NEO_ACRUB",
     "solana-sol-to-bitcoin-btc": "SOL_BTC",
     "solana-sol-to-ethereum-eth": "SOL_ETH",
-    "solana-sol-to-solana-sol": "SOL_SOL",
-    "solana-sol-to-0x-zrx": "SOL_ZRX",
-    "solana-sol-to-zcash-zec": "SOL_ZEC",
-    "solana-sol-to-monero-xmr": "SOL_XMR",
-    "solana-sol-to-stellar-xlm": "SOL_XLM",
-    "solana-sol-to-toncoin-ton": "SOL_TON",
-    "solana-sol-to-tron-trx": "SOL_TRX",
-    "solana-sol-to-shibainu-shib": "SOL_SHIB",
     "solana-sol-to-litecoin-ltc": "SOL_LTC",
-    "solana-sol-to-cardano-ada": "SOL_ADA",
-    "solana-sol-to-eos-eos": "SOL_EOS",
-    "solana-sol-to-ripple-xrp": "SOL_XRP",
-    "solana-sol-to-uniswap-uni": "SOL_UNI",
-    "solana-sol-to-polkadot-dot": "SOL_DOT",
-    "solana-sol-to-dogecoin-doge": "SOL_DOGE",
-    "solana-sol-to-classic-etc": "SOL_ETC",
+    "solana-sol-to-monero-xmr": "SOL_XMR",
+    "solana-sol-to-solana-sol": "SOL_SOL",
+    "solana-sol-to-tron-trx": "SOL_TRX",
     "solana-sol-to-dai-dai": "SOL_DAI",
-    "solana-sol-to-bitcoincash-bch": "SOL_BCH",
-    "solana-sol-to-dash-dash": "SOL_DASH",
+    "solana-sol-to-0x-zrx": "SOL_ZRX",
     "solana-sol-to-tether-usdt-erc20": "SOL_USDTERC20",
     "solana-sol-to-tether-usdt-trc20": "SOL_USDTTRC20",
+    "solana-sol-to-cash-rub": "SOL_CASHRUB",
     "solana-sol-to-sber-rub": "SOL_SBERRUB",
     "solana-sol-to-t-bank-rub": "SOL_TCSBRUB",
-    "solana-sol-to-gazprom-rub": "SOL_GPBRUB",
-    "solana-sol-to-sbp-rub": "SOL_SBPRUB",
-    "solana-sol-to-alfa-bank-rub": "SOL_ACRUB",
-    "solana-sol-to-psb-rub": "SOL_PSBRUB",
-    "solana-sol-to-pochtabank-rub": "SOL_POSTBRUB",
-    "solana-sol-to-rosselhoz-rub": "SOL_RSHBRUB",
-    "solana-sol-to-halyk-kzt": "SOL_HLKBKZT",
-    "solana-sol-to-kaspi-kzt": "SOL_KSPBKZT",
-    "solana-sol-to-privat24-uah": "SOL_P24UAH",
-    "solana-sol-to-oschadbank-uah": "SOL_OSDBUAH",
-    "solana-sol-to-fuib-uah": "SOL_PMBBUAH",
-    "solana-sol-to-rnkb-rub": "SOL_RNKBRUB",
-    "solana-sol-to-cash-rub": "SOL_CASHRUB",
+    "solana-sol-to-alpha-bank-rub": "SOL_ACRUB",
+    "tron-trx-to-bitcoin-btc": "TRX_BTC",
+    "tron-trx-to-ethereum-eth": "TRX_ETH",
+    "tron-trx-to-litecoin-ltc": "TRX_LTC",
+    "tron-trx-to-monero-xmr": "TRX_XMR",
+    "tron-trx-to-neo-neo": "TRX_NEO",
+    "tron-trx-to-solana-sol": "TRX_SOL",
+    "tron-trx-to-tron-trx": "TRX_TRX",
+    "tron-trx-to-dai-dai": "TRX_DAI",
+    "tron-trx-to-0x-zrx": "TRX_ZRX",
+    "tron-trx-to-tether-usdt-erc20": "TRX_USDTERC20",
+    "tron-trx-to-tether-usdt-trc20": "TRX_USDTTRC20",
+    "tron-trx-to-cash-rub": "TRX_CASHRUB",
+    "tron-trx-to-cash-usd": "TRX_CASHUSD",
+    "tron-trx-to-sber-rub": "TRX_SBERRUB",
+    "tron-trx-to-t-bank-rub": "TRX_TCSBRUB",
+    "tron-trx-to-alpha-bank-rub": "TRX_ACRUB",
+    "dai-dai-to-bitcoin-btc": "DAI_BTC",
+    "dai-dai-to-ethereum-eth": "DAI_ETH",
+    "dai-dai-to-litecoin-ltc": "DAI_LTC",
+    "dai-dai-to-monero-xmr": "DAI_XMR",
+    "dai-dai-to-neo-neo": "DAI_NEO",
+    "dai-dai-to-solana-sol": "DAI_SOL",
+    "dai-dai-to-tron-trx": "DAI_TRX",
+    "dai-dai-to-0x-zrx": "DAI_ZRX",
+    "dai-dai-to-tether-usdt-erc20": "DAI_USDTERC20",
+    "dai-dai-to-tether-usdt-trc20": "DAI_USDTTRC20",
+    "dai-dai-to-cash-rub": "DAI_CASHRUB",
+    "dai-dai-to-cash-usd": "DAI_CASHUSD",
+    "dai-dai-to-sber-rub": "DAI_SBERRUB",
+    "dai-dai-to-t-bank-rub": "DAI_TCSBRUB",
+    "dai-dai-to-alpha-bank-rub": "DAI_ACRUB",
     "0x-zrx-to-bitcoin-btc": "ZRX_BTC",
     "0x-zrx-to-ethereum-eth": "ZRX_ETH",
-    "0x-zrx-to-solana-sol": "ZRX_SOL",
-    "0x-zrx-to-zcash-zec": "ZRX_ZEC",
-    "0x-zrx-to-monero-xmr": "ZRX_XMR",
-    "0x-zrx-to-stellar-xlm": "ZRX_XLM",
-    "0x-zrx-to-toncoin-ton": "ZRX_TON",
-    "0x-zrx-to-tron-trx": "ZRX_TRX",
-    "0x-zrx-to-shibainu-shib": "ZRX_SHIB",
-    "0x-zrx-to-trueusd-tusd": "ZRX_TUSD",
     "0x-zrx-to-litecoin-ltc": "ZRX_LTC",
-    "0x-zrx-to-cardano-ada": "ZRX_ADA",
-    "0x-zrx-to-eos-eos": "ZRX_EOS",
-    "0x-zrx-to-ripple-xrp": "ZRX_XRP",
-    "0x-zrx-to-uniswap-uni": "ZRX_UNI",
-    "0x-zrx-to-polkadot-dot": "ZRX_DOT",
-    "0x-zrx-to-dogecoin-doge": "ZRX_DOGE",
-    "0x-zrx-to-classic-etc": "ZRX_ETC",
+    "0x-zrx-to-monero-xmr": "ZRX_XMR",
+    "0x-zrx-to-neo-neo": "ZRX_NEO",
+    "0x-zrx-to-solana-sol": "ZRX_SOL",
+    "0x-zrx-to-tron-trx": "ZRX_TRX",
     "0x-zrx-to-dai-dai": "ZRX_DAI",
-    "0x-zrx-to-bitcoincash-bch": "ZRX_BCH",
-    "0x-zrx-to-dash-dash": "ZRX_DASH",
     "0x-zrx-to-tether-usdt-erc20": "ZRX_USDTERC20",
     "0x-zrx-to-tether-usdt-trc20": "ZRX_USDTTRC20",
     "0x-zrx-to-sber-rub": "ZRX_SBERRUB",
     "0x-zrx-to-t-bank-rub": "ZRX_TCSBRUB",
-    "0x-zrx-to-gazprom-rub": "ZRX_GPBRUB",
-    "0x-zrx-to-sbp-rub": "ZRX_SBPRUB",
-    "0x-zrx-to-alfa-bank-rub": "ZRX_ACRUB",
-    "0x-zrx-to-psb-rub": "ZRX_PSBRUB",
-    "0x-zrx-to-pochtabank-rub": "ZRX_POSTBRUB",
-    "0x-zrx-to-rosselhoz-rub": "ZRX_RSHBRUB",
-    "0x-zrx-to-rnkb-rub": "ZRX_RNKBRUB",
-    "zcash-zec-to-bitcoin-btc": "ZEC_BTC",
-    "zcash-zec-to-ethereum-eth": "ZEC_ETH",
-    "zcash-zec-to-solana-sol": "ZEC_SOL",
-    "zcash-zec-to-0x-zrx": "ZEC_ZRX",
-    "zcash-zec-to-zcash-zec": "ZEC_ZEC",
-    "zcash-zec-to-monero-xmr": "ZEC_XMR",
-    "zcash-zec-to-stellar-xlm": "ZEC_XLM",
-    "zcash-zec-to-toncoin-ton": "ZEC_TON",
-    "zcash-zec-to-tron-trx": "ZEC_TRX",
-    "zcash-zec-to-shibainu-shib": "ZEC_SHIB",
-    "zcash-zec-to-trueusd-tusd": "ZEC_TUSD",
-    "zcash-zec-to-usdcoin-usdc": "ZEC_USDC",
-    "zcash-zec-to-litecoin-ltc": "ZEC_LTC",
-    "zcash-zec-to-paxos-usdp": "ZEC_USDP",
-    "zcash-zec-to-cardano-ada": "ZEC_ADA",
-    "zcash-zec-to-eos-eos": "ZEC_EOS",
-    "zcash-zec-to-ripple-xrp": "ZEC_XRP",
-    "zcash-zec-to-uniswap-uni": "ZEC_UNI",
-    "zcash-zec-to-polkadot-dot": "ZEC_DOT",
-    "zcash-zec-to-dogecoin-doge": "ZEC_DOGE",
-    "zcash-zec-to-classic-etc": "ZEC_ETC",
-    "zcash-zec-to-dai-dai": "ZEC_DAI",
-    "zcash-zec-to-bitcoincash-bch": "ZEC_BCH",
-    "zcash-zec-to-dash-dash": "ZEC_DASH",
-    "zcash-zec-to-tether-usdt-erc20": "ZEC_USDTERC20",
-    "zcash-zec-to-tether-usdt-trc20": "ZEC_USDTTRC20",
-    "zcash-zec-to-sber-rub": "ZEC_SBERRUB",
-    "zcash-zec-to-t-bank-rub": "ZEC_TCSBRUB",
-    "zcash-zec-to-gazprom-rub": "ZEC_GPBRUB",
-    "zcash-zec-to-sbp-rub": "ZEC_SBPRUB",
-    "zcash-zec-to-alfa-bank-rub": "ZEC_ACRUB",
-    "zcash-zec-to-psb-rub": "ZEC_PSBRUB",
-    "zcash-zec-to-pochtabank-rub": "ZEC_POSTBRUB",
-    "zcash-zec-to-rosselhoz-rub": "ZEC_RSHBRUB",
-    "zcash-zec-to-halyk-kzt": "ZEC_HLKBKZT",
-    "zcash-zec-to-kaspi-kzt": "ZEC_KSPBKZT",
-    "zcash-zec-to-privat24-uah": "ZEC_P24UAH",
-    "zcash-zec-to-oschadbank-uah": "ZEC_OSDBUAH",
-    "zcash-zec-to-fuib-uah": "ZEC_PMBBUAH",
-    "zcash-zec-to-rnkb-rub": "ZEC_RNKBRUB",
-    "zcash-zec-to-cash-usd": "ZEC_CASHUSD",
-    "monero-xmr-to-bitcoin-btc": "XMR_BTC",
-    "monero-xmr-to-ethereum-eth": "XMR_ETH",
-    "monero-xmr-to-solana-sol": "XMR_SOL",
-    "monero-xmr-to-0x-zrx": "XMR_ZRX",
-    "monero-xmr-to-zcash-zec": "XMR_ZEC",
-    "monero-xmr-to-monero-xmr": "XMR_XMR",
-    "monero-xmr-to-stellar-xlm": "XMR_XLM",
-    "monero-xmr-to-toncoin-ton": "XMR_TON",
-    "monero-xmr-to-tron-trx": "XMR_TRX",
-    "monero-xmr-to-shibainu-shib": "XMR_SHIB",
-    "monero-xmr-to-trueusd-tusd": "XMR_TUSD",
-    "monero-xmr-to-usdcoin-usdc": "XMR_USDC",
-    "monero-xmr-to-litecoin-ltc": "XMR_LTC",
-    "monero-xmr-to-paxos-usdp": "XMR_USDP",
-    "monero-xmr-to-cardano-ada": "XMR_ADA",
-    "monero-xmr-to-eos-eos": "XMR_EOS",
-    "monero-xmr-to-ripple-xrp": "XMR_XRP",
-    "monero-xmr-to-uniswap-uni": "XMR_UNI",
-    "monero-xmr-to-polkadot-dot": "XMR_DOT",
-    "monero-xmr-to-dogecoin-doge": "XMR_DOGE",
-    "monero-xmr-to-classic-etc": "XMR_ETC",
-    "monero-xmr-to-dai-dai": "XMR_DAI",
-    "monero-xmr-to-bitcoincash-bch": "XMR_BCH",
-    "monero-xmr-to-dash-dash": "XMR_DASH",
-    "monero-xmr-to-tether-usdt-erc20": "XMR_USDTERC20",
-    "monero-xmr-to-tether-usdt-trc20": "XMR_USDTTRC20",
-    "monero-xmr-to-sber-rub": "XMR_SBERRUB",
-    "monero-xmr-to-t-bank-rub": "XMR_TCSBRUB",
-    "monero-xmr-to-gazprom-rub": "XMR_GPBRUB",
-    "monero-xmr-to-sbp-rub": "XMR_SBPRUB",
-    "monero-xmr-to-alfa-bank-rub": "XMR_ACRUB",
-    "monero-xmr-to-psb-rub": "XMR_PSBRUB",
-    "monero-xmr-to-pochtabank-rub": "XMR_POSTBRUB",
-    "monero-xmr-to-rosselhoz-rub": "XMR_RSHBRUB",
-    "monero-xmr-to-halyk-kzt": "XMR_HLKBKZT",
-    "monero-xmr-to-kaspi-kzt": "XMR_KSPBKZT",
-    "monero-xmr-to-privat24-uah": "XMR_P24UAH",
-    "monero-xmr-to-privat24-usd": "XMR_P24USD",
-    "monero-xmr-to-oschadbank-uah": "XMR_OSDBUAH",
-    "monero-xmr-to-fuib-uah": "XMR_PMBBUAH",
-    "monero-xmr-to-rnkb-rub": "XMR_RNKBRUB",
-    "monero-xmr-to-cash-usd": "XMR_CASHUSD",
-    "monero-xmr-to-cash-rub": "XMR_CASHRUB",
-    "stellar-xlm-to-bitcoin-btc": "XLM_BTC",
-    "stellar-xlm-to-ethereum-eth": "XLM_ETH",
-    "stellar-xlm-to-solana-sol": "XLM_SOL",
-    "stellar-xlm-to-0x-zrx": "XLM_ZRX",
-    "stellar-xlm-to-zcash-zec": "XLM_ZEC",
-    "stellar-xlm-to-monero-xmr": "XLM_XMR",
-    "stellar-xlm-to-stellar-xlm": "XLM_XLM",
-    "stellar-xlm-to-toncoin-ton": "XLM_TON",
-    "stellar-xlm-to-tron-trx": "XLM_TRX",
-    "stellar-xlm-to-shibainu-shib": "XLM_SHIB",
-    "stellar-xlm-to-litecoin-ltc": "XLM_LTC",
-    "stellar-xlm-to-cardano-ada": "XLM_ADA",
-    "stellar-xlm-to-eos-eos": "XLM_EOS",
-    "stellar-xlm-to-ripple-xrp": "XLM_XRP",
-    "stellar-xlm-to-uniswap-uni": "XLM_UNI",
-    "stellar-xlm-to-polkadot-dot": "XLM_DOT",
-    "stellar-xlm-to-dogecoin-doge": "XLM_DOGE",
-    "stellar-xlm-to-classic-etc": "XLM_ETC",
-    "stellar-xlm-to-dai-dai": "XLM_DAI",
-    "stellar-xlm-to-bitcoincash-bch": "XLM_BCH",
-    "stellar-xlm-to-dash-dash": "XLM_DASH",
-    "stellar-xlm-to-tether-usdt-erc20": "XLM_USDTERC20",
-    "stellar-xlm-to-tether-usdt-trc20": "XLM_USDTTRC20",
-    "stellar-xlm-to-sber-rub": "XLM_SBERRUB",
-    "stellar-xlm-to-t-bank-rub": "XLM_TCSBRUB",
-    "stellar-xlm-to-gazprom-rub": "XLM_GPBRUB",
-    "stellar-xlm-to-sbp-rub": "XLM_SBPRUB",
-    "stellar-xlm-to-alfa-bank-rub": "XLM_ACRUB",
-    "stellar-xlm-to-psb-rub": "XLM_PSBRUB",
-    "stellar-xlm-to-pochtabank-rub": "XLM_POSTBRUB",
-    "stellar-xlm-to-rosselhoz-rub": "XLM_RSHBRUB",
-    "stellar-xlm-to-halyk-kzt": "XLM_HLKBKZT",
-    "stellar-xlm-to-kaspi-kzt": "XLM_KSPBKZT",
-    "stellar-xlm-to-privat24-uah": "XLM_P24UAH",
-    "stellar-xlm-to-oschadbank-uah": "XLM_OSDBUAH",
-    "stellar-xlm-to-fuib-uah": "XLM_PMBBUAH",
-    "stellar-xlm-to-rnkb-rub": "XLM_RNKBRUB",
-    "toncoin-ton-to-bitcoin-btc": "TON_BTC",
-    "toncoin-ton-to-ethereum-eth": "TON_ETH",
-    "toncoin-ton-to-solana-sol": "TON_SOL",
-    "toncoin-ton-to-0x-zrx": "TON_ZRX",
-    "toncoin-ton-to-zcash-zec": "TON_ZEC",
-    "toncoin-ton-to-monero-xmr": "TON_XMR",
-    "toncoin-ton-to-stellar-xlm": "TON_XLM",
-    "toncoin-ton-to-toncoin-ton": "TON_TON",
-    "toncoin-ton-to-tron-trx": "TON_TRX",
-    "toncoin-ton-to-shibainu-shib": "TON_SHIB",
-    "toncoin-ton-to-litecoin-ltc": "TON_LTC",
-    "toncoin-ton-to-cardano-ada": "TON_ADA",
-    "toncoin-ton-to-eos-eos": "TON_EOS",
-    "toncoin-ton-to-ripple-xrp": "TON_XRP",
-    "toncoin-ton-to-uniswap-uni": "TON_UNI",
-    "toncoin-ton-to-polkadot-dot": "TON_DOT",
-    "toncoin-ton-to-dogecoin-doge": "TON_DOGE",
-    "toncoin-ton-to-classic-etc": "TON_ETC",
-    "toncoin-ton-to-dai-dai": "TON_DAI",
-    "toncoin-ton-to-bitcoincash-bch": "TON_BCH",
-    "toncoin-ton-to-dash-dash": "TON_DASH",
-    "toncoin-ton-to-tether-usdt-erc20": "TON_USDTERC20",
-    "toncoin-ton-to-tether-usdt-trc20": "TON_USDTTRC20",
-    "toncoin-ton-to-sber-rub": "TON_SBERRUB",
-    "toncoin-ton-to-t-bank-rub": "TON_TCSBRUB",
-    "toncoin-ton-to-gazprom-rub": "TON_GPBRUB",
-    "toncoin-ton-to-sbp-rub": "TON_SBPRUB",
-    "toncoin-ton-to-alfa-bank-rub": "TON_ACRUB",
-    "toncoin-ton-to-psb-rub": "TON_PSBRUB",
-    "toncoin-ton-to-pochtabank-rub": "TON_POSTBRUB",
-    "toncoin-ton-to-rosselhoz-rub": "TON_RSHBRUB",
-    "toncoin-ton-to-halyk-kzt": "TON_HLKBKZT",
-    "toncoin-ton-to-kaspi-kzt": "TON_KSPBKZT",
-    "toncoin-ton-to-privat24-uah": "TON_P24UAH",
-    "toncoin-ton-to-oschadbank-uah": "TON_OSDBUAH",
-    "toncoin-ton-to-fuib-uah": "TON_PMBBUAH",
-    "toncoin-ton-to-rnkb-rub": "TON_RNKBRUB",
-    "toncoin-ton-to-cash-rub": "TON_CASHRUB",
-    "tron-trx-to-bitcoin-btc": "TRX_BTC",
-    "tron-trx-to-ethereum-eth": "TRX_ETH",
-    "tron-trx-to-solana-sol": "TRX_SOL",
-    "tron-trx-to-0x-zrx": "TRX_ZRX",
-    "tron-trx-to-zcash-zec": "TRX_ZEC",
-    "tron-trx-to-monero-xmr": "TRX_XMR",
-    "tron-trx-to-stellar-xlm": "TRX_XLM",
-    "tron-trx-to-toncoin-ton": "TRX_TON",
-    "tron-trx-to-tron-trx": "TRX_TRX",
-    "tron-trx-to-shibainu-shib": "TRX_SHIB",
-    "tron-trx-to-trueusd-tusd": "TRX_TUSD",
-    "tron-trx-to-litecoin-ltc": "TRX_LTC",
-    "tron-trx-to-neo-neo": "TRX_NEO",
-    "tron-trx-to-cardano-ada": "TRX_ADA",
-    "tron-trx-to-eos-eos": "TRX_EOS",
-    "tron-trx-to-ripple-xrp": "TRX_XRP",
-    "tron-trx-to-uniswap-uni": "TRX_UNI",
-    "tron-trx-to-polkadot-dot": "TRX_DOT",
-    "tron-trx-to-dogecoin-doge": "TRX_DOGE",
-    "tron-trx-to-classic-etc": "TRX_ETC",
-    "tron-trx-to-dai-dai": "TRX_DAI",
-    "tron-trx-to-bitcoincash-bch": "TRX_BCH",
-    "tron-trx-to-dash-dash": "TRX_DASH",
-    "tron-trx-to-tether-usdt-erc20": "TRX_USDTERC20",
-    "tron-trx-to-tether-usdt-trc20": "TRX_USDTTRC20",
-    "tron-trx-to-sber-rub": "TRX_SBERRUB",
-    "tron-trx-to-t-bank-rub": "TRX_TCSBRUB",
-    "tron-trx-to-gazprom-rub": "TRX_GPBRUB",
-    "tron-trx-to-sbp-rub": "TRX_SBPRUB",
-    "tron-trx-to-alfa-bank-rub": "TRX_ACRUB",
-    "tron-trx-to-psb-rub": "TRX_PSBRUB",
-    "tron-trx-to-pochtabank-rub": "TRX_POSTBRUB",
-    "tron-trx-to-rosselhoz-rub": "TRX_RSHBRUB",
-    "tron-trx-to-halyk-kzt": "TRX_HLKBKZT",
-    "tron-trx-to-kaspi-kzt": "TRX_KSPBKZT",
-    "tron-trx-to-privat24-uah": "TRX_P24UAH",
-    "tron-trx-to-privat24-usd": "TRX_P24USD",
-    "tron-trx-to-oschadbank-uah": "TRX_OSDBUAH",
-    "tron-trx-to-fuib-uah": "TRX_PMBBUAH",
-    "tron-trx-to-rnkb-rub": "TRX_RNKBRUB",
-    "tron-trx-to-cash-usd": "TRX_CASHUSD",
-    "tron-trx-to-cash-rub": "TRX_CASHRUB",
-    "shibainu-shib-to-bitcoin-btc": "SHIB_BTC",
-    "shibainu-shib-to-ethereum-eth": "SHIB_ETH",
-    "shibainu-shib-to-0x-zrx": "SHIB_ZRX",
-    "shibainu-shib-to-zcash-zec": "SHIB_ZEC",
-    "shibainu-shib-to-stellar-xlm": "SHIB_XLM",
-    "shibainu-shib-to-toncoin-ton": "SHIB_TON",
-    "shibainu-shib-to-tron-trx": "SHIB_TRX",
-    "shibainu-shib-to-litecoin-ltc": "SHIB_LTC",
-    "shibainu-shib-to-cardano-ada": "SHIB_ADA",
-    "shibainu-shib-to-ripple-xrp": "SHIB_XRP",
-    "shibainu-shib-to-polkadot-dot": "SHIB_DOT",
-    "shibainu-shib-to-dogecoin-doge": "SHIB_DOGE",
-    "shibainu-shib-to-classic-etc": "SHIB_ETC",
-    "shibainu-shib-to-bitcoincash-bch": "SHIB_BCH",
-    "shibainu-shib-to-dash-dash": "SHIB_DASH",
-    "shibainu-shib-to-tether-usdt-trc20": "SHIB_USDTTRC20",
-    "trueusd-tusd-to-bitcoin-btc": "TUSD_BTC",
-    "trueusd-tusd-to-ethereum-eth": "TUSD_ETH",
-    "trueusd-tusd-to-solana-sol": "TUSD_SOL",
-    "trueusd-tusd-to-0x-zrx": "TUSD_ZRX",
-    "trueusd-tusd-to-zcash-zec": "TUSD_ZEC",
-    "trueusd-tusd-to-monero-xmr": "TUSD_XMR",
-    "trueusd-tusd-to-stellar-xlm": "TUSD_XLM",
-    "trueusd-tusd-to-tron-trx": "TUSD_TRX",
-    "trueusd-tusd-to-litecoin-ltc": "TUSD_LTC",
-    "trueusd-tusd-to-cardano-ada": "TUSD_ADA",
-    "trueusd-tusd-to-ripple-xrp": "TUSD_XRP",
-    "trueusd-tusd-to-polkadot-dot": "TUSD_DOT",
-    "trueusd-tusd-to-dogecoin-doge": "TUSD_DOGE",
-    "trueusd-tusd-to-classic-etc": "TUSD_ETC",
-    "trueusd-tusd-to-bitcoincash-bch": "TUSD_BCH",
-    "trueusd-tusd-to-dash-dash": "TUSD_DASH",
-    "trueusd-tusd-to-tether-usdt-trc20": "TUSD_USDTTRC20",
-    "litecoin-ltc-to-bitcoin-btc": "LTC_BTC",
-    "litecoin-ltc-to-ethereum-eth": "LTC_ETH",
-    "litecoin-ltc-to-solana-sol": "LTC_SOL",
-    "litecoin-ltc-to-0x-zrx": "LTC_ZRX",
-    "litecoin-ltc-to-zcash-zec": "LTC_ZEC",
-    "litecoin-ltc-to-monero-xmr": "LTC_XMR",
-    "litecoin-ltc-to-stellar-xlm": "LTC_XLM",
-    "litecoin-ltc-to-toncoin-ton": "LTC_TON",
-    "litecoin-ltc-to-tron-trx": "LTC_TRX",
-    "litecoin-ltc-to-shibainu-shib": "LTC_SHIB",
-    "litecoin-ltc-to-trueusd-tusd": "LTC_TUSD",
-    "litecoin-ltc-to-usdcoin-usdc": "LTC_USDC",
-    "litecoin-ltc-to-litecoin-ltc": "LTC_LTC",
-    "litecoin-ltc-to-paxos-usdp": "LTC_USDP",
-    "litecoin-ltc-to-neo-neo": "LTC_NEO",
-    "litecoin-ltc-to-cardano-ada": "LTC_ADA",
-    "litecoin-ltc-to-eos-eos": "LTC_EOS",
-    "litecoin-ltc-to-ripple-xrp": "LTC_XRP",
-    "litecoin-ltc-to-uniswap-uni": "LTC_UNI",
-    "litecoin-ltc-to-polkadot-dot": "LTC_DOT",
-    "litecoin-ltc-to-dogecoin-doge": "LTC_DOGE",
-    "litecoin-ltc-to-classic-etc": "LTC_ETC",
-    "litecoin-ltc-to-dai-dai": "LTC_DAI",
-    "litecoin-ltc-to-bitcoincash-bch": "LTC_BCH",
-    "litecoin-ltc-to-dash-dash": "LTC_DASH",
-    "litecoin-ltc-to-tether-usdt-erc20": "LTC_USDTERC20",
-    "litecoin-ltc-to-tether-usdt-trc20": "LTC_USDTTRC20",
-    "litecoin-ltc-to-sber-rub": "LTC_SBERRUB",
-    "litecoin-ltc-to-t-bank-rub": "LTC_TCSBRUB",
-    "litecoin-ltc-to-gazprom-rub": "LTC_GPBRUB",
-    "litecoin-ltc-to-sbp-rub": "LTC_SBPRUB",
-    "litecoin-ltc-to-alfa-bank-rub": "LTC_ACRUB",
-    "litecoin-ltc-to-psb-rub": "LTC_PSBRUB",
-    "litecoin-ltc-to-pochtabank-rub": "LTC_POSTBRUB",
-    "litecoin-ltc-to-rosselhoz-rub": "LTC_RSHBRUB",
-    "litecoin-ltc-to-halyk-kzt": "LTC_HLKBKZT",
-    "litecoin-ltc-to-kaspi-kzt": "LTC_KSPBKZT",
-    "litecoin-ltc-to-privat24-uah": "LTC_P24UAH",
-    "litecoin-ltc-to-privat24-usd": "LTC_P24USD",
-    "litecoin-ltc-to-oschadbank-uah": "LTC_OSDBUAH",
-    "litecoin-ltc-to-fuib-uah": "LTC_PMBBUAH",
-    "litecoin-ltc-to-rnkb-rub": "LTC_RNKBRUB",
-    "litecoin-ltc-to-cash-usd": "LTC_CASHUSD",
-    "litecoin-ltc-to-cash-rub": "LTC_CASHRUB",
-    "paxos-usdp-to-litecoin-ltc": "USDP_LTC",
-    "paxos-usdp-to-dash-dash": "USDP_DASH",
-    "neo-neo-to-bitcoin-btc": "NEO_BTC",
-    "neo-neo-to-ethereum-eth": "NEO_ETH",
-    "neo-neo-to-zcash-zec": "NEO_ZEC",
-    "neo-neo-to-monero-xmr": "NEO_XMR",
-    "neo-neo-to-tron-trx": "NEO_TRX",
-    "neo-neo-to-litecoin-ltc": "NEO_LTC",
-    "neo-neo-to-cardano-ada": "NEO_ADA",
-    "neo-neo-to-ripple-xrp": "NEO_XRP",
-    "neo-neo-to-polkadot-dot": "NEO_DOT",
-    "neo-neo-to-classic-etc": "NEO_ETC",
-    "neo-neo-to-bitcoincash-bch": "NEO_BCH",
-    "neo-neo-to-dash-dash": "NEO_DASH",
-    "neo-neo-to-tether-usdt-erc20": "NEO_USDTERC20",
-    "neo-neo-to-tether-usdt-trc20": "NEO_USDTTRC20",
-    "cardano-ada-to-bitcoin-btc": "ADA_BTC",
-    "cardano-ada-to-ethereum-eth": "ADA_ETH",
-    "cardano-ada-to-solana-sol": "ADA_SOL",
-    "cardano-ada-to-0x-zrx": "ADA_ZRX",
-    "cardano-ada-to-zcash-zec": "ADA_ZEC",
-    "cardano-ada-to-monero-xmr": "ADA_XMR",
-    "cardano-ada-to-stellar-xlm": "ADA_XLM",
-    "cardano-ada-to-toncoin-ton": "ADA_TON",
-    "cardano-ada-to-tron-trx": "ADA_TRX",
-    "cardano-ada-to-shibainu-shib": "ADA_SHIB",
-    "cardano-ada-to-litecoin-ltc": "ADA_LTC",
-    "cardano-ada-to-neo-neo": "ADA_NEO",
-    "cardano-ada-to-cardano-ada": "ADA_ADA",
-    "cardano-ada-to-eos-eos": "ADA_EOS",
-    "cardano-ada-to-ripple-xrp": "ADA_XRP",
-    "cardano-ada-to-uniswap-uni": "ADA_UNI",
-    "cardano-ada-to-polkadot-dot": "ADA_DOT",
-    "cardano-ada-to-dogecoin-doge": "ADA_DOGE",
-    "cardano-ada-to-classic-etc": "ADA_ETC",
-    "cardano-ada-to-dai-dai": "ADA_DAI",
-    "cardano-ada-to-bitcoincash-bch": "ADA_BCH",
-    "cardano-ada-to-dash-dash": "ADA_DASH",
-    "cardano-ada-to-tether-usdt-erc20": "ADA_USDTERC20",
-    "cardano-ada-to-tether-usdt-trc20": "ADA_USDTTRC20",
-    "cardano-ada-to-sber-rub": "ADA_SBERRUB",
-    "cardano-ada-to-t-bank-rub": "ADA_TCSBRUB",
-    "cardano-ada-to-gazprom-rub": "ADA_GPBRUB",
-    "cardano-ada-to-sbp-rub": "ADA_SBPRUB",
-    "cardano-ada-to-alfa-bank-rub": "ADA_ACRUB",
-    "cardano-ada-to-psb-rub": "ADA_PSBRUB",
-    "cardano-ada-to-pochtabank-rub": "ADA_POSTBRUB",
-    "cardano-ada-to-rosselhoz-rub": "ADA_RSHBRUB",
-    "cardano-ada-to-halyk-kzt": "ADA_HLKBKZT",
-    "cardano-ada-to-kaspi-kzt": "ADA_KSPBKZT",
-    "cardano-ada-to-privat24-uah": "ADA_P24UAH",
-    "cardano-ada-to-oschadbank-uah": "ADA_OSDBUAH",
-    "cardano-ada-to-fuib-uah": "ADA_PMBBUAH",
-    "cardano-ada-to-rnkb-rub": "ADA_RNKBRUB",
-    "eos-eos-to-bitcoin-btc": "EOS_BTC",
-    "eos-eos-to-ethereum-eth": "EOS_ETH",
-    "eos-eos-to-solana-sol": "EOS_SOL",
-    "eos-eos-to-0x-zrx": "EOS_ZRX",
-    "eos-eos-to-zcash-zec": "EOS_ZEC",
-    "eos-eos-to-monero-xmr": "EOS_XMR",
-    "eos-eos-to-stellar-xlm": "EOS_XLM",
-    "eos-eos-to-toncoin-ton": "EOS_TON",
-    "eos-eos-to-tron-trx": "EOS_TRX",
-    "eos-eos-to-litecoin-ltc": "EOS_LTC",
-    "eos-eos-to-cardano-ada": "EOS_ADA",
-    "eos-eos-to-ripple-xrp": "EOS_XRP",
-    "eos-eos-to-uniswap-uni": "EOS_UNI",
-    "eos-eos-to-polkadot-dot": "EOS_DOT",
-    "eos-eos-to-dogecoin-doge": "EOS_DOGE",
-    "eos-eos-to-classic-etc": "EOS_ETC",
-    "eos-eos-to-dai-dai": "EOS_DAI",
-    "eos-eos-to-bitcoincash-bch": "EOS_BCH",
-    "eos-eos-to-dash-dash": "EOS_DASH",
-    "eos-eos-to-tether-usdt-erc20": "EOS_USDTERC20",
-    "eos-eos-to-tether-usdt-trc20": "EOS_USDTTRC20",
-    "eos-eos-to-sber-rub": "EOS_SBERRUB",
-    "eos-eos-to-t-bank-rub": "EOS_TCSBRUB",
-    "eos-eos-to-gazprom-rub": "EOS_GPBRUB",
-    "eos-eos-to-sbp-rub": "EOS_SBPRUB",
-    "eos-eos-to-alfa-bank-rub": "EOS_ACRUB",
-    "eos-eos-to-psb-rub": "EOS_PSBRUB",
-    "eos-eos-to-pochtabank-rub": "EOS_POSTBRUB",
-    "eos-eos-to-rosselhoz-rub": "EOS_RSHBRUB",
-    "eos-eos-to-rnkb-rub": "EOS_RNKBRUB",
-    "ripple-xrp-to-bitcoin-btc": "XRP_BTC",
-    "ripple-xrp-to-ethereum-eth": "XRP_ETH",
-    "ripple-xrp-to-solana-sol": "XRP_SOL",
-    "ripple-xrp-to-0x-zrx": "XRP_ZRX",
-    "ripple-xrp-to-zcash-zec": "XRP_ZEC",
-    "ripple-xrp-to-monero-xmr": "XRP_XMR",
-    "ripple-xrp-to-stellar-xlm": "XRP_XLM",
-    "ripple-xrp-to-toncoin-ton": "XRP_TON",
-    "ripple-xrp-to-tron-trx": "XRP_TRX",
-    "ripple-xrp-to-shibainu-shib": "XRP_SHIB",
-    "ripple-xrp-to-litecoin-ltc": "XRP_LTC",
-    "ripple-xrp-to-neo-neo": "XRP_NEO",
-    "ripple-xrp-to-cardano-ada": "XRP_ADA",
-    "ripple-xrp-to-eos-eos": "XRP_EOS",
-    "ripple-xrp-to-ripple-xrp": "XRP_XRP",
-    "ripple-xrp-to-uniswap-uni": "XRP_UNI",
-    "ripple-xrp-to-polkadot-dot": "XRP_DOT",
-    "ripple-xrp-to-dogecoin-doge": "XRP_DOGE",
-    "ripple-xrp-to-classic-etc": "XRP_ETC",
-    "ripple-xrp-to-dai-dai": "XRP_DAI",
-    "ripple-xrp-to-bitcoincash-bch": "XRP_BCH",
-    "ripple-xrp-to-dash-dash": "XRP_DASH",
-    "ripple-xrp-to-tether-usdt-erc20": "XRP_USDTERC20",
-    "ripple-xrp-to-tether-usdt-trc20": "XRP_USDTTRC20",
-    "ripple-xrp-to-sber-rub": "XRP_SBERRUB",
-    "ripple-xrp-to-t-bank-rub": "XRP_TCSBRUB",
-    "ripple-xrp-to-gazprom-rub": "XRP_GPBRUB",
-    "ripple-xrp-to-sbp-rub": "XRP_SBPRUB",
-    "ripple-xrp-to-alfa-bank-rub": "XRP_ACRUB",
-    "ripple-xrp-to-psb-rub": "XRP_PSBRUB",
-    "ripple-xrp-to-pochtabank-rub": "XRP_POSTBRUB",
-    "ripple-xrp-to-rosselhoz-rub": "XRP_RSHBRUB",
-    "ripple-xrp-to-halyk-kzt": "XRP_HLKBKZT",
-    "ripple-xrp-to-kaspi-kzt": "XRP_KSPBKZT",
-    "ripple-xrp-to-privat24-uah": "XRP_P24UAH",
-    "ripple-xrp-to-privat24-usd": "XRP_P24USD",
-    "ripple-xrp-to-oschadbank-uah": "XRP_OSDBUAH",
-    "ripple-xrp-to-fuib-uah": "XRP_PMBBUAH",
-    "ripple-xrp-to-rnkb-rub": "XRP_RNKBRUB",
-    "ripple-xrp-to-cash-usd": "XRP_CASHUSD",
-    "uniswap-uni-to-bitcoin-btc": "UNI_BTC",
-    "uniswap-uni-to-ethereum-eth": "UNI_ETH",
-    "uniswap-uni-to-solana-sol": "UNI_SOL",
-    "uniswap-uni-to-0x-zrx": "UNI_ZRX",
-    "uniswap-uni-to-zcash-zec": "UNI_ZEC",
-    "uniswap-uni-to-monero-xmr": "UNI_XMR",
-    "uniswap-uni-to-stellar-xlm": "UNI_XLM",
-    "uniswap-uni-to-toncoin-ton": "UNI_TON",
-    "uniswap-uni-to-tron-trx": "UNI_TRX",
-    "uniswap-uni-to-litecoin-ltc": "UNI_LTC",
-    "uniswap-uni-to-cardano-ada": "UNI_ADA",
-    "uniswap-uni-to-eos-eos": "UNI_EOS",
-    "uniswap-uni-to-ripple-xrp": "UNI_XRP",
-    "uniswap-uni-to-polkadot-dot": "UNI_DOT",
-    "uniswap-uni-to-dogecoin-doge": "UNI_DOGE",
-    "uniswap-uni-to-classic-etc": "UNI_ETC",
-    "uniswap-uni-to-dai-dai": "UNI_DAI",
-    "uniswap-uni-to-bitcoincash-bch": "UNI_BCH",
-    "uniswap-uni-to-dash-dash": "UNI_DASH",
-    "uniswap-uni-to-tether-usdt-erc20": "UNI_USDTERC20",
-    "uniswap-uni-to-tether-usdt-trc20": "UNI_USDTTRC20",
-    "uniswap-uni-to-sber-rub": "UNI_SBERRUB",
-    "uniswap-uni-to-t-bank-rub": "UNI_TCSBRUB",
-    "uniswap-uni-to-gazprom-rub": "UNI_GPBRUB",
-    "uniswap-uni-to-sbp-rub": "UNI_SBPRUB",
-    "uniswap-uni-to-alfa-bank-rub": "UNI_ACRUB",
-    "uniswap-uni-to-psb-rub": "UNI_PSBRUB",
-    "uniswap-uni-to-pochtabank-rub": "UNI_POSTBRUB",
-    "uniswap-uni-to-rosselhoz-rub": "UNI_RSHBRUB",
-    "uniswap-uni-to-rnkb-rub": "UNI_RNKBRUB",
-    "polkadot-dot-to-bitcoin-btc": "DOT_BTC",
-    "polkadot-dot-to-ethereum-eth": "DOT_ETH",
-    "polkadot-dot-to-solana-sol": "DOT_SOL",
-    "polkadot-dot-to-0x-zrx": "DOT_ZRX",
-    "polkadot-dot-to-zcash-zec": "DOT_ZEC",
-    "polkadot-dot-to-monero-xmr": "DOT_XMR",
-    "polkadot-dot-to-stellar-xlm": "DOT_XLM",
-    "polkadot-dot-to-toncoin-ton": "DOT_TON",
-    "polkadot-dot-to-tron-trx": "DOT_TRX",
-    "polkadot-dot-to-shibainu-shib": "DOT_SHIB",
-    "polkadot-dot-to-litecoin-ltc": "DOT_LTC",
-    "polkadot-dot-to-neo-neo": "DOT_NEO",
-    "polkadot-dot-to-cardano-ada": "DOT_ADA",
-    "polkadot-dot-to-eos-eos": "DOT_EOS",
-    "polkadot-dot-to-ripple-xrp": "DOT_XRP",
-    "polkadot-dot-to-uniswap-uni": "DOT_UNI",
-    "polkadot-dot-to-polkadot-dot": "DOT_DOT",
-    "polkadot-dot-to-dogecoin-doge": "DOT_DOGE",
-    "polkadot-dot-to-classic-etc": "DOT_ETC",
-    "polkadot-dot-to-dai-dai": "DOT_DAI",
-    "polkadot-dot-to-bitcoincash-bch": "DOT_BCH",
-    "polkadot-dot-to-dash-dash": "DOT_DASH",
-    "polkadot-dot-to-tether-usdt-erc20": "DOT_USDTERC20",
-    "polkadot-dot-to-tether-usdt-trc20": "DOT_USDTTRC20",
-    "polkadot-dot-to-sber-rub": "DOT_SBERRUB",
-    "polkadot-dot-to-t-bank-rub": "DOT_TCSBRUB",
-    "polkadot-dot-to-gazprom-rub": "DOT_GPBRUB",
-    "polkadot-dot-to-sbp-rub": "DOT_SBPRUB",
-    "polkadot-dot-to-alfa-bank-rub": "DOT_ACRUB",
-    "polkadot-dot-to-psb-rub": "DOT_PSBRUB",
-    "polkadot-dot-to-pochtabank-rub": "DOT_POSTBRUB",
-    "polkadot-dot-to-rosselhoz-rub": "DOT_RSHBRUB",
-    "polkadot-dot-to-halyk-kzt": "DOT_HLKBKZT",
-    "polkadot-dot-to-kaspi-kzt": "DOT_KSPBKZT",
-    "polkadot-dot-to-privat24-uah": "DOT_P24UAH",
-    "polkadot-dot-to-oschadbank-uah": "DOT_OSDBUAH",
-    "polkadot-dot-to-fuib-uah": "DOT_PMBBUAH",
-    "polkadot-dot-to-rnkb-rub": "DOT_RNKBRUB",
-    "dogecoin-doge-to-bitcoin-btc": "DOGE_BTC",
-    "dogecoin-doge-to-ethereum-eth": "DOGE_ETH",
-    "dogecoin-doge-to-solana-sol": "DOGE_SOL",
-    "dogecoin-doge-to-0x-zrx": "DOGE_ZRX",
-    "dogecoin-doge-to-zcash-zec": "DOGE_ZEC",
-    "dogecoin-doge-to-monero-xmr": "DOGE_XMR",
-    "dogecoin-doge-to-stellar-xlm": "DOGE_XLM",
-    "dogecoin-doge-to-toncoin-ton": "DOGE_TON",
-    "dogecoin-doge-to-tron-trx": "DOGE_TRX",
-    "dogecoin-doge-to-shibainu-shib": "DOGE_SHIB",
-    "dogecoin-doge-to-trueusd-tusd": "DOGE_TUSD",
-    "dogecoin-doge-to-litecoin-ltc": "DOGE_LTC",
-    "dogecoin-doge-to-cardano-ada": "DOGE_ADA",
-    "dogecoin-doge-to-eos-eos": "DOGE_EOS",
-    "dogecoin-doge-to-ripple-xrp": "DOGE_XRP",
-    "dogecoin-doge-to-uniswap-uni": "DOGE_UNI",
-    "dogecoin-doge-to-polkadot-dot": "DOGE_DOT",
-    "dogecoin-doge-to-dogecoin-doge": "DOGE_DOGE",
-    "dogecoin-doge-to-classic-etc": "DOGE_ETC",
-    "dogecoin-doge-to-dai-dai": "DOGE_DAI",
-    "dogecoin-doge-to-bitcoincash-bch": "DOGE_BCH",
-    "dogecoin-doge-to-dash-dash": "DOGE_DASH",
-    "dogecoin-doge-to-tether-usdt-erc20": "DOGE_USDTERC20",
-    "dogecoin-doge-to-tether-usdt-trc20": "DOGE_USDTTRC20",
-    "dogecoin-doge-to-sber-rub": "DOGE_SBERRUB",
-    "dogecoin-doge-to-t-bank-rub": "DOGE_TCSBRUB",
-    "dogecoin-doge-to-gazprom-rub": "DOGE_GPBRUB",
-    "dogecoin-doge-to-sbp-rub": "DOGE_SBPRUB",
-    "dogecoin-doge-to-alfa-bank-rub": "DOGE_ACRUB",
-    "dogecoin-doge-to-psb-rub": "DOGE_PSBRUB",
-    "dogecoin-doge-to-pochtabank-rub": "DOGE_POSTBRUB",
-    "dogecoin-doge-to-rosselhoz-rub": "DOGE_RSHBRUB",
-    "dogecoin-doge-to-halyk-kzt": "DOGE_HLKBKZT",
-    "dogecoin-doge-to-kaspi-kzt": "DOGE_KSPBKZT",
-    "dogecoin-doge-to-privat24-uah": "DOGE_P24UAH",
-    "dogecoin-doge-to-privat24-usd": "DOGE_P24USD",
-    "dogecoin-doge-to-oschadbank-uah": "DOGE_OSDBUAH",
-    "dogecoin-doge-to-fuib-uah": "DOGE_PMBBUAH",
-    "dogecoin-doge-to-rnkb-rub": "DOGE_RNKBRUB",
-    "dogecoin-doge-to-cash-rub": "DOGE_CASHRUB",
-    "classic-etc-to-bitcoin-btc": "ETC_BTC",
-    "classic-etc-to-ethereum-eth": "ETC_ETH",
-    "classic-etc-to-solana-sol": "ETC_SOL",
-    "classic-etc-to-0x-zrx": "ETC_ZRX",
-    "classic-etc-to-zcash-zec": "ETC_ZEC",
-    "classic-etc-to-monero-xmr": "ETC_XMR",
-    "classic-etc-to-stellar-xlm": "ETC_XLM",
-    "classic-etc-to-toncoin-ton": "ETC_TON",
-    "classic-etc-to-tron-trx": "ETC_TRX",
-    "classic-etc-to-shibainu-shib": "ETC_SHIB",
-    "classic-etc-to-litecoin-ltc": "ETC_LTC",
-    "classic-etc-to-neo-neo": "ETC_NEO",
-    "classic-etc-to-cardano-ada": "ETC_ADA",
-    "classic-etc-to-eos-eos": "ETC_EOS",
-    "classic-etc-to-ripple-xrp": "ETC_XRP",
-    "classic-etc-to-uniswap-uni": "ETC_UNI",
-    "classic-etc-to-polkadot-dot": "ETC_DOT",
-    "classic-etc-to-dogecoin-doge": "ETC_DOGE",
-    "classic-etc-to-classic-etc": "ETC_ETC",
-    "classic-etc-to-dai-dai": "ETC_DAI",
-    "classic-etc-to-bitcoincash-bch": "ETC_BCH",
-    "classic-etc-to-dash-dash": "ETC_DASH",
-    "classic-etc-to-tether-usdt-erc20": "ETC_USDTERC20",
-    "classic-etc-to-tether-usdt-trc20": "ETC_USDTTRC20",
-    "classic-etc-to-sber-rub": "ETC_SBERRUB",
-    "classic-etc-to-t-bank-rub": "ETC_TCSBRUB",
-    "classic-etc-to-gazprom-rub": "ETC_GPBRUB",
-    "classic-etc-to-sbp-rub": "ETC_SBPRUB",
-    "classic-etc-to-alfa-bank-rub": "ETC_ACRUB",
-    "classic-etc-to-psb-rub": "ETC_PSBRUB",
-    "classic-etc-to-pochtabank-rub": "ETC_POSTBRUB",
-    "classic-etc-to-rosselhoz-rub": "ETC_RSHBRUB",
-    "classic-etc-to-halyk-kzt": "ETC_HLKBKZT",
-    "classic-etc-to-kaspi-kzt": "ETC_KSPBKZT",
-    "classic-etc-to-privat24-uah": "ETC_P24UAH",
-    "classic-etc-to-privat24-usd": "ETC_P24USD",
-    "classic-etc-to-oschadbank-uah": "ETC_OSDBUAH",
-    "classic-etc-to-fuib-uah": "ETC_PMBBUAH",
-    "classic-etc-to-rnkb-rub": "ETC_RNKBRUB",
-    "classic-etc-to-cash-rub": "ETC_CASHRUB",
-    "dai-dai-to-bitcoin-btc": "DAI_BTC",
-    "dai-dai-to-ethereum-eth": "DAI_ETH",
-    "dai-dai-to-solana-sol": "DAI_SOL",
-    "dai-dai-to-0x-zrx": "DAI_ZRX",
-    "dai-dai-to-zcash-zec": "DAI_ZEC",
-    "dai-dai-to-monero-xmr": "DAI_XMR",
-    "dai-dai-to-stellar-xlm": "DAI_XLM",
-    "dai-dai-to-toncoin-ton": "DAI_TON",
-    "dai-dai-to-tron-trx": "DAI_TRX",
-    "dai-dai-to-litecoin-ltc": "DAI_LTC",
-    "dai-dai-to-cardano-ada": "DAI_ADA",
-    "dai-dai-to-eos-eos": "DAI_EOS",
-    "dai-dai-to-ripple-xrp": "DAI_XRP",
-    "dai-dai-to-uniswap-uni": "DAI_UNI",
-    "dai-dai-to-polkadot-dot": "DAI_DOT",
-    "dai-dai-to-dogecoin-doge": "DAI_DOGE",
-    "dai-dai-to-classic-etc": "DAI_ETC",
-    "dai-dai-to-dai-dai": "DAI_DAI",
-    "dai-dai-to-bitcoincash-bch": "DAI_BCH",
-    "dai-dai-to-dash-dash": "DAI_DASH",
-    "dai-dai-to-tether-usdt-erc20": "DAI_USDTERC20",
-    "dai-dai-to-tether-usdt-trc20": "DAI_USDTTRC20",
-    "dai-dai-to-sber-rub": "DAI_SBERRUB",
-    "dai-dai-to-t-bank-rub": "DAI_TCSBRUB",
-    "dai-dai-to-gazprom-rub": "DAI_GPBRUB",
-    "dai-dai-to-sbp-rub": "DAI_SBPRUB",
-    "dai-dai-to-alfa-bank-rub": "DAI_ACRUB",
-    "dai-dai-to-psb-rub": "DAI_PSBRUB",
-    "dai-dai-to-pochtabank-rub": "DAI_POSTBRUB",
-    "dai-dai-to-rosselhoz-rub": "DAI_RSHBRUB",
-    "dai-dai-to-halyk-kzt": "DAI_HLKBKZT",
-    "dai-dai-to-kaspi-kzt": "DAI_KSPBKZT",
-    "dai-dai-to-privat24-uah": "DAI_P24UAH",
-    "dai-dai-to-privat24-usd": "DAI_P24USD",
-    "dai-dai-to-oschadbank-uah": "DAI_OSDBUAH",
-    "dai-dai-to-fuib-uah": "DAI_PMBBUAH",
-    "dai-dai-to-rnkb-rub": "DAI_RNKBRUB",
-    "bitcoincash-bch-to-bitcoin-btc": "BCH_BTC",
-    "bitcoincash-bch-to-ethereum-eth": "BCH_ETH",
-    "bitcoincash-bch-to-solana-sol": "BCH_SOL",
-    "bitcoincash-bch-to-0x-zrx": "BCH_ZRX",
-    "bitcoincash-bch-to-zcash-zec": "BCH_ZEC",
-    "bitcoincash-bch-to-monero-xmr": "BCH_XMR",
-    "bitcoincash-bch-to-stellar-xlm": "BCH_XLM",
-    "bitcoincash-bch-to-toncoin-ton": "BCH_TON",
-    "bitcoincash-bch-to-tron-trx": "BCH_TRX",
-    "bitcoincash-bch-to-shibainu-shib": "BCH_SHIB",
-    "bitcoincash-bch-to-trueusd-tusd": "BCH_TUSD",
-    "bitcoincash-bch-to-usdcoin-usdc": "BCH_USDC",
-    "bitcoincash-bch-to-litecoin-ltc": "BCH_LTC",
-    "bitcoincash-bch-to-paxos-usdp": "BCH_USDP",
-    "bitcoincash-bch-to-neo-neo": "BCH_NEO",
-    "bitcoincash-bch-to-cardano-ada": "BCH_ADA",
-    "bitcoincash-bch-to-eos-eos": "BCH_EOS",
-    "bitcoincash-bch-to-ripple-xrp": "BCH_XRP",
-    "bitcoincash-bch-to-uniswap-uni": "BCH_UNI",
-    "bitcoincash-bch-to-polkadot-dot": "BCH_DOT",
-    "bitcoincash-bch-to-dogecoin-doge": "BCH_DOGE",
-    "bitcoincash-bch-to-classic-etc": "BCH_ETC",
-    "bitcoincash-bch-to-dai-dai": "BCH_DAI",
-    "bitcoincash-bch-to-bitcoincash-bch": "BCH_BCH",
-    "bitcoincash-bch-to-dash-dash": "BCH_DASH",
-    "bitcoincash-bch-to-tether-usdt-erc20": "BCH_USDTERC20",
-    "bitcoincash-bch-to-tether-usdt-trc20": "BCH_USDTTRC20",
-    "bitcoincash-bch-to-sber-rub": "BCH_SBERRUB",
-    "bitcoincash-bch-to-t-bank-rub": "BCH_TCSBRUB",
-    "bitcoincash-bch-to-gazprom-rub": "BCH_GPBRUB",
-    "bitcoincash-bch-to-sbp-rub": "BCH_SBPRUB",
-    "bitcoincash-bch-to-alfa-bank-rub": "BCH_ACRUB",
-    "bitcoincash-bch-to-psb-rub": "BCH_PSBRUB",
-    "bitcoincash-bch-to-pochtabank-rub": "BCH_POSTBRUB",
-    "bitcoincash-bch-to-rosselhoz-rub": "BCH_RSHBRUB",
-    "bitcoincash-bch-to-halyk-kzt": "BCH_HLKBKZT",
-    "bitcoincash-bch-to-kaspi-kzt": "BCH_KSPBKZT",
-    "bitcoincash-bch-to-privat24-uah": "BCH_P24UAH",
-    "bitcoincash-bch-to-privat24-usd": "BCH_P24USD",
-    "bitcoincash-bch-to-oschadbank-uah": "BCH_OSDBUAH",
-    "bitcoincash-bch-to-fuib-uah": "BCH_PMBBUAH",
-    "bitcoincash-bch-to-rnkb-rub": "BCH_RNKBRUB",
-    "dash-dash-to-bitcoin-btc": "DASH_BTC",
-    "dash-dash-to-ethereum-eth": "DASH_ETH",
-    "dash-dash-to-solana-sol": "DASH_SOL",
-    "dash-dash-to-0x-zrx": "DASH_ZRX",
-    "dash-dash-to-zcash-zec": "DASH_ZEC",
-    "dash-dash-to-monero-xmr": "DASH_XMR",
-    "dash-dash-to-stellar-xlm": "DASH_XLM",
-    "dash-dash-to-toncoin-ton": "DASH_TON",
-    "dash-dash-to-tron-trx": "DASH_TRX",
-    "dash-dash-to-shibainu-shib": "DASH_SHIB",
-    "dash-dash-to-usdcoin-usdc": "DASH_USDC",
-    "dash-dash-to-litecoin-ltc": "DASH_LTC",
-    "dash-dash-to-cardano-ada": "DASH_ADA",
-    "dash-dash-to-eos-eos": "DASH_EOS",
-    "dash-dash-to-ripple-xrp": "DASH_XRP",
-    "dash-dash-to-uniswap-uni": "DASH_UNI",
-    "dash-dash-to-polkadot-dot": "DASH_DOT",
-    "dash-dash-to-dogecoin-doge": "DASH_DOGE",
-    "dash-dash-to-classic-etc": "DASH_ETC",
-    "dash-dash-to-dai-dai": "DASH_DAI",
-    "dash-dash-to-bitcoincash-bch": "DASH_BCH",
-    "dash-dash-to-dash-dash": "DASH_DASH",
-    "dash-dash-to-tether-usdt-erc20": "DASH_USDTERC20",
-    "dash-dash-to-tether-usdt-trc20": "DASH_USDTTRC20",
-    "dash-dash-to-sber-rub": "DASH_SBERRUB",
-    "dash-dash-to-t-bank-rub": "DASH_TCSBRUB",
-    "dash-dash-to-gazprom-rub": "DASH_GPBRUB",
-    "dash-dash-to-sbp-rub": "DASH_SBPRUB",
-    "dash-dash-to-alfa-bank-rub": "DASH_ACRUB",
-    "dash-dash-to-psb-rub": "DASH_PSBRUB",
-    "dash-dash-to-pochtabank-rub": "DASH_POSTBRUB",
-    "dash-dash-to-rosselhoz-rub": "DASH_RSHBRUB",
-    "dash-dash-to-halyk-kzt": "DASH_HLKBKZT",
-    "dash-dash-to-kaspi-kzt": "DASH_KSPBKZT",
-    "dash-dash-to-privat24-uah": "DASH_P24UAH",
-    "dash-dash-to-privat24-usd": "DASH_P24USD",
-    "dash-dash-to-oschadbank-uah": "DASH_OSDBUAH",
-    "dash-dash-to-fuib-uah": "DASH_PMBBUAH",
-    "dash-dash-to-rnkb-rub": "DASH_RNKBRUB",
-    "dash-dash-to-cash-usd": "DASH_CASHUSD",
-    "dash-dash-to-cash-rub": "DASH_CASHRUB",
+    "0x-zrx-to-alpha-bank-rub": "ZRX_ACRUB",
     "tether-usdt-erc20-to-bitcoin-btc": "USDTERC20_BTC",
     "tether-usdt-erc20-to-ethereum-eth": "USDTERC20_ETH",
-    "tether-usdt-erc20-to-solana-sol": "USDTERC20_SOL",
-    "tether-usdt-erc20-to-0x-zrx": "USDTERC20_ZRX",
-    "tether-usdt-erc20-to-zcash-zec": "USDTERC20_ZEC",
-    "tether-usdt-erc20-to-monero-xmr": "USDTERC20_XMR",
-    "tether-usdt-erc20-to-stellar-xlm": "USDTERC20_XLM",
-    "tether-usdt-erc20-to-toncoin-ton": "USDTERC20_TON",
-    "tether-usdt-erc20-to-tron-trx": "USDTERC20_TRX",
     "tether-usdt-erc20-to-litecoin-ltc": "USDTERC20_LTC",
+    "tether-usdt-erc20-to-monero-xmr": "USDTERC20_XMR",
     "tether-usdt-erc20-to-neo-neo": "USDTERC20_NEO",
-    "tether-usdt-erc20-to-cardano-ada": "USDTERC20_ADA",
-    "tether-usdt-erc20-to-eos-eos": "USDTERC20_EOS",
-    "tether-usdt-erc20-to-ripple-xrp": "USDTERC20_XRP",
-    "tether-usdt-erc20-to-uniswap-uni": "USDTERC20_UNI",
-    "tether-usdt-erc20-to-polkadot-dot": "USDTERC20_DOT",
-    "tether-usdt-erc20-to-dogecoin-doge": "USDTERC20_DOGE",
-    "tether-usdt-erc20-to-classic-etc": "USDTERC20_ETC",
+    "tether-usdt-erc20-to-solana-sol": "USDTERC20_SOL",
+    "tether-usdt-erc20-to-tron-trx": "USDTERC20_TRX",
     "tether-usdt-erc20-to-dai-dai": "USDTERC20_DAI",
-    "tether-usdt-erc20-to-bitcoincash-bch": "USDTERC20_BCH",
-    "tether-usdt-erc20-to-dash-dash": "USDTERC20_DASH",
+    "tether-usdt-erc20-to-0x-zrx": "USDTERC20_ZRX",
     "tether-usdt-erc20-to-tether-usdt-erc20": "USDTERC20_USDTERC20",
     "tether-usdt-erc20-to-tether-usdt-trc20": "USDTERC20_USDTTRC20",
+    "tether-usdt-erc20-to-cash-rub": "USDTERC20_CASHRUB",
+    "tether-usdt-erc20-to-cash-usd": "USDTERC20_CASHUSD",
     "tether-usdt-erc20-to-sber-rub": "USDTERC20_SBERRUB",
     "tether-usdt-erc20-to-t-bank-rub": "USDTERC20_TCSBRUB",
-    "tether-usdt-erc20-to-gazprom-rub": "USDTERC20_GPBRUB",
-    "tether-usdt-erc20-to-sbp-rub": "USDTERC20_SBPRUB",
-    "tether-usdt-erc20-to-alfa-bank-rub": "USDTERC20_ACRUB",
-    "tether-usdt-erc20-to-psb-rub": "USDTERC20_PSBRUB",
-    "tether-usdt-erc20-to-pochtabank-rub": "USDTERC20_POSTBRUB",
-    "tether-usdt-erc20-to-rosselhoz-rub": "USDTERC20_RSHBRUB",
-    "tether-usdt-erc20-to-halyk-kzt": "USDTERC20_HLKBKZT",
-    "tether-usdt-erc20-to-kaspi-kzt": "USDTERC20_KSPBKZT",
-    "tether-usdt-erc20-to-privat24-uah": "USDTERC20_P24UAH",
-    "tether-usdt-erc20-to-privat24-usd": "USDTERC20_P24USD",
-    "tether-usdt-erc20-to-oschadbank-uah": "USDTERC20_OSDBUAH",
-    "tether-usdt-erc20-to-fuib-uah": "USDTERC20_PMBBUAH",
-    "tether-usdt-erc20-to-rnkb-rub": "USDTERC20_RNKBRUB",
-    "tether-usdt-erc20-to-cash-usd": "USDTERC20_CASHUSD",
-    "tether-usdt-erc20-to-cash-rub": "USDTERC20_CASHRUB",
-    "tether-usdt-erc20-to-cash-uah": "USDTERC20_CASHUAH",
-    "tether-usdt-erc20-to-cash-try": "USDTERC20_CASHTRY",
-    "tether-usdt-erc20-to-cash-gbp": "USDTERC20_CASHGBP",
+    "tether-usdt-erc20-to-alpha-bank-rub": "USDTERC20_ACRUB",
     "tether-usdt-trc20-to-bitcoin-btc": "USDTTRC20_BTC",
     "tether-usdt-trc20-to-ethereum-eth": "USDTTRC20_ETH",
-    "tether-usdt-trc20-to-solana-sol": "USDTTRC20_SOL",
-    "tether-usdt-trc20-to-0x-zrx": "USDTTRC20_ZRX",
-    "tether-usdt-trc20-to-zcash-zec": "USDTTRC20_ZEC",
-    "tether-usdt-trc20-to-monero-xmr": "USDTTRC20_XMR",
-    "tether-usdt-trc20-to-stellar-xlm": "USDTTRC20_XLM",
-    "tether-usdt-trc20-to-toncoin-ton": "USDTTRC20_TON",
-    "tether-usdt-trc20-to-tron-trx": "USDTTRC20_TRX",
-    "tether-usdt-trc20-to-shibainu-shib": "USDTTRC20_SHIB",
-    "tether-usdt-trc20-to-trueusd-tusd": "USDTTRC20_TUSD",
     "tether-usdt-trc20-to-litecoin-ltc": "USDTTRC20_LTC",
+    "tether-usdt-trc20-to-monero-xmr": "USDTTRC20_XMR",
     "tether-usdt-trc20-to-neo-neo": "USDTTRC20_NEO",
-    "tether-usdt-trc20-to-cardano-ada": "USDTTRC20_ADA",
-    "tether-usdt-trc20-to-eos-eos": "USDTTRC20_EOS",
-    "tether-usdt-trc20-to-ripple-xrp": "USDTTRC20_XRP",
-    "tether-usdt-trc20-to-uniswap-uni": "USDTTRC20_UNI",
-    "tether-usdt-trc20-to-polkadot-dot": "USDTTRC20_DOT",
-    "tether-usdt-trc20-to-dogecoin-doge": "USDTTRC20_DOGE",
-    "tether-usdt-trc20-to-classic-etc": "USDTTRC20_ETC",
+    "tether-usdt-trc20-to-solana-sol": "USDTTRC20_SOL",
+    "tether-usdt-trc20-to-tron-trx": "USDTTRC20_TRX",
     "tether-usdt-trc20-to-dai-dai": "USDTTRC20_DAI",
-    "tether-usdt-trc20-to-bitcoincash-bch": "USDTTRC20_BCH",
-    "tether-usdt-trc20-to-dash-dash": "USDTTRC20_DASH",
+    "tether-usdt-trc20-to-0x-zrx": "USDTTRC20_ZRX",
     "tether-usdt-trc20-to-tether-usdt-erc20": "USDTTRC20_USDTERC20",
     "tether-usdt-trc20-to-tether-usdt-trc20": "USDTTRC20_USDTTRC20",
+    "tether-usdt-trc20-to-cash-rub": "USDTTRC20_CASHRUB",
+    "tether-usdt-trc20-to-cash-usd": "USDTTRC20_CASHUSD",
     "tether-usdt-trc20-to-sber-rub": "USDTTRC20_SBERRUB",
     "tether-usdt-trc20-to-t-bank-rub": "USDTTRC20_TCSBRUB",
-    "tether-usdt-trc20-to-gazprom-rub": "USDTTRC20_GPBRUB",
-    "tether-usdt-trc20-to-sbp-rub": "USDTTRC20_SBPRUB",
-    "tether-usdt-trc20-to-alfa-bank-rub": "USDTTRC20_ACRUB",
-    "tether-usdt-trc20-to-psb-rub": "USDTTRC20_PSBRUB",
-    "tether-usdt-trc20-to-pochtabank-rub": "USDTTRC20_POSTBRUB",
-    "tether-usdt-trc20-to-rosselhoz-rub": "USDTTRC20_RSHBRUB",
-    "tether-usdt-trc20-to-halyk-kzt": "USDTTRC20_HLKBKZT",
-    "tether-usdt-trc20-to-kaspi-kzt": "USDTTRC20_KSPBKZT",
-    "tether-usdt-trc20-to-privat24-uah": "USDTTRC20_P24UAH",
-    "tether-usdt-trc20-to-privat24-usd": "USDTTRC20_P24USD",
-    "tether-usdt-trc20-to-oschadbank-uah": "USDTTRC20_OSDBUAH",
-    "tether-usdt-trc20-to-fuib-uah": "USDTTRC20_PMBBUAH",
-    "tether-usdt-trc20-to-rnkb-rub": "USDTTRC20_RNKBRUB",
-    "tether-usdt-trc20-to-cash-usd": "USDTTRC20_CASHUSD",
-    "tether-usdt-trc20-to-cash-rub": "USDTTRC20_CASHRUB",
-    "tether-usdt-trc20-to-cash-cny": "USDTTRC20_CASHCNY",
-    "tether-usdt-trc20-to-cash-uah": "USDTTRC20_CASHUAH",
-    "tether-usdt-trc20-to-cash-try": "USDTTRC20_CASHTRY",
-    "tether-usdt-trc20-to-cash-gbp": "USDTTRC20_CASHGBP",
-    "sber-rub-to-bitcoin-btc": "SBERRUB_BTC",
-    "sber-rub-to-ethereum-eth": "SBERRUB_ETH",
-    "sber-rub-to-solana-sol": "SBERRUB_SOL",
-    "sber-rub-to-0x-zrx": "SBERRUB_ZRX",
-    "sber-rub-to-zcash-zec": "SBERRUB_ZEC",
-    "sber-rub-to-monero-xmr": "SBERRUB_XMR",
-    "sber-rub-to-stellar-xlm": "SBERRUB_XLM",
-    "sber-rub-to-toncoin-ton": "SBERRUB_TON",
-    "sber-rub-to-tron-trx": "SBERRUB_TRX",
-    "sber-rub-to-litecoin-ltc": "SBERRUB_LTC",
-    "sber-rub-to-cardano-ada": "SBERRUB_ADA",
-    "sber-rub-to-eos-eos": "SBERRUB_EOS",
-    "sber-rub-to-ripple-xrp": "SBERRUB_XRP",
-    "sber-rub-to-uniswap-uni": "SBERRUB_UNI",
-    "sber-rub-to-polkadot-dot": "SBERRUB_DOT",
-    "sber-rub-to-dogecoin-doge": "SBERRUB_DOGE",
-    "sber-rub-to-classic-etc": "SBERRUB_ETC",
-    "sber-rub-to-dai-dai": "SBERRUB_DAI",
-    "sber-rub-to-bitcoincash-bch": "SBERRUB_BCH",
-    "sber-rub-to-dash-dash": "SBERRUB_DASH",
-    "sber-rub-to-tether-usdt-erc20": "SBERRUB_USDTERC20",
-    "sber-rub-to-tether-usdt-trc20": "SBERRUB_USDTTRC20",
-    "sber-rub-to-halyk-kzt": "SBERRUB_HLKBKZT",
-    "sber-rub-to-kaspi-kzt": "SBERRUB_KSPBKZT",
-    "sber-rub-to-privat24-uah": "SBERRUB_P24UAH",
-    "sber-rub-to-oschadbank-uah": "SBERRUB_OSDBUAH",
-    "t-bank-rub-to-bitcoin-btc": "TCSBRUB_BTC",
-    "t-bank-rub-to-ethereum-eth": "TCSBRUB_ETH",
-    "t-bank-rub-to-solana-sol": "TCSBRUB_SOL",
-    "t-bank-rub-to-0x-zrx": "TCSBRUB_ZRX",
-    "t-bank-rub-to-zcash-zec": "TCSBRUB_ZEC",
-    "t-bank-rub-to-monero-xmr": "TCSBRUB_XMR",
-    "t-bank-rub-to-stellar-xlm": "TCSBRUB_XLM",
-    "t-bank-rub-to-toncoin-ton": "TCSBRUB_TON",
-    "t-bank-rub-to-tron-trx": "TCSBRUB_TRX",
-    "t-bank-rub-to-litecoin-ltc": "TCSBRUB_LTC",
-    "t-bank-rub-to-cardano-ada": "TCSBRUB_ADA",
-    "t-bank-rub-to-eos-eos": "TCSBRUB_EOS",
-    "t-bank-rub-to-ripple-xrp": "TCSBRUB_XRP",
-    "t-bank-rub-to-uniswap-uni": "TCSBRUB_UNI",
-    "t-bank-rub-to-polkadot-dot": "TCSBRUB_DOT",
-    "t-bank-rub-to-dogecoin-doge": "TCSBRUB_DOGE",
-    "t-bank-rub-to-classic-etc": "TCSBRUB_ETC",
-    "t-bank-rub-to-dai-dai": "TCSBRUB_DAI",
-    "t-bank-rub-to-bitcoincash-bch": "TCSBRUB_BCH",
-    "t-bank-rub-to-dash-dash": "TCSBRUB_DASH",
-    "t-bank-rub-to-tether-usdt-erc20": "TCSBRUB_USDTERC20",
-    "t-bank-rub-to-tether-usdt-trc20": "TCSBRUB_USDTTRC20",
-    "gazprom-rub-to-bitcoin-btc": "GPBRUB_BTC",
-    "gazprom-rub-to-ethereum-eth": "GPBRUB_ETH",
-    "gazprom-rub-to-solana-sol": "GPBRUB_SOL",
-    "gazprom-rub-to-0x-zrx": "GPBRUB_ZRX",
-    "gazprom-rub-to-zcash-zec": "GPBRUB_ZEC",
-    "gazprom-rub-to-monero-xmr": "GPBRUB_XMR",
-    "gazprom-rub-to-stellar-xlm": "GPBRUB_XLM",
-    "gazprom-rub-to-toncoin-ton": "GPBRUB_TON",
-    "gazprom-rub-to-tron-trx": "GPBRUB_TRX",
-    "gazprom-rub-to-litecoin-ltc": "GPBRUB_LTC",
-    "gazprom-rub-to-cardano-ada": "GPBRUB_ADA",
-    "gazprom-rub-to-eos-eos": "GPBRUB_EOS",
-    "gazprom-rub-to-ripple-xrp": "GPBRUB_XRP",
-    "gazprom-rub-to-uniswap-uni": "GPBRUB_UNI",
-    "gazprom-rub-to-polkadot-dot": "GPBRUB_DOT",
-    "gazprom-rub-to-dogecoin-doge": "GPBRUB_DOGE",
-    "gazprom-rub-to-classic-etc": "GPBRUB_ETC",
-    "gazprom-rub-to-dai-dai": "GPBRUB_DAI",
-    "gazprom-rub-to-bitcoincash-bch": "GPBRUB_BCH",
-    "gazprom-rub-to-dash-dash": "GPBRUB_DASH",
-    "gazprom-rub-to-tether-usdt-erc20": "GPBRUB_USDTERC20",
-    "gazprom-rub-to-tether-usdt-trc20": "GPBRUB_USDTTRC20",
-    "sbp-rub-to-bitcoin-btc": "SBPRUB_BTC",
-    "sbp-rub-to-ethereum-eth": "SBPRUB_ETH",
-    "sbp-rub-to-solana-sol": "SBPRUB_SOL",
-    "sbp-rub-to-0x-zrx": "SBPRUB_ZRX",
-    "sbp-rub-to-zcash-zec": "SBPRUB_ZEC",
-    "sbp-rub-to-monero-xmr": "SBPRUB_XMR",
-    "sbp-rub-to-stellar-xlm": "SBPRUB_XLM",
-    "sbp-rub-to-toncoin-ton": "SBPRUB_TON",
-    "sbp-rub-to-tron-trx": "SBPRUB_TRX",
-    "sbp-rub-to-litecoin-ltc": "SBPRUB_LTC",
-    "sbp-rub-to-cardano-ada": "SBPRUB_ADA",
-    "sbp-rub-to-ripple-xrp": "SBPRUB_XRP",
-    "sbp-rub-to-polkadot-dot": "SBPRUB_DOT",
-    "sbp-rub-to-dogecoin-doge": "SBPRUB_DOGE",
-    "sbp-rub-to-classic-etc": "SBPRUB_ETC",
-    "sbp-rub-to-dai-dai": "SBPRUB_DAI",
-    "sbp-rub-to-bitcoincash-bch": "SBPRUB_BCH",
-    "sbp-rub-to-dash-dash": "SBPRUB_DASH",
-    "sbp-rub-to-tether-usdt-erc20": "SBPRUB_USDTERC20",
-    "sbp-rub-to-tether-usdt-trc20": "SBPRUB_USDTTRC20",
-    "sbp-rub-to-privat24-uah": "SBPRUB_P24UAH",
-    "sbp-rub-to-oschadbank-uah": "SBPRUB_OSDBUAH",
-    "alfa-bank-rub-to-bitcoin-btc": "ACRUB_BTC",
-    "alfa-bank-rub-to-ethereum-eth": "ACRUB_ETH",
-    "alfa-bank-rub-to-solana-sol": "ACRUB_SOL",
-    "alfa-bank-rub-to-0x-zrx": "ACRUB_ZRX",
-    "alfa-bank-rub-to-zcash-zec": "ACRUB_ZEC",
-    "alfa-bank-rub-to-monero-xmr": "ACRUB_XMR",
-    "alfa-bank-rub-to-stellar-xlm": "ACRUB_XLM",
-    "alfa-bank-rub-to-toncoin-ton": "ACRUB_TON",
-    "alfa-bank-rub-to-tron-trx": "ACRUB_TRX",
-    "alfa-bank-rub-to-litecoin-ltc": "ACRUB_LTC",
-    "alfa-bank-rub-to-cardano-ada": "ACRUB_ADA",
-    "alfa-bank-rub-to-eos-eos": "ACRUB_EOS",
-    "alfa-bank-rub-to-ripple-xrp": "ACRUB_XRP",
-    "alfa-bank-rub-to-uniswap-uni": "ACRUB_UNI",
-    "alfa-bank-rub-to-polkadot-dot": "ACRUB_DOT",
-    "alfa-bank-rub-to-dogecoin-doge": "ACRUB_DOGE",
-    "alfa-bank-rub-to-classic-etc": "ACRUB_ETC",
-    "alfa-bank-rub-to-dai-dai": "ACRUB_DAI",
-    "alfa-bank-rub-to-bitcoincash-bch": "ACRUB_BCH",
-    "alfa-bank-rub-to-dash-dash": "ACRUB_DASH",
-    "alfa-bank-rub-to-tether-usdt-erc20": "ACRUB_USDTERC20",
-    "alfa-bank-rub-to-tether-usdt-trc20": "ACRUB_USDTTRC20",
-    "alfa-bank-rub-to-kaspi-kzt": "ACRUB_KSPBKZT",
-    "psb-rub-to-bitcoin-btc": "PSBRUB_BTC",
-    "psb-rub-to-ethereum-eth": "PSBRUB_ETH",
-    "psb-rub-to-solana-sol": "PSBRUB_SOL",
-    "psb-rub-to-0x-zrx": "PSBRUB_ZRX",
-    "psb-rub-to-zcash-zec": "PSBRUB_ZEC",
-    "psb-rub-to-monero-xmr": "PSBRUB_XMR",
-    "psb-rub-to-stellar-xlm": "PSBRUB_XLM",
-    "psb-rub-to-toncoin-ton": "PSBRUB_TON",
-    "psb-rub-to-tron-trx": "PSBRUB_TRX",
-    "psb-rub-to-litecoin-ltc": "PSBRUB_LTC",
-    "psb-rub-to-cardano-ada": "PSBRUB_ADA",
-    "psb-rub-to-eos-eos": "PSBRUB_EOS",
-    "psb-rub-to-ripple-xrp": "PSBRUB_XRP",
-    "psb-rub-to-uniswap-uni": "PSBRUB_UNI",
-    "psb-rub-to-polkadot-dot": "PSBRUB_DOT",
-    "psb-rub-to-dogecoin-doge": "PSBRUB_DOGE",
-    "psb-rub-to-classic-etc": "PSBRUB_ETC",
-    "psb-rub-to-dai-dai": "PSBRUB_DAI",
-    "psb-rub-to-bitcoincash-bch": "PSBRUB_BCH",
-    "psb-rub-to-dash-dash": "PSBRUB_DASH",
-    "psb-rub-to-tether-usdt-erc20": "PSBRUB_USDTERC20",
-    "psb-rub-to-tether-usdt-trc20": "PSBRUB_USDTTRC20",
-    "psb-rub-to-privat24-uah": "PSBRUB_P24UAH",
-    "psb-rub-to-oschadbank-uah": "PSBRUB_OSDBUAH",
-    "pochtabank-rub-to-bitcoin-btc": "POSTBRUB_BTC",
-    "pochtabank-rub-to-ethereum-eth": "POSTBRUB_ETH",
-    "pochtabank-rub-to-solana-sol": "POSTBRUB_SOL",
-    "pochtabank-rub-to-0x-zrx": "POSTBRUB_ZRX",
-    "pochtabank-rub-to-zcash-zec": "POSTBRUB_ZEC",
-    "pochtabank-rub-to-monero-xmr": "POSTBRUB_XMR",
-    "pochtabank-rub-to-stellar-xlm": "POSTBRUB_XLM",
-    "pochtabank-rub-to-toncoin-ton": "POSTBRUB_TON",
-    "pochtabank-rub-to-tron-trx": "POSTBRUB_TRX",
-    "pochtabank-rub-to-litecoin-ltc": "POSTBRUB_LTC",
-    "pochtabank-rub-to-cardano-ada": "POSTBRUB_ADA",
-    "pochtabank-rub-to-eos-eos": "POSTBRUB_EOS",
-    "pochtabank-rub-to-ripple-xrp": "POSTBRUB_XRP",
-    "pochtabank-rub-to-uniswap-uni": "POSTBRUB_UNI",
-    "pochtabank-rub-to-polkadot-dot": "POSTBRUB_DOT",
-    "pochtabank-rub-to-dogecoin-doge": "POSTBRUB_DOGE",
-    "pochtabank-rub-to-classic-etc": "POSTBRUB_ETC",
-    "pochtabank-rub-to-dai-dai": "POSTBRUB_DAI",
-    "pochtabank-rub-to-bitcoincash-bch": "POSTBRUB_BCH",
-    "pochtabank-rub-to-dash-dash": "POSTBRUB_DASH",
-    "pochtabank-rub-to-tether-usdt-erc20": "POSTBRUB_USDTERC20",
-    "pochtabank-rub-to-tether-usdt-trc20": "POSTBRUB_USDTTRC20",
-    "rosselhoz-rub-to-bitcoin-btc": "RSHBRUB_BTC",
-    "rosselhoz-rub-to-ethereum-eth": "RSHBRUB_ETH",
-    "rosselhoz-rub-to-solana-sol": "RSHBRUB_SOL",
-    "rosselhoz-rub-to-0x-zrx": "RSHBRUB_ZRX",
-    "rosselhoz-rub-to-zcash-zec": "RSHBRUB_ZEC",
-    "rosselhoz-rub-to-monero-xmr": "RSHBRUB_XMR",
-    "rosselhoz-rub-to-stellar-xlm": "RSHBRUB_XLM",
-    "rosselhoz-rub-to-toncoin-ton": "RSHBRUB_TON",
-    "rosselhoz-rub-to-tron-trx": "RSHBRUB_TRX",
-    "rosselhoz-rub-to-litecoin-ltc": "RSHBRUB_LTC",
-    "rosselhoz-rub-to-cardano-ada": "RSHBRUB_ADA",
-    "rosselhoz-rub-to-eos-eos": "RSHBRUB_EOS",
-    "rosselhoz-rub-to-ripple-xrp": "RSHBRUB_XRP",
-    "rosselhoz-rub-to-uniswap-uni": "RSHBRUB_UNI",
-    "rosselhoz-rub-to-polkadot-dot": "RSHBRUB_DOT",
-    "rosselhoz-rub-to-dogecoin-doge": "RSHBRUB_DOGE",
-    "rosselhoz-rub-to-classic-etc": "RSHBRUB_ETC",
-    "rosselhoz-rub-to-dai-dai": "RSHBRUB_DAI",
-    "rosselhoz-rub-to-bitcoincash-bch": "RSHBRUB_BCH",
-    "rosselhoz-rub-to-dash-dash": "RSHBRUB_DASH",
-    "rosselhoz-rub-to-tether-usdt-erc20": "RSHBRUB_USDTERC20",
-    "rosselhoz-rub-to-tether-usdt-trc20": "RSHBRUB_USDTTRC20",
-    "halyk-kzt-to-bitcoin-btc": "HLKBKZT_BTC",
-    "halyk-kzt-to-ethereum-eth": "HLKBKZT_ETH",
-    "halyk-kzt-to-solana-sol": "HLKBKZT_SOL",
-    "halyk-kzt-to-zcash-zec": "HLKBKZT_ZEC",
-    "halyk-kzt-to-monero-xmr": "HLKBKZT_XMR",
-    "halyk-kzt-to-toncoin-ton": "HLKBKZT_TON",
-    "halyk-kzt-to-tron-trx": "HLKBKZT_TRX",
-    "halyk-kzt-to-litecoin-ltc": "HLKBKZT_LTC",
-    "halyk-kzt-to-cardano-ada": "HLKBKZT_ADA",
-    "halyk-kzt-to-ripple-xrp": "HLKBKZT_XRP",
-    "halyk-kzt-to-dogecoin-doge": "HLKBKZT_DOGE",
-    "halyk-kzt-to-classic-etc": "HLKBKZT_ETC",
-    "halyk-kzt-to-bitcoincash-bch": "HLKBKZT_BCH",
-    "halyk-kzt-to-dash-dash": "HLKBKZT_DASH",
-    "halyk-kzt-to-tether-usdt-erc20": "HLKBKZT_USDTERC20",
-    "halyk-kzt-to-tether-usdt-trc20": "HLKBKZT_USDTTRC20",
-    "halyk-kzt-to-sber-rub": "HLKBKZT_SBERRUB",
-    "halyk-kzt-to-t-bank-rub": "HLKBKZT_TCSBRUB",
-    "halyk-kzt-to-alfa-bank-rub": "HLKBKZT_ACRUB",
-    "kaspi-kzt-to-bitcoin-btc": "KSPBKZT_BTC",
-    "kaspi-kzt-to-ethereum-eth": "KSPBKZT_ETH",
-    "kaspi-kzt-to-solana-sol": "KSPBKZT_SOL",
-    "kaspi-kzt-to-zcash-zec": "KSPBKZT_ZEC",
-    "kaspi-kzt-to-monero-xmr": "KSPBKZT_XMR",
-    "kaspi-kzt-to-toncoin-ton": "KSPBKZT_TON",
-    "kaspi-kzt-to-tron-trx": "KSPBKZT_TRX",
-    "kaspi-kzt-to-litecoin-ltc": "KSPBKZT_LTC",
-    "kaspi-kzt-to-cardano-ada": "KSPBKZT_ADA",
-    "kaspi-kzt-to-ripple-xrp": "KSPBKZT_XRP",
-    "kaspi-kzt-to-dogecoin-doge": "KSPBKZT_DOGE",
-    "kaspi-kzt-to-classic-etc": "KSPBKZT_ETC",
-    "kaspi-kzt-to-bitcoincash-bch": "KSPBKZT_BCH",
-    "kaspi-kzt-to-dash-dash": "KSPBKZT_DASH",
-    "kaspi-kzt-to-tether-usdt-erc20": "KSPBKZT_USDTERC20",
-    "kaspi-kzt-to-tether-usdt-trc20": "KSPBKZT_USDTTRC20",
-    "kaspi-kzt-to-sber-rub": "KSPBKZT_SBERRUB",
-    "kaspi-kzt-to-t-bank-rub": "KSPBKZT_TCSBRUB",
-    "kaspi-kzt-to-alfa-bank-rub": "KSPBKZT_ACRUB",
-    "privat24-uah-to-bitcoin-btc": "P24UAH_BTC",
-    "privat24-uah-to-ethereum-eth": "P24UAH_ETH",
-    "privat24-uah-to-tron-trx": "P24UAH_TRX",
-    "privat24-uah-to-litecoin-ltc": "P24UAH_LTC",
-    "privat24-uah-to-cardano-ada": "P24UAH_ADA",
-    "privat24-uah-to-ripple-xrp": "P24UAH_XRP",
-    "privat24-uah-to-dogecoin-doge": "P24UAH_DOGE",
-    "privat24-uah-to-bitcoincash-bch": "P24UAH_BCH",
-    "privat24-uah-to-dash-dash": "P24UAH_DASH",
-    "privat24-uah-to-tether-usdt-erc20": "P24UAH_USDTERC20",
-    "privat24-uah-to-tether-usdt-trc20": "P24UAH_USDTTRC20",
-    "oschadbank-uah-to-tether-usdt-trc20": "OSDBUAH_USDTTRC20",
-    "oschadbank-uah-to-sber-rub": "OSDBUAH_SBERRUB",
-    "oschadbank-uah-to-sbp-rub": "OSDBUAH_SBPRUB",
-    "oschadbank-uah-to-psb-rub": "OSDBUAH_PSBRUB",
-    "fuib-uah-to-bitcoin-btc": "PMBBUAH_BTC",
-    "fuib-uah-to-ethereum-eth": "PMBBUAH_ETH",
-    "fuib-uah-to-monero-xmr": "PMBBUAH_XMR",
-    "fuib-uah-to-tron-trx": "PMBBUAH_TRX",
-    "fuib-uah-to-litecoin-ltc": "PMBBUAH_LTC",
-    "fuib-uah-to-cardano-ada": "PMBBUAH_ADA",
-    "fuib-uah-to-dogecoin-doge": "PMBBUAH_DOGE",
-    "fuib-uah-to-bitcoincash-bch": "PMBBUAH_BCH",
-    "fuib-uah-to-dash-dash": "PMBBUAH_DASH",
-    "fuib-uah-to-tether-usdt-erc20": "PMBBUAH_USDTERC20",
-    "fuib-uah-to-tether-usdt-trc20": "PMBBUAH_USDTTRC20",
-    "fuib-uah-to-sber-rub": "PMBBUAH_SBERRUB",
-    "fuib-uah-to-sbp-rub": "PMBBUAH_SBPRUB",
-    "fuib-uah-to-psb-rub": "PMBBUAH_PSBRUB",
-    "rnkb-rub-to-bitcoin-btc": "RNKBRUB_BTC",
-    "rnkb-rub-to-ethereum-eth": "RNKBRUB_ETH",
-    "rnkb-rub-to-solana-sol": "RNKBRUB_SOL",
-    "rnkb-rub-to-0x-zrx": "RNKBRUB_ZRX",
-    "rnkb-rub-to-zcash-zec": "RNKBRUB_ZEC",
-    "rnkb-rub-to-monero-xmr": "RNKBRUB_XMR",
-    "rnkb-rub-to-stellar-xlm": "RNKBRUB_XLM",
-    "rnkb-rub-to-toncoin-ton": "RNKBRUB_TON",
-    "rnkb-rub-to-tron-trx": "RNKBRUB_TRX",
-    "rnkb-rub-to-litecoin-ltc": "RNKBRUB_LTC",
-    "rnkb-rub-to-cardano-ada": "RNKBRUB_ADA",
-    "rnkb-rub-to-eos-eos": "RNKBRUB_EOS",
-    "rnkb-rub-to-ripple-xrp": "RNKBRUB_XRP",
-    "rnkb-rub-to-uniswap-uni": "RNKBRUB_UNI",
-    "rnkb-rub-to-polkadot-dot": "RNKBRUB_DOT",
-    "rnkb-rub-to-dogecoin-doge": "RNKBRUB_DOGE",
-    "rnkb-rub-to-classic-etc": "RNKBRUB_ETC",
-    "rnkb-rub-to-dai-dai": "RNKBRUB_DAI",
-    "rnkb-rub-to-bitcoincash-bch": "RNKBRUB_BCH",
-    "rnkb-rub-to-dash-dash": "RNKBRUB_DASH",
-    "rnkb-rub-to-tether-usdt-erc20": "RNKBRUB_USDTERC20",
-    "rnkb-rub-to-tether-usdt-trc20": "RNKBRUB_USDTTRC20",
-    "cash-usd-to-bitcoin-btc": "CASHUSD_BTC",
-    "cash-usd-to-ethereum-eth": "CASHUSD_ETH",
-    "cash-usd-to-monero-xmr": "CASHUSD_XMR",
-    "cash-usd-to-tron-trx": "CASHUSD_TRX",
-    "cash-usd-to-litecoin-ltc": "CASHUSD_LTC",
-    "cash-usd-to-ripple-xrp": "CASHUSD_XRP",
-    "cash-usd-to-dash-dash": "CASHUSD_DASH",
-    "cash-usd-to-tether-usdt-erc20": "CASHUSD_USDTERC20",
-    "cash-usd-to-tether-usdt-trc20": "CASHUSD_USDTTRC20",
+    "tether-usdt-trc20-to-alpha-bank-rub": "USDTTRC20_ACRUB",
     "cash-rub-to-bitcoin-btc": "CASHRUB_BTC",
     "cash-rub-to-ethereum-eth": "CASHRUB_ETH",
     "cash-rub-to-litecoin-ltc": "CASHRUB_LTC",
+    "cash-rub-to-monero-xmr": "CASHRUB_XMR",
+    "cash-rub-to-solana-sol": "CASHRUB_SOL",
+    "cash-rub-to-tron-trx": "CASHRUB_TRX",
+    "cash-rub-to-dai-dai": "CASHRUB_DAI",
     "cash-rub-to-tether-usdt-erc20": "CASHRUB_USDTERC20",
     "cash-rub-to-tether-usdt-trc20": "CASHRUB_USDTTRC20",
-    "cash-uah-to-bitcoin-btc": "CASHUAH_BTC",
-    "cash-uah-to-ethereum-eth": "CASHUAH_ETH",
-    "cash-uah-to-zcash-zec": "CASHUAH_ZEC",
-    "cash-uah-to-litecoin-ltc": "CASHUAH_LTC",
-    "cash-uah-to-dash-dash": "CASHUAH_DASH",
-    "cash-uah-to-tether-usdt-erc20": "CASHUAH_USDTERC20",
-    "cash-uah-to-tether-usdt-trc20": "CASHUAH_USDTTRC20"
+    "cash-usd-to-bitcoin-btc": "CASHUSD_BTC",
+    "cash-usd-to-ethereum-eth": "CASHUSD_ETH",
+    "cash-usd-to-litecoin-ltc": "CASHUSD_LTC",
+    "cash-usd-to-monero-xmr": "CASHUSD_XMR",
+    "cash-usd-to-tron-trx": "CASHUSD_TRX",
+    "cash-usd-to-tether-usdt-erc20": "CASHUSD_USDTERC20",
+    "cash-usd-to-tether-usdt-trc20": "CASHUSD_USDTTRC20",
+    "sber-rub-to-bitcoin-btc": "SBERRUB_BTC",
+    "sber-rub-to-ethereum-eth": "SBERRUB_ETH",
+    "sber-rub-to-litecoin-ltc": "SBERRUB_LTC",
+    "sber-rub-to-monero-xmr": "SBERRUB_XMR",
+    "sber-rub-to-neo-neo": "SBERRUB_NEO",
+    "sber-rub-to-solana-sol": "SBERRUB_SOL",
+    "sber-rub-to-tron-trx": "SBERRUB_TRX",
+    "sber-rub-to-dai-dai": "SBERRUB_DAI",
+    "sber-rub-to-0x-zrx": "SBERRUB_ZRX",
+    "sber-rub-to-tether-usdt-erc20": "SBERRUB_USDTERC20",
+    "sber-rub-to-tether-usdt-trc20": "SBERRUB_USDTTRC20",
+    "t-bank-rub-to-bitcoin-btc": "TCSBRUB_BTC",
+    "t-bank-rub-to-ethereum-eth": "TCSBRUB_ETH",
+    "t-bank-rub-to-litecoin-ltc": "TCSBRUB_LTC",
+    "t-bank-rub-to-monero-xmr": "TCSBRUB_XMR",
+    "t-bank-rub-to-neo-neo": "TCSBRUB_NEO",
+    "t-bank-rub-to-solana-sol": "TCSBRUB_SOL",
+    "t-bank-rub-to-tron-trx": "TCSBRUB_TRX",
+    "t-bank-rub-to-dai-dai": "TCSBRUB_DAI",
+    "t-bank-rub-to-0x-zrx": "TCSBRUB_ZRX",
+    "t-bank-rub-to-tether-usdt-erc20": "TCSBRUB_USDTERC20",
+    "t-bank-rub-to-tether-usdt-trc20": "TCSBRUB_USDTTRC20",
+    "alpha-bank-rub-to-bitcoin-btc": "ACRUB_BTC",
+    "alpha-bank-rub-to-ethereum-eth": "ACRUB_ETH",
+    "alpha-bank-rub-to-litecoin-ltc": "ACRUB_LTC",
+    "alpha-bank-rub-to-monero-xmr": "ACRUB_XMR",
+    "alpha-bank-rub-to-neo-neo": "ACRUB_NEO",
+    "alpha-bank-rub-to-solana-sol": "ACRUB_SOL",
+    "alpha-bank-rub-to-tron-trx": "ACRUB_TRX",
+    "alpha-bank-rub-to-dai-dai": "ACRUB_DAI",
+    "alpha-bank-rub-to-0x-zrx": "ACRUB_ZRX",
+    "alpha-bank-rub-to-tether-usdt-erc20": "ACRUB_USDTERC20",
+    "alpha-bank-rub-to-tether-usdt-trc20": "ACRUB_USDTTRC20"
   },
   "cities": [
     {
-      "closest_cities": [
-        {
-          "en_name": "Gelendzhik",
-          "ru_name": "Геленджик"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "ANAPA",
         "AAQ",
@@ -1573,12 +407,7 @@
       "ru_name": "Адлер"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Maykop",
-          "ru_name": "Майкоп"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "SOCH",
         "SXI"
@@ -1663,12 +492,7 @@
       "ru_name": "Алма-Ата"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Rotterdam",
-          "ru_name": "Роттердам"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "AMST",
         "AMS"
@@ -1785,12 +609,7 @@
       "ru_name": "Антверпен"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Severodvinsk",
-          "ru_name": "Северодвинск"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "ARKH",
         "ARH",
@@ -1861,10 +680,6 @@
     },
     {
       "closest_cities": [
-        {
-          "en_name": "Orlando",
-          "ru_name": "Орландо"
-        },
         {
           "en_name": "Chicago",
           "ru_name": "Чикаго"
@@ -1943,12 +758,7 @@
       "ru_name": "Барнаул"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Shanghai",
-          "ru_name": "Шанхай"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "BEIJ",
         "PEK"
@@ -2000,12 +810,7 @@
       "ru_name": "Бангкок"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Stary-Oskol",
-          "ru_name": "Старый Оскол"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "BLGR",
         "BGO"
@@ -2040,12 +845,7 @@
       "ru_name": "Богота"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Delhi",
-          "ru_name": "Дели"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "MUM",
         "BOM"
@@ -2089,10 +889,6 @@
         {
           "en_name": "Tver",
           "ru_name": "Тверь"
-        },
-        {
-          "en_name": "Lyuban",
-          "ru_name": "Любань"
         }
       ],
       "codes": [
@@ -2177,12 +973,7 @@
       "ru_name": "Бразилиа"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Grodno",
-          "ru_name": "Гродно"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "BREST",
         "BQT"
@@ -2199,12 +990,7 @@
       "ru_name": "Брест"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Oryol",
-          "ru_name": "Орёл"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "BRN",
         "BRYK"
@@ -2426,12 +1212,7 @@
       "ru_name": "Чебаркуль"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Rybinsk",
-          "ru_name": "Рыбинск"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "CHRP",
         "CEE"
@@ -2505,12 +1286,7 @@
       "ru_name": "Чикаго"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Yoshkar-Ola",
-          "ru_name": "Йошкар-Ола"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "CHEB",
         "CSY"
@@ -2528,14 +1304,6 @@
     },
     {
       "closest_cities": [
-        {
-          "en_name": "Kropyvnytskyi",
-          "ru_name": "Кропивницкий"
-        },
-        {
-          "en_name": "Kremenchuk",
-          "ru_name": "Кременчуг"
-        },
         {
           "en_name": "Kyiv",
           "ru_name": "Киев"
@@ -2557,12 +1325,7 @@
       "ru_name": "Черкассы"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Ivano-Frankivsk",
-          "ru_name": "Ивано-Франковск"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "CHERN",
         "CWC"
@@ -2583,10 +1346,6 @@
         {
           "en_name": "Nizhnekamsk",
           "ru_name": "Нижнекамск"
-        },
-        {
-          "en_name": "Yelabuga",
-          "ru_name": "Елабуга"
         },
         {
           "en_name": "Kazan",
@@ -2626,20 +1385,7 @@
       "ru_name": "Копенгаген"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Kislovodsk",
-          "ru_name": "Кисловодск"
-        },
-        {
-          "en_name": "Yessentuki",
-          "ru_name": "Ессентуки"
-        },
-        {
-          "en_name": "Pyatigorsk",
-          "ru_name": "Пятигорск"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "CRK"
       ],
@@ -2655,12 +1401,7 @@
       "ru_name": "Черкесск"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Mumbai",
-          "ru_name": "Мумбаи"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "DLH",
         "DEL",
@@ -2726,12 +1467,7 @@
       "ru_name": "Дмитров"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Zaporozhye",
-          "ru_name": "Запорожье"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "DNK",
         "DNP"
@@ -2766,10 +1502,6 @@
     },
     {
       "closest_cities": [
-        {
-          "en_name": "Leipzig",
-          "ru_name": "Лейпциг"
-        },
         {
           "en_name": "Berlin",
           "ru_name": "Берлин"
@@ -2852,10 +1584,6 @@
         {
           "en_name": "Nizhny-Novgorod",
           "ru_name": "Нижний Новгород"
-        },
-        {
-          "en_name": "Murom",
-          "ru_name": "Муром"
         }
       ],
       "codes": [
@@ -2918,12 +1646,7 @@
       "ru_name": "Ейск"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Chelyabinsk",
-          "ru_name": "Челябинск"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "SVX"
       ],
@@ -3026,12 +1749,7 @@
       "ru_name": "Ереван"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Stavropol",
-          "ru_name": "Ставрополь"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "ESL",
         "ELST"
@@ -3048,16 +1766,7 @@
       "ru_name": "Элиста"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Pyatigorsk",
-          "ru_name": "Пятигорск"
-        },
-        {
-          "en_name": "Kislovodsk",
-          "ru_name": "Кисловодск"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "ESS",
         "YES"
@@ -3075,10 +1784,6 @@
     },
     {
       "closest_cities": [
-        {
-          "en_name": "Leipzig",
-          "ru_name": "Лейпциг"
-        },
         {
           "en_name": "Munich",
           "ru_name": "Мюнхен"
@@ -3104,10 +1809,6 @@
         {
           "en_name": "Pskov",
           "ru_name": "Псков"
-        },
-        {
-          "en_name": "Gatchina",
-          "ru_name": "Гатчина"
         }
       ],
       "codes": [
@@ -3126,12 +1827,7 @@
       "ru_name": "Гдов"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Anapa",
-          "ru_name": "Анапа"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "GLND",
         "GDZ",
@@ -3184,12 +1880,7 @@
       "ru_name": "Гомель"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Brest",
-          "ru_name": "Брест"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "GRDN",
         "GRN"
@@ -3210,10 +1901,6 @@
         {
           "en_name": "Grozny",
           "ru_name": "Грозный"
-        },
-        {
-          "en_name": "Nazran",
-          "ru_name": "Назрань"
         }
       ],
       "codes": [
@@ -3289,12 +1976,7 @@
       "ru_name": "Гуанчжоу"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Quito",
-          "ru_name": "Кито"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "GUAQ",
         "GYE"
@@ -3315,10 +1997,6 @@
         {
           "en_name": "Vladimir",
           "ru_name": "Владимир"
-        },
-        {
-          "en_name": "Shatura",
-          "ru_name": "Шатура"
         }
       ],
       "codes": [
@@ -3381,16 +2059,7 @@
       "ru_name": "Гонконг"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Surgut",
-          "ru_name": "Сургут"
-        },
-        {
-          "en_name": "Tobolsk",
-          "ru_name": "Тобольск"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "HMA",
         "KHMA"
@@ -3407,12 +2076,7 @@
       "ru_name": "Ханты-Мансийск"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Ternopil",
-          "ru_name": "Тернополь"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "HMJ",
         "KHM"
@@ -3484,10 +2148,6 @@
     {
       "closest_cities": [
         {
-          "en_name": "Ulan-Ude",
-          "ru_name": "Улан-Уде"
-        },
-        {
           "en_name": "Irkutsk",
           "ru_name": "Иркутск"
         }
@@ -3526,10 +2186,6 @@
     },
     {
       "closest_cities": [
-        {
-          "en_name": "Kostroma",
-          "ru_name": "Кострома"
-        },
         {
           "en_name": "Yaroslavl",
           "ru_name": "Ярославль"
@@ -3576,12 +2232,7 @@
       "ru_name": "Киев (Жуляны)"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Ternopil",
-          "ru_name": "Тернополь"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "IVFR",
         "IFO",
@@ -3730,12 +2381,7 @@
       "ru_name": "Джакарта"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Cheboksary",
-          "ru_name": "Чебоксары"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "YSH",
         "YOLA",
@@ -3770,16 +2416,7 @@
       "ru_name": "Киев"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Tomsk",
-          "ru_name": "Томск"
-        },
-        {
-          "en_name": "Novokuznetsk",
-          "ru_name": "Новокузнецк"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "KEM",
         "KEJ",
@@ -3815,16 +2452,7 @@
       "ru_name": "Калининград"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Slaviansk",
-          "ru_name": "Славянск"
-        },
-        {
-          "en_name": "Severodonetsk",
-          "ru_name": "Северодонецк"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "KRAM",
         "KGO"
@@ -3858,12 +2486,7 @@
       "ru_name": "Хабаровск"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Nikolaev",
-          "ru_name": "Николаев"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "KHERS",
         "KHE",
@@ -3882,10 +2505,6 @@
     },
     {
       "closest_cities": [
-        {
-          "en_name": "Yoshkar-Ola",
-          "ru_name": "Йошкар-Ола"
-        },
         {
           "en_name": "Izhevsk",
           "ru_name": "Ижевск"
@@ -3907,16 +2526,7 @@
       "ru_name": "Киров"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Yessentuki",
-          "ru_name": "Ессентуки"
-        },
-        {
-          "en_name": "Pyatigorsk",
-          "ru_name": "Пятигорск"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "KIS",
         "KSL"
@@ -3968,12 +2578,7 @@
       "ru_name": "Красноярск"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Obninsk",
-          "ru_name": "Обнинск"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "KLG",
         "KLF"
@@ -3994,10 +2599,6 @@
         {
           "en_name": "Yaroslavl",
           "ru_name": "Ярославль"
-        },
-        {
-          "en_name": "Ivanovo",
-          "ru_name": "Иваново"
         }
       ],
       "codes": [
@@ -4048,12 +2649,7 @@
       "ru_name": "Караганда"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Kropyvnytskyi",
-          "ru_name": "Кропивницкий"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "KRMN",
         "KMC"
@@ -4093,14 +2689,6 @@
     },
     {
       "closest_cities": [
-        {
-          "en_name": "Cherkasy",
-          "ru_name": "Черкассы"
-        },
-        {
-          "en_name": "Kremenchuk",
-          "ru_name": "Кременчуг"
-        },
         {
           "en_name": "Krivoy-Rog",
           "ru_name": "Кривой Рог"
@@ -4174,10 +2762,6 @@
     {
       "closest_cities": [
         {
-          "en_name": "Veliky-Ustyug",
-          "ru_name": "Великий Устюг"
-        },
-        {
           "en_name": "Syktyvkar",
           "ru_name": "Сыктывкар"
         },
@@ -4236,16 +2820,7 @@
       "ru_name": "Куала-Лумпур"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Stary-Oskol",
-          "ru_name": "Старый Оскол"
-        },
-        {
-          "en_name": "Belgorod",
-          "ru_name": "Белгород"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "KURSK"
       ],
@@ -4283,10 +2858,6 @@
     },
     {
       "closest_cities": [
-        {
-          "en_name": "Abakan",
-          "ru_name": "Абакан"
-        },
         {
           "en_name": "Krasnoyarsk",
           "ru_name": "Красноярск"
@@ -4328,10 +2899,6 @@
         {
           "en_name": "Limassol",
           "ru_name": "Лимасол"
-        },
-        {
-          "en_name": "Paphos",
-          "ru_name": "Пафос"
         }
       ],
       "codes": [
@@ -4366,12 +2933,7 @@
       "ru_name": "Лос-Анджелес"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Moscow",
-          "ru_name": "Москва"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "SPB",
         "LED"
@@ -4464,12 +3026,7 @@
       "ru_name": "Лениногорск"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Bryansk",
-          "ru_name": "Брянск"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "LNX"
       ],
@@ -4506,10 +3063,6 @@
         {
           "en_name": "Moscow",
           "ru_name": "Москва"
-        },
-        {
-          "en_name": "Mytishchi",
-          "ru_name": "Мытищи"
         }
       ],
       "codes": [
@@ -4530,10 +3083,6 @@
     {
       "closest_cities": [
         {
-          "en_name": "Severodonetsk",
-          "ru_name": "Северодонецк"
-        },
-        {
           "en_name": "Donetsk",
           "ru_name": "Донецк"
         }
@@ -4553,12 +3102,7 @@
       "ru_name": "Луганск"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Rivne",
-          "ru_name": "Ровно"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "LUT"
       ],
@@ -4578,10 +3122,6 @@
         {
           "en_name": "Los-Angeles",
           "ru_name": "Лос-Анджелес"
-        },
-        {
-          "en_name": "San-Francisco",
-          "ru_name": "Сан-Франциско"
         }
       ],
       "codes": [
@@ -4603,10 +3143,6 @@
         {
           "en_name": "Novorossiysk",
           "ru_name": "Новороссийск"
-        },
-        {
-          "en_name": "Gatchina",
-          "ru_name": "Гатчина"
         }
       ],
       "codes": [
@@ -4625,10 +3161,6 @@
     },
     {
       "closest_cities": [
-        {
-          "en_name": "Dresden",
-          "ru_name": "Дрезден"
-        },
         {
           "en_name": "Berlin",
           "ru_name": "Берлин"
@@ -4722,10 +3254,6 @@
           "ru_name": "Запорожье"
         },
         {
-          "en_name": "Mariupol",
-          "ru_name": "Мариуполь"
-        },
-        {
           "en_name": "Dnepr",
           "ru_name": "Днепр"
         }
@@ -4747,10 +3275,6 @@
     {
       "closest_cities": [
         {
-          "en_name": "Vitebsk",
-          "ru_name": "Витебск"
-        },
-        {
           "en_name": "Gomel",
           "ru_name": "Гомель"
         }
@@ -4771,16 +3295,7 @@
       "ru_name": "Могилев"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Miass",
-          "ru_name": "Миасс"
-        },
-        {
-          "en_name": "Zlatoust",
-          "ru_name": "Златоуст"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "MAGN",
         "MQF"
@@ -4833,10 +3348,6 @@
     {
       "closest_cities": [
         {
-          "en_name": "Zlatoust",
-          "ru_name": "Златоуст"
-        },
-        {
           "en_name": "Chelyabinsk",
           "ru_name": "Челябинск"
         }
@@ -4858,16 +3369,8 @@
     {
       "closest_cities": [
         {
-          "en_name": "Lensk",
-          "ru_name": "Ленск"
-        },
-        {
           "en_name": "Yakutsk",
           "ru_name": "Якутск"
-        },
-        {
-          "en_name": "Tynda",
-          "ru_name": "Тында"
         }
       ],
       "codes": [
@@ -4929,12 +3432,7 @@
       "ru_name": "Малага"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Severodvinsk",
-          "ru_name": "Северодвинск"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "MURM",
         "MMK",
@@ -5020,12 +3518,7 @@
       "ru_name": "Монтевидео"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Saint-Petersburg",
-          "ru_name": "Санкт-Петербург"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "MSK",
         "MOS",
@@ -5123,10 +3616,6 @@
         {
           "en_name": "Moscow",
           "ru_name": "Москва"
-        },
-        {
-          "en_name": "Lyubertsy",
-          "ru_name": "Люберцы"
         }
       ],
       "codes": [
@@ -5161,16 +3650,7 @@
       "ru_name": "Мюнхен"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Dzerzhinsk",
-          "ru_name": "Дзержинск"
-        },
-        {
-          "en_name": "Vladimir",
-          "ru_name": "Владимир"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "MUO"
       ],
@@ -5208,12 +3688,7 @@
       "ru_name": "Майкоп"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Kherson",
-          "ru_name": "Херсон"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "MYKL"
       ],
@@ -5229,16 +3704,7 @@
       "ru_name": "Николаев"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Pyatigorsk",
-          "ru_name": "Пятигорск"
-        },
-        {
-          "en_name": "Kislovodsk",
-          "ru_name": "Кисловодск"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "NAL"
       ],
@@ -5271,16 +3737,7 @@
       "ru_name": "Ницца"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Surgut",
-          "ru_name": "Сургут"
-        },
-        {
-          "en_name": "Khanty-Mansiysk",
-          "ru_name": "Ханты-Мансийск"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "NVT"
       ],
@@ -5324,14 +3781,6 @@
     {
       "closest_cities": [
         {
-          "en_name": "Vorkuta",
-          "ru_name": "Воркута"
-        },
-        {
-          "en_name": "Salekhard",
-          "ru_name": "Салехард"
-        },
-        {
           "en_name": "Arkhangelsk",
           "ru_name": "Архангельск"
         }
@@ -5370,12 +3819,7 @@
       "ru_name": "Новороссийск"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Kemerovo",
-          "ru_name": "Кемерово"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "NVK",
         "NQZ",
@@ -5453,12 +3897,7 @@
       "ru_name": "Нижний Тагил"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Surgut",
-          "ru_name": "Сургут"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "NUX"
       ],
@@ -5494,14 +3933,6 @@
         {
           "en_name": "Novy-Urengoy",
           "ru_name": "Новый Уренгой"
-        },
-        {
-          "en_name": "Salekhard",
-          "ru_name": "Салехард"
-        },
-        {
-          "en_name": "Vorkuta",
-          "ru_name": "Воркута"
         }
       ],
       "codes": [
@@ -5535,16 +3966,7 @@
       "ru_name": "Нижнекамск"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Kaluga",
-          "ru_name": "Калуга"
-        },
-        {
-          "en_name": "Podolsk",
-          "ru_name": "Подольск"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "OBN"
       ],
@@ -5560,12 +3982,7 @@
       "ru_name": "Обнинск"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Bryansk",
-          "ru_name": "Брянск"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "OEL"
       ],
@@ -5581,12 +3998,7 @@
       "ru_name": "Орёл"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Grozny",
-          "ru_name": "Грозный"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "VLK",
         "OGZ"
@@ -5653,12 +4065,7 @@
       "ru_name": "Оренбург"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Atlanta",
-          "ru_name": "Атланта"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "ORLND"
       ],
@@ -5743,10 +4150,6 @@
           "ru_name": "Монреаль"
         },
         {
-          "en_name": "Vancouver",
-          "ru_name": "Ванкувер"
-        },
-        {
           "en_name": "Toronto",
           "ru_name": "Торонто"
         }
@@ -5766,16 +4169,7 @@
       "ru_name": "Оттава"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Lyubertsy",
-          "ru_name": "Люберцы"
-        },
-        {
-          "en_name": "Mytishchi",
-          "ru_name": "Мытищи"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "OZH"
       ],
@@ -5795,10 +4189,6 @@
         {
           "en_name": "Limassol",
           "ru_name": "Лимасол"
-        },
-        {
-          "en_name": "Larnaca",
-          "ru_name": "Ларнака"
         }
       ],
       "codes": [
@@ -5909,12 +4299,7 @@
       "ru_name": "Филадельфия"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Komsomolsk-on-Amur",
-          "ru_name": "Комсомольск-на-Амуре"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "PKC"
       ],
@@ -5964,12 +4349,7 @@
       "ru_name": "Прага"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Yessentuki",
-          "ru_name": "Ессентуки"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "PYTG",
         "PYA",
@@ -5988,10 +4368,6 @@
     },
     {
       "closest_cities": [
-        {
-          "en_name": "Lyubertsy",
-          "ru_name": "Люберцы"
-        },
         {
           "en_name": "Moscow",
           "ru_name": "Москва"
@@ -6016,14 +4392,6 @@
         {
           "en_name": "Montreal",
           "ru_name": "Монреаль"
-        },
-        {
-          "en_name": "Vancouver",
-          "ru_name": "Ванкувер"
-        },
-        {
-          "en_name": "Ottawa",
-          "ru_name": "Оттава"
         }
       ],
       "codes": [
@@ -6041,12 +4409,7 @@
       "ru_name": "Квебек"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Guayaquil",
-          "ru_name": "Гуаякиль"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "QUITO"
       ],
@@ -6126,12 +4489,7 @@
       "ru_name": "Рио-де-Жанейро"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Lutsk",
-          "ru_name": "Луцк"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "RIVNE"
       ],
@@ -6165,12 +4523,7 @@
       "ru_name": "Рим"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Taganrog",
-          "ru_name": "Таганрог"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "RST"
       ],
@@ -6186,12 +4539,7 @@
       "ru_name": "Ростов"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Amsterdam",
-          "ru_name": "Амстердам"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "RTR",
         "RTRD"
@@ -6208,12 +4556,7 @@
       "ru_name": "Роттердам"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Penza",
-          "ru_name": "Пенза"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "SRTV",
         "SAR",
@@ -6235,10 +4578,6 @@
         {
           "en_name": "Yaroslavl",
           "ru_name": "Ярославль"
-        },
-        {
-          "en_name": "Kostroma",
-          "ru_name": "Кострома"
         }
       ],
       "codes": [
@@ -6306,12 +4645,7 @@
       "ru_name": "Сан-Паулу"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Kirov",
-          "ru_name": "Киров"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "SYKT",
         "SYK",
@@ -6329,12 +4663,7 @@
       "ru_name": "Сыктывкар"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "San-Francisco",
-          "ru_name": "Сан-Франциско"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "SEAT",
         "SEA"
@@ -6406,12 +4735,7 @@
       "ru_name": "Сан-Франциско"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Khanty-Mansiysk",
-          "ru_name": "Ханты-Мансийск"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "SGT",
         "SGC"
@@ -6428,12 +4752,7 @@
       "ru_name": "Сургут"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Beijing",
-          "ru_name": "Пекин"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "SHG",
         "SHA"
@@ -6479,10 +4798,6 @@
         {
           "en_name": "Orekhovo-Zuyevo",
           "ru_name": "Орехово-Зуево"
-        },
-        {
-          "en_name": "Gus-Khrustalny",
-          "ru_name": "Гусь-Хрустальный"
         },
         {
           "en_name": "Vladimir",
@@ -6627,16 +4942,7 @@
       "ru_name": "Соль-Илецк"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Kramatorsk",
-          "ru_name": "Краматорск"
-        },
-        {
-          "en_name": "Severodonetsk",
-          "ru_name": "Северодонецк"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "SLV"
       ],
@@ -6653,14 +4959,6 @@
     },
     {
       "closest_cities": [
-        {
-          "en_name": "Vorkuta",
-          "ru_name": "Воркута"
-        },
-        {
-          "en_name": "Nadym",
-          "ru_name": "Надым"
-        },
         {
           "en_name": "Novy-Urengoy",
           "ru_name": "Новый Уренгой"
@@ -6681,12 +4979,7 @@
       "ru_name": "Салехард"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Cherkessk",
-          "ru_name": "Черкесск"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "STAV",
         "STW"
@@ -6721,12 +5014,7 @@
       "ru_name": "Стокгольм"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Belgorod",
-          "ru_name": "Белгород"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "STOS"
       ],
@@ -6774,16 +5062,7 @@
       "ru_name": "Сумы"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Slaviansk",
-          "ru_name": "Славянск"
-        },
-        {
-          "en_name": "Kramatorsk",
-          "ru_name": "Краматорск"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "SVDN"
       ],
@@ -6799,12 +5078,7 @@
       "ru_name": "Северодонецк"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Arkhangelsk",
-          "ru_name": "Архангельск"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "SVM"
       ],
@@ -6895,12 +5169,7 @@
       "ru_name": "Тегеран"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Ivano-Frankivsk",
-          "ru_name": "Ивано-Франковск"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "TERNO"
       ],
@@ -6971,10 +5240,6 @@
         {
           "en_name": "Tyumen",
           "ru_name": "Тюмень"
-        },
-        {
-          "en_name": "Khanty-Mansiysk",
-          "ru_name": "Ханты-Мансийск"
         }
       ],
       "codes": [
@@ -6992,12 +5257,7 @@
       "ru_name": "Тобольск"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Kemerovo",
-          "ru_name": "Кемерово"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "TOM",
         "TOF"
@@ -7103,12 +5363,7 @@
       "ru_name": "Тунис"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Mytishchi",
-          "ru_name": "Мытищи"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "TVE"
       ],
@@ -7155,16 +5410,8 @@
     {
       "closest_cities": [
         {
-          "en_name": "Mirny",
-          "ru_name": "Мирный"
-        },
-        {
           "en_name": "Yakutsk",
           "ru_name": "Якутск"
-        },
-        {
-          "en_name": "Tynda",
-          "ru_name": "Тында"
         }
       ],
       "codes": [
@@ -7212,10 +5459,6 @@
         {
           "en_name": "Irkutsk",
           "ru_name": "Иркутск"
-        },
-        {
-          "en_name": "Chita",
-          "ru_name": "Чита"
         }
       ],
       "codes": [
@@ -7311,12 +5554,7 @@
       "ru_name": "Вильнюс"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Khmelnitsky",
-          "ru_name": "Хмельницкий"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "VIN"
       ],
@@ -7332,20 +5570,7 @@
       "ru_name": "Винница"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Salekhard",
-          "ru_name": "Салехард"
-        },
-        {
-          "en_name": "Nadym",
-          "ru_name": "Надым"
-        },
-        {
-          "en_name": "Naryan-Mar",
-          "ru_name": "Нарьян-Мар"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "VKT"
       ],
@@ -7395,12 +5620,7 @@
       "ru_name": "Волгоград"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Mogilev",
-          "ru_name": "Могилев"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "VTB"
       ],
@@ -7417,10 +5637,6 @@
     },
     {
       "closest_cities": [
-        {
-          "en_name": "Kotlas",
-          "ru_name": "Котлас"
-        },
         {
           "en_name": "Syktyvkar",
           "ru_name": "Сыктывкар"
@@ -7445,12 +5661,7 @@
       "ru_name": "Великий Устюг"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Khabarovsk",
-          "ru_name": "Хабаровск"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "VVO",
         "VLD"
@@ -7527,12 +5738,7 @@
       "ru_name": "Якутск"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Dnepr",
-          "ru_name": "Днепр"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "ZAP"
       ],
@@ -7548,12 +5754,7 @@
       "ru_name": "Запорожье"
     },
     {
-      "closest_cities": [
-        {
-          "en_name": "Vinnytsia",
-          "ru_name": "Винница"
-        }
-      ],
+      "closest_cities": [],
       "codes": [
         "ZHYTO"
       ],
@@ -7570,10 +5771,6 @@
     },
     {
       "closest_cities": [
-        {
-          "en_name": "Miass",
-          "ru_name": "Миасс"
-        },
         {
           "en_name": "Chelyabinsk",
           "ru_name": "Челябинск"
@@ -7602,34 +5799,34 @@
       "ru_name": "биткойн",
       "subgroup_name": null,
       "currency": {
-        "id": "4",
+        "id": "3",
         "code": "btc",
-        "accuracy": 3
+        "accuracy": 5
       },
       "icon": {
-        "id": "107",
+        "id": "170",
         "alternativeText": null,
-        "url": "/uploads/btc_1df366f4b2.png"
+        "url": "/uploads/btc_7a55cef581.png"
       },
-      "color": "dark_yellow",
+      "color": "green",
       "popular_as": null,
       "section": "crypto"
     },
     {
-      "pm_group_id": "5",
+      "pm_group_id": "4",
       "code": "ETH",
       "en_name": "ethereum",
       "ru_name": "эфир",
       "subgroup_name": null,
       "currency": {
-        "id": "17",
+        "id": "4",
         "code": "eth",
-        "accuracy": 3
+        "accuracy": 4
       },
       "icon": {
-        "id": "127",
+        "id": "182",
         "alternativeText": null,
-        "url": "/uploads/eth_1b16a41767.png"
+        "url": "/uploads/eth_5d019bfe45.png"
       },
       "color": "dark_gray",
       "popular_as": null,
@@ -7637,539 +5834,59 @@
     },
     {
       "pm_group_id": "7",
-      "code": "SOL",
-      "en_name": "solana",
-      "ru_name": "солана",
+      "code": "LTC",
+      "en_name": "litecoin",
+      "ru_name": "лайткойн",
       "subgroup_name": null,
       "currency": {
-        "id": "30",
-        "code": "sol",
-        "accuracy": 3
-      },
-      "icon": {
-        "id": "165",
-        "alternativeText": null,
-        "url": "/uploads/sol_a2e838843e.png"
-      },
-      "color": "dark_purple",
-      "popular_as": null,
-      "section": "crypto"
-    },
-    {
-      "pm_group_id": "17",
-      "code": "ZRX",
-      "en_name": "0x",
-      "ru_name": "0x",
-      "subgroup_name": null,
-      "currency": {
-        "id": "31",
-        "code": "zrx",
+        "id": "12",
+        "code": "ltc",
         "accuracy": 2
       },
       "icon": {
-        "id": "182",
+        "id": "200",
         "alternativeText": null,
-        "url": "/uploads/zrx_da0bc46e6e.png"
+        "url": "/uploads/ltc_9ac63f1939.png"
       },
-      "color": "dark_gray",
+      "color": "gray",
       "popular_as": null,
       "section": "crypto"
     },
     {
-      "pm_group_id": "18",
-      "code": "ZEC",
-      "en_name": "Zcash",
-      "ru_name": "Zcash",
-      "subgroup_name": null,
-      "currency": {
-        "id": "9",
-        "code": "zec",
-        "accuracy": 4
-      },
-      "icon": {
-        "id": "173",
-        "alternativeText": null,
-        "url": "/uploads/zec_32edc84bb6.png"
-      },
-      "color": "yellow",
-      "popular_as": null,
-      "section": "crypto"
-    },
-    {
-      "pm_group_id": "19",
+      "pm_group_id": "5",
       "code": "XMR",
-      "en_name": "Monero",
-      "ru_name": "Монеро",
+      "en_name": "monero",
+      "ru_name": "монеро",
       "subgroup_name": null,
       "currency": {
-        "id": "18",
+        "id": "10",
         "code": "xmr",
         "accuracy": 2
       },
       "icon": {
-        "id": "180",
+        "id": "242",
         "alternativeText": null,
-        "url": "/uploads/xmr_945ff1588c.png"
+        "url": "/uploads/xmr_8fc6192098.png"
       },
       "color": "dark_orange",
       "popular_as": null,
       "section": "crypto"
     },
     {
-      "pm_group_id": "20",
-      "code": "XLM",
-      "en_name": "Stellar",
-      "ru_name": "Стеллар",
-      "subgroup_name": null,
-      "currency": {
-        "id": "25",
-        "code": "xlm",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "178",
-        "alternativeText": null,
-        "url": "/uploads/xlm_5637e5c2b3.png"
-      },
-      "color": "gray",
-      "popular_as": null,
-      "section": "crypto"
-    },
-    {
-      "pm_group_id": "26",
-      "code": "TON",
-      "en_name": "Toncoin",
-      "ru_name": "Toncoin",
-      "subgroup_name": null,
-      "currency": {
-        "id": "32",
-        "code": "ton",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "159",
-        "alternativeText": null,
-        "url": "/uploads/ton_842f53f4ef.png"
-      },
-      "color": "blue",
-      "popular_as": null,
-      "section": "crypto"
-    },
-    {
-      "pm_group_id": "34",
-      "code": "TRX",
-      "en_name": "Tron",
-      "ru_name": "Трон",
-      "subgroup_name": null,
-      "currency": {
-        "id": "36",
-        "code": "trx",
-        "accuracy": 0
-      },
-      "icon": {
-        "id": "158",
-        "alternativeText": null,
-        "url": "/uploads/trx_fe3ae04bc7.png"
-      },
-      "color": "dark_red",
-      "popular_as": null,
-      "section": "crypto"
-    },
-    {
-      "pm_group_id": "37",
-      "code": "SHIB",
-      "en_name": "Shiba Inu",
-      "ru_name": "Шиба Ину",
-      "subgroup_name": null,
-      "currency": {
-        "id": "39",
-        "code": "shib",
-        "accuracy": 0
-      },
-      "icon": {
-        "id": "157",
-        "alternativeText": null,
-        "url": "/uploads/shib_2209eaf439.png"
-      },
-      "color": "orange",
-      "popular_as": null,
-      "section": "crypto"
-    },
-    {
-      "pm_group_id": "36",
-      "code": "TUSD",
-      "en_name": "TrueUSD",
-      "ru_name": "TrueUSD",
-      "subgroup_name": null,
-      "currency": {
-        "id": "38",
-        "code": "tusd",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "156",
-        "alternativeText": null,
-        "url": "/uploads/tusd_268dd5ce53.png"
-      },
-      "color": "dark_blue",
-      "popular_as": null,
-      "section": "crypto"
-    },
-    {
-      "pm_group_id": "35",
-      "code": "USDC",
-      "en_name": "USD Coin",
-      "ru_name": "USD Coin",
-      "subgroup_name": null,
-      "currency": {
-        "id": "37",
-        "code": "usdc",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "171",
-        "alternativeText": null,
-        "url": "/uploads/usdc_f5c5d70d81.png"
-      },
-      "color": "dark_blue",
-      "popular_as": null,
-      "section": "crypto"
-    },
-    {
-      "pm_group_id": "39",
-      "code": "LTC",
-      "en_name": "Litecoin",
-      "ru_name": "Лайткойн",
-      "subgroup_name": null,
-      "currency": {
-        "id": "8",
-        "code": "ltc",
-        "accuracy": 1
-      },
-      "icon": {
-        "id": "146",
-        "alternativeText": null,
-        "url": "/uploads/ltc_72306a5804.png"
-      },
-      "color": "dark_gray",
-      "popular_as": null,
-      "section": "crypto"
-    },
-    {
-      "pm_group_id": "38",
-      "code": "USDP",
-      "en_name": "Paxos",
-      "ru_name": "Paxos",
-      "subgroup_name": null,
-      "currency": {
-        "id": "40",
-        "code": "usdp",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "153",
-        "alternativeText": null,
-        "url": "/uploads/paxos_a83e7627cf.png"
-      },
-      "color": "green",
-      "popular_as": null,
-      "section": "crypto"
-    },
-    {
-      "pm_group_id": "40",
+      "pm_group_id": "9",
       "code": "NEO",
-      "en_name": "NEO",
-      "ru_name": "NEO",
+      "en_name": "neo",
+      "ru_name": "нео",
       "subgroup_name": null,
       "currency": {
-        "id": "6",
+        "id": "23",
         "code": "neo",
-        "accuracy": 0
+        "accuracy": 5
       },
       "icon": {
-        "id": "136",
+        "id": "204",
         "alternativeText": null,
-        "url": "/uploads/neo_a986e204f2.png"
-      },
-      "color": "teal",
-      "popular_as": null,
-      "section": "crypto"
-    },
-    {
-      "pm_group_id": "44",
-      "code": "ADA",
-      "en_name": "Cardano",
-      "ru_name": "Cardano",
-      "subgroup_name": null,
-      "currency": {
-        "id": "13",
-        "code": "ada",
-        "accuracy": 0
-      },
-      "icon": {
-        "id": "104",
-        "alternativeText": null,
-        "url": "/uploads/ada_45c5e888e3.png"
-      },
-      "color": "dark_blue",
-      "popular_as": null,
-      "section": "crypto"
-    },
-    {
-      "pm_group_id": "45",
-      "code": "EOS",
-      "en_name": "EOS",
-      "ru_name": "EOS",
-      "subgroup_name": null,
-      "currency": {
-        "id": "22",
-        "code": "eos",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "120",
-        "alternativeText": null,
-        "url": "/uploads/eos_705556fada.png"
-      },
-      "color": "dark_gray",
-      "popular_as": null,
-      "section": "crypto"
-    },
-    {
-      "pm_group_id": "46",
-      "code": "XRP",
-      "en_name": "Ripple",
-      "ru_name": "Ripple",
-      "subgroup_name": null,
-      "currency": {
-        "id": "7",
-        "code": "xrp",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "181",
-        "alternativeText": null,
-        "url": "/uploads/xrp_d46f9d1917.png"
-      },
-      "color": "gray",
-      "popular_as": null,
-      "section": "crypto"
-    },
-    {
-      "pm_group_id": "47",
-      "code": "UNI",
-      "en_name": "Uniswap",
-      "ru_name": "Uniswap",
-      "subgroup_name": null,
-      "currency": {
-        "id": "24",
-        "code": "uni",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "174",
-        "alternativeText": null,
-        "url": "/uploads/uni_985268cae2.png"
-      },
-      "color": "dark_pink",
-      "popular_as": null,
-      "section": "crypto"
-    },
-    {
-      "pm_group_id": "48",
-      "code": "DOT",
-      "en_name": "Polkadot",
-      "ru_name": "Polkadot",
-      "subgroup_name": null,
-      "currency": {
-        "id": "14",
-        "code": "dot",
-        "accuracy": 0
-      },
-      "icon": {
-        "id": "115",
-        "alternativeText": null,
-        "url": "/uploads/dot_1cfe63ad2a.png"
-      },
-      "color": "dark_pink",
-      "popular_as": null,
-      "section": "crypto"
-    },
-    {
-      "pm_group_id": "49",
-      "code": "DOGE",
-      "en_name": "Dogecoin",
-      "ru_name": "Dogecoin",
-      "subgroup_name": null,
-      "currency": {
-        "id": "46",
-        "code": "doge",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "167",
-        "alternativeText": null,
-        "url": "/uploads/xdg_afeba9b6ae.png"
-      },
-      "color": "orange",
-      "popular_as": null,
-      "section": "crypto"
-    },
-    {
-      "pm_group_id": "50",
-      "code": "ETC",
-      "en_name": "Classic",
-      "ru_name": "Classic",
-      "subgroup_name": null,
-      "currency": {
-        "id": "19",
-        "code": "etc",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "110",
-        "alternativeText": null,
-        "url": "/uploads/etc_f5689a9149.png"
-      },
-      "color": "green",
-      "popular_as": null,
-      "section": "crypto"
-    },
-    {
-      "pm_group_id": "51",
-      "code": "DAI",
-      "en_name": "DAI",
-      "ru_name": "DAI",
-      "subgroup_name": null,
-      "currency": {
-        "id": "45",
-        "code": "dai",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "119",
-        "alternativeText": null,
-        "url": "/uploads/dai_c9dbbd14fc.png"
-      },
-      "color": "orange",
-      "popular_as": null,
-      "section": "crypto"
-    },
-    {
-      "pm_group_id": "53",
-      "code": "BNB",
-      "en_name": "Binance",
-      "ru_name": "Binance",
-      "subgroup_name": null,
-      "currency": {
-        "id": "3",
-        "code": "bnb",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "101",
-        "alternativeText": null,
-        "url": "/uploads/bnb_0a2c42bbe1.png"
-      },
-      "color": "dark_yellow",
-      "popular_as": null,
-      "section": "crypto"
-    },
-    {
-      "pm_group_id": "55",
-      "code": "BCH",
-      "en_name": "Bitcoin Cash",
-      "ru_name": "Bitcoin Cash",
-      "subgroup_name": null,
-      "currency": {
-        "id": "41",
-        "code": "bch",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "108",
-        "alternativeText": null,
-        "url": "/uploads/bch_440b9c1f0a.png"
-      },
-      "color": "green",
-      "popular_as": null,
-      "section": "crypto"
-    },
-    {
-      "pm_group_id": "54",
-      "code": "BTG",
-      "en_name": "Bitcoin Gold",
-      "ru_name": "Bitcoin Gold",
-      "subgroup_name": null,
-      "currency": {
-        "id": "42",
-        "code": "btg",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "109",
-        "alternativeText": null,
-        "url": "/uploads/btg_d60ff943da.png"
-      },
-      "color": "dark_blue",
-      "popular_as": null,
-      "section": "crypto"
-    },
-    {
-      "pm_group_id": "56",
-      "code": "DASH",
-      "en_name": "Dash",
-      "ru_name": "Dash",
-      "subgroup_name": null,
-      "currency": {
-        "id": "44",
-        "code": "dash",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "117",
-        "alternativeText": null,
-        "url": "/uploads/dash_99b0f9b88a.png"
-      },
-      "color": "dark_blue",
-      "popular_as": null,
-      "section": "crypto"
-    },
-    {
-      "pm_group_id": "57",
-      "code": "USDTERC20",
-      "en_name": "Tether",
-      "ru_name": "Тезер",
-      "subgroup_name": "ERC20",
-      "currency": {
-        "id": "12",
-        "code": "usdt",
-        "accuracy": 0
-      },
-      "icon": {
-        "id": "168",
-        "alternativeText": null,
-        "url": "/uploads/usdt_fef4058e01.png"
-      },
-      "color": "dark_teal",
-      "popular_as": null,
-      "section": "crypto"
-    },
-    {
-      "pm_group_id": "57",
-      "code": "USDTTRC20",
-      "en_name": "Tether",
-      "ru_name": "Тезер",
-      "subgroup_name": "TRC20",
-      "currency": {
-        "id": "12",
-        "code": "usdt",
-        "accuracy": 0
-      },
-      "icon": {
-        "id": "168",
-        "alternativeText": null,
-        "url": "/uploads/usdt_fef4058e01.png"
+        "url": "/uploads/neo_88f6d8df1f.png"
       },
       "color": "dark_teal",
       "popular_as": null,
@@ -8177,463 +5894,123 @@
     },
     {
       "pm_group_id": "3",
-      "code": "SBERRUB",
-      "en_name": "sber",
-      "ru_name": "сбер",
+      "code": "SOL",
+      "en_name": "solana",
+      "ru_name": "солана",
       "subgroup_name": null,
       "currency": {
-        "id": "2",
-        "code": "rub",
-        "accuracy": 0
+        "id": "17",
+        "code": "sol",
+        "accuracy": 3
       },
       "icon": {
-        "id": "177",
+        "id": "224",
         "alternativeText": null,
-        "url": "/uploads/sber_e137396006.png"
+        "url": "/uploads/sol_4cb421e97c.png"
       },
-      "color": "green",
+      "color": "dark_purple",
       "popular_as": null,
-      "section": "bank"
-    },
-    {
-      "pm_group_id": "8",
-      "code": "TCSBRUB",
-      "en_name": "T-Bank",
-      "ru_name": "Т-Банк",
-      "subgroup_name": null,
-      "currency": {
-        "id": "2",
-        "code": "rub",
-        "accuracy": 0
-      },
-      "icon": {
-        "id": "166",
-        "alternativeText": null,
-        "url": "/uploads/tcsb_f978136f39.png"
-      },
-      "color": "yellow",
-      "popular_as": null,
-      "section": "bank"
+      "section": "crypto"
     },
     {
       "pm_group_id": "10",
-      "code": "GPBRUB",
-      "en_name": "Gazprom",
-      "ru_name": "Газпром",
+      "code": "TRX",
+      "en_name": "tron",
+      "ru_name": "трон",
       "subgroup_name": null,
       "currency": {
-        "id": "2",
-        "code": "rub",
-        "accuracy": 0
+        "id": "26",
+        "code": "trx",
+        "accuracy": 2
       },
       "icon": {
-        "id": "123",
+        "id": "230",
         "alternativeText": null,
-        "url": "/uploads/gazprom_06a792b98b.png"
+        "url": "/uploads/trx_3fb0dc7869.png"
       },
-      "color": "dark_blue",
+      "color": "dark_red",
       "popular_as": null,
-      "section": "bank"
+      "section": "crypto"
     },
     {
       "pm_group_id": "11",
-      "code": "SBPRUB",
-      "en_name": "SBP",
-      "ru_name": "СБП",
+      "code": "DAI",
+      "en_name": "DAI",
+      "ru_name": null,
       "subgroup_name": null,
       "currency": {
-        "id": "2",
-        "code": "rub",
-        "accuracy": 0
+        "id": "14",
+        "code": "dai",
+        "accuracy": 2
       },
       "icon": {
-        "id": "148",
+        "id": "173",
         "alternativeText": null,
-        "url": "/uploads/sbp_94d7a16051.png"
+        "url": "/uploads/dai_131b272fb4.png"
       },
-      "color": "blue",
+      "color": "yellow",
       "popular_as": null,
-      "section": "bank"
+      "section": "crypto"
     },
     {
-      "pm_group_id": "12",
-      "code": "ACRUB",
-      "en_name": "Alfa-Bank",
-      "ru_name": "Альфа-банк",
+      "pm_group_id": "6",
+      "code": "ZRX",
+      "en_name": "0x",
+      "ru_name": null,
       "subgroup_name": null,
       "currency": {
-        "id": "2",
-        "code": "rub",
-        "accuracy": 0
+        "id": "21",
+        "code": "zrx",
+        "accuracy": 4
       },
       "icon": {
-        "id": "105",
+        "id": "245",
         "alternativeText": null,
-        "url": "/uploads/ac_e0d3d3330a.png"
+        "url": "/uploads/zrx_e7686c4f50.png"
       },
-      "color": "dark_red",
+      "color": "gray",
       "popular_as": null,
-      "section": "bank"
-    },
-    {
-      "pm_group_id": "13",
-      "code": "PSBRUB",
-      "en_name": "PSB",
-      "ru_name": "ПСБ",
-      "subgroup_name": null,
-      "currency": {
-        "id": "2",
-        "code": "rub",
-        "accuracy": 0
-      },
-      "icon": {
-        "id": "143",
-        "alternativeText": null,
-        "url": "/uploads/psb_9aa393241c.png"
-      },
-      "color": "dark_blue",
-      "popular_as": null,
-      "section": "bank"
+      "section": "crypto"
     },
     {
       "pm_group_id": "14",
-      "code": "POSTBRUB",
-      "en_name": "Pochta Bank",
-      "ru_name": "Почта Банк",
-      "subgroup_name": null,
+      "code": "USDTERC20",
+      "en_name": "tether",
+      "ru_name": "тезер",
+      "subgroup_name": "ERC20",
       "currency": {
-        "id": "2",
-        "code": "rub",
+        "id": "25",
+        "code": "usdt",
         "accuracy": 0
       },
       "icon": {
-        "id": "145",
+        "id": "231",
         "alternativeText": null,
-        "url": "/uploads/postb_bcb78ec801.png"
+        "url": "/uploads/usdt_b1ccbfeb95.png"
       },
-      "color": "pink",
+      "color": "dark_teal",
       "popular_as": null,
-      "section": "bank"
+      "section": "crypto"
     },
     {
-      "pm_group_id": "15",
-      "code": "RSHBRUB",
-      "en_name": "Rosselhoz",
-      "ru_name": "Россельхоз",
-      "subgroup_name": null,
+      "pm_group_id": "14",
+      "code": "USDTTRC20",
+      "en_name": "tether",
+      "ru_name": "тезер",
+      "subgroup_name": "TRC20",
       "currency": {
-        "id": "2",
-        "code": "rub",
+        "id": "25",
+        "code": "usdt",
         "accuracy": 0
       },
       "icon": {
-        "id": "187",
+        "id": "231",
         "alternativeText": null,
-        "url": "/uploads/RSHB_77f7b388a5.png"
+        "url": "/uploads/usdt_b1ccbfeb95.png"
       },
-      "color": "dark_green",
+      "color": "dark_teal",
       "popular_as": null,
-      "section": "bank"
-    },
-    {
-      "pm_group_id": "16",
-      "code": "ROSRUB",
-      "en_name": "Rosbank",
-      "ru_name": "Росбанк",
-      "subgroup_name": null,
-      "currency": {
-        "id": "2",
-        "code": "rub",
-        "accuracy": 0
-      },
-      "icon": {
-        "id": "152",
-        "alternativeText": null,
-        "url": "/uploads/ros_3e7c7ec9b7.png"
-      },
-      "color": "dark_pink",
-      "popular_as": null,
-      "section": "bank"
-    },
-    {
-      "pm_group_id": "31",
-      "code": "HLKBKZT",
-      "en_name": "Halyk",
-      "ru_name": "Halyk",
-      "subgroup_name": null,
-      "currency": {
-        "id": "35",
-        "code": "kzt",
-        "accuracy": 0
-      },
-      "icon": {
-        "id": "122",
-        "alternativeText": null,
-        "url": "/uploads/halyk_a097d658bd.png"
-      },
-      "color": "green",
-      "popular_as": null,
-      "section": "bank"
-    },
-    {
-      "pm_group_id": "32",
-      "code": "KSPBKZT",
-      "en_name": "Kaspi",
-      "ru_name": "Каспи",
-      "subgroup_name": null,
-      "currency": {
-        "id": "35",
-        "code": "kzt",
-        "accuracy": 0
-      },
-      "icon": {
-        "id": "129",
-        "alternativeText": null,
-        "url": "/uploads/kspb_334077f464.png"
-      },
-      "color": "dark_red",
-      "popular_as": null,
-      "section": "bank"
-    },
-    {
-      "pm_group_id": "32",
-      "code": "KSPBUSD",
-      "en_name": "Kaspi",
-      "ru_name": "Каспи",
-      "subgroup_name": null,
-      "currency": {
-        "id": "1",
-        "code": "usd",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "129",
-        "alternativeText": null,
-        "url": "/uploads/kspb_334077f464.png"
-      },
-      "color": "dark_red",
-      "popular_as": null,
-      "section": "bank"
-    },
-    {
-      "pm_group_id": "32",
-      "code": "KSPBEUR",
-      "en_name": "Kaspi",
-      "ru_name": "Каспи",
-      "subgroup_name": null,
-      "currency": {
-        "id": "10",
-        "code": "eur",
-        "accuracy": 0
-      },
-      "icon": {
-        "id": "129",
-        "alternativeText": null,
-        "url": "/uploads/kspb_334077f464.png"
-      },
-      "color": "dark_red",
-      "popular_as": null,
-      "section": "bank"
-    },
-    {
-      "pm_group_id": "33",
-      "code": "P24UAH",
-      "en_name": "Privat 24",
-      "ru_name": "Приват 24 ",
-      "subgroup_name": null,
-      "currency": {
-        "id": "26",
-        "code": "uah",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "147",
-        "alternativeText": null,
-        "url": "/uploads/p24_6531958ea9.png"
-      },
-      "color": "dark_green",
-      "popular_as": null,
-      "section": "bank"
-    },
-    {
-      "pm_group_id": "33",
-      "code": "P24USD",
-      "en_name": "Privat 24",
-      "ru_name": "Приват 24 ",
-      "subgroup_name": null,
-      "currency": {
-        "id": "1",
-        "code": "usd",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "147",
-        "alternativeText": null,
-        "url": "/uploads/p24_6531958ea9.png"
-      },
-      "color": "dark_green",
-      "popular_as": null,
-      "section": "bank"
-    },
-    {
-      "pm_group_id": "41",
-      "code": "OSDBUAH",
-      "en_name": "Oschadbank",
-      "ru_name": "Ощадбанк",
-      "subgroup_name": null,
-      "currency": {
-        "id": "26",
-        "code": "uah",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "140",
-        "alternativeText": null,
-        "url": "/uploads/oshad_5925ab26e0.png"
-      },
-      "color": "dark_green",
-      "popular_as": null,
-      "section": "bank"
-    },
-    {
-      "pm_group_id": "41",
-      "code": "OSDBUSD",
-      "en_name": "Oschadbank",
-      "ru_name": "Ощадбанк",
-      "subgroup_name": null,
-      "currency": {
-        "id": "1",
-        "code": "usd",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "140",
-        "alternativeText": null,
-        "url": "/uploads/oshad_5925ab26e0.png"
-      },
-      "color": "dark_green",
-      "popular_as": null,
-      "section": "bank"
-    },
-    {
-      "pm_group_id": "41",
-      "code": "OSDBEUR",
-      "en_name": "Oschadbank",
-      "ru_name": "Ощадбанк",
-      "subgroup_name": null,
-      "currency": {
-        "id": "10",
-        "code": "eur",
-        "accuracy": 0
-      },
-      "icon": {
-        "id": "140",
-        "alternativeText": null,
-        "url": "/uploads/oshad_5925ab26e0.png"
-      },
-      "color": "dark_green",
-      "popular_as": null,
-      "section": "bank"
-    },
-    {
-      "pm_group_id": "42",
-      "code": "PMBBUAH",
-      "en_name": "FUIB",
-      "ru_name": "ПУМБ",
-      "subgroup_name": null,
-      "currency": {
-        "id": "26",
-        "code": "uah",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "141",
-        "alternativeText": null,
-        "url": "/uploads/pumb_80c09b8914.png"
-      },
-      "color": "dark_red",
-      "popular_as": null,
-      "section": "bank"
-    },
-    {
-      "pm_group_id": "42",
-      "code": "PMBBUSD",
-      "en_name": "FUIB",
-      "ru_name": "ПУМБ",
-      "subgroup_name": null,
-      "currency": {
-        "id": "1",
-        "code": "usd",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "141",
-        "alternativeText": null,
-        "url": "/uploads/pumb_80c09b8914.png"
-      },
-      "color": "dark_red",
-      "popular_as": null,
-      "section": "bank"
-    },
-    {
-      "pm_group_id": "42",
-      "code": "PMBBEUR",
-      "en_name": "FUIB",
-      "ru_name": "ПУМБ",
-      "subgroup_name": null,
-      "currency": {
-        "id": "10",
-        "code": "eur",
-        "accuracy": 0
-      },
-      "icon": {
-        "id": "141",
-        "alternativeText": null,
-        "url": "/uploads/pumb_80c09b8914.png"
-      },
-      "color": "dark_red",
-      "popular_as": null,
-      "section": "bank"
-    },
-    {
-      "pm_group_id": "43",
-      "code": "RNKBRUB",
-      "en_name": "RNKB",
-      "ru_name": "РНКБ",
-      "subgroup_name": null,
-      "currency": {
-        "id": "2",
-        "code": "rub",
-        "accuracy": 0
-      },
-      "icon": {
-        "id": "155",
-        "alternativeText": null,
-        "url": "/uploads/rnkb_582ee084c5.png"
-      },
-      "color": "dark_cyan",
-      "popular_as": null,
-      "section": "bank"
-    },
-    {
-      "pm_group_id": "4",
-      "code": "CASHUSD",
-      "en_name": "cash",
-      "ru_name": "доллар",
-      "subgroup_name": null,
-      "currency": {
-        "id": "1",
-        "code": "usd",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "172",
-        "alternativeText": null,
-        "url": "/uploads/usd_476c2d0355.png"
-      },
-      "color": "dark_cyan",
-      "popular_as": null,
-      "section": "cash"
+      "section": "crypto"
     },
     {
       "pm_group_id": "2",
@@ -8647,253 +6024,113 @@
         "accuracy": 0
       },
       "icon": {
-        "id": "149",
+        "id": "218",
         "alternativeText": null,
-        "url": "/uploads/rub_51241f3c58.png"
+        "url": "/uploads/rub_1699b5f3e7.png"
       },
-      "color": "dark_cyan",
+      "color": "gray",
       "popular_as": null,
       "section": "cash"
     },
     {
-      "pm_group_id": "21",
-      "code": "CASHCNY",
+      "pm_group_id": "8",
+      "code": "CASHUSD",
       "en_name": "cash",
-      "ru_name": "йены",
+      "ru_name": "доллары",
       "subgroup_name": null,
       "currency": {
-        "id": "16",
-        "code": "cny",
+        "id": "1",
+        "code": "usd",
         "accuracy": null
       },
       "icon": {
-        "id": "175",
+        "id": "232",
         "alternativeText": null,
-        "url": "/uploads/yuan_d6b30cebae.png"
+        "url": "/uploads/usd_478f845d8e.png"
       },
-      "color": "dark_cyan",
+      "color": "gray",
       "popular_as": null,
       "section": "cash"
     },
     {
-      "pm_group_id": "22",
-      "code": "CASHUAH",
+      "pm_group_id": "15",
+      "code": "EUR",
       "en_name": "cash",
-      "ru_name": "гривна",
+      "ru_name": "евро",
       "subgroup_name": null,
       "currency": {
-        "id": "26",
-        "code": "uah",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "134",
-        "alternativeText": null,
-        "url": "/uploads/hryvnia_e91300f6f3.png"
-      },
-      "color": "dark_cyan",
-      "popular_as": null,
-      "section": "cash"
-    },
-    {
-      "pm_group_id": "27",
-      "code": "CASHAZN",
-      "en_name": "cash",
-      "ru_name": "манаты",
-      "subgroup_name": null,
-      "currency": {
-        "id": "28",
-        "code": "azn",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "103",
-        "alternativeText": null,
-        "url": "/uploads/azn_9232a0db5f.png"
-      },
-      "color": "dark_cyan",
-      "popular_as": null,
-      "section": "cash"
-    },
-    {
-      "pm_group_id": "28",
-      "code": "CASHGEL",
-      "en_name": "cash",
-      "ru_name": "лари",
-      "subgroup_name": null,
-      "currency": {
-        "id": "33",
-        "code": "gel",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "128",
-        "alternativeText": null,
-        "url": "/uploads/lari_63d47fdf7e.png"
-      },
-      "color": "dark_cyan",
-      "popular_as": null,
-      "section": "cash"
-    },
-    {
-      "pm_group_id": "29",
-      "code": "CASHTRY",
-      "en_name": "cash",
-      "ru_name": "лиры",
-      "subgroup_name": null,
-      "currency": {
-        "id": "27",
-        "code": "try",
-        "accuracy": 0
-      },
-      "icon": {
-        "id": "113",
-        "alternativeText": null,
-        "url": "/uploads/cashtry_747c796a9e.png"
-      },
-      "color": "dark_cyan",
-      "popular_as": null,
-      "section": "cash"
-    },
-    {
-      "pm_group_id": "30",
-      "code": "CASHGBP",
-      "en_name": "cash",
-      "ru_name": "фунт",
-      "subgroup_name": null,
-      "currency": {
-        "id": "34",
-        "code": "gbp",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "131",
-        "alternativeText": null,
-        "url": "/uploads/gbp_43a1ba45ac.png"
-      },
-      "color": "dark_cyan",
-      "popular_as": null,
-      "section": "cash"
-    },
-    {
-      "pm_group_id": "23",
-      "code": "WUUSD",
-      "en_name": "Western Union",
-      "ru_name": "Western Union",
-      "subgroup_name": null,
-      "currency": {
-        "id": "1",
-        "code": "usd",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "169",
-        "alternativeText": null,
-        "url": "/uploads/wu_2adcddb53f.png"
-      },
-      "color": "dark_yellow",
-      "popular_as": null,
-      "section": "transfer"
-    },
-    {
-      "pm_group_id": "23",
-      "code": "WUEUR",
-      "en_name": "Western Union",
-      "ru_name": "Western Union",
-      "subgroup_name": null,
-      "currency": {
-        "id": "10",
+        "id": "6",
         "code": "eur",
+        "accuracy": null
+      },
+      "icon": {
+        "id": "184",
+        "alternativeText": null,
+        "url": "/uploads/eur_3df8e5f4f1.png"
+      },
+      "color": "gray",
+      "popular_as": null,
+      "section": "cash"
+    },
+    {
+      "pm_group_id": "12",
+      "code": "SBERRUB",
+      "en_name": "sber",
+      "ru_name": "сбер",
+      "subgroup_name": null,
+      "currency": {
+        "id": "2",
+        "code": "rub",
         "accuracy": 0
       },
       "icon": {
-        "id": "169",
+        "id": "219",
         "alternativeText": null,
-        "url": "/uploads/wu_2adcddb53f.png"
+        "url": "/uploads/sber_20bafb5a6e.png"
       },
-      "color": "dark_yellow",
+      "color": "dark_green",
       "popular_as": null,
-      "section": "transfer"
+      "section": "banks"
     },
     {
-      "pm_group_id": "24",
-      "code": "MGUSD",
-      "en_name": "MoneyGram",
-      "ru_name": "MoneyGram",
+      "pm_group_id": "13",
+      "code": "TCSBRUB",
+      "en_name": "t-bank",
+      "ru_name": "т-банк",
       "subgroup_name": null,
       "currency": {
-        "id": "1",
-        "code": "usd",
-        "accuracy": 2
+        "id": "2",
+        "code": "rub",
+        "accuracy": 0
       },
       "icon": {
-        "id": "138",
+        "id": "226",
         "alternativeText": null,
-        "url": "/uploads/mg_3743d8aff9.png"
+        "url": "/uploads/tcsb_026044dae5.png"
+      },
+      "color": "yellow",
+      "popular_as": null,
+      "section": "banks"
+    },
+    {
+      "pm_group_id": "16",
+      "code": "ACRUB",
+      "en_name": "alpha-bank",
+      "ru_name": "альфа-банк",
+      "subgroup_name": null,
+      "currency": {
+        "id": "2",
+        "code": "rub",
+        "accuracy": 0
+      },
+      "icon": {
+        "id": "161",
+        "alternativeText": null,
+        "url": "/uploads/ac_c0199ddaac.png"
       },
       "color": "dark_red",
       "popular_as": null,
-      "section": "transfer"
-    },
-    {
-      "pm_group_id": "24",
-      "code": "MGEUR",
-      "en_name": "MoneyGram",
-      "ru_name": "MoneyGram",
-      "subgroup_name": null,
-      "currency": {
-        "id": "10",
-        "code": "eur",
-        "accuracy": 0
-      },
-      "icon": {
-        "id": "138",
-        "alternativeText": null,
-        "url": "/uploads/mg_3743d8aff9.png"
-      },
-      "color": "dark_red",
-      "popular_as": null,
-      "section": "transfer"
-    },
-    {
-      "pm_group_id": "25",
-      "code": "RMTFUSD",
-      "en_name": "Ria",
-      "ru_name": "Ria",
-      "subgroup_name": null,
-      "currency": {
-        "id": "1",
-        "code": "usd",
-        "accuracy": 2
-      },
-      "icon": {
-        "id": "154",
-        "alternativeText": null,
-        "url": "/uploads/RMTF_5ff1bf9369.png"
-      },
-      "color": "dark_orange",
-      "popular_as": null,
-      "section": "transfer"
-    },
-    {
-      "pm_group_id": "25",
-      "code": "RMTFEUR",
-      "en_name": "Ria",
-      "ru_name": "Ria",
-      "subgroup_name": null,
-      "currency": {
-        "id": "10",
-        "code": "eur",
-        "accuracy": 0
-      },
-      "icon": {
-        "id": "154",
-        "alternativeText": null,
-        "url": "/uploads/RMTF_5ff1bf9369.png"
-      },
-      "color": "dark_orange",
-      "popular_as": null,
-      "section": "transfer"
+      "section": "banks"
     }
   ],
   "exchangePaths": [
@@ -150247,240 +147484,121 @@
     }
   ],
   "donors": {
-    "LTC_CASHRUB": {
-      "Gelendzhik": "Anapa",
-      "Yoshkar-Ola": "Cheboksary",
-      "Anapa": "Gelendzhik",
-      "Moscow": "Saint-Petersburg",
-      "Belgorod": "Stary-Oskol",
-      "Lipetsk": "Tambov"
-    },
-    "USDTERC20_CASHUSD": {
-      "Gelendzhik": "Anapa",
-      "Stary-Oskol": "Kursk",
-      "New-York": "Boston",
-      "Kyiv": "Chernihiv",
-      "Kropyvnytskyi": "Kremenchuk",
-      "Guayaquil": "Quito",
-      "Taganrog": "Rostov",
-      "Alma-Ata": "Shymkent"
-    },
-    "USDTERC20_CASHRUB": {
-      "Gelendzhik": "Anapa",
-      "Stary-Oskol": "Kursk"
-    },
-    "USDTTRC20_CASHUSD": {
-      "Gelendzhik": "Anapa",
-      "Stary-Oskol": "Kursk",
-      "Kyiv": "Chernihiv",
-      "Kropyvnytskyi": "Kremenchuk",
-      "Guayaquil": "Quito",
-      "Taganrog": "Rostov",
-      "Alma-Ata": "Shymkent"
-    },
-    "USDTTRC20_CASHRUB": {
-      "Gelendzhik": "Anapa",
-      "Stary-Oskol": "Kursk"
-    },
     "XMR_CASHUSD": {
       "Istanbul": "Ankara",
-      "New-York": "Boston",
-      "Kyiv": "Chernihiv",
-      "Kropyvnytskyi": "Kremenchuk",
-      "Ivano-Frankivsk": "Ternopil",
-      "Quito": "Guayaquil",
-      "Ternopil": "Ivano-Frankivsk",
-      "Cherkasy": "Kropyvnytskyi",
-      "Guayaquil": "Quito",
-      "Taganrog": "Rostov"
+      "Kyiv": "Cherkasy",
+      "Krivoy-Rog": "Kropyvnytskyi"
     },
     "TRX_CASHUSD": {
-      "Istanbul": "Ankara",
-      "Ternopil": "Ivano-Frankivsk",
-      "Guayaquil": "Quito",
-      "Taganrog": "Rostov"
+      "Istanbul": "Ankara"
     },
-    "CASHUSD_USDTTRC20": {
+    "DAI_CASHUSD": {
       "Istanbul": "Ankara",
-      "Quito": "Guayaquil",
-      "Saint-Petersburg": "Moscow"
+      "New-York": "Boston",
+      "Kyiv": "Cherkasy",
+      "Krivoy-Rog": "Kropyvnytskyi"
+    },
+    "USDTERC20_CASHUSD": {
+      "Istanbul": "Ankara",
+      "New-York": "Boston",
+      "Izhevsk": "Kirov",
+      "Bryansk": "Orel",
+      "Alma-Ata": "Shymkent",
+      "Lipetsk": "Tambov"
+    },
+    "USDTTRC20_CASHUSD": {
+      "Istanbul": "Ankara",
+      "New-York": "Boston",
+      "Izhevsk": "Kirov",
+      "Bryansk": "Orel",
+      "Alma-Ata": "Shymkent",
+      "Lipetsk": "Tambov"
     },
     "BTC_CASHUSD": {
-      "New-York": "Boston",
-      "Kyiv": "Chernihiv",
-      "Quito": "Guayaquil",
-      "Kropyvnytskyi": "Kremenchuk",
-      "Guayaquil": "Quito",
-      "Taganrog": "Rostov"
+      "New-York": "Boston"
     },
     "ETH_CASHUSD": {
-      "New-York": "Boston",
-      "Kyiv": "Chernihiv",
-      "Ivano-Frankivsk": "Chernivtsi",
-      "Quito": "Guayaquil",
-      "Kropyvnytskyi": "Kremenchuk",
-      "Guayaquil": "Quito",
-      "Taganrog": "Rostov"
+      "New-York": "Boston"
     },
     "LTC_CASHUSD": {
       "New-York": "Boston",
-      "Kropyvnytskyi": "Kremenchuk",
-      "Ivano-Frankivsk": "Ternopil",
-      "Quito": "Guayaquil",
-      "Cherkasy": "Kropyvnytskyi"
-    },
-    "XRP_CASHUSD": {
-      "New-York": "Boston",
-      "Kyiv": "Chernihiv",
-      "Ivano-Frankivsk": "Chernivtsi",
-      "Quito": "Guayaquil",
-      "Kropyvnytskyi": "Kremenchuk"
-    },
-    "BTC_CASHUAH": {
-      "Kyiv": "Chernihiv",
-      "Ivano-Frankivsk": "Ternopil",
-      "Cherkasy": "Kropyvnytskyi"
-    },
-    "ETH_CASHUAH": {
-      "Kyiv": "Chernihiv",
-      "Kropyvnytskyi": "Cherkasy",
-      "Ternopil": "Ivano-Frankivsk",
-      "Cherkasy": "Kropyvnytskyi",
-      "Ivano-Frankivsk": "Ternopil"
-    },
-    "USDTERC20_CASHUAH": {
-      "Kyiv": "Chernihiv",
-      "Ivano-Frankivsk": "Ternopil",
-      "Cherkasy": "Kropyvnytskyi"
-    },
-    "USDTTRC20_CASHUAH": {
-      "Kyiv": "Chernihiv",
-      "Ivano-Frankivsk": "Ternopil",
-      "Cherkasy": "Kropyvnytskyi"
+      "Kyiv": "Cherkasy",
+      "Krivoy-Rog": "Kropyvnytskyi"
     },
     "CASHUSD_XMR": {
-      "Kyiv": "Chernihiv",
-      "Kropyvnytskyi": "Kremenchuk",
-      "Ivano-Frankivsk": "Ternopil"
+      "Kyiv": "Cherkasy"
     },
     "CASHUSD_TRX": {
-      "Kyiv": "Chernihiv",
-      "Kropyvnytskyi": "Kremenchuk",
-      "Ivano-Frankivsk": "Ternopil",
-      "Ternopil": "Ivano-Frankivsk",
-      "Moscow": "Saint-Petersburg",
-      "Saint-Petersburg": "Moscow"
-    },
-    "CASHUAH_BTC": {
-      "Kyiv": "Chernihiv",
-      "Kropyvnytskyi": "Cherkasy",
-      "Ternopil": "Ivano-Frankivsk",
-      "Cherkasy": "Kropyvnytskyi",
-      "Ivano-Frankivsk": "Ternopil"
-    },
-    "CASHUAH_ETH": {
-      "Kyiv": "Chernihiv",
-      "Kropyvnytskyi": "Cherkasy",
-      "Ternopil": "Ivano-Frankivsk",
-      "Cherkasy": "Kropyvnytskyi",
-      "Ivano-Frankivsk": "Ternopil"
-    },
-    "CASHUAH_USDTERC20": {
-      "Kyiv": "Chernihiv",
-      "Kropyvnytskyi": "Cherkasy",
-      "Ternopil": "Ivano-Frankivsk",
-      "Cherkasy": "Kropyvnytskyi",
-      "Ivano-Frankivsk": "Ternopil"
-    },
-    "CASHUAH_USDTTRC20": {
-      "Kyiv": "Chernihiv",
-      "Kropyvnytskyi": "Cherkasy",
-      "Ternopil": "Ivano-Frankivsk",
-      "Cherkasy": "Kropyvnytskyi",
-      "Ivano-Frankivsk": "Ternopil"
-    },
-    "CASHRUB_BTC": {
-      "Yoshkar-Ola": "Kirov"
-    },
-    "CASHRUB_ETH": {
-      "Yoshkar-Ola": "Cheboksary",
-      "Khabarovsk": "Vladivostok"
-    },
-    "CASHRUB_USDTERC20": {
-      "Yoshkar-Ola": "Cheboksary"
-    },
-    "CASHRUB_USDTTRC20": {
-      "Yoshkar-Ola": "Kirov",
-      "Khabarovsk": "Vladivostok"
+      "Kyiv": "Cherkasy"
     },
     "CASHUSD_LTC": {
-      "Kropyvnytskyi": "Cherkasy",
-      "Ivano-Frankivsk": "Ternopil",
-      "Cherkasy": "Kropyvnytskyi",
-      "Moscow": "Saint-Petersburg",
-      "Saint-Petersburg": "Moscow"
-    },
-    "CASHUSD_USDTERC20": {
-      "Kropyvnytskyi": "Kremenchuk",
-      "Quito": "Guayaquil",
-      "Saint-Petersburg": "Moscow",
-      "Ivano-Frankivsk": "Ternopil"
+      "Kyiv": "Cherkasy",
+      "Krivoy-Rog": "Kropyvnytskyi"
     },
     "XMR_CASHRUB": {
-      "Cheboksary": "Yoshkar-Ola",
-      "Yoshkar-Ola": "Kirov",
-      "Bryansk": "Orel",
-      "Khabarovsk": "Vladivostok"
-    },
-    "TON_CASHRUB": {
-      "Cheboksary": "Yoshkar-Ola",
-      "Yoshkar-Ola": "Kirov",
-      "Saint-Petersburg": "Moscow",
-      "Bryansk": "Orel",
-      "Khabarovsk": "Vladivostok"
-    },
-    "TRX_CASHRUB": {
-      "Cheboksary": "Yoshkar-Ola",
-      "Yoshkar-Ola": "Kirov",
-      "Saint-Petersburg": "Moscow",
-      "Bryansk": "Orel",
-      "Khabarovsk": "Vladivostok"
-    },
-    "DOGE_CASHRUB": {
-      "Cheboksary": "Yoshkar-Ola",
-      "Yoshkar-Ola": "Kirov",
-      "Bryansk": "Orel",
-      "Khabarovsk": "Vladivostok"
-    },
-    "ETC_CASHRUB": {
-      "Cheboksary": "Yoshkar-Ola",
-      "Yoshkar-Ola": "Kirov",
-      "Saint-Petersburg": "Moscow",
-      "Bryansk": "Orel",
-      "Khabarovsk": "Vladivostok"
-    },
-    "DASH_CASHUSD": {
-      "Cheboksary": "Yoshkar-Ola"
-    },
-    "DASH_CASHRUB": {
-      "Cheboksary": "Yoshkar-Ola",
-      "Yoshkar-Ola": "Kirov",
-      "Saint-Petersburg": "Moscow",
-      "Bryansk": "Orel",
-      "Khabarovsk": "Vladivostok"
-    },
-    "CASHRUB_LTC": {
-      "Moscow": "Saint-Petersburg",
-      "Saint-Petersburg": "Moscow"
+      "Izhevsk": "Kirov",
+      "Donetsk": "Mariupol",
+      "Bryansk": "Orel"
     },
     "SOL_CASHRUB": {
-      "Saint-Petersburg": "Moscow"
+      "Izhevsk": "Kirov",
+      "Donetsk": "Mariupol",
+      "Bryansk": "Orel"
     },
-    "CASHUSD_BTC": {
-      "Khabarovsk": "Vladivostok"
+    "TRX_CASHRUB": {
+      "Izhevsk": "Kirov",
+      "Donetsk": "Mariupol",
+      "Bryansk": "Orel"
     },
-    "CASHUSD_ETH": {
-      "Khabarovsk": "Vladivostok"
+    "CASHRUB_BTC": {
+      "Izhevsk": "Kirov",
+      "Donetsk": "Mariupol"
+    },
+    "CASHRUB_ETH": {
+      "Izhevsk": "Kirov",
+      "Donetsk": "Mariupol"
+    },
+    "CASHRUB_LTC": {
+      "Izhevsk": "Kirov",
+      "Donetsk": "Mariupol"
+    },
+    "CASHRUB_XMR": {
+      "Izhevsk": "Kirov",
+      "Donetsk": "Mariupol"
+    },
+    "CASHRUB_SOL": {
+      "Izhevsk": "Kirov",
+      "Donetsk": "Mariupol"
+    },
+    "CASHRUB_TRX": {
+      "Izhevsk": "Kirov",
+      "Donetsk": "Mariupol"
+    },
+    "BTC_CASHRUB": {
+      "Donetsk": "Mariupol"
+    },
+    "ETH_CASHRUB": {
+      "Donetsk": "Mariupol"
+    },
+    "LTC_CASHRUB": {
+      "Donetsk": "Mariupol",
+      "Lipetsk": "Tambov"
+    },
+    "DAI_CASHRUB": {
+      "Donetsk": "Mariupol"
+    },
+    "USDTERC20_CASHRUB": {
+      "Donetsk": "Mariupol",
+      "Lipetsk": "Tambov"
+    },
+    "CASHRUB_DAI": {
+      "Donetsk": "Mariupol"
+    },
+    "CASHRUB_USDTERC20": {
+      "Donetsk": "Mariupol"
+    },
+    "USDTTRC20_CASHRUB": {
+      "Lipetsk": "Tambov"
     }
   },
   "exchangers": [
