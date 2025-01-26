@@ -83,7 +83,7 @@ const Article = ({
               whiteSpace="normal"
               onClick={() => executeScroll(chapter.ref)}
             >
-              {`• ${chapter.title}`}
+              {`${chapter.title}`}
             </ResponsiveText>
           ))}
         </Box>

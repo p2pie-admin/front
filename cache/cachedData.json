@@ -176,7 +176,6 @@
     "monero-xmr-to-ethereum-eth": "XMR_ETH",
     "monero-xmr-to-litecoin-ltc": "XMR_LTC",
     "monero-xmr-to-monero-xmr": "XMR_XMR",
-    "monero-xmr-to-neo-neo": "XMR_NEO",
     "monero-xmr-to-solana-sol": "XMR_SOL",
     "monero-xmr-to-tron-trx": "XMR_TRX",
     "monero-xmr-to-dai-dai": "XMR_DAI",
@@ -194,12 +193,8 @@
     "neo-neo-to-monero-xmr": "NEO_XMR",
     "neo-neo-to-tron-trx": "NEO_TRX",
     "neo-neo-to-dai-dai": "NEO_DAI",
-    "neo-neo-to-0x-zrx": "NEO_ZRX",
     "neo-neo-to-tether-usdt-erc20": "NEO_USDTERC20",
     "neo-neo-to-tether-usdt-trc20": "NEO_USDTTRC20",
-    "neo-neo-to-sber-rub": "NEO_SBERRUB",
-    "neo-neo-to-t-bank-rub": "NEO_TCSBRUB",
-    "neo-neo-to-alpha-bank-rub": "NEO_ACRUB",
     "solana-sol-to-bitcoin-btc": "SOL_BTC",
     "solana-sol-to-ethereum-eth": "SOL_ETH",
     "solana-sol-to-litecoin-ltc": "SOL_LTC",
@@ -234,14 +229,11 @@
     "dai-dai-to-ethereum-eth": "DAI_ETH",
     "dai-dai-to-litecoin-ltc": "DAI_LTC",
     "dai-dai-to-monero-xmr": "DAI_XMR",
-    "dai-dai-to-neo-neo": "DAI_NEO",
     "dai-dai-to-solana-sol": "DAI_SOL",
     "dai-dai-to-tron-trx": "DAI_TRX",
     "dai-dai-to-0x-zrx": "DAI_ZRX",
     "dai-dai-to-tether-usdt-erc20": "DAI_USDTERC20",
     "dai-dai-to-tether-usdt-trc20": "DAI_USDTTRC20",
-    "dai-dai-to-cash-rub": "DAI_CASHRUB",
-    "dai-dai-to-cash-usd": "DAI_CASHUSD",
     "dai-dai-to-sber-rub": "DAI_SBERRUB",
     "dai-dai-to-t-bank-rub": "DAI_TCSBRUB",
     "dai-dai-to-alpha-bank-rub": "DAI_ACRUB",
@@ -249,15 +241,11 @@
     "0x-zrx-to-ethereum-eth": "ZRX_ETH",
     "0x-zrx-to-litecoin-ltc": "ZRX_LTC",
     "0x-zrx-to-monero-xmr": "ZRX_XMR",
-    "0x-zrx-to-neo-neo": "ZRX_NEO",
     "0x-zrx-to-solana-sol": "ZRX_SOL",
     "0x-zrx-to-tron-trx": "ZRX_TRX",
     "0x-zrx-to-dai-dai": "ZRX_DAI",
     "0x-zrx-to-tether-usdt-erc20": "ZRX_USDTERC20",
     "0x-zrx-to-tether-usdt-trc20": "ZRX_USDTTRC20",
-    "0x-zrx-to-sber-rub": "ZRX_SBERRUB",
-    "0x-zrx-to-t-bank-rub": "ZRX_TCSBRUB",
-    "0x-zrx-to-alpha-bank-rub": "ZRX_ACRUB",
     "tether-usdt-erc20-to-bitcoin-btc": "USDTERC20_BTC",
     "tether-usdt-erc20-to-ethereum-eth": "USDTERC20_ETH",
     "tether-usdt-erc20-to-litecoin-ltc": "USDTERC20_LTC",
@@ -293,10 +281,6 @@
     "cash-rub-to-bitcoin-btc": "CASHRUB_BTC",
     "cash-rub-to-ethereum-eth": "CASHRUB_ETH",
     "cash-rub-to-litecoin-ltc": "CASHRUB_LTC",
-    "cash-rub-to-monero-xmr": "CASHRUB_XMR",
-    "cash-rub-to-solana-sol": "CASHRUB_SOL",
-    "cash-rub-to-tron-trx": "CASHRUB_TRX",
-    "cash-rub-to-dai-dai": "CASHRUB_DAI",
     "cash-rub-to-tether-usdt-erc20": "CASHRUB_USDTERC20",
     "cash-rub-to-tether-usdt-trc20": "CASHRUB_USDTTRC20",
     "cash-usd-to-bitcoin-btc": "CASHUSD_BTC",
@@ -310,7 +294,6 @@
     "sber-rub-to-ethereum-eth": "SBERRUB_ETH",
     "sber-rub-to-litecoin-ltc": "SBERRUB_LTC",
     "sber-rub-to-monero-xmr": "SBERRUB_XMR",
-    "sber-rub-to-neo-neo": "SBERRUB_NEO",
     "sber-rub-to-solana-sol": "SBERRUB_SOL",
     "sber-rub-to-tron-trx": "SBERRUB_TRX",
     "sber-rub-to-dai-dai": "SBERRUB_DAI",
@@ -321,7 +304,6 @@
     "t-bank-rub-to-ethereum-eth": "TCSBRUB_ETH",
     "t-bank-rub-to-litecoin-ltc": "TCSBRUB_LTC",
     "t-bank-rub-to-monero-xmr": "TCSBRUB_XMR",
-    "t-bank-rub-to-neo-neo": "TCSBRUB_NEO",
     "t-bank-rub-to-solana-sol": "TCSBRUB_SOL",
     "t-bank-rub-to-tron-trx": "TCSBRUB_TRX",
     "t-bank-rub-to-dai-dai": "TCSBRUB_DAI",
@@ -332,7 +314,6 @@
     "alpha-bank-rub-to-ethereum-eth": "ACRUB_ETH",
     "alpha-bank-rub-to-litecoin-ltc": "ACRUB_LTC",
     "alpha-bank-rub-to-monero-xmr": "ACRUB_XMR",
-    "alpha-bank-rub-to-neo-neo": "ACRUB_NEO",
     "alpha-bank-rub-to-solana-sol": "ACRUB_SOL",
     "alpha-bank-rub-to-tron-trx": "ACRUB_TRX",
     "alpha-bank-rub-to-dai-dai": "ACRUB_DAI",
@@ -6090,7 +6071,7 @@
       },
       "color": "dark_green",
       "popular_as": null,
-      "section": "banks"
+      "section": "bank"
     },
     {
       "pm_group_id": "13",
@@ -6110,7 +6091,7 @@
       },
       "color": "yellow",
       "popular_as": null,
-      "section": "banks"
+      "section": "bank"
     },
     {
       "pm_group_id": "16",
@@ -6130,7 +6111,7 @@
       },
       "color": "dark_red",
       "popular_as": null,
-      "section": "banks"
+      "section": "bank"
     }
   ],
   "exchangePaths": [
@@ -147492,12 +147473,6 @@
     "TRX_CASHUSD": {
       "Istanbul": "Ankara"
     },
-    "DAI_CASHUSD": {
-      "Istanbul": "Ankara",
-      "New-York": "Boston",
-      "Kyiv": "Cherkasy",
-      "Krivoy-Rog": "Kropyvnytskyi"
-    },
     "USDTERC20_CASHUSD": {
       "Istanbul": "Ankara",
       "New-York": "Boston",
@@ -147506,13 +147481,8 @@
       "Alma-Ata": "Shymkent",
       "Lipetsk": "Tambov"
     },
-    "USDTTRC20_CASHUSD": {
-      "Istanbul": "Ankara",
-      "New-York": "Boston",
-      "Izhevsk": "Kirov",
-      "Bryansk": "Orel",
-      "Alma-Ata": "Shymkent",
-      "Lipetsk": "Tambov"
+    "CASHUSD_USDTTRC20": {
+      "Istanbul": "Ankara"
     },
     "BTC_CASHUSD": {
       "New-York": "Boston"
@@ -147537,65 +147507,39 @@
     },
     "XMR_CASHRUB": {
       "Izhevsk": "Kirov",
-      "Donetsk": "Mariupol",
       "Bryansk": "Orel"
     },
     "SOL_CASHRUB": {
       "Izhevsk": "Kirov",
-      "Donetsk": "Mariupol",
       "Bryansk": "Orel"
     },
     "TRX_CASHRUB": {
       "Izhevsk": "Kirov",
-      "Donetsk": "Mariupol",
       "Bryansk": "Orel"
     },
-    "CASHRUB_BTC": {
+    "USDTTRC20_CASHUSD": {
       "Izhevsk": "Kirov",
-      "Donetsk": "Mariupol"
+      "Bryansk": "Orel",
+      "Alma-Ata": "Shymkent",
+      "Lipetsk": "Tambov"
+    },
+    "CASHRUB_BTC": {
+      "Izhevsk": "Kirov"
     },
     "CASHRUB_ETH": {
-      "Izhevsk": "Kirov",
-      "Donetsk": "Mariupol"
+      "Izhevsk": "Kirov"
     },
     "CASHRUB_LTC": {
-      "Izhevsk": "Kirov",
-      "Donetsk": "Mariupol"
+      "Izhevsk": "Kirov"
     },
-    "CASHRUB_XMR": {
-      "Izhevsk": "Kirov",
-      "Donetsk": "Mariupol"
-    },
-    "CASHRUB_SOL": {
-      "Izhevsk": "Kirov",
-      "Donetsk": "Mariupol"
-    },
-    "CASHRUB_TRX": {
-      "Izhevsk": "Kirov",
-      "Donetsk": "Mariupol"
-    },
-    "BTC_CASHRUB": {
-      "Donetsk": "Mariupol"
-    },
-    "ETH_CASHRUB": {
-      "Donetsk": "Mariupol"
+    "CASHRUB_USDTTRC20": {
+      "Izhevsk": "Kirov"
     },
     "LTC_CASHRUB": {
-      "Donetsk": "Mariupol",
       "Lipetsk": "Tambov"
-    },
-    "DAI_CASHRUB": {
-      "Donetsk": "Mariupol"
     },
     "USDTERC20_CASHRUB": {
-      "Donetsk": "Mariupol",
       "Lipetsk": "Tambov"
-    },
-    "CASHRUB_DAI": {
-      "Donetsk": "Mariupol"
-    },
-    "CASHRUB_USDTERC20": {
-      "Donetsk": "Mariupol"
     },
     "USDTTRC20_CASHRUB": {
       "Lipetsk": "Tambov"

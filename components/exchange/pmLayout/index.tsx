@@ -35,7 +35,7 @@ export default function pmLayout({ pmData }: { pmData: IPmData }) {
                 variant="no_contrast"
                 whiteSpace="nowrap"
               >
-                {`• ${text.replace("\x03", "")}`}
+                {`${text.replace("\x03", "")}`}
               </ResponsiveText>
             ))}
           </Box>
