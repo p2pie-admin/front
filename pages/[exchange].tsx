@@ -117,10 +117,10 @@ export async function getStaticProps({
 
     if (articleCodes.length) {
       giveArticleExists = !!articleCodes.find(
-        (ac) => ac?.toUpperCase() == givePm.code.toUpperCase()
+        (ac) => ac?.toUpperCase() == givePm.en_name.toUpperCase()
       );
       getArticleExists = !!articleCodes.find(
-        (ac) => ac?.toUpperCase() == getPm.code.toUpperCase()
+        (ac) => ac?.toUpperCase() == getPm.en_name.toUpperCase()
       );
     }
 

@@ -17,7 +17,7 @@ const CryptoPm = ({ cryptoPm }: { cryptoPm: IPm }) => {
       <HStack alignItems="center">
         <CircularIcon
           iconAlt={cryptoPm.en_name}
-          small
+          size="sm"
           color={cryptoPm.color}
           icon={cryptoPm.icon}
         />

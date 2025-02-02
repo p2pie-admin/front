@@ -11,7 +11,6 @@ import { ICache } from "../types/exchange";
 import { MainTextsQuery, RootTextQuery } from "../services/initialQueries";
 import { IMainText, ITextBox } from "../types/pages";
 import { NextSeo, BreadcrumbJsonLd } from "next-seo";
-import article from "next-seo/lib/jsonld/article";
 import { useTranslation } from "react-i18next";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {

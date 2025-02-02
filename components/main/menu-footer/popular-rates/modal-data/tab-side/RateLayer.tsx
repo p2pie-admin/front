@@ -76,7 +76,7 @@ const RateLayer = ({
                 <Tr>
                   <Td>
                     <HStack>
-                      <CircularIcon color={pm.color} small icon={pm.icon} />{" "}
+                      <CircularIcon color={pm.color} size="sm" icon={pm.icon} />{" "}
                       <Text>{name}</Text>
                     </HStack>
                   </Td>

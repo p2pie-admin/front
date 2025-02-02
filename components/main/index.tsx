@@ -21,13 +21,11 @@ const MainPageContent = ({
   popularRates,
   mainTexts,
   rootText,
-  locale,
 }: {
   popularPms?: IPm[];
   popularRates?: IPopularDirRates;
   mainTexts?: IMainText[];
   rootText: ITextBox;
-  locale: "en" | "ru";
 }) => {
   const { t } = useTranslation();
   const router = useRouter();

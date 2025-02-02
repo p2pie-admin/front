@@ -10,12 +10,12 @@ import { IImage } from "../../types/selector";
 const CircularIcon = ({
   icon,
   color,
-  small,
   iconAlt,
+  size = "md",
 }: {
   color: string;
   icon?: IImage;
-  small?: boolean;
+  size?: "sm" | "md" | "lg";
   iconAlt?: string;
 }) => {
   const [
@@ -97,9 +97,9 @@ const CircularIcon = ({
       ? process.env.NEXT_PUBLIC_STRAPI_PROD_BASE_URL
       : process.env.NEXT_PUBLIC_STRAPI_DEV_BASE_URL;
 
-  const size = small ? [5, 6] : [6, 7];
+  const iconSize = size == "lg" ? [8, 9] : size == "sm" ? [5, 6] : [6, 7];
   return (
-    <Center w={size} h={size} position="relative">
+    <Center w={iconSize} h={iconSize} position="relative">
       <Image
         zIndex="6"
         filter={filter}
@@ -116,11 +116,7 @@ const CircularIcon = ({
         borderRadius="50%"
         w="100%"
         h="100%"
-        boxShadow={
-          small
-            ? `0px 0px 10px -10px ${colorHEX}`
-            : `0px 0px 14px -7px ${colorHEX}`
-        }
+        boxShadow={`0px 0px 14px -7px ${colorHEX}`}
         filter="saturate(1.5)"
         bg={`radial-gradient(circle, ${colorHEX} 60%, rgba(0,0,0,0) 70%)`}
         // position="absolute"

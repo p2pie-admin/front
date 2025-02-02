@@ -69,9 +69,11 @@ const Similar = ({ similarPmPairs }: { similarPmPairs: IPm[][] }) => {
         });
 
         return (
-          <Dir key={slug} givePm={pair[0]} getPm={pair[1]} slug={slug}>
-            {data?.[index] && renderRate(pair, data[index])}
-          </Dir>
+          <Box mb="4">
+            <Dir key={slug} givePm={pair[0]} getPm={pair[1]} slug={slug}>
+              {data?.[index] && renderRate(pair, data[index])}
+            </Dir>
+          </Box>
         );
       })}
     </Box3D>

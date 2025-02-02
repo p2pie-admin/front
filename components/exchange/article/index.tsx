@@ -16,21 +16,22 @@ import { BreadcrumbJsonLd, NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import RichText from "../../shared/article/RichText";
 import header from "../../layout/header";
+import CircularIcon from "../../shared/CircularIcon";
 
 const Article = ({
   article,
-  code,
   otherDirs,
 }: {
   article?: IArticle | null;
-  code: string;
   otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] };
 }) => {
+  const { locale } = useRouter() as { locale: "en" | "ru" };
   const timestampToDate = (ts?: string) => {
     const [y, m, d] = ts ? ts?.split("T")[0]?.split("-") : ["-", "-", "-"];
     return `${d}.${m}.${y}`;
   };
   if (!article) return <></>;
+
   const refChapters = article.chapters.map((chapter) => ({
     ...chapter,
     ref: useRef(null),
@@ -46,6 +47,9 @@ const Article = ({
 
   const minToRead = Math.round(symbols / 1000);
 
+  const pm = otherDirs.buy[0].givePm;
+  const pmName = pm?.[`${locale}_name`] + " " + pm?.code;
+  if (!pm) return <>Nothing was found!</>;
   return (
     <>
       <Box3D
@@ -56,26 +60,31 @@ const Article = ({
         py={["4", "8"]}
       >
         <HStack>
-          <FaExpandArrowsAlt size="2.5rem" />
-          <Heading as="h1" fontSize="5xl">
-            {"Что такое " + article.header + "?"}
+          <CircularIcon
+            iconAlt={pm.en_name}
+            icon={pm.icon}
+            color={pm.color || "gray"}
+            size="lg"
+          />
+          <Heading as="h1" fontSize="3xl">
+            {article.header}
           </Heading>
         </HStack>
-        <Heading as="h2" fontSize="2xl">
+        <Heading as="h2" fontSize="xl">
           {article.subheader}
         </Heading>
 
-        <Heading as="h3" fontSize="md">{`${timestampToDate(
+        <ResponsiveText fontSize="md">{`${timestampToDate(
           article.updatedAt
-        )} • ${minToRead} minutes read`}</Heading>
+        )} • ${minToRead} minutes read`}</ResponsiveText>
 
         <Box p="4">
-          {refChapters.map((chapter) => (
+          {refChapters.map((chapter, idx) => (
             <ResponsiveText
-              key={"manu:" + chapter.id + chapter.title}
+              key={"chapterHeader:" + idx}
               cursor="pointer"
               fontWeight="bold"
-              size="xl"
+              size="lg"
               color="peach.300"
               _hover={{
                 color: "peach.50",
@@ -83,7 +92,7 @@ const Article = ({
               whiteSpace="normal"
               onClick={() => executeScroll(chapter.ref)}
             >
-              {`${chapter.title}`}
+              {`- ${chapter.title}`}
             </ResponsiveText>
           ))}
         </Box>
@@ -91,7 +100,7 @@ const Article = ({
         <Box>
           {refChapters.map((chapter, idx) => {
             return (
-              <Box key={"text:" + chapter.id + chapter.title + idx}>
+              <Box key={"chapter:" + idx}>
                 <HStack fontSize="lg" fontWeight="bold" mt="4">
                   <Text color="peach.300">#</Text>
                   <Text ref={chapter.ref}>{chapter.title || ""}</Text>
@@ -100,16 +109,15 @@ const Article = ({
                 <RichText sanitizedHTML={chapter.text} />
                 {/* <ReactMarkdown></ReactMarkdown> */}
 
-                {chapter.disclaimer && (
+                {/* {chapter.disclaimer && (
                   <Disclaimer disclaimer={chapter.disclaimer} />
-                )}
+                )} */}
               </Box>
             );
           })}
         </Box>
-        {article.section == "pm" && (
-          <OtherDirs code={article.header} otherDirs={otherDirs} />
-        )}
+
+        <OtherDirs pmName={pmName} otherDirs={otherDirs} />
 
         <FoundError />
       </Box3D>

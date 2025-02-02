@@ -17,7 +17,7 @@ export default function pmLayout({ pmData }: { pmData: IPmData }) {
       _hover={{ filter: "brightness(1.1)" }}
     >
       <LinkWrapper
-        url={`/articles/${pmData.pm.code.toLowerCase()}`}
+        url={`/articles/${pmData.pm.en_name.toLowerCase()}`}
         articleExists={pmData.articleExists}
       >
         <VStack h="100%" justifyContent="space-around" color="bg.400">

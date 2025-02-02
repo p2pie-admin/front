@@ -11,7 +11,7 @@ import { useAppDispatch } from "../../redux/hooks";
 import { useEffect } from "react";
 import { setDirRatesStatus } from "../../redux/mainReducer";
 
-import { IArticle, IChapter } from "../../types/pages";
+import { IArticle } from "../../types/pages";
 import { marked } from "marked";
 import DOMPurify from "isomorphic-dompurify";
 
@@ -30,7 +30,7 @@ export function sanitizeArticle(article?: IArticle): IArticle | null {
   };
 }
 
-export function sanitizeChapter(chapter: IChapter): IChapter {
+export function sanitizeChapter(chapter: { title: string; text: string }) {
   return {
     ...chapter,
     text: textToHTML(chapter.text), // Sanitize `text`
@@ -44,6 +44,7 @@ const ArticlePage = (props: {
   otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] };
 }) => {
   const { article, code, locale } = props;
+
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(setDirRatesStatus("fulfilled"));
@@ -110,7 +111,9 @@ export async function getStaticProps({
     const { articles } = (await cmsFetcher(articleQuery)) as {
       articles: IArticle[];
     };
+
     const article = sanitizeArticle(articles?.[0]);
+
     if (!article)
       return {
         notFound: true,
@@ -122,11 +125,11 @@ export async function getStaticProps({
     };
 
     const cachedData = readCache() as ICache;
-    if (article?.section == "pm" && cachedData.pms.length) {
+    if (cachedData.pms.length) {
       const { pms, slugToCodes } = cachedData;
 
       const articlePms = pms.filter(
-        (pm) => pm.code.toLowerCase() == code.toLowerCase()
+        (pm) => pm.en_name.toLowerCase() == code.toLowerCase()
       );
 
       // берем только те направления, что имеют или give или get pm
@@ -164,10 +167,8 @@ export async function getStaticProps({
 
     return {
       props: {
-        locale,
         article,
         otherDirs,
-        code,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
       revalidate: 6000,

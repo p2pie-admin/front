@@ -2,20 +2,15 @@ import { IImage } from "./selector";
 
 export interface IArticle {
   id: string;
-  header: string;
-  subheader?: string;
-  section?: string;
   time_to_read?: number;
   updatedAt?: string;
-  chapters: IChapter[];
-}
-
-export interface IChapter {
-  id: string;
-  title?: string;
-  text: string;
-  link?: ILink[];
-  disclaimer?: IDisclaimer;
+  header: string;
+  subheader: string;
+  stats: { [key: string]: string };
+  chapters: {
+    title: string;
+    text: string;
+  }[];
 }
 
 export interface ILink {

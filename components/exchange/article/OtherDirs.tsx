@@ -4,61 +4,61 @@ import { IPm } from "../../../types/selector";
 import { IPmPairs } from "../../../types/exchange";
 import Dir from "../Dir";
 import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
 
 const OtherDirs = ({
-  code,
   otherDirs,
+  pmName,
 }: {
-  code: string;
   otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] };
+  pmName: string;
 }) => {
   const { t } = useTranslation();
+
   if (!otherDirs?.buy.length) return <></>;
   return (
     <VStack mt="4" w="100%" gap="4">
       <Box borderRadius="lg" bgColor="bg.900">
         <Heading
-          as="h2"
+          as="h3"
           fontSize="xl"
           bgColor="bg.1000"
           borderRadius="lg"
-          p="2"
+          p="4"
           mt="0"
         >
-          {`${t("main:toSell")} ${capitalize(code)}:`}
+          {`${t("main:toSell")} ${capitalize(pmName)}:`}
         </Heading>
-        <Flex gap="2" w="100%" flexWrap="wrap">
+        <Flex gap="4" w="100%" flexWrap="wrap" p="4">
           {otherDirs.buy.map((pmPair) => (
-            <Box m="1">
-              <Dir
-                givePm={pmPair.givePm}
-                getPm={pmPair.getPm}
-                slug={pmPair.slug}
-              />
-            </Box>
+            <Dir
+              key={pmPair.slug + "_sell"}
+              givePm={pmPair.givePm}
+              getPm={pmPair.getPm}
+              slug={pmPair.slug}
+            />
           ))}
         </Flex>
       </Box>
       <Box borderRadius="lg" bgColor="bg.900">
         <Heading
-          as="h2"
+          as="h3"
           fontSize="xl"
           bgColor="bg.1000"
           borderRadius="lg"
-          p="2"
+          p="4"
           mt="0"
         >
-          {`${t("main:toBuy")} ${capitalize(code)}:`}
+          {`${t("main:toBuy")} ${capitalize(pmName)}:`}
         </Heading>
-        <Flex gap="2" w="100%" flexWrap="wrap">
+        <Flex gap="4" w="100%" flexWrap="wrap" p="4">
           {otherDirs.sell.map((pmPair) => (
-            <Box m="1" key={pmPair.slug}>
-              <Dir
-                givePm={pmPair.givePm}
-                getPm={pmPair.getPm}
-                slug={pmPair.slug}
-              />
-            </Box>
+            <Dir
+              key={pmPair.slug + "_buy"}
+              givePm={pmPair.givePm}
+              getPm={pmPair.getPm}
+              slug={pmPair.slug}
+            />
           ))}
         </Flex>
       </Box>

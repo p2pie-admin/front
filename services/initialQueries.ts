@@ -215,28 +215,9 @@ export const articleQuery = gql`
         attributes {
           header
           subheader
-          section
           updatedAt
-          chapters {
-            ... on ComponentArticleChapter {
-              id
-              title
-              text
-              link {
-                id
-                text
-                href
-                isExternal
-                isBlank
-              }
-              disclaimer {
-                id
-                title
-                text
-                color
-              }
-            }
-          }
+          chapters
+          stats
         }
       }
     }
