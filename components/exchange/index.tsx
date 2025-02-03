@@ -166,6 +166,7 @@ const Exchange = ({
       <Box
         bgGradient={`radial-gradient(circle at 50% -10%, ${centerColor} 0%, ${peripheryColor} 60%)`}
         bgClip="text"
+        mx="2"
       >
         <Heading
           fontSize={{ base: isLong ? "lg" : "xl", lg: isLong ? "3xl" : "4xl" }}

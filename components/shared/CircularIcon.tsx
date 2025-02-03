@@ -97,7 +97,7 @@ const CircularIcon = ({
       ? process.env.NEXT_PUBLIC_STRAPI_PROD_BASE_URL
       : process.env.NEXT_PUBLIC_STRAPI_DEV_BASE_URL;
 
-  const iconSize = size == "lg" ? [8, 9] : size == "sm" ? [5, 6] : [6, 7];
+  const iconSize = size == "lg" ? [10, 12] : size == "sm" ? [5, 6] : [6, 7];
   return (
     <Center w={iconSize} h={iconSize} position="relative">
       <Image

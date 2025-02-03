@@ -6203,6 +6203,9 @@
       "Izhevsk": "Kirov",
       "Bryansk": "Orel",
       "Lipetsk": "Tambov"
+    },
+    "BTC_CASHRUB": {
+      "Bryansk": "Orel"
     }
   }
 }

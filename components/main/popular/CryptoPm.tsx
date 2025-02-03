@@ -13,7 +13,7 @@ import CircularIcon from "../../shared/CircularIcon";
 
 const CryptoPm = ({ cryptoPm }: { cryptoPm: IPm }) => {
   return (
-    <Link href={`/articles/${cryptoPm.code.toLowerCase()}`} passHref>
+    <Link href={`/articles/${cryptoPm.en_name.toLowerCase()}`} passHref>
       <HStack alignItems="center">
         <CircularIcon
           iconAlt={cryptoPm.en_name}
