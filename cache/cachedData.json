@@ -62,14 +62,16 @@
     "articleCodes": [
       "Bitcoin",
       "Ethereum",
-      "Monero",
       "Litecoin",
-      "Solana",
+      "Monero",
       "Neo",
+      "Solana",
       "Tron",
-      "DAI",
+      "0x",
       "Tether",
-      "0x"
+      "Sber",
+      "T-bank",
+      "Alpha-bank"
     ]
   },
   "ruData": {
@@ -147,7 +149,22 @@
       "Tron",
       "DAI",
       "0x",
-      "Tether"
+      "Tether",
+      "Sber",
+      "T-bank",
+      "Alpha-bank",
+      "Bitcoin",
+      "Ethereum",
+      "Litecoin",
+      "Monero",
+      "Neo",
+      "Solana",
+      "Tron",
+      "0x",
+      "Tether",
+      "Sber",
+      "T-bank",
+      "Alpha-bank"
     ]
   },
   "slugToCodes": {
@@ -216,7 +233,6 @@
     "neo-neo-to-bitcoin-btc": "NEO_BTC",
     "neo-neo-to-ethereum-eth": "NEO_ETH",
     "neo-neo-to-litecoin-ltc": "NEO_LTC",
-    "neo-neo-to-tether-usdt-erc20": "NEO_USDTERC20",
     "neo-neo-to-tether-usdt-trc20": "NEO_USDTTRC20",
     "solana-sol-to-bitcoin-btc": "SOL_BTC",
     "solana-sol-to-ethereum-eth": "SOL_ETH",

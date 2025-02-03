@@ -6,7 +6,7 @@ export interface IArticle {
   updatedAt?: string;
   header: string;
   subheader: string;
-  stats: { [key: string]: string };
+  stats: { [key: string]: number };
   chapters: {
     title: string;
     text: string;

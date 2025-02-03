@@ -168,7 +168,7 @@ const Exchange = ({
         bgClip="text"
       >
         <Heading
-          fontSize={{ base: isLong ? "lg" : "xl", md: isLong ? "3xl" : "4xl" }}
+          fontSize={{ base: isLong ? "lg" : "xl", lg: isLong ? "3xl" : "4xl" }}
           as="h1"
           fontWeight="bold"
           color="inherit"

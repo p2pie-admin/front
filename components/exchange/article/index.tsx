@@ -1,6 +1,6 @@
-import { HStack, Box, Text, Heading } from "@chakra-ui/react";
+import { HStack, Box, Text, Heading, Flex } from "@chakra-ui/react";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Disclaimer from "../../shared/article/Disclaimer";
 import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
 import { IArticle } from "../../../types/pages";
@@ -10,13 +10,11 @@ import { BsTelegram } from "react-icons/bs";
 
 import FoundError from "./FoundError";
 import OtherDirs from "./OtherDirs";
-import { IPm } from "../../../types/selector";
 import { IPmPairs } from "../../../types/exchange";
-import { BreadcrumbJsonLd, NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import RichText from "../../shared/article/RichText";
-import header from "../../layout/header";
 import CircularIcon from "../../shared/CircularIcon";
+import Stats from "./Stats";
 
 const Article = ({
   article,
@@ -25,6 +23,7 @@ const Article = ({
   article?: IArticle | null;
   otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] };
 }) => {
+  const [highlited, setHighlited] = useState(undefined);
   const { locale } = useRouter() as { locale: "en" | "ru" };
   const timestampToDate = (ts?: string) => {
     const [y, m, d] = ts ? ts?.split("T")[0]?.split("-") : ["-", "-", "-"];
@@ -37,8 +36,10 @@ const Article = ({
     ref: useRef(null),
   }));
 
-  const executeScroll = (ref: any) =>
+  const executeScroll = (ref: any) => {
     ref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    setHighlited(ref);
+  };
 
   const symbols = article.chapters.reduce(
     (length, chapter) => (length += chapter.text.length),
@@ -59,18 +60,18 @@ const Article = ({
         px={["2", "8"]}
         py={["4", "8"]}
       >
-        <HStack>
+        <HStack gap="4">
           <CircularIcon
             iconAlt={pm.en_name}
             icon={pm.icon}
             color={pm.color || "gray"}
             size="lg"
           />
-          <Heading as="h1" fontSize="3xl">
+          <Heading as="h1" fontSize={["xl", "2xl", "3xl"]}>
             {article.header}
           </Heading>
         </HStack>
-        <Heading as="h2" fontSize="xl">
+        <Heading as="h2" fontSize={["lg", "xl"]}>
           {article.subheader}
         </Heading>
 
@@ -78,13 +79,15 @@ const Article = ({
           article.updatedAt
         )} • ${minToRead} minutes read`}</ResponsiveText>
 
-        <Box p="4">
+        <Stats stats={article.stats} />
+
+        <Box>
           {refChapters.map((chapter, idx) => (
             <ResponsiveText
               key={"chapterHeader:" + idx}
               cursor="pointer"
               fontWeight="bold"
-              size="lg"
+              size={"lg"}
               color="peach.300"
               _hover={{
                 color: "peach.50",
@@ -92,7 +95,7 @@ const Article = ({
               whiteSpace="normal"
               onClick={() => executeScroll(chapter.ref)}
             >
-              {`- ${chapter.title}`}
+              {`• ${chapter.title}`}
             </ResponsiveText>
           ))}
         </Box>
@@ -101,9 +104,14 @@ const Article = ({
           {refChapters.map((chapter, idx) => {
             return (
               <Box key={"chapter:" + idx}>
-                <HStack fontSize="lg" fontWeight="bold" mt="4">
+                <HStack fontSize={["md", "lg"]} fontWeight="bold" mt="4">
                   <Text color="peach.300">#</Text>
-                  <Text ref={chapter.ref}>{chapter.title || ""}</Text>
+                  <Text
+                    ref={chapter.ref}
+                    color={chapter.ref == highlited ? "peach.300" : "unset"}
+                  >
+                    {chapter.title || ""}
+                  </Text>
                 </HStack>
 
                 <RichText sanitizedHTML={chapter.text} />
