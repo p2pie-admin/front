@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import useSWR from "swr";
-import { TopParametersQuery, DirectionParametersQuery } from "./queries";
+
 import ErrorWrapper from "../../shared/ErrorWrapper";
 import { initCMSFetcher } from "../../../services/fetchers";
 import { Box, HStack, Link } from "@chakra-ui/react";
 import { IParameter, IRate } from "../../../types/rates";
 import Swiper from "./Swiper";
 import { useIsMobile } from "./hooks";
-import { fetchDirRates, fetchParameters } from "../../../redux/thunks";
+import { fetchDirRates, fetchTopParameters } from "../../../redux/thunks";
 import CustomModal from "../../shared/CustomModal";
 import RateDetails from "../../shared/RateDetails";
 import { useRouter } from "next/router";
@@ -50,7 +50,7 @@ const TV = ({
   }, [dir, city]);
 
   useEffect(() => {
-    dispatch(fetchParameters(locale));
+    dispatch(fetchTopParameters());
     setInitial(false);
   }, []);
 
@@ -106,7 +106,7 @@ const TV = ({
 
 export default TV;
 // const { data: topParametersData, error: topParameterError } = useSWR(
-//   TopParametersQuery,
+//   TopTopParametersQuery,
 //   fetcher
 // ) as {
 //   data: {
@@ -116,7 +116,7 @@ export default TV;
 // };
 
 // const { data: directionParametersData, error: directionParameterError } =
-//   useSWR(DirectionParametersQuery, fetcher) as {
+//   useSWR(DirectionTopParametersQuery, fetcher) as {
 //     data: {
 //       directionParameters: IParamData[];
 //     };
@@ -124,7 +124,7 @@ export default TV;
 //   };
 
 // const { data: exchangerParametersData, error: exchangerParameterError } =
-//   useSWR(DirectionParametersQuery, fetcher) as {
+//   useSWR(DirectionTopParametersQuery, fetcher) as {
 //     data: {
 //       exchangerParameters: IParamData[];
 //     };

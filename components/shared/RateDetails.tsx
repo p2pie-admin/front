@@ -24,7 +24,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { IoWarningOutline } from "react-icons/io5";
 import { MdOutlineNotifications } from "react-icons/md";
 import { sendToast } from "../../redux/mainReducer";
-import Parameter from "../main/tv/Parameter";
+import Parameter from "../main/tv/TopParameter";
 
 // const Layer = ({ title, value }: { title: string; value: string }) => (
 //   <HStack justifyContent="space-between" fontSize="sm">

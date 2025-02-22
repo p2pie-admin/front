@@ -18,8 +18,9 @@ import { redirect } from "../../../redux/thunks";
 import { IRate } from "../../../types/rates";
 import { triggerModal } from "../../../redux/mainReducer";
 import { GrCircleInformation } from "react-icons/gr";
-import Parameter from "./Parameter";
+import TopParameter from "./TopParameter";
 import { useIsMobile } from "./hooks";
+import Rating from "./Rating";
 
 const DesktopParameters = ({
   parameterCodes,
@@ -30,7 +31,7 @@ const DesktopParameters = ({
   return (
     <HStack justifyContent="end" mb="1" alignSelf="end">
       {parameterCodes.map((code, i) => (
-        <Parameter
+        <TopParameter
           isExtended={parameterCodes.length < 3}
           code={code}
           key={code + i}
@@ -59,7 +60,11 @@ const MobileParameters = ({
       zIndex="1"
     >
       {parameterCodes.map((code, i) => (
-        <Parameter isExtended={false} code={code} key={code + i + "mobile"} />
+        <TopParameter
+          isExtended={false}
+          code={code}
+          key={code + i + "mobile"}
+        />
       ))}
     </Grid>
   );
@@ -83,18 +88,7 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
         ) / 100
       : rate.admin_rating;
 
-  const ratingColor =
-    rating < 3
-      ? "red.500"
-      : rating < 4
-      ? "orange.500"
-      : rating < 4.5
-      ? "yellow.600"
-      : rating < 4.7
-      ? "#97bb48"
-      : "green.400";
-
-  const { name, course, min, max, ref_link } = rate;
+  const { name, course, min, max, ref_link, parameterCodes } = rate;
 
   const giveCur = useAppSelector(
     (state) => state.main.givePm?.currency.code.toUpperCase() || ""
@@ -145,12 +139,7 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
             >
               {capitalize(name)}
             </ResponsiveText>
-            <Box color={ratingColor} mb="1">
-              <FaStar size="1rem" />
-            </Box>
-            <ResponsiveText size="lg" color={ratingColor}>
-              {rating}
-            </ResponsiveText>
+            <Rating rating={rating} />
           </HStack>
           <Box
             cursor="pointer"

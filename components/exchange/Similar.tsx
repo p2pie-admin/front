@@ -69,8 +69,8 @@ const Similar = ({ similarPmPairs }: { similarPmPairs: IPm[][] }) => {
         });
 
         return (
-          <Box mb="4">
-            <Dir key={slug} givePm={pair[0]} getPm={pair[1]} slug={slug}>
+          <Box mb="4" key={slug + index}>
+            <Dir givePm={pair[0]} getPm={pair[1]} slug={slug}>
               {data?.[index] && renderRate(pair, data[index])}
             </Dir>
           </Box>

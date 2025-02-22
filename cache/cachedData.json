@@ -135,24 +135,7 @@
       }
     ],
     "articleCodes": [
-      "Bitcoin",
-      "Bitcoin",
-      "Litecoin",
-      "Litecoin",
-      "Neo",
-      "Solana",
-      "Monero",
-      "Neo",
       "DAI",
-      "Solana",
-      "0x",
-      "Tron",
-      "DAI",
-      "0x",
-      "Tether",
-      "Sber",
-      "T-bank",
-      "Alpha-bank",
       "Bitcoin",
       "Ethereum",
       "Litecoin",
@@ -163,7 +146,6 @@
       "0x",
       "Tether",
       "Sber",
-      "T-bank",
       "Alpha-bank"
     ]
   },
@@ -220,12 +202,14 @@
     "monero-xmr-to-ethereum-eth": "XMR_ETH",
     "monero-xmr-to-litecoin-ltc": "XMR_LTC",
     "monero-xmr-to-monero-xmr": "XMR_XMR",
+    "monero-xmr-to-neo-neo": "XMR_NEO",
     "monero-xmr-to-solana-sol": "XMR_SOL",
     "monero-xmr-to-tron-trx": "XMR_TRX",
     "monero-xmr-to-dai-dai": "XMR_DAI",
     "monero-xmr-to-0x-zrx": "XMR_ZRX",
     "monero-xmr-to-tether-usdt-erc20": "XMR_USDTERC20",
     "monero-xmr-to-tether-usdt-trc20": "XMR_USDTTRC20",
+    "monero-xmr-to-cash-rub": "XMR_CASHRUB",
     "monero-xmr-to-cash-usd": "XMR_CASHUSD",
     "monero-xmr-to-sber-rub": "XMR_SBERRUB",
     "monero-xmr-to-t-bank-rub": "XMR_TCSBRUB",
@@ -233,17 +217,30 @@
     "neo-neo-to-bitcoin-btc": "NEO_BTC",
     "neo-neo-to-ethereum-eth": "NEO_ETH",
     "neo-neo-to-litecoin-ltc": "NEO_LTC",
+    "neo-neo-to-monero-xmr": "NEO_XMR",
+    "neo-neo-to-solana-sol": "NEO_SOL",
+    "neo-neo-to-tron-trx": "NEO_TRX",
+    "neo-neo-to-dai-dai": "NEO_DAI",
+    "neo-neo-to-0x-zrx": "NEO_ZRX",
+    "neo-neo-to-tether-usdt-erc20": "NEO_USDTERC20",
     "neo-neo-to-tether-usdt-trc20": "NEO_USDTTRC20",
+    "neo-neo-to-cash-rub": "NEO_CASHRUB",
+    "neo-neo-to-sber-rub": "NEO_SBERRUB",
+    "neo-neo-to-t-bank-rub": "NEO_TCSBRUB",
+    "neo-neo-to-alpha-bank-rub": "NEO_ACRUB",
     "solana-sol-to-bitcoin-btc": "SOL_BTC",
     "solana-sol-to-ethereum-eth": "SOL_ETH",
     "solana-sol-to-litecoin-ltc": "SOL_LTC",
     "solana-sol-to-monero-xmr": "SOL_XMR",
+    "solana-sol-to-neo-neo": "SOL_NEO",
     "solana-sol-to-solana-sol": "SOL_SOL",
     "solana-sol-to-tron-trx": "SOL_TRX",
     "solana-sol-to-dai-dai": "SOL_DAI",
     "solana-sol-to-0x-zrx": "SOL_ZRX",
     "solana-sol-to-tether-usdt-erc20": "SOL_USDTERC20",
     "solana-sol-to-tether-usdt-trc20": "SOL_USDTTRC20",
+    "solana-sol-to-cash-rub": "SOL_CASHRUB",
+    "solana-sol-to-cash-usd": "SOL_CASHUSD",
     "solana-sol-to-sber-rub": "SOL_SBERRUB",
     "solana-sol-to-t-bank-rub": "SOL_TCSBRUB",
     "solana-sol-to-alpha-bank-rub": "SOL_ACRUB",
@@ -251,12 +248,14 @@
     "tron-trx-to-ethereum-eth": "TRX_ETH",
     "tron-trx-to-litecoin-ltc": "TRX_LTC",
     "tron-trx-to-monero-xmr": "TRX_XMR",
+    "tron-trx-to-neo-neo": "TRX_NEO",
     "tron-trx-to-solana-sol": "TRX_SOL",
     "tron-trx-to-tron-trx": "TRX_TRX",
     "tron-trx-to-dai-dai": "TRX_DAI",
     "tron-trx-to-0x-zrx": "TRX_ZRX",
     "tron-trx-to-tether-usdt-erc20": "TRX_USDTERC20",
     "tron-trx-to-tether-usdt-trc20": "TRX_USDTTRC20",
+    "tron-trx-to-cash-rub": "TRX_CASHRUB",
     "tron-trx-to-cash-usd": "TRX_CASHUSD",
     "tron-trx-to-sber-rub": "TRX_SBERRUB",
     "tron-trx-to-t-bank-rub": "TRX_TCSBRUB",
@@ -265,11 +264,15 @@
     "dai-dai-to-ethereum-eth": "DAI_ETH",
     "dai-dai-to-litecoin-ltc": "DAI_LTC",
     "dai-dai-to-monero-xmr": "DAI_XMR",
+    "dai-dai-to-neo-neo": "DAI_NEO",
     "dai-dai-to-solana-sol": "DAI_SOL",
     "dai-dai-to-tron-trx": "DAI_TRX",
+    "dai-dai-to-dai-dai": "DAI_DAI",
     "dai-dai-to-0x-zrx": "DAI_ZRX",
     "dai-dai-to-tether-usdt-erc20": "DAI_USDTERC20",
     "dai-dai-to-tether-usdt-trc20": "DAI_USDTTRC20",
+    "dai-dai-to-cash-rub": "DAI_CASHRUB",
+    "dai-dai-to-cash-usd": "DAI_CASHUSD",
     "dai-dai-to-sber-rub": "DAI_SBERRUB",
     "dai-dai-to-t-bank-rub": "DAI_TCSBRUB",
     "dai-dai-to-alpha-bank-rub": "DAI_ACRUB",
@@ -277,11 +280,15 @@
     "0x-zrx-to-ethereum-eth": "ZRX_ETH",
     "0x-zrx-to-litecoin-ltc": "ZRX_LTC",
     "0x-zrx-to-monero-xmr": "ZRX_XMR",
+    "0x-zrx-to-neo-neo": "ZRX_NEO",
     "0x-zrx-to-solana-sol": "ZRX_SOL",
     "0x-zrx-to-tron-trx": "ZRX_TRX",
     "0x-zrx-to-dai-dai": "ZRX_DAI",
     "0x-zrx-to-tether-usdt-erc20": "ZRX_USDTERC20",
     "0x-zrx-to-tether-usdt-trc20": "ZRX_USDTTRC20",
+    "0x-zrx-to-sber-rub": "ZRX_SBERRUB",
+    "0x-zrx-to-t-bank-rub": "ZRX_TCSBRUB",
+    "0x-zrx-to-alpha-bank-rub": "ZRX_ACRUB",
     "tether-usdt-erc20-to-bitcoin-btc": "USDTERC20_BTC",
     "tether-usdt-erc20-to-ethereum-eth": "USDTERC20_ETH",
     "tether-usdt-erc20-to-litecoin-ltc": "USDTERC20_LTC",
@@ -316,11 +323,18 @@
     "tether-usdt-trc20-to-alpha-bank-rub": "USDTTRC20_ACRUB",
     "cash-rub-to-bitcoin-btc": "CASHRUB_BTC",
     "cash-rub-to-ethereum-eth": "CASHRUB_ETH",
-    "cash-rub-to-tether-usdt-erc20": "CASHRUB_USDTERC20",
+    "cash-rub-to-litecoin-ltc": "CASHRUB_LTC",
+    "cash-rub-to-neo-neo": "CASHRUB_NEO",
+    "cash-rub-to-solana-sol": "CASHRUB_SOL",
+    "cash-rub-to-tron-trx": "CASHRUB_TRX",
     "cash-rub-to-tether-usdt-trc20": "CASHRUB_USDTTRC20",
     "cash-usd-to-bitcoin-btc": "CASHUSD_BTC",
     "cash-usd-to-ethereum-eth": "CASHUSD_ETH",
     "cash-usd-to-litecoin-ltc": "CASHUSD_LTC",
+    "cash-usd-to-neo-neo": "CASHUSD_NEO",
+    "cash-usd-to-solana-sol": "CASHUSD_SOL",
+    "cash-usd-to-tron-trx": "CASHUSD_TRX",
+    "cash-usd-to-0x-zrx": "CASHUSD_ZRX",
     "cash-usd-to-tether-usdt-erc20": "CASHUSD_USDTERC20",
     "cash-usd-to-tether-usdt-trc20": "CASHUSD_USDTTRC20",
     "sber-rub-to-bitcoin-btc": "SBERRUB_BTC",
@@ -330,8 +344,10 @@
     "sber-rub-to-solana-sol": "SBERRUB_SOL",
     "sber-rub-to-tron-trx": "SBERRUB_TRX",
     "sber-rub-to-dai-dai": "SBERRUB_DAI",
+    "sber-rub-to-0x-zrx": "SBERRUB_ZRX",
     "sber-rub-to-tether-usdt-erc20": "SBERRUB_USDTERC20",
     "sber-rub-to-tether-usdt-trc20": "SBERRUB_USDTTRC20",
+    "sber-rub-to-t-bank-rub": "SBERRUB_TCSBRUB",
     "t-bank-rub-to-bitcoin-btc": "TCSBRUB_BTC",
     "t-bank-rub-to-ethereum-eth": "TCSBRUB_ETH",
     "t-bank-rub-to-litecoin-ltc": "TCSBRUB_LTC",
@@ -339,6 +355,7 @@
     "t-bank-rub-to-solana-sol": "TCSBRUB_SOL",
     "t-bank-rub-to-tron-trx": "TCSBRUB_TRX",
     "t-bank-rub-to-dai-dai": "TCSBRUB_DAI",
+    "t-bank-rub-to-0x-zrx": "TCSBRUB_ZRX",
     "t-bank-rub-to-tether-usdt-erc20": "TCSBRUB_USDTERC20",
     "t-bank-rub-to-tether-usdt-trc20": "TCSBRUB_USDTTRC20",
     "alpha-bank-rub-to-bitcoin-btc": "ACRUB_BTC",
@@ -348,6 +365,7 @@
     "alpha-bank-rub-to-solana-sol": "ACRUB_SOL",
     "alpha-bank-rub-to-tron-trx": "ACRUB_TRX",
     "alpha-bank-rub-to-dai-dai": "ACRUB_DAI",
+    "alpha-bank-rub-to-0x-zrx": "ACRUB_ZRX",
     "alpha-bank-rub-to-tether-usdt-erc20": "ACRUB_USDTERC20",
     "alpha-bank-rub-to-tether-usdt-trc20": "ACRUB_USDTTRC20"
   },
@@ -6145,67 +6163,75 @@
     }
   ],
   "donors": {
-    "LTC_CASHUSD": {
-      "Istanbul": "Ankara"
+    "BTC_CASHUSD": {
+      "New-York": "Boston",
+      "Kyiv": "Chernihiv",
+      "Guangzhou": "Hong-Kong",
+      "Izhevsk": "Kirov",
+      "Bryansk": "Orel",
+      "Alma-Ata": "Shymkent",
+      "Lipetsk": "Tambov"
     },
-    "XMR_CASHUSD": {
-      "Istanbul": "Ankara",
+    "ETH_CASHUSD": {
+      "New-York": "Boston",
+      "Kyiv": "Chernihiv",
+      "Guangzhou": "Hong-Kong",
+      "Alma-Ata": "Shymkent"
+    },
+    "LTC_CASHUSD": {
+      "Kyiv": "Cherkasy",
+      "Krivoy-Rog": "Kropyvnytskyi"
+    },
+    "SOL_CASHUSD": {
       "Kyiv": "Cherkasy",
       "Krivoy-Rog": "Kropyvnytskyi"
     },
     "TRX_CASHUSD": {
-      "Istanbul": "Ankara"
-    },
-    "USDTERC20_CASHUSD": {
-      "Istanbul": "Ankara",
-      "New-York": "Boston",
-      "Izhevsk": "Kirov",
-      "Bryansk": "Orel",
-      "Lipetsk": "Tambov"
-    },
-    "USDTTRC20_CASHUSD": {
-      "Istanbul": "Ankara",
-      "New-York": "Boston",
-      "Izhevsk": "Kirov",
-      "Bryansk": "Orel",
-      "Lipetsk": "Tambov"
-    },
-    "BTC_CASHUSD": {
-      "New-York": "Boston"
-    },
-    "ETH_CASHUSD": {
-      "New-York": "Boston"
-    },
-    "CASHUSD_BTC": {
-      "Kyiv": "Cherkasy"
-    },
-    "CASHUSD_ETH": {
-      "Kyiv": "Cherkasy"
-    },
-    "CASHUSD_LTC": {
       "Kyiv": "Cherkasy",
       "Krivoy-Rog": "Kropyvnytskyi"
     },
-    "CASHUSD_USDTERC20": {
-      "Kyiv": "Cherkasy"
+    "DAI_CASHUSD": {
+      "Kyiv": "Cherkasy",
+      "Krivoy-Rog": "Kropyvnytskyi"
+    },
+    "USDTERC20_CASHUSD": {
+      "Kyiv": "Chernihiv",
+      "Izhevsk": "Kirov",
+      "Bryansk": "Orel",
+      "Lipetsk": "Tambov"
+    },
+    "CASHUSD_NEO": {
+      "Kyiv": "Cherkasy",
+      "Krivoy-Rog": "Kropyvnytskyi"
+    },
+    "CASHUSD_SOL": {
+      "Kyiv": "Cherkasy",
+      "Krivoy-Rog": "Kropyvnytskyi"
+    },
+    "CASHUSD_ZRX": {
+      "Kyiv": "Cherkasy",
+      "Krivoy-Rog": "Kropyvnytskyi"
+    },
+    "USDTTRC20_CASHUSD": {
+      "Izhevsk": "Kirov",
+      "Krivoy-Rog": "Kropyvnytskyi",
+      "Bryansk": "Orel",
+      "Lipetsk": "Tambov"
+    },
+    "CASHRUB_SOL": {
+      "Izhevsk": "Kirov"
+    },
+    "CASHRUB_TRX": {
+      "Izhevsk": "Kirov"
     },
     "LTC_CASHRUB": {
-      "Izhevsk": "Kirov",
-      "Bryansk": "Orel",
       "Lipetsk": "Tambov"
     },
-    "USDTERC20_CASHRUB": {
-      "Izhevsk": "Kirov",
-      "Bryansk": "Orel",
+    "XMR_CASHRUB": {
       "Lipetsk": "Tambov"
     },
-    "USDTTRC20_CASHRUB": {
-      "Izhevsk": "Kirov",
-      "Bryansk": "Orel",
+    "SOL_CASHRUB": {
       "Lipetsk": "Tambov"
-    },
-    "BTC_CASHRUB": {
-      "Bryansk": "Orel"
     }
   }
 }

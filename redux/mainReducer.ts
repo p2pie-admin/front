@@ -19,7 +19,7 @@ import {
   fetchCurrencyConverterRates,
   submitOrder,
   getOrderByUID,
-  fetchParameters,
+  fetchTopParameters,
   fetchCity,
 } from "./thunks";
 import { IPm, IPmGroup } from "../types/selector";
@@ -95,7 +95,7 @@ export interface MainState {
   ccRates?: ICurrencyConverterRate;
   p2p: IOrder;
   fingerprint?: IFingerprint;
-  parameters: IParameter[];
+  topParameters: IParameter[];
 }
 
 const initialState: MainState = {
@@ -110,7 +110,7 @@ const initialState: MainState = {
   toast: { title: "", status: "info" },
   city: defaultCity,
   p2p: initialOrder,
-  parameters: [],
+  topParameters: [],
 };
 
 export const mainSlice = createSlice({
@@ -475,8 +475,8 @@ export const mainSlice = createSlice({
       state.toast = action.payload;
     });
 
-    builder.addCase(fetchParameters.fulfilled, (state, action) => {
-      state.parameters = action.payload?.parameters || [];
+    builder.addCase(fetchTopParameters.fulfilled, (state, action) => {
+      state.topParameters = action.payload?.topParameters || [];
     });
 
     builder.addCase(getOrderByUID.fulfilled, (state, action) => {

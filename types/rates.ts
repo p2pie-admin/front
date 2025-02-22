@@ -24,10 +24,15 @@ export interface IRate {
 export interface IParameter {
   id: string;
   code: string;
-  icon?: IImage;
-  title?: string;
-  color?: string;
-  description?: string;
+  en_name: string;
+  ru_name: string;
+  color: string;
+  parameter: {
+    id: string;
+    en_description: string;
+    ru_description: string;
+    icon: IImage;
+  };
 }
 
 export type ExchangerId = string;

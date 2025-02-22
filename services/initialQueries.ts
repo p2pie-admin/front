@@ -270,26 +270,29 @@ export const RootTextQuery = gql`
   }
 `;
 
-export const ParametersQuery = gql`
-  query Parameters($locale: I18NLocaleCode) {
-    parameters(locale: $locale, pagination: { limit: 200 }) {
+export const TopParametersQuery = gql`
+  {
+    topParameters(pagination: { limit: 200 }) {
       data {
         id
         attributes {
           code
-          icon {
-            data {
-              id
-              attributes {
-                name
-                alternativeText
-                url
+          en_name
+          ru_name
+          parameter {
+            id
+            en_description
+            ru_description
+            icon {
+              data {
+                id
+                attributes {
+                  name
+                  url
+                }
               }
             }
           }
-          title
-          description
-          color
         }
       }
     }

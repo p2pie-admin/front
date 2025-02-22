@@ -17,13 +17,16 @@ const Parameter = ({
   isExtended,
 }: {
   code: string;
-  isExtended: boolean;
+  isExtended?: boolean;
 }) => {
-  const parameter = useAppSelector((state) =>
-    state.main.parameters.find((p) => p.code == code)
+  const topParameter = useAppSelector((state) =>
+    state.main.topParameters.find((p) => p.code == code)
   );
-  if (!parameter) return <></>;
-  const { id, icon, title, description } = parameter;
+
+  if (!topParameter) return <></>;
+  const { id, parameter, en_name, ru_name, color } = topParameter;
+  const { en_description, ru_description, icon } = parameter;
+
   const rotationColor = 50 * (+id || 0);
   const filter = `invert(60%) sepia(97%) ${useColorModeValue(
     "saturate(550%)",
@@ -31,7 +34,7 @@ const Parameter = ({
   )} hue-rotate(${rotationColor}deg)`;
 
   return (
-    <MyTooltip label={description} placement="left">
+    <MyTooltip label={en_description} placement="left">
       <HStack
         filter={filter}
         zIndex="4"
@@ -59,11 +62,18 @@ const Parameter = ({
         }}
       >
         {icon ? (
-          <CustomImage w="5" h="5" img={icon} customAlt={parameter.title} />
+          <CustomImage
+            w="5"
+            h="5"
+            img={icon}
+            customAlt={parameter.en_description}
+          />
         ) : (
           <IoInformation size="1rem" />
         )}
-        {isExtended && title && <Text fontSize={["xs", "sm"]}>{title}</Text>}
+        {isExtended && en_name && (
+          <Text fontSize={["xs", "sm"]}>{en_name}</Text>
+        )}
       </HStack>
     </MyTooltip>
   );
