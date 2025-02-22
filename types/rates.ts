@@ -19,6 +19,7 @@ export interface IRate {
   parameterCodes?: string[];
   cities?: { [key: string]: string[] };
   ref_link?: string;
+  logo: IImage;
 }
 
 export interface IParameter {

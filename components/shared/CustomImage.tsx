@@ -1,6 +1,7 @@
 import { Image, Box } from "@chakra-ui/react";
 import React from "react";
 import { IImage } from "../../types/selector";
+import fallbackImage from "../../public/fallback.png"; // Import local fallback image
 
 const CustomImage = ({
   img,
@@ -21,19 +22,20 @@ const CustomImage = ({
       ? process.env.NEXT_PUBLIC_STRAPI_PROD_BASE_URL
       : process.env.NEXT_PUBLIC_STRAPI_DEV_BASE_URL;
 
-  const fallbackSRC = "https://i.ibb.co/74jyjr2/fb2.png";
-  if (!img) return <></>;
+  const imageSrc = img ? SRC + img.url : fallbackImage.src; // Use local fallback
+
   return (
-    <Image
-      key={img.id}
-      w={w}
-      h={h}
-      filter={shaded ? "grayscale(0.6) brightness(0.3)" : "none"}
-      fallbackSrc={fallbackSRC}
-      fetchPriority="low"
-      src={img ? SRC + img.url : ""}
-      alt={img ? img.alternativeText : customAlt}
-    />
+    <Box w={w} h={h} overflow="hidden">
+      <Image
+        key={img?.id}
+        w="100%"
+        h="100%"
+        objectFit="cover"
+        filter={shaded ? "grayscale(0.6) brightness(0.3)" : "none"}
+        src={imageSrc}
+        alt={img?.alternativeText || customAlt}
+      />
+    </Box>
   );
 };
 

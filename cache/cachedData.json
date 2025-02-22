@@ -327,10 +327,12 @@
     "cash-rub-to-neo-neo": "CASHRUB_NEO",
     "cash-rub-to-solana-sol": "CASHRUB_SOL",
     "cash-rub-to-tron-trx": "CASHRUB_TRX",
+    "cash-rub-to-dai-dai": "CASHRUB_DAI",
     "cash-rub-to-tether-usdt-trc20": "CASHRUB_USDTTRC20",
     "cash-usd-to-bitcoin-btc": "CASHUSD_BTC",
     "cash-usd-to-ethereum-eth": "CASHUSD_ETH",
     "cash-usd-to-litecoin-ltc": "CASHUSD_LTC",
+    "cash-usd-to-monero-xmr": "CASHUSD_XMR",
     "cash-usd-to-neo-neo": "CASHUSD_NEO",
     "cash-usd-to-solana-sol": "CASHUSD_SOL",
     "cash-usd-to-tron-trx": "CASHUSD_TRX",
@@ -6176,7 +6178,10 @@
       "New-York": "Boston",
       "Kyiv": "Chernihiv",
       "Guangzhou": "Hong-Kong",
-      "Alma-Ata": "Shymkent"
+      "Izhevsk": "Kirov",
+      "Bryansk": "Orel",
+      "Alma-Ata": "Shymkent",
+      "Lipetsk": "Tambov"
     },
     "LTC_CASHUSD": {
       "Kyiv": "Cherkasy",
@@ -6212,6 +6217,11 @@
       "Kyiv": "Cherkasy",
       "Krivoy-Rog": "Kropyvnytskyi"
     },
+    "DAI_CASHRUB": {
+      "Izhevsk": "Kirov",
+      "Bryansk": "Orel",
+      "Lipetsk": "Tambov"
+    },
     "USDTTRC20_CASHUSD": {
       "Izhevsk": "Kirov",
       "Krivoy-Rog": "Kropyvnytskyi",
@@ -6231,6 +6241,9 @@
       "Lipetsk": "Tambov"
     },
     "SOL_CASHRUB": {
+      "Lipetsk": "Tambov"
+    },
+    "TRX_CASHRUB": {
       "Lipetsk": "Tambov"
     }
   }

@@ -21,6 +21,7 @@ import { GrCircleInformation } from "react-icons/gr";
 import TopParameter from "./TopParameter";
 import { useIsMobile } from "./hooks";
 import Rating from "./Rating";
+import CustomImage from "../../shared/CustomImage";
 
 const DesktopParameters = ({
   parameterCodes,
@@ -88,7 +89,7 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
         ) / 100
       : rate.admin_rating;
 
-  const { name, course, min, max, ref_link, parameterCodes } = rate;
+  const { name, course, min, max, ref_link, logo } = rate;
 
   const giveCur = useAppSelector(
     (state) => state.main.givePm?.currency.code.toUpperCase() || ""
@@ -98,7 +99,7 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
   );
   const bgColor = useColorModeValue("bg.10", "bg.700");
   const colorActive = useColorModeValue("bg.700", "bg.200");
-  const colorInactive = useColorModeValue("bg.600", "bg.300");
+  // const colorInactive = useColorModeValue("bg.600", "bg.300");
   const side = course > 1 ? "give" : "get";
   const smallCur = side === "give" ? giveCur : getCur;
   const bigCur = side === "give" ? getCur : giveCur;
@@ -125,17 +126,23 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
     >
       <Box w="100%">
         <HStack justifyContent={isMobile ? "start" : "space-between"}>
-          <HStack alignItems="center">
+          <HStack
+            alignItems="center"
+            cursor="pointer"
+            onClick={() => {
+              dispatch(redirect());
+              window.open(ref_link, "_blank");
+            }}
+          >
+            <Box borderRadius="xl" overflow="hidden" boxShadow="md">
+              <CustomImage img={logo} w="35px" h="35px" />
+            </Box>
+
             <ResponsiveText
-              size={name.length > 15 ? "md" : "lg"}
+              size={name.length > 15 ? "lg" : "xl"}
               fontWeight="bold"
               transition="color 200ms linear"
               variant={"primary"}
-              cursor="pointer"
-              onClick={() => {
-                dispatch(redirect());
-                window.open(ref_link, "_blank");
-              }}
             >
               {capitalize(name)}
             </ResponsiveText>
