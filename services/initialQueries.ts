@@ -125,11 +125,15 @@ export const exchangersQuery = gql`
         id
         attributes {
           name
-          description
           ref_link
-          rates_link
           tag
           admin_rating
+          ru_description
+          en_description
+          email
+          telegram
+          working_time
+          date_listed
         }
       }
     }

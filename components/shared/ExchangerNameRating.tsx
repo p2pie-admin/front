@@ -16,7 +16,7 @@ const ExchangerNameRating = ({
   rating,
 }: {
   exchangerName: string;
-  rating: number;
+  rating?: number;
 }) => {
   const [
     primary200,
@@ -33,6 +33,7 @@ const ExchangerNameRating = ({
     "blackAlpha.300",
     "whiteAlpha.300",
   ]);
+  if (!rating) return <></>;
 
   return (
     <HStack h="40px" px="2" position="relative">

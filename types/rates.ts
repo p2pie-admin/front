@@ -18,7 +18,7 @@ export interface IRate {
   reserve: ILimit;
   parameterCodes?: string[];
   cities?: { [key: string]: string[] };
-  ref_link?: string;
+  ref_link: string;
   logo: IImage;
 }
 

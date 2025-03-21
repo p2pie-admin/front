@@ -10,9 +10,13 @@ export type IDirRatesStatus = "fulfilled" | "rejected" | "pending";
 export type IExchanger = {
   name: string;
   id: string;
-  rates_link: string;
-  ref_link?: string;
+  ref_link: string;
   tag?: string | null;
   admin_rating?: number;
-  description: string;
+  ru_description?: string;
+  en_description?: string;
+  email?: string;
+  telegram?: string;
+  working_time?: string;
+  date_listed?: string;
 };

@@ -12,19 +12,22 @@ import useSWR from "swr";
 import { useAppSelector } from "../../redux/hooks";
 import { initCMSFetcher } from "../../services/fetchers";
 import { Box3D, CustomBox3D } from "../../styles/theme/custom";
-import { IExchangerData } from "../../types/exchanger";
+
 import ExchangerNameRating from "./ExchangerNameRating";
 import { exchangerQuery } from "./queries";
 import RatingSlider from "./RatingSlider";
+import { IExchanger } from "../../types/general";
+import { useRouter } from "next/router";
 
 const ExchangerDetails = () => {
+  const { locale } = useRouter() as { locale: "en" | "ru" };
   const exchangerId = useAppSelector(
     (state) => state.main.dirRates?.[state.main.swiperIdVisible]?.exchangerId
   );
   const fetcher = initCMSFetcher({ id: exchangerId });
 
   const { data, error } = useSWR(exchangerQuery, fetcher) as {
-    data: { exchanger: IExchangerData };
+    data: { exchanger: IExchanger };
     error: any;
   };
 
@@ -32,10 +35,11 @@ const ExchangerDetails = () => {
 
   const {
     name,
-    status,
+    telegram,
+    email,
+    working_time,
     tag,
     ref_link,
-    description,
     date_listed,
     admin_rating,
   } = data.exchanger;
@@ -58,14 +62,14 @@ const ExchangerDetails = () => {
     "red.400",
   ];
   const mainColor = useColorModeValue("violet.700", "peach.300");
-
+  const description = data.exchanger[`${locale}_description`];
   return (
     <CustomBox3D>
       <Text color="bg.500" mb="2">
         Exchanger info
       </Text>
       <Grid gridTemplateColumns="5fr 3fr" gridGap="4">
-        <ExchangerNameRating exchangerName={name} rating={rating} />
+        <ExchangerNameRating exchangerName={name} rating={admin_rating} />
 
         <Box
           p="2"
