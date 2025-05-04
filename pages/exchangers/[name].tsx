@@ -3,15 +3,16 @@ import { capitalize } from "../../components/main/side/selector/section/PmGroup/
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { initCMSFetcher } from "../../services/fetchers";
 import { exchangersQuery } from "../../services/initialQueries";
-import { IExchanger } from "../../types/general";
+import { IExchanger } from "../../types/exchanger";
 import { readCache, writeCache } from "../../cache";
 import { ICache } from "../../types/exchange";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
 import { Box, HStack, Text } from "@chakra-ui/react";
-import LinkButton from "../../components/shared/LinkButton";
+
 import { FiPlusCircle } from "react-icons/fi";
 import { LinkWrapper } from "../../components/exchange/pmLayout/LinkWrapper";
 import { TbExternalLink } from "react-icons/tb";
+import { exchangerNameToSlug } from "./helper";
 
 export default function ExchangerPage({
   exchanger,
@@ -21,13 +22,13 @@ export default function ExchangerPage({
   locale: "en" | "ru";
 }) {
   const router = useRouter();
-  const { name } = router.query as { name: string };
+  //const { name } = router.query as { name: string };
 
   // Handle non-existent exchanger
   if (!exchanger) {
     return <ResponsiveText>Exchanger not found</ResponsiveText>;
   }
-  console.log(exchanger);
+  //console.log(exchanger);
 
   const url = exchanger.ref_link;
 
@@ -44,7 +45,7 @@ export default function ExchangerPage({
 
       <Box>
         <ResponsiveText whiteSpace="unset">
-          {exchanger?.[`${locale}_description`]}
+          {exchanger.exchanger_card?.[`${locale}_description`]}
         </ResponsiveText>
       </Box>
     </Box3D>
@@ -74,7 +75,7 @@ export async function getStaticPaths() {
     ) => [
       ...res,
       ...locales.map((locale) => ({
-        params: { name: exchanger.name.toLowerCase().replaceAll(" ", "-") },
+        params: { name: exchangerNameToSlug(exchanger.name) },
         locale,
       })),
     ],
@@ -98,7 +99,7 @@ export async function getStaticProps({
 
     const exchanger =
       exchangers.find(
-        (e) => e.name.toLowerCase().replaceAll(" ", "-") == name
+        (e) => exchangerNameToSlug(e.name) == name.toLowerCase()
       ) || null;
     return {
       props: {

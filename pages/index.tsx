@@ -17,13 +17,14 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   // must be async
   try {
     const circleTextsFetcher = initCMSFetcher({ locale });
-    const { mainTexts } = (await circleTextsFetcher(MainTextsQuery)) as {
-      mainTexts: IMainText[];
-    };
 
     const rootTextFetcher = initCMSFetcher({ locale, key: "root" });
     const { textBoxes } = (await rootTextFetcher(RootTextQuery)) as {
       textBoxes: ITextBox[];
+    };
+
+    const { mainTexts } = (await circleTextsFetcher(MainTextsQuery)) as {
+      mainTexts: IMainText[];
     };
 
     const rootText = textBoxes[0] || null;

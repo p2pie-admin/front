@@ -114,6 +114,7 @@ const CircularTexts = ({ mainTexts }: { mainTexts?: IMainText[] }) => {
                     w="60px"
                     h="60px"
                     customAlt={mt.title}
+                    objectFit="contain"
                   />
                 </Box>
               </Center>

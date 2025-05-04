@@ -5,9 +5,10 @@ import { GetStaticProps } from "next";
 import { initCMSFetcher } from "../../services/fetchers";
 import { exchangersQuery } from "../../services/initialQueries";
 import { IPmLayout } from "../../types/exchange";
-import { IExchanger } from "../../types/general";
+import { IExchanger } from "../../types/exchanger";
 import { capitalize } from "../../components/main/side/selector/section/PmGroup/helper";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
+import { exchangerNameToSlug } from "./helper";
 
 // const exchangersData = [
 //   { name: "binance", displayName: "Binance" },
@@ -28,7 +29,9 @@ export default function ExchangersList({
       </ResponsiveText>
 
       {exchangers.map((exchanger) => (
-        <li key={exchanger.name}>{exchanger.name}</li>
+        <Link href={`/exchangers/${exchangerNameToSlug(exchanger.name)}`}>
+          <li key={exchanger.name}>{exchanger.name}</li>
+        </Link>
       ))}
     </Box3D>
   );
@@ -46,5 +49,6 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
       exchangers,
       ...(await serverSideTranslations(locale || "ru", ["main"])),
     },
+    revalidate: 300, // 5 minutes in seconds
   };
 };

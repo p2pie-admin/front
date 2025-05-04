@@ -9,12 +9,14 @@ const CustomImage = ({
   h = "200px",
   shaded = false,
   customAlt = "",
+  objectFit = "cover",
 }: {
   img?: IImage;
   w?: string;
   h?: string;
   shaded?: boolean;
   customAlt?: string;
+  objectFit?: "cover" | "contain";
 }) => {
   const env = process.env.NODE_ENV;
   const SRC =
@@ -30,7 +32,7 @@ const CustomImage = ({
         key={img?.id}
         w="100%"
         h="100%"
-        objectFit="cover"
+        objectFit={objectFit}
         filter={shaded ? "grayscale(0.6) brightness(0.3)" : "none"}
         src={imageSrc}
         alt={img?.alternativeText || customAlt}

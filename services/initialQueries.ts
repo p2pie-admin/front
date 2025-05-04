@@ -117,7 +117,13 @@ export const pmLayoutsQuery = gql`
 
 export const exchangersQuery = gql`
   {
-    exchangers(pagination: { start: 0, limit: 1000 }) {
+    exchangers(
+      pagination: { start: 0, limit: 1000 }
+      filters: {
+        exchanger_card: { ru_description: { notNull: true } }
+        ref_link: { notNull: true }
+      }
+    ) {
       data {
         id
         attributes {
@@ -125,12 +131,14 @@ export const exchangersQuery = gql`
           ref_link
           tag
           admin_rating
-          ru_description
-          en_description
-          email
-          telegram
-          working_time
-          date_listed
+
+          exchanger_card {
+            en_description
+            ru_description
+            telegram
+            email
+            working_time
+          }
         }
       }
     }
@@ -227,7 +235,7 @@ export const articleQuery = gql`
 
 export const MainTextsQuery = gql`
   query MainTexts($locale: I18NLocaleCode) {
-    mainTexts(locale: $locale, pagination: { start: 0, limit: 24 }) {
+    mainTexts(locale: $locale, pagination: { start: 0, limit: 200 }) {
       data {
         id
         attributes {

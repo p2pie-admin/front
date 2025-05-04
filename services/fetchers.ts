@@ -16,7 +16,7 @@ export const initCMSFetcher = (variables = {}) => {
   return async (query: string) => {
     const data = await graphQLClient
       .request(query, variables)
-      .catch((e) => console.error(e));
+      .catch((e) => console.error("CMS FETCHER ERROR: ", e));
     return normalize(data);
   };
 };
