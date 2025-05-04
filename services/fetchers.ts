@@ -11,10 +11,12 @@ export const initCMSFetcher = (variables = {}) => {
       ? process.env.NEXT_PUBLIC_STRAPI_PROD_BASE_URL + "/graphql"
       : process.env.NEXT_PUBLIC_STRAPI_DEV_BASE_URL + "/graphql";
 
-  const graphQLClient = new GraphQLClient(url || "", { timeout: 5000 });
+  const graphQLClient = new GraphQLClient(url || "", { timeout: 15000 });
 
   return async (query: string) => {
-    const data = await graphQLClient.request(query, variables);
+    const data = await graphQLClient
+      .request(query, variables)
+      .catch((e) => console.error(e));
     return normalize(data);
   };
 };

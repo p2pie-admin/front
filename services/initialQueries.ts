@@ -117,10 +117,7 @@ export const pmLayoutsQuery = gql`
 
 export const exchangersQuery = gql`
   {
-    exchangers(
-      pagination: { start: 0, limit: 1000 }
-      filters: { status: { eq: "active" } }
-    ) {
+    exchangers(pagination: { start: 0, limit: 1000 }) {
       data {
         id
         attributes {

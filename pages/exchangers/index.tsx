@@ -26,19 +26,10 @@ export default function ExchangersList({
       <ResponsiveText fontWeight="bold" size="xl" variant="primary">
         Exchangers List:
       </ResponsiveText>
-      <Wrap p="2">
-        {exchangers.map((exchanger) => (
-          <li key={exchanger.name}>
-            <Link
-              href={`/exchangers/${exchanger.name
-                .toLowerCase()
-                .replaceAll(" ", "-")}`}
-            >
-              <Button>{capitalize(exchanger.name)}</Button>
-            </Link>
-          </li>
-        ))}
-      </Wrap>
+
+      {exchangers.map((exchanger) => (
+        <li key={exchanger.name}>{exchanger.name}</li>
+      ))}
     </Box3D>
   );
 }

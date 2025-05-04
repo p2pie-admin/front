@@ -27,6 +27,7 @@ export default function ExchangerPage({
   if (!exchanger) {
     return <ResponsiveText>Exchanger not found</ResponsiveText>;
   }
+  console.log(exchanger);
 
   const url = exchanger.ref_link;
 
@@ -43,7 +44,7 @@ export default function ExchangerPage({
 
       <Box>
         <ResponsiveText whiteSpace="unset">
-          {locale == "ru" && exchanger?.[`${locale}_description`]}
+          {exchanger?.[`${locale}_description`]}
         </ResponsiveText>
       </Box>
     </Box3D>

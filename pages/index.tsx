@@ -20,10 +20,12 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     const { mainTexts } = (await circleTextsFetcher(MainTextsQuery)) as {
       mainTexts: IMainText[];
     };
+
     const rootTextFetcher = initCMSFetcher({ locale, key: "root" });
     const { textBoxes } = (await rootTextFetcher(RootTextQuery)) as {
       textBoxes: ITextBox[];
     };
+
     const rootText = textBoxes[0] || null;
     const possiblePairsFetcher = initParserFetcher();
     const popularRates = (await possiblePairsFetcher(
@@ -39,6 +41,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     const popularPms = pms?.filter((pm) =>
       popularPmCodes.find((code) => code === pm.code)
     );
+    console.log("hello3");
 
     return {
       props: {
@@ -51,7 +54,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
       },
     };
   } catch (e) {
-    console.error(e);
+    console.error("Goes to 404 because: ", e);
     return {
       notFound: true,
     };
