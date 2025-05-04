@@ -12,7 +12,7 @@ import { Box, HStack, Text } from "@chakra-ui/react";
 import { FiPlusCircle } from "react-icons/fi";
 import { LinkWrapper } from "../../components/exchange/pmLayout/LinkWrapper";
 import { TbExternalLink } from "react-icons/tb";
-import { exchangerNameToSlug } from "./helper";
+import { exchangerNameToSlug } from "../../components/exchangers/helper";
 
 export default function ExchangerPage({
   exchanger,

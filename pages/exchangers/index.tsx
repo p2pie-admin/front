@@ -8,7 +8,7 @@ import { IPmLayout } from "../../types/exchange";
 import { IExchanger } from "../../types/exchanger";
 import { capitalize } from "../../components/main/side/selector/section/PmGroup/helper";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
-import { exchangerNameToSlug } from "./helper";
+import { exchangerNameToSlug } from "../../components/exchangers/helper";
 
 // const exchangersData = [
 //   { name: "binance", displayName: "Binance" },
