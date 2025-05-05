@@ -9,6 +9,7 @@ import { appWithTranslation } from "next-i18next";
 import { DefaultSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { defaultConfig } from "../next-seo.config";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { locale } = useRouter() as { locale: "en" | "ru" };
@@ -18,6 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ChakraProvider theme={theme}>
       <Provider store={store}>
         <Layout>
+          <SpeedInsights />
           <DefaultSeo {...seoConfig} />
           <Component {...pageProps} />
         </Layout>
