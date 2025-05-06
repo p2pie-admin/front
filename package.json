@@ -2,8 +2,9 @@
   "name": "p2pie",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "clean-cache": "rm -f cachedData.json",
+    "dev": "yarn clean-cache && next dev",
+    "build": "yarn clean-cache && next build",
     "start": "next start",
     "lint": "next lint",
     "postbuild": "next-sitemap"
