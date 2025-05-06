@@ -96,90 +96,34 @@ const ArticlePage = (props: {
   );
 };
 
-export async function getStaticProps({
-  locale,
-  params,
-}: {
-  locale: "en" | "ru";
-  params: { code: string };
-}) {
-  const rawCode = params?.code || "";
-  const code = rawCode.toLowerCase();
+export async function getStaticProps({ params, locale }: { params: { code: string }; locale: string }) {
+  const cachedData = readCache();
 
-  console.info(
-    `[getStaticProps] Starting for locale: ${locale}, code: ${code}`
-  );
-  try {
-    const cmsFetcher = initCMSFetcher({ code, locale });
-    const { articles } = (await cmsFetcher(articleQuery)) as {
-      articles: IArticle[];
-    };
-
-    if (!articles?.length) {
-      console.warn(`[getStaticProps] No article found for code: ${code}`);
-      return { notFound: true };
-    }
-
-    const article = sanitizeArticle(articles[0]);
-    if (!article) {
-      console.warn(
-        `[getStaticProps] Sanitized article is null for code: ${code}`
-      );
-      return { notFound: true };
-    }
-
-    const cachedData = readCache() as ICache;
-    let otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] } = {
-      buy: [],
-      sell: [],
-    };
-
-    if (cachedData?.pms?.length) {
-      const { pms, slugToCodes } = cachedData;
-      const articlePms = pms.filter((pm) => pm.en_name.toLowerCase() === code);
-
-      const filteredDirs = Object.values(slugToCodes).filter((dir) => {
-        const [giveCode, getCode] = dir.split("_");
-        return (
-          articlePms.find((pm) => pm.code === giveCode) ||
-          articlePms.find((pm) => pm.code === getCode)
-        );
-      });
-
-      otherDirs = filteredDirs.reduce(
-        (res: { buy: IPmPairs[]; sell: IPmPairs[] }, dir: string) => {
-          const slug = Object.keys(slugToCodes).find(
-            (key) => slugToCodes[key] === dir
-          );
-          const givePm = pms.find((pm) => pm.code === dir.split("_")[0]);
-          const getPm = pms.find((pm) => pm.code === dir.split("_")[1]);
-
-          const pmPair = { slug, givePm, getPm } as IPmPairs;
-
-          return givePm?.section === getPm?.section
-            ? res
-            : givePm?.en_name.toLowerCase() ===
-              articlePms[0]?.en_name.toLowerCase()
-            ? { sell: [...res.sell], buy: [...res.buy, pmPair] }
-            : { buy: [...res.buy], sell: [...res.sell, pmPair] };
-        },
-        { buy: [], sell: [] }
-      );
-    }
-
-    return {
-      props: {
-        article,
-        otherDirs,
-        code,
-        ...(await serverSideTranslations(locale || "ru", ["main"])),
-      },
-      revalidate: 6000,
-    };
-  } catch (e) {
-    console.error(`[getStaticProps] Error for code: ${code}`, e);
+  if (!cachedData || !cachedData.possiblePairs) {
+    console.error("[getStaticProps] Cached data is missing or invalid.");
     return { notFound: true };
   }
+
+  const { possiblePairs, selector, parserSetting } = cachedData;
+
+  // Use cached data as needed
+  const code = params.code.toLowerCase();
+  const article = selector.articles.find((a: any) => a.code.toLowerCase() === code);
+
+  if (!article) {
+    console.warn(`[getStaticProps] No article found for code: ${code}`);
+    return { notFound: true };
+  }
+
+  return {
+    props: {
+      article,
+      possiblePairs,
+      parserSetting,
+      ...(await serverSideTranslations(locale || "ru", ["main"])),
+    },
+    revalidate: 600,
+  };
 }
 
 export async function getStaticPaths() {

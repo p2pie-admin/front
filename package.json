@@ -3,8 +3,9 @@
   "private": true,
   "scripts": {
     "clean-cache": "rm -f cachedData.json",
-    "dev": "yarn clean-cache && next dev",
-    "build": "yarn clean-cache && next build",
+    "prebuild": "node scripts/prebuild.js",
+    "dev": "next dev",
+    "build": "yarn prebuild && next build", 
     "start": "next start",
     "lint": "next lint",
     "postbuild": "next-sitemap"

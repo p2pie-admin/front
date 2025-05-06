@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const cacheFilePath = path.resolve(process.cwd(), "cache", "cachedData.json");
+const isProduction = process.env.NODE_ENV === "production";
 
 const readCache = () => {
   try {
@@ -16,6 +17,11 @@ const readCache = () => {
 };
 
 const writeCache = (data) => {
+  if (isProduction) {
+    console.warn("writeCache is disabled in production.");
+    return;
+  }
+
   try {
     const currentCache = readCache(); // Read existing cache
     const mergedCache = { ...currentCache, ...data }; // Merge with new data
