@@ -29,25 +29,24 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 
     const rootText = textBoxes[0] || null;
     const possiblePairsFetcher = initParserFetcher();
-    const popularRates = (await possiblePairsFetcher(
-      "top"
-    )) as IPopularDirRates;
-    const cachedData = readCache() as ICache;
-    const pms = cachedData?.pms;
+    // const popularRates = (await possiblePairsFetcher(
+    //   "top"
+    // )) as IPopularDirRates;
+    //const cachedData = readCache() as ICache;
+    //const pms = cachedData?.pms;
 
-    const popularPmCodes = [
-      ...Object.keys(popularRates),
-      ...Object.values(popularRates)[0]?.buy.map((i) => i.fiat),
-    ];
-    const popularPms = pms?.filter((pm) =>
-      popularPmCodes.find((code) => code === pm.code)
-    );
-    console.log("hello3");
+    // const popularPmCodes = [
+    //   ...Object.keys(popularRates),
+    //   ...Object.values(popularRates)[0]?.buy.map((i) => i.fiat),
+    // ];
+    // const popularPms = pms?.filter((pm) =>
+    //   popularPmCodes.find((code) => code === pm.code)
+    // );
 
     return {
       props: {
-        popularPms: popularPms || null,
-        popularRates: popularRates || null,
+        popularPms: null, //popularPms || null,
+        popularRates: null, //popularRates || null,
         mainTexts: mainTexts || null,
         rootText,
         locale,
