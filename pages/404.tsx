@@ -11,7 +11,7 @@ function NotFound() {
   const dispatch = useAppDispatch();
   return (
     <Flex width="100%" justifyContent="center" alignItems="center" mt="5">
-      <Box3D minW="400px" minH="200px" variant="no_contrast">
+      <Box3D minW="400px" minH="200px" variant="extra_contrast">
         <ErrorWrapper
           isError={true}
           primaryMessage="404"
