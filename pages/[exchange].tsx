@@ -53,24 +53,42 @@ export async function getStaticProps({
   locale: "en" | "ru";
   params: { exchange: string };
 }) {
+  console.info("[getStaticProps] Starting with params:", params);
+
   try {
     const { exchange } = params;
     const [slug, cityParam] = exchangeToSlugCity(exchange);
 
     const cachedData = readCache() as ICache;
+
+    if (!cachedData) {
+      console.error("[getStaticProps] Cached data is undefined.");
+      return { notFound: true };
+    }
+
     const { pms, slugToCodes, cities, ruData, enData } = cachedData;
-    const dir = cachedData?.slugToCodes?.[slug];
 
-    const givePm = pms.find((pm) => pm.code == dir?.split("_")?.[0]);
-    const getPm = pms.find((pm) => pm.code == dir?.split("_")?.[1]);
+    if (!pms || !slugToCodes) {
+      console.error(
+        "[getStaticProps] Missing required cached data properties."
+      );
+      return { notFound: true };
+    }
 
-    if (!dir || !givePm || !getPm)
-      return {
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
+    const dir = slugToCodes?.[slug];
+
+    if (!dir) {
+      console.warn("[getStaticProps] No directory found for slug:", slug);
+      return { notFound: true };
+    }
+
+    const givePm = pms.find((pm) => pm.code == dir.split("_")[0]);
+    const getPm = pms.find((pm) => pm.code == dir.split("_")[1]);
+
+    if (!givePm || !getPm) {
+      console.warn("[getStaticProps] Missing givePm or getPm for slug:", slug);
+      return { notFound: true };
+    }
 
     const similarPmPairs = findSimilarPmPairs(
       givePm,
@@ -80,33 +98,42 @@ export async function getStaticProps({
     );
 
     const city = cityParam
-      ? cachedData.cities.find((c) => c.en_name.toLowerCase() == cityParam)
+      ? cities?.find((c) => c.en_name.toLowerCase() == cityParam)
       : null;
 
     const donorName =
-      (city?.en_name && cachedData.donors[dir]?.[city?.en_name]) || null;
+      (city?.en_name && cachedData.donors?.[dir]?.[city?.en_name]) || null;
     const donorCity = donorName
-      ? cachedData.cities.find(
+      ? cities?.find(
           (c) => c.en_name.toLowerCase() == donorName.toLowerCase()
         ) || null
       : null;
 
     const localData = locale == "en" ? enData : ruData;
+
+    if (!localData) {
+      console.error(
+        "[getStaticProps] Local data is undefined for locale:",
+        locale
+      );
+      return { notFound: true };
+    }
+
     const { pmLayouts, dirsTexts, articleCodes } = localData;
 
     const givePmLayout =
-      pmLayouts.find((l) => l.section == givePm.section) || null;
+      pmLayouts?.find((l) => l.section == givePm.section) || null;
     const getPmLayout =
-      pmLayouts.find((l) => l.section == getPm?.section) || null;
+      pmLayouts?.find((l) => l.section == getPm?.section) || null;
 
     const dirText =
-      dirsTexts.find(
+      dirsTexts?.find(
         (t) =>
           t?.section_give == givePm.section && t?.section_get == getPm?.section
       ) || null;
 
     let [giveArticleExists, getArticleExists] = [false, false];
-    if (articleCodes.length) {
+    if (articleCodes?.length) {
       giveArticleExists = !!articleCodes.find(
         (ac) => ac?.toUpperCase() == givePm.en_name.toUpperCase()
       );
@@ -127,6 +154,18 @@ export async function getStaticProps({
       articleExists: getArticleExists,
     } as IPmData;
 
+    console.info("[getStaticProps] Returning props:", {
+      locale,
+      slug,
+      cities,
+      givePmData,
+      getPmData,
+      dirText,
+      city,
+      similarPmPairs,
+      donorCity,
+    });
+
     return {
       props: {
         locale,
@@ -143,7 +182,7 @@ export async function getStaticProps({
       revalidate: 600,
     };
   } catch (e) {
-    console.error(e);
+    console.error("[getStaticProps] Error:", e);
     return {
       notFound: true,
     };
@@ -151,159 +190,79 @@ export async function getStaticProps({
 }
 
 export async function getStaticPaths() {
-  const parserFetcher = initParserFetcher();
-  const possiblePairs = (await parserFetcher("possible_pairs")) as {
-    [key: string]: string[];
-  };
+  console.info("[getStaticPaths] Generating paths...");
 
-  const dirs = Object.entries(possiblePairs).reduce(
-    (res: string[], [code, pairs]) => [
-      ...res,
-      ...pairs.map((pair) => `${code}_${pair}`),
-    ],
-    []
-  );
+  try {
+    const parserFetcher = initParserFetcher();
+    const possiblePairs = (await parserFetcher("possible_pairs")) as {
+      [key: string]: string[];
+    };
 
-  const cmsFetcher = initCMSFetcher();
-  const { selector } = (await cmsFetcher(selectorQuery)) as {
-    selector: ISelector;
-  };
-  const { parserSetting } = (await cmsFetcher(citiesQuery)) as {
-    parserSetting: { cities: ICity[] };
-  };
-
-  const pmGroups = selector.sections.reduce(
-    (res: IPmGroup[], section: ISection) => [
-      ...res,
-      ...section.pm_groups.map((pmg) => ({
-        ...pmg,
-        section: section.en_title.toLowerCase(),
-      })),
-    ],
-    []
-  );
-
-  const pms = pmGroups.reduce((res: IPm[], pmGroup: IPmGroup) => {
-    const pms = extractPmsFromPmGroup(pmGroup);
-    if (!pms || !pms.length) console.log("cant get pms from: ", pmGroup);
-    return !pms ? res : [...res, ...pms];
-  }, []);
-
-  const slugToCodes = dirs.reduce((res: { [key: string]: string }, dir) => {
-    const pmPairFromDir = {
-      givePm: pms.find((pm) => pm.code.toUpperCase() === dir.split("_")[0]),
-      getPm: pms.find((pm) => pm.code.toUpperCase() === dir.split("_")[1]),
-    } as IPossiblePmPair;
-    const slug = pmsToSlug(pmPairFromDir);
-    if (!slug) return res;
-    return { ...res, [slug]: dir };
-  }, {});
-
-  const locales = ["en", "ru"];
-  const cities = parserSetting.cities;
-  const allPaths: { params: { exchange: string }; locale: string }[] = [];
-
-  Object.keys(slugToCodes).forEach((slug) => {
-    locales.forEach((locale) => {
-      allPaths.push({
-        params: { exchange: slug },
-        locale,
-      });
-    });
-  });
-
-  const nonEmpty = (await parserFetcher(`non_empty_cities`)) as {
-    [key: string]: { [key: string]: number };
-  };
-
-  const donors: IDonors = {};
-
-  for (const city of cities) {
-    for (const [slug, dir] of Object.entries(slugToCodes)) {
-      if (!(slug.startsWith("cash-") || slug.includes("-cash-"))) continue;
-
-      const rateIsEmpty = nonEmpty?.[city.en_name.toLowerCase()]?.[dir] < 2;
-
-      const donor = city.closest_cities.find((c) =>
-        Object.keys(nonEmpty).includes(c.en_name.toLowerCase())
-      );
-
-      const donorName = donor?.en_name;
-
-      if (rateIsEmpty && donorName && dir) {
-        donors[dir] = donors[dir] || {};
-        donors[dir][donorName] = city.en_name;
-      }
-
-      locales.forEach((locale) => {
-        allPaths.push({
-          params: {
-            exchange: `${slug}-in-${city.en_name.toLowerCase()}`,
-          },
-          locale,
-        });
-      });
-    }
-  }
-
-  const needPrerender = (exchangePath: string) => {
-    if (!exchangePath.includes("-in-")) return true;
-    const city = cities.find((city) =>
-      exchangePath.includes(city.en_name.toLowerCase())
+    const dirs = Object.entries(possiblePairs).reduce(
+      (res: string[], [code, pairs]) => [
+        ...res,
+        ...pairs.map((pair) => `${code}_${pair}`),
+      ],
+      []
     );
-    if (!city?.en_name) return false;
-    const countryName = city?.en_country_name?.toLowerCase();
-    return city?.population > 3 && prerenderCountries.includes(countryName);
-  };
 
-  const slicedPaths = allPaths
-    .filter((p) => needPrerender(p.params.exchange))
-    .slice(0, 2000); // adjust max limit if needed
+    const cmsFetcher = initCMSFetcher();
+    const { selector } = (await cmsFetcher(selectorQuery)) as {
+      selector: ISelector;
+    };
+    const { parserSetting } = (await cmsFetcher(citiesQuery)) as {
+      parserSetting: { cities: ICity[] };
+    };
 
-  const ruCmsFetcher = initCMSFetcher({ locale: "ru" });
-  const enCmsFetcher = initCMSFetcher({ locale: "en" });
+    const pmGroups = selector.sections.reduce(
+      (res: IPmGroup[], section: ISection) => [
+        ...res,
+        ...section.pm_groups.map((pmg) => ({
+          ...pmg,
+          section: section.en_title.toLowerCase(),
+        })),
+      ],
+      []
+    );
 
-  const ruPmLayouts = (await ruCmsFetcher(pmLayoutsQuery)) as {
-    pmLayouts: IPmLayout[];
-  };
-  const enPmLayouts = (await enCmsFetcher(pmLayoutsQuery)) as {
-    pmLayouts: IPmLayout[];
-  };
-  const ruDirsTexts = (await ruCmsFetcher(dirsTextsQuery)) as {
-    dirsTexts: IDirText[];
-  };
-  const enDirsTexts = (await enCmsFetcher(dirsTextsQuery)) as {
-    dirsTexts: IDirText[];
-  };
-  const enArticleCodes = (await ruCmsFetcher(articleCodesQuery)) as {
-    articles: { code: string }[];
-  };
-  const ruArticleCodes = (await enCmsFetcher(articleCodesQuery)) as {
-    articles: { code: string }[];
-  };
+    const pms = pmGroups.reduce((res: IPm[], pmGroup: IPmGroup) => {
+      const pms = extractPmsFromPmGroup(pmGroup);
+      if (!pms || !pms.length) console.log("cant get pms from: ", pmGroup);
+      return !pms ? res : [...res, ...pms];
+    }, []);
 
-  const cachedData = readCache() as ICache;
-  cachedData.enData = {
-    pmLayouts: enPmLayouts.pmLayouts,
-    dirsTexts: enDirsTexts.dirsTexts,
-    articleCodes: enArticleCodes.articles.map((a) => a.code),
-  };
-  cachedData.ruData = {
-    pmLayouts: ruPmLayouts.pmLayouts,
-    dirsTexts: ruDirsTexts.dirsTexts,
-    articleCodes: ruArticleCodes.articles.map((a) => a.code),
-  };
-  cachedData.slugToCodes = slugToCodes;
-  cachedData.cities = cities;
-  cachedData.pms = pms;
-  cachedData.donors = donors;
+    const slugToCodes = dirs.reduce((res: { [key: string]: string }, dir) => {
+      const pmPairFromDir = {
+        givePm: pms.find((pm) => pm.code.toUpperCase() === dir.split("_")[0]),
+        getPm: pms.find((pm) => pm.code.toUpperCase() === dir.split("_")[1]),
+      } as IPossiblePmPair;
+      const slug = pmsToSlug(pmPairFromDir);
+      if (!slug) return res;
+      return { ...res, [slug]: dir };
+    }, {});
 
-  writeCache(cachedData);
+    const locales = ["en", "ru"];
+    const cities = parserSetting.cities;
 
-  return {
-    paths: slicedPaths,
-    fallback: "blocking",
-  };
+    // Prerender a few specific paths
+    const prerenderPaths = [
+      { params: { exchange: "bitcoin-btc-to-ethereum-eth" }, locale: "en" },
+      { params: { exchange: "usd-to-eur" }, locale: "en" },
+    ];
+
+    console.info("[getStaticPaths] Prerendering paths:", prerenderPaths);
+
+    return {
+      paths: prerenderPaths,
+      fallback: "blocking", // Allow dynamic generation
+    };
+  } catch (e) {
+    console.error("[getStaticPaths] Error:", e);
+    return {
+      paths: [],
+      fallback: "blocking",
+    };
+  }
 }
 
 export default ExchangePage;
