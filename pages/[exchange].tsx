@@ -58,22 +58,34 @@ export async function getStaticProps({
     const [slug, cityParam] = exchangeToSlugCity(exchange);
 
     const cachedData = readCache() as ICache;
-    console.info("[getStaticProps] Cached data:", cachedData);
+
+    if (!cachedData) {
+      console.error("[getStaticProps] Cached data is undefined.");
+      return { notFound: true };
+    }
 
     const { pms, slugToCodes, cities, ruData, enData } = cachedData;
-    const dir = cachedData?.slugToCodes?.[slug];
 
-    const givePm = pms.find((pm) => pm.code == dir?.split("_")?.[0]);
-    const getPm = pms.find((pm) => pm.code == dir?.split("_")?.[1]);
+    if (!pms || !slugToCodes) {
+      console.error(
+        "[getStaticProps] Missing required cached data properties."
+      );
+      return { notFound: true };
+    }
 
-    if (!dir || !givePm || !getPm) {
-      console.warn("[getStaticProps] Missing data for slug:", slug);
-      return {
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
+    const dir = slugToCodes?.[slug];
+
+    if (!dir) {
+      console.warn("[getStaticProps] No directory found for slug:", slug);
+      return { notFound: true };
+    }
+
+    const givePm = pms.find((pm) => pm.code == dir.split("_")[0]);
+    const getPm = pms.find((pm) => pm.code == dir.split("_")[1]);
+
+    if (!givePm || !getPm) {
+      console.warn("[getStaticProps] Missing givePm or getPm for slug:", slug);
+      return { notFound: true };
     }
 
     const similarPmPairs = findSimilarPmPairs(
@@ -84,33 +96,42 @@ export async function getStaticProps({
     );
 
     const city = cityParam
-      ? cachedData.cities.find((c) => c.en_name.toLowerCase() == cityParam)
+      ? cities?.find((c) => c.en_name.toLowerCase() == cityParam)
       : null;
 
     const donorName =
-      (city?.en_name && cachedData.donors[dir]?.[city?.en_name]) || null;
+      (city?.en_name && cachedData.donors?.[dir]?.[city?.en_name]) || null;
     const donorCity = donorName
-      ? cachedData.cities.find(
+      ? cities?.find(
           (c) => c.en_name.toLowerCase() == donorName.toLowerCase()
         ) || null
       : null;
 
     const localData = locale == "en" ? enData : ruData;
+
+    if (!localData) {
+      console.error(
+        "[getStaticProps] Local data is undefined for locale:",
+        locale
+      );
+      return { notFound: true };
+    }
+
     const { pmLayouts, dirsTexts, articleCodes } = localData;
 
     const givePmLayout =
-      pmLayouts.find((l) => l.section == givePm.section) || null;
+      pmLayouts?.find((l) => l.section == givePm.section) || null;
     const getPmLayout =
-      pmLayouts.find((l) => l.section == getPm?.section) || null;
+      pmLayouts?.find((l) => l.section == getPm?.section) || null;
 
     const dirText =
-      dirsTexts.find(
+      dirsTexts?.find(
         (t) =>
           t?.section_give == givePm.section && t?.section_get == getPm?.section
       ) || null;
 
     let [giveArticleExists, getArticleExists] = [false, false];
-    if (articleCodes.length) {
+    if (articleCodes?.length) {
       giveArticleExists = !!articleCodes.find(
         (ac) => ac?.toUpperCase() == givePm.en_name.toUpperCase()
       );
@@ -234,7 +255,7 @@ export async function getStaticPaths() {
 
     return {
       paths: allPaths,
-      fallback: "blocking",
+      fallback: "blocking", // Allow dynamic generation
     };
   } catch (e) {
     console.error("[getStaticPaths] Error:", e);
