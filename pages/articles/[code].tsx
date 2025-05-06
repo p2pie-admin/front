@@ -1,24 +1,20 @@
 import { readCache, writeCache } from "../../cache";
 import { initCMSFetcher } from "../../services/fetchers";
-
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { articleCodesQuery, articleQuery } from "../../services/initialQueries";
 import Article from "../../components/exchange/article";
 import { ICache, IPmPairs } from "../../types/exchange";
-
 import { NextSeo, BreadcrumbJsonLd } from "next-seo";
 import { useAppDispatch } from "../../redux/hooks";
 import { useEffect } from "react";
 import { setDirRatesStatus } from "../../redux/mainReducer";
-
 import { IArticle } from "../../types/pages";
 import { marked } from "marked";
 import DOMPurify from "isomorphic-dompurify";
 
 export const textToHTML = (text: string): string => {
-  // only for SSR
-  const rawHTML = marked(text) as string; // Convert Markdown to HTML
-  const sanitizedHTML = DOMPurify.sanitize(rawHTML); // Sanitize HTML
+  const rawHTML = marked(text) as string;
+  const sanitizedHTML = DOMPurify.sanitize(rawHTML);
   return sanitizedHTML.replace(/\n/g, "<br>");
 };
 
@@ -33,7 +29,7 @@ export function sanitizeArticle(article?: IArticle): IArticle | null {
 export function sanitizeChapter(chapter: { title: string; text: string }) {
   return {
     ...chapter,
-    text: textToHTML(chapter.text), // Sanitize `text`
+    text: textToHTML(chapter.text),
   };
 }
 
@@ -44,27 +40,30 @@ const ArticlePage = (props: {
   otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] };
 }) => {
   const { article, code, locale } = props;
+  const normalizedCode = code.toLowerCase();
 
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(setDirRatesStatus("fulfilled"));
   }, []);
+
   if (!article) return <></>;
+
   return (
     <>
       <NextSeo
         title={article.header}
         description={article.subheader}
-        canonical={`https://p2pie.com/articles/${code}`}
+        canonical={`https://p2pie.com/articles/${normalizedCode}`}
         additionalLinkTags={[
           {
             rel: "alternate",
-            href: `https://p2pie.com/en/articles/${code}`,
+            href: `https://p2pie.com/en/articles/${normalizedCode}`,
             hrefLang: "en",
           },
           {
             rel: "alternate",
-            href: `https://p2pie.com/ru/articles/${code}`,
+            href: `https://p2pie.com/ru/articles/${normalizedCode}`,
             hrefLang: "ru",
           },
         ]}
@@ -74,7 +73,7 @@ const ArticlePage = (props: {
             publishedTime: article.updatedAt,
             modifiedTime: article.updatedAt,
           },
-          url: `https://p2pie.com/${locale}/articles/${code}`,
+          url: `https://p2pie.com/${locale}/articles/${normalizedCode}`,
           site_name: article.header,
         }}
       />
@@ -88,13 +87,13 @@ const ArticlePage = (props: {
           {
             position: 2,
             name: article.header,
-            item: `https://p2pie.com/${locale}/articles/${code}`,
+            item: `https://p2pie.com/${locale}/articles/${normalizedCode}`,
           },
         ]}
       />
       <Article {...props} />
     </>
-  ); ///<Article article={article} />;
+  );
 };
 
 export async function getStaticProps({
@@ -104,43 +103,40 @@ export async function getStaticProps({
   locale: "en" | "ru";
   params: { code: string };
 }) {
+  const rawCode = params?.code || "";
+  const code = rawCode.toLowerCase();
+
   console.info(
-    `[getStaticProps] Starting for locale: ${locale}, code: ${params?.code}`
+    `[getStaticProps] Starting for locale: ${locale}, code: ${code}`
   );
   try {
-    const { code } = params;
     const cmsFetcher = initCMSFetcher({ code, locale });
-
-    console.info(`[getStaticProps] Fetching article for code: ${code}`);
     const { articles } = (await cmsFetcher(articleQuery)) as {
       articles: IArticle[];
     };
 
-    if (!articles || !articles.length) {
+    if (!articles?.length) {
       console.warn(`[getStaticProps] No article found for code: ${code}`);
+      return { notFound: true };
     }
 
-    const article = sanitizeArticle(articles?.[0]);
+    const article = sanitizeArticle(articles[0]);
     if (!article) {
       console.warn(
-        `[getStaticProps] Article sanitization failed or article is null for code: ${code}`
+        `[getStaticProps] Sanitized article is null for code: ${code}`
       );
       return { notFound: true };
     }
 
-    let otherDirs = { buy: [], sell: [] } as {
-      buy: IPmPairs[];
-      sell: IPmPairs[];
+    const cachedData = readCache() as ICache;
+    let otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] } = {
+      buy: [],
+      sell: [],
     };
 
-    const cachedData = readCache() as ICache;
-    if (!cachedData?.pms?.length) {
-      console.warn(`[getStaticProps] No cached PMs available.`);
-    } else {
+    if (cachedData?.pms?.length) {
       const { pms, slugToCodes } = cachedData;
-      const articlePms = pms.filter(
-        (pm) => pm.en_name.toLowerCase() === code.toLowerCase()
-      );
+      const articlePms = pms.filter((pm) => pm.en_name.toLowerCase() === code);
 
       const filteredDirs = Object.values(slugToCodes).filter((dir) => {
         const [giveCode, getCode] = dir.split("_");
@@ -171,19 +167,17 @@ export async function getStaticProps({
       );
     }
 
-    console.info(
-      `[getStaticProps] Successfully generated props for code: ${code}`
-    );
     return {
       props: {
         article,
         otherDirs,
+        code,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
       revalidate: 6000,
     };
   } catch (e) {
-    console.error(`[getStaticProps] Error for code: ${params?.code}`, e);
+    console.error(`[getStaticProps] Error for code: ${code}`, e);
     return { notFound: true };
   }
 }
@@ -197,11 +191,12 @@ export async function getStaticPaths() {
       articles: { code: string }[];
     };
 
-    if (!articles || !articles.length) {
+    if (!articles?.length) {
       console.warn("[getStaticPaths] No articles returned from CMS.");
     }
 
-    const articleCodes = articles.map((a) => a.code);
+    const articleCodes = articles.map((a) => a.code.toLowerCase());
+
     const paths = articleCodes.flatMap((code) =>
       locales.map((locale) => ({
         params: { code },
@@ -209,7 +204,6 @@ export async function getStaticPaths() {
       }))
     );
 
-    console.info(`[getStaticPaths] Total paths generated: ${paths.length}`);
     return {
       paths,
       fallback: "blocking",
