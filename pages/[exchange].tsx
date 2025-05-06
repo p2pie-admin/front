@@ -28,7 +28,6 @@ import {
   extractPmsFromPmGroup,
   pmsToSlug,
 } from "../components/main/side/selector/section/PmGroup/helper";
-
 const prerenderCountries = ["ukraine", "russia", "belarus"];
 
 const ExchangePage = (props: {
@@ -56,7 +55,6 @@ export async function getStaticProps({
 }) {
   try {
     const { exchange } = params;
-
     const [slug, cityParam] = exchangeToSlugCity(exchange);
 
     const cachedData = readCache() as ICache;
@@ -73,6 +71,7 @@ export async function getStaticProps({
           permanent: false,
         },
       };
+
     const similarPmPairs = findSimilarPmPairs(
       givePm,
       getPm,
@@ -80,13 +79,10 @@ export async function getStaticProps({
       Object.values(slugToCodes)
     );
 
-    // обработка городов
-
     const city = cityParam
       ? cachedData.cities.find((c) => c.en_name.toLowerCase() == cityParam)
       : null;
 
-    // города доноры это те, у которых нет курса по нарпавлению но есть в соседнем
     const donorName =
       (city?.en_name && cachedData.donors[dir]?.[city?.en_name]) || null;
     const donorCity = donorName
@@ -95,11 +91,7 @@ export async function getStaticProps({
         ) || null
       : null;
 
-    // обработка текстов
-
     const localData = locale == "en" ? enData : ruData;
-    // первое : достаем коробки описания секций пм, это также ссылки на артиклы пм
-    // и втрое : достаем шаблоны для направления с местами для вставки
     const { pmLayouts, dirsTexts, articleCodes } = localData;
 
     const givePmLayout =
@@ -114,7 +106,6 @@ export async function getStaticProps({
       ) || null;
 
     let [giveArticleExists, getArticleExists] = [false, false];
-
     if (articleCodes.length) {
       giveArticleExists = !!articleCodes.find(
         (ac) => ac?.toUpperCase() == givePm.en_name.toUpperCase()
@@ -128,14 +119,12 @@ export async function getStaticProps({
       pm: givePm,
       pmLayout: givePmLayout,
       articleExists: giveArticleExists,
-      // possiblePairs: possiblePairs[givePm.code],
     } as IPmData;
 
     const getPmData = {
       pm: getPm,
       pmLayout: getPmLayout,
       articleExists: getArticleExists,
-      // possiblePairs: possiblePairs[getPm.code],
     } as IPmData;
 
     return {
@@ -161,12 +150,12 @@ export async function getStaticProps({
   }
 }
 
-//.....................................................................................................
 export async function getStaticPaths() {
   const parserFetcher = initParserFetcher();
   const possiblePairs = (await parserFetcher("possible_pairs")) as {
     [key: string]: string[];
   };
+
   const dirs = Object.entries(possiblePairs).reduce(
     (res: string[], [code, pairs]) => [
       ...res,
@@ -175,7 +164,6 @@ export async function getStaticPaths() {
     []
   );
 
-  // забираем все необходимое
   const cmsFetcher = initCMSFetcher();
   const { selector } = (await cmsFetcher(selectorQuery)) as {
     selector: ISelector;
@@ -186,7 +174,7 @@ export async function getStaticPaths() {
 
   const pmGroups = selector.sections.reduce(
     (res: IPmGroup[], section: ISection) => [
-      ...res, // adding section names
+      ...res,
       ...section.pm_groups.map((pmg) => ({
         ...pmg,
         section: section.en_title.toLowerCase(),
@@ -195,15 +183,11 @@ export async function getStaticPaths() {
     []
   );
 
-  console.log("pmGroups fetched: ", pmGroups.length);
-  console.log(`extracting pms from  ${pmGroups.length} pmGroups`);
-
   const pms = pmGroups.reduce((res: IPm[], pmGroup: IPmGroup) => {
     const pms = extractPmsFromPmGroup(pmGroup);
     if (!pms || !pms.length) console.log("cant get pms from: ", pmGroup);
     return !pms ? res : [...res, ...pms];
   }, []);
-  console.log(`received ${pms.length} pms`);
 
   const slugToCodes = dirs.reduce((res: { [key: string]: string }, dir) => {
     const pmPairFromDir = {
@@ -216,50 +200,36 @@ export async function getStaticPaths() {
   }, {});
 
   const locales = ["en", "ru"];
-  const cities = parserSetting.cities as ICity[];
-  console.log(`received ${Object.keys(cities).length} cities`);
-  console.log(`received ${dirs.length} dirs`);
-  console.log(`received ${Object.keys(slugToCodes).length} slugToCodes`);
+  const cities = parserSetting.cities;
+  const allPaths: { params: { exchange: string }; locale: string }[] = [];
 
-  // сперва обычные направления добавляем
-  const allPaths = Object.keys(slugToCodes).reduce(
-    (
-      res: {
-        params: { exchange: string };
-        locale: string;
-      }[],
-      slug: string
-    ) => [
-      ...res,
-      ...locales.map((locale) => ({
+  Object.keys(slugToCodes).forEach((slug) => {
+    locales.forEach((locale) => {
+      allPaths.push({
         params: { exchange: slug },
         locale,
-      })),
-    ],
-    []
-  );
+      });
+    });
+  });
 
   const nonEmpty = (await parserFetcher(`non_empty_cities`)) as {
     [key: string]: { [key: string]: number };
   };
 
-  const tryDonor = (city: ICity) => {
-    return city.closest_cities.find((c) =>
-      Object.keys(nonEmpty).find(
-        (nnc) => nnc.toLowerCase() == c.en_name.toLowerCase()
-      )
-    )?.en_name;
-  };
+  const donors: IDonors = {};
 
-  let donors = {} as IDonors;
+  for (const city of cities) {
+    for (const [slug, dir] of Object.entries(slugToCodes)) {
+      if (!(slug.startsWith("cash-") || slug.includes("-cash-"))) continue;
 
-  cities.map(async (city) => {
-    Object.entries(slugToCodes).forEach(([slug, dir]) => {
-      // если направление не кэш или город имеет меньше 2 курсов  - скипаем его
-      if (!(slug.startsWith("cash-") || slug.includes("-cash-"))) return;
-      const rateIsEmpty = nonEmpty?.[city?.en_name.toLowerCase()]?.[dir] < 2;
-      const donorName = tryDonor(city);
-      if (rateIsEmpty && !donorName) return;
+      const rateIsEmpty = nonEmpty?.[city.en_name.toLowerCase()]?.[dir] < 2;
+
+      const donor = city.closest_cities.find((c) =>
+        Object.keys(nonEmpty).includes(c.en_name.toLowerCase())
+      );
+
+      const donorName = donor?.en_name;
+
       if (rateIsEmpty && donorName && dir) {
         donors[dir] = donors[dir] || {};
         donors[dir][donorName] = city.en_name;
@@ -268,13 +238,13 @@ export async function getStaticPaths() {
       locales.forEach((locale) => {
         allPaths.push({
           params: {
-            exchange: `${slug}-in-${[city.en_name.toLowerCase()]}`,
+            exchange: `${slug}-in-${city.en_name.toLowerCase()}`,
           },
           locale,
         });
       });
-    });
-  });
+    }
+  }
 
   const needPrerender = (exchangePath: string) => {
     if (!exchangePath.includes("-in-")) return true;
@@ -288,12 +258,8 @@ export async function getStaticPaths() {
 
   const slicedPaths = allPaths
     .filter((p) => needPrerender(p.params.exchange))
-    .slice(0, 20);
-  // срезаем 2к
+    .slice(0, 2000); // adjust max limit if needed
 
-  // ПУТИ ЕСТЬ ПОЛНЫЕ ДЛЯ САЙТМАП, А  ЕСТЬ ДЛЯ ПРЕРЕНДЕРИНГА
-
-  // ДАЛЕЕ СОХРАНЯЕМ ДАННЫЕ ДЛЯ getStaticProps
   const ruCmsFetcher = initCMSFetcher({ locale: "ru" });
   const enCmsFetcher = initCMSFetcher({ locale: "en" });
 
@@ -316,26 +282,23 @@ export async function getStaticPaths() {
     articles: { code: string }[];
   };
 
-  console.log("enArticleCodes", enArticleCodes.articles.length);
-  console.log("ruArticleCodes", ruArticleCodes.articles.length);
-
   const cachedData = readCache() as ICache;
-  cachedData.enData = {} as any;
-  cachedData.ruData = {} as any;
+  cachedData.enData = {
+    pmLayouts: enPmLayouts.pmLayouts,
+    dirsTexts: enDirsTexts.dirsTexts,
+    articleCodes: enArticleCodes.articles.map((a) => a.code),
+  };
+  cachedData.ruData = {
+    pmLayouts: ruPmLayouts.pmLayouts,
+    dirsTexts: ruDirsTexts.dirsTexts,
+    articleCodes: ruArticleCodes.articles.map((a) => a.code),
+  };
   cachedData.slugToCodes = slugToCodes;
   cachedData.cities = cities;
   cachedData.pms = pms;
-  //cachedData.possiblePairs = possiblePairs;
-  //cachedData.exchangePaths = allPaths;
   cachedData.donors = donors;
-  cachedData.enData.pmLayouts = enPmLayouts.pmLayouts;
-  cachedData.ruData.pmLayouts = ruPmLayouts.pmLayouts;
-  cachedData.enData.dirsTexts = enDirsTexts.dirsTexts;
-  cachedData.ruData.dirsTexts = ruDirsTexts.dirsTexts;
-  cachedData.enData.articleCodes = enArticleCodes.articles?.map((a) => a.code);
-  cachedData.ruData.articleCodes = ruArticleCodes.articles?.map((a) => a.code);
 
-  writeCache(cachedData); // Save to cache
+  writeCache(cachedData);
 
   return {
     paths: slicedPaths,
