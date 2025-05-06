@@ -8,7 +8,7 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    domains: ["localhost", "p2pie.com"],
+    domains: ["localhost", "p2pie.com", "p2pie.help"],
   },
   // experimental: {
   //   // выключил, потому что https://github.com/vercel/next.js/issues/32360 для CircularMenu

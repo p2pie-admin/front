@@ -189,19 +189,11 @@ export async function getStaticPaths() {
   };
   const articleCodes = articles.map((a) => a.code);
 
-  const paths = Object.keys(articleCodes).reduce(
-    (
-      res: {
-        params: { code: string };
-        locale: string;
-      }[],
-      code: string
-    ) => [
+  const paths = articleCodes.reduce(
+    (res: { params: { code: string }; locale: string }[], code: string) => [
       ...res,
       ...locales.map((locale) => ({
-        params: {
-          code,
-        },
+        params: { code },
         locale,
       })),
     ],
