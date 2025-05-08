@@ -1,16 +1,18 @@
 {
   "compilerOptions": {
-    "target": "es2021",
+    "module": "ESNext",
+    "target": "ESNext",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
@@ -25,7 +27,9 @@
     "next-i18next.config.js",
     "next-seo.config.ts",
     "next-sitemap.config.js",
-    "cache/index.js"
+    "cache/index.js",
+    "scripts/prebuild.mjs",
+    "scripts/prebuild.mjs"
   ],
   "exclude": ["node_modules"]
 }

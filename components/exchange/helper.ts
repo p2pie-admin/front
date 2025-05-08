@@ -38,7 +38,7 @@ export const fillWords = ({
 
 // export const convertCities = (cities: ICity[]): ICities => {
 //   const newCities = {} as ICities; //changes key from BTM -> batumi
-//   console.log(cities);
+//   mylog(cities);
 //   for (const key in cities) {
 //     if (cities.hasOwnProperty(key)) {
 //       const newKey = cities[key][1].toLowerCase().split(", ")[0];

@@ -28,7 +28,7 @@ export default function ExchangerPage({
   if (!exchanger) {
     return <ResponsiveText>Exchanger not found</ResponsiveText>;
   }
-  //console.log(exchanger);
+  //mylog(exchanger);
 
   const url = exchanger.ref_link;
 

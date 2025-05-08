@@ -106,7 +106,7 @@ export const destructureDirSlug = (slug: string) => {
 //         );
 //       })
 //       .sort((r1, r2) => r1[1].course - r2[1].course)[0]?.[1];
-//     console.log("best", best?.name);
+//     mylog("best", best?.name);
 //     return best;
 //   }
 //   return;

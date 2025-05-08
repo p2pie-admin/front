@@ -1,6 +1,8 @@
-const fs = require("fs");
-const path = require("path");
-const { initCMSFetcher, initParserFetcher } = require("../services/fetchers");
+import fs from "fs";
+import path from "path";
+import { initCMSFetcher, initParserFetcher } from "../services/fetchers.ts";
+import { selectorQuery, citiesQuery } from "../services/initialQueries.ts";
+
 const cacheFilePath = path.resolve(process.cwd(), "cache", "cachedData.json");
 
 const populateCache = async () => {

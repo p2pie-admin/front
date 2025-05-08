@@ -28,6 +28,7 @@ import {
   extractPmsFromPmGroup,
   pmsToSlug,
 } from "../components/main/side/selector/section/PmGroup/helper";
+import { mylog } from "../services/utils";
 const prerenderCountries = ["ukraine", "russia", "belarus"];
 
 const ExchangePage = (props: {
@@ -227,7 +228,7 @@ export async function getStaticPaths() {
 
     const pms = pmGroups.reduce((res: IPm[], pmGroup: IPmGroup) => {
       const pms = extractPmsFromPmGroup(pmGroup);
-      if (!pms || !pms.length) console.log("cant get pms from: ", pmGroup);
+      if (!pms || !pms.length) mylog("cant get pms from: ", pmGroup);
       return !pms ? res : [...res, ...pms];
     }, []);
 
