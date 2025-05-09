@@ -31,11 +31,6 @@ const readCache = () => {
 };
 
 const writeCache = (data) => {
-  if (isProduction) {
-    console.warn("writeCache is disabled in production.");
-    return;
-  }
-
   try {
     const currentCache = readCache();
     const mergedCache = { ...currentCache, ...data };
