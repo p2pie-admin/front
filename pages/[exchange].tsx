@@ -83,8 +83,8 @@ export async function getStaticProps({
 
     const dir = cachedData?.slugToCodes?.[slug];
 
-    const givePm = pms?.find((pm) => pm.code == dir?.split("_")?.[0]);
-    const getPm = pms?.find((pm) => pm.code == dir?.split("_")?.[1]);
+    const givePm = pms && pms?.find((pm) => pm.code == dir?.split("_")?.[0]);
+    const getPm = pms && pms?.find((pm) => pm.code == dir?.split("_")?.[1]);
 
     if (!dir || !givePm || !getPm)
       return {
@@ -139,10 +139,10 @@ export async function getStaticProps({
     let [giveArticleExists, getArticleExists] = [false, false];
 
     if (articleCodes.length) {
-      giveArticleExists = !!articleCodes.find(
+      giveArticleExists = !!articleCodes?.find(
         (ac) => ac?.toUpperCase() == givePm.en_name.toUpperCase()
       );
-      getArticleExists = !!articleCodes.find(
+      getArticleExists = !!articleCodes?.find(
         (ac) => ac?.toUpperCase() == getPm.en_name.toUpperCase()
       );
     }
@@ -234,7 +234,7 @@ export async function getStaticPaths() {
   );
 
   const tryDonor = (city: ICity) => {
-    return city.closest_cities.find((c) =>
+    return city.closest_cities?.find((c) =>
       nonEmptyCities.has(c.en_name.toLowerCase())
     )?.en_name;
   };

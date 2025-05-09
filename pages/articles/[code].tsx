@@ -123,7 +123,7 @@ export async function getStaticProps({
     return { notFound: true };
   }
 
-  const article = selector.articles.find(
+  const article = selector.articles?.find(
     (a: any) => a.code.toLowerCase() === code
   );
 

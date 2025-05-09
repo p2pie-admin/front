@@ -56,8 +56,8 @@ export const loadInitialData = async (): Promise<ICache | undefined> => {
 
     const slugToCodes = dirs.reduce((res: { [key: string]: string }, dir) => {
       const pmPairFromDir = {
-        givePm: pms.find((pm) => pm.code.toUpperCase() === dir.split("_")[0]),
-        getPm: pms.find((pm) => pm.code.toUpperCase() === dir.split("_")[1]),
+        givePm: pms?.find((pm) => pm.code.toUpperCase() === dir.split("_")[0]),
+        getPm: pms?.find((pm) => pm.code.toUpperCase() === dir.split("_")[1]),
       } as IPossiblePmPair;
       const slug = pmsToSlug(pmPairFromDir);
       if (!slug) return res;
