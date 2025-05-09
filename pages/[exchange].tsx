@@ -61,16 +61,30 @@ export async function getStaticProps({
     const [slug, cityParam] = exchangeToSlugCity(exchange);
 
     const cachedData = readCache() as ICache;
+    const { pms, slugToCodes, cities, ruData, enData } = cachedData;
+
     if (!cachedData || !cachedData.pms || !cachedData.slugToCodes) {
       console.error("[getStaticProps] Cached data is missing or invalid.");
       return { notFound: true };
     }
 
-    const { pms, slugToCodes, cities, ruData, enData } = cachedData;
+    if (!pms || !Array.isArray(pms)) {
+      console.error("[getStaticProps] 'pms' is missing or invalid.");
+      return { notFound: true };
+    }
+
+    if (!cachedData.cities || !Array.isArray(cachedData.cities)) {
+      console.error("[getStaticProps] 'cities' is missing or invalid.");
+      return { notFound: true };
+    }
+
+    console.log("[getStaticProps] pms:", pms);
+    console.log("[getStaticProps] cities:", cachedData.cities);
+
     const dir = cachedData?.slugToCodes?.[slug];
 
-    const givePm = pms.find((pm) => pm.code == dir?.split("_")?.[0]);
-    const getPm = pms.find((pm) => pm.code == dir?.split("_")?.[1]);
+    const givePm = pms?.find((pm) => pm.code == dir?.split("_")?.[0]);
+    const getPm = pms?.find((pm) => pm.code == dir?.split("_")?.[1]);
 
     if (!dir || !givePm || !getPm)
       return {
@@ -89,14 +103,14 @@ export async function getStaticProps({
     // обработка городов
 
     const city = cityParam
-      ? cachedData.cities.find((c) => c.en_name.toLowerCase() == cityParam)
+      ? cachedData.cities?.find((c) => c.en_name.toLowerCase() == cityParam)
       : null;
 
     // города доноры это те, у которых нет курса по нарпавлению но есть в соседнем
     const donorName =
       (city?.en_name && cachedData.donors[dir]?.[city?.en_name]) || null;
     const donorCity = donorName
-      ? cachedData.cities.find(
+      ? cachedData.cities?.find(
           (c) => c.en_name.toLowerCase() == donorName.toLowerCase()
         ) || null
       : null;
@@ -108,15 +122,18 @@ export async function getStaticProps({
     // и втрое : достаем шаблоны для направления с местами для вставки
     const { pmLayouts, dirsTexts, articleCodes } = localData;
 
+    console.log("[getStaticProps] pmLayouts:", pmLayouts);
+    console.log("[getStaticProps] dirsTexts:", dirsTexts);
+
     const givePmLayout =
-      pmLayouts.find((l) => l.section == givePm.section) || null;
+      pmLayouts?.find((l) => l.section == givePm?.section) || null;
     const getPmLayout =
-      pmLayouts.find((l) => l.section == getPm?.section) || null;
+      pmLayouts?.find((l) => l.section == getPm?.section) || null;
 
     const dirText =
-      dirsTexts.find(
+      dirsTexts?.find(
         (t) =>
-          t?.section_give == givePm.section && t?.section_get == getPm?.section
+          t?.section_give == givePm?.section && t?.section_get == getPm?.section
       ) || null;
 
     let [giveArticleExists, getArticleExists] = [false, false];
@@ -253,13 +270,23 @@ export async function getStaticPaths() {
 
   const needPrerender = (exchangePath: string) => {
     if (!exchangePath.includes("-in-")) return true; // dont prerender cities
-    const city = cities.find((city) =>
+    const city = cities?.find((city) =>
       exchangePath.includes(city.en_name.toLowerCase())
-    ); // берем город из строки ссылки
-    if (!city?.en_name) return false;
+    );
+    if (!city) {
+      console.warn(
+        "[getStaticPaths] City not found for exchangePath:",
+        exchangePath
+      );
+    }
     const countryName = city?.en_country_name?.toLowerCase();
     // пререндерим крупные города и определенные страны
-    return city?.population > 3 && prerenderCountries.includes(countryName);
+    return (
+      city &&
+      countryName &&
+      city?.population > 3 &&
+      prerenderCountries.includes(countryName)
+    );
   };
 
   const slicedPaths = allPaths
