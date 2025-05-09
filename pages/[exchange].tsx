@@ -29,13 +29,14 @@ import {
   pmsToSlug,
 } from "../components/main/side/selector/section/PmGroup/helper";
 import { loadInitialData } from "../services/loadInitialData";
+import { mylog } from "../services/utils";
 
 const prerenderCountries = ["ukraine", "russia", "belarus"];
 
 const ExchangePage = (props: {
   //article?: IArticle | null;
   //cities: ICity[];
-  possiblePairs: { [key: string]: string[] };
+  //possiblePairs: { [key: string]: string[] };
   givePmData: IPmData;
   getPmData: IPmData;
   locale: "en" | "ru";
@@ -64,7 +65,7 @@ export async function getStaticProps({
     const cachedData = readCache() as ICache;
     console.log(
       "exchangers [getStaticProps] cachedData length: ",
-      Object.keys(cachedData).length
+      String(cachedData).length
     );
 
     if (
@@ -246,85 +247,86 @@ export async function getStaticPaths() {
     []
   );
 
-  const parserFetcher = initParserFetcher();
-  const nonEmpty = (await parserFetcher(`non_empty_cities`)) as {
-    [key: string]: { [key: string]: number };
-  };
+  // const parserFetcher = initParserFetcher();
+  // const nonEmpty = (await parserFetcher(`non_empty_cities`)) as {
+  //   [key: string]: { [key: string]: number };
+  // };
 
-  if (!nonEmpty) {
-    console.error("[getStaticPaths] nonEmpty data is missing or invalid.");
-    return {
-      paths: [],
-      fallback: "blocking",
-    };
-  }
+  // if (!nonEmpty) {
+  //   console.error("[getStaticPaths] nonEmpty data is missing or invalid.");
+  //   return {
+  //     paths: [],
+  //     fallback: "blocking",
+  //   };
+  // }
 
-  const nonEmptyCities = new Set(
-    Object.keys(nonEmpty).map((key) => key.toLowerCase())
-  );
+  // const nonEmptyCities = new Set(
+  //   Object.keys(nonEmpty).map((key) => key.toLowerCase())
+  // );
 
-  const tryDonor = (city: ICity) =>
-    city.closest_cities?.find((c) =>
-      nonEmptyCities.has(c.en_name.toLowerCase())
-    )?.en_name;
+  // const tryDonor = (city: ICity) =>
+  //   city.closest_cities?.find((c) =>
+  //     nonEmptyCities.has(c.en_name.toLowerCase())
+  //   )?.en_name;
 
-  let donors = {} as IDonors;
+  // let donors = {} as IDonors;
 
-  await Promise.all(
-    cities.map(async (city) => {
-      Object.entries(slugToCodes).forEach(([slug, dir]) => {
-        // если направление не кэш или город имеет меньше 2 курсов  - скипаем его
-        if (!(slug.startsWith("cash-") || slug.includes("-cash-"))) return;
-        const rateIsEmpty = nonEmpty?.[city?.en_name.toLowerCase()]?.[dir] < 2;
-        const donorName = tryDonor(city);
-        if (rateIsEmpty && !donorName) return;
-        if (rateIsEmpty && donorName && dir) {
-          donors[dir] = donors[dir] || {};
-          donors[dir][donorName] = city.en_name;
-        }
+  // await Promise.all(
+  //   cities.map(async (city) => {
+  //     Object.entries(slugToCodes).forEach(([slug, dir]) => {
+  //       // если направление не кэш или город имеет меньше 2 курсов  - скипаем его
+  //       if (!(slug.startsWith("cash-") || slug.includes("-cash-"))) return;
+  //       const rateIsEmpty = nonEmpty?.[city?.en_name.toLowerCase()]?.[dir] < 2;
+  //       const donorName = tryDonor(city);
+  //       if (rateIsEmpty && !donorName) return;
+  //       if (rateIsEmpty && donorName && dir) {
+  //         donors[dir] = donors[dir] || {};
+  //         donors[dir][donorName] = city.en_name;
+  //       }
 
-        locales.forEach((locale) => {
-          allPaths.push({
-            params: {
-              exchange: `${slug}-in-${[city.en_name.toLowerCase()]}`,
-            },
-            locale,
-          });
-        });
-      });
-    })
-  );
+  //       locales.forEach((locale) => {
+  //         allPaths.push({
+  //           params: {
+  //             exchange: `${slug}-in-${[city.en_name.toLowerCase()]}`,
+  //           },
+  //           locale,
+  //         });
+  //       });
+  //     });
+  //   })
+  // );
 
-  writeCache({ ...cachedData, donors });
+  //writeCache({ ...cachedData, donors });
 
-  const needPrerender = (exchangePath: string) => {
-    if (!exchangePath.includes("-in-")) return true; // dont prerender cities
-    const city = cities?.find((city) =>
-      exchangePath.includes(city.en_name.toLowerCase())
-    );
-    if (!city) {
-      console.warn(
-        "[getStaticPaths] City not found for exchangePath:",
-        exchangePath
-      );
-    }
-    const countryName = city?.en_country_name?.toLowerCase();
-    // пререндерим крупные города и определенные страны
-    return (
-      city &&
-      countryName &&
-      city?.population > 3 &&
-      prerenderCountries.includes(countryName)
-    );
-  };
+  // const needPrerender = (exchangePath: string) => {
+  //   if (!exchangePath.includes("-in-")) return true; // dont prerender cities
+  //   const city = cities?.find((city) =>
+  //     exchangePath.includes(city.en_name.toLowerCase())
+  //   );
+  //   if (!city) {
+  //     console.warn(
+  //       "[getStaticPaths] City not found for exchangePath:",
+  //       exchangePath
+  //     );
+  //   }
+  //   const countryName = city?.en_country_name?.toLowerCase();
+  //   // пререндерим крупные города и определенные страны
+  //   return (
+  //     city &&
+  //     countryName &&
+  //     city?.population > 3 &&
+  //     prerenderCountries.includes(countryName)
+  //   );
+  // };
 
-  const slicedPaths = allPaths
-    .filter((p) => needPrerender(p.params.exchange))
-    .slice(0, 2); // это потом нужно убрать
+  // const slicedPaths = allPaths
+  //   .filter((p) => needPrerender(p.params.exchange))
+  //   .slice(0, 2); // это потом нужно убрать
+  mylog(String(allPaths.length), "important");
 
   // ПУТИ ЕСТЬ ПОЛНЫЕ ДЛЯ САЙТМАП, А  ЕСТЬ ДЛЯ ПРЕРЕНДЕРИНГА
   return {
-    paths: slicedPaths,
+    paths: allPaths,
     fallback: "blocking",
   };
 }
