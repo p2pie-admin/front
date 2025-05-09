@@ -1,4 +1,4 @@
-import { IExchanger } from "./general";
+import { IExchanger } from "./exchanger";
 import { IPm } from "./selector";
 
 export type ISectionName = "crypto" | "bank" | "cash" | "digital" | "transfer";
@@ -50,7 +50,6 @@ export type IPmData = {
 export interface ICache {
   pms: IPm[];
   slugToCodes: { [key: string]: string }; // для запроса курсов
-  articleCodes: string[];
   cities: ICity[];
   //possiblePairs?: { [key: string]: string[] };
   exchangePaths: IPath[];
@@ -58,6 +57,7 @@ export interface ICache {
   enData: ICachedData;
   ruData: ICachedData;
   exchangers: IExchanger[];
+  timestamp: number;
 }
 
 export interface IPossiblePmPair {

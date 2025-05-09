@@ -11,6 +11,7 @@ import { setDirRatesStatus } from "../../redux/mainReducer";
 import { IArticle } from "../../types/pages";
 import { marked } from "marked";
 import DOMPurify from "isomorphic-dompurify";
+import { loadInitialData } from "../../services/loadInitialData";
 
 export const textToHTML = (text: string): string => {
   const rawHTML = marked(text) as string;
@@ -47,14 +48,16 @@ const ArticlePage = (props: {
     dispatch(setDirRatesStatus("fulfilled"));
   }, []);
 
-  if (!article) return <></>;
+  if (!article) {
+    return <div>Article not found</div>;
+  }
 
   return (
     <>
       <NextSeo
         title={article.header}
         description={article.subheader}
-        canonical={`https://p2pie.com/articles/${normalizedCode}`}
+        canonical={`https://p2pie.com/${locale}/articles/${normalizedCode}`}
         additionalLinkTags={[
           {
             rel: "alternate",
@@ -96,7 +99,13 @@ const ArticlePage = (props: {
   );
 };
 
-export async function getStaticProps({ params, locale }: { params: { code: string }; locale: string }) {
+export async function getStaticProps({
+  params,
+  locale,
+}: {
+  params: { code: string };
+  locale: string;
+}) {
   const cachedData = readCache();
 
   if (!cachedData || !cachedData.possiblePairs) {
@@ -108,7 +117,15 @@ export async function getStaticProps({ params, locale }: { params: { code: strin
 
   // Use cached data as needed
   const code = params.code.toLowerCase();
-  const article = selector.articles.find((a: any) => a.code.toLowerCase() === code);
+
+  if (!selector.articles || !Array.isArray(selector.articles)) {
+    console.error("[getStaticProps] Articles data is missing or invalid.");
+    return { notFound: true };
+  }
+
+  const article = selector.articles.find(
+    (a: any) => a.code.toLowerCase() === code
+  );
 
   if (!article) {
     console.warn(`[getStaticProps] No article found for code: ${code}`);
@@ -127,30 +144,51 @@ export async function getStaticProps({ params, locale }: { params: { code: strin
 }
 
 export async function getStaticPaths() {
-  console.info("[getStaticPaths] Generating paths...");
+  let cachedData;
   try {
-    const locales = ["en", "ru"];
-    const cmsFetcher = initCMSFetcher();
-    const { articles } = (await cmsFetcher(articleCodesQuery)) as {
-      articles: { code: string }[];
+    cachedData = await loadInitialData();
+  } catch (e) {
+    console.error("[getStaticPaths] Error loading initial data", e);
+    return {
+      paths: [],
+      fallback: "blocking",
     };
+  }
 
-    if (!articles?.length) {
-      console.warn("[getStaticPaths] No articles returned from CMS.");
-    }
+  if (!cachedData) {
+    console.error("[getStaticPaths] Cached data is missing or invalid.");
+    return {
+      paths: [],
+      fallback: "blocking",
+    };
+  }
 
-    const articleCodes = articles.map((a) => a.code.toLowerCase());
+  try {
+    const locales = ["en", "ru"] as ("en" | "ru")[];
+    const paths: { params: { code: string }; locale: "en" | "ru" }[] = [];
 
-    const paths = articleCodes.flatMap((code) =>
-      locales.map((locale) => ({
-        params: { code },
-        locale,
-      }))
-    );
+    locales.forEach((locale) => {
+      const localeData = cachedData?.[`${locale}Data`];
+      if (!localeData || !localeData.articleCodes) {
+        console.warn(
+          `[getStaticPaths] No article codes found for locale: ${locale}`
+        );
+        return;
+      }
+
+      localeData.articleCodes.forEach((code) => {
+        paths.push({
+          params: {
+            code: code.toLowerCase(),
+          },
+          locale,
+        });
+      });
+    });
 
     return {
       paths,
-      fallback: "blocking",
+      fallback: "blocking", // Use "blocking" to dynamically generate pages on demand
     };
   } catch (e) {
     console.error("[getStaticPaths] Error while generating paths", e);
