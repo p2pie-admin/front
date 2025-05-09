@@ -109,7 +109,9 @@ export async function getStaticProps({
   const cachedData = readCache();
 
   if (!cachedData || !cachedData.possiblePairs) {
-    console.error("[getStaticProps] Cached data is missing or invalid.");
+    console.error(
+      "articles [getStaticProps] Cached data is missing or invalid."
+    );
     return { notFound: true };
   }
 
@@ -156,7 +158,9 @@ export async function getStaticPaths() {
   }
 
   if (!cachedData) {
-    console.error("[getStaticPaths] Cached data is missing or invalid.");
+    console.error(
+      "articles [getStaticPaths] Cached data is missing or invalid."
+    );
     return {
       paths: [],
       fallback: "blocking",

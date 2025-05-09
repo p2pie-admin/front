@@ -60,7 +60,12 @@ export async function getStaticProps({
 
     const [slug, cityParam] = exchangeToSlugCity(exchange);
 
+    console.log("exchangers [getStaticProps] reading cache ");
     const cachedData = readCache() as ICache;
+    console.log(
+      "exchangers [getStaticProps] cachedData length: ",
+      Object.keys(cachedData).length
+    );
 
     if (
       !cachedData ||
@@ -68,7 +73,9 @@ export async function getStaticProps({
       !cachedData.slugToCodes ||
       !cachedData.cities
     ) {
-      console.error("[getStaticProps] Cached data is missing or invalid.");
+      console.error(
+        "exchangers [getStaticProps] Cached data is missing or invalid."
+      );
       return { notFound: true };
     }
 
@@ -199,7 +206,9 @@ export async function getStaticProps({
 export async function getStaticPaths() {
   const cachedData = await loadInitialData();
   if (!cachedData) {
-    console.error("[getStaticPaths] Cached data is missing or invalid.");
+    console.error(
+      "exchangers [getStaticPaths] Cached data is missing or invalid."
+    );
     return {
       paths: [],
       fallback: "blocking",

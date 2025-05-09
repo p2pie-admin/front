@@ -17,6 +17,7 @@ const readCache = () => {
     if (fs.existsSync(cacheFilePath)) {
       const data = fs.readFileSync(cacheFilePath, "utf8");
       try {
+        console.log("readCache length: ", data.length);
         return validateCache(JSON.parse(data));
       } catch (parseErr) {
         console.error(`Error parsing cache file at ${cacheFilePath}`, parseErr);
