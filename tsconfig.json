@@ -27,9 +27,7 @@
     "next-i18next.config.js",
     "next-seo.config.ts",
     "next-sitemap.config.js",
-    "cache/index.js",
-    "scripts/prebuild.mjs",
-    "scripts/prebuild.mjs"
+    "cache/index.js"
   ],
   "exclude": ["node_modules"]
 }
