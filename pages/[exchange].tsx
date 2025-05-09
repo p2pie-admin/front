@@ -61,12 +61,7 @@ export async function getStaticProps({
 
     const [slug, cityParam] = exchangeToSlugCity(exchange);
 
-    console.log("exchangers [getStaticProps] reading cache ");
     const cachedData = readCache() as ICache;
-    console.log(
-      "exchangers [getStaticProps] cachedData length: ",
-      String(cachedData).length
-    );
 
     if (
       !cachedData ||
@@ -206,6 +201,10 @@ export async function getStaticProps({
 //.....................................................................................................
 export async function getStaticPaths() {
   const cachedData = await loadInitialData();
+  console.log(
+    "[getStaticPaths] cachedData:",
+    JSON.stringify(cachedData, undefined, 4)
+  );
   if (!cachedData) {
     console.error(
       "exchangers [getStaticPaths] Cached data is missing or invalid."
