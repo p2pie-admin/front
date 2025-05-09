@@ -61,38 +61,43 @@ export async function getStaticProps({
     const [slug, cityParam] = exchangeToSlugCity(exchange);
 
     const cachedData = readCache() as ICache;
-    const { pms, slugToCodes, cities, ruData, enData } = cachedData;
 
-    if (!cachedData || !cachedData.pms || !cachedData.slugToCodes) {
+    if (
+      !cachedData ||
+      !cachedData.pms ||
+      !cachedData.slugToCodes ||
+      !cachedData.cities
+    ) {
       console.error("[getStaticProps] Cached data is missing or invalid.");
       return { notFound: true };
     }
+
+    const { pms, slugToCodes, cities, ruData, enData } = cachedData;
 
     if (!pms || !Array.isArray(pms)) {
       console.error("[getStaticProps] 'pms' is missing or invalid.");
       return { notFound: true };
     }
 
-    if (!cachedData.cities || !Array.isArray(cachedData.cities)) {
-      console.error("[getStaticProps] 'cities' is missing or invalid.");
-      return { notFound: true };
-    }
-
     console.log("[getStaticProps] pms:", pms.length);
     console.log("[getStaticProps] cities:", cachedData.cities.length);
 
-    const dir = cachedData?.slugToCodes?.[slug];
+    const dir = slugToCodes?.[slug];
+    const [giveCode, getCode] = dir?.split("_") ?? [];
 
-    const givePm = pms && pms?.find((pm) => pm.code == dir?.split("_")?.[0]);
-    const getPm = pms && pms?.find((pm) => pm.code == dir?.split("_")?.[1]);
+    const givePm = pms?.find((pm) => pm.code === giveCode) ?? null;
+    const getPm = pms?.find((pm) => pm.code === getCode) ?? null;
 
-    if (!dir || !givePm || !getPm)
+    if (!dir || !givePm || !getPm) {
+      console.error("[getStaticProps] Invalid direction or PM data.");
       return {
         redirect: {
           destination: "/",
           permanent: false,
         },
       };
+    }
+
     const similarPmPairs = findSimilarPmPairs(
       givePm,
       getPm,
@@ -103,17 +108,26 @@ export async function getStaticProps({
     // обработка городов
 
     const city = cityParam
-      ? cachedData.cities?.find((c) => c.en_name.toLowerCase() == cityParam)
+      ? cities?.find(
+          (c) => c.en_name?.toLowerCase() === cityParam.toLowerCase()
+        ) || null
       : null;
+
+    if (!cities || !Array.isArray(cities)) {
+      console.error("[getStaticProps] 'cities' is missing or invalid.");
+      return { notFound: true };
+    }
 
     // города доноры это те, у которых нет курса по нарпавлению но есть в соседнем
     const donorName =
-      (city?.en_name && cachedData.donors[dir]?.[city?.en_name]) || null;
-    const donorCity = donorName
-      ? cachedData.cities?.find(
-          (c) => c.en_name.toLowerCase() == donorName.toLowerCase()
-        ) || null
-      : null;
+      (city?.en_name && cachedData.donors?.[dir]?.[city.en_name]) || null;
+
+    const donorCity =
+      (donorName &&
+        cities?.find(
+          (c) => c.en_name?.toLowerCase() === donorName.toLowerCase()
+        )) ||
+      null;
 
     // обработка текстов
 
@@ -196,6 +210,16 @@ export async function getStaticPaths() {
 
   const { slugToCodes, cities } = cachedData;
 
+  if (!slugToCodes || !cities) {
+    console.error(
+      "[getStaticPaths] 'slugToCodes' or 'cities' is missing or invalid."
+    );
+    return {
+      paths: [],
+      fallback: "blocking",
+    };
+  }
+
   const allPaths = Object.keys(slugToCodes).reduce(
     (
       res: {
@@ -230,11 +254,10 @@ export async function getStaticPaths() {
     Object.keys(nonEmpty).map((key) => key.toLowerCase())
   );
 
-  const tryDonor = (city: ICity) => {
-    return city.closest_cities?.find((c) =>
+  const tryDonor = (city: ICity) =>
+    city.closest_cities?.find((c) =>
       nonEmptyCities.has(c.en_name.toLowerCase())
     )?.en_name;
-  };
 
   let donors = {} as IDonors;
 
