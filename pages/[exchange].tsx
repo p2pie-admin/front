@@ -291,7 +291,7 @@ export async function getStaticPaths() {
 
   const slicedPaths = allPaths
     .filter((p) => needPrerender(p.params.exchange))
-    .slice(0, 20); // это потом нужно убрать
+    .slice(0, 2); // это потом нужно убрать
 
   // ПУТИ ЕСТЬ ПОЛНЫЕ ДЛЯ САЙТМАП, А  ЕСТЬ ДЛЯ ПРЕРЕНДЕРИНГА
   return {
