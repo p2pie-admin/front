@@ -78,8 +78,8 @@ export async function getStaticProps({
       return { notFound: true };
     }
 
-    console.log("[getStaticProps] pms:", pms);
-    console.log("[getStaticProps] cities:", cachedData.cities);
+    console.log("[getStaticProps] pms:", pms.length);
+    console.log("[getStaticProps] cities:", cachedData.cities.length);
 
     const dir = cachedData?.slugToCodes?.[slug];
 
@@ -121,9 +121,6 @@ export async function getStaticProps({
     // первое : достаем коробки описания секций пм, это также ссылки на артиклы пм
     // и втрое : достаем шаблоны для направления с местами для вставки
     const { pmLayouts, dirsTexts, articleCodes } = localData;
-
-    console.log("[getStaticProps] pmLayouts:", pmLayouts);
-    console.log("[getStaticProps] dirsTexts:", dirsTexts);
 
     const givePmLayout =
       pmLayouts?.find((l) => l.section == givePm?.section) || null;

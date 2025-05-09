@@ -10,6 +10,7 @@ const readCache = () => {
       const data = fs.readFileSync(cacheFilePath, "utf8");
       return JSON.parse(data);
     }
+    return {};
   } catch (err) {
     console.error("Error reading cache file", err);
   }

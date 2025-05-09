@@ -40,6 +40,8 @@ export const loadInitialData = async (): Promise<ICache | undefined> => {
     cachedData.timestamp = now;
 
     const parserFetcher = initParserFetcher();
+    const cmsFetcher = initCMSFetcher();
+
     const possiblePairs = (await parserFetcher("possible_pairs")) as {
       [key: string]: string[];
     };
@@ -54,25 +56,8 @@ export const loadInitialData = async (): Promise<ICache | undefined> => {
 
     console.log(`received ${dirs.length} dirs`);
 
-    const slugToCodes = dirs.reduce((res: { [key: string]: string }, dir) => {
-      const pmPairFromDir = {
-        givePm: pms?.find((pm) => pm.code.toUpperCase() === dir.split("_")[0]),
-        getPm: pms?.find((pm) => pm.code.toUpperCase() === dir.split("_")[1]),
-      } as IPossiblePmPair;
-      const slug = pmsToSlug(pmPairFromDir);
-      if (!slug) return res;
-      return { ...res, [slug]: dir };
-    }, {});
-
-    cachedData.slugToCodes = slugToCodes;
-    console.log(`received ${Object.keys(slugToCodes).length} slugToCodes`);
-
-    const cmsFetcher = initCMSFetcher();
     const { selector } = (await cmsFetcher(selectorQuery)) as {
       selector: ISelector;
-    };
-    const { parserSetting } = (await cmsFetcher(citiesQuery)) as {
-      parserSetting: { cities: ICity[] };
     };
 
     const pmGroups = selector.sections.reduce(
@@ -86,17 +71,34 @@ export const loadInitialData = async (): Promise<ICache | undefined> => {
       []
     );
 
-    console.log("pmGroups fetched: ", pmGroups.length);
-    console.log(`extracting pms from  ${pmGroups.length} pmGroups`);
-
     const pms = pmGroups.reduce((res: IPm[], pmGroup: IPmGroup) => {
-      const pms = extractPmsFromPmGroup(pmGroup);
-      if (!pms || !pms.length) console.log("cant get pms from: ", pmGroup);
-      return !pms ? res : [...res, ...pms];
+      const extractedPms = extractPmsFromPmGroup(pmGroup);
+      if (!extractedPms || !extractedPms.length)
+        console.log("cant get pms from: ", pmGroup);
+      return !extractedPms ? res : [...res, ...extractedPms];
     }, []);
     console.log(`received ${pms.length} pms`);
 
     cachedData.pms = pms;
+
+    const slugToCodes = dirs.reduce((res: { [key: string]: string }, dir) => {
+      const pmPairFromDir = {
+        givePm: pms?.find((pm) => pm.code.toUpperCase() === dir.split("_")[0]),
+        getPm: pms?.find((pm) => pm.code.toUpperCase() === dir.split("_")[1]),
+      } as IPossiblePmPair;
+      const slug = pmsToSlug(pmPairFromDir);
+      if (!slug) return res;
+      return { ...res, [slug]: dir };
+    }, {});
+
+    cachedData.slugToCodes = slugToCodes;
+    console.log(`received ${Object.keys(slugToCodes).length} slugToCodes`);
+
+    const { parserSetting } = (await cmsFetcher(citiesQuery)) as {
+      parserSetting: { cities: ICity[] };
+    };
+
+    console.log("pmGroups fetched: ", pmGroups.length);
 
     const cities = parserSetting.cities as ICity[];
     console.log(`received ${Object.keys(cities).length} cities`);
