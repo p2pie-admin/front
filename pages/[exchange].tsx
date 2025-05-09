@@ -10,7 +10,7 @@ import {
 import { IPmGroup, IPm, ISelector, ISection } from "../types/selector";
 import { readCache, writeCache } from "../cache";
 import React from "react";
-import Exchange from "../components/exchange";
+import Exchange from "../components/exchange/_index";
 import {
   ICache,
   ICity,
@@ -81,9 +81,6 @@ export async function getStaticProps({
       console.error("[getStaticProps] 'pms' is missing or invalid.");
       return { notFound: true };
     }
-
-    console.log("[getStaticProps] pms:", pms.length);
-    console.log("[getStaticProps] cities:", cachedData.cities.length);
 
     const dir = slugToCodes?.[slug];
     const [giveCode, getCode] = dir?.split("_") ?? [];
