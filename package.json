@@ -1,7 +1,6 @@
 {
   "name": "p2pie",
   "private": true,
-  "type": "module",
   "scripts": {
     "clean-cache": "rm -f cachedData.json",
     "dev": "next dev",
