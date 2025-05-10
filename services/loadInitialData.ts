@@ -10,7 +10,9 @@ import {
   IPmLayout,
   IDirText,
   ICache,
+  IParserSetting,
 } from "../types/exchange";
+import { IArticle } from "../types/pages";
 import { ISelector, IPmGroup, ISection, IPm } from "../types/selector";
 import { initCMSFetcher, initParserFetcher } from "./fetchers";
 import {
@@ -19,6 +21,7 @@ import {
   pmLayoutsQuery,
   dirsTextsQuery,
   articleCodesQuery,
+  articlesQuery,
 } from "./initialQueries";
 import { mylog } from "./utils";
 
@@ -45,6 +48,7 @@ export const loadInitialData = async (): Promise<ICache | undefined> => {
     const possiblePairs = (await parserFetcher("possible_pairs")) as {
       [key: string]: string[];
     };
+    cachedData.possiblePairs = possiblePairs; // Save to cache
 
     const dirs = Object.entries(possiblePairs).reduce(
       (res: string[], [code, pairs]) => [
@@ -95,8 +99,9 @@ export const loadInitialData = async (): Promise<ICache | undefined> => {
     console.log(`received ${Object.keys(slugToCodes).length} slugToCodes`);
 
     const { parserSetting } = (await cmsFetcher(citiesQuery)) as {
-      parserSetting: { cities: ICity[] };
+      parserSetting: IParserSetting;
     };
+    cachedData.parserSetting = parserSetting;
 
     console.log("pmGroups fetched: ", pmGroups.length);
 
@@ -124,15 +129,15 @@ export const loadInitialData = async (): Promise<ICache | undefined> => {
     const enDirsTexts = (await enCmsFetcher(dirsTextsQuery)) as {
       dirsTexts: IDirText[];
     };
-    const enArticleCodes = (await enCmsFetcher(articleCodesQuery)) as {
-      articles: { code: string }[];
+    const enArticles = (await enCmsFetcher(articlesQuery)) as {
+      articles: IArticle[];
     };
-    const ruArticleCodes = (await ruCmsFetcher(articleCodesQuery)) as {
-      articles: { code: string }[];
+    const ruArticles = (await ruCmsFetcher(articlesQuery)) as {
+      articles: IArticle[];
     };
 
-    console.log("enArticleCodes", enArticleCodes.articles.length);
-    console.log("ruArticleCodes", ruArticleCodes.articles.length);
+    console.log("enArticles", enArticles.articles.length);
+    console.log("ruArticles", ruArticles.articles.length);
 
     cachedData.enData = {} as any;
     cachedData.ruData = {} as any;
@@ -140,12 +145,8 @@ export const loadInitialData = async (): Promise<ICache | undefined> => {
     cachedData.ruData.pmLayouts = ruPmLayouts.pmLayouts;
     cachedData.enData.dirsTexts = enDirsTexts.dirsTexts;
     cachedData.ruData.dirsTexts = ruDirsTexts.dirsTexts;
-    cachedData.enData.articleCodes = enArticleCodes.articles?.map(
-      (a) => a.code
-    );
-    cachedData.ruData.articleCodes = ruArticleCodes.articles?.map(
-      (a) => a.code
-    );
+    cachedData.enData.articles = enArticles.articles;
+    cachedData.ruData.articles = ruArticles.articles;
 
     writeCache(cachedData); // Save to cache
     return cachedData;

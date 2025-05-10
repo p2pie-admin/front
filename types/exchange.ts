@@ -1,5 +1,6 @@
 import { IExchanger } from "./exchanger";
-import { IPm } from "./selector";
+import { IArticle } from "./pages";
+import { IPm, ISelector } from "./selector";
 
 export type ISectionName = "crypto" | "bank" | "cash" | "digital" | "transfer";
 
@@ -38,7 +39,7 @@ export interface IPath {
 export type ICachedData = {
   pmLayouts: IPmLayout[];
   dirsTexts: IDirText[];
-  articleCodes: string[];
+  articles: IArticle[];
 };
 
 export type IPmData = {
@@ -47,12 +48,17 @@ export type IPmData = {
   articleExists: boolean;
 };
 
+export interface IParserSetting {
+  cities: ICity[];
+}
+
 export interface ICache {
   pms: IPm[];
   slugToCodes: { [key: string]: string }; // для запроса курсов
   cities: ICity[];
-  //possiblePairs?: { [key: string]: string[] };
+  possiblePairs?: { [key: string]: string[] };
   exchangePaths: IPath[];
+  parserSetting: IParserSetting;
   donors: IDonors;
   enData: ICachedData;
   ruData: ICachedData;

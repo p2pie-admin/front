@@ -1,6 +1,7 @@
 import { IImage } from "./selector";
 
 export interface IArticle {
+  code: string;
   id: string;
   time_to_read?: number;
   updatedAt?: string;

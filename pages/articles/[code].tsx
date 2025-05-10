@@ -1,7 +1,6 @@
 import { readCache, writeCache } from "../../cache";
 import { initCMSFetcher } from "../../services/fetchers";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { articleCodesQuery, articleQuery } from "../../services/initialQueries";
 import Article from "../../components/exchange/article";
 import { ICache, IPmPairs } from "../../types/exchange";
 import { NextSeo, BreadcrumbJsonLd } from "next-seo";
@@ -104,39 +103,35 @@ export async function getStaticProps({
   locale,
 }: {
   params: { code: string };
-  locale: string;
+  locale: "en" | "ru";
 }) {
-  const cachedData = readCache();
+  const cachedData = await loadInitialData();
 
-  if (!cachedData || !cachedData.possiblePairs) {
+  if (!cachedData || !cachedData?.possiblePairs) {
     console.error(
       "articles [getStaticProps] Cached data is missing or invalid."
     );
     return { notFound: true };
   }
 
-  const { possiblePairs, selector, parserSetting } = cachedData;
+  const { possiblePairs, parserSetting } = cachedData;
 
   // Use cached data as needed
   const code = params.code.toLowerCase();
-
-  if (!selector.articles || !Array.isArray(selector.articles)) {
-    console.error("[getStaticProps] Articles data is missing or invalid.");
-    return { notFound: true };
-  }
-
-  const article = selector.articles?.find(
-    (a: any) => a.code.toLowerCase() === code
+  const article = cachedData?.[`${locale}Data`]?.articles?.find(
+    (article) => article.code.toLowerCase() === code
   );
-
   if (!article) {
-    console.warn(`[getStaticProps] No article found for code: ${code}`);
+    console.error(
+      `[getStaticProps] Article with code ${code} not found in cached data.`
+    );
     return { notFound: true };
   }
+  const sanitizedArticle = sanitizeArticle(article);
 
   return {
     props: {
-      article,
+      article: sanitizedArticle,
       possiblePairs,
       parserSetting,
       ...(await serverSideTranslations(locale || "ru", ["main"])),
@@ -146,16 +141,7 @@ export async function getStaticProps({
 }
 
 export async function getStaticPaths() {
-  let cachedData;
-  try {
-    cachedData = await loadInitialData();
-  } catch (e) {
-    console.error("[getStaticPaths] Error loading initial data", e);
-    return {
-      paths: [],
-      fallback: "blocking",
-    };
-  }
+  const cachedData = await loadInitialData();
 
   if (!cachedData) {
     console.error(
@@ -173,17 +159,17 @@ export async function getStaticPaths() {
 
     locales.forEach((locale) => {
       const localeData = cachedData?.[`${locale}Data`];
-      if (!localeData || !localeData.articleCodes) {
+      if (!localeData || !localeData.articles) {
         console.warn(
           `[getStaticPaths] No article codes found for locale: ${locale}`
         );
         return;
       }
 
-      localeData.articleCodes.forEach((code) => {
+      localeData.articles.forEach((article) => {
         paths.push({
           params: {
-            code: code.toLowerCase(),
+            code: article.code.toLowerCase(),
           },
           locale,
         });

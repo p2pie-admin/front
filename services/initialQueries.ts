@@ -216,12 +216,13 @@ export const citiesQuery = gql`
   }
 `;
 
-export const articleQuery = gql`
-  query GetArticle($locale: I18NLocaleCode, $code: String) {
-    articles(locale: $locale, filters: { code: { eqi: $code } }) {
+export const articlesQuery = gql`
+  query GetArticle($locale: I18NLocaleCode) {
+    articles(locale: $locale, pagination: { start: 0, limit: 1200 }) {
       data {
         id
         attributes {
+          code
           header
           subheader
           updatedAt

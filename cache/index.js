@@ -2,10 +2,9 @@ const fs = require("fs");
 const path = require("path");
 
 const cacheFilePath = path.resolve(process.cwd(), "cache", "cachedData.json");
-const isProduction = process.env.NODE_ENV === "production";
 
 const validateCache = (data) => {
-  if (typeof data !== "object" || data === null) {
+  if (typeof data !== "object" || data === null || Array.isArray(data)) {
     console.warn("Invalid cache data structure. Returning empty object.");
     return {};
   }
@@ -14,46 +13,39 @@ const validateCache = (data) => {
 
 const readCache = () => {
   try {
-    if (fs.existsSync(cacheFilePath)) {
-      const data = fs.readFileSync(cacheFilePath, "utf8");
-      try {
-        return validateCache(JSON.parse(data));
-      } catch (parseErr) {
-        console.error(`Error parsing cache file at ${cacheFilePath}`, parseErr);
-        return {};
-      }
+    if (!fs.existsSync(cacheFilePath)) return {};
+
+    const raw = fs.readFileSync(cacheFilePath, "utf8");
+    try {
+      return validateCache(JSON.parse(raw));
+    } catch (parseErr) {
+      console.error(`Error parsing cache file at ${cacheFilePath}:`, parseErr);
+      return {};
     }
-    return {};
   } catch (err) {
-    console.error(`Error reading cache file at ${cacheFilePath}`, err);
+    console.error(`Error reading cache file at ${cacheFilePath}:`, err);
     return {};
   }
 };
 
 const writeCache = (data) => {
   try {
-    const currentCache = readCache();
-    const mergedCache = { ...currentCache, ...data };
-
-    try {
-      fs.mkdirSync(path.dirname(cacheFilePath), { recursive: true });
-    } catch (err) {
-      console.error(
-        `Error creating cache directory at ${path.dirname(cacheFilePath)}`,
-        err
-      );
+    if (typeof data !== "object" || data === null) {
+      console.warn("Attempted to write non-object cache data. Skipping.");
       return;
     }
 
+    // Ensure cache directory exists
+    fs.mkdirSync(path.dirname(cacheFilePath), { recursive: true });
+
+    // Write to a temporary file first
     const tempFilePath = `${cacheFilePath}.tmp`;
-    fs.writeFileSync(
-      tempFilePath,
-      JSON.stringify(mergedCache, null, 2),
-      "utf8"
-    );
-    fs.renameSync(tempFilePath, cacheFilePath); // Atomic rename
+    fs.writeFileSync(tempFilePath, JSON.stringify(data, null, 2), "utf8");
+
+    // Atomic replace
+    fs.renameSync(tempFilePath, cacheFilePath);
   } catch (err) {
-    console.error(`Error writing cache file at ${cacheFilePath}`, err);
+    console.error(`Error writing cache file at ${cacheFilePath}:`, err);
   }
 };
 

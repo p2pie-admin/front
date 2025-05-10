@@ -1,33 +1,14 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { initCMSFetcher, initParserFetcher } from "../services/fetchers";
-import {
-  articleCodesQuery,
-  citiesQuery,
-  dirsTextsQuery,
-  pmLayoutsQuery,
-  selectorQuery,
-} from "../services/initialQueries";
-import { IPmGroup, IPm, ISelector, ISection } from "../types/selector";
-import { readCache, writeCache } from "../cache";
+
+import { IPm } from "../types/selector";
 import React from "react";
-import Exchange from "../components/exchange/_index";
-import {
-  ICache,
-  ICity,
-  IDirText,
-  IDonors,
-  IPmData,
-  IPmLayout,
-  IPossiblePmPair,
-} from "../types/exchange";
+import Exchange from "../components/exchange";
+import { ICity, IDirText, IPmData } from "../types/exchange";
 import {
   exchangeToSlugCity,
   findSimilarPmPairs,
 } from "../components/exchange/helper";
-import {
-  extractPmsFromPmGroup,
-  pmsToSlug,
-} from "../components/main/side/selector/section/PmGroup/helper";
+
 import { loadInitialData } from "../services/loadInitialData";
 import { mylog } from "../services/utils";
 
@@ -61,7 +42,7 @@ export async function getStaticProps({
 
     const [slug, cityParam] = exchangeToSlugCity(exchange);
 
-    const cachedData = readCache() as ICache;
+    const cachedData = await loadInitialData();
 
     if (
       !cachedData ||
@@ -134,7 +115,7 @@ export async function getStaticProps({
     const localData = locale == "en" ? enData : ruData;
     // первое : достаем коробки описания секций пм, это также ссылки на артиклы пм
     // и втрое : достаем шаблоны для направления с местами для вставки
-    const { pmLayouts, dirsTexts, articleCodes } = localData;
+    const { pmLayouts, dirsTexts, articles } = localData;
 
     const givePmLayout =
       pmLayouts?.find((l) => l.section == givePm?.section) || null;
@@ -149,12 +130,12 @@ export async function getStaticProps({
 
     let [giveArticleExists, getArticleExists] = [false, false];
 
-    if (articleCodes.length) {
-      giveArticleExists = !!articleCodes?.find(
-        (ac) => ac?.toUpperCase() == givePm.en_name.toUpperCase()
+    if (articles.length) {
+      giveArticleExists = !!articles?.find(
+        (article) => article.code?.toUpperCase() == givePm.en_name.toUpperCase()
       );
-      getArticleExists = !!articleCodes?.find(
-        (ac) => ac?.toUpperCase() == getPm.en_name.toUpperCase()
+      getArticleExists = !!articles?.find(
+        (article) => article.code?.toUpperCase() == getPm.en_name.toUpperCase()
       );
     }
 
