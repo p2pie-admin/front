@@ -129,15 +129,15 @@ export const loadInitialData = async (): Promise<ICache | undefined> => {
     const enDirsTexts = (await enCmsFetcher(dirsTextsQuery)) as {
       dirsTexts: IDirText[];
     };
-    const enArticles = (await enCmsFetcher(articlesQuery)) as {
-      articles: IArticle[];
-    };
-    const ruArticles = (await ruCmsFetcher(articlesQuery)) as {
-      articles: IArticle[];
-    };
+    // const enArticles = (await enCmsFetcher(articlesQuery)) as {
+    //   articles: IArticle[];
+    // };
+    // const ruArticles = (await ruCmsFetcher(articlesQuery)) as {
+    //   articles: IArticle[];
+    // };
 
-    console.log("enArticles", enArticles.articles.length);
-    console.log("ruArticles", ruArticles.articles.length);
+    // console.log("enArticles", enArticles.articles.length);
+    // console.log("ruArticles", ruArticles.articles.length);
 
     cachedData.enData = {} as any;
     cachedData.ruData = {} as any;
@@ -145,8 +145,8 @@ export const loadInitialData = async (): Promise<ICache | undefined> => {
     cachedData.ruData.pmLayouts = ruPmLayouts.pmLayouts;
     cachedData.enData.dirsTexts = enDirsTexts.dirsTexts;
     cachedData.ruData.dirsTexts = ruDirsTexts.dirsTexts;
-    cachedData.enData.articles = enArticles.articles;
-    cachedData.ruData.articles = ruArticles.articles;
+    // cachedData.enData.articles = enArticles.articles;
+    // cachedData.ruData.articles = ruArticles.articles;
 
     writeCache(cachedData); // Save to cache
     return cachedData;

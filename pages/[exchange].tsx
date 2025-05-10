@@ -130,14 +130,14 @@ export async function getStaticProps({
 
     let [giveArticleExists, getArticleExists] = [false, false];
 
-    if (articles.length) {
-      giveArticleExists = !!articles?.find(
-        (article) => article.code?.toUpperCase() == givePm.en_name.toUpperCase()
-      );
-      getArticleExists = !!articles?.find(
-        (article) => article.code?.toUpperCase() == getPm.en_name.toUpperCase()
-      );
-    }
+    // if (articles.length) {
+    //   giveArticleExists = !!articles?.find(
+    //     (article) => article.code?.toUpperCase() == givePm.en_name.toUpperCase()
+    //   );
+    //   getArticleExists = !!articles?.find(
+    //     (article) => article.code?.toUpperCase() == getPm.en_name.toUpperCase()
+    //   );
+    // }
 
     const givePmData = {
       pm: givePm,
