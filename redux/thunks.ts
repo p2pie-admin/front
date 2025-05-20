@@ -176,7 +176,7 @@ export const fetchPossiblePairs = createAsyncThunk(
   "currencies/fetchPossiblePairs",
   async ({ code, side }: { code: string; side: ISide }) => {
     const response = await axios
-      .get(`${courseFilterLink}/possible_pairs/code=${code}`)
+      .get(`${courseFilterLink}/possible_pairs/${code}`)
       .catch((err) => console.error(err));
     const possiblePairs = response?.data as string[];
     return {

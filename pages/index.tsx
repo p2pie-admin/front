@@ -16,18 +16,18 @@ import { useTranslation } from "react-i18next";
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   // must be async
   try {
-    // const circleTextsFetcher = initCMSFetcher({ locale });
+    const circleTextsFetcher = initCMSFetcher({ locale });
 
-    // const rootTextFetcher = initCMSFetcher({ locale, key: "root" });
-    // const { textBoxes } = (await rootTextFetcher(RootTextQuery)) as {
-    //   textBoxes: ITextBox[];
-    // };
+    const rootTextFetcher = initCMSFetcher({ locale, key: "root" });
+    const { textBoxes } = (await rootTextFetcher(RootTextQuery)) as {
+      textBoxes: ITextBox[];
+    };
 
-    // const { mainTexts } = (await circleTextsFetcher(MainTextsQuery)) as {
-    //   mainTexts: IMainText[];
-    // };
+    const { mainTexts } = (await circleTextsFetcher(MainTextsQuery)) as {
+      mainTexts: IMainText[];
+    };
 
-    //const rootText = textBoxes[0] || null;
+    const rootText = textBoxes[0] || null;
     const possiblePairsFetcher = initParserFetcher();
     const popularRates = (await possiblePairsFetcher(
       "top"
@@ -45,10 +45,10 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 
     return {
       props: {
-        popularPms: null, //popularPms || null,
-        popularRates: null, //popularRates || null,
-        // mainTexts: mainTexts || null,
-        // rootText,
+        popularPms: popularPms || null,
+        popularRates: popularRates || null,
+        mainTexts: mainTexts || null,
+        rootText: rootText || null,
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
