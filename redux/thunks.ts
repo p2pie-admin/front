@@ -70,7 +70,7 @@ const _fetchRates = async ({
   cityName?: string;
 }) => {
   const response = await axios
-    .get(`${courseFilterLink}/dir=${dir}/${cityName?.toLowerCase()}`)
+    .get(`${courseFilterLink}/dir=${dir}/part/${cityName?.toLowerCase()}`)
     .catch((err) => console.error("could not fetch, ", err));
   return response?.data as IRate[];
 };

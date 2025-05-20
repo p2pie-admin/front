@@ -16,39 +16,39 @@ import { useTranslation } from "react-i18next";
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   // must be async
   try {
-    const circleTextsFetcher = initCMSFetcher({ locale });
+    // const circleTextsFetcher = initCMSFetcher({ locale });
 
-    const rootTextFetcher = initCMSFetcher({ locale, key: "root" });
-    const { textBoxes } = (await rootTextFetcher(RootTextQuery)) as {
-      textBoxes: ITextBox[];
-    };
+    // const rootTextFetcher = initCMSFetcher({ locale, key: "root" });
+    // const { textBoxes } = (await rootTextFetcher(RootTextQuery)) as {
+    //   textBoxes: ITextBox[];
+    // };
 
-    const { mainTexts } = (await circleTextsFetcher(MainTextsQuery)) as {
-      mainTexts: IMainText[];
-    };
+    // const { mainTexts } = (await circleTextsFetcher(MainTextsQuery)) as {
+    //   mainTexts: IMainText[];
+    // };
 
-    const rootText = textBoxes[0] || null;
+    //const rootText = textBoxes[0] || null;
     const possiblePairsFetcher = initParserFetcher();
-    // const popularRates = (await possiblePairsFetcher(
-    //   "top"
-    // )) as IPopularDirRates;
-    //const cachedData = readCache() as ICache;
-    //const pms = cachedData?.pms;
+    const popularRates = (await possiblePairsFetcher(
+      "top"
+    )) as IPopularDirRates;
+    const cachedData = readCache() as ICache;
+    const pms = cachedData?.pms;
 
-    // const popularPmCodes = [
-    //   ...Object.keys(popularRates),
-    //   ...Object.values(popularRates)[0]?.buy.map((i) => i.fiat),
-    // ];
-    // const popularPms = pms?.filter((pm) =>
-    //   popularPmCodes.find((code) => code === pm.code)
-    // );
+    const popularPmCodes = [
+      ...Object.keys(popularRates),
+      ...Object.values(popularRates)[0]?.buy.map((i) => i.fiat),
+    ];
+    const popularPms = pms?.filter((pm) =>
+      popularPmCodes.find((code) => code === pm.code)
+    );
 
     return {
       props: {
         popularPms: null, //popularPms || null,
         popularRates: null, //popularRates || null,
-        mainTexts: mainTexts || null,
-        rootText,
+        // mainTexts: mainTexts || null,
+        // rootText,
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },

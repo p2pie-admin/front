@@ -36,10 +36,10 @@ export interface IPath {
   locale: string;
 }
 
-export type ICachedData = {
+export type ILocalData = {
   pmLayouts: IPmLayout[];
   dirsTexts: IDirText[];
-  articles: IArticle[];
+  articles?: IArticle[];
 };
 
 export type IPmData = {
@@ -57,12 +57,12 @@ export interface ICache {
   slugToCodes: { [key: string]: string }; // для запроса курсов
   cities: ICity[];
   possiblePairs?: { [key: string]: string[] };
-  exchangePaths: IPath[];
+  exchangePaths?: IPath[];
   parserSetting: IParserSetting;
-  donors: IDonors;
-  enData: ICachedData;
-  ruData: ICachedData;
-  exchangers: IExchanger[];
+  donors?: IDonors;
+  enData: ILocalData;
+  ruData: ILocalData;
+  exchangers?: IExchanger[];
   timestamp: number;
 }
 

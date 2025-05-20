@@ -98,7 +98,7 @@ export async function getStaticProps({
     const { exchangers } = readCache() as ICache;
 
     const exchanger =
-      exchangers.find(
+      exchangers?.find(
         (e) => exchangerNameToSlug(e.name) == name.toLowerCase()
       ) || null;
     return {

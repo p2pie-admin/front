@@ -5,6 +5,8 @@ import {
   useColorModeValue,
   Box,
   Text,
+  Center,
+  Spinner,
 } from "@chakra-ui/react";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
 import Shader from "../shared/Shader";
@@ -49,7 +51,18 @@ const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
         w={400}
         h={164}
         objectFit="cover"
-        fallback={<img src={fallbackSRC} alt={alt} />}
+        fallback={
+          <Center
+            w={400}
+            h={164}
+            justifyContent="center"
+            alignItems="center"
+            minW="100"
+            minH="100"
+          >
+            <Spinner size="xl" color="bg.500" />
+          </Center>
+        }
         src={`${SRC}/${getCur}_${giveCur}/${isLongTimeFrame ? "day" : "hour"}`}
         alt={alt}
       />
