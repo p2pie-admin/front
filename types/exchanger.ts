@@ -15,6 +15,52 @@ export type IExchanger = {
   };
 };
 
+export type IExchangerStatus = "active" | "suspended" | "disabled";
+
+export type IErrorCode =
+  | "no-rates"
+  | "ENOTFOUND"
+  | "ECONNREFUSED"
+  | "ECONNRESET"
+  | "ETIMEDOUT"
+  | "EPERM"
+  | "ECONNABORTED"
+  | "CERT_HAS_EXPIRED"
+  | "ERR_FR_TOO_MANY_REDIRECTS"
+  | "307"
+  | "403"
+  | "404"
+  | "500"
+  | "503"
+  | "522"
+  | "json-parsing-error"
+  | "data-error"
+  | "exchanger-custom-error"
+  | "unknown";
+
+export interface IExchangerParsingError {
+  comment?: string;
+  autoMessage?: string;
+  code?: IErrorCode;
+  codeExplanation?: string;
+}
+
+export interface IExchangerParsingInfo {
+  rates: number;
+  comment?: string;
+}
+
+export type IParserExchanger = {
+  name: string;
+  id: string;
+  status: IExchangerStatus;
+  total_rates?: number;
+  skip?: number;
+  error?: IExchangerParsingError;
+  info?: IExchangerParsingInfo;
+  warnings?: { [key: string]: string };
+};
+
 export interface IPhysicalRate {
   id: string;
   currency?: ICurrency;
@@ -34,3 +80,5 @@ export interface IPhysicalExchanger {
   updatedAt: string;
   physical_rates?: IPhysicalRate[];
 }
+
+export type IDotColors = "green" | "orange" | "red" | "black";

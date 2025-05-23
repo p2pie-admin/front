@@ -1,4 +1,5 @@
 import { readCache, writeCache } from "../cache";
+import exchangers from "../components/exchangers";
 import {
   extractPmsFromPmGroup,
   pmsToSlug,
@@ -11,6 +12,7 @@ import {
   IParserSetting,
   IPmLayout,
 } from "../types/exchange";
+import { IExchanger, IParserExchanger } from "../types/exchanger";
 import { ISelector, IPmGroup, ISection, IPm } from "../types/selector";
 import { initCMSFetcher, initParserFetcher } from "./fetchers";
 import {
@@ -18,6 +20,7 @@ import {
   citiesQuery,
   pmLayoutsQuery,
   dirsTextsQuery,
+  exchangersQuery,
 } from "./initialQueries";
 import { mylog } from "./utils";
 
@@ -63,6 +66,27 @@ export const loadInitialData = async (): Promise<ICache | undefined> => {
     const { selector } = (await cmsFetcher(selectorQuery)) as {
       selector: ISelector;
     };
+
+    const { exchangers: allExchangers } = (await cmsFetcher(
+      exchangersQuery
+    )) as {
+      exchangers: IExchanger[];
+    };
+    const parserExchangers = await parserFetcher("exchangers");
+
+    // объединяем данные из двух источников
+    let exchangers = [] as (IExchanger & IParserExchanger)[];
+    for (const exchanger of allExchangers || []) {
+      const parserExchanger = parserExchangers?.[exchanger.id];
+      const merged = {
+        ...parserExchanger,
+        ...exchanger,
+      } as IExchanger & IParserExchanger;
+
+      if (merged) {
+        exchangers.push(merged);
+      }
+    }
 
     // Flatten and enrich PM groups with section info
     const pmGroups: IPmGroup[] = selector.sections.flatMap(
@@ -113,6 +137,7 @@ export const loadInitialData = async (): Promise<ICache | undefined> => {
       cities,
       enData,
       ruData,
+      exchangers,
     };
 
     writeCache(finalCache);

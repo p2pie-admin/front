@@ -1,4 +1,4 @@
-import { IExchanger } from "./exchanger";
+import { IExchanger, IParserExchanger } from "./exchanger";
 import { IArticle } from "./pages";
 import { IPm, ISelector } from "./selector";
 
@@ -62,7 +62,7 @@ export interface ICache {
   donors?: IDonors;
   enData: ILocalData;
   ruData: ILocalData;
-  exchangers?: IExchanger[];
+  exchangers?: (IExchanger & IParserExchanger)[];
   timestamp: number;
 }
 

@@ -46,7 +46,7 @@ const styles = {
       color: mode("bg.600", "bg.400")(props),
     },
     a: {
-      color: "pink.400",
+      color: "peach.200",
       _hover: {
         textDecoration: "underline",
       },

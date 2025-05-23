@@ -120,8 +120,9 @@ export const exchangersQuery = gql`
     exchangers(
       pagination: { start: 0, limit: 1000 }
       filters: {
-        exchanger_card: { ru_description: { notNull: true } }
+        # exchanger_card: { ru_description: { notNull: true } }
         ref_link: { notNull: true }
+        rates_link: { notNull: true }
       }
     ) {
       data {
