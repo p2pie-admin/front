@@ -71,7 +71,7 @@ const CircularTexts = ({ mainTexts }: { mainTexts?: IMainText[] }) => {
         <Box
           position="absolute"
           top="50%"
-          left="10%"
+          left={{ base: "0", xs: "10%", lg: "12%" }}
           w="600px"
           h="600px"
           borderRadius="50%"
@@ -101,10 +101,6 @@ const CircularTexts = ({ mainTexts }: { mainTexts?: IMainText[] }) => {
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
-                transform={`scale(${
-                  currentIndex % mainTexts.length === index ? 1 : 0.7
-                })`}
-                transition="all .8s ease-in-out"
               >
                 <Box
                   transform={`rotate(${(index * 360) / mainTexts.length}deg)`}

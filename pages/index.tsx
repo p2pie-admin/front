@@ -52,6 +52,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
+      revalidate: 120, // Revalidate every 120 seconds (2 minutes)
     };
   } catch (e) {
     console.error("Goes to 404 because: ", e);
