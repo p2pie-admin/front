@@ -1,16 +1,26 @@
-import { Flex, Wrap } from "@chakra-ui/react";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { GetStaticProps } from "next";
-
+import {
+  Box,
+  Center,
+  Flex,
+  Grid,
+  HStack,
+  Spinner,
+  VStack,
+  Wrap,
+} from "@chakra-ui/react";
 import { IExchanger, IParserExchanger } from "../../types/exchanger";
-
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
-
-import { loadInitialData } from "../../services/loadInitialData";
-import Dot from "../../components/exchangers/Dot";
 import Exchanger from "../../components/exchangers";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useCallback, useRef } from "react";
 import SortButtons from "../../components/exchangers/SortButtons";
+import ExchangerSearch from "../../components/exchangers/ExchangerSearch";
+import { GetStaticProps } from "next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { loadInitialData } from "../../services/loadInitialData";
+import FilterButtons from "../../components/exchangers/FilterButtons";
+import { getStatus } from "../../components/exchangers/helper";
+import TopPanel from "../../components/exchangers/TopPanel";
+import ExchangersHeader from "../../components/exchangers/ExchangersHeader";
 
 export default function ExchangersList({
   exchangers,
@@ -20,37 +30,139 @@ export default function ExchangersList({
   const [sortCriteria, setSortCriteria] = useState<
     "name" | "total_rates" | "admin_rating"
   >("name");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [loadingSearchSort, setLoadingSearchSort] = useState(false);
+  const [activeFilter, setActiveFilter] = useState<string | null>(null);
+  const [visibleCount, setVisibleCount] = useState(30);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+
+  const loadMore = useCallback((node: HTMLDivElement | null) => {
+    if (observerRef.current) observerRef.current.disconnect();
+
+    observerRef.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        setVisibleCount((prev) => prev + 30);
+      }
+    });
+
+    if (node) observerRef.current.observe(node);
+  }, []);
+
+  const toggleFilter = (status: string) => {
+    setLoadingSearchSort(true);
+    setActiveFilter((prev) => (prev === status ? null : status));
+  };
+
+  const toggleSort = (criteria: typeof sortCriteria) => {
+    setLoadingSearchSort(true);
+    if (sortCriteria === criteria) {
+      setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
+    } else {
+      setSortCriteria(criteria);
+      setSortDirection("desc");
+    }
+  };
+
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+
+  useEffect(() => {
+    setLoadingSearchSort(true);
+    const timeout = setTimeout(() => {
+      setDebouncedQuery(searchQuery.trim().toLowerCase());
+    }, 300);
+    return () => clearTimeout(timeout);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setLoadingSearchSort(false);
+    }, 200);
+    return () => clearTimeout(timeout);
+  }, [debouncedQuery, sortCriteria, sortDirection, activeFilter]);
+
+  const filteredExchangers = useMemo(() => {
+    return exchangers?.filter((exchanger) => {
+      const matchesFilter =
+        activeFilter === null || activeFilter === getStatus(exchanger);
+
+      const matchesSearch =
+        debouncedQuery === "" ||
+        exchanger.name.toLowerCase().includes(debouncedQuery) ||
+        exchanger?.ref_link?.toLowerCase().includes(debouncedQuery);
+
+      return matchesFilter && matchesSearch;
+    });
+  }, [exchangers, debouncedQuery, activeFilter]);
 
   const sortedExchangers = useMemo(() => {
-    return exchangers.slice().sort((a, b) => {
+    const sorted = filteredExchangers?.slice().sort((a, b) => {
+      let result = 0;
+
       if (sortCriteria === "name") {
-        return a.name.localeCompare(b.name, "ru", { sensitivity: "base" });
+        result = a.name.localeCompare(b.name, "ru", { sensitivity: "base" });
       } else if (sortCriteria === "total_rates") {
-        return (b.total_rates || 0) - (a.total_rates || 0);
+        result = (a.total_rates || 0) - (b.total_rates || 0);
       } else if (sortCriteria === "admin_rating") {
-        return (Number(b?.admin_rating) || 0) - (Number(a?.admin_rating) || 0);
+        result =
+          (Number(a?.admin_rating) || 0) - (Number(b?.admin_rating) || 0);
       }
-      return 0;
+
+      return sortDirection === "asc" ? result : -result;
     });
-  }, [exchangers, sortCriteria]);
+
+    return sorted;
+  }, [filteredExchangers, sortCriteria, sortDirection]);
+
+  const visibleExchangers = useMemo(
+    () => sortedExchangers.slice(0, visibleCount),
+    [sortedExchangers, visibleCount]
+  );
 
   if (!exchangers?.length) return <>no exchangers</>;
 
   return (
-    <Box3D p="4" variant="no_contrast" mt="10">
-      <ResponsiveText fontWeight="bold" size="xl" variant="primary">
-        Exchangers List:
-      </ResponsiveText>
+    <Box3D p="4" variant="no_contrast" mt="10" minH="100vh">
+      <ExchangersHeader exchangers={exchangers} />
 
-      <Flex justify="flex-end" mt="4">
-        <SortButtons sortCriteria={sortCriteria} toggleSort={setSortCriteria} />
-      </Flex>
+      <TopPanel
+        toggleFilter={toggleFilter}
+        activeFilter={activeFilter}
+        setSearchQuery={setSearchQuery}
+        sortCriteria={sortCriteria}
+        sortDirection={sortDirection}
+        toggleSort={toggleSort}
+      />
 
-      <Wrap mt="4">
-        {sortedExchangers.map((exchanger) => (
-          <Exchanger key={exchanger.id} exchanger={exchanger} />
-        ))}
-      </Wrap>
+      <Box mt="4">
+        <Box maxW="container.xl" mx="auto">
+          {loadingSearchSort ? (
+            <Center py="20">
+              <Spinner
+                size="xl"
+                thickness="4px"
+                speed="0.7s"
+                color="blue.400"
+              />
+            </Center>
+          ) : (
+            <Grid
+              gap="4"
+              justifyItems="center"
+              gridTemplateColumns={{
+                base: "1fr",
+                md: "repeat(2, 1fr)",
+                lg: "repeat(3, 1fr)",
+              }}
+            >
+              {visibleExchangers.map((exchanger) => (
+                <Exchanger key={exchanger.id} exchanger={exchanger} />
+              ))}
+            </Grid>
+          )}
+          <div ref={loadMore} style={{ height: "1px" }} />
+        </Box>
+      </Box>
     </Box3D>
   );
 }

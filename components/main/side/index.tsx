@@ -6,6 +6,7 @@ import {
   Text,
   Flex,
   HStack,
+  VStack,
 } from "@chakra-ui/react";
 import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
 import { IPm } from "../../../types/selector";
@@ -22,21 +23,30 @@ const Side = () => {
   const { t } = useTranslation();
   return (
     <Box3D>
-      <Grid
-        gridTemplateRows="1fr 36px 1fr"
+      {/* <Grid
+        gridTemplateRows="1fr 36px"
         gridTemplateColumns="auto 1fr"
         alignItems="center"
         px={["2", "4"]}
         gridAutoFlow=""
+      > */}
+      <HStack
+        justifyContent="space-between"
+        alignItems="center"
+        px={["2", "4"]}
       >
-        <Text color="bg.500" fontSize="xs">
-          {t(`main:${side}Title`)}
-        </Text>
-        <Box />
-        <PmModalButton />
+        <Box>
+          <ResponsiveText color="bg.500" fontSize="md" mt="2">
+            {t(`main:${side}Title`)}
+          </ResponsiveText>
+
+          <PmModalButton />
+        </Box>
 
         <AmountInput />
-      </Grid>
+      </HStack>
+
+      {/* </Grid> */}
     </Box3D>
   );
 };

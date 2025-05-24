@@ -81,4 +81,4 @@ export interface IPhysicalExchanger {
   physical_rates?: IPhysicalRate[];
 }
 
-export type IDotColors = "green" | "orange" | "red" | "black";
+export type IDotColors = "green" | "orange";

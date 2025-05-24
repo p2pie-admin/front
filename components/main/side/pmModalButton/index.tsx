@@ -22,11 +22,10 @@ import { useTranslation } from "next-i18next";
 const PmModalButton = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const p2pIndex = useContext(p2pContext);
+
   const side = useContext(SideContext) as "give" | "get";
-  const isP2P = p2pIndex !== undefined;
+
   const pms = useAppSelector((state) => {
-    if (isP2P) return state.main.p2p.dirs[p2pIndex]?.[side]?.slice(0, 3);
     const pm = state.main?.[`${side}Pm`];
     return pm ? [pm] : [];
     //      state.main[`${side == "give" ? "get" : "give"}Pm`],
@@ -35,7 +34,7 @@ const PmModalButton = () => {
   const openDialog = () => {
     batch(() => {
       // берем возможные пары для обратной пм если такая выбрана
-      dispatch(triggerModal(side + p2pIndex || ""));
+      dispatch(triggerModal(side || ""));
       dispatch(setSearchBarInputValue(""));
     });
   };
@@ -61,7 +60,7 @@ const PmModalButton = () => {
         )
       }
     >
-      <SelectorModal id={side + p2pIndex || ""} />
+      <SelectorModal id={side || ""} />
       <ResponsiveText size="md" variant="primary">
         {!pms?.length ? unselectedPmText : currencyCode}
       </ResponsiveText>

@@ -17,11 +17,13 @@ export default function Exchanger({
       <Box3D
         key={name}
         as={Button}
-        p="2"
+        px="4"
+        py="2"
         variant="extra_contrast"
-        minW="240"
+        minW={{ base: "90vw", md: "250px" }}
         justifyContent="start"
         alignItems="center"
+        h="12"
       >
         <HStack w="100%">
           <Dot color={getStatus(exchanger)} />

@@ -22,10 +22,8 @@ export const getStatus = (exchanger: IExchanger & IParserExchanger) => {
     (error && Object.keys(error).length > 0) ||
     (skip && skip > 64)
   ) {
-    return "red";
-  }
-  if ((warnings && Object.keys(warnings).length > 0) || (skip && skip > 2)) {
     return "orange";
   }
+
   return "green";
 };
