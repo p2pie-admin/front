@@ -6,7 +6,6 @@ import {
   Text,
   Flex,
   HStack,
-  VStack,
 } from "@chakra-ui/react";
 import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
 import { IPm } from "../../../types/selector";
@@ -24,19 +23,17 @@ const Side = () => {
   return (
     <Box3D>
       <Grid
-        gridTemplateRows="1fr 36px"
+        gridTemplateRows="1fr 36px 1fr"
         gridTemplateColumns="auto 1fr"
         alignItems="center"
         px={["2", "4"]}
         gridAutoFlow=""
       >
-        <Box>
-          <ResponsiveText color="bg.500" fontSize="xs" mt="2">
-            {t(`main:${side}Title`)}
-          </ResponsiveText>
-
-          <PmModalButton />
-        </Box>
+        <Text color="bg.600" fontSize="sm" mt="2">
+          {t(`main:${side}Title`)}
+        </Text>
+        <Box />
+        <PmModalButton />
 
         <AmountInput />
       </Grid>
