@@ -28,10 +28,9 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     };
 
     const rootText = textBoxes[0] || null;
-    const possiblePairsFetcher = initParserFetcher();
-    const popularRates = (await possiblePairsFetcher(
-      "top"
-    )) as IPopularDirRates;
+    const parserFetcher = initParserFetcher();
+    const popularRates = (await parserFetcher("top")) as IPopularDirRates;
+
     const cachedData = readCache() as ICache;
     const pms = cachedData?.pms;
 
@@ -52,7 +51,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
-      revalidate: 120, // Revalidate every 120 seconds (2 minutes)
+      revalidate: 300, // Revalidate every 300 seconds (5 minutes)
     };
   } catch (e) {
     console.error("Goes to 404 because: ", e);

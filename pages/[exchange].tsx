@@ -166,7 +166,7 @@ export async function getStaticProps({
         donorCity,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
-      revalidate: 600,
+      revalidate: 2400,
     };
   } catch (e) {
     console.error(e);
