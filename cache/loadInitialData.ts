@@ -1,4 +1,4 @@
-import { readCache, writeCache } from "../cache";
+import { readCache, writeCache } from ".";
 import exchangers from "../components/exchangers";
 import {
   extractPmsFromPmGroup,
@@ -14,15 +14,15 @@ import {
 } from "../types/exchange";
 import { IExchanger, IParserExchanger } from "../types/exchanger";
 import { ISelector, IPmGroup, ISection, IPm } from "../types/selector";
-import { initCMSFetcher, initParserFetcher } from "./fetchers";
+import { initCMSFetcher, initParserFetcher } from "../services/fetchers";
 import {
   selectorQuery,
   citiesQuery,
   pmLayoutsQuery,
   dirsTextsQuery,
   exchangersQuery,
-} from "./initialQueries";
-import { mylog } from "./utils";
+} from "../services/initialQueries";
+import { mylog } from "../services/utils";
 
 // Helper to fetch localized content
 const fetchLocalizedData = async (locale: "en" | "ru") => {

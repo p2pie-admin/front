@@ -12,6 +12,7 @@ import { MainTextsQuery, RootTextQuery } from "../services/initialQueries";
 import { IMainText, ITextBox } from "../types/pages";
 import { NextSeo, BreadcrumbJsonLd } from "next-seo";
 import { useTranslation } from "react-i18next";
+import { loadInitialData } from "../cache/loadInitialData";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   // must be async
@@ -31,7 +32,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     const parserFetcher = initParserFetcher();
     const popularRates = (await parserFetcher("top")) as IPopularDirRates;
 
-    const cachedData = readCache() as ICache;
+    const cachedData = (await loadInitialData()) as ICache | undefined;
     const pms = cachedData?.pms;
 
     const popularPmCodes = [

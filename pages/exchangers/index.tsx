@@ -16,7 +16,7 @@ import SortButtons from "../../components/exchangers/SortButtons";
 import ExchangerSearch from "../../components/exchangers/ExchangerSearch";
 import { GetStaticProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { loadInitialData } from "../../services/loadInitialData";
+import { loadInitialData } from "../../cache/loadInitialData";
 import FilterButtons from "../../components/exchangers/FilterButtons";
 import { getStatus } from "../../components/exchangers/helper";
 import TopPanel from "../../components/exchangers/TopPanel";

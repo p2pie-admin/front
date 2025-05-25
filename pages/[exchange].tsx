@@ -9,7 +9,7 @@ import {
   findSimilarPmPairs,
 } from "../components/exchange/helper";
 
-import { loadInitialData } from "../services/loadInitialData";
+import { loadInitialData } from "../cache/loadInitialData";
 import { mylog } from "../services/utils";
 
 const prerenderCountries = ["ukraine", "russia", "belarus"];
