@@ -17,6 +17,7 @@
     "@next/bundle-analyzer": "^13.3.0",
     "@react-google-maps/api": "^2.19.0",
     "@reduxjs/toolkit": "^1.7.2",
+    "@types/react-icons": "^3.0.0",
     "@types/styled-components": "^5.1.26",
     "@types/uuid": "^9.0.7",
     "@vercel/speed-insights": "^1.2.0",

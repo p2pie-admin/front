@@ -39,7 +39,7 @@ export default function ExchangerPage({
           <ResponsiveText fontWeight="bold" size="xl" variant="primary">
             {capitalize(exchanger.name)}
           </ResponsiveText>
-          <TbExternalLink size="1.5rem" />
+          {<TbExternalLink size="1.5rem" />}
         </HStack>
       </LinkWrapper>
 

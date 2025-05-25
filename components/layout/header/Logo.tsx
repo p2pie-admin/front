@@ -24,7 +24,6 @@ const Logo = () => {
         alt="p2pie logo"
         src={useColorModeValue(darkPie, lightPie)}
         width={36}
-        fetchPriority="low"
       />
 
       <ResponsiveText variant="primary" fontSize="2xl" fontWeight="bold" mx="2">

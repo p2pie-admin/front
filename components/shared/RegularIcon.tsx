@@ -9,9 +9,6 @@ const SRC =
 const RegularIcon = ({ url, index }: { url: string; index: number }) => {
   return (
     <Center
-      // filter={`invert(60%) sepia(97%) saturate(150%) hue-rotate(${
-      //   index * 55
-      // }deg)`}
       zIndex="4"
       position="relative"
       justifyContent="center"
@@ -26,13 +23,7 @@ const RegularIcon = ({ url, index }: { url: string; index: number }) => {
         h: "50%",
       }}
     >
-      <Image
-        alt={"icon" + index}
-        w="8"
-        h="8"
-        src={SRC + url}
-        fetchPriority="low"
-      />
+      <Image alt={"icon" + index} w="8" h="8" src={SRC + url} />
     </Center>
   );
 };

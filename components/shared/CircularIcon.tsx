@@ -105,7 +105,7 @@ const CircularIcon = ({
         filter={filter}
         // filter={shaded ? "grayscale(0.6) brightness(0.3)" : "none"}
         // fallbackSrc={fallbackSRC}
-        fetchPriority="low"
+
         src={icon ? SRC + icon.url : ""}
         alt={icon ? icon.alternativeText : iconAlt}
       />

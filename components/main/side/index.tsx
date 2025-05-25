@@ -23,20 +23,15 @@ const Side = () => {
   const { t } = useTranslation();
   return (
     <Box3D>
-      {/* <Grid
+      <Grid
         gridTemplateRows="1fr 36px"
         gridTemplateColumns="auto 1fr"
         alignItems="center"
         px={["2", "4"]}
         gridAutoFlow=""
-      > */}
-      <HStack
-        justifyContent="space-between"
-        alignItems="center"
-        px={["2", "4"]}
       >
         <Box>
-          <ResponsiveText color="bg.500" fontSize="md" mt="2">
+          <ResponsiveText color="bg.500" fontSize="xs" mt="2">
             {t(`main:${side}Title`)}
           </ResponsiveText>
 
@@ -44,9 +39,7 @@ const Side = () => {
         </Box>
 
         <AmountInput />
-      </HStack>
-
-      {/* </Grid> */}
+      </Grid>
     </Box3D>
   );
 };

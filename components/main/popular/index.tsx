@@ -24,13 +24,17 @@ const Popular = ({
         const cryptoPm = popularPms?.find((pm) => pm?.code == cryptoCode);
         if (!cryptoPm) return <></>;
         return (
-          <Box3D variant="extra_contrast" p="2" my="2">
+          <Box3D
+            key={cryptoCode} // Use cryptoCode as the unique key
+            variant="extra_contrast"
+            p="2"
+            my="2"
+          >
             <Grid
               gridTemplateColumns="auto 1fr 1fr"
               gridGap="2"
               alignItems="center"
               color="bg.200"
-              key={cryptoCode + "popular" + index}
             >
               <CryptoPm cryptoPm={cryptoPm} />
 

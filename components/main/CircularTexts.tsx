@@ -71,7 +71,7 @@ const CircularTexts = ({ mainTexts }: { mainTexts?: IMainText[] }) => {
         <Box
           position="absolute"
           top="50%"
-          left={{ base: "0", xs: "10%", lg: "12%" }}
+          left={{ base: "5%", xs: "10%", lg: "12%" }}
           w="600px"
           h="600px"
           borderRadius="50%"
