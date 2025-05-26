@@ -11,6 +11,7 @@ import {
   ICache,
   IParserSetting,
   IPmLayout,
+  ILocalData,
 } from "../types/exchange";
 import { IExchanger, IParserExchanger } from "../types/exchanger";
 import { ISelector, IPmGroup, ISection, IPm } from "../types/selector";
@@ -21,11 +22,14 @@ import {
   pmLayoutsQuery,
   dirsTextsQuery,
   exchangersQuery,
+  articleCodesQuery,
+  articlesQuery,
 } from "../services/initialQueries";
 import { mylog } from "../services/utils";
+import { IArticle } from "../types/pages";
 
 // Helper to fetch localized content
-const fetchLocalizedData = async (locale: "en" | "ru") => {
+const fetchLocalizedData = async (locale: "en" | "ru"): Promise<ILocalData> => {
   const fetcher = initCMSFetcher({ locale });
 
   const { pmLayouts } = (await fetcher(pmLayoutsQuery)) as {
@@ -35,7 +39,11 @@ const fetchLocalizedData = async (locale: "en" | "ru") => {
     dirsTexts: IDirText[];
   };
 
-  return { pmLayouts, dirsTexts };
+  const { articles } = (await fetcher(articlesQuery)) as {
+    articles: IArticle[];
+  };
+
+  return { pmLayouts, dirsTexts, articles };
 };
 
 // Load data once and cache it for 5 hours

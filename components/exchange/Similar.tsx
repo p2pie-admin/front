@@ -58,8 +58,8 @@ const Similar = ({ similarPmPairs }: { similarPmPairs: IPm[][] }) => {
   };
 
   return (
-    <Box3D px="4" w="100%" minH={{ base: "unset", lg: "328px" }}>
-      <ResponsiveText my="2" variant="no_contrast">
+    <Box3D px="4" w="100%" minH={{ base: "unset", lg: "370px" }}>
+      <ResponsiveText mt="4" variant="no_contrast">
         {t("main:similarDirs")}
       </ResponsiveText>
       {similarPmPairs.map((pair, index) => {
@@ -69,7 +69,7 @@ const Similar = ({ similarPmPairs }: { similarPmPairs: IPm[][] }) => {
         });
 
         return (
-          <Box mb="4" key={slug + index}>
+          <Box my={{ base: "2", lg: "4" }} key={slug + index}>
             <Dir givePm={pair[0]} getPm={pair[1]} slug={slug}>
               {data?.[index] && renderRate(pair, data[index])}
             </Dir>

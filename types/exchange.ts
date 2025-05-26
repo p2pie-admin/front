@@ -39,7 +39,7 @@ export interface IPath {
 export type ILocalData = {
   pmLayouts: IPmLayout[];
   dirsTexts: IDirText[];
-  articles?: IArticle[];
+  articles: IArticle[];
 };
 
 export type IPmData = {

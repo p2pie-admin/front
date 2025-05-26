@@ -1,8 +1,8 @@
 import { Box, Flex, Heading, VStack } from "@chakra-ui/react";
-import { capitalize } from "../../main/side/selector/section/PmGroup/helper";
-import { IPm } from "../../../types/selector";
-import { IPmPairs } from "../../../types/exchange";
-import Dir from "../Dir";
+import { capitalize } from "../main/side/selector/section/PmGroup/helper";
+import { IPm } from "../../types/selector";
+import { IPmPairs } from "../../types/exchange";
+import Dir from "../exchange/Dir";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 

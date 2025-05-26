@@ -1,19 +1,19 @@
 import { HStack, Box, Text, Heading, Flex, Center } from "@chakra-ui/react";
 
 import { useRef, useState } from "react";
-import Disclaimer from "../../shared/article/Disclaimer";
-import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
-import { IArticle } from "../../../types/pages";
+import Disclaimer from "../shared/article/Disclaimer";
+import { Box3D, ResponsiveText } from "../../styles/theme/custom";
+import { IArticle } from "../../types/pages";
 //import ReactMarkdown from "react-markdown";
 import { FaExpandArrowsAlt } from "react-icons/fa";
 import { BsTelegram } from "react-icons/bs";
 
 import FoundError from "./FoundError";
 import OtherDirs from "./OtherDirs";
-import { IPmPairs } from "../../../types/exchange";
+import { IPmPairs } from "../../types/exchange";
 import { useRouter } from "next/router";
-import RichText from "../../shared/article/RichText";
-import CircularIcon from "../../shared/CircularIcon";
+import RichText from "../shared/article/RichText";
+import CircularIcon from "../shared/CircularIcon";
 import Stats from "./Stats";
 
 const Article = ({
@@ -48,9 +48,9 @@ const Article = ({
 
   const minToRead = Math.round(symbols / 1000);
 
-  const pm = otherDirs.buy[0].givePm;
-  const pmName = pm?.[`${locale}_name`] + " " + pm?.code;
-  if (!pm) return <>Nothing was found!</>;
+  // const pm = otherDirs.buy[0].givePm;
+  // const pmName = pm?.[`${locale}_name`] + " " + pm?.code;
+  // if (!pm) return <>Nothing was found!</>;
   return (
     <>
       <Box3D
@@ -85,12 +85,12 @@ const Article = ({
             w="5"
             h="5"
           />
-          <CircularIcon
+          {/* <CircularIcon
             iconAlt={pm.en_name}
             icon={pm.icon}
             color={pm.color || "gray"}
             size="lg"
-          />
+          /> */}
           <Box
             border="2px solid"
             bgColor="bg.500"
@@ -175,7 +175,7 @@ const Article = ({
           })}
         </Box>
 
-        <OtherDirs pmName={pmName} otherDirs={otherDirs} />
+        {/* <OtherDirs pmName={pmName} otherDirs={otherDirs} /> */}
 
         <FoundError />
       </Box3D>

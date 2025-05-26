@@ -7,9 +7,7 @@ import { IExchanger } from "../../types/exchanger";
 import { readCache, writeCache } from "../../cache";
 import { ICache } from "../../types/exchange";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
-import { Box, HStack, Text } from "@chakra-ui/react";
-
-import { FiPlusCircle } from "react-icons/fi";
+import { Box, HStack } from "@chakra-ui/react";
 import { LinkWrapper } from "../../components/exchange/pmLayout/LinkWrapper";
 import { TbExternalLink } from "react-icons/tb";
 import { exchangerNameToSlug } from "../../components/exchangers/helper";
@@ -39,7 +37,7 @@ export default function ExchangerPage({
           <ResponsiveText fontWeight="bold" size="xl" variant="primary">
             {capitalize(exchanger.name)}
           </ResponsiveText>
-          {<TbExternalLink size="1.5rem" />}
+          <TbExternalLink size="1.5rem" />
         </HStack>
       </LinkWrapper>
 

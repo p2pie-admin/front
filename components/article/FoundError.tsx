@@ -1,5 +1,5 @@
 import { BsTelegram } from "react-icons/bs";
-import LinkButton from "../../shared/LinkButton";
+import LinkButton from "../shared/LinkButton";
 import { HStack, Text } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
 

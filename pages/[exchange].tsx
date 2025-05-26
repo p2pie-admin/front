@@ -115,7 +115,7 @@ export async function getStaticProps({
     const localData = locale == "en" ? enData : ruData;
     // первое : достаем коробки описания секций пм, это также ссылки на артиклы пм
     // и втрое : достаем шаблоны для направления с местами для вставки
-    const { pmLayouts, dirsTexts, articles } = localData;
+    const { pmLayouts, dirsTexts, articleCodes } = localData;
 
     const givePmLayout =
       pmLayouts?.find((l) => l.section == givePm?.section) || null;
@@ -179,10 +179,7 @@ export async function getStaticProps({
 //.....................................................................................................
 export async function getStaticPaths() {
   const cachedData = await loadInitialData();
-  console.log(
-    "[getStaticPaths] cachedData:",
-    JSON.stringify(cachedData, undefined, 4)
-  );
+
   if (!cachedData) {
     console.error(
       "exchangers [getStaticPaths] Cached data is missing or invalid."
