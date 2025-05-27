@@ -1,29 +1,79 @@
 import { IArticle } from "../../types/pages";
-import { marked } from "marked";
-import DOMPurify from "isomorphic-dompurify";
+import { marked, Renderer, RendererObject } from "marked";
 
-export const addLinksToText = (text: string): string => {
-  const textWithLinks = text;
-  return textWithLinks.replace(/\n/g, "<br>");
+function addLinksToText(
+  text: string,
+  articleCodesSet: Set<string>,
+  seenCodes: Set<string>
+): string {
+  return text.replace(/\n/g, "<br>").replace(/\b\w+\b/g, (word) => {
+    const lowerWord = word.toLowerCase();
+    if (articleCodesSet.has(lowerWord) && !seenCodes.has(lowerWord)) {
+      seenCodes.add(lowerWord);
+      return `<a href="/en/articles/${lowerWord}">${word}</a>`;
+    }
+    return word;
+  });
+}
+
+export const addCrossLinking = (articles: IArticle[]): IArticle[] => {
+  const articleCodesSet = new Set(articles.map((a) => a.code.toLowerCase()));
+
+  return articles.map((article) => {
+    const seenCodes = new Set<string>(); // Moved here to track per article
+
+    article.chapters = article.chapters.map((chapter) => {
+      const textWithLinks = addLinksToText(
+        chapter.text,
+        articleCodesSet,
+        seenCodes
+      );
+
+      return {
+        ...chapter,
+        text: textWithLinks,
+      };
+    });
+
+    return article;
+  });
 };
 
-export const textToHTML = (text: string): string => {
-  const rawHTML = marked(text) as string;
-  const sanitizedHTML = DOMPurify.sanitize(rawHTML);
-  return sanitizedHTML;
+export const textToHTML = async (text: string, target: "blank" | "self") => {
+  const renderer = new Renderer();
+
+  renderer.link = ({ href, title, text }) => {
+    const titleAttr = title ? ` title="${title}"` : "";
+    // Optionally prevent unsafe links
+    if (!href || href.trim().toLowerCase().startsWith("javascript:"))
+      return text;
+    return `<a href="${href}" target="_${target}" rel="noopener noreferrer"${titleAttr}>${text}</a>`;
+  };
+
+  marked.setOptions({
+    breaks: true,
+    gfm: true,
+    renderer,
+  });
+
+  return await marked.parse(text);
 };
 
-export function sanitizeArticle(article?: IArticle): IArticle | null {
+export async function convertArticle(
+  article?: IArticle
+): Promise<IArticle | null> {
   if (!article) return null;
   return {
     ...article,
-    chapters: article.chapters.map((chapter) => sanitizeChapter(chapter)),
+    chapters: await Promise.all(
+      article.chapters.map((chapter) => convertChapter(chapter))
+    ),
   };
 }
 
-export function sanitizeChapter(chapter: { title: string; text: string }) {
+export async function convertChapter(chapter: { title: string; text: string }) {
   return {
     ...chapter,
-    text: textToHTML(chapter.text),
+    text: await textToHTML(chapter.text, "blank"),
   };
 }

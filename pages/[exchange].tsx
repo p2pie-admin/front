@@ -115,7 +115,7 @@ export async function getStaticProps({
     const localData = locale == "en" ? enData : ruData;
     // первое : достаем коробки описания секций пм, это также ссылки на артиклы пм
     // и втрое : достаем шаблоны для направления с местами для вставки
-    const { pmLayouts, dirsTexts, articleCodes } = localData;
+    const { pmLayouts, dirsTexts, articles } = localData;
 
     const givePmLayout =
       pmLayouts?.find((l) => l.section == givePm?.section) || null;
@@ -130,14 +130,14 @@ export async function getStaticProps({
 
     let [giveArticleExists, getArticleExists] = [false, false];
 
-    // if (articles.length) {
-    //   giveArticleExists = !!articles?.find(
-    //     (article) => article.code?.toUpperCase() == givePm.en_name.toUpperCase()
-    //   );
-    //   getArticleExists = !!articles?.find(
-    //     (article) => article.code?.toUpperCase() == getPm.en_name.toUpperCase()
-    //   );
-    // }
+    if (articles.length) {
+      giveArticleExists = !!articles?.find(
+        (article) => article.code?.toUpperCase() == givePm.en_name.toUpperCase()
+      );
+      getArticleExists = !!articles?.find(
+        (article) => article.code?.toUpperCase() == getPm.en_name.toUpperCase()
+      );
+    }
 
     const givePmData = {
       pm: givePm,

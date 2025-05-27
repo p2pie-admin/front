@@ -9,22 +9,26 @@ import { FaExpandArrowsAlt } from "react-icons/fa";
 import { BsTelegram } from "react-icons/bs";
 
 import FoundError from "./FoundError";
-import OtherDirs from "./OtherDirs";
+
 import { IPmPairs } from "../../types/exchange";
 import { useRouter } from "next/router";
 import RichText from "../shared/article/RichText";
 import CircularIcon from "../shared/CircularIcon";
 import Stats from "./Stats";
+import OtherDirs from "./OtherDirs";
+import ReactMarkdown from "react-markdown";
 
 const Article = ({
   article,
   otherDirs,
+  locale,
 }: {
   article?: IArticle | null;
   otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] };
+  locale: "en" | "ru";
 }) => {
   const [highlited, setHighlited] = useState(undefined);
-  const { locale } = useRouter() as { locale: "en" | "ru" };
+
   const timestampToDate = (ts?: string) => {
     const [y, m, d] = ts ? ts?.split("T")[0]?.split("-") : ["-", "-", "-"];
     return `${d}.${m}.${y}`;
@@ -48,9 +52,9 @@ const Article = ({
 
   const minToRead = Math.round(symbols / 1000);
 
-  // const pm = otherDirs.buy[0].givePm;
-  // const pmName = pm?.[`${locale}_name`] + " " + pm?.code;
-  // if (!pm) return <>Nothing was found!</>;
+  const pm = otherDirs.buy[0].givePm;
+  const pmName = pm?.[`${locale}_name`] + " " + pm?.code;
+  if (!pm) return <>Nothing was found!</>;
   return (
     <>
       <Box3D
@@ -85,12 +89,12 @@ const Article = ({
             w="5"
             h="5"
           />
-          {/* <CircularIcon
+          <CircularIcon
             iconAlt={pm.en_name}
             icon={pm.icon}
             color={pm.color || "gray"}
             size="lg"
-          /> */}
+          />
           <Box
             border="2px solid"
             bgColor="bg.500"
@@ -165,7 +169,6 @@ const Article = ({
                 </HStack>
 
                 <RichText sanitizedHTML={chapter.text} />
-                {/* <ReactMarkdown></ReactMarkdown> */}
 
                 {/* {chapter.disclaimer && (
                   <Disclaimer disclaimer={chapter.disclaimer} />
@@ -175,7 +178,7 @@ const Article = ({
           })}
         </Box>
 
-        {/* <OtherDirs pmName={pmName} otherDirs={otherDirs} /> */}
+        <OtherDirs pmName={pmName} otherDirs={otherDirs} />
 
         <FoundError />
       </Box3D>
