@@ -47,10 +47,11 @@ export async function getStaticProps({
       ) || null;
 
     const articles = cachedData[`${"en"}Data`]?.articles || [];
+    const pms = cachedData.pms;
 
     return {
       props: {
-        exchanger: await addExchangerCrossLinking(exchanger, articles),
+        exchanger: await addExchangerCrossLinking(exchanger, articles, pms),
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },

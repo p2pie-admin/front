@@ -39,7 +39,8 @@ export const addArticlesCrossLinking = (articles: IArticle[]): IArticle[] => {
   });
 };
 
-export const textToHTML = async (text: string, target: "blank" | "self") => {
+export const textToHTML = async (text?: string, target?: "blank" | "self") => {
+  if (!text || !text.trim()) return "";
   const renderer = new Renderer();
 
   renderer.link = ({ href, title, text }) => {
@@ -47,7 +48,7 @@ export const textToHTML = async (text: string, target: "blank" | "self") => {
     // Optionally prevent unsafe links
     if (!href || href.trim().toLowerCase().startsWith("javascript:"))
       return text;
-    return `<a href="${href}" target="_${target}" rel="noopener noreferrer"${titleAttr}>${text}</a>`;
+    return `<a href="${href}" target="_${target}" rel="noopener noreferrer"${titleAttr}><b>${text}</b></a>`;
   };
 
   marked.setOptions({

@@ -1,7 +1,9 @@
 import Transliterator from "../../services/transliterator";
 import { IExchanger, IParserExchanger } from "../../types/exchanger";
 import { IArticle } from "../../types/pages";
+import { IPm } from "../../types/selector";
 import { textToHTML } from "../article/helper";
+import { enrichText } from "../shared/helper";
 
 export function hasCyrillic(text: string): boolean {
   return /[\u0400-\u04FF]/.test(text);
@@ -32,26 +34,22 @@ export const getStatus = (exchanger: IExchanger & IParserExchanger) => {
 
 export const addExchangerCrossLinking = async (
   exchanger: (IExchanger & IParserExchanger) | null,
-  articles: IArticle[] | undefined
+  articles: IArticle[] | undefined,
+  pms: IPm[] | undefined
 ) => {
   if (!articles || !exchanger || !exchanger.exchanger_card.en_description)
     return exchanger;
-  const articleCodesSet = new Set(articles.map((a) => a.code.toLowerCase()));
-  const seenCodes = new Set<string>();
-  const newDescription = exchanger.exchanger_card.en_description.replace(
-    /\b\w+\b/g,
-    (word) => {
-      const lowerWord = word.toLowerCase();
-      if (articleCodesSet.has(lowerWord) && !seenCodes.has(lowerWord)) {
-        seenCodes.add(lowerWord);
-        return `<a href="/en/articles/${lowerWord}">${word}</a>`;
-      }
-      return word;
-    }
+
+  const linkedText = enrichText(
+    exchanger.exchanger_card.en_description,
+    articles,
+    pms
   );
+
   exchanger.exchanger_card.en_description = await textToHTML(
-    newDescription,
+    linkedText,
     "self"
   );
+
   return exchanger;
 };

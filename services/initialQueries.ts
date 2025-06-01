@@ -195,7 +195,7 @@ export const selectorQuery = gql`
             columns
             ru_title
             en_title
-            pm_groups(pagination: { start: 0, limit: 1000 } ) {
+            pm_groups(pagination: { start: 0, limit: 2000 } ) {
               ${pmGroup}
           }
         }
@@ -237,7 +237,7 @@ export const articlesQuery = gql`
 
 export const MainTextsQuery = gql`
   query MainTexts($locale: I18NLocaleCode) {
-    mainTexts(locale: $locale, pagination: { start: 0, limit: 200 }) {
+    mainTexts(locale: $locale, pagination: { start: 0, limit: 2000 }) {
       data {
         id
         attributes {
@@ -268,7 +268,11 @@ export const MainTextsQuery = gql`
 
 export const TextBoxQuery = gql`
   query TextBox($locale: I18NLocaleCode, $key: String) {
-    textBoxes(locale: $locale, filters: { key: { eqi: $key } }) {
+    textBoxes(
+      locale: $locale
+      filters: { key: { eqi: $key } }
+      pagination: { start: 0, limit: 2000 }
+    ) {
       data {
         id
         attributes {
