@@ -40,6 +40,7 @@ export default function Stats({ stats }: { stats: { [key: string]: number } }) {
         return (
           <Box
             mb="2"
+            key={idx}
             border="1px solid"
             borderRadius="lg"
             p="2"
@@ -48,7 +49,7 @@ export default function Stats({ stats }: { stats: { [key: string]: number } }) {
             <ResponsiveText mb="1" size="sm">
               {str[0].toUpperCase() + str.slice(1)}
             </ResponsiveText>
-            <Bricks n={n} key={idx} />
+            <Bricks key={idx} n={n} />
           </Box>
         );
       })}

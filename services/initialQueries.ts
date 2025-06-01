@@ -266,7 +266,7 @@ export const MainTextsQuery = gql`
   }
 `;
 
-export const RootTextQuery = gql`
+export const TextBoxQuery = gql`
   query TextBox($locale: I18NLocaleCode, $key: String) {
     textBoxes(locale: $locale, filters: { key: { eqi: $key } }) {
       data {

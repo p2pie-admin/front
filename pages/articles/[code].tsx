@@ -10,7 +10,7 @@ import { IArticle } from "../../types/pages";
 import Article from "../../components/article";
 import { loadInitialData } from "../../cache/loadInitialData";
 import {
-  addCrossLinking,
+  addArticlesCrossLinking,
   convertArticle,
 } from "../../components/article/helper";
 
@@ -104,7 +104,7 @@ export async function getStaticProps({
     console.error("[getStaticProps] 'articles' is missing or invalid.");
     return { notFound: true };
   }
-  const updatedArticles = addCrossLinking(articles);
+  const updatedArticles = addArticlesCrossLinking(articles);
 
   // Use cached data as needed
   const code = params.code.toLowerCase();

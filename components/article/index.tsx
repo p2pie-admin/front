@@ -1,7 +1,7 @@
 import { HStack, Box, Text, Heading, Flex, Center } from "@chakra-ui/react";
 
 import { useRef, useState } from "react";
-import Disclaimer from "../shared/article/Disclaimer";
+import Disclaimer from "./Disclaimer";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
 import { IArticle } from "../../types/pages";
 //import ReactMarkdown from "react-markdown";
@@ -12,7 +12,6 @@ import FoundError from "./FoundError";
 
 import { IPmPairs } from "../../types/exchange";
 import { useRouter } from "next/router";
-import RichText from "../shared/article/RichText";
 import CircularIcon from "../shared/CircularIcon";
 import Stats from "./Stats";
 import OtherDirs from "./OtherDirs";
@@ -168,7 +167,7 @@ const Article = ({
                   </Text>
                 </HStack>
 
-                <RichText sanitizedHTML={chapter.text} />
+                <div dangerouslySetInnerHTML={{ __html: chapter.text }} />
 
                 {/* {chapter.disclaimer && (
                   <Disclaimer disclaimer={chapter.disclaimer} />

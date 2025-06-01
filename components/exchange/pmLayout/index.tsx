@@ -23,8 +23,6 @@ export default function pmLayout({ pmData }: { pmData: IPmData }) {
         <VStack h="100%" justifyContent="space-around" color="bg.400">
           <HStack justifyContent="space-between" w="100%">
             <PmName pm={pmData.pm} />
-
-            <RiInformationLine size="1.5rem" />
           </HStack>
           <Box w="100%">
             {pmData.pmLayout?.description.split("\n").map((text, index) => (

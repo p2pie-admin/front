@@ -16,7 +16,7 @@ function addLinksToText(
   });
 }
 
-export const addCrossLinking = (articles: IArticle[]): IArticle[] => {
+export const addArticlesCrossLinking = (articles: IArticle[]): IArticle[] => {
   const articleCodesSet = new Set(articles.map((a) => a.code.toLowerCase()));
 
   return articles.map((article) => {

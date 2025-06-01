@@ -9,15 +9,12 @@ import {
   Wrap,
 } from "@chakra-ui/react";
 import { IExchanger, IParserExchanger } from "../../types/exchanger";
-import { Box3D, ResponsiveText } from "../../styles/theme/custom";
-import Exchanger from "../../components/exchangers";
+import { Box3D } from "../../styles/theme/custom";
+import ExchangerPreview from "../../components/exchangers";
 import { useState, useMemo, useEffect, useCallback, useRef } from "react";
-import SortButtons from "../../components/exchangers/SortButtons";
-import ExchangerSearch from "../../components/exchangers/ExchangerSearch";
 import { GetStaticProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { loadInitialData } from "../../cache/loadInitialData";
-import FilterButtons from "../../components/exchangers/FilterButtons";
 import { getStatus } from "../../components/exchangers/helper";
 import TopPanel from "../../components/exchangers/TopPanel";
 import ExchangersHeader from "../../components/exchangers/ExchangersHeader";
@@ -156,7 +153,7 @@ export default function ExchangersList({
               }}
             >
               {visibleExchangers.map((exchanger) => (
-                <Exchanger key={exchanger.id} exchanger={exchanger} />
+                <ExchangerPreview key={exchanger.id} exchanger={exchanger} />
               ))}
             </Grid>
           )}

@@ -11,6 +11,9 @@ import {
 
 import { loadInitialData } from "../cache/loadInitialData";
 import { mylog } from "../services/utils";
+import { TextBoxQuery } from "../services/initialQueries";
+import { initCMSFetcher } from "../services/fetchers";
+import { ITextBox } from "../types/pages";
 
 const prerenderCountries = ["ukraine", "russia", "belarus"];
 
@@ -127,6 +130,16 @@ export async function getStaticProps({
         (t) =>
           t?.section_give == givePm?.section && t?.section_get == getPm?.section
       ) || null;
+
+    //если есть текст для направления - внедряем
+    const dirTextFetcher = initCMSFetcher({ locale, key: dir.toUpperCase() });
+    const res = (await dirTextFetcher(TextBoxQuery)) as {
+      textBoxes: ITextBox[];
+    };
+    const textBoxes = res?.textBoxes;
+
+    if (dirText && textBoxes?.length && textBoxes[0]?.text)
+      dirText.text = textBoxes[0]?.text;
 
     let [giveArticleExists, getArticleExists] = [false, false];
 

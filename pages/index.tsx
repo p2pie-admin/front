@@ -8,7 +8,7 @@ import { initCMSFetcher, initParserFetcher } from "../services/fetchers";
 import { readCache } from "../cache";
 import { ICache } from "../types/exchange";
 
-import { MainTextsQuery, RootTextQuery } from "../services/initialQueries";
+import { MainTextsQuery, TextBoxQuery } from "../services/initialQueries";
 import { IMainText, ITextBox } from "../types/pages";
 import { NextSeo, BreadcrumbJsonLd } from "next-seo";
 import { useTranslation } from "react-i18next";
@@ -20,13 +20,15 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     const circleTextsFetcher = initCMSFetcher({ locale });
 
     const rootTextFetcher = initCMSFetcher({ locale, key: "root" });
-    const { textBoxes } = (await rootTextFetcher(RootTextQuery)) as {
+    const res1 = (await rootTextFetcher(TextBoxQuery)) as {
       textBoxes: ITextBox[];
     };
+    const textBoxes = res1?.textBoxes;
 
-    const { mainTexts } = (await circleTextsFetcher(MainTextsQuery)) as {
+    const res2 = (await circleTextsFetcher(MainTextsQuery)) as {
       mainTexts: IMainText[];
     };
+    const mainTexts = res2?.mainTexts;
 
     const rootText = textBoxes[0] || null;
     const parserFetcher = initParserFetcher();

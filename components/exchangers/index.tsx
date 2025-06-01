@@ -6,7 +6,7 @@ import { IExchanger, IParserExchanger } from "../../types/exchanger";
 import Dot from "./Dot";
 import { exchangerNameToSlug, getStatus } from "./helper";
 
-export default function Exchanger({
+export default function ExchangerPreview({
   exchanger,
 }: {
   exchanger: IExchanger & IParserExchanger;

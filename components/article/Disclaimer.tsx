@@ -1,5 +1,5 @@
 import { Box, HStack, Text } from "@chakra-ui/react";
-import { IDisclaimer } from "../../../types/pages";
+import { IDisclaimer } from "../../types/pages";
 import { IoIosWarning } from "react-icons/io";
 import { FaLightbulb } from "react-icons/fa";
 import { IconType } from "react-icons";
