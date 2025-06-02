@@ -2,10 +2,7 @@ import { IArticle } from "../../types/pages";
 import { IPm } from "../../types/selector";
 import { marked, Renderer } from "marked";
 
-export const textToHTML = async (
-  text?: string,
-  target: "blank" | "self" = "blank"
-) => {
+export const textToHTML = async (text?: string) => {
   if (!text?.trim()) return "";
 
   const renderer = new Renderer();
@@ -13,7 +10,7 @@ export const textToHTML = async (
     if (!href || href.trim().toLowerCase().startsWith("javascript:"))
       return text;
     const titleAttr = title ? ` title="${title}"` : "";
-    return `<a href="${href}" target="_${target}" rel="noopener noreferrer"${titleAttr}><b>${text}</b></a>`;
+    return `<a href="${href}" target="_self" rel="noopener noreferrer"${titleAttr}><b>${text}</b></a>`;
   };
 
   marked.setOptions({ breaks: true, gfm: true, renderer });
@@ -46,13 +43,20 @@ export const enrichText = (
         .some((v) => v?.toLowerCase() === lower)
     );
 
-    if (pm && !seen.has(lower)) {
-      seen.add(lower);
-      return `<a href="/${locale}/articles/${pm.en_name.toLowerCase()}"><b>${word}</b></a>`;
+    if (pm) {
+      const slug = `${locale}/articles/${pm.en_name.toLowerCase()}`;
+
+      // если мы уже вставляли ссылку — не вставляем снова
+      if (seen.has(slug)) {
+        return word;
+      }
+
+      seen.add(slug);
+      return `<a href="/${slug}"><b>${word}</b></a>`;
     }
 
     return word;
   });
 
-  return textToHTML(replaced, "blank");
+  return textToHTML(replaced);
 };

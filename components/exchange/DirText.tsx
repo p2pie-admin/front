@@ -20,14 +20,14 @@ const DirText = ({
   city?: ICity;
 }) => {
   const { locale } = useRouter() as { locale: "en" | "ru" };
-  const cityCountry = useAppSelector(
-    (state) =>
-      `${
-        locale === "ru"
-          ? state.main.city.preposition
-          : state.main.city[`${locale}_name`]
-      } / ${state.main.city[`${locale}_country_name`]}`
-  );
+  const cityCountry = useAppSelector((state) => {
+    if (!(slug.startsWith("cash-") || slug.includes("-cash-"))) return "";
+    return `${
+      locale === "ru"
+        ? state.main.city.preposition
+        : state.main.city[`${locale}_name`]
+    } / ${state.main.city[`${locale}_country_name`]}`;
+  });
 
   if (!dirText) return <></>;
   const { text, title } = dirText;
@@ -37,9 +37,8 @@ const DirText = ({
       <Heading as="h2" fontSize="3xl">
         {fillWords({ title, givePm, getPm, cityCountry })}
       </Heading>
-      <ResponsiveText whiteSpace="unset" variant="no_contrast">
-        {text}
-      </ResponsiveText>
+
+      <div dangerouslySetInnerHTML={{ __html: text }} />
     </Box>
   );
 };

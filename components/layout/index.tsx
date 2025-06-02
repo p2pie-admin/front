@@ -73,33 +73,6 @@ const Layout = ({ children }: { children: any }) => {
         "&::WebkitOverflowScrolling": "touch",
       }}
     >
-      {/* <Box minH="-webkit-fill-available" p="1" w="100%" bgColor="red.500">
-       
-      </Box> */}
-      {/* <Box>
-        {Object.values({
-          "10": "#fdf6f3",
-          "50": "#faddde",
-          "100": "#f7dace",
-          "200": "#f1c4b5",
-          "300": "#efbaa3",
-          "400": "#dfa694",
-          "500": "#cd9b85",
-          "600": "#b78a77",
-          "700": "#9a7564",
-          "800": "#684f44",
-          "900": "#584339",
-          "1000": "#3f3029",
-        }).map((v) => (
-          <Box w="10" h="10" bg={v} />
-        ))}
-      </Box> */}
-      {/* <Box
-        w="10"
-        h="10"
-        bg={dirRatesStatus !== "fulfilled" ? "red.500" : "green.500"}
-      /> */}
-
       <Box
         position="absolute"
         w="100%"

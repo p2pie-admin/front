@@ -14,6 +14,7 @@ import { mylog } from "../services/utils";
 import { TextBoxQuery } from "../services/initialQueries";
 import { initCMSFetcher } from "../services/fetchers";
 import { ITextBox } from "../types/pages";
+import { enrichText } from "../components/shared/helper";
 
 const prerenderCountries = ["ukraine", "russia", "belarus"];
 
@@ -138,8 +139,14 @@ export async function getStaticProps({
     };
     const textBoxes = res?.textBoxes;
 
-    if (dirText && textBoxes?.length && textBoxes[0]?.text)
-      dirText.text = textBoxes[0]?.text;
+    if (dirText && textBoxes?.length && textBoxes[0]?.text) {
+      dirText.text = await enrichText(
+        textBoxes[0]?.text,
+        articles,
+        pms,
+        locale
+      );
+    }
 
     let [giveArticleExists, getArticleExists] = [false, false];
 

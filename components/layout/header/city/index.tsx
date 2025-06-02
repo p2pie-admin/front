@@ -14,16 +14,13 @@ const CitySelector = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const { locale } = router as { locale: "en" | "ru" };
-  const { exchange } = router.query as { exchange: string };
+  const { exchange: slug } = router.query as { exchange: string };
   const currentCity = useAppSelector(
     (state) => state.main?.city[`${locale}_name`]
   );
 
   const dispatch = useAppDispatch();
-  if (
-    !exchange ||
-    !(exchange.startsWith("cash-") || exchange.includes("-cash-"))
-  )
+  if (!slug || !(slug.startsWith("cash-") || slug.includes("-cash-")))
     return <></>;
   return (
     <Box>
