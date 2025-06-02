@@ -22,7 +22,6 @@ const Bricks = ({ n }: { n: number }) => {
 };
 
 export default function Stats({ stats }: { stats: { [key: string]: number } }) {
-  mylog(String(stats), "hidden");
   const entries = Object.entries(stats);
   return (
     <Grid

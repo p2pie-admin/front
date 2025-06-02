@@ -51,7 +51,12 @@ export async function getStaticProps({
 
     return {
       props: {
-        exchanger: await addExchangerCrossLinking(exchanger, articles, pms),
+        exchanger: await addExchangerCrossLinking(
+          exchanger,
+          articles,
+          pms,
+          locale
+        ),
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },

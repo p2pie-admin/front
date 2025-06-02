@@ -2,7 +2,7 @@ import Transliterator from "../../services/transliterator";
 import { IExchanger, IParserExchanger } from "../../types/exchanger";
 import { IArticle } from "../../types/pages";
 import { IPm } from "../../types/selector";
-import { textToHTML } from "../article/helper";
+
 import { enrichText } from "../shared/helper";
 
 export function hasCyrillic(text: string): boolean {
@@ -35,21 +35,20 @@ export const getStatus = (exchanger: IExchanger & IParserExchanger) => {
 export const addExchangerCrossLinking = async (
   exchanger: (IExchanger & IParserExchanger) | null,
   articles: IArticle[] | undefined,
-  pms: IPm[] | undefined
+  pms: IPm[] | undefined,
+  locale: "en" | "ru" = "en"
 ) => {
   if (!articles || !exchanger || !exchanger.exchanger_card.en_description)
     return exchanger;
 
-  const linkedText = enrichText(
+  const text = await enrichText(
     exchanger.exchanger_card.en_description,
     articles,
-    pms
+    pms,
+    locale
   );
 
-  exchanger.exchanger_card.en_description = await textToHTML(
-    linkedText,
-    "self"
-  );
+  exchanger.exchanger_card.en_description = text;
 
   return exchanger;
 };

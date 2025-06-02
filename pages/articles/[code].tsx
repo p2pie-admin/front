@@ -9,10 +9,7 @@ import { setDirRatesStatus } from "../../redux/mainReducer";
 import { IArticle } from "../../types/pages";
 import Article from "../../components/article";
 import { loadInitialData } from "../../cache/loadInitialData";
-import {
-  addArticlesCrossLinking,
-  convertArticle,
-} from "../../components/article/helper";
+import { addArticleCrossLinking } from "../../components/article/helper";
 
 const ArticlePage = (props: {
   locale: "en" | "ru";
@@ -104,19 +101,8 @@ export async function getStaticProps({
     console.error("[getStaticProps] 'articles' is missing or invalid.");
     return { notFound: true };
   }
-  const updatedArticles = addArticlesCrossLinking(articles);
 
-  // Use cached data as needed
   const code = params.code.toLowerCase();
-
-  const article = updatedArticles?.find(
-    (a: any) => a.code.toLowerCase() === code
-  );
-
-  if (!article) {
-    console.warn(`[getStaticProps] No article found for code: ${code}`);
-    return { notFound: true };
-  }
 
   const articlePms = pms.filter(
     (pm) => pm.en_name.toLowerCase() == code.toLowerCase()
@@ -152,10 +138,25 @@ export async function getStaticProps({
     },
     { buy: [], sell: [] }
   );
+  const article = articles.find(
+    (a) => a.code.toLowerCase() == code.toLowerCase()
+  );
+  if (!article) {
+    console.warn(`[getStaticProps] No article found for code: ${code}`);
+    return { notFound: true };
+  }
+
+  const linkedArticle = await addArticleCrossLinking(
+    article,
+    articles,
+    pms,
+    locale,
+    articlePms[0]
+  );
 
   return {
     props: {
-      article: await convertArticle(article),
+      article: linkedArticle,
       otherDirs,
       locale,
       ...(await serverSideTranslations(locale || "ru", ["main"])),
