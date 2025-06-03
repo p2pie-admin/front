@@ -38,6 +38,7 @@ import ColumnGrid from "../layout/ColumnGrid";
 import { NextSeo, BreadcrumbJsonLd } from "next-seo";
 import { useTranslation } from "next-i18next";
 import PmLayout from "./pmLayout";
+import UniversalSeo from "../shared/UniversalSeo";
 
 const Exchange = ({
   locale,
@@ -96,66 +97,55 @@ const Exchange = ({
   const isLong = title1.length > 40;
   let [description, cityAddon, site_name] = ["", "", ""];
   if (locale == "ru") {
-    description = "Поиску лучших предложений обмена";
+    description = `Обмен ${givePm.ru_name || givePm.en_name} ${giveCur} на ${
+      getPm.ru_name || getPm.en_name
+    } ${getCur}`;
     if (city) cityAddon = ` в ${city.ru_name}, ${city.ru_country_name}`;
     site_name = "P2Pie мониторинг обменников";
   } else {
-    description = "Finding the best exchange offers";
     if (city) cityAddon = ` в ${city.en_name}, ${city.en_country_name}`;
+    description = `Exchange ${givePm.en_name} ${giveCur} for ${getPm.en_name} ${getCur}`;
     site_name = "P2Pie Exchange Monitoring";
   }
 
   if (!slug) return <></>;
   return (
     <VStack>
-      <NextSeo
-        title={title1}
-        description={description + cityAddon}
-        canonical={`https://p2pie.com/${slugCityToExchange(
-          slug,
-          city?.en_name
-        )}`}
-        additionalLinkTags={[
+      <UniversalSeo
+        title={title1} // e.g. "Exchange BTC to USDT in Moscow"
+        description={description + cityAddon} // e.g. "Best rates to exchange BTC to USDT in Moscow"
+        canonicalPath={`${locale}/${slugCityToExchange(slug, city?.en_name)}`} // e.g. "en/btc-to-usdt-moscow"
+        locale={locale}
+        updatedAt={dirText?.updatedAt}
+        isArticle={false} // Exchange pages are not blog articles
+        siteName="P2Pie Exchange"
+        alternateLangs={[
           {
             rel: "alternate",
-            href: `https://p2pie.com/ru/${slugCityToExchange(
-              slug,
-              city?.en_name
-            )}`,
             hrefLang: "en",
-          },
-          {
-            rel: "alternate",
             href: `https://p2pie.com/en/${slugCityToExchange(
               slug,
               city?.en_name
             )}`,
+          },
+          {
+            rel: "alternate",
             hrefLang: "ru",
+            href: `https://p2pie.com/ru/${slugCityToExchange(
+              slug,
+              city?.en_name
+            )}`,
           },
         ]}
-        openGraph={{
-          type: "article",
-          article: {
-            publishedTime: dirText?.updatedAt,
-            modifiedTime: dirText?.updatedAt,
-          },
-          url: `https://p2pie.com/${locale}/${slugCityToExchange(
-            slug,
-            city?.en_name
-          )}`,
-          site_name: site_name,
-        }}
-      />
-      <BreadcrumbJsonLd
-        itemListElements={[
+        breadcrumbs={[
           {
             position: 1,
-            name: locale == "en" ? "Home" : "Главная",
+            name: locale === "en" ? "Home" : "Главная",
             item: `https://p2pie.com/${locale}`,
           },
           {
             position: 2,
-            name: { title1 },
+            name: title1,
             item: `https://p2pie.com/${locale}/${slugCityToExchange(
               slug,
               city?.en_name
@@ -163,6 +153,7 @@ const Exchange = ({
           },
         ]}
       />
+
       <Box
         bgGradient={`radial-gradient(circle at 50% -10%, ${centerColor} 0%, ${peripheryColor} 60%)`}
         bgClip="text"

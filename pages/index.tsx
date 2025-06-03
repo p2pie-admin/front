@@ -13,6 +13,7 @@ import { IMainText, ITextBox } from "../types/pages";
 import { NextSeo, BreadcrumbJsonLd } from "next-seo";
 import { useTranslation } from "react-i18next";
 import { loadInitialData } from "../cache/loadInitialData";
+import UniversalSeo from "../components/shared/UniversalSeo";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   // must be async
@@ -65,41 +66,16 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 };
 
 const Home = (props: any) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language as "en" | "ru"; // Default to 'ru' if no language is set
   return (
     <>
-      <NextSeo
+      <UniversalSeo
         title={t("main:meta-title")}
         description={t("main:meta-description")}
-        canonical={`https://p2pie.com`}
-        additionalLinkTags={[
-          {
-            rel: "alternate",
-            href: `https://p2pie.com/en`,
-            hrefLang: "en",
-          },
-          {
-            rel: "alternate",
-            href: `https://p2pie.com/ru`,
-            hrefLang: "ru",
-          },
-        ]}
-        openGraph={{
-          type: "website", // Use "website" for the homepage instead of "article".
-          url: "https://p2pie.com",
-          site_name: "p2pie",
-          title: t("main:meta-title"),
-          description: t("main:meta-description"),
-        }}
-      />
-      <BreadcrumbJsonLd
-        itemListElements={[
-          {
-            position: 1,
-            name: "Home",
-            item: `https://p2pie.com`,
-          },
-        ]}
+        canonicalPath={`${locale}`}
+        locale={locale}
+        isArticle={false}
       />
       <MainPageContent {...props} />
     </>

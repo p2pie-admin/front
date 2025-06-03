@@ -41,22 +41,33 @@ export async function getStaticProps({
       };
     }
 
-    const exchanger =
-      cachedData?.exchangers?.find(
-        (e) => exchangerNameToSlug(e.name) == name.toLowerCase()
+    const rawExchanger =
+      cachedData.exchangers.find(
+        (e) => exchangerNameToSlug(e.name) === name.toLowerCase()
       ) || null;
 
-    const articles = cachedData[`${"en"}Data`]?.articles || [];
+    if (!rawExchanger) {
+      return {
+        notFound: true,
+      };
+    }
+
+    const articles = cachedData[`${locale}Data`]?.articles || [];
     const pms = cachedData.pms;
+
+    const enrichedExchanger = await addExchangerCrossLinking(
+      rawExchanger,
+      articles,
+      pms,
+      locale
+    );
+
+    // Fallback: If description or other enriched data is missing, return minimal data
+    const exchanger = enrichedExchanger || rawExchanger;
 
     return {
       props: {
-        exchanger: await addExchangerCrossLinking(
-          exchanger,
-          articles,
-          pms,
-          locale
-        ),
+        exchanger,
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },

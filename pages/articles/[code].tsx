@@ -15,65 +15,7 @@ const ArticlePage = (props: {
   locale: "en" | "ru";
   article: IArticle | null;
   otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] };
-}) => {
-  const { article, locale } = props;
-
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(setDirRatesStatus("fulfilled"));
-  }, []);
-
-  if (!article) {
-    return <div>Article not found</div>;
-  }
-  const normalizedCode = article.code.toLowerCase();
-
-  return (
-    <>
-      <NextSeo
-        title={article.header}
-        description={article.subheader}
-        canonical={`https://p2pie.com/${locale}/articles/${normalizedCode}`}
-        additionalLinkTags={[
-          {
-            rel: "alternate",
-            href: `https://p2pie.com/en/articles/${normalizedCode}`,
-            hrefLang: "en",
-          },
-          {
-            rel: "alternate",
-            href: `https://p2pie.com/ru/articles/${normalizedCode}`,
-            hrefLang: "ru",
-          },
-        ]}
-        openGraph={{
-          type: "article",
-          article: {
-            publishedTime: article.updatedAt,
-            modifiedTime: article.updatedAt,
-          },
-          url: `https://p2pie.com/${locale}/articles/${normalizedCode}`,
-          site_name: article.header,
-        }}
-      />
-      <BreadcrumbJsonLd
-        itemListElements={[
-          {
-            position: 1,
-            name: locale == "en" ? "Home" : "Главная",
-            item: `https://p2pie.com/${locale}`,
-          },
-          {
-            position: 2,
-            name: article.header,
-            item: `https://p2pie.com/${locale}/articles/${normalizedCode}`,
-          },
-        ]}
-      />
-      <Article {...props} />
-    </>
-  );
-};
+}) => <Article {...props} />;
 
 export async function getStaticProps({
   params,

@@ -16,6 +16,8 @@ import CircularIcon from "../shared/CircularIcon";
 import Stats from "./Stats";
 import OtherDirs from "./OtherDirs";
 import ReactMarkdown from "react-markdown";
+import TopImage from "./TopImage";
+import UniversalSeo from "../shared/UniversalSeo";
 
 const Article = ({
   article,
@@ -26,6 +28,8 @@ const Article = ({
   otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] };
   locale: "en" | "ru";
 }) => {
+  const normalizedCode = article?.code.toLowerCase();
+
   const [highlited, setHighlited] = useState(undefined);
 
   const timestampToDate = (ts?: string) => {
@@ -56,6 +60,26 @@ const Article = ({
   if (!pm) return <>Nothing was found!</>;
   return (
     <>
+      <UniversalSeo
+        title={article.header}
+        description={article.subheader}
+        canonicalPath={`${locale}/articles/${normalizedCode}`}
+        updatedAt={article.updatedAt}
+        isArticle
+        locale={locale}
+        alternateLangs={[
+          {
+            rel: "alternate",
+            hrefLang: "en",
+            href: `https://p2pie.com/en/articles/${normalizedCode}`,
+          },
+          {
+            rel: "alternate",
+            hrefLang: "ru",
+            href: `https://p2pie.com/ru/articles/${normalizedCode}`,
+          },
+        ]}
+      />
       <Box3D
         variant="contrast"
         w="100%"
@@ -63,62 +87,7 @@ const Article = ({
         px={["2", "8"]}
         py={["4", "8"]}
       >
-        <Center w="100%" gap="2" mb="6">
-          <Box
-            border="1px solid"
-            bgColor="bg.700"
-            borderColor="bg.600"
-            borderRadius="50%"
-            w="3"
-            h="3"
-          />
-          <Box
-            border="1.5px solid"
-            bgColor="bg.600"
-            borderColor="bg.500"
-            borderRadius="50%"
-            w="4"
-            h="4"
-          />
-          <Box
-            border="2px solid"
-            bgColor="bg.500"
-            borderColor="bg.400"
-            borderRadius="50%"
-            w="5"
-            h="5"
-          />
-          <CircularIcon
-            iconAlt={pm.en_name}
-            icon={pm.icon}
-            color={pm.color || "gray"}
-            size="lg"
-          />
-          <Box
-            border="2px solid"
-            bgColor="bg.500"
-            borderColor="bg.400"
-            borderRadius="50%"
-            w="5"
-            h="5"
-          />
-          <Box
-            border="1.5px solid"
-            bgColor="bg.600"
-            borderColor="bg.500"
-            borderRadius="50%"
-            w="4"
-            h="4"
-          />
-          <Box
-            border="1px solid"
-            bgColor="bg.700"
-            borderColor="bg.600"
-            borderRadius="50%"
-            w="3"
-            h="3"
-          />
-        </Center>
+        <TopImage pm={pm} />
 
         <Heading as="h1" fontSize={["xl", "2xl", "3xl"]}>
           {article.header}

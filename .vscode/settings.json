@@ -1,3 +1,17 @@
 {
-    "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "folder-color.pathColors": [
+    {
+      "folderPath": "front/pages/",
+      "badge": "🫷"
+    },
+    {
+      "folderPath": "front/pages/index.tsx/",
+      "badge": "⛺"
+    },
+    {
+      "folderPath": "front/components/exchanger/",
+      "badge": "🌸"
+    }
+  ]
 }
