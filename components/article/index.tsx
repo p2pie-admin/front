@@ -55,7 +55,7 @@ const Article = ({
 
   const minToRead = Math.round(symbols / 1000);
 
-  const pm = otherDirs.buy[0].givePm;
+  const pm = otherDirs?.buy[0]?.givePm;
   const pmName = pm?.[`${locale}_name`] + " " + pm?.code;
   if (!pm) return <>Nothing was found!</>;
   return (
