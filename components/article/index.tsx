@@ -26,7 +26,7 @@ const Article = ({
   otherDirs,
   locale,
 }: {
-  pm: IPm;
+  pm?: IPm;
   article?: IArticle | null;
   otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] };
   locale: "en" | "ru";

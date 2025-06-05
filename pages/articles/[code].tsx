@@ -101,7 +101,7 @@ export async function getStaticProps({
 
   return {
     props: {
-      pm: articlePms[0],
+      pm: articlePms[0] || null,
       article: linkedArticle,
       otherDirs,
       locale,

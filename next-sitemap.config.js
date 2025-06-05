@@ -21,19 +21,34 @@ const config = {
       });
     });
 
-    cachedData.enData.articleCodes.forEach((code) =>
-      paths.push({
-        loc: `/ru/articles/${`/${code}`}`,
-        lastmod: new Date().toISOString(),
-      })
-    );
+    const enArticles = cachedData[`enData`]?.articles || [];
+    const ruArticles = cachedData[`ruData`]?.articles || [];
 
-    cachedData.ruData.articleCodes.forEach((code) =>
+    enArticles.forEach((article) => {
       paths.push({
-        loc: `/en/articles/${`/${code}`}`,
+        loc: `/en/${`${article.code.toLowerCase()}`}`,
         lastmod: new Date().toISOString(),
-      })
-    );
+      });
+    });
+
+    ruArticles.forEach((article) => {
+      paths.push({
+        loc: `/ru/${`${article.code.toLowerCase()}`}`,
+        lastmod: new Date().toISOString(),
+      });
+    });
+
+    const exchangerSlugs = cachedData?.exchangerSlugs;
+
+    if (exchangerSlugs) {
+      exchangerSlugs.forEach((exchangerSlug) => {
+        paths.push({
+          loc: `/exchangers/${exchangerSlug}`,
+          lastmod: new Date().toISOString(),
+        });
+      });
+    }
+
     console.log("paths for sitemap collected: ", paths.length);
     return paths;
   },

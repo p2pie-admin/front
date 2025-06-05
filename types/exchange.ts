@@ -64,6 +64,7 @@ export interface ICache {
   ruData: ILocalData;
   exchangers?: (IExchanger & IParserExchanger)[];
   timestamp: number;
+  exchangerSlugs?: string[];
 }
 
 export interface IPossiblePmPair {

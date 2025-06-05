@@ -27,6 +27,7 @@ import {
 } from "../services/initialQueries";
 import { mylog } from "../services/utils";
 import { IArticle } from "../types/pages";
+import { exchangerNameToSlug } from "../components/exchangers/helper";
 
 // Helper to fetch localized content
 const fetchLocalizedData = async (locale: "en" | "ru"): Promise<ILocalData> => {
@@ -135,6 +136,12 @@ export const loadInitialData = async (): Promise<ICache | undefined> => {
       fetchLocalizedData("ru"),
     ]);
 
+    // Exchanegr slugs нужны чтобы запихнуть в сайтмап
+
+    const exchangerSlugs = allExchangers.map((exchanger) =>
+      exchangerNameToSlug(exchanger.name)
+    );
+
     // Finalize cache
     const finalCache: ICache = {
       timestamp,
@@ -146,6 +153,7 @@ export const loadInitialData = async (): Promise<ICache | undefined> => {
       enData,
       ruData,
       exchangers,
+      exchangerSlugs,
     };
 
     writeCache(finalCache);

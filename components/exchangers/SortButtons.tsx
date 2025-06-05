@@ -54,7 +54,6 @@ const SortButtons: React.FC<SortButtonsProps> = ({
             onClick={() => toggleSort(key)}
             rightIcon={getIcon(key)}
             borderRadius="none"
-            dropShadow="lg"
             _first={{ borderTopLeftRadius: "xl", borderBottomLeftRadius: "xl" }}
             _last={{
               borderTopRightRadius: "xl",
