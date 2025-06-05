@@ -20,6 +20,7 @@ import {
   RegularBox,
   ResponsiveText,
 } from "../../../../../styles/theme/custom";
+import { useTranslation } from "react-i18next";
 
 const Section = ({
   title,
@@ -30,6 +31,7 @@ const Section = ({
   itemsToShow: number;
   pmGroups: IPmGroup[];
 }) => {
+  const { t } = useTranslation("main");
   // const country = useAppSelector((state) =>
   //   state.main.location.en_country_name.toUpperCase()
   // );
@@ -57,7 +59,7 @@ const Section = ({
         justifyContent="start"
       >
         <ResponsiveText fontWeight="bold" variant="no_contrast">
-          {title.toUpperCase()}
+          {t(title).toUpperCase()}
         </ResponsiveText>
         <Spacer />
       </RegularBox>

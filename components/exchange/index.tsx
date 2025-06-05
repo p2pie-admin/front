@@ -97,14 +97,16 @@ const Exchange = ({
   const isLong = title1.length > 40;
   let [description, cityAddon, site_name] = ["", "", ""];
   if (locale == "ru") {
-    description = `Обмен ${givePm.ru_name || givePm.en_name} ${giveCur} на ${
-      getPm.ru_name || getPm.en_name
-    } ${getCur}`;
+    description = `Обмен ${givePm.ru_name || givePm.en_name} ${giveCur} ${
+      givePm.subgroup_name || ""
+    } на ${getPm.ru_name || getPm.en_name} ${getCur}`;
     if (city) cityAddon = ` в ${city.ru_name}, ${city.ru_country_name}`;
     site_name = "P2Pie мониторинг обменников";
   } else {
     if (city) cityAddon = ` в ${city.en_name}, ${city.en_country_name}`;
-    description = `Exchange ${givePm.en_name} ${giveCur} for ${getPm.en_name} ${getCur}`;
+    description = `Exchange ${givePm.en_name} ${giveCur} ${
+      givePm.subgroup_name || ""
+    } for ${getPm.en_name} ${getCur}`;
     site_name = "P2Pie Exchange Monitoring";
   }
 

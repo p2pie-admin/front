@@ -1,11 +1,7 @@
 import Subitems from "./Subitems";
 
 import Name from "./Name";
-import {
-  extractPmsFromPmGroup,
-  pmsToSlug,
-  singlePmHasUnmetPairs,
-} from "./helper";
+import { extractPmsFromPmGroup, pmsToSlug } from "./helper";
 import { useAppDispatch, useAppSelector } from "../../../../../../redux/hooks";
 import { batch } from "react-redux";
 import { IPmGroup, IPm } from "../../../../../../types/selector";
@@ -25,7 +21,7 @@ import { slugCityToExchange } from "../../../../../exchange/helper";
 
 const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   const router = useRouter();
-  const p2pDirIndex = useContext(P2PContext);
+  //const p2pDirIndex = useContext(P2PContext);
   const dispatch = useAppDispatch();
   const side = useContext(SideContext) as "give" | "get";
   const oppositePm = useAppSelector(
@@ -39,7 +35,8 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   }
   const possiblePairs = oppositePm?.possible_pairs;
 
-  const shaded = !!oppositePm && singlePmHasUnmetPairs(pms[0], possiblePairs);
+  const shaded =
+    !!oppositePm && !possiblePairs?.find((pair) => pms[0].code === pair);
 
   const choosePm = (sub?: string) => {
     const pm =
@@ -57,15 +54,6 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
     });
 
     if (oppositePm?.code) {
-      // const oldSlug = router.query.slug as string;
-      // const leftPart =
-      //   side === "give"
-      //     ? `${pm.en_name}-${pm.currency.code}`
-      //     : oldSlug.split("-to-")[0];
-      // const rightPart =
-      //   side === "give"
-      //     ? oldSlug.split("-to-")[1]
-      //     : `${pm.en_name}-${pm.currency.code}`;
       const [givePm, getPm] =
         side === "give" ? [pm, oppositePm] : [oppositePm, pm];
       dispatch(setDirRatesStatus("pending"));
@@ -76,33 +64,6 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
         ? router.push(`/`)
         : router.push(`/${slugCityToExchange(slug, cityName)}`);
     }
-
-    // const oppositePm = side === "give" ? getPm : givePm;
-    // batch(() => {
-    //   dispatch(fetchPossiblePairs({ code: selectedPm.code, side }));
-    //   dispatch(triggerModal(undefined));
-    //   dispatch(setPm({ pm: selectedPm, side }));
-    //   if (oppositePm?.code) {
-    //     if (shaded) {
-    //       // clear opposite Pm is no pair possible anyway
-    //       dispatch(
-    //         setPm({
-    //           pm: undefined,
-    //           side: side === "give" ? "get" : "give",
-    //         })
-    //       );
-    //     } else {
-    //       const slug = pmsToSlug(
-    //         side === "get"
-    //           ? { givePm, getPm: selectedPm }
-    //           : { givePm: selectedPm, getPm }
-    //       );
-    //       router.push(`/exchange/${slug}`, undefined, {
-    //         shallow: true,
-    //       });
-    //     }
-    //   }
-    // });
   };
 
   const name = pm_group.en_name;

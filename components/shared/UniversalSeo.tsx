@@ -22,7 +22,7 @@ interface UniversalSeoProps {
 const UniversalSeo = ({
   title,
   description,
-  canonicalPath,
+  canonicalPath = "",
   locale = "en",
   updatedAt,
   siteName = "P2P Exchange",
@@ -57,7 +57,7 @@ const UniversalSeo = ({
     {
       position: 1,
       name: locale === "en" ? "Home" : "Главная",
-      item: `https://p2pie.com/${locale}`,
+      item: `https://p2pie.com/${locale || "ru"}`,
     },
     {
       position: 2,

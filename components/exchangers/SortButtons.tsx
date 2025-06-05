@@ -1,6 +1,7 @@
-import { Button, ButtonGroup, HStack, Tooltip } from "@chakra-ui/react";
+import { Button, HStack, Tooltip, useColorModeValue } from "@chakra-ui/react";
 import { FaArrowUpWideShort, FaArrowDownShortWide } from "react-icons/fa6";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 interface SortButtonsProps {
   sortCriteria: "name" | "total_rates" | "admin_rating";
@@ -13,44 +14,57 @@ const SortButtons: React.FC<SortButtonsProps> = ({
   sortDirection,
   toggleSort,
 }) => {
-  const getIcon = (criteria: SortButtonsProps["sortCriteria"]) => {
-    if (sortCriteria !== criteria) return <></>;
-    return sortDirection === "asc" ? (
-      <FaArrowDownShortWide />
-    ) : (
-      <FaArrowUpWideShort />
-    );
-  };
+  const { t } = useTranslation();
+  const activeBg = useColorModeValue("bg.100", "bg.600");
+
+  const getIcon = (criteria: SortButtonsProps["sortCriteria"]) =>
+    sortCriteria === criteria ? (
+      sortDirection === "asc" ? (
+        <FaArrowDownShortWide />
+      ) : (
+        <FaArrowUpWideShort />
+      )
+    ) : undefined; // ✅ instead of `null`
+
+  const buttons = [
+    { key: "name", label: t("Name"), tooltip: t("Sort by name") },
+    {
+      key: "total_rates",
+      label: t("Rates"),
+      tooltip: t("Sort by total rates"),
+    },
+    {
+      key: "admin_rating",
+      label: t("Rating"),
+      tooltip: t("Sort by admin rating"),
+    },
+  ] as const;
 
   return (
-    <HStack borderWidth="2px" borderRadius="xl" borderColor="bg.500" gap="0">
-      <Tooltip label="Sort by name" fontSize="sm">
-        <Button
-          bgColor={sortCriteria === "name" ? "bg.700" : "transparent"}
-          onClick={() => toggleSort("name")}
-          rightIcon={getIcon("name")}
-        >
-          Name
-        </Button>
-      </Tooltip>
-      <Tooltip label="Sort by total rates" fontSize="sm">
-        <Button
-          bgColor={sortCriteria === "total_rates" ? "bg.700" : "transparent"}
-          onClick={() => toggleSort("total_rates")}
-          rightIcon={getIcon("total_rates")}
-        >
-          Rates
-        </Button>
-      </Tooltip>
-      <Tooltip label="Sort by admin rating" fontSize="sm">
-        <Button
-          bgColor={sortCriteria === "admin_rating" ? "bg.700" : "transparent"}
-          onClick={() => toggleSort("admin_rating")}
-          rightIcon={getIcon("admin_rating")}
-        >
-          Rating
-        </Button>
-      </Tooltip>
+    <HStack
+      borderWidth="2px"
+      borderRadius="2xl"
+      borderColor="bg.500"
+      spacing={0}
+    >
+      {buttons.map(({ key, label, tooltip }) => (
+        <Tooltip key={key} label={tooltip} fontSize="sm">
+          <Button
+            bgColor={sortCriteria === key ? activeBg : "transparent"}
+            onClick={() => toggleSort(key)}
+            rightIcon={getIcon(key)}
+            borderRadius="none"
+            dropShadow="lg"
+            _first={{ borderTopLeftRadius: "xl", borderBottomLeftRadius: "xl" }}
+            _last={{
+              borderTopRightRadius: "xl",
+              borderBottomRightRadius: "xl",
+            }}
+          >
+            {label}
+          </Button>
+        </Tooltip>
+      ))}
     </HStack>
   );
 };

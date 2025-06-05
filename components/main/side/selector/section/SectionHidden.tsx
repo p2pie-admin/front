@@ -12,8 +12,10 @@ import Arrow from "../../../../shared/Arrow";
 import SectionGridWrapper from "./SectionGrid";
 import PmGroup from "./PmGroup";
 import { IPmGroup } from "../../../../../types/selector";
+import { useTranslation } from "react-i18next";
 
 const SectionHidden = ({ children }: { children: IPmGroup[] }) => {
+  const { t } = useTranslation("main");
   const dividerColor = useColorModeValue(
     "rgba(0,0,0,0.1)",
     "rgba(225,200,255,0.1)"
@@ -54,7 +56,7 @@ const SectionHidden = ({ children }: { children: IPmGroup[] }) => {
         color="bg.500"
       >
         <Text fontSize="md" m="0 2px">
-          {folded ? "see all" : "see less"}
+          {folded ? t("see all") : t("see less")}
         </Text>
         <Arrow isUp={!folded} />
       </Button>

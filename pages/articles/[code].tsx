@@ -10,8 +10,10 @@ import { IArticle } from "../../types/pages";
 import Article from "../../components/article";
 import { loadInitialData } from "../../cache/loadInitialData";
 import { addArticleCrossLinking } from "../../components/article/helper";
+import { IPm } from "../../types/selector";
 
 const ArticlePage = (props: {
+  pm: IPm;
   locale: "en" | "ru";
   article: IArticle | null;
   otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] };
@@ -47,6 +49,7 @@ export async function getStaticProps({
   const code = params.code.toLowerCase();
 
   const articlePms = pms.filter(
+    // может быть несколько pm с одинаковым en_name
     (pm) => pm.en_name.toLowerCase() == code.toLowerCase()
   );
 
@@ -98,6 +101,7 @@ export async function getStaticProps({
 
   return {
     props: {
+      pm: articlePms[0],
       article: linkedArticle,
       otherDirs,
       locale,

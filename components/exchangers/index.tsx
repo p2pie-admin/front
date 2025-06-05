@@ -7,15 +7,17 @@ import { getStatus } from "./helper";
 import TopPanel from "./TopPanel";
 import ExchangersHeader from "./ExchangersHeader";
 import ExchangerLink from "./ExchangerLink";
-import { t } from "i18next";
+
 import UniversalSeo from "../shared/UniversalSeo";
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
 
 export default function ExchangersList({
   exchangers,
 }: {
   exchangers: (IExchanger & IParserExchanger)[];
 }) {
+  const { t } = useTranslation("main");
   const { locale } = useRouter() as { locale: "en" | "ru" };
   const [sortCriteria, setSortCriteria] = useState<
     "name" | "total_rates" | "admin_rating"
@@ -114,8 +116,8 @@ export default function ExchangersList({
   return (
     <>
       <UniversalSeo
-        title={t("main:exchangers-meta-title")}
-        description={t("main:exchangers-meta-description")}
+        title={t("exchangers-meta-title")}
+        description={t("exchangers-meta-description")}
         canonicalPath={`${locale}/exchangers`}
         locale={locale}
         isArticle={false}

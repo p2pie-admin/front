@@ -21,6 +21,7 @@ import { countryCurrencies } from "./section/helper";
 import { useRouter } from "next/router";
 
 const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {
+  const { t } = useTranslation("main");
   const { locale } = useRouter() as { locale: "en" | "ru" };
   const [inputFocused, setInputFocused] = useState(false);
   const searchBarInputValue = useAppSelector(
@@ -35,7 +36,7 @@ const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {
 
   const placeholder = inputFocused
     ? search_bar?.[`${locale}_give_adornment`]
-    : "Search...";
+    : t("Search...");
 
   const dispatch = useAppDispatch();
 

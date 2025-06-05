@@ -18,12 +18,15 @@ import OtherDirs from "./OtherDirs";
 import ReactMarkdown from "react-markdown";
 import TopImage from "./TopImage";
 import UniversalSeo from "../shared/UniversalSeo";
+import { IPm } from "../../types/selector";
 
 const Article = ({
+  pm,
   article,
   otherDirs,
   locale,
 }: {
+  pm: IPm;
   article?: IArticle | null;
   otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] };
   locale: "en" | "ru";
@@ -54,8 +57,6 @@ const Article = ({
   );
 
   const minToRead = Math.round(symbols / 1000);
-
-  const pm = otherDirs?.buy[0]?.givePm;
   const pmName = pm?.[`${locale}_name`] + " " + pm?.code;
   if (!pm) return <>Nothing was found!</>;
   return (

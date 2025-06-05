@@ -15,7 +15,6 @@ import React, { useContext } from "react";
 import Arrow from "../../../../../shared/Arrow";
 import { SubButton } from "./SubButton";
 import { IPm } from "../../../../../../types/selector";
-import { allPmsHaveUnmetPairs, singlePmHasUnmetPairs } from "./helper";
 import { useAppSelector } from "../../../../../../redux/hooks";
 import SideContext from "../../../../../shared/contexts/SideContext";
 
@@ -40,9 +39,10 @@ const Subitems = ({
   const [mounted, setMounted] = React.useState(false);
   const mount = () => setMounted(true);
   const unmount = () => setTimeout(() => setMounted(!mounted), 300);
-  const shaded = !!oppositePm && allPmsHaveUnmetPairs(pms, possiblePairs);
+  const shaded =
+    !!oppositePm && !pms.some((pm) => possiblePairs?.includes(pm.code));
   const subShaded = (pm: IPm) =>
-    !!oppositePm && singlePmHasUnmetPairs(pm, possiblePairs);
+    !!oppositePm && !possiblePairs?.find((pair) => pm.code === pair);
   return (
     // сама обложка раскрывалки
     <VStack>
