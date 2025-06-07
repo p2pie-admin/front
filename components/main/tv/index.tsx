@@ -26,8 +26,8 @@ const TV = ({
   slug,
 }: {
   dir: string;
-  city?: ICity;
-  donorCity?: ICity;
+  city: ICity | null;
+  donorCity: ICity | null;
   slug: string;
 }) => {
   const [initial, setInitial] = useState(true);

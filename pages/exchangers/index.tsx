@@ -8,7 +8,7 @@ import ExchangersList from "../../components/exchangers";
 export default function ExchangersPage({
   exchangers,
 }: {
-  exchangers: (IExchanger & IParserExchanger)[];
+  exchangers: (IExchanger & IParserExchanger)[] | null;
 }) {
   return <ExchangersList exchangers={exchangers} />;
 }
@@ -18,12 +18,18 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const { exchangers } = cachedData || {};
 
   if (!exchangers?.length) {
-    return { notFound: true };
+    return {
+      props: {
+        exchangers: null,
+        ...(await serverSideTranslations(locale || "ru", ["main"])),
+      },
+      revalidate: 4000,
+    };
   }
 
   return {
     props: {
-      exchangers,
+      exchangers: exchangers || null,
       ...(await serverSideTranslations(locale || "ru", ["main"])),
     },
     revalidate: 4000,

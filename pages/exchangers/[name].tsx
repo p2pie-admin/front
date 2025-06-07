@@ -67,7 +67,7 @@ export async function getStaticProps({
 
     return {
       props: {
-        exchanger,
+        exchanger: exchanger || null,
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
@@ -75,7 +75,11 @@ export async function getStaticProps({
   } catch (e) {
     console.error(e);
     return {
-      notFound: true,
+      props: {
+        exchanger: null,
+        locale,
+        ...(await serverSideTranslations(locale || "ru", ["main"])),
+      },
     };
   }
 }

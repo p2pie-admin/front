@@ -26,9 +26,9 @@ const Article = ({
   otherDirs,
   locale,
 }: {
-  pm?: IPm;
+  pm: IPm | null;
   article?: IArticle | null;
-  otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] };
+  otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] } | null;
   locale: "en" | "ru";
 }) => {
   const normalizedCode = article?.code.toLowerCase();
@@ -147,7 +147,7 @@ const Article = ({
           })}
         </Box>
 
-        <OtherDirs pmName={pmName} otherDirs={otherDirs} />
+        {otherDirs && <OtherDirs pmName={pmName} otherDirs={otherDirs} />}
 
         <FoundError />
       </Box3D>

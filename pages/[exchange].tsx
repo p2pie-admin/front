@@ -22,14 +22,14 @@ const ExchangePage = (props: {
   //article?: IArticle | null;
   //cities: ICity[];
   //possiblePairs: { [key: string]: string[] };
-  givePmData: IPmData;
-  getPmData: IPmData;
+  givePmData: IPmData | null;
+  getPmData: IPmData | null;
   locale: "en" | "ru";
-  slug?: string;
-  dirText?: IDirText;
-  city?: ICity;
-  similarPmPairs: IPm[][];
-  donorCity?: ICity;
+  slug: string | null;
+  dirText: IDirText | null;
+  city: ICity | null;
+  similarPmPairs: IPm[][] | null;
+  donorCity: ICity | null;
 }) => {
   return <Exchange {...props} />;
 };
@@ -176,14 +176,14 @@ export async function getStaticProps({
     return {
       props: {
         locale,
-        slug,
-        cities,
-        givePmData,
-        getPmData,
-        dirText,
-        city,
-        similarPmPairs,
-        donorCity,
+        slug: slug || null,
+        cities: cities || null,
+        givePmData: givePmData || null,
+        getPmData: getPmData || null,
+        dirText: dirText || null,
+        city: city || null,
+        similarPmPairs: similarPmPairs || null,
+        donorCity: donorCity || null,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
       revalidate: 2400,
@@ -191,7 +191,19 @@ export async function getStaticProps({
   } catch (e) {
     console.error(e);
     return {
-      notFound: true,
+      props: {
+        locale,
+        slug: null,
+        cities: null,
+        givePmData: null,
+        getPmData: null,
+        dirText: null,
+        city: null,
+        similarPmPairs: null,
+        donorCity: null,
+        ...(await serverSideTranslations(locale || "ru", ["main"])),
+      },
+      revalidate: 2400,
     };
   }
 }

@@ -52,19 +52,36 @@ const Exchange = ({
 }: {
   //article?: IArticle | null;
   locale: "en" | "ru";
-  slug?: string;
-  givePmData: IPmData;
-  getPmData: IPmData;
-  dirText?: IDirText;
-  city?: ICity;
-  similarPmPairs: IPm[][];
-  donorCity?: ICity;
+  slug: string | null;
+  givePmData: IPmData | null;
+  getPmData: IPmData | null;
+  dirText: IDirText | null;
+  city: ICity | null;
+  similarPmPairs: IPm[][] | null;
+  donorCity: ICity | null;
 }) => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
+
+  if (
+    !givePmData ||
+    !getPmData ||
+    !dirText ||
+    !givePmData.pm ||
+    !getPmData.pm
+  ) {
+    return (
+      <Center h="100vh">
+        <Text fontSize="xl" color="gray.500">
+          {t("main:loadingExchangeData")}
+        </Text>
+      </Center>
+    );
+  }
   const [givePm, getPm] = [givePmData.pm, getPmData.pm];
   const dir = `${givePm.code}_${getPm.code}`;
   const curPair = `${givePm.currency.code}_${getPm.currency.code}`;
-  const { t } = useTranslation();
+
   useEffect(() => {
     batch(() => {
       dispatch(fetchCurrencyConverterRates({ curPair }));
@@ -190,7 +207,7 @@ const Exchange = ({
               /> */}
             </HStack>
 
-            <Similar similarPmPairs={similarPmPairs} />
+            {similarPmPairs && <Similar similarPmPairs={similarPmPairs} />}
           </VStack>
         </Column>
 

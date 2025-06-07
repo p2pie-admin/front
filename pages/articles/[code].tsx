@@ -13,10 +13,10 @@ import { addArticleCrossLinking } from "../../components/article/helper";
 import { IPm } from "../../types/selector";
 
 const ArticlePage = (props: {
-  pm: IPm;
+  pm: IPm | null;
   locale: "en" | "ru";
   article: IArticle | null;
-  otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] };
+  otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] } | null;
 }) => <Article {...props} />;
 
 export async function getStaticProps({
@@ -88,7 +88,16 @@ export async function getStaticProps({
   );
   if (!article) {
     console.warn(`[getStaticProps] No article found for code: ${code}`);
-    return { notFound: true };
+    return {
+      props: {
+        pm: null,
+        article: null,
+        otherDirs: null,
+        locale,
+        ...(await serverSideTranslations(locale || "ru", ["main"])),
+      },
+      revalidate: 600,
+    };
   }
 
   const linkedArticle = await addArticleCrossLinking(
@@ -102,8 +111,8 @@ export async function getStaticProps({
   return {
     props: {
       pm: articlePms[0] || null,
-      article: linkedArticle,
-      otherDirs,
+      article: linkedArticle || null,
+      otherDirs: otherDirs || null,
       locale,
       ...(await serverSideTranslations(locale || "ru", ["main"])),
     },

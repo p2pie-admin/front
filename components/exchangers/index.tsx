@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next";
 export default function ExchangersList({
   exchangers,
 }: {
-  exchangers: (IExchanger & IParserExchanger)[];
+  exchangers: (IExchanger & IParserExchanger)[] | null;
 }) {
   const { t } = useTranslation("main");
   const { locale } = useRouter() as { locale: "en" | "ru" };
@@ -107,7 +107,7 @@ export default function ExchangersList({
   }, [filteredExchangers, sortCriteria, sortDirection]);
 
   const visibleExchangers = useMemo(
-    () => sortedExchangers.slice(0, visibleCount),
+    () => sortedExchangers?.slice(0, visibleCount),
     [sortedExchangers, visibleCount]
   );
 
@@ -156,7 +156,7 @@ export default function ExchangersList({
                   lg: "repeat(3, 1fr)",
                 }}
               >
-                {visibleExchangers.map((exchanger) => (
+                {visibleExchangers?.map((exchanger) => (
                   <ExchangerLink key={exchanger.id} exchanger={exchanger} />
                 ))}
               </Grid>

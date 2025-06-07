@@ -361,7 +361,7 @@ export const mainSlice = createSlice({
       action: PayloadAction<{
         givePm: IPm;
         getPm: IPm;
-        city?: ICity;
+        city: ICity | null;
       }>
     ) => {
       state.dirRatesStatus = "pending";

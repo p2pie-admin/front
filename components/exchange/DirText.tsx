@@ -17,7 +17,7 @@ const DirText = ({
   givePm: IPm;
   getPm: IPm;
   slug: string;
-  city?: ICity;
+  city: ICity | null;
 }) => {
   const { locale } = useRouter() as { locale: "en" | "ru" };
   const cityCountry = useAppSelector((state) => {
