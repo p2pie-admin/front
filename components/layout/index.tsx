@@ -18,7 +18,6 @@ import { initCurrencyConverterFetcher } from "../../services/fetchers";
 
 import Nav from "./nav";
 import { batch } from "react-redux";
-import HeadHTML from "./HeadHTML";
 
 import { useRouter } from "next/router";
 import { ICity } from "../../types/exchange";

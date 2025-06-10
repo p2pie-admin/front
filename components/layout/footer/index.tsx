@@ -1,5 +1,4 @@
-import { Box, Center, Flex, Text, VStack } from "@chakra-ui/react";
-import { Box3D } from "../../../styles/theme/custom";
+import { Flex, Text, VStack } from "@chakra-ui/react";
 
 const Footer = () => {
   return (

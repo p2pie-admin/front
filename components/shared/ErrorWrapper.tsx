@@ -38,7 +38,9 @@ const Error = ({ primaryMessage = "", secondaryMessage = "" }) => {
       </Text>
 
       <LinkButton
-        href={String(process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT)}
+        href={
+          String(process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT) || "https://t.me"
+        }
         message={"Report problem"}
         CustomIcon={BsTelegram}
       />

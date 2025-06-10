@@ -12,6 +12,30 @@
     {
       "folderPath": "front/components/exchanger/",
       "badge": "🌸"
+    },
+    {
+      "folderPath": "front/components/article/",
+      "badge": "✏️"
+    },
+    {
+      "folderPath": "front/components/exchange/",
+      "badge": "⚖️"
+    },
+    {
+      "folderPath": "front/components/exchangers/",
+      "badge": "🚥"
+    },
+    {
+      "folderPath": "front/components/layout/",
+      "badge": "📋"
+    },
+    {
+      "folderPath": "front/components/main/",
+      "badge": "⚪"
+    },
+    {
+      "folderPath": "front/styles/",
+      "badge": "🖍️"
     }
   ]
 }
