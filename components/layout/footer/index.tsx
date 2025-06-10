@@ -16,7 +16,7 @@ const Footer = () => {
         fontSize="lg"
       >
         <Text>p2pie.com</Text>
-        <Text>2024</Text>
+        <Text>2025</Text>
       </VStack>
     </Flex>
   );
