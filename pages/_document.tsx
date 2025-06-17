@@ -1,10 +1,9 @@
 import { Html, Head, Main, NextScript } from "next/document";
-import { useRouter } from "next/router";
+import type { DocumentContext } from "next/document";
 
-export default function Document() {
-  const { locale } = useRouter(); // You can dynamically set this based on your app's locale
+export default function Document({ locale }: { locale?: string }) {
   return (
-    <Html lang={locale}>
+    <Html lang={locale || "en"}>
       <Head>
         {/* Favicon */}
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -57,3 +56,11 @@ export default function Document() {
     </Html>
   );
 }
+
+Document.getInitialProps = async (ctx: DocumentContext) => {
+  const initialProps = await ctx.defaultGetInitialProps(ctx);
+  return {
+    ...initialProps,
+    locale: ctx.locale, // get locale from context
+  };
+};
