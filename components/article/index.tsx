@@ -19,20 +19,21 @@ import ReactMarkdown from "react-markdown";
 import TopImage from "./TopImage";
 import UniversalSeo from "../shared/UniversalSeo";
 import { IPm } from "../../types/selector";
+import { ISEO } from "../../types/general";
 
 const Article = ({
+  seo,
   pm,
   article,
   otherDirs,
   locale,
 }: {
+  seo: ISEO;
   pm: IPm | null;
   article?: IArticle | null;
   otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] } | null;
   locale: "en" | "ru";
 }) => {
-  const normalizedCode = article?.code.toLowerCase();
-
   const [highlited, setHighlited] = useState(undefined);
 
   const timestampToDate = (ts?: string) => {
@@ -61,26 +62,7 @@ const Article = ({
   if (!pm) return <>Nothing was found!</>;
   return (
     <>
-      <UniversalSeo
-        title={article.header}
-        description={article.subheader}
-        canonicalPath={`${locale}/articles/${normalizedCode}`}
-        updatedAt={article.updatedAt}
-        isArticle
-        locale={locale}
-        alternateLangs={[
-          {
-            rel: "alternate",
-            hrefLang: "en",
-            href: `https://p2pie.com/en/articles/${normalizedCode}`,
-          },
-          {
-            rel: "alternate",
-            hrefLang: "ru",
-            href: `https://p2pie.com/ru/articles/${normalizedCode}`,
-          },
-        ]}
-      />
+      <UniversalSeo seo={seo} />
       <Box3D
         variant="contrast"
         w="100%"

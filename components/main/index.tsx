@@ -60,7 +60,10 @@ const MainPageContent = ({
         </Column>
 
         <Column index={4}>
-          <ColumnHeader text={rootText?.title} query={["p2pie"]} />
+          <ColumnHeader
+            text={rootText?.title}
+            query={[`${process.env.NEXT_PUBLIC_NAME}`]}
+          />
           <ResponsiveText variant="contrast" as="h3">
             {rootText?.subtitle || ""}
           </ResponsiveText>

@@ -21,13 +21,13 @@ const Logo = () => {
       cursor="pointer"
     >
       <Image
-        alt="p2pie logo"
+        alt={`${process.env.NEXT_PUBLIC_NAME} logo`}
         src={useColorModeValue(darkPie, lightPie)}
         width={36}
       />
 
       <ResponsiveText variant="primary" fontSize="2xl" fontWeight="bold" mx="2">
-        p2pie
+        {process.env.NEXT_PUBLIC_NAME}
       </ResponsiveText>
     </Flex>
   );

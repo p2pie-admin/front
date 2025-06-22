@@ -7,6 +7,8 @@ import { ICity, IDirText, IPmData } from "../types/exchange";
 import {
   exchangeToSlugCity,
   findSimilarPmPairs,
+  generateTitle,
+  slugCityToExchange,
 } from "../components/exchange/helper";
 
 import { loadInitialData } from "../cache/loadInitialData";
@@ -15,6 +17,8 @@ import { TextBoxQuery } from "../services/initialQueries";
 import { initCMSFetcher } from "../services/fetchers";
 import { ITextBox } from "../types/pages";
 import { enrichText } from "../components/shared/helper";
+import { t } from "i18next";
+import { ISEO } from "../types/general";
 
 const prerenderCountries = ["ukraine", "russia", "belarus"];
 
@@ -22,6 +26,7 @@ const ExchangePage = (props: {
   //article?: IArticle | null;
   //cities: ICity[];
   //possiblePairs: { [key: string]: string[] };
+  seo: ISEO;
   givePmData: IPmData | null;
   getPmData: IPmData | null;
   locale: "en" | "ru";
@@ -173,9 +178,71 @@ export async function getStaticProps({
       // possiblePairs: possiblePairs[getPm.code],
     } as IPmData;
 
+    const title1 = generateTitle({
+      locale,
+      givePm,
+      getPm,
+    });
+    const giveCur = givePm.currency.code.toUpperCase();
+    const getCur = getPm.currency.code.toUpperCase();
+    let [description, cityAddon, site_name] = ["", "", ""];
+    if (locale == "ru") {
+      description = `Обмен ${givePm.ru_name || givePm.en_name} ${giveCur} ${
+        givePm.subgroup_name || ""
+      } на ${getPm.ru_name || getPm.en_name} ${getCur}`;
+      if (city) cityAddon = ` в ${city.ru_name}, ${city.ru_country_name}`;
+      site_name = `${process.env.NEXT_PUBLIC_NAME} мониторинг обменников`;
+    } else {
+      if (city) cityAddon = ` в ${city.en_name}, ${city.en_country_name}`;
+      description = `Exchange ${givePm.en_name} ${giveCur} ${
+        givePm.subgroup_name || ""
+      } for ${getPm.en_name} ${getCur}`;
+      site_name = `${process.env.NEXT_PUBLIC_NAME} Exchange Monitoring`;
+    }
+
+    const seo = {
+      title: title1,
+      description: description + cityAddon,
+      canonicalPath: `${locale}/${slugCityToExchange(slug, city?.en_name)}`,
+      locale,
+      updatedAt: dirText?.updatedAt,
+      isArticle: false,
+      alternateLangs: [
+        {
+          rel: "alternate",
+          hrefLang: "en",
+          href: `https://${
+            process.env.NEXT_PUBLIC_NAME
+          }.com/en/${slugCityToExchange(slug, city?.en_name)}`,
+        },
+        {
+          rel: "alternate",
+          hrefLang: "ru",
+          href: `https://${
+            process.env.NEXT_PUBLIC_NAME
+          }.com/ru/${slugCityToExchange(slug, city?.en_name)}`,
+        },
+      ],
+      breadcrumbs: [
+        {
+          position: 1,
+          name: locale === "en" ? "Home" : "Главная",
+          item: `https://${process.env.NEXT_PUBLIC_NAME}.com/${locale}`,
+        },
+        {
+          position: 2,
+          name: title1,
+          item: `https://${
+            process.env.NEXT_PUBLIC_NAME
+          }.com/${locale}/${slugCityToExchange(slug, city?.en_name)}`,
+        },
+      ],
+    };
+
     return {
       props: {
         locale,
+        seo,
         slug: slug || null,
         cities: cities || null,
         givePmData: givePmData || null,
@@ -193,6 +260,7 @@ export async function getStaticProps({
     return {
       props: {
         locale,
+        seo: null,
         slug: null,
         cities: null,
         givePmData: null,

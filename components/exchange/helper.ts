@@ -168,6 +168,29 @@ export const generateTitle = ({
       )}`;
 };
 
+export const generateH1 = ({
+  locale,
+  givePm,
+  getPm,
+}: {
+  locale: "en" | "ru";
+  givePm: IPm;
+  getPm: IPm;
+}) => {
+  const U = (str?: string | null) => (str ? str.toUpperCase() : "");
+  return locale === "ru"
+    ? `Обмен ${capitalize(givePm.ru_name)} ${U(givePm.currency.code)} ${U(
+        givePm.subgroup_name
+      )} на ${capitalize(getPm.ru_name)} ${U(getPm.currency.code)} ${U(
+        getPm.subgroup_name
+      )}`
+    : `Exchange ${capitalize(givePm.en_name)} ${U(givePm.currency.code)} ${U(
+        givePm.subgroup_name
+      )} to ${capitalize(getPm.en_name)} ${U(getPm.currency.code)} ${U(
+        getPm.subgroup_name
+      )}`;
+};
+
 export const exchangeToSlugCity = (exchange: string) => {
   return exchange.includes("-in-")
     ? [exchange.split("-in-")[0], exchange.split("-in-")[1]]

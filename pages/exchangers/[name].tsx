@@ -6,13 +6,18 @@ import {
   addExchangerCrossLinking,
   exchangerNameToSlug,
 } from "../../components/exchangers/helper";
-import Exchanger from "../../components/exchangers/exchanger";
+
 import { loadInitialData } from "../../cache/loadInitialData";
+import Exchanger from "../../components/exchangers/exchanger";
+import { capitalize } from "../../components/main/side/selector/section/PmGroup/helper";
+import { ISEO } from "../../types/general";
 
 export default function ExchangerPage({
   exchanger,
+  seo,
 }: {
   exchanger: (IExchanger & IParserExchanger) | null;
+  seo: ISEO;
 }) {
   // Handle non-existent exchanger
   if (!exchanger) {
@@ -20,7 +25,7 @@ export default function ExchangerPage({
   }
   //mylog(exchanger);
 
-  return <Exchanger exchanger={exchanger} />;
+  return <Exchanger exchanger={exchanger} seo={seo} />;
 }
 
 // Pass exchanger data to the page
@@ -65,9 +70,40 @@ export async function getStaticProps({
     // Fallback: If description or other enriched data is missing, return minimal data
     const exchanger = enrichedExchanger || rawExchanger;
 
+    const title = ` ${locale == "en" ? "Exchanger" : "Обменник"} ${capitalize(
+      exchanger.name
+    )}`;
+    const description = `${capitalize(exchanger.name)}: ${
+      locale == "en"
+        ? "Exchanger card, rating and info"
+        : "Карточка обменника, рейтинг и информация"
+    } `;
+    const normalizedCode = exchangerNameToSlug(exchanger.name);
+
+    const seo = {
+      title,
+      description,
+      canonicalPath: `${locale}/exchangers/${normalizedCode}`,
+      isArticle: true,
+      locale,
+      alternateLangs: [
+        {
+          rel: "alternate",
+          hrefLang: "en",
+          href: `https://p2pie.com/en/exchangers/${normalizedCode}`,
+        },
+        {
+          rel: "alternate",
+          hrefLang: "ru",
+          href: `https://p2pie.com/ru/exchangers/${normalizedCode}`,
+        },
+      ],
+    };
+
     return {
       props: {
         exchanger: exchanger || null,
+        seo,
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
@@ -76,6 +112,7 @@ export async function getStaticProps({
     console.error(e);
     return {
       props: {
+        seo: null,
         exchanger: null,
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),

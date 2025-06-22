@@ -11,14 +11,15 @@ import ExchangerLink from "./ExchangerLink";
 import UniversalSeo from "../shared/UniversalSeo";
 import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
+import { ISEO } from "../../types/general";
 
 export default function ExchangersList({
   exchangers,
+  seo,
 }: {
   exchangers: (IExchanger & IParserExchanger)[] | null;
+  seo: ISEO;
 }) {
-  const { t } = useTranslation("main");
-  const { locale } = useRouter() as { locale: "en" | "ru" };
   const [sortCriteria, setSortCriteria] = useState<
     "name" | "total_rates" | "admin_rating"
   >("name");
@@ -115,13 +116,7 @@ export default function ExchangersList({
 
   return (
     <>
-      <UniversalSeo
-        title={t("exchangers-meta-title")}
-        description={t("exchangers-meta-description")}
-        canonicalPath={`${locale}/exchangers`}
-        locale={locale}
-        isArticle={false}
-      />
+      <UniversalSeo seo={seo} />
 
       <Box3D p="4" variant="no_contrast" mt="10" minH="100vh">
         <ExchangersHeader exchangers={exchangers} />

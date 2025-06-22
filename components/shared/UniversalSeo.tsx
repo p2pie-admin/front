@@ -1,36 +1,18 @@
 import { NextSeo, BreadcrumbJsonLd } from "next-seo";
-import { LinkTag } from "next-seo/lib/types";
+import { ISEO, BreadcrumbItem } from "../../types/general";
 
-interface BreadcrumbItem {
-  position: number;
-  name: string;
-  item: string;
-}
-
-interface UniversalSeoProps {
-  title: string;
-  description: string;
-  canonicalPath: string; // e.g., "en/articles/some-slug"
-  locale?: "en" | "ru";
-  updatedAt?: string;
-  siteName?: string;
-  breadcrumbs?: BreadcrumbItem[];
-  alternateLangs?: LinkTag[]; // must include rel: 'alternate'
-  isArticle?: boolean;
-}
-
-const UniversalSeo = ({
-  title,
-  description,
-  canonicalPath = "",
-  locale = "en",
-  updatedAt,
-  siteName = "P2P Exchange",
-  breadcrumbs,
-  alternateLangs = [],
-  isArticle = false,
-}: UniversalSeoProps) => {
-  const fullCanonicalUrl = `https://p2pie.com/${canonicalPath}`;
+const UniversalSeo = ({ seo }: { seo: ISEO }) => {
+  const {
+    title,
+    description,
+    canonicalPath,
+    locale = "ru",
+    updatedAt,
+    breadcrumbs,
+    alternateLangs = [],
+    isArticle = false,
+  } = seo;
+  const fullCanonicalUrl = `https://${process.env.NEXT_PUBLIC_NAME}.com/${canonicalPath}`;
   const ogType = isArticle ? "article" : "website";
 
   const openGraph = {
@@ -38,7 +20,7 @@ const UniversalSeo = ({
     url: fullCanonicalUrl,
     title,
     description,
-    site_name: siteName,
+    site_name: `${process.env.NEXT_PUBLIC_NAME}`,
     locale: locale === "en" ? "en_US" : "ru_RU",
     ...(alternateLangs.length > 0 && {
       localeAlternate: alternateLangs.map((lang) => lang.hrefLang),
@@ -57,7 +39,7 @@ const UniversalSeo = ({
     {
       position: 1,
       name: locale === "en" ? "Home" : "Главная",
-      item: `https://p2pie.com/${locale || "ru"}`,
+      item: `https://${process.env.NEXT_PUBLIC_NAME}.com/${locale || "ru"}`,
     },
     {
       position: 2,

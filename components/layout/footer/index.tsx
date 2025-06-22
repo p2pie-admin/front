@@ -14,7 +14,7 @@ const Footer = () => {
         color="bg.500"
         fontSize="lg"
       >
-        <Text>p2pie.com</Text>
+        <Text>{process.env.NEXT_PUBLIC_NAME}.com</Text>
         <Text>2025</Text>
       </VStack>
     </Flex>

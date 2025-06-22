@@ -22,7 +22,7 @@ const Intro = () => {
   return (
     <Collapse in={hidden}>
       <ResponsiveText size="xl" textAlign="center" fontWeight="bold" my="4">
-        Why publish rates on p2pie?
+        Why publish rates on {process.env.NEXT_PUBLIC_NAME}?
       </ResponsiveText>
 
       <Grid

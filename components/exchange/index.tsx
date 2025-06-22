@@ -30,7 +30,7 @@ import { batch } from "react-redux";
 import Similar from "./Similar";
 import { Column } from "../layout/Column";
 import ColumnHeader from "../layout/ColumnHeader";
-import { generateTitle, slugCityToExchange } from "./helper";
+import { generateH1, generateTitle, slugCityToExchange } from "./helper";
 
 import { ICity, IDirText, IPmData, IPmLayout } from "../../types/exchange";
 import ColumnGrid from "../layout/ColumnGrid";
@@ -39,9 +39,11 @@ import { NextSeo, BreadcrumbJsonLd } from "next-seo";
 import { useTranslation } from "next-i18next";
 import PmLayout from "./pmLayout";
 import UniversalSeo from "../shared/UniversalSeo";
+import { ISEO } from "../../types/general";
 
 const Exchange = ({
   locale,
+  seo,
   slug,
   dirText,
   givePmData,
@@ -52,6 +54,7 @@ const Exchange = ({
 }: {
   //article?: IArticle | null;
   locale: "en" | "ru";
+  seo: ISEO;
   slug: string | null;
   givePmData: IPmData | null;
   getPmData: IPmData | null;
@@ -105,73 +108,20 @@ const Exchange = ({
 
   const giveCur = givePm.currency.code.toUpperCase();
   const getCur = getPm.currency.code.toUpperCase();
-  const title2 = t("main:bestSuggestions");
-  const title1 = generateTitle({
+
+  const h1 = generateH1({
     locale,
     givePm,
     getPm,
   });
-  const isLong = title1.length > 40;
-  let [description, cityAddon, site_name] = ["", "", ""];
-  if (locale == "ru") {
-    description = `Обмен ${givePm.ru_name || givePm.en_name} ${giveCur} ${
-      givePm.subgroup_name || ""
-    } на ${getPm.ru_name || getPm.en_name} ${getCur}`;
-    if (city) cityAddon = ` в ${city.ru_name}, ${city.ru_country_name}`;
-    site_name = "P2Pie мониторинг обменников";
-  } else {
-    if (city) cityAddon = ` в ${city.en_name}, ${city.en_country_name}`;
-    description = `Exchange ${givePm.en_name} ${giveCur} ${
-      givePm.subgroup_name || ""
-    } for ${getPm.en_name} ${getCur}`;
-    site_name = "P2Pie Exchange Monitoring";
-  }
+
+  const isLong = h1.length > 40;
 
   if (!slug) return <></>;
+
   return (
     <VStack>
-      <UniversalSeo
-        title={title1} // e.g. "Exchange BTC to USDT in Moscow"
-        description={description + cityAddon} // e.g. "Best rates to exchange BTC to USDT in Moscow"
-        canonicalPath={`${locale}/${slugCityToExchange(slug, city?.en_name)}`} // e.g. "en/btc-to-usdt-moscow"
-        locale={locale}
-        updatedAt={dirText?.updatedAt}
-        isArticle={false} // Exchange pages are not blog articles
-        siteName="P2Pie Exchange"
-        alternateLangs={[
-          {
-            rel: "alternate",
-            hrefLang: "en",
-            href: `https://p2pie.com/en/${slugCityToExchange(
-              slug,
-              city?.en_name
-            )}`,
-          },
-          {
-            rel: "alternate",
-            hrefLang: "ru",
-            href: `https://p2pie.com/ru/${slugCityToExchange(
-              slug,
-              city?.en_name
-            )}`,
-          },
-        ]}
-        breadcrumbs={[
-          {
-            position: 1,
-            name: locale === "en" ? "Home" : "Главная",
-            item: `https://p2pie.com/${locale}`,
-          },
-          {
-            position: 2,
-            name: title1,
-            item: `https://p2pie.com/${locale}/${slugCityToExchange(
-              slug,
-              city?.en_name
-            )}`,
-          },
-        ]}
-      />
+      <UniversalSeo seo={seo} />
 
       <Box
         bgGradient={`radial-gradient(circle at 50% -10%, ${centerColor} 0%, ${peripheryColor} 60%)`}
@@ -184,17 +134,12 @@ const Exchange = ({
           fontWeight="bold"
           color="inherit"
         >
-          {title1}
+          {h1}
         </Heading>
       </Box>
 
       <ColumnGrid>
         <Column index={0}>
-          {/* <ColumnHeader
-            text={title1}
-            as="h1"
-            query={[givePm.currency.code, getPm.currency.code]}
-          /> */}
           <Chart giveCur={giveCur} getCur={getCur} />
           <VStack mt="4" w="100%" gap="4">
             <HStack gap="4" w="100%" mb="0">

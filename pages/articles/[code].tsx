@@ -11,8 +11,10 @@ import Article from "../../components/article";
 import { loadInitialData } from "../../cache/loadInitialData";
 import { addArticleCrossLinking } from "../../components/article/helper";
 import { IPm } from "../../types/selector";
+import { ISEO } from "../../types/general";
 
 const ArticlePage = (props: {
+  seo: ISEO;
   pm: IPm | null;
   locale: "en" | "ru";
   article: IArticle | null;
@@ -108,8 +110,32 @@ export async function getStaticProps({
     articlePms[0]
   );
 
+  const normalizedCode = article?.code.toLowerCase();
+
+  const seo = {
+    title: article.header,
+    description: article.subheader,
+    canonicalPath: `${locale}/articles/${normalizedCode}`,
+    updatedAt: article.updatedAt,
+    isArticle: true,
+    locale,
+    alternateLangs: [
+      {
+        rel: "alternate",
+        hrefLang: "en",
+        href: `https://${process.env.NEXT_PUBLIC_NAME}.com/en/articles/${normalizedCode}`,
+      },
+      {
+        rel: "alternate",
+        hrefLang: "ru",
+        href: `https://${process.env.NEXT_PUBLIC_NAME}.com/ru/articles/${normalizedCode}`,
+      },
+    ],
+  };
+
   return {
     props: {
+      seo,
       pm: articlePms[0] || null,
       article: linkedArticle || null,
       otherDirs: otherDirs || null,

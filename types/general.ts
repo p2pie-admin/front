@@ -6,3 +6,19 @@ export type IToast = {
 };
 
 export type IDirRatesStatus = "fulfilled" | "rejected" | "pending";
+
+export type BreadcrumbItem = {
+  position: number;
+  name: string;
+  item: string;
+};
+export type ISEO = {
+  title: string;
+  description: string;
+  canonicalPath: string;
+  locale: "en" | "ru";
+  updatedAt: string;
+  breadcrumbs: BreadcrumbItem[];
+  alternateLangs?: { rel: string; hrefLang: string; href: string }[];
+  isArticle?: boolean;
+};

@@ -10,11 +10,14 @@ import { useRouter } from "next/router";
 import article from "../../article";
 import UniversalSeo from "../../shared/UniversalSeo";
 import { exchangerNameToSlug } from "../helper";
+import { ISEO } from "../../../types/general";
 
 export default function Exchanger({
   exchanger,
+  seo,
 }: {
   exchanger: IExchanger & IParserExchanger;
+  seo: ISEO;
 }) {
   if (!exchanger || !exchanger.ref_link) {
     return (
@@ -27,10 +30,7 @@ export default function Exchanger({
   }
 
   const { locale } = useRouter() as { locale: "en" | "ru" };
-  const { email, telegram, working_time } = exchanger?.exchanger_card;
-  const title = ` ${locale == "en" ? "Exchanger" : "Обменник"} ${capitalize(
-    exchanger.name
-  )}`;
+
   const description =
     exchanger.exchanger_card[`${locale}_description`] || "no description";
 
@@ -38,25 +38,7 @@ export default function Exchanger({
 
   return (
     <>
-      <UniversalSeo
-        title={title}
-        description={description}
-        canonicalPath={`${locale}/exchangers/${normalizedCode}`}
-        isArticle
-        locale={locale}
-        alternateLangs={[
-          {
-            rel: "alternate",
-            hrefLang: "en",
-            href: `https://p2pie.com/en/exchangers/${normalizedCode}`,
-          },
-          {
-            rel: "alternate",
-            hrefLang: "ru",
-            href: `https://p2pie.com/ru/exchangers/${normalizedCode}`,
-          },
-        ]}
-      />
+      <UniversalSeo seo={seo} />
       <Box3D p="4" variant="no_contrast" mt="10">
         <LinkWrapper
           url={exchanger.ref_link}

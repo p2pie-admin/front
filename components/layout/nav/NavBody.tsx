@@ -32,7 +32,7 @@ const NavBody = () => {
 
       <LinkButton
         message={t("main:contactsPage")}
-        href={"https://t.me/p2pie"}
+        href={`https://t.me/${process.env.NEXT_PUBLIC_NAME}`}
         CustomIcon={LiaTelegramPlane}
       />
       {/* <LinkButton

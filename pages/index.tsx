@@ -1,23 +1,24 @@
-import type { NextPage, GetStaticProps } from "next";
-import Head from "next/head";
-import { Box, Text } from "@chakra-ui/react";
+import type { GetStaticProps } from "next";
 import MainPageContent from "../components/main";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IPopularDirRates } from "../types/rates";
 import { initCMSFetcher, initParserFetcher } from "../services/fetchers";
-import { readCache } from "../cache";
+
 import { ICache } from "../types/exchange";
 
 import { MainTextsQuery, TextBoxQuery } from "../services/initialQueries";
 import { IMainText, ITextBox } from "../types/pages";
-import { NextSeo, BreadcrumbJsonLd } from "next-seo";
+
 import { useTranslation } from "react-i18next";
 import { loadInitialData } from "../cache/loadInitialData";
 import UniversalSeo from "../components/shared/UniversalSeo";
+import { i18n } from "next-i18next";
+import { ISEO } from "../types/general";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   // must be async
   try {
+    const { t, i18n } = useTranslation();
     const circleTextsFetcher = initCMSFetcher({ locale });
 
     const rootTextFetcher = initCMSFetcher({ locale, key: "root" });
@@ -45,9 +46,17 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     const popularPms = pms?.filter((pm) =>
       popularPmCodes.find((code) => code === pm.code)
     );
+    const seo = {
+      title: t("main:meta-title"),
+      description: t("main:meta-description"),
+      canonicalPath: `${locale}`,
+      locale: locale,
+      isArticle: false,
+    } as ISEO;
 
     return {
       props: {
+        seo,
         popularPms: popularPms || null,
         popularRates: popularRates || null,
         mainTexts: mainTexts || null,
@@ -61,7 +70,9 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     console.error("Error during getStaticProps:", e);
 
     return {
+      // возвращаем пустые данные чтобы сработал ревалидейт
       props: {
+        seo: null,
         popularPms: null,
         popularRates: null,
         mainTexts: null,
@@ -69,23 +80,15 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
-      revalidate: 300, // try again in 5 minutes or whatever fits
+      revalidate: 3000, // try again in 3000 seconds (50 minutes)
     };
   }
 };
 
 const Home = (props: any) => {
-  const { t, i18n } = useTranslation();
-  const locale = i18n.language as "en" | "ru"; // Default to 'ru' if no language is set
   return (
     <>
-      <UniversalSeo
-        title={t("main:meta-title")}
-        description={t("main:meta-description")}
-        canonicalPath={`${locale}`}
-        locale={locale}
-        isArticle={false}
-      />
+      <UniversalSeo seo={props.seo} />
       <MainPageContent {...props} />
     </>
   );
