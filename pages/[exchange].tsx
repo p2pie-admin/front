@@ -393,12 +393,17 @@ export async function getStaticPaths() {
     );
   };
 
-  const slicedPaths = allPaths.filter((p) => needPrerender(p.params.exchange));
+  const paths = allPaths.filter((p) => needPrerender(p.params.exchange));
   // .slice(0, 2); // это потом нужно убрать
 
   // ПУТИ ЕСТЬ ПОЛНЫЕ ДЛЯ САЙТМАП, А  ЕСТЬ ДЛЯ ПРЕРЕНДЕРИНГА
   return {
-    paths: slicedPaths,
+    paths: paths.slice(
+      0,
+      process.env.NEXT_PUBLIC_PRERENDER_LIMIT
+        ? Number(process.env.NEXT_PUBLIC_PRERENDER_LIMIT)
+        : undefined
+    ),
     fallback: "blocking",
   };
 }

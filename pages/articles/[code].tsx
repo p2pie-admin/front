@@ -206,7 +206,12 @@ export async function getStaticPaths() {
     });
 
     return {
-      paths,
+      paths: paths.slice(
+        0,
+        process.env.NEXT_PUBLIC_PRERENDER_LIMIT
+          ? Number(process.env.NEXT_PUBLIC_PRERENDER_LIMIT)
+          : undefined
+      ),
       fallback: "blocking", // Use "blocking" to dynamically generate pages on demand
     };
   } catch (e) {

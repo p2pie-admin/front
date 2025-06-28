@@ -155,5 +155,13 @@ export async function getStaticPaths() {
     ],
     []
   );
-  return { paths, fallback: false };
+  return {
+    paths: paths.slice(
+      0,
+      process.env.NEXT_PUBLIC_PRERENDER_LIMIT
+        ? Number(process.env.NEXT_PUBLIC_PRERENDER_LIMIT)
+        : undefined
+    ),
+    fallback: false,
+  };
 }
