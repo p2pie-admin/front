@@ -11,6 +11,8 @@ import { loadInitialData } from "../../cache/loadInitialData";
 import Exchanger from "../../components/exchangers/exchanger";
 import { capitalize } from "../../components/main/side/selector/section/PmGroup/helper";
 import { ISEO } from "../../types/general";
+import { getT } from "../../components/shared/getT";
+import { nullSeo } from "../../components/shared/UniversalSeo";
 
 export default function ExchangerPage({
   exchanger,
@@ -38,7 +40,6 @@ export async function getStaticProps({
 }) {
   try {
     const { name } = params;
-
     const cachedData = await loadInitialData();
     if (!cachedData || !cachedData.exchangers) {
       return {
@@ -80,11 +81,14 @@ export async function getStaticProps({
     } `;
     const normalizedCode = exchangerNameToSlug(exchanger.name);
 
+    const t = await getT(locale || "ru");
+
     const seo = {
       title,
       description,
       canonicalPath: `${locale}/exchangers/${normalizedCode}`,
-      isArticle: true,
+
+      updatedAt: exchanger.updatedAt || new Date().toISOString(),
       locale,
       alternateLangs: [
         {
@@ -103,7 +107,7 @@ export async function getStaticProps({
     return {
       props: {
         exchanger: exchanger || null,
-        seo,
+        seo: seo || nullSeo,
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
@@ -112,7 +116,7 @@ export async function getStaticProps({
     console.error(e);
     return {
       props: {
-        seo: null,
+        seo: nullSeo,
         exchanger: null,
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),

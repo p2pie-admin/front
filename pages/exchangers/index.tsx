@@ -4,8 +4,10 @@ import { loadInitialData } from "../../cache/loadInitialData";
 
 import { IExchanger, IParserExchanger } from "../../types/exchanger";
 import ExchangersList from "../../components/exchangers";
-import { t } from "i18next";
+
 import { ISEO } from "../../types/general";
+import { getT } from "../../components/shared/getT";
+import { nullSeo } from "../../components/shared/UniversalSeo";
 
 const ExchangersPage = ({
   exchangers,
@@ -29,17 +31,18 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     };
   }
 
+  const t = await getT(locale || "ru");
+
   const seo = {
     title: t("exchangers-meta-title"),
     description: t("exchangers-meta-description"),
     canonicalPath: `${locale}/exchangers`,
     locale,
-    isArticle: false,
   };
 
   return {
     props: {
-      seo: seo,
+      seo: seo || nullSeo,
       exchangers: exchangers || null,
       ...(await serverSideTranslations(locale || "ru", ["main"])),
     },

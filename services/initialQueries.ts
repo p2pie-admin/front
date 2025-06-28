@@ -135,7 +135,7 @@ export const exchangersQuery = gql`
           ref_link
           tag
           admin_rating
-
+          updatedAt
           exchanger_card {
             en_description
             ru_description

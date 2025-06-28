@@ -9,16 +9,15 @@ import { ICache } from "../types/exchange";
 import { MainTextsQuery, TextBoxQuery } from "../services/initialQueries";
 import { IMainText, ITextBox } from "../types/pages";
 
-import { useTranslation } from "react-i18next";
 import { loadInitialData } from "../cache/loadInitialData";
-import UniversalSeo from "../components/shared/UniversalSeo";
-import { i18n } from "next-i18next";
+import UniversalSeo, { nullSeo } from "../components/shared/UniversalSeo";
+
 import { ISEO } from "../types/general";
+import { getT } from "../components/shared/getT";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   // must be async
   try {
-    const { t, i18n } = useTranslation();
     const circleTextsFetcher = initCMSFetcher({ locale });
 
     const rootTextFetcher = initCMSFetcher({ locale, key: "root" });
@@ -46,17 +45,18 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     const popularPms = pms?.filter((pm) =>
       popularPmCodes.find((code) => code === pm.code)
     );
+
+    const t = await getT(locale || "ru");
     const seo = {
       title: t("main:meta-title"),
       description: t("main:meta-description"),
       canonicalPath: `${locale}`,
       locale: locale,
-      isArticle: false,
     } as ISEO;
 
     return {
       props: {
-        seo,
+        seo: seo || nullSeo,
         popularPms: popularPms || null,
         popularRates: popularRates || null,
         mainTexts: mainTexts || null,
@@ -72,7 +72,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     return {
       // возвращаем пустые данные чтобы сработал ревалидейт
       props: {
-        seo: null,
+        seo: nullSeo,
         popularPms: null,
         popularRates: null,
         mainTexts: null,

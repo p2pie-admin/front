@@ -19,6 +19,7 @@ import { ITextBox } from "../types/pages";
 import { enrichText } from "../components/shared/helper";
 import { t } from "i18next";
 import { ISEO } from "../types/general";
+import { nullSeo } from "../components/shared/UniversalSeo";
 
 const prerenderCountries = ["ukraine", "russia", "belarus"];
 
@@ -133,8 +134,9 @@ export async function getStaticProps({
 
     const dirText =
       dirsTexts?.find(
-        (t) =>
-          t?.section_give == givePm?.section && t?.section_get == getPm?.section
+        (text) =>
+          text?.section_give == givePm?.section &&
+          text?.section_get == getPm?.section
       ) || null;
 
     //если есть текст для направления - внедряем
@@ -205,8 +207,6 @@ export async function getStaticProps({
       description: description + cityAddon,
       canonicalPath: `${locale}/${slugCityToExchange(slug, city?.en_name)}`,
       locale,
-      updatedAt: dirText?.updatedAt,
-      isArticle: false,
       alternateLangs: [
         {
           rel: "alternate",
@@ -242,7 +242,7 @@ export async function getStaticProps({
     return {
       props: {
         locale,
-        seo,
+        seo: seo || nullSeo,
         slug: slug || null,
         cities: cities || null,
         givePmData: givePmData || null,
@@ -260,7 +260,7 @@ export async function getStaticProps({
     return {
       props: {
         locale,
-        seo: null,
+        seo: nullSeo,
         slug: null,
         cities: null,
         givePmData: null,
@@ -372,34 +372,33 @@ export async function getStaticPaths() {
 
   //writeCache({ ...cachedData, donors });
 
-  // const needPrerender = (exchangePath: string) => {
-  //   if (!exchangePath.includes("-in-")) return true; // dont prerender cities
-  //   const city = cities?.find((city) =>
-  //     exchangePath.includes(city.en_name.toLowerCase())
-  //   );
-  //   if (!city) {
-  //     console.warn(
-  //       "[getStaticPaths] City not found for exchangePath:",
-  //       exchangePath
-  //     );
-  //   }
-  //   const countryName = city?.en_country_name?.toLowerCase();
-  //   // пререндерим крупные города и определенные страны
-  //   return (
-  //     city &&
-  //     countryName &&
-  //     city?.population > 3 &&
-  //     prerenderCountries.includes(countryName)
-  //   );
-  // };
+  const needPrerender = (exchangePath: string) => {
+    if (!exchangePath.includes("-in-")) return true; // dont prerender cities
+    const city = cities?.find((city) =>
+      exchangePath.includes(city.en_name.toLowerCase())
+    );
+    if (!city) {
+      console.warn(
+        "[getStaticPaths] City not found for exchangePath:",
+        exchangePath
+      );
+    }
+    const countryName = city?.en_country_name?.toLowerCase();
+    // пререндерим крупные города и определенные страны
+    return (
+      city &&
+      countryName &&
+      city?.population > 3 &&
+      prerenderCountries.includes(countryName)
+    );
+  };
 
-  // const slicedPaths = allPaths
-  //   .filter((p) => needPrerender(p.params.exchange))
-  //   .slice(0, 2); // это потом нужно убрать
+  const slicedPaths = allPaths.filter((p) => needPrerender(p.params.exchange));
+  // .slice(0, 2); // это потом нужно убрать
 
   // ПУТИ ЕСТЬ ПОЛНЫЕ ДЛЯ САЙТМАП, А  ЕСТЬ ДЛЯ ПРЕРЕНДЕРИНГА
   return {
-    paths: allPaths,
+    paths: slicedPaths,
     fallback: "blocking",
   };
 }

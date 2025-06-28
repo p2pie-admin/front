@@ -1,19 +1,29 @@
 import { NextSeo, BreadcrumbJsonLd } from "next-seo";
 import { ISEO, BreadcrumbItem } from "../../types/general";
 
+export const nullSeo = {
+  title: null,
+  description: null,
+  canonicalPath: null,
+  locale: null,
+  alternateLangs: [],
+  breadcrumbs: [],
+  updatedAt: null,
+  isArticle: false,
+};
+
 const UniversalSeo = ({ seo }: { seo: ISEO }) => {
   const {
     title,
     description,
     canonicalPath,
     locale = "ru",
-    updatedAt,
+    updatedAt = new Date().toISOString(),
     breadcrumbs,
     alternateLangs = [],
-    isArticle = false,
   } = seo;
   const fullCanonicalUrl = `https://${process.env.NEXT_PUBLIC_NAME}.com/${canonicalPath}`;
-  const ogType = isArticle ? "article" : "website";
+  const ogType = updatedAt ? "article" : "website";
 
   const openGraph = {
     type: ogType,
@@ -25,7 +35,7 @@ const UniversalSeo = ({ seo }: { seo: ISEO }) => {
     ...(alternateLangs.length > 0 && {
       localeAlternate: alternateLangs.map((lang) => lang.hrefLang),
     }),
-    ...(isArticle && updatedAt
+    ...(updatedAt
       ? {
           article: {
             publishedTime: updatedAt,

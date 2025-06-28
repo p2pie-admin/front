@@ -12,6 +12,8 @@ import { loadInitialData } from "../../cache/loadInitialData";
 import { addArticleCrossLinking } from "../../components/article/helper";
 import { IPm } from "../../types/selector";
 import { ISEO } from "../../types/general";
+import { getT } from "../../components/shared/getT";
+import { nullSeo } from "../../components/shared/UniversalSeo";
 
 const ArticlePage = (props: {
   seo: ISEO;
@@ -28,70 +30,131 @@ export async function getStaticProps({
   params: { code: string };
   locale: "en" | "ru";
 }) {
-  const cachedData = await loadInitialData();
+  try {
+    const cachedData = await loadInitialData();
 
-  if (!cachedData || !cachedData.possiblePairs) {
-    console.error(
-      "articles [getStaticProps] Cached data is missing or invalid."
-    );
-    return { notFound: true };
-  }
-
-  const { pms, slugToCodes } = cachedData;
-  const articles = cachedData[`${locale}Data`]?.articles || [];
-  if (!pms || !Array.isArray(pms)) {
-    console.error("[getStaticProps] 'pms' is missing or invalid.");
-    return { notFound: true };
-  }
-  if (!articles || !Array.isArray(articles)) {
-    console.error("[getStaticProps] 'articles' is missing or invalid.");
-    return { notFound: true };
-  }
-
-  const code = params.code.toLowerCase();
-
-  const articlePms = pms.filter(
-    // может быть несколько pm с одинаковым en_name
-    (pm) => pm.en_name.toLowerCase() == code.toLowerCase()
-  );
-
-  // берем только те направления, что имеют или give или get pm
-  const filteredDirs = Object.values(slugToCodes).filter((dir) => {
-    const [giveCode, getCode] = dir.split("_");
-    return (
-      articlePms.find((pm) => pm.code === giveCode) ||
-      articlePms.find((pm) => pm.code === getCode)
-    );
-  });
-  //  создаем альтернативные предложения
-  const otherDirs = filteredDirs.reduce(
-    (res: { buy: IPmPairs[]; sell: IPmPairs[] }, dir: string) => {
-      const slug = Object.keys(slugToCodes).find(
-        (key) => slugToCodes[key] === dir
+    if (!cachedData || !cachedData.possiblePairs) {
+      console.error(
+        "articles [getStaticProps] Cached data is missing or invalid."
       );
-      const givePm = pms.find((pm) => pm.code === dir.split("_")[0]);
-      const getPm = pms.find((pm) => pm.code === dir.split("_")[1]);
-      const pmPair = {
-        slug,
-        givePm,
-        getPm,
-      } as IPmPairs;
+      return { notFound: true };
+    }
 
-      return givePm?.section == getPm?.section
-        ? res
-        : givePm?.en_name.toLowerCase() === articlePms[0]?.en_name.toLowerCase()
-        ? { sell: [...res.sell], buy: [...res.buy, pmPair] }
-        : { buy: [...res.buy], sell: [...res.sell, pmPair] };
-    },
-    { buy: [], sell: [] }
-  );
-  const article = articles.find(
-    (a) => a.code.toLowerCase() == code.toLowerCase()
-  );
-  if (!article) {
-    console.warn(`[getStaticProps] No article found for code: ${code}`);
+    const { pms, slugToCodes } = cachedData;
+    const articles = cachedData[`${locale}Data`]?.articles || [];
+    if (!pms || !Array.isArray(pms)) {
+      console.error("[getStaticProps] 'pms' is missing or invalid.");
+      return { notFound: true };
+    }
+    if (!articles || !Array.isArray(articles)) {
+      console.error("[getStaticProps] 'articles' is missing or invalid.");
+      return { notFound: true };
+    }
+
+    const code = params.code.toLowerCase();
+
+    const articlePms = pms.filter(
+      // может быть несколько pm с одинаковым en_name
+      (pm) => pm.en_name.toLowerCase() == code.toLowerCase()
+    );
+
+    // берем только те направления, что имеют или give или get pm
+    const filteredDirs = Object.values(slugToCodes).filter((dir) => {
+      const [giveCode, getCode] = dir.split("_");
+      return (
+        articlePms.find((pm) => pm.code === giveCode) ||
+        articlePms.find((pm) => pm.code === getCode)
+      );
+    });
+    //  создаем альтернативные предложения
+    const otherDirs = filteredDirs.reduce(
+      (res: { buy: IPmPairs[]; sell: IPmPairs[] }, dir: string) => {
+        const slug = Object.keys(slugToCodes).find(
+          (key) => slugToCodes[key] === dir
+        );
+        const givePm = pms.find((pm) => pm.code === dir.split("_")[0]);
+        const getPm = pms.find((pm) => pm.code === dir.split("_")[1]);
+        const pmPair = {
+          slug,
+          givePm,
+          getPm,
+        } as IPmPairs;
+
+        return givePm?.section == getPm?.section
+          ? res
+          : givePm?.en_name.toLowerCase() ===
+            articlePms[0]?.en_name.toLowerCase()
+          ? { sell: [...res.sell], buy: [...res.buy, pmPair] }
+          : { buy: [...res.buy], sell: [...res.sell, pmPair] };
+      },
+      { buy: [], sell: [] }
+    );
+    const article = articles.find(
+      (a) => a.code.toLowerCase() == code.toLowerCase()
+    );
+    if (!article) {
+      console.warn(`[getStaticProps] No article found for code: ${code}`);
+      return {
+        props: {
+          pm: null,
+          article: null,
+          otherDirs: null,
+          locale,
+          ...(await serverSideTranslations(locale || "ru", ["main"])),
+        },
+        revalidate: 600,
+      };
+    }
+
+    const linkedArticle = await addArticleCrossLinking(
+      article,
+      articles,
+      pms,
+      locale,
+      articlePms[0]
+    );
+
+    const normalizedCode = article?.code.toLowerCase();
+
+    const t = await getT(locale || "ru");
+
+    const seo = {
+      title: article.header,
+      description: article.subheader,
+      canonicalPath: `${locale}/articles/${normalizedCode}`,
+      updatedAt: article.updatedAt || new Date().toISOString(),
+
+      locale,
+      alternateLangs: [
+        {
+          rel: "alternate",
+          hrefLang: "en",
+          href: `https://${process.env.NEXT_PUBLIC_NAME}.com/en/articles/${normalizedCode}`,
+        },
+        {
+          rel: "alternate",
+          hrefLang: "ru",
+          href: `https://${process.env.NEXT_PUBLIC_NAME}.com/ru/articles/${normalizedCode}`,
+        },
+      ],
+    };
+
     return {
       props: {
+        seo: seo || nullSeo,
+        pm: articlePms[0] || null,
+        article: linkedArticle || null,
+        otherDirs: otherDirs || null,
+        locale,
+        ...(await serverSideTranslations(locale || "ru", ["main"])),
+      },
+      revalidate: 600,
+    };
+  } catch (e) {
+    console.error("[getStaticProps] Error:", e);
+    return {
+      props: {
+        seo: nullSeo,
         pm: null,
         article: null,
         otherDirs: null,
@@ -101,49 +164,6 @@ export async function getStaticProps({
       revalidate: 600,
     };
   }
-
-  const linkedArticle = await addArticleCrossLinking(
-    article,
-    articles,
-    pms,
-    locale,
-    articlePms[0]
-  );
-
-  const normalizedCode = article?.code.toLowerCase();
-
-  const seo = {
-    title: article.header,
-    description: article.subheader,
-    canonicalPath: `${locale}/articles/${normalizedCode}`,
-    updatedAt: article.updatedAt,
-    isArticle: true,
-    locale,
-    alternateLangs: [
-      {
-        rel: "alternate",
-        hrefLang: "en",
-        href: `https://${process.env.NEXT_PUBLIC_NAME}.com/en/articles/${normalizedCode}`,
-      },
-      {
-        rel: "alternate",
-        hrefLang: "ru",
-        href: `https://${process.env.NEXT_PUBLIC_NAME}.com/ru/articles/${normalizedCode}`,
-      },
-    ],
-  };
-
-  return {
-    props: {
-      seo,
-      pm: articlePms[0] || null,
-      article: linkedArticle || null,
-      otherDirs: otherDirs || null,
-      locale,
-      ...(await serverSideTranslations(locale || "ru", ["main"])),
-    },
-    revalidate: 600,
-  };
 }
 /////////////////////////////////////////////////////////////////////////////////////////////
 export async function getStaticPaths() {

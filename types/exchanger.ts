@@ -4,6 +4,7 @@ export type IExchanger = {
   id: string;
   name: string;
   ref_link: string;
+  updatedAt: string;
   tag?: string;
   admin_rating?: string;
   exchanger_card: {

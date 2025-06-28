@@ -20,5 +20,4 @@ export type ISEO = {
   updatedAt: string;
   breadcrumbs: BreadcrumbItem[];
   alternateLangs?: { rel: string; hrefLang: string; href: string }[];
-  isArticle?: boolean;
 };
