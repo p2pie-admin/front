@@ -133,7 +133,7 @@ export async function getStaticPaths() {
   if (!exchangers || exchangers.length === 0) {
     return {
       paths: [],
-      fallback: false,
+      fallback: "blocking",
     };
   }
 
@@ -162,6 +162,6 @@ export async function getStaticPaths() {
         ? Number(process.env.NEXT_PUBLIC_PRERENDER_LIMIT)
         : undefined
     ),
-    fallback: false,
+    fallback: "blocking",
   };
 }
