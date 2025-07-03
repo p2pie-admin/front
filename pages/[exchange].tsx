@@ -402,9 +402,9 @@ export async function getStaticPaths() {
       0,
       process.env.NEXT_PUBLIC_PRERENDER_LIMIT
         ? Number(process.env.NEXT_PUBLIC_PRERENDER_LIMIT)
-        : undefined
+        : 10000
     ),
-    fallback: "blocking",
+    fallback: "blocking", // Use "blocking" to dynamically generate pages on demand
   };
 }
 
