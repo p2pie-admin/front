@@ -47,15 +47,12 @@ const fetchLocalizedData = async (locale: "en" | "ru"): Promise<ILocalData> => {
   return { pmLayouts, dirsTexts, articles };
 };
 
-// Load data once and cache it for 5 hours
+// Load data once and cache it for 15 min
 export const loadInitialData = async (): Promise<ICache | undefined> => {
   const cachedData = readCache() as ICache;
   const now = Date.now();
 
-  if (
-    cachedData?.timestamp &&
-    now - cachedData.timestamp < 1000 * 60 * 60 * 5
-  ) {
+  if (cachedData?.timestamp && now - cachedData.timestamp < 1000 * 60 * 15) {
     return cachedData; // Return if cache is fresh
   }
 
