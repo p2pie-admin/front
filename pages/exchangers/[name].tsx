@@ -7,12 +7,13 @@ import {
   exchangerNameToSlug,
 } from "../../components/exchangers/helper";
 
-import { loadInitialData } from "../../cache/loadInitialData";
+import { getCachedData, loadInitialData } from "../../cache/loadInitialData";
 import Exchanger from "../../components/exchangers/exchanger";
 import { capitalize } from "../../components/main/side/selector/section/PmGroup/helper";
 import { ISEO } from "../../types/general";
 import { getT } from "../../components/shared/getT";
 import { nullSeo } from "../../components/shared/UniversalSeo";
+import { ICache } from "../../types/exchange";
 
 export default function ExchangerPage({
   exchanger,
@@ -40,7 +41,10 @@ export async function getStaticProps({
 }) {
   try {
     const { name } = params;
-    const cachedData = await loadInitialData();
+    const cachedData = (await getCachedData({ isHard: false })) as
+      | ICache
+      | undefined;
+
     if (!cachedData || !cachedData.exchangers) {
       return {
         notFound: true,
@@ -127,7 +131,10 @@ export async function getStaticProps({
 
 // Generate paths for each exchanger
 export async function getStaticPaths() {
-  const cachedData = await loadInitialData();
+  const cachedData = (await getCachedData({ isHard: true })) as
+    | ICache
+    | undefined;
+
   const { exchangers } = cachedData || {};
 
   if (!exchangers || exchangers.length === 0) {

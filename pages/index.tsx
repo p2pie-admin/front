@@ -9,7 +9,7 @@ import { ICache } from "../types/exchange";
 import { MainTextsQuery, TextBoxQuery } from "../services/initialQueries";
 import { IMainText, ITextBox } from "../types/pages";
 
-import { loadInitialData } from "../cache/loadInitialData";
+import { getCachedData, loadInitialData } from "../cache/loadInitialData";
 import UniversalSeo, { nullSeo } from "../components/shared/UniversalSeo";
 
 import { ISEO } from "../types/general";
@@ -18,6 +18,10 @@ import { getT } from "../components/shared/getT";
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   // must be async
   try {
+    const cachedData = (await getCachedData({ isHard: false })) as
+      | ICache
+      | undefined;
+
     const circleTextsFetcher = initCMSFetcher({ locale });
 
     const rootTextFetcher = initCMSFetcher({ locale, key: "root" });
@@ -35,7 +39,6 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     const parserFetcher = initParserFetcher();
     const popularRates = (await parserFetcher("top")) as IPopularDirRates;
 
-    const cachedData = (await loadInitialData()) as ICache | undefined;
     const pms = cachedData?.pms;
 
     const popularPmCodes = [

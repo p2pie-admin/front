@@ -3,7 +3,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IPm } from "../types/selector";
 import React from "react";
 import Exchange from "../components/exchange";
-import { ICity, IDirText, IPmData } from "../types/exchange";
+import { ICache, ICity, IDirText, IPmData } from "../types/exchange";
 import {
   exchangeToSlugCity,
   findSimilarPmPairs,
@@ -11,7 +11,7 @@ import {
   slugCityToExchange,
 } from "../components/exchange/helper";
 
-import { loadInitialData } from "../cache/loadInitialData";
+import { getCachedData, loadInitialData } from "../cache/loadInitialData";
 import { mylog } from "../services/utils";
 import { TextBoxQuery } from "../services/initialQueries";
 import { initCMSFetcher } from "../services/fetchers";
@@ -52,7 +52,9 @@ export async function getStaticProps({
 
     const [slug, cityParam] = exchangeToSlugCity(exchange);
 
-    const cachedData = await loadInitialData();
+    const cachedData = (await getCachedData({ isHard: false })) as
+      | ICache
+      | undefined;
 
     if (
       !cachedData ||
@@ -278,7 +280,9 @@ export async function getStaticProps({
 
 //.....................................................................................................
 export async function getStaticPaths() {
-  const cachedData = await loadInitialData();
+  const cachedData = (await getCachedData({ isHard: true })) as
+    | ICache
+    | undefined;
 
   if (!cachedData) {
     console.error(

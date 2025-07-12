@@ -47,14 +47,7 @@ const fetchLocalizedData = async (locale: "en" | "ru"): Promise<ILocalData> => {
 };
 
 // Load data once and cache it for 15 min
-export const loadInitialData = async (): Promise<ICache | undefined> => {
-  const cachedData = readCache() as ICache;
-  const now = Date.now();
-
-  if (cachedData?.timestamp && now - cachedData.timestamp < 1000 * 60 * 5) {
-    return cachedData;
-  }
-
+export const loadInitialData = async () => {
   try {
     const timestamp = Date.now();
     const parserFetcher = initParserFetcher();
@@ -153,8 +146,26 @@ export const loadInitialData = async (): Promise<ICache | undefined> => {
     };
 
     writeCache(finalCache);
-    return finalCache;
   } catch (e) {
     mylog(`[loadInitialData] Error: ${String(e)}`, "error");
   }
+};
+
+export const getCachedData = async ({
+  isHard,
+}: {
+  isHard: boolean;
+}): Promise<ICache | undefined> => {
+  const now = Date.now();
+  const cache = readCache();
+  // Check if the cache is still valid (5 minutes)
+  if (cache?.timestamp && now - cache.timestamp < 1000 * 60 * 5) {
+    return cache;
+  }
+  if (isHard) {
+    await loadInitialData();
+    return readCache();
+  }
+  loadInitialData();
+  return cache; // Return old cache while new data loads
 };

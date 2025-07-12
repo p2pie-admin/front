@@ -6,25 +6,31 @@ const cacheFilePath = path.resolve(process.cwd(), "cache", "cachedData.json");
 const validateCache = (data) => {
   if (typeof data !== "object" || data === null || Array.isArray(data)) {
     console.warn("Invalid cache data structure. Returning empty object.");
-    return {};
+    return;
   }
+
+  // const now = Date.now();
+  // // Check if the cache is still valid (5 minutes)
+  // if (data?.timestamp && now - data.timestamp < 1000 * 60 * 5) {
+  //   return data;
+  // }
   return data;
 };
 
 const readCache = () => {
   try {
-    if (!fs.existsSync(cacheFilePath)) return {};
+    if (!fs.existsSync(cacheFilePath)) return;
 
     const raw = fs.readFileSync(cacheFilePath, "utf8");
     try {
       return validateCache(JSON.parse(raw));
     } catch (parseErr) {
       console.error(`Error parsing cache file at ${cacheFilePath}:`, parseErr);
-      return {};
+      return;
     }
   } catch (err) {
     console.error(`Error reading cache file at ${cacheFilePath}:`, err);
-    return {};
+    return;
   }
 };
 

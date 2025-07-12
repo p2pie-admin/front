@@ -8,12 +8,25 @@ import { useEffect } from "react";
 import { setDirRatesStatus } from "../../redux/mainReducer";
 import { IArticle } from "../../types/pages";
 import Article from "../../components/article";
-import { loadInitialData } from "../../cache/loadInitialData";
+import { getCachedData, loadInitialData } from "../../cache/loadInitialData";
 import { addArticleCrossLinking } from "../../components/article/helper";
 import { IPm } from "../../types/selector";
 import { ISEO } from "../../types/general";
 import { getT } from "../../components/shared/getT";
 import { nullSeo } from "../../components/shared/UniversalSeo";
+import { read } from "fs";
+
+const emptyProps = async (locale: "en" | "ru") => ({
+  props: {
+    seo: nullSeo,
+    pm: null,
+    article: null,
+    otherDirs: null,
+    locale,
+    ...(await serverSideTranslations(locale || "ru", ["main"])),
+  },
+  revalidate: 600,
+});
 
 const ArticlePage = (props: {
   seo: ISEO;
@@ -31,25 +44,19 @@ export async function getStaticProps({
   locale: "en" | "ru";
 }) {
   try {
-    const cachedData = await loadInitialData();
+    const cachedData = (await getCachedData({ isHard: false })) as
+      | ICache
+      | undefined;
 
     if (!cachedData || !cachedData.possiblePairs) {
       console.error(
         "articles [getStaticProps] Cached data is missing or invalid."
       );
-      return { notFound: true };
+      return emptyProps(locale || "ru");
     }
 
     const { pms, slugToCodes } = cachedData;
     const articles = cachedData[`${locale}Data`]?.articles || [];
-    if (!pms || !Array.isArray(pms)) {
-      console.error("[getStaticProps] 'pms' is missing or invalid.");
-      return { notFound: true };
-    }
-    if (!articles || !Array.isArray(articles)) {
-      console.error("[getStaticProps] 'articles' is missing or invalid.");
-      return { notFound: true };
-    }
 
     const code = params.code.toLowerCase();
 
@@ -152,46 +159,28 @@ export async function getStaticProps({
     };
   } catch (e) {
     console.error("[getStaticProps] Error:", e);
-    return {
-      props: {
-        seo: nullSeo,
-        pm: null,
-        article: null,
-        otherDirs: null,
-        locale,
-        ...(await serverSideTranslations(locale || "ru", ["main"])),
-      },
-      revalidate: 600,
-    };
+    return emptyProps;
   }
 }
 /////////////////////////////////////////////////////////////////////////////////////////////
 export async function getStaticPaths() {
-  let cachedData;
   try {
-    cachedData = await loadInitialData();
-  } catch (e) {
-    console.error("[getStaticPaths] Error loading initial data", e);
-    return {
-      paths: [],
-      fallback: "blocking",
-    };
-  }
+    const cachedData = (await getCachedData({ isHard: true })) as
+      | ICache
+      | undefined;
 
-  if (!cachedData) {
-    console.error(
-      "articles [getStaticPaths] Cached data is missing or invalid."
-    );
-    return {
-      paths: [],
-      fallback: "blocking",
-    };
-  }
+    if (!cachedData?.timestamp) {
+      console.error(
+        "articles [getStaticPaths] Cached data is missing or invalid."
+      );
+      return {
+        paths: [],
+        fallback: "blocking",
+      };
+    }
 
-  try {
     const locales = ["en", "ru"] as ("en" | "ru")[];
     const paths: { params: { code: string }; locale: "en" | "ru" }[] = [];
-    const cachedData = await loadInitialData();
 
     locales.forEach((locale) => {
       const articles = cachedData?.[`${locale}Data`]?.articles || [];
@@ -215,7 +204,7 @@ export async function getStaticPaths() {
       fallback: "blocking", // Use "blocking" to dynamically generate pages on demand
     };
   } catch (e) {
-    console.error("[getStaticPaths] Error while generating paths", e);
+    console.error("Articles [getStaticPaths] Error while generating paths", e);
     return {
       paths: [],
       fallback: "blocking",
