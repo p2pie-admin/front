@@ -23,7 +23,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     | ICache
     | undefined;
 
-  const exchangers = cachedData?.exchangers || {};
+  const exchangers = cachedData?.exchangers || [];
 
   if (!exchangers?.length) {
     return {
