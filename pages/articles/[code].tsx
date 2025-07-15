@@ -14,7 +14,6 @@ import { IPm } from "../../types/selector";
 import { ISEO } from "../../types/general";
 import { getT } from "../../components/shared/getT";
 import { nullSeo } from "../../components/shared/UniversalSeo";
-import { read } from "fs";
 
 const emptyProps = async (locale: "en" | "ru") => ({
   props: {
@@ -159,7 +158,7 @@ export async function getStaticProps({
     };
   } catch (e) {
     console.error("[getStaticProps] Error:", e);
-    return emptyProps;
+    return await emptyProps(locale || "ru");
   }
 }
 /////////////////////////////////////////////////////////////////////////////////////////////

@@ -64,6 +64,7 @@ const RateLayer = ({
             </Tr>
           </Thead>
           <Tbody>
+            §
             {rates.map((rate) => {
               const pm = findPmByCode(rate.fiat);
               if (!pm) return <Tr></Tr>;

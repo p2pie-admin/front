@@ -151,6 +151,20 @@ export const loadInitialData = async () => {
   }
 };
 
+let isRefreshing = false;
+
+const loadInitialDataDebounced = async () => {
+  if (isRefreshing) return;
+  isRefreshing = true;
+  try {
+    await loadInitialData();
+  } catch (e) {
+    console.error("Cache refresh failed:", e);
+  } finally {
+    isRefreshing = false;
+  }
+};
+
 export const getCachedData = async ({
   isHard,
 }: {
@@ -166,6 +180,6 @@ export const getCachedData = async ({
     await loadInitialData();
     return readCache();
   }
-  loadInitialData();
+  loadInitialDataDebounced();
   return cache; // Return old cache while new data loads
 };
