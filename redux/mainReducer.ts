@@ -476,7 +476,7 @@ export const mainSlice = createSlice({
     });
 
     builder.addCase(fetchTopParameters.fulfilled, (state, action) => {
-      state.topParameters = action.payload?.topParameters || [];
+      state.topParameters = action.payload || [];
     });
 
     builder.addCase(getOrderByUID.fulfilled, (state, action) => {

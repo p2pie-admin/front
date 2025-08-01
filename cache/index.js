@@ -8,12 +8,6 @@ const validateCache = (data) => {
     console.warn("Invalid cache data structure. Returning empty object.");
     return;
   }
-
-  // const now = Date.now();
-  // // Check if the cache is still valid (5 minutes)
-  // if (data?.timestamp && now - data.timestamp < 1000 * 60 * 5) {
-  //   return data;
-  // }
   return data;
 };
 

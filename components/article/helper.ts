@@ -5,7 +5,7 @@ import { IPm } from "../../types/selector";
 
 export const addArticleCrossLinking = async (
   article: IArticle,
-  articles: IArticle[],
+  articleCodes: string[],
   pms: IPm[] = [],
   locale: "en" | "ru" = "en",
   pmToIgnore: IPm | null = null
@@ -13,7 +13,13 @@ export const addArticleCrossLinking = async (
   const chapters = await Promise.all(
     article.chapters.map(async (chapter) => ({
       ...chapter,
-      text: await enrichText(chapter.text, articles, pms, locale, pmToIgnore),
+      text: await enrichText(
+        chapter.text,
+        articleCodes,
+        pms,
+        locale,
+        pmToIgnore
+      ),
     }))
   );
 

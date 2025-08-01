@@ -7,7 +7,7 @@ import { RegulationsQuery } from "./queries";
 import { IP2PRegulationGroup } from "../../../types/p2p";
 import RegulationGroup from "./RegulationGroup";
 import MultipleCitiesContext from "../../layout/header/city/location/MultipleCitiesContext";
-import Location from "../../layout/header/city/location";
+
 import { useAppDispatch } from "../../../redux/hooks";
 import { useEffect } from "react";
 import { initDefaultRegulationCodes } from "../../../redux/mainReducer";
@@ -17,29 +17,25 @@ const Step2 = () => {
   const fetcher = initCMSFetcher();
 
   const { data, error } = useSWR(RegulationsQuery, fetcher) as {
-    data: {
-      regulationGroups: any;
-    };
+    data: IP2PRegulationGroup[];
     error: boolean;
   };
 
-  const fetchedRegGroups = data?.regulationGroups as IP2PRegulationGroup[];
-
   useEffect(() => {
     // забираем первичные дефолтные параметры если нет из localStorage
-    if (fetchedRegGroups?.length) {
-      dispatch(initDefaultRegulationCodes(fetchedRegGroups));
+    if (data?.length) {
+      dispatch(initDefaultRegulationCodes(data));
     }
-  }, [fetchedRegGroups]);
+  }, [data]);
 
   return (
-    <ErrorWrapper isError={!!error} isLoading={!fetchedRegGroups}>
+    <ErrorWrapper isError={!!error} isLoading={!data}>
       <Box mt="2">
         <MultipleCitiesContext.Provider value={true}>
-          <Location />
+          {/* <Location /> */}
         </MultipleCitiesContext.Provider>
-        {fetchedRegGroups &&
-          fetchedRegGroups.map((regulationGroup) => (
+        {data &&
+          data.map((regulationGroup) => (
             <RegulationGroup
               key={regulationGroup.id}
               regulationGroup={regulationGroup}

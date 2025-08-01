@@ -39,11 +39,11 @@ import { selectorQuery } from "../../../../services/initialQueries";
 import { useTranslation } from "next-i18next";
 
 //const gqlFetcher = new GraphQLFetcher(); // may pass variables here
-const fetcher = initCMSFetcher({ countries: ["turkey"] });
+const fetcher = initCMSFetcher();
 
 const Selector = function Selector() {
   const { data, error } = useSWR(selectorQuery, fetcher) as {
-    data: { selector: ISelector };
+    data: ISelector | null;
     error: any;
   };
 
@@ -52,11 +52,14 @@ const Selector = function Selector() {
   const searchBarInputValue = useAppSelector(
     (state) => state.main.searchBarInputValue
   );
-
-  const sections = filterSections(
-    searchBarInputValue,
-    data?.selector?.sections
-  );
+  if (!data)
+    return (
+      <>
+        {" "}
+        <Spinner size="sm" />
+      </>
+    );
+  const sections = filterSections(searchBarInputValue, data?.sections);
 
   return (
     <VStack
@@ -77,7 +80,7 @@ const Selector = function Selector() {
       }}
     >
       <ErrorWrapper isLoading={!data} isError={!!error}>
-        <SearchBar search_bar={data?.selector?.search_bar} />
+        {/* <SearchBar search_bar={data?.selector?.search_bar} /> */}
 
         <SectionsList sections={sections} />
 

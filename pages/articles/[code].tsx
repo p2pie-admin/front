@@ -1,19 +1,19 @@
-import { readCache, writeCache } from "../../cache";
-import { initCMSFetcher } from "../../services/fetchers";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { ICache, IPmPairs } from "../../types/exchange";
-import { NextSeo, BreadcrumbJsonLd } from "next-seo";
-import { useAppDispatch } from "../../redux/hooks";
-import { useEffect } from "react";
-import { setDirRatesStatus } from "../../redux/mainReducer";
+import { IPmPairs } from "../../types/exchange";
 import { IArticle } from "../../types/pages";
 import Article from "../../components/article";
-import { getCachedData, loadInitialData } from "../../cache/loadInitialData";
 import { addArticleCrossLinking } from "../../components/article/helper";
 import { IPm } from "../../types/selector";
 import { ISEO } from "../../types/general";
 import { getT } from "../../components/shared/getT";
 import { nullSeo } from "../../components/shared/UniversalSeo";
+import {
+  loadArticle,
+  loadPms,
+  loadPossiblePairs,
+  loadArticlesCodes,
+} from "../../cache/loadInitialData";
+import { getSlugToCodes } from "../../cache/helper";
 
 const emptyProps = async (locale: "en" | "ru") => ({
   props: {
@@ -43,20 +43,17 @@ export async function getStaticProps({
   locale: "en" | "ru";
 }) {
   try {
-    const cachedData = (await getCachedData({ isHard: false })) as
-      | ICache
-      | undefined;
-
-    if (!cachedData || !cachedData.possiblePairs) {
-      console.error(
-        "articles [getStaticProps] Cached data is missing or invalid."
+    const article = (await loadArticle(params.code.toLowerCase(), locale))?.[0];
+    const articleCodes = (await loadArticlesCodes()) || [];
+    const pms = (await loadPms()) || [];
+    const possiblePairs = (await loadPossiblePairs()) || {};
+    const slugToCodes = getSlugToCodes(possiblePairs, pms);
+    if (!article || !pms || !slugToCodes) {
+      console.warn(
+        `[getStaticProps] No article found for code: ${params.code}`
       );
       return emptyProps(locale || "ru");
     }
-
-    const { pms, slugToCodes } = cachedData;
-    const articles = cachedData[`${locale}Data`]?.articles || [];
-
     const code = params.code.toLowerCase();
 
     const articlePms = pms.filter(
@@ -95,9 +92,7 @@ export async function getStaticProps({
       },
       { buy: [], sell: [] }
     );
-    const article = articles.find(
-      (a) => a.code.toLowerCase() == code.toLowerCase()
-    );
+
     if (!article) {
       console.warn(`[getStaticProps] No article found for code: ${code}`);
       return {
@@ -114,7 +109,7 @@ export async function getStaticProps({
 
     const linkedArticle = await addArticleCrossLinking(
       article,
-      articles,
+      articleCodes,
       pms,
       locale,
       articlePms[0]
@@ -164,29 +159,15 @@ export async function getStaticProps({
 /////////////////////////////////////////////////////////////////////////////////////////////
 export async function getStaticPaths() {
   try {
-    const cachedData = (await getCachedData({ isHard: true })) as
-      | ICache
-      | undefined;
-
-    if (!cachedData?.timestamp) {
-      console.error(
-        "articles [getStaticPaths] Cached data is missing or invalid."
-      );
-      return {
-        paths: [],
-        fallback: "blocking",
-      };
-    }
-
     const locales = ["en", "ru"] as ("en" | "ru")[];
     const paths: { params: { code: string }; locale: "en" | "ru" }[] = [];
+    const articles = await loadArticlesCodes();
 
     locales.forEach((locale) => {
-      const articles = cachedData?.[`${locale}Data`]?.articles || [];
-      articles.forEach((a) => {
+      articles.forEach((code) => {
         paths.push({
           params: {
-            code: a.code.toLowerCase(),
+            code: code.toLowerCase(),
           },
           locale,
         });

@@ -11,13 +11,11 @@ const Intro = () => {
   const fetcher = initCMSFetcher();
 
   const { data, error } = useSWR(OrderIntrosQuery, fetcher) as {
-    data: {
-      orderIntros: IOrderIntro[];
-    };
+    data: IOrderIntro[];
+
     error: boolean;
   };
 
-  const introItems = data?.orderIntros;
   const hidden = useAppSelector((state) => !state.main.p2p.dirs[0].toUsdRate);
   return (
     <Collapse in={hidden}>
@@ -29,8 +27,8 @@ const Intro = () => {
         my={["2", "4"]}
         gridTemplateColumns={["6fr 2px", "6fr 2px 6fr 1px"]}
       >
-        {introItems &&
-          introItems.map((introItem, idx) => (
+        {data &&
+          data.map((introItem, idx) => (
             <>
               <IntroItem introItem={introItem} />
               <Divider

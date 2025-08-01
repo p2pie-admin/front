@@ -9,14 +9,33 @@ export function hasCyrillic(text: string): boolean {
   return /[\u0400-\u04FF]/.test(text);
 }
 
-export const exchangerNameToSlug = (name: string) => {
-  let latinName = name;
-  if (hasCyrillic(name)) {
-    const transliterator = new Transliterator();
-    latinName = transliterator._transliterate(name).cyrillic_to_latin;
+export function exchangerNameToSlug(name: string): string {
+  return name
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9\s_-]/g, "") // ✅ underscore is preserved
+    .replace(/\s+/g, "_") // spaces -> underscore
+    .replace(/_+/g, "_")
+    .replace(/-+/g, "-");
+}
+
+export function exchangerSlugToName(slug: string): string {
+  return slug
+    .trim()
+    .replace(/_/g, " ") // underscores -> spaces
+    .split(/[\s-]/) // split words on both spaces and dashes
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(matchSpacing(slug)); // rejoin with original separators
+}
+
+// helper to restore separators
+function matchSpacing(slug: string): string {
+  // If original had dash(s), keep dash separation
+  if (slug.includes("-") && !slug.includes("_")) {
+    return "-";
   }
-  return latinName.toLowerCase().replace(/[ .]/g, "-");
-};
+  return " ";
+}
 
 export const getStatus = (exchanger: IExchanger & IParserExchanger) => {
   const { error, warnings, skip, total_rates } = exchanger;
@@ -34,12 +53,12 @@ export const getStatus = (exchanger: IExchanger & IParserExchanger) => {
 
 export const addExchangerCrossLinking = async (
   exchanger: (IExchanger & IParserExchanger) | null,
-  articles: IArticle[] | undefined,
+  articleCodes: string[] | undefined,
   pms: IPm[] | undefined,
   locale: "en" | "ru" = "en"
 ) => {
   if (
-    !articles ||
+    !articleCodes ||
     !exchanger ||
     !exchanger.exchanger_card.en_description ||
     !exchanger.exchanger_card.ru_description
@@ -48,7 +67,7 @@ export const addExchangerCrossLinking = async (
 
   const text = await enrichText(
     exchanger.exchanger_card[`${locale}_description`] || "",
-    articles,
+    articleCodes,
     pms,
     locale
   );

@@ -1,6 +1,6 @@
 import { GetStaticProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { getCachedData, loadInitialData } from "../../cache/loadInitialData";
+import { loadExchangers } from "../../cache/loadInitialData";
 
 import { IExchanger, IParserExchanger } from "../../types/exchanger";
 import ExchangersList from "../../components/exchangers";
@@ -19,11 +19,7 @@ const ExchangersPage = ({
 }) => <ExchangersList exchangers={exchangers} seo={seo} />;
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  const cachedData = (await getCachedData({ isHard: false })) as
-    | ICache
-    | undefined;
-
-  const exchangers = cachedData?.exchangers || [];
+  const exchangers = await loadExchangers();
 
   if (!exchangers?.length) {
     return {

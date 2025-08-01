@@ -19,14 +19,17 @@ export const textToHTML = async (text?: string) => {
 
 export const enrichText = (
   text: string,
-  articles: IArticle[] = [],
+  articleCodes: string[] = [],
   pms: IPm[] = [],
   locale: "en" | "ru" = "en",
   pmToIgnore: IPm | null = null
 ) => {
-  const articlePms = articles
-    .map((a) =>
-      pms.find((pm) => pm.en_name.toLowerCase() === a.code.toLowerCase())
+  const articlePms = articleCodes
+    .map((code) =>
+      pms.find(
+        (pm) =>
+          pm.en_name.toLowerCase().replaceAll(" ", "_") === code.toLowerCase()
+      )
     )
     .filter(
       (pm): pm is IPm =>

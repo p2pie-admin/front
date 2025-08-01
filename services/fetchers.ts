@@ -17,7 +17,19 @@ const retry = async <T>(fn: () => Promise<T>, retries = 3): Promise<T> => {
   throw lastError;
 };
 
-export const initCMSFetcher = (variables = {}) => {
+const unwrap = (data: any) => {
+  if (
+    typeof data === "object" &&
+    data !== null &&
+    !Array.isArray(data) &&
+    Object.keys(data).length === 1
+  ) {
+    return data[Object.keys(data)[0]];
+  }
+  return data;
+};
+
+export const initCMSFetcher = () => {
   const env = process.env.NODE_ENV;
   const url =
     env === "production"
@@ -26,10 +38,10 @@ export const initCMSFetcher = (variables = {}) => {
 
   const graphQLClient = new GraphQLClient(url || "", { timeout: 15000 });
 
-  return async (query: string) => {
+  return async (query: string, variables?: Record<string, any>) => {
     try {
       const data = await retry(() => graphQLClient.request(query, variables));
-      return normalize(data);
+      return unwrap(normalize(data));
     } catch (e) {
       console.error("CMS FETCHER ERROR after 3 retries: ", e);
       return null;

@@ -1,9 +1,8 @@
 import { Html, Head, Main, NextScript } from "next/document";
-import type { DocumentContext } from "next/document";
 
-export default function Document({ locale }: { locale?: string }) {
+export default function MyDocument() {
   return (
-    <Html lang={locale || "en"}>
+    <Html>
       <Head>
         {/* Favicon */}
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -30,13 +29,6 @@ export default function Document({ locale }: { locale?: string }) {
           href="https://fonts.googleapis.com/css?family=Inconsolata&text=1234567890,.-+&display=swap"
           rel="stylesheet"
         />
-        {/* Optional custom font */}
-        {/* 
-        <link
-          href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@900&display=swap&text=p2ie"
-          rel="stylesheet"
-        /> 
-        */}
 
         {/* Meta tags */}
         <meta name="google" content="notranslate" />
@@ -56,11 +48,3 @@ export default function Document({ locale }: { locale?: string }) {
     </Html>
   );
 }
-
-Document.getInitialProps = async (ctx: DocumentContext) => {
-  const initialProps = await ctx.defaultGetInitialProps(ctx);
-  return {
-    ...initialProps,
-    locale: ctx.locale, // get locale from context
-  };
-};

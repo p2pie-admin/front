@@ -13,9 +13,7 @@ import { PhysicalExchangersQuery } from "../../components/map/queries";
 const Home: NextPage = () => {
   const fetcher = initCMSFetcher();
   const { data, error } = useSWR(PhysicalExchangersQuery, fetcher) as {
-    data: {
-      physicalExchangers: IPhysicalExchanger[];
-    };
+    data: IPhysicalExchanger[];
     error: boolean;
   };
 
@@ -170,7 +168,7 @@ const Home: NextPage = () => {
     return <Text>Loading...</Text>;
   }
 
-  const priceBasis = getPricesUSD(data.physicalExchangers);
+  const priceBasis = getPricesUSD(data);
 
   return (
     <Box
@@ -189,7 +187,7 @@ const Home: NextPage = () => {
         }}
         mapContainerStyle={containerStyle}
       >
-        {data.physicalExchangers.map((physicalExchanger) => {
+        {physicalExchangers.map((physicalExchanger) => {
           const { id, lat, lng } = physicalExchanger;
           return (
             <OverlayView

@@ -2,44 +2,29 @@ import type { GetStaticProps } from "next";
 import MainPageContent from "../components/main";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IPopularDirRates } from "../types/rates";
-import { initCMSFetcher, initParserFetcher } from "../services/fetchers";
+import { initParserFetcher } from "../services/fetchers";
 
 import { ICache } from "../types/exchange";
 
 import { MainTextsQuery, TextBoxQuery } from "../services/initialQueries";
 import { IMainText, ITextBox } from "../types/pages";
-
-import { getCachedData, loadInitialData } from "../cache/loadInitialData";
 import UniversalSeo, { nullSeo } from "../components/shared/UniversalSeo";
 
 import { ISEO } from "../types/general";
 import { getT } from "../components/shared/getT";
+import { loadMainTexts, loadPms, loadRootText } from "../cache/loadInitialData";
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
+export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
   // must be async
+
   try {
-    const cachedData = (await getCachedData({ isHard: false })) as
-      | ICache
-      | undefined;
+    const mainTexts = await loadMainTexts(locale);
+    const rootText = await loadRootText(locale);
 
-    const circleTextsFetcher = initCMSFetcher({ locale });
-
-    const rootTextFetcher = initCMSFetcher({ locale, key: "root" });
-    const res1 = (await rootTextFetcher(TextBoxQuery)) as {
-      textBoxes: ITextBox[];
-    };
-    const textBoxes = res1?.textBoxes;
-
-    const res2 = (await circleTextsFetcher(MainTextsQuery)) as {
-      mainTexts: IMainText[];
-    };
-    const mainTexts = res2?.mainTexts;
-
-    const rootText = textBoxes[0] || null;
     const parserFetcher = initParserFetcher();
     const popularRates = (await parserFetcher("top")) as IPopularDirRates;
 
-    const pms = cachedData?.pms;
+    const pms = (await loadPms()) || [];
 
     const popularPmCodes = [
       ...Object.keys(popularRates),

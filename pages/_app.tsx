@@ -10,22 +10,33 @@ import { DefaultSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { defaultConfig } from "../next-seo.config";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import Head from "next/head"; // ✅ import Head
+import App from "next/app";
 
-function MyApp({ Component, pageProps }: AppProps) {
+export function MyApp({ Component, pageProps }: AppProps) {
   const { locale } = useRouter() as { locale: "en" | "ru" };
   const seoConfig = defaultConfig[locale || "ru"];
 
   return (
-    <ChakraProvider theme={theme}>
-      <Provider store={store}>
-        <Layout>
-          <SpeedInsights />
-          <DefaultSeo {...seoConfig} />
-          <Component {...pageProps} />
-        </Layout>
-      </Provider>
-    </ChakraProvider>
+    <>
+      <Head>
+        {/* ✅ moved from _document.tsx because its dynamic. эта хуйня должна жить тут, не в universalSEO */}
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+        />
+      </Head>
+      <ChakraProvider theme={theme}>
+        <Provider store={store}>
+          <Layout>
+            <SpeedInsights />
+            <DefaultSeo {...seoConfig} />
+            <Component {...pageProps} />
+          </Layout>
+        </Provider>
+      </ChakraProvider>
+    </>
   );
 }
 
-export default appWithTranslation(MyApp);
+export default MyApp;

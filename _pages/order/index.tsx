@@ -78,9 +78,7 @@ const Steps = () => {
   const stepComponents = [<Step1 />, <Step2 />, <Step3 />];
   const fetcher = initCMSFetcher();
   const { data, error } = useSWR(StepsQuery, fetcher) as {
-    data: {
-      steps: any;
-    };
+    data: any;
     error: boolean;
   };
 

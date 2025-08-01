@@ -1,15 +1,8 @@
-import { readCache, writeCache } from ".";
-import exchangers from "../components/exchangers";
-import {
-  extractPmsFromPmGroup,
-  pmsToSlug,
-} from "../components/main/side/selector/section/PmGroup/helper";
 import {
   ICity,
   IPossiblePmPair,
   IDirText,
   ICache,
-  IParserSetting,
   IPmLayout,
   ILocalData,
 } from "../types/exchange";
@@ -24,162 +17,192 @@ import {
   exchangersQuery,
   articleCodesQuery,
   articlesQuery,
+  articleQuery,
+  MainTextsQuery,
+  TextBoxQuery,
+  exchangerQuery,
 } from "../services/initialQueries";
 import { mylog } from "../services/utils";
-import { IArticle } from "../types/pages";
-import { exchangerNameToSlug } from "../components/exchangers/helper";
+import { IArticle, IMainText, ITextBox } from "../types/pages";
 
-// Helper to fetch localized content
-const fetchLocalizedData = async (locale: "en" | "ru"): Promise<ILocalData> => {
-  const fetcher = initCMSFetcher({ locale });
+import { getPmsFromSelector, getSlugToCodes, mergeExchangers } from "./helper";
+import { readCache, writeCache } from ".";
+import exchanger from "../components/exchangers/exchanger";
+
+// FETCHERS
+
+const parserFetcher = initParserFetcher();
+const cmsFetcher = initCMSFetcher();
+
+type FetchKey = string;
+
+// кешируем только при билде, чтобы не грузить лишний раз
+const safeFetch = async <T>(
+  key: FetchKey,
+  fetcher: () => Promise<T>
+): Promise<T> => {
+  const cache = readCache() || {};
+  if (cache[key]) return cache[key] as T;
+
+  try {
+    const data = await fetcher();
+    writeCache({ ...cache, [key]: data });
+    return data;
+  } catch (e) {
+    console.error(`Failed to fetch ${key}:`, e);
+    return {} as T;
+  }
+};
+
+export const loadRootText = async (locale: "en" | "ru") =>
+  await safeFetch("root_text", async () => {
+    const textBoxes = await cmsFetcher(TextBoxQuery, { locale, key: "root" });
+    return textBoxes[0] || null;
+  });
+export const loadMainTexts = async (locale: "en" | "ru") =>
+  await safeFetch("main_texts", async () => {
+    const mainTexts = await cmsFetcher(MainTextsQuery, { locale });
+    return mainTexts || null;
+  });
+
+export const loadParserExchangers = () =>
+  safeFetch("exchangers", () => parserFetcher("exchangers"));
+
+export const loadPmLayouts = () =>
+  safeFetch("pmLayouts", () => cmsFetcher(pmLayoutsQuery)) as Promise<
+    IPmLayout[]
+  >;
+export const loadDirsTexts = () =>
+  safeFetch("dirsTexts", () => cmsFetcher(dirsTextsQuery)) as Promise<
+    IDirText[]
+  >;
+
+export const loadArticlesCodes = () =>
+  safeFetch("articleCodes", () => cmsFetcher(articleCodesQuery)) as Promise<
+    string[]
+  >;
+
+export const loadArticles = () =>
+  safeFetch("articles", () => cmsFetcher(articlesQuery)) as Promise<IArticle[]>;
+
+export const loadArticle = (code: string, locale: "en" | "ru") =>
+  safeFetch(`article_${code}_${locale}`, () =>
+    cmsFetcher(articleQuery, { code, locale })
+  ) as Promise<IArticle[]>;
+
+export const loadPossiblePairs = () =>
+  safeFetch("possible_pairs", () => parserFetcher("possible_pairs")) as Promise<
+    Record<string, string[]>
+  >;
+export const loadPms = async () => {
+  const selector = (await safeFetch("selector", () =>
+    cmsFetcher(selectorQuery)
+  )) as ISelector;
+  const pms = getPmsFromSelector(selector);
+  return pms;
+};
+
+export const loadExchanger = async (
+  name: string
+): Promise<IExchanger | null> => {
+  const exchanger = (await safeFetch(`exchanger_${name}`, async () =>
+    cmsFetcher(exchangerQuery, { name })
+  )) as Promise<IExchanger>;
+  return exchanger;
+};
+
+export const loadExchangers = async () => {
+  const [cmsExchangers, parserExchangers] = await Promise.all([
+    safeFetch("cms_exchangers", () => cmsFetcher(exchangersQuery)) as Promise<
+      IExchanger[]
+    >,
+    safeFetch("parser_exchangers", () =>
+      parserFetcher("exchangers")
+    ) as Promise<Record<string, IParserExchanger>>,
+  ]);
+  const exchangers = mergeExchangers(cmsExchangers, parserExchangers);
+  return exchangers;
+};
+
+export const loadCities = () =>
+  safeFetch("cities", async () => {
+    const parserSettings = (await cmsFetcher(citiesQuery)) as {
+      cities: ICity[] | null;
+    };
+    return parserSettings?.cities;
+  }) as Promise<ICity[]>;
+
+export const fetchLocalizedData = async (
+  locale: "en" | "ru"
+): Promise<ILocalData> => {
+  const fetcher = initCMSFetcher();
 
   const [pmLayoutsRes, dirsTextsRes, articlesRes] = await Promise.all([
-    fetcher(pmLayoutsQuery),
-    fetcher(dirsTextsQuery),
-    fetcher(articlesQuery),
+    fetcher(pmLayoutsQuery, { locale }),
+    fetcher(dirsTextsQuery, { locale }),
+    fetcher(articlesQuery, { locale }),
   ]);
 
   return {
-    pmLayouts: (pmLayoutsRes as { pmLayouts: IPmLayout[] }).pmLayouts,
-    dirsTexts: (dirsTextsRes as { dirsTexts: IDirText[] }).dirsTexts,
-    articles: (articlesRes as { articles: IArticle[] }).articles,
+    pmLayouts: pmLayoutsRes as IPmLayout[],
+    dirsTexts: dirsTextsRes as IDirText[],
+    articles: articlesRes as IArticle[],
   };
 };
 
-// Load data once and cache it for 15 min
-export const loadInitialData = async () => {
-  try {
-    const timestamp = Date.now();
-    const parserFetcher = initParserFetcher();
-    const cmsFetcher = initCMSFetcher();
+//// SELECTORS
 
-    // Start all async operations in parallel
-    const possiblePairsPromise = parserFetcher("possible_pairs");
-    const selectorPromise = cmsFetcher(selectorQuery);
-    const exchangersPromise = cmsFetcher(exchangersQuery);
-    const parserExchangersPromise = parserFetcher("exchangers");
-    const parserSettingPromise = cmsFetcher(citiesQuery);
-    const localizedDataPromise = Promise.all([
-      fetchLocalizedData("en"),
-      fetchLocalizedData("ru"),
-    ]);
+export const emptyProps = (locale: "en" | "ru") => ({
+  pm: null,
+  locale,
+  article: null,
+  otherDirs: null,
+});
 
-    // Wait for all to complete
-    const [
-      possiblePairs,
-      { selector },
-      { exchangers: allExchangers },
-      parserExchangers,
-      { parserSetting },
-      [enData, ruData],
-    ] = await Promise.all([
-      possiblePairsPromise,
-      selectorPromise,
-      exchangersPromise,
-      parserExchangersPromise,
-      parserSettingPromise,
-      localizedDataPromise,
-    ]);
+// грузит все подряд, универсальная, для getStaticPaths
+// export const loadStaticData = async () => {
+//   try {
+//     const cache = (await readCache()) as ICache | undefined;
+//     if (cache) {
+//       return cache;
+//     }
 
-    const dirs = Object.entries(
-      possiblePairs as Record<string, string[]>
-    ).flatMap(([code, pairs]) => pairs.map((pair) => `${code}_${pair}`));
+//     // Wait for all to complete
+//     const [
+//       possiblePairs,
+//       selector,
+//       exchangers,
+//       enData,
+//       ruData,
+//     ] = await Promise.all([
+//       loadPossiblePairs(),
+//       loadSelector(),
+//       loadExchangers(),
+//       fetchLocalizedData("en"),
+//       fetchLocalizedData("ru"),
+//     ]);
 
-    // Merge exchangers
-    const exchangers: (IExchanger & IParserExchanger)[] = (
-      allExchangers || []
-    ).map((exchanger: IExchanger & IParserExchanger) => {
-      const parserExchanger = parserExchangers?.[exchanger.id];
-      return {
-        ...parserExchanger,
-        ...exchanger,
-      } as IExchanger & IParserExchanger;
-    });
+//     const pms: IPm[] = getPmsFromSelector(selector);
+//     const slugToCodes = getSlugToCodes(
+//       possiblePairs as Record<string, string[]>,
+//       pms
+//     );
 
-    // Flatten PM groups and extract PMs
-    const pmGroups: IPmGroup[] = selector.sections.flatMap(
-      (section: ISection) =>
-        section.pm_groups.map((pmg) => ({
-          ...pmg,
-          section: section.en_title.toLowerCase(),
-        }))
-    );
+//     const cities = parserSetting.cities as ICity[];
 
-    const pms: IPm[] = pmGroups.flatMap((pmGroup) => {
-      const extracted = extractPmsFromPmGroup(pmGroup);
-      if (!extracted?.length) console.log("Missing PMs in group:", pmGroup);
-      return extracted || [];
-    });
+//     const staticCache: ICache = {
+//       possiblePairs,
+//       pms,
+//       slugToCodes,
+//       cities,
+//       enData,
+//       ruData,
+//       exchangers,
+//     };
 
-    // Pre-index PMs by code for faster lookup
-    const pmMap = new Map(pms.map((pm) => [pm.code.toUpperCase(), pm]));
-
-    // Map slugs to pair codes
-    const slugToCodes: Record<string, string> = dirs.reduce((acc, dir) => {
-      const [give, get] = dir.split("_");
-      const pair: IPossiblePmPair = {
-        givePm: pmMap.get(give),
-        getPm: pmMap.get(get),
-      };
-      const slug = pmsToSlug(pair);
-      return slug ? { ...acc, [slug]: dir } : acc;
-    }, {});
-
-    const cities = parserSetting.cities as ICity[];
-
-    const exchangerSlugs = allExchangers.map(
-      (exchanger: IExchanger & IParserExchanger) =>
-        exchangerNameToSlug(exchanger.name)
-    );
-
-    const finalCache: ICache = {
-      timestamp,
-      possiblePairs,
-      pms,
-      slugToCodes,
-      parserSetting,
-      cities,
-      enData,
-      ruData,
-      exchangers,
-      exchangerSlugs,
-    };
-
-    writeCache(finalCache);
-  } catch (e) {
-    mylog(`[loadInitialData] Error: ${String(e)}`, "error");
-  }
-};
-
-let isRefreshing = false;
-
-const loadInitialDataDebounced = async () => {
-  if (isRefreshing) return;
-  isRefreshing = true;
-  try {
-    await loadInitialData();
-  } catch (e) {
-    console.error("Cache refresh failed:", e);
-  } finally {
-    isRefreshing = false;
-  }
-};
-
-export const getCachedData = async ({
-  isHard,
-}: {
-  isHard: boolean;
-}): Promise<ICache | undefined> => {
-  const now = Date.now();
-  const cache = readCache();
-  // Check if the cache is still valid (5 minutes)
-  if (cache?.timestamp && now - cache.timestamp < 1000 * 60 * 5) {
-    return cache;
-  }
-  if (isHard) {
-    await loadInitialData();
-    return readCache();
-  }
-  loadInitialDataDebounced();
-  return cache; // Return old cache while new data loads
-};
+//     writeCache(staticCache);
+//     return staticCache;
+//   } catch (e) {
+//     mylog(`[staticCache] Error: ${String(e)}`, "error");
+//   }
+// };

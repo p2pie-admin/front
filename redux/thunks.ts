@@ -143,23 +143,19 @@ export const restoreFromSlug = async (
     getSubgroupName,
   } = destructureDirSlug(slug);
 
-  const fetcher = initCMSFetcher({ giveName, getName });
-  const response = (await fetcher(pmGroupsByNamesQuery)) as {
-    pmGroups: IPmGroup[];
-  };
+  const fetcher = initCMSFetcher();
+  const pmGroups = (await fetcher(pmGroupsByNamesQuery, {
+    giveName,
+    getName,
+  })) as IPmGroup[];
 
   const givePm = pmFromPmGroups(
     giveName,
     giveCurCode,
     giveSubgroupName,
-    response.pmGroups
+    pmGroups
   );
-  const getPm = pmFromPmGroups(
-    getName,
-    getCurCode,
-    getSubgroupName,
-    response.pmGroups
-  );
+  const getPm = pmFromPmGroups(getName, getCurCode, getSubgroupName, pmGroups);
 
   return {
     givePm,
@@ -188,8 +184,7 @@ export const fetchPossiblePairs = createAsyncThunk(
 
 export const fetchPms = createAsyncThunk("initial/fetchPms", async () => {
   const fetcher = initCMSFetcher();
-  const response = await fetcher(pmsQuery);
-  return response?.pms as IPmPointer[];
+  return (await fetcher(pmsQuery)) as IPmPointer[];
 });
 
 export const fetchCity = createAsyncThunk(
@@ -223,14 +218,14 @@ export const submitOrder = createAsyncThunk(
     }
     if (!id) {
       // creating
-      const fetcher = initCMSFetcher(order);
-      const response = await fetcher(CreateOrderMutation);
+      const fetcher = initCMSFetcher();
+      const response = await fetcher(CreateOrderMutation, { order });
       response?.createP2P?.id && writeLocalOrder(order);
       return { title: "Order was created!", status: "success" };
     }
     // updating
-    const fetcher = initCMSFetcher({ id, ...order });
-    await fetcher(UpdateOrderMutation);
+    const fetcher = initCMSFetcher();
+    await fetcher(UpdateOrderMutation, { id, ...order });
     writeLocalOrder(order);
     return { title: "Order was updated!", status: "info" };
   }
@@ -242,8 +237,8 @@ export const getOrderByUID = createAsyncThunk(
     const { main } = thunkAPI.getState() as { main: MainState };
     const uidFromIP = createUID(main.fingerprint);
     const uid = uidFromLink || uidFromIP;
-    const fetcher = initCMSFetcher({ uid });
-    const response = await fetcher(OrderByUIDQuery);
+    const fetcher = initCMSFetcher();
+    const response = await fetcher(OrderByUIDQuery, { uid });
     return response?.p2Ps?.[0] as IOrder | undefined;
   }
 );
@@ -253,7 +248,9 @@ export const redirect = createAsyncThunk(
   async (_, thunkAPI) => {
     const { main } = thunkAPI.getState() as { main: MainState };
     const currentRate = main?.dirRates?.[main.swiperIdVisible];
-    const fetcher = initCMSFetcher({
+    const fetcher = initCMSFetcher();
+
+    await fetcher(CreateRedirectMutation, {
       direction: `${main.givePm?.code}_${main.getPm?.code}`,
       give: +main.amountOutputs.give,
       get: +main.amountOutputs.get,
@@ -261,8 +258,6 @@ export const redirect = createAsyncThunk(
       isP2P: !!currentRate?.tag,
       ip: main.fingerprint?.ip,
     });
-
-    await fetcher(CreateRedirectMutation);
   }
 );
 

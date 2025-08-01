@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import useSWR from "swr";
 
 import ErrorWrapper from "../../shared/ErrorWrapper";
-import { initCMSFetcher } from "../../../services/fetchers";
+
 import { Box, HStack, Link } from "@chakra-ui/react";
 import { IParameter, IRate } from "../../../types/rates";
 import Swiper from "./Swiper";

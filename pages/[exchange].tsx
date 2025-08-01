@@ -11,7 +11,6 @@ import {
   slugCityToExchange,
 } from "../components/exchange/helper";
 
-import { getCachedData, loadInitialData } from "../cache/loadInitialData";
 import { mylog } from "../services/utils";
 import { TextBoxQuery } from "../services/initialQueries";
 import { initCMSFetcher } from "../services/fetchers";
@@ -20,6 +19,12 @@ import { enrichText } from "../components/shared/helper";
 import { t } from "i18next";
 import { ISEO } from "../types/general";
 import { nullSeo } from "../components/shared/UniversalSeo";
+import { getSlugToCodes } from "../cache/helper";
+import {
+  loadCities,
+  loadPms,
+  loadPossiblePairs,
+} from "../cache/loadInitialData";
 
 const prerenderCountries = ["ukraine", "russia", "belarus"];
 
@@ -48,215 +53,188 @@ export async function getStaticProps({
   params: { exchange: string };
 }) {
   try {
-    const { exchange } = params;
-
-    const [slug, cityParam] = exchangeToSlugCity(exchange);
-
-    const cachedData = (await getCachedData({ isHard: false })) as
-      | ICache
-      | undefined;
-
-    if (
-      !cachedData ||
-      !cachedData.pms ||
-      !cachedData.slugToCodes ||
-      !cachedData.cities
-    ) {
-      console.error(
-        "exchangers [getStaticProps] Cached data is missing or invalid."
-      );
-      return { notFound: true };
-    }
-
-    const { pms, slugToCodes, cities, ruData, enData } = cachedData;
-
-    if (!pms || !Array.isArray(pms)) {
-      console.error("[getStaticProps] 'pms' is missing or invalid.");
-      return { notFound: true };
-    }
-
-    const dir = slugToCodes?.[slug];
-    const [giveCode, getCode] = dir?.split("_") ?? [];
-
-    const givePm = pms?.find((pm) => pm.code === giveCode) ?? null;
-    const getPm = pms?.find((pm) => pm.code === getCode) ?? null;
-
-    if (!dir || !givePm || !getPm) {
-      console.error("[getStaticProps] Invalid direction or PM data.");
-      return {
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
-
-    const similarPmPairs = findSimilarPmPairs(
-      givePm,
-      getPm,
-      pms,
-      Object.values(slugToCodes)
-    );
-
-    // обработка городов
-
-    const city = cityParam
-      ? cities?.find(
-          (c) => c.en_name?.toLowerCase() === cityParam.toLowerCase()
-        ) || null
-      : null;
-
-    if (!cities || !Array.isArray(cities)) {
-      console.error("[getStaticProps] 'cities' is missing or invalid.");
-      return { notFound: true };
-    }
-
-    // города доноры это те, у которых нет курса по нарпавлению но есть в соседнем
-    const donorName =
-      (city?.en_name && cachedData.donors?.[dir]?.[city.en_name]) || null;
-
-    const donorCity =
-      (donorName &&
-        cities?.find(
-          (c) => c.en_name?.toLowerCase() === donorName.toLowerCase()
-        )) ||
-      null;
-
-    // обработка текстов
-
-    const localData = locale == "en" ? enData : ruData;
-    // первое : достаем коробки описания секций пм, это также ссылки на артиклы пм
-    // и втрое : достаем шаблоны для направления с местами для вставки
-    const { pmLayouts, dirsTexts, articles } = localData;
-
-    const givePmLayout =
-      pmLayouts?.find((l) => l.section == givePm?.section) || null;
-    const getPmLayout =
-      pmLayouts?.find((l) => l.section == getPm?.section) || null;
-
-    const dirText =
-      dirsTexts?.find(
-        (text) =>
-          text?.section_give == givePm?.section &&
-          text?.section_get == getPm?.section
-      ) || null;
-
-    //если есть текст для направления - внедряем
-    const dirTextFetcher = initCMSFetcher({ locale, key: dir.toUpperCase() });
-    const res = (await dirTextFetcher(TextBoxQuery)) as {
-      textBoxes: ITextBox[];
-    };
-    const textBoxes = res?.textBoxes;
-
-    if (dirText && textBoxes?.length && textBoxes[0]?.text) {
-      dirText.text = await enrichText(
-        textBoxes[0]?.text,
-        articles,
-        pms,
-        locale
-      );
-    }
-
-    let [giveArticleExists, getArticleExists] = [false, false];
-
-    if (articles.length) {
-      giveArticleExists = !!articles?.find(
-        (article) => article.code?.toUpperCase() == givePm.en_name.toUpperCase()
-      );
-      getArticleExists = !!articles?.find(
-        (article) => article.code?.toUpperCase() == getPm.en_name.toUpperCase()
-      );
-    }
-
-    const givePmData = {
-      pm: givePm,
-      pmLayout: givePmLayout,
-      articleExists: giveArticleExists,
-      // possiblePairs: possiblePairs[givePm.code],
-    } as IPmData;
-
-    const getPmData = {
-      pm: getPm,
-      pmLayout: getPmLayout,
-      articleExists: getArticleExists,
-      // possiblePairs: possiblePairs[getPm.code],
-    } as IPmData;
-
-    const title1 = generateTitle({
-      locale,
-      givePm,
-      getPm,
-    });
-    const giveCur = givePm.currency.code.toUpperCase();
-    const getCur = getPm.currency.code.toUpperCase();
-    let [description, cityAddon, site_name] = ["", "", ""];
-    if (locale == "ru") {
-      description = `Обмен ${givePm.ru_name || givePm.en_name} ${giveCur} ${
-        givePm.subgroup_name || ""
-      } на ${getPm.ru_name || getPm.en_name} ${getCur}`;
-      if (city) cityAddon = ` в ${city.ru_name}, ${city.ru_country_name}`;
-      site_name = `${process.env.NEXT_PUBLIC_NAME} мониторинг обменников`;
-    } else {
-      if (city) cityAddon = ` в ${city.en_name}, ${city.en_country_name}`;
-      description = `Exchange ${givePm.en_name} ${giveCur} ${
-        givePm.subgroup_name || ""
-      } for ${getPm.en_name} ${getCur}`;
-      site_name = `${process.env.NEXT_PUBLIC_NAME} Exchange Monitoring`;
-    }
-
-    const seo = {
-      title: title1,
-      description: description + cityAddon,
-      canonicalPath: `${locale}/${slugCityToExchange(slug, city?.en_name)}`,
-      locale,
-      alternateLangs: [
-        {
-          rel: "alternate",
-          hrefLang: "en",
-          href: `https://${
-            process.env.NEXT_PUBLIC_NAME
-          }.com/en/${slugCityToExchange(slug, city?.en_name)}`,
-        },
-        {
-          rel: "alternate",
-          hrefLang: "ru",
-          href: `https://${
-            process.env.NEXT_PUBLIC_NAME
-          }.com/ru/${slugCityToExchange(slug, city?.en_name)}`,
-        },
-      ],
-      breadcrumbs: [
-        {
-          position: 1,
-          name: locale === "en" ? "Home" : "Главная",
-          item: `https://${process.env.NEXT_PUBLIC_NAME}.com/${locale}`,
-        },
-        {
-          position: 2,
-          name: title1,
-          item: `https://${
-            process.env.NEXT_PUBLIC_NAME
-          }.com/${locale}/${slugCityToExchange(slug, city?.en_name)}`,
-        },
-      ],
-    };
-
-    return {
-      props: {
-        locale,
-        seo: seo || nullSeo,
-        slug: slug || null,
-        cities: cities || null,
-        givePmData: givePmData || null,
-        getPmData: getPmData || null,
-        dirText: dirText || null,
-        city: city || null,
-        similarPmPairs: similarPmPairs || null,
-        donorCity: donorCity || null,
-        ...(await serverSideTranslations(locale || "ru", ["main"])),
-      },
-      revalidate: 2400,
-    };
+    // const { exchange } = params;
+    // const [slug, cityParam] = exchangeToSlugCity(exchange);
+    // const cachedData = (await getCachedData({ isHard: false })) as
+    //   | ICache
+    //   | undefined;
+    // if (
+    //   !cachedData ||
+    //   !cachedData.pms ||
+    //   !cachedData.slugToCodes ||
+    //   !cachedData.cities
+    // ) {
+    //   console.error(
+    //     "exchangers [getStaticProps] Cached data is missing or invalid."
+    //   );
+    //   return { notFound: true };
+    // }
+    // const { pms, slugToCodes, cities, ruData, enData } = cachedData;
+    // if (!pms || !Array.isArray(pms)) {
+    //   console.error("[getStaticProps] 'pms' is missing or invalid.");
+    //   return { notFound: true };
+    // }
+    // const dir = slugToCodes?.[slug];
+    // const [giveCode, getCode] = dir?.split("_") ?? [];
+    // const givePm = pms?.find((pm) => pm.code === giveCode) ?? null;
+    // const getPm = pms?.find((pm) => pm.code === getCode) ?? null;
+    // if (!dir || !givePm || !getPm) {
+    //   console.error("[getStaticProps] Invalid direction or PM data.");
+    //   return {
+    //     redirect: {
+    //       destination: "/",
+    //       permanent: false,
+    //     },
+    //   };
+    // }
+    // const similarPmPairs = findSimilarPmPairs(
+    //   givePm,
+    //   getPm,
+    //   pms,
+    //   Object.values(slugToCodes)
+    // );
+    // // обработка городов
+    // const city = cityParam
+    //   ? cities?.find(
+    //       (c) => c.en_name?.toLowerCase() === cityParam.toLowerCase()
+    //     ) || null
+    //   : null;
+    // if (!cities || !Array.isArray(cities)) {
+    //   console.error("[getStaticProps] 'cities' is missing or invalid.");
+    //   return { notFound: true };
+    // }
+    // // города доноры это те, у которых нет курса по нарпавлению но есть в соседнем
+    // const donorName =
+    //   (city?.en_name && cachedData.donors?.[dir]?.[city.en_name]) || null;
+    // const donorCity =
+    //   (donorName &&
+    //     cities?.find(
+    //       (c) => c.en_name?.toLowerCase() === donorName.toLowerCase()
+    //     )) ||
+    //   null;
+    // // обработка текстов
+    // const localData = locale == "en" ? enData : ruData;
+    // // первое : достаем коробки описания секций пм, это также ссылки на артиклы пм
+    // // и втрое : достаем шаблоны для направления с местами для вставки
+    // const { pmLayouts, dirsTexts, articles } = localData;
+    // const givePmLayout =
+    //   pmLayouts?.find((l) => l.section == givePm?.section) || null;
+    // const getPmLayout =
+    //   pmLayouts?.find((l) => l.section == getPm?.section) || null;
+    // const dirText =
+    //   dirsTexts?.find(
+    //     (text) =>
+    //       text?.section_give == givePm?.section &&
+    //       text?.section_get == getPm?.section
+    //   ) || null;
+    // //если есть текст для направления - внедряем
+    // const dirTextFetcher = initCMSFetcher();
+    // const textBoxes = (await dirTextFetcher(TextBoxQuery, {
+    //   locale,
+    //   key: dir.toUpperCase(),
+    // })) as ITextBox[];
+    // if (dirText && textBoxes?.length && textBoxes[0]?.text) {
+    //   dirText.text = await enrichText(
+    //     textBoxes[0]?.text,
+    //     articles,
+    //     pms,
+    //     locale
+    //   );
+    // }
+    // let [giveArticleExists, getArticleExists] = [false, false];
+    // if (articles.length) {
+    //   giveArticleExists = !!articles?.find(
+    //     (article) => article.code?.toUpperCase() == givePm.en_name.toUpperCase()
+    //   );
+    //   getArticleExists = !!articles?.find(
+    //     (article) => article.code?.toUpperCase() == getPm.en_name.toUpperCase()
+    //   );
+    // }
+    // const givePmData = {
+    //   pm: givePm,
+    //   pmLayout: givePmLayout,
+    //   articleExists: giveArticleExists,
+    //   // possiblePairs: possiblePairs[givePm.code],
+    // } as IPmData;
+    // const getPmData = {
+    //   pm: getPm,
+    //   pmLayout: getPmLayout,
+    //   articleExists: getArticleExists,
+    //   // possiblePairs: possiblePairs[getPm.code],
+    // } as IPmData;
+    // const title1 = generateTitle({
+    //   locale,
+    //   givePm,
+    //   getPm,
+    // });
+    // const giveCur = givePm.currency.code.toUpperCase();
+    // const getCur = getPm.currency.code.toUpperCase();
+    // let [description, cityAddon, site_name] = ["", "", ""];
+    // if (locale == "ru") {
+    //   description = `Обмен ${givePm.ru_name || givePm.en_name} ${giveCur} ${
+    //     givePm.subgroup_name || ""
+    //   } на ${getPm.ru_name || getPm.en_name} ${getCur}`;
+    //   if (city) cityAddon = ` в ${city.ru_name}, ${city.ru_country_name}`;
+    //   site_name = `${process.env.NEXT_PUBLIC_NAME} мониторинг обменников`;
+    // } else {
+    //   if (city) cityAddon = ` в ${city.en_name}, ${city.en_country_name}`;
+    //   description = `Exchange ${givePm.en_name} ${giveCur} ${
+    //     givePm.subgroup_name || ""
+    //   } for ${getPm.en_name} ${getCur}`;
+    //   site_name = `${process.env.NEXT_PUBLIC_NAME} Exchange Monitoring`;
+    // }
+    // const seo = {
+    //   title: title1,
+    //   description: description + cityAddon,
+    //   canonicalPath: `${locale}/${slugCityToExchange(slug, city?.en_name)}`,
+    //   locale,
+    //   alternateLangs: [
+    //     {
+    //       rel: "alternate",
+    //       hrefLang: "en",
+    //       href: `https://${
+    //         process.env.NEXT_PUBLIC_NAME
+    //       }.com/en/${slugCityToExchange(slug, city?.en_name)}`,
+    //     },
+    //     {
+    //       rel: "alternate",
+    //       hrefLang: "ru",
+    //       href: `https://${
+    //         process.env.NEXT_PUBLIC_NAME
+    //       }.com/ru/${slugCityToExchange(slug, city?.en_name)}`,
+    //     },
+    //   ],
+    //   breadcrumbs: [
+    //     {
+    //       position: 1,
+    //       name: locale === "en" ? "Home" : "Главная",
+    //       item: `https://${process.env.NEXT_PUBLIC_NAME}.com/${locale}`,
+    //     },
+    //     {
+    //       position: 2,
+    //       name: title1,
+    //       item: `https://${
+    //         process.env.NEXT_PUBLIC_NAME
+    //       }.com/${locale}/${slugCityToExchange(slug, city?.en_name)}`,
+    //     },
+    //   ],
+    // };
+    // return {
+    //   props: {
+    //     locale,
+    //     seo: seo || nullSeo,
+    //     slug: slug || null,
+    //     cities: cities || null,
+    //     givePmData: givePmData || null,
+    //     getPmData: getPmData || null,
+    //     dirText: dirText || null,
+    //     city: city || null,
+    //     similarPmPairs: similarPmPairs || null,
+    //     donorCity: donorCity || null,
+    //     ...(await serverSideTranslations(locale || "ru", ["main"])),
+    //   },
+    //   revalidate: 2400,
+    // };
   } catch (e) {
     console.error(e);
     return {
@@ -280,23 +258,11 @@ export async function getStaticProps({
 
 //.....................................................................................................
 export async function getStaticPaths() {
-  const cachedData = (await getCachedData({ isHard: true })) as
-    | ICache
-    | undefined;
-
-  if (!cachedData) {
-    console.error(
-      "exchangers [getStaticPaths] Cached data is missing or invalid."
-    );
-    return {
-      paths: [],
-      fallback: "blocking",
-    };
-  }
-
   const locales = ["en", "ru"];
-
-  const { slugToCodes, cities } = cachedData;
+  const possiblePairs = await loadPossiblePairs();
+  const pms = await loadPms();
+  const cities = await loadCities();
+  const slugToCodes = getSlugToCodes(possiblePairs, pms);
 
   if (!slugToCodes || !cities) {
     console.error(

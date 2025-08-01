@@ -48,23 +48,16 @@ export type IPmData = {
   articleExists: boolean;
 };
 
-export interface IParserSetting {
-  cities: ICity[];
-}
-
 export interface ICache {
   pms: IPm[];
   slugToCodes: { [key: string]: string }; // для запроса курсов
   cities: ICity[];
   possiblePairs?: { [key: string]: string[] };
   exchangePaths?: IPath[];
-  parserSetting: IParserSetting;
   donors?: IDonors;
   enData: ILocalData;
   ruData: ILocalData;
   exchangers?: (IExchanger & IParserExchanger)[];
-  timestamp: number;
-  exchangerSlugs?: string[];
 }
 
 export interface IPossiblePmPair {

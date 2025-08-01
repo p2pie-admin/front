@@ -115,6 +115,19 @@ export const pmLayoutsQuery = gql`
   }
 `;
 
+export const exchangerQuery = gql`
+  query ExchangerQuery($name: String!) {
+    exchangers(filters: { name: { eqi: $name } }) {
+      data {
+        id
+        attributes {
+          name
+        }
+      }
+    }
+  }
+`;
+
 export const exchangersQuery = gql`
   {
     exchangers(
@@ -223,6 +236,28 @@ export const citiesQuery = gql`
 export const articlesQuery = gql`
   query GetArticle($locale: I18NLocaleCode) {
     articles(locale: $locale, pagination: { start: 0, limit: 1200 }) {
+      data {
+        id
+        attributes {
+          code
+          header
+          subheader
+          updatedAt
+          chapters
+          stats
+        }
+      }
+    }
+  }
+`;
+
+export const articleQuery = gql`
+  query GetArticle($locale: I18NLocaleCode, $code: String!) {
+    articles(
+      locale: $locale
+      filter: { code: { eq: $code } }
+      pagination: { start: 0, limit: 1200 }
+    ) {
       data {
         id
         attributes {

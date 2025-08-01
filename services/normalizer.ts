@@ -1,18 +1,14 @@
 // костыль против матрешки из data , attributes
 
-const normalize = (data: any) => {
-  const isObject = (data: any) =>
-    Object.prototype.toString.call(data) === "[object Object]";
-  const isArray = (data: any) =>
-    Object.prototype.toString.call(data) === "[object Array]";
+const normalize = (data: any): any => {
+  const isObject = (val: any) =>
+    Object.prototype.toString.call(val) === "[object Object]";
+  const isArray = (val: any) =>
+    Object.prototype.toString.call(val) === "[object Array]";
 
-  const flatten = (data: any) => {
-    if (!data.attributes) return data;
-
-    return {
-      id: data.id,
-      ...data.attributes,
-    };
+  const flatten = (item: any) => {
+    if (!item?.attributes) return item;
+    return { id: item.id, ...item.attributes };
   };
 
   if (isArray(data)) {
