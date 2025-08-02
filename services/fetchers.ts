@@ -2,21 +2,17 @@ import axios from "axios";
 import { GraphQLClient } from "graphql-request";
 import normalize from "./normalizer";
 
-const retry = async <T>(fn: () => Promise<T>, retries = 3): Promise<T> => {
-  let lastError;
-  for (let attempt = 0; attempt < retries; attempt++) {
+const retry = <T>(fn: () => Promise<T>, retries = 2): Promise<T> => {
+  let lastErr;
+  for (let i = 0; i < retries; i++) {
     try {
-      return await fn();
+      return fn();
     } catch (err) {
-      lastError = err;
-      if (attempt < retries - 1) {
-        console.warn(`Retry ${attempt + 1} failed. Retrying...`);
-      }
+      lastErr = err;
     }
   }
-  throw lastError;
+  throw lastErr;
 };
-
 const unwrap = (data: any) => {
   if (
     typeof data === "object" &&
@@ -36,7 +32,7 @@ export const initCMSFetcher = () => {
       ? process.env.NEXT_PUBLIC_STRAPI_PROD_BASE_URL + "/graphql"
       : process.env.NEXT_PUBLIC_STRAPI_DEV_BASE_URL + "/graphql";
 
-  const graphQLClient = new GraphQLClient(url || "", { timeout: 15000 });
+  const graphQLClient = new GraphQLClient(url || "", { timeout: 5000 });
 
   return async (query: string, variables?: Record<string, any>) => {
     try {
