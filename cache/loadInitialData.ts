@@ -37,18 +37,33 @@ const cmsFetcher = initCMSFetcher();
 type FetchKey = string;
 
 // кешируем только при билде, чтобы не грузить лишний раз
+const isBuildTime = process.env.NEXT_PHASE === "phase-production-build";
+
 const safeFetch = async <T>(
   key: FetchKey,
   fetcher: () => Promise<T>
 ): Promise<T> => {
-  const cache = readCache() || {};
-  if (process.env.NODE_ENV == "production" && cache[key])
-    return cache[key] as T;
+  const shouldUseCache = isBuildTime;
 
+  if (shouldUseCache) {
+    const cache = readCache() || {};
+    if (cache[key]) {
+      return cache[key] as T;
+    }
+
+    try {
+      const data = await fetcher();
+      writeCache({ ...cache, [key]: data });
+      return data;
+    } catch (e) {
+      console.error(`Failed to fetch ${key}:`, e);
+      return {} as T;
+    }
+  }
+
+  // Not build time: fetch without caching
   try {
-    const data = await fetcher();
-    writeCache({ ...cache, [key]: data });
-    return data;
+    return await fetcher();
   } catch (e) {
     console.error(`Failed to fetch ${key}:`, e);
     return {} as T;
