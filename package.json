@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "clean-cache": "rm -f cache/cachedData.json",
-    "dev": "next dev",
+    "dev": "yarn clean-cache && next dev",
     "build": "yarn clean-cache && next build",
     "start": "next start",
     "lint": "next lint",

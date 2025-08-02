@@ -15,8 +15,12 @@ import { getT } from "../../components/shared/getT";
 import { nullSeo } from "../../components/shared/UniversalSeo";
 import { ICache } from "../../types/exchange";
 
-import { loadExchanger, loadExchangers } from "../../cache/loadInitialData";
-import exchangers from ".";
+import {
+  loadArticleCodes,
+  loadExchanger,
+  loadExchangers,
+  loadPms,
+} from "../../cache/loadInitialData";
 
 export default function ExchangerPage({
   exchanger,
@@ -45,20 +49,25 @@ export async function getStaticProps({
   try {
     const { slug } = params;
     const name = exchangerSlugToName(slug);
-    const exchanger = await loadExchanger(name);
-    if (!exchanger) {
+    const cmsExchanger = await loadExchanger(name);
+
+    const articleCodes = await loadArticleCodes();
+    const pms = await loadPms();
+
+    if (!cmsExchanger) {
       return {
         notFound: true,
       };
     }
-    // const enrichedExchanger = await addExchangerCrossLinking(
-    //   rawExchanger,
-    //   articles,
-    //   pms,
-    //   locale
-    // );
-    // Fallback: If description or other enriched data is missing, return minimal data
-    // const exchanger = enrichedExchanger || rawExchanger;
+    const enrichedExchanger = await addExchangerCrossLinking(
+      cmsExchanger,
+      articleCodes,
+      pms,
+      locale
+    );
+
+    const exchanger = enrichedExchanger || cmsExchanger;
+
     const title = ` ${locale == "en" ? "Exchanger" : "Обменник"} ${capitalize(
       exchanger.name
     )}`;

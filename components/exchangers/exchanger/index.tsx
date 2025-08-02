@@ -7,9 +7,7 @@ import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
 import { LinkWrapper } from "../../exchange/pmLayout/LinkWrapper";
 import { capitalize } from "../../main/side/selector/section/PmGroup/helper";
 import { useRouter } from "next/router";
-import article from "../../article";
 import UniversalSeo from "../../shared/UniversalSeo";
-import { exchangerNameToSlug } from "../helper";
 import { ISEO } from "../../../types/general";
 
 export default function Exchanger({
@@ -33,8 +31,6 @@ export default function Exchanger({
 
   const description =
     exchanger.exchanger_card[`${locale}_description`] || "no description";
-
-  const normalizedCode = exchangerNameToSlug(exchanger.name);
 
   return (
     <>

@@ -33,10 +33,6 @@ export default function MyDocument() {
         {/* Meta tags */}
         <meta name="google" content="notranslate" />
         <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-        />
-        <meta
           name="keywords"
           content="обмен, наличные, крипта, биткойн, криптовалюта, п2п, обменять, p2p, exchange, bitcoin, crypto, monitoring, rate"
         />

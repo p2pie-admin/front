@@ -69,6 +69,7 @@ const _fetchRates = async ({
   dir: string;
   cityName?: string;
 }) => {
+  //const isCash = (dir.split("_")[0].startsWith("CASH") || dir.split("_")[1].startsWith("CASH"));
   const response = await axios
     .get(`${courseFilterLink}/dir=${dir}/part/${cityName?.toLowerCase()}`)
     .catch((err) => console.error("could not fetch, ", err));

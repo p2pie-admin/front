@@ -11,7 +11,7 @@ import {
   loadArticle,
   loadPms,
   loadPossiblePairs,
-  loadArticlesCodes,
+  loadArticleCodes,
 } from "../../cache/loadInitialData";
 import { getSlugToCodes } from "../../cache/helper";
 
@@ -43,25 +43,32 @@ export async function getStaticProps({
   locale: "en" | "ru";
 }) {
   try {
-    const article = (await loadArticle(params.code.toLowerCase(), locale))?.[0];
-    const articleCodes = (await loadArticlesCodes()) || [];
+    const code = params.code;
+    const article = (await loadArticle(code, locale))?.[0];
+    const articleCodes = (await loadArticleCodes()) || [];
     const pms = (await loadPms()) || [];
     const possiblePairs = (await loadPossiblePairs()) || {};
     const slugToCodes = getSlugToCodes(possiblePairs, pms);
-    if (!article || !pms || !slugToCodes) {
+    if (!article) {
       console.warn(
         `[getStaticProps] No article found for code: ${params.code}`
       );
       return emptyProps(locale || "ru");
     }
-    const code = params.code.toLowerCase();
+    if (!pms?.length || !slugToCodes) {
+      console.warn(
+        `[getStaticProps] No pms or slugToCodes found for code: ${params.code}`
+      );
+
+      return emptyProps(locale || "ru");
+    }
 
     const articlePms = pms.filter(
       // может быть несколько pm с одинаковым en_name
       (pm) => pm.en_name.toLowerCase() == code.toLowerCase()
     );
 
-    // берем только те направления, что имеют или give или get pm
+    // берем только те направления, что имеют такие же или give или get pm
     const filteredDirs = Object.values(slugToCodes).filter((dir) => {
       const [giveCode, getCode] = dir.split("_");
       return (
@@ -117,8 +124,6 @@ export async function getStaticProps({
 
     const normalizedCode = article?.code.toLowerCase();
 
-    const t = await getT(locale || "ru");
-
     const seo = {
       title: article.header,
       description: article.subheader,
@@ -139,7 +144,7 @@ export async function getStaticProps({
         },
       ],
     };
-
+    console.log(" linkedArticle:", linkedArticle);
     return {
       props: {
         seo: seo || nullSeo,
@@ -161,10 +166,10 @@ export async function getStaticPaths() {
   try {
     const locales = ["en", "ru"] as ("en" | "ru")[];
     const paths: { params: { code: string }; locale: "en" | "ru" }[] = [];
-    const articles = await loadArticlesCodes();
+    const articleCodes = await loadArticleCodes();
 
     locales.forEach((locale) => {
-      articles.forEach((code) => {
+      articleCodes.forEach((code) => {
         paths.push({
           params: {
             code: code.toLowerCase(),

@@ -122,6 +122,17 @@ export const exchangerQuery = gql`
         id
         attributes {
           name
+          ref_link
+          tag
+          admin_rating
+          updatedAt
+          exchanger_card {
+            en_description
+            ru_description
+            telegram
+            email
+            working_time
+          }
         }
       }
     }
@@ -162,17 +173,6 @@ export const exchangersQuery = gql`
   }
 `;
 
-export const articleCodesQuery = gql`
-  query Articles($locale: I18NLocaleCode) {
-    articles(locale: $locale, pagination: { start: 0, limit: 1000 }) {
-      data {
-        attributes {
-          code
-        }
-      }
-    }
-  }
-`;
 // export const pmLayoutsQuery = gql`
 //   query pmLayout($locale: I18NLocaleCode, $sections: [String]) {
 //     pmLayouts(locale: $locale, filters: { section: { in: $sections } }) {
@@ -220,7 +220,7 @@ export const selectorQuery = gql`
   }
    }
 `;
-//filters: { or: [ {countries: { containsi: $countries} }, {countries: {eq: null} }]}
+
 export const citiesQuery = gql`
   {
     parserSetting {
@@ -255,7 +255,7 @@ export const articleQuery = gql`
   query GetArticle($locale: I18NLocaleCode, $code: String!) {
     articles(
       locale: $locale
-      filter: { code: { eq: $code } }
+      filters: { code: { eqi: $code } }
       pagination: { start: 0, limit: 1200 }
     ) {
       data {
@@ -267,6 +267,18 @@ export const articleQuery = gql`
           updatedAt
           chapters
           stats
+        }
+      }
+    }
+  }
+`;
+
+export const articleCodesQuery = gql`
+  query Articles($locale: I18NLocaleCode) {
+    articles(locale: $locale, pagination: { start: 0, limit: 1000 }) {
+      data {
+        attributes {
+          code
         }
       }
     }

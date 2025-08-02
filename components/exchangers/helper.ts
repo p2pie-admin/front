@@ -52,7 +52,7 @@ export const getStatus = (exchanger: IExchanger & IParserExchanger) => {
 };
 
 export const addExchangerCrossLinking = async (
-  exchanger: (IExchanger & IParserExchanger) | null,
+  exchanger: IExchanger | null,
   articleCodes: string[] | undefined,
   pms: IPm[] | undefined,
   locale: "en" | "ru" = "en"

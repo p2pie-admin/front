@@ -31,17 +31,10 @@ const CryptoRates = ({
       <Box>
         {buySell.buy.map((rate, index) => {
           const pm = popularPms?.find((pm) => pm?.code == rate?.fiat);
-          const slug = pmsToSlug({ givePm: cryptoPm, getPm: pm });
           return (
-            <Link
-              key={rate.exchangerId + "bank" + index}
-              href={`/${slug}`}
-              passHref
-            >
-              <ResponsiveText size="sm" _hover={{ color: "bg.200" }} my="1">
-                {`${capitalize(pm?.[`${locale}_name`])}`}
-              </ResponsiveText>
-            </Link>
+            <ResponsiveText size="sm" _hover={{ color: "bg.200" }} my="1">
+              {`${capitalize(pm?.[`${locale}_name`])}`}
+            </ResponsiveText>
           );
         })}
       </Box>

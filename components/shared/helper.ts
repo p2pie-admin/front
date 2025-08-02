@@ -25,12 +25,14 @@ export const enrichText = (
   pmToIgnore: IPm | null = null
 ) => {
   const articlePms = articleCodes
-    .map((code) =>
-      pms.find(
+    .map((code) => {
+      if (typeof code !== "string") return null;
+
+      return pms.find(
         (pm) =>
           pm.en_name.toLowerCase().replaceAll(" ", "_") === code.toLowerCase()
-      )
-    )
+      );
+    })
     .filter(
       (pm): pm is IPm =>
         !!pm && (!pmToIgnore || pm.en_name !== pmToIgnore.en_name)

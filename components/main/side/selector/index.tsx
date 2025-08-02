@@ -15,6 +15,7 @@ import {
   Box,
   Button,
   Fade,
+  Center,
 } from "@chakra-ui/react";
 
 import Error from "../../../shared/ErrorWrapper";
@@ -54,10 +55,16 @@ const Selector = function Selector() {
   );
   if (!data)
     return (
-      <>
-        {" "}
-        <Spinner size="sm" />
-      </>
+      <Center
+        w="100%"
+        h="100%"
+        justifyContent="center"
+        alignItems="center"
+        minW="100"
+        minH="100"
+      >
+        <Spinner size="xl" color="bg.500" />
+      </Center>
     );
   const sections = filterSections(searchBarInputValue, data?.sections);
 
@@ -80,8 +87,7 @@ const Selector = function Selector() {
       }}
     >
       <ErrorWrapper isLoading={!data} isError={!!error}>
-        {/* <SearchBar search_bar={data?.selector?.search_bar} /> */}
-
+        <SearchBar search_bar={data?.search_bar} />
         <SectionsList sections={sections} />
 
         <Text fontSize="2xl" mt="5" color="bg.500">

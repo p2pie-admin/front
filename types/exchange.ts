@@ -4,7 +4,7 @@ import { IPm, ISelector } from "./selector";
 
 export type ISectionName = "crypto" | "bank" | "cash" | "digital" | "transfer";
 
-export type IDonors = { [key: string]: { [key: string]: string } };
+//export type IDonors = { [key: string]: { [key: string]: string } };
 // {BTC_CASHRUB: {samara: "moscow"}}
 
 export interface IPmLayout {
@@ -39,7 +39,6 @@ export interface IPath {
 export type ILocalData = {
   pmLayouts: IPmLayout[];
   dirsTexts: IDirText[];
-  articles: IArticle[];
 };
 
 export type IPmData = {
@@ -54,7 +53,7 @@ export interface ICache {
   cities: ICity[];
   possiblePairs?: { [key: string]: string[] };
   exchangePaths?: IPath[];
-  donors?: IDonors;
+  //donors?: IDonors;
   enData: ILocalData;
   ruData: ILocalData;
   exchangers?: (IExchanger & IParserExchanger)[];

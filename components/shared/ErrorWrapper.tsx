@@ -12,10 +12,10 @@ import {
 
 import LinkButton from "./LinkButton";
 import { BsTelegram } from "react-icons/bs";
-import { IoWarningOutline } from "react-icons/io5";
 
+import { IoSearch } from "react-icons/io5";
 const Error = ({ primaryMessage = "", secondaryMessage = "" }) => {
-  const iconColor = useColorModeValue("orange.400", "yellow.200");
+  const iconColor = useColorModeValue("orange.400", "bg.500");
   const mainColor = useColorModeValue("bg.700", "bg.300");
   return (
     <Flex
@@ -27,7 +27,7 @@ const Error = ({ primaryMessage = "", secondaryMessage = "" }) => {
       my="4"
     >
       <Box color={iconColor}>
-        <IoWarningOutline size="5rem" />
+        <IoSearch size="5rem" />
       </Box>
 
       <Text color={`${mainColor || "bg"}`} fontSize="2xl">

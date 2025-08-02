@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import Disclaimer from "./Disclaimer";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
 import { IArticle } from "../../types/pages";
-//import ReactMarkdown from "react-markdown";
+
 import { FaExpandArrowsAlt } from "react-icons/fa";
 import { BsTelegram } from "react-icons/bs";
 
@@ -15,7 +15,7 @@ import { useRouter } from "next/router";
 import CircularIcon from "../shared/CircularIcon";
 import Stats from "./Stats";
 import OtherDirs from "./OtherDirs";
-import ReactMarkdown from "react-markdown";
+
 import TopImage from "./TopImage";
 import UniversalSeo from "../shared/UniversalSeo";
 import { IPm } from "../../types/selector";
