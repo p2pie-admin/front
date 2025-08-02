@@ -7,7 +7,11 @@ export function middleware(req: NextRequest) {
   const pathname = url.pathname;
 
   // Match any slug containing "cash" but not already ending with "-in-moscow"
-  if (pathname.includes("cash") && !pathname.endsWith("-in-moscow")) {
+  if (
+    pathname &&
+    (pathname.startsWith("cash-") || pathname.includes("-cash-")) &&
+    !pathname.endsWith("-in-moscow")
+  ) {
     url.pathname = `${pathname}-in-moscow`;
     return NextResponse.redirect(url);
   }
