@@ -18,14 +18,17 @@ export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
   // must be async
 
   try {
-    const mainTexts = await loadMainTexts(locale);
-    const rootText = await loadRootText(locale);
-
     const parserFetcher = initParserFetcher();
-    const popularRates = (await parserFetcher("top")) as IPopularDirRates;
 
-    const pms = (await loadPms()) || [];
+    const [mainTexts, rootText, popularRatesRaw, pmsRaw] = await Promise.all([
+      loadMainTexts(locale),
+      loadRootText(locale),
+      parserFetcher("top"),
+      loadPms(),
+    ]);
 
+    const popularRates = popularRatesRaw as IPopularDirRates;
+    const pms = pmsRaw || [];
     const popularPmCodes = [
       ...Object.keys(popularRates),
       ...Object.values(popularRates)[0]?.buy.map((i) => i.fiat),

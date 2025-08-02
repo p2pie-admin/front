@@ -44,10 +44,14 @@ export async function getStaticProps({
 }) {
   try {
     const code = params.code;
-    const article = (await loadArticle(code, locale))?.[0];
-    const articleCodes = (await loadArticleCodes()) || [];
-    const pms = (await loadPms()) || [];
-    const possiblePairs = (await loadPossiblePairs()) || {};
+    const [articleData, articleCodes, pms, possiblePairs] = await Promise.all([
+      loadArticle(code, locale),
+      loadArticleCodes(),
+      loadPms(),
+      loadPossiblePairs(),
+    ]);
+
+    const article = articleData?.[0];
     const slugToCodes = getSlugToCodes(possiblePairs, pms);
     if (!article) {
       console.warn(

@@ -58,13 +58,16 @@ export async function getStaticProps({
   try {
     const { exchange } = params;
     const [slug, cityParam] = exchangeToSlugCity(exchange);
-    const pms = await loadPms();
-    const possiblePairs = await loadPossiblePairs();
+    const [pms, possiblePairs, cities, pmLayouts, dirTexts, articleCodes] =
+      await Promise.all([
+        loadPms(),
+        loadPossiblePairs(),
+        loadCities(),
+        fetchPmLayouts(locale),
+        fetchDirsTexts(locale),
+        loadArticleCodes(),
+      ]);
     const slugToCodes = getSlugToCodes(possiblePairs, pms);
-    const cities = await loadCities();
-    const pmLayouts = await fetchPmLayouts(locale);
-    const dirTexts = await fetchDirsTexts(locale);
-    const articleCodes = await loadArticleCodes();
 
     if (!pms || !Array.isArray(pms)) {
       console.error("[getStaticProps] 'pms' is missing or invalid.");
