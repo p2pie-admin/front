@@ -3,36 +3,42 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { getT } from "../../../components/shared/getT";
 import UniversalSeo, { nullSeo } from "../../../components/shared/UniversalSeo";
 import { ISEO } from "../../../types/general";
-import { loadPms } from "../../../cache/loadInitialData";
+import {
+  loadMainTexts,
+  loadPms,
+  loadRootText,
+} from "../../../cache/loadInitialData";
 import { IPm } from "../../../types/selector";
 import { Box3D } from "../../../styles/theme/custom";
 import { Wrap } from "@chakra-ui/react";
 
 type Props = {
   seo: ISEO;
-  //pms: IPm[] | null;
+  somedata: any | null;
   crypto: string;
   fiat: string;
   locale: string;
 };
 
-const BuyPage = ({ seo, crypto, fiat }: Props) => {
+const BuyPage = ({ seo, crypto, fiat, somedata }: Props) => {
   return (
     <>
       <UniversalSeo seo={seo} />
       <h1>
         Buy {crypto} with {fiat}
       </h1>
-      {/* <Wrap>
-        {pms &&
-          pms.length > 0 &&
-          pms.map((pm) => (
+      {somedata.mainTexts.length}
+      {somedata.rootText && <p>{somedata.rootText.text}</p>}
+      {somedata.popularPms && somedata.popularPms.length > 0 && (
+        <Wrap>
+          {somedata.popularPms.map((pm: IPm) => (
             <Box3D key={pm.code} p="2" w="fit-content">
               <h2>{pm.en_name}</h2>
               <p>{pm.section}</p>
             </Box3D>
           ))}
-      </Wrap> */}
+        </Wrap>
+      )}
     </>
   );
 };
@@ -44,10 +50,22 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
+export const getStaticProps: any = async ({
+  params,
+  locale,
+}: {
+  params: { crypto: string; fiat: string };
+  locale: "en" | "ru";
+}) => {
   const { crypto, fiat } = params as { crypto: string; fiat: string };
 
-  //const pms = await loadPms();
+  const [mainTexts, rootText, popularPms] = await Promise.all([
+    loadMainTexts(locale),
+    loadRootText(locale),
+    loadPms(),
+  ]);
+
+  const somedata = { mainTexts, rootText, popularPms };
 
   try {
     // Load translations and other page-specific data
@@ -64,7 +82,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
 
     return {
       props: {
-        //pms,
+        somedata,
         seo,
         crypto,
         fiat,
