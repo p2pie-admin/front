@@ -1,6 +1,6 @@
 import { GetStaticProps, GetStaticPaths } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { getT } from "../../../components/shared/getT";
+//import { getT } from "../../../components/shared/getT";
 import UniversalSeo, { nullSeo } from "../../../components/shared/UniversalSeo";
 import { ISEO } from "../../../types/general";
 import { loadPms } from "../../../cache/loadInitialData";
@@ -17,12 +17,10 @@ type Props = {
 };
 
 const SellPage = async ({ seo, crypto, fiat }: Props) => {
-  const t = await getT();
   return (
     <>
-      <UniversalSeo seo={seo} />
+      {/* <UniversalSeo seo={seo} /> */}
       <h1>
-        {t("title")}
         Sell {crypto} for {fiat}
       </h1>
       {/* <Wrap>
@@ -53,21 +51,21 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
 
   try {
     // Load translations and other page-specific data
-    const t = await getT(locale || "ru");
+    //const t = await getT(locale || "ru");
 
-    const seo: ISEO = {
-      title: t("main:meta-title"),
-      description: t("main:meta-description"),
-      canonicalPath: `${locale}/sell/${crypto}/${fiat}`,
-      locale: "ru",
-      updatedAt: new Date().toISOString(),
-      breadcrumbs: [],
-    };
+    //  const seo: ISEO = {
+    //    title: t("main:meta-title"),
+    //    description: t("main:meta-description"),
+    //    canonicalPath: `${locale}/sell/${crypto}/${fiat}`,
+    //    locale: "ru",
+    //    updatedAt: new Date().toISOString(),
+    //    breadcrumbs: [],
+    //  };
 
     return {
       props: {
         // pms,
-        seo,
+        //   seo,
         crypto,
         fiat,
         locale,
