@@ -16,7 +16,7 @@ type Props = {
   locale: string;
 };
 
-const SellPage = async ({ seo, crypto, fiat }: Props) => {
+const SellPage = ({ crypto, fiat }: Props) => {
   return (
     <>
       {/* <UniversalSeo seo={seo} /> */}
