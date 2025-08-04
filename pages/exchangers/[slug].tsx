@@ -125,7 +125,7 @@ export async function getStaticPaths() {
   if (!exchangers || exchangers.length === 0) {
     return {
       paths: [],
-      fallback: "true",
+      fallback: true,
     };
   }
 
@@ -154,6 +154,6 @@ export async function getStaticPaths() {
         ? Number(process.env.NEXT_PUBLIC_PRERENDER_LIMIT)
         : 10000
     ),
-    fallback: "true", // Use "blocking" to dynamically generate pages on demand
+    fallback: true, // Use "blocking" to dynamically generate pages on demand
   };
 }
