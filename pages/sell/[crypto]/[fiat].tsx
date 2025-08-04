@@ -16,14 +16,16 @@ type Props = {
   locale: string;
 };
 
-const SellPage = ({ seo, crypto, fiat, pms }: Props) => {
+const SellPage = async ({ seo, crypto, fiat }: Props) => {
+  const t = await getT();
   return (
     <>
       <UniversalSeo seo={seo} />
       <h1>
+        {t("title")}
         Sell {crypto} for {fiat}
       </h1>
-      <Wrap>
+      {/* <Wrap>
         {pms &&
           pms.length > 0 &&
           pms.map((pm) => (
@@ -32,7 +34,7 @@ const SellPage = ({ seo, crypto, fiat, pms }: Props) => {
               <p>{pm.section}</p>
             </Box3D>
           ))}
-      </Wrap>
+      </Wrap> */}
     </>
   );
 };
@@ -47,7 +49,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   const { crypto, fiat } = params as { crypto: string; fiat: string };
 
-  const pms = await loadPms();
+  // const pms = await loadPms();
 
   try {
     // Load translations and other page-specific data
@@ -64,14 +66,13 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
 
     return {
       props: {
-        pms,
+        // pms,
         seo,
         crypto,
         fiat,
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
-      revalidate: 3000,
     };
   } catch (e) {
     console.error("Error during getStaticProps:", e);
@@ -84,7 +85,6 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
-      revalidate: 3000,
     };
   }
 };
