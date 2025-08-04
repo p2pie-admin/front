@@ -13,32 +13,20 @@ import { Box3D } from "../../../styles/theme/custom";
 import { Wrap } from "@chakra-ui/react";
 
 type Props = {
-  seo: ISEO;
+  //seo: ISEO;
   somedata: any | null;
   crypto: string;
   fiat: string;
   //locale: string;
 };
 
-const BuyPage = ({ seo, crypto, fiat, somedata }: Props) => {
+const BuyPage = ({ crypto, fiat }: Props) => {
   return (
     <>
-      <UniversalSeo seo={seo} />
+      {/* <UniversalSeo seo={seo} /> */}
       <h1>
         Buy {crypto} with {fiat}
       </h1>
-      {somedata.mainTexts.length}
-      {somedata.rootText && <p>{somedata.rootText.text}</p>}
-      {somedata.popularPms && somedata.popularPms.length > 0 && (
-        <Wrap>
-          {somedata.popularPms.map((pm: IPm) => (
-            <Box3D key={pm.code} p="2" w="fit-content">
-              <h2>{pm.en_name}</h2>
-              <p>{pm.section}</p>
-            </Box3D>
-          ))}
-        </Wrap>
-      )}
     </>
   );
 };
@@ -59,18 +47,17 @@ export const getStaticProps: any = async ({
 }) => {
   const { crypto, fiat } = params as { crypto: string; fiat: string };
 
-  const [mainTexts, rootText, popularPms] = await Promise.all([
-    loadMainTexts("ru"),
-    loadRootText("ru"),
-    loadPms(),
-  ]);
+  //   const [mainTexts, rootText, popularPms] = await Promise.all([
+  //     loadMainTexts("ru"),
+  //     loadRootText("ru"),
+  //     loadPms(),
+  //   ]);
 
-  const somedata = { mainTexts, rootText, popularPms };
+  //const somedata = { mainTexts, rootText, popularPms };
 
   try {
     // Load translations and other page-specific data
     //const t = await getT(locale || "ru");
-
     const seo: ISEO = {
       title: "header",
       description: "descr",
@@ -82,7 +69,7 @@ export const getStaticProps: any = async ({
 
     return {
       props: {
-        somedata,
+        //somedata,
         seo,
         crypto,
         fiat,
