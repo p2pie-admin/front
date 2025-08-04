@@ -10,20 +10,20 @@ import { Wrap } from "@chakra-ui/react";
 
 type Props = {
   seo: ISEO;
-  pms: IPm[] | null;
+  //pms: IPm[] | null;
   crypto: string;
   fiat: string;
   locale: string;
 };
 
-const BuyPage = ({ seo, crypto, fiat, pms }: Props) => {
+const BuyPage = ({ seo, crypto, fiat }: Props) => {
   return (
     <>
       <UniversalSeo seo={seo} />
       <h1>
         Buy {crypto} with {fiat}
       </h1>
-      <Wrap>
+      {/* <Wrap>
         {pms &&
           pms.length > 0 &&
           pms.map((pm) => (
@@ -32,7 +32,7 @@ const BuyPage = ({ seo, crypto, fiat, pms }: Props) => {
               <p>{pm.section}</p>
             </Box3D>
           ))}
-      </Wrap>
+      </Wrap> */}
     </>
   );
 };
@@ -47,7 +47,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   const { crypto, fiat } = params as { crypto: string; fiat: string };
 
-  const pms = await loadPms();
+  //const pms = await loadPms();
 
   try {
     // Load translations and other page-specific data
@@ -64,7 +64,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
 
     return {
       props: {
-        pms,
+        //pms,
         seo,
         crypto,
         fiat,
