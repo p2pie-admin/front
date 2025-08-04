@@ -24,7 +24,7 @@
     "**/*.tsx",
     "next-i18next.config.js",
     "next-seo.config.ts",
-    "next-sitemap.config.js",
+    "next-sitemap.config.ts",
     "cache/index.js"
   ],
   "exclude": ["node_modules"]
