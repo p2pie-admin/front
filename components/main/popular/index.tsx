@@ -15,7 +15,7 @@ const Popular = ({
   popularPms?: IPm[];
 }) => {
   const { t } = useTranslation();
-  const borderColor = useColorModeValue("bg.200", "bg.600");
+
   if (!popularRates || !popularPms) return <></>;
 
   return (
