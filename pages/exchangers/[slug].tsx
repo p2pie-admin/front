@@ -60,47 +60,47 @@ export async function getStaticProps({
         notFound: true,
       };
     }
-    const enrichedExchanger = await addExchangerCrossLinking(
-      cmsExchanger,
-      articleCodes,
-      pms,
-      locale
-    );
+    // const enrichedExchanger = await addExchangerCrossLinking(
+    //   cmsExchanger,
+    //   articleCodes,
+    //   pms,
+    //   locale
+    // );
 
-    const exchanger = enrichedExchanger || cmsExchanger;
+    // const exchanger = enrichedExchanger || cmsExchanger;
 
-    const title = ` ${locale == "en" ? "Exchanger" : "Обменник"} ${capitalize(
-      exchanger.name
-    )}`;
-    const description = `${capitalize(exchanger.name)}: ${
-      locale == "en"
-        ? "Exchanger card, rating and info"
-        : "Карточка обменника, рейтинг и информация"
-    } `;
+    // const title = ` ${locale == "en" ? "Exchanger" : "Обменник"} ${capitalize(
+    //   exchanger.name
+    // )}`;
+    // const description = `${capitalize(exchanger.name)}: ${
+    //   locale == "en"
+    //     ? "Exchanger card, rating and info"
+    //     : "Карточка обменника, рейтинг и информация"
+    // } `;
 
-    const seo = {
-      title,
-      description,
-      canonicalPath: `${locale}/exchangers/${slug}`,
-      updatedAt: exchanger.updatedAt || new Date().toISOString(),
-      locale,
-      alternateLangs: [
-        {
-          rel: "alternate",
-          hrefLang: "en",
-          href: `https://p2pie.com/en/exchangers/${slug}`,
-        },
-        {
-          rel: "alternate",
-          hrefLang: "ru",
-          href: `https://p2pie.com/ru/exchangers/${slug}`,
-        },
-      ],
-    };
+    // const seo = {
+    //   title,
+    //   description,
+    //   canonicalPath: `${locale}/exchangers/${slug}`,
+    //   updatedAt: exchanger.updatedAt || new Date().toISOString(),
+    //   locale,
+    //   alternateLangs: [
+    //     {
+    //       rel: "alternate",
+    //       hrefLang: "en",
+    //       href: `https://p2pie.com/en/exchangers/${slug}`,
+    //     },
+    //     {
+    //       rel: "alternate",
+    //       hrefLang: "ru",
+    //       href: `https://p2pie.com/ru/exchangers/${slug}`,
+    //     },
+    //   ],
+    // };
     return {
       props: {
-        exchanger: exchanger || null,
-        seo: seo || nullSeo,
+        exchanger: cmsExchanger || null,
+        // seo: seo || nullSeo,
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
@@ -109,7 +109,7 @@ export async function getStaticProps({
     console.error(e);
     return {
       props: {
-        seo: nullSeo,
+        //seo: nullSeo,
         exchanger: null,
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
@@ -148,12 +148,7 @@ export async function getStaticPaths() {
     []
   );
   return {
-    paths: paths.slice(
-      0,
-      process.env.NEXT_PUBLIC_PRERENDER_LIMIT
-        ? Number(process.env.NEXT_PUBLIC_PRERENDER_LIMIT)
-        : 10000
-    ),
+    paths: [],
     fallback: true, // Use "blocking" to dynamically generate pages on demand
   };
 }

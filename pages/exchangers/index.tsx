@@ -8,7 +8,6 @@ import ExchangersList from "../../components/exchangers";
 import { ISEO } from "../../types/general";
 import { getT } from "../../components/shared/getT";
 import { nullSeo } from "../../components/shared/UniversalSeo";
-import { ICache } from "../../types/exchange";
 
 const ExchangersPage = ({
   exchangers,
