@@ -1,6 +1,6 @@
 import React from "react";
 import { IExchanger, IParserExchanger } from "../../../types/exchanger";
-import { HStack, Box } from "@chakra-ui/react";
+import { HStack, Box, Center, Spinner } from "@chakra-ui/react";
 
 import { TbExternalLink } from "react-icons/tb";
 import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
@@ -19,11 +19,16 @@ export default function Exchanger({
 }) {
   if (!exchanger || !exchanger.ref_link) {
     return (
-      <Box3D p="4" variant="no_contrast" mt="10">
-        <ResponsiveText fontWeight="bold" size="xl" variant="primary" as="h1">
-          {exchanger ? capitalize(exchanger.name) : "Exchanger not found"}
-        </ResponsiveText>
-      </Box3D>
+      <Center
+        w="100%"
+        h="100%"
+        justifyContent="center"
+        alignItems="center"
+        minW="100"
+        minH="100"
+      >
+        <Spinner size="xl" color="bg.500" />
+      </Center>
     );
   }
 

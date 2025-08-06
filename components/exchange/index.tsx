@@ -8,6 +8,7 @@ import {
   Center,
   useColorModeValue,
   useToken,
+  Spinner,
 } from "@chakra-ui/react";
 import { Box3D } from "../../styles/theme/custom";
 
@@ -73,11 +74,13 @@ const Exchange = ({
     !givePmData.pm ||
     !getPmData.pm
   ) {
+    console.log("givePmData", givePmData);
+    console.log("getPmData", getPmData);
+    console.log("dirText", dirText);
+    console.log("city", city);
     return (
       <Center h="100vh">
-        <Text fontSize="xl" color="gray.500">
-          {t("main:loadingExchangeData")}
-        </Text>
+        <Spinner />
       </Center>
     );
   }

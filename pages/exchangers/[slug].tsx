@@ -51,8 +51,8 @@ export async function getStaticProps({
     const name = exchangerSlugToName(slug);
     const [cmsExchanger] = await Promise.all([
       loadExchanger(name),
-      // loadArticleCodes(),
-      // loadPms(),
+      loadArticleCodes(),
+      loadPms(),
     ]);
 
     if (!cmsExchanger) {
