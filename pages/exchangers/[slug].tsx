@@ -21,13 +21,18 @@ import {
   loadExchangers,
   loadPms,
 } from "../../cache/loadInitialData";
+import { IPm } from "../../types/selector";
 
 export default function ExchangerPage({
   exchanger,
   seo,
+  articleCodes,
+  pms,
 }: {
   exchanger: (IExchanger & IParserExchanger) | null;
   seo: ISEO;
+  articleCodes: string[];
+  pms: IPm[];
 }) {
   // Handle non-existent exchanger
   if (!exchanger) {
@@ -35,7 +40,14 @@ export default function ExchangerPage({
   }
   //mylog(exchanger);
 
-  return <Exchanger exchanger={exchanger} seo={seo} />;
+  return (
+    <Exchanger
+      exchanger={exchanger}
+      seo={seo}
+      articleCodes={articleCodes}
+      pms={pms}
+    />
+  );
 }
 
 // Pass exchanger data to the page
@@ -49,7 +61,7 @@ export async function getStaticProps({
   try {
     const { slug } = params;
     const name = exchangerSlugToName(slug);
-    const [cmsExchanger] = await Promise.all([
+    const [cmsExchanger, articleCodes, pms] = await Promise.all([
       loadExchanger(name),
       loadArticleCodes(),
       loadPms(),
@@ -100,6 +112,8 @@ export async function getStaticProps({
     return {
       props: {
         exchanger: cmsExchanger || null,
+        articleCodes: articleCodes || [],
+        pms: pms || [],
         seo: seo || nullSeo,
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),

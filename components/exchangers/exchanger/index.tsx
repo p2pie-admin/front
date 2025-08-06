@@ -9,13 +9,18 @@ import { capitalize } from "../../main/side/selector/section/PmGroup/helper";
 import { useRouter } from "next/router";
 import UniversalSeo from "../../shared/UniversalSeo";
 import { ISEO } from "../../../types/general";
+import { IPm } from "../../../types/selector";
 
 export default function Exchanger({
   exchanger,
   seo,
+  articleCodes = [],
+  pms = [],
 }: {
   exchanger: IExchanger & IParserExchanger;
   seo: ISEO;
+  articleCodes: string[];
+  pms: IPm[];
 }) {
   if (!exchanger || !exchanger.ref_link) {
     return (
@@ -40,6 +45,26 @@ export default function Exchanger({
   return (
     <>
       <UniversalSeo seo={seo} />
+      <ResponsiveText
+        fontWeight="bold"
+        size="4xl"
+        variant="primary"
+        color="green.500"
+        textAlign="center"
+        mb="4"
+      >
+        {"pms " + pms.length}
+      </ResponsiveText>
+      <ResponsiveText
+        fontWeight="bold"
+        size="4xl"
+        variant="primary"
+        color="red.500"
+        textAlign="center"
+        mb="4"
+      >
+        {"articleCodes " + articleCodes.length}
+      </ResponsiveText>
       <Box3D p="4" variant="no_contrast" mt="10">
         <LinkWrapper
           url={exchanger.ref_link}
