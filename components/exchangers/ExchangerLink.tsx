@@ -13,7 +13,11 @@ export default function ExchangerPreview({
 }) {
   const { name, total_rates } = exchanger;
   return (
-    <Link href={`/exchangers/${exchangerNameToSlug(name)}`} key={name}>
+    <Link
+      href={`/exchangers/${exchangerNameToSlug(name)}`}
+      key={name}
+      prefetch={false}
+    >
       <Box3D
         key={name}
         as={Button}
