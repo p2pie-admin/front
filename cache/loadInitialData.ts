@@ -26,8 +26,8 @@ import { mylog } from "../services/utils";
 import { IArticle, IMainText, ITextBox } from "../types/pages";
 
 import { getPmsFromSelector, getSlugToCodes, mergeExchangers } from "./helper";
-import { readCache, writeCache } from ".";
-import exchanger from "../components/exchangers/exchanger";
+
+import { readCacheItem, writeCacheItem } from ".";
 
 // FETCHERS
 
@@ -37,33 +37,41 @@ const cmsFetcher = initCMSFetcher();
 type FetchKey = string;
 
 // кешируем только при билде, чтобы не грузить лишний раз
-const isBuildTime = process.env.NEXT_PHASE === "phase-production-build";
+const memoryCache = {} as any;
+const isBuildTime = process.env.BUILD_CACHE === "true";
 
-const safeFetch = async <T>(
+export const safeFetch = async <T>(
   key: FetchKey,
   fetcher: () => Promise<T>
 ): Promise<T> => {
-  const shouldUseCache = isBuildTime;
-
-  if (shouldUseCache) {
-    const cache = readCache() || {};
-    if (cache[key]) {
-      return cache[key] as T;
-    }
-
+  // Skip cache if not build time
+  if (!isBuildTime) {
     try {
-      const data = await fetcher();
-      writeCache({ ...cache, [key]: data });
-      return data;
+      return await fetcher();
     } catch (e) {
       console.error(`Failed to fetch ${key}:`, e);
       return {} as T;
     }
   }
 
-  // Not build time: fetch without caching
+  // Use in-memory cache
+  if (memoryCache[key]) {
+    return memoryCache[key] as T;
+  }
+
+  // Use disk cache if available
+  const cachedData = readCacheItem(key);
+  if (cachedData) {
+    memoryCache[key] = cachedData;
+    return cachedData;
+  }
+
+  // Fetch fresh data and cache it
   try {
-    return await fetcher();
+    const data = await fetcher();
+    memoryCache[key] = data;
+    writeCacheItem(key, data);
+    return data;
   } catch (e) {
     console.error(`Failed to fetch ${key}:`, e);
     return {} as T;

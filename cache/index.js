@@ -1,52 +1,60 @@
 const fs = require("fs");
 const path = require("path");
 
-const cacheFilePath = path.resolve(process.cwd(), "cache", "cachedData.json");
+const cacheDir = path.resolve(process.cwd(), "cache");
+const memoryCache = {};
+const isBuildTime = process.env.BUILD_CACHE === "true";
 
+/**
+ * Validate cache structure
+ */
 const validateCache = (data) => {
-  if (typeof data !== "object" || data === null || Array.isArray(data)) {
+  if (typeof data !== "object" || data === null) {
     console.warn("Invalid cache data structure. Returning empty object.");
-    return;
+    return null;
   }
   return data;
 };
 
-const readCache = () => {
+/**
+ * Read a single cache item
+ */
+const readCacheItem = (key) => {
   try {
-    if (!fs.existsSync(cacheFilePath)) return;
+    const filePath = path.join(cacheDir, `${key}.json`);
+    if (!fs.existsSync(filePath)) return null;
 
-    const raw = fs.readFileSync(cacheFilePath, "utf8");
-    try {
-      return validateCache(JSON.parse(raw));
-    } catch (parseErr) {
-      console.error(`Error parsing cache file at ${cacheFilePath}:`, parseErr);
-      return;
-    }
+    const raw = fs.readFileSync(filePath, "utf8");
+    return validateCache(JSON.parse(raw));
   } catch (err) {
-    console.error(`Error reading cache file at ${cacheFilePath}:`, err);
-    return;
+    console.error(`Error reading cache item ${key}:`, err);
+    return null;
   }
 };
 
-const writeCache = (data) => {
+/**
+ * Write a single cache item
+ */
+const writeCacheItem = (key, data) => {
   try {
     if (typeof data !== "object" || data === null) {
-      console.warn("Attempted to write non-object cache data. Skipping.");
+      console.warn(`Attempted to write non-object cache item for key: ${key}`);
       return;
     }
 
-    // Ensure cache directory exists
-    fs.mkdirSync(path.dirname(cacheFilePath), { recursive: true });
+    fs.mkdirSync(cacheDir, { recursive: true });
+    const filePath = path.join(cacheDir, `${key}.json`);
 
-    // Write to a temporary file first
-    const tempFilePath = `${cacheFilePath}.tmp`;
-    fs.writeFileSync(tempFilePath, JSON.stringify(data, null, 2), "utf8");
-
-    // Atomic replace
-    fs.renameSync(tempFilePath, cacheFilePath);
+    const tmpFilePath = `${filePath}.tmp`;
+    fs.writeFileSync(tmpFilePath, JSON.stringify(data, null, 2), "utf8");
+    fs.renameSync(tmpFilePath, filePath);
   } catch (err) {
-    console.error(`Error writing cache file at ${cacheFilePath}:`, err);
+    console.error(`Error writing cache item ${key}:`, err);
   }
 };
 
-module.exports = { writeCache, readCache };
+/**
+ * Safe fetch with optional build-time caching
+ */
+
+module.exports = { readCacheItem, writeCacheItem };
