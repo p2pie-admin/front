@@ -43,23 +43,23 @@ const safeFetch = async <T>(
   key: FetchKey,
   fetcher: () => Promise<T>
 ): Promise<T> => {
-  // const shouldUseCache = isBuildTime;
+  const shouldUseCache = isBuildTime;
 
-  // if (shouldUseCache) {
-  //   const cache = readCache() || {};
-  //   if (cache[key]) {
-  //     return cache[key] as T;
-  //   }
+  if (shouldUseCache) {
+    const cache = readCache() || {};
+    if (cache[key]) {
+      return cache[key] as T;
+    }
 
-  //   try {
-  //     const data = await fetcher();
-  //     writeCache({ ...cache, [key]: data });
-  //     return data;
-  //   } catch (e) {
-  //     console.error(`Failed to fetch ${key}:`, e);
-  //     return {} as T;
-  //   }
-  // }
+    try {
+      const data = await fetcher();
+      writeCache({ ...cache, [key]: data });
+      return data;
+    } catch (e) {
+      console.error(`Failed to fetch ${key}:`, e);
+      return {} as T;
+    }
+  }
 
   // Not build time: fetch without caching
   try {
