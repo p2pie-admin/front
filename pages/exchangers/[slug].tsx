@@ -24,10 +24,10 @@ import {
 
 export default function ExchangerPage({
   exchanger,
-}: // seo,
-{
+  seo,
+}: {
   exchanger: (IExchanger & IParserExchanger) | null;
-  // seo: ISEO;
+  seo: ISEO;
 }) {
   // Handle non-existent exchanger
   if (!exchanger) {
@@ -35,7 +35,7 @@ export default function ExchangerPage({
   }
   //mylog(exchanger);
 
-  return <Exchanger exchanger={exchanger} />;
+  return <Exchanger exchanger={exchanger} seo={seo} />;
 }
 
 // Pass exchanger data to the page
@@ -69,38 +69,38 @@ export async function getStaticProps({
 
     // const exchanger = enrichedExchanger || cmsExchanger;
 
-    // const title = ` ${locale == "en" ? "Exchanger" : "Обменник"} ${capitalize(
-    //   exchanger.name
-    // )}`;
-    // const description = `${capitalize(exchanger.name)}: ${
-    //   locale == "en"
-    //     ? "Exchanger card, rating and info"
-    //     : "Карточка обменника, рейтинг и информация"
-    // } `;
+    const title = ` ${locale == "en" ? "Exchanger" : "Обменник"} ${capitalize(
+      cmsExchanger.name
+    )}`;
+    const description = `${capitalize(cmsExchanger.name)}: ${
+      locale == "en"
+        ? "Exchanger card, rating and info"
+        : "Карточка обменника, рейтинг и информация"
+    } `;
 
-    // const seo = {
-    //   title,
-    //   description,
-    //   canonicalPath: `${locale}/exchangers/${slug}`,
-    //   updatedAt: exchanger.updatedAt || new Date().toISOString(),
-    //   locale,
-    //   alternateLangs: [
-    //     {
-    //       rel: "alternate",
-    //       hrefLang: "en",
-    //       href: `https://p2pie.com/en/exchangers/${slug}`,
-    //     },
-    //     {
-    //       rel: "alternate",
-    //       hrefLang: "ru",
-    //       href: `https://p2pie.com/ru/exchangers/${slug}`,
-    //     },
-    //   ],
-    // };
+    const seo = {
+      title,
+      description,
+      canonicalPath: `${locale}/exchangers/${slug}`,
+      updatedAt: cmsExchanger.updatedAt || new Date().toISOString(),
+      locale,
+      alternateLangs: [
+        {
+          rel: "alternate",
+          hrefLang: "en",
+          href: `https://p2pie.com/en/exchangers/${slug}`,
+        },
+        {
+          rel: "alternate",
+          hrefLang: "ru",
+          href: `https://p2pie.com/ru/exchangers/${slug}`,
+        },
+      ],
+    };
     return {
       props: {
         exchanger: cmsExchanger || null,
-        // seo: seo || nullSeo,
+        seo: seo || nullSeo,
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
@@ -109,7 +109,7 @@ export async function getStaticProps({
     console.error(e);
     return {
       props: {
-        //seo: nullSeo,
+        seo: nullSeo,
         exchanger: null,
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),

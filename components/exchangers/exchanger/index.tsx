@@ -12,10 +12,10 @@ import { ISEO } from "../../../types/general";
 
 export default function Exchanger({
   exchanger,
-}: //seo,
-{
+  seo,
+}: {
   exchanger: IExchanger & IParserExchanger;
-  //seo: ISEO;
+  seo: ISEO;
 }) {
   if (!exchanger || !exchanger.ref_link) {
     return (
@@ -34,7 +34,7 @@ export default function Exchanger({
 
   return (
     <>
-      {/* <UniversalSeo seo={seo} /> */}
+      <UniversalSeo seo={seo} />
       <Box3D p="4" variant="no_contrast" mt="10">
         <LinkWrapper
           url={exchanger.ref_link}
