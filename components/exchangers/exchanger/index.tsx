@@ -16,11 +16,13 @@ export default function Exchanger({
   seo,
   articleCodes = [],
   pms = [],
+  time,
 }: {
   exchanger: IExchanger & IParserExchanger;
   seo: ISEO;
   articleCodes: string[];
   pms: IPm[];
+  time: string;
 }) {
   if (!exchanger || !exchanger.ref_link) {
     return (
@@ -53,7 +55,7 @@ export default function Exchanger({
         textAlign="center"
         mb="4"
       >
-        {"pms " + pms.length}
+        {"time: " + time}
       </ResponsiveText>
       <ResponsiveText
         fontWeight="bold"
@@ -63,7 +65,8 @@ export default function Exchanger({
         textAlign="center"
         mb="4"
       >
-        {"articleCodes " + articleCodes.length}
+        {" articleCodes: " + articleCodes.length}
+        {" | pms: " + pms.length}
       </ResponsiveText>
       <Box3D p="4" variant="no_contrast" mt="10">
         <LinkWrapper

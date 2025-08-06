@@ -28,14 +28,17 @@ export default function ExchangerPage({
   seo,
   articleCodes,
   pms,
+  time,
 }: {
   exchanger: (IExchanger & IParserExchanger) | null;
   seo: ISEO;
   articleCodes: string[];
   pms: IPm[];
+  time: string;
 }) {
   // Handle non-existent exchanger
   if (!exchanger) {
+    console.log("exchanger", exchanger);
     return <ResponsiveText>Exchanger not found</ResponsiveText>;
   }
   //mylog(exchanger);
@@ -46,6 +49,7 @@ export default function ExchangerPage({
       seo={seo}
       articleCodes={articleCodes}
       pms={pms}
+      time={time}
     />
   );
 }
@@ -61,11 +65,18 @@ export async function getStaticProps({
   try {
     const { slug } = params;
     const name = exchangerSlugToName(slug);
+
+    const start = performance.now();
+
     const [cmsExchanger, articleCodes, pms] = await Promise.all([
       loadExchanger(name),
       loadArticleCodes(),
       loadPms(),
     ]);
+
+    const end = performance.now();
+    const time = ((end - start) / 1000).toFixed(2);
+    console.log(`Data fetching took ${time} seconds`);
 
     if (!cmsExchanger) {
       return {
@@ -115,20 +126,14 @@ export async function getStaticProps({
         articleCodes: articleCodes || [],
         pms: pms || [],
         seo: seo || nullSeo,
+        time,
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
     };
   } catch (e) {
     console.error(e);
-    return {
-      props: {
-        seo: nullSeo,
-        exchanger: null,
-        locale,
-        ...(await serverSideTranslations(locale || "ru", ["main"])),
-      },
-    };
+    return { notFound: true };
   }
 }
 
