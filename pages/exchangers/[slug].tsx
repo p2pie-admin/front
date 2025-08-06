@@ -24,10 +24,10 @@ import {
 
 export default function ExchangerPage({
   exchanger,
-  seo,
-}: {
+}: // seo,
+{
   exchanger: (IExchanger & IParserExchanger) | null;
-  seo: ISEO;
+  // seo: ISEO;
 }) {
   // Handle non-existent exchanger
   if (!exchanger) {
@@ -35,7 +35,7 @@ export default function ExchangerPage({
   }
   //mylog(exchanger);
 
-  return <Exchanger exchanger={exchanger} seo={seo} />;
+  return <Exchanger exchanger={exchanger} />;
 }
 
 // Pass exchanger data to the page
@@ -49,10 +49,10 @@ export async function getStaticProps({
   try {
     const { slug } = params;
     const name = exchangerSlugToName(slug);
-    const [cmsExchanger, articleCodes, pms] = await Promise.all([
+    const [cmsExchanger] = await Promise.all([
       loadExchanger(name),
-      loadArticleCodes(),
-      loadPms(),
+      // loadArticleCodes(),
+      // loadPms(),
     ]);
 
     if (!cmsExchanger) {
