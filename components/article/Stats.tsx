@@ -2,7 +2,6 @@ import React from "react";
 import { Box, Grid, HStack, VStack, Wrap } from "@chakra-ui/react";
 import { ResponsiveText } from "../../styles/theme/custom";
 import { capitalize } from "../main/side/selector/section/PmGroup/helper";
-import { mylog } from "../../services/utils";
 
 const Bricks = ({ n }: { n: number }) => {
   const color = n > 4 ? "green" : n > 3 ? "yellow" : n > 2 ? "orange" : "red";

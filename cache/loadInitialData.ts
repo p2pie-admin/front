@@ -22,7 +22,7 @@ import {
   TextBoxQuery,
   exchangerQuery,
 } from "../services/initialQueries";
-import { mylog } from "../services/utils";
+
 import { IArticle, IMainText, ITextBox } from "../types/pages";
 
 import { getPmsFromSelector, getSlugToCodes, mergeExchangers } from "./helper";
