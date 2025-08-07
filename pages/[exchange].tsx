@@ -125,10 +125,10 @@ export async function getStaticProps({
         (text) =>
           text?.section_give == givePm?.section &&
           text?.section_get == getPm?.section
-      ) || null;
+      ) || dirTexts[0];
     //если есть текст для направления - внедряем
-    const dirTextFetcher = initCMSFetcher();
-    const textBoxes = (await dirTextFetcher(TextBoxQuery, {
+    const textBoxFetcher = initCMSFetcher();
+    const textBoxes = (await textBoxFetcher(TextBoxQuery, {
       locale,
       key: dir.toUpperCase(),
     })) as ITextBox[];
