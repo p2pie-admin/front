@@ -1,15 +1,9 @@
-import type { GetStaticProps } from "next";
 import MainPageContent from "../components/main";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IPopularDirRates } from "../types/rates";
 import { initParserFetcher } from "../services/fetchers";
-
-import { ICache } from "../types/exchange";
-
-import { MainTextsQuery, TextBoxQuery } from "../services/initialQueries";
 import { IMainText, ITextBox } from "../types/pages";
 import UniversalSeo, { nullSeo } from "../components/shared/UniversalSeo";
-
 import { ISEO } from "../types/general";
 import { getT } from "../components/shared/getT";
 import { loadMainTexts, loadPms, loadRootText } from "../cache/loadInitialData";
@@ -20,22 +14,22 @@ export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
   try {
     const parserFetcher = initParserFetcher();
 
-    // const [mainTexts, rootText, popularRatesRaw, pmsRaw] = await Promise.all([
-    //   loadMainTexts(locale),
-    //   loadRootText(locale),
-    //   parserFetcher("top"),
-    //   loadPms(),
-    // ]);
+    const [mainTexts, rootText, popularRatesRaw, pmsRaw] = await Promise.all([
+      loadMainTexts(locale),
+      loadRootText(locale),
+      parserFetcher("top"),
+      loadPms(),
+    ]);
 
-    // const popularRates = popularRatesRaw as IPopularDirRates;
-    // const pms = pmsRaw || [];
-    // const popularPmCodes = [
-    //   ...Object.keys(popularRates),
-    //   ...Object.values(popularRates)[0]?.buy.map((i) => i.fiat),
-    // ];
-    // const popularPms = pms?.filter((pm) =>
-    //   popularPmCodes.find((code) => code === pm.code)
-    // );
+    const popularRates = popularRatesRaw as IPopularDirRates;
+    const pms = pmsRaw || [];
+    const popularPmCodes = [
+      ...Object.keys(popularRates),
+      ...Object.values(popularRates)[0]?.buy.map((i) => i.fiat),
+    ];
+    const popularPms = pms?.filter((pm) =>
+      popularPmCodes.find((code) => code === pm.code)
+    );
 
     const t = await getT(locale || "ru");
     const seo = {
@@ -48,10 +42,10 @@ export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
     return {
       props: {
         seo: seo || nullSeo,
-        popularPms: null,
-        popularRates: null,
-        mainTexts: null,
-        rootText: null,
+        popularPms: popularPms || null,
+        popularRates: popularRates || null,
+        mainTexts: (mainTexts || []) as IMainText[],
+        rootText: (rootText || null) as ITextBox | null,
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },

@@ -22,6 +22,7 @@ import {
   loadPms,
 } from "../../cache/loadInitialData";
 import { IPm } from "../../types/selector";
+import { Center, Spinner } from "@chakra-ui/react";
 
 export default function ExchangerPage({
   exchanger,
@@ -39,7 +40,18 @@ export default function ExchangerPage({
   // Handle non-existent exchanger
   if (!exchanger) {
     console.log("exchanger", exchanger);
-    return <ResponsiveText>Exchanger not found</ResponsiveText>;
+    return (
+      <Center
+        w="100%"
+        h="100%"
+        justifyContent="center"
+        alignItems="center"
+        minW="100"
+        minH="100"
+      >
+        <Spinner size="xl" color="bg.500" />
+      </Center>
+    );
   }
   //mylog(exchanger);
 
