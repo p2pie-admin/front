@@ -9,8 +9,7 @@ import ExchangersHeader from "./ExchangersHeader";
 import ExchangerLink from "./ExchangerLink";
 
 import UniversalSeo from "../shared/UniversalSeo";
-import { useRouter } from "next/router";
-import { useTranslation } from "react-i18next";
+
 import { ISEO } from "../../types/general";
 
 export default function ExchangersList({

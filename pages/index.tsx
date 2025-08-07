@@ -20,22 +20,22 @@ export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
   try {
     const parserFetcher = initParserFetcher();
 
-    const [mainTexts, rootText, popularRatesRaw, pmsRaw] = await Promise.all([
-      loadMainTexts(locale),
-      loadRootText(locale),
-      parserFetcher("top"),
-      loadPms(),
-    ]);
+    // const [mainTexts, rootText, popularRatesRaw, pmsRaw] = await Promise.all([
+    //   loadMainTexts(locale),
+    //   loadRootText(locale),
+    //   parserFetcher("top"),
+    //   loadPms(),
+    // ]);
 
-    const popularRates = popularRatesRaw as IPopularDirRates;
-    const pms = pmsRaw || [];
-    const popularPmCodes = [
-      ...Object.keys(popularRates),
-      ...Object.values(popularRates)[0]?.buy.map((i) => i.fiat),
-    ];
-    const popularPms = pms?.filter((pm) =>
-      popularPmCodes.find((code) => code === pm.code)
-    );
+    // const popularRates = popularRatesRaw as IPopularDirRates;
+    // const pms = pmsRaw || [];
+    // const popularPmCodes = [
+    //   ...Object.keys(popularRates),
+    //   ...Object.values(popularRates)[0]?.buy.map((i) => i.fiat),
+    // ];
+    // const popularPms = pms?.filter((pm) =>
+    //   popularPmCodes.find((code) => code === pm.code)
+    // );
 
     const t = await getT(locale || "ru");
     const seo = {
@@ -48,10 +48,10 @@ export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
     return {
       props: {
         seo: seo || nullSeo,
-        popularPms: popularPms || null,
-        popularRates: popularRates || null,
-        mainTexts: mainTexts || null,
-        rootText: rootText || null,
+        popularPms: null,
+        popularRates: null,
+        mainTexts: null,
+        rootText: null,
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
