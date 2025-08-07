@@ -68,10 +68,10 @@ export async function getStaticProps({
 
     const start = performance.now();
 
-    const [cmsExchanger, articleCodes, pms] = await Promise.all([
+    const [cmsExchanger, articleCodes] = await Promise.all([
       loadExchanger(name),
       loadArticleCodes(),
-      loadPms(),
+      //loadPms(),
     ]);
 
     const end = performance.now();
@@ -124,7 +124,7 @@ export async function getStaticProps({
       props: {
         exchanger: cmsExchanger || null,
         articleCodes,
-        pms,
+        pms: [],
         seo: seo || nullSeo,
         time,
         locale,
