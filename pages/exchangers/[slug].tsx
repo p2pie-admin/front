@@ -144,7 +144,7 @@ export async function getStaticPaths() {
   if (!exchangers || exchangers.length === 0) {
     return {
       paths: [],
-      fallback: true,
+      fallback: "blocking",
     };
   }
 
