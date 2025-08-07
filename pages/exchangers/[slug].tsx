@@ -74,10 +74,6 @@ export async function getStaticProps({
       loadPms(),
     ]);
 
-    const end = performance.now();
-    const time = ((end - start) / 1000).toFixed(2);
-    console.log(`Data fetching took ${time} seconds`);
-
     if (!cmsExchanger) {
       return {
         notFound: true,
@@ -120,6 +116,10 @@ export async function getStaticProps({
         },
       ],
     };
+    const end = performance.now();
+    const time = ((end - start) / 1000).toFixed(2);
+
+    console.log(`Data fetching took ${time} seconds`);
     return {
       props: {
         exchanger: exchanger || null,
@@ -170,9 +170,10 @@ export async function getStaticPaths() {
     // paths: paths.slice(5),
     paths: paths.slice(
       0,
-      process.env.NEXT_PUBLIC_PRERENDER_LIMIT
-        ? Number(process.env.NEXT_PUBLIC_PRERENDER_LIMIT)
-        : 10000
+      20
+      // process.env.NEXT_PUBLIC_PRERENDER_LIMIT
+      //   ? Number(process.env.NEXT_PUBLIC_PRERENDER_LIMIT)
+      //   : 10000
     ),
     fallback: true, // Use "blocking" to dynamically generate pages on demand
   };
