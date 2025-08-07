@@ -45,6 +45,7 @@ const Popular = ({
                 {`${t("main:toSell")} ${cryptoPm.currency.code.toUpperCase()}`}
               </ResponsiveText>
               <CryptoRates
+                key={cryptoCode}
                 popularPms={popularPms}
                 cryptoPm={cryptoPm}
                 buySell={buySell}
