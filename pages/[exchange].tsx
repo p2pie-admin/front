@@ -1,187 +1,125 @@
+import { GetStaticProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-
-import { IPm } from "../types/selector";
-import React from "react";
-import Exchange from "../components/exchange";
-import { ICache, ICity, IDirText, IPmData } from "../types/exchange";
-import {
-  exchangeToSlugCity,
-  findSimilarPmPairs,
-  generateTitle,
-  slugCityToExchange,
-} from "../components/exchange/helper";
-
-import { mylog } from "../services/utils";
-import { TextBoxQuery } from "../services/initialQueries";
-import { initCMSFetcher } from "../services/fetchers";
-import { ITextBox } from "../types/pages";
-import { enrichText } from "../components/shared/helper";
-import { t } from "i18next";
-import { ISEO } from "../types/general";
+import { safeFetch } from "../cache/loadInitialData";
+import ExchangersList from "../components/exchangers";
+import { getT } from "../components/shared/getT";
 import { nullSeo } from "../components/shared/UniversalSeo";
-import { getSlugToCodes } from "../cache/helper";
-import {
-  fetchDirsTexts,
-  fetchPmLayouts,
-  loadArticleCodes,
-  loadCities,
-  loadPms,
-  loadPossiblePairs,
-} from "../cache/loadInitialData";
+import { loadExchangers } from "../next-sitemap.config";
+import { IExchanger, IParserExchanger } from "../types/exchanger";
+import { ISEO } from "../types/general";
+import { safeFetchRedis } from "../cache/cache";
+import { slugCityToExchange } from "../components/exchange/helper";
+import city from "../components/layout/header/city";
 
-const prerenderCountries = ["ukraine", "russia", "belarus"];
-
-const ExchangePage = (props: {
-  //article?: IArticle | null;
-  //cities: ICity[];
-  //possiblePairs: { [key: string]: string[] };
-  seo: ISEO;
-  givePmData: IPmData | null;
-  getPmData: IPmData | null;
-  locale: "en" | "ru";
-  slug: string | null;
-  dirText: IDirText | null;
-  city: ICity | null;
-  similarPmPairs: IPm[][] | null;
-  donorCity: ICity | null;
-}) => {
-  return <Exchange {...props} />;
-};
-
-export async function getStaticProps({
-  locale,
-  params,
+const ExchangersPage = ({
+  exchangers,
+  seo,
+  loadTime,
+  cacheStatus,
 }: {
-  locale: "en" | "ru";
-  params: { exchange: string };
-}) {
-  try {
-    const { exchange } = params;
-    const [slug, cityParam] = exchangeToSlugCity(exchange);
-    const [pms, possiblePairs, cities, pmLayouts, dirTexts, articleCodes] =
-      await Promise.all([
-        loadPms(),
-        loadPossiblePairs(),
-        loadCities(),
-        fetchPmLayouts(locale),
-        fetchDirsTexts(locale),
-        loadArticleCodes(),
-      ]);
-    const slugToCodes = getSlugToCodes(possiblePairs, pms);
+  exchangers: (IExchanger & IParserExchanger)[] | null;
+  seo: ISEO;
+  loadTime?: string;
+  cacheStatus?: string;
+}) => (
+  <>
+    <ExchangersList exchangers={exchangers} seo={seo} />
+    {process.env.NODE_ENV === "development" && (
+      <div
+        style={{
+          position: "fixed",
+          bottom: "10px",
+          right: "10px",
+          background: "rgba(0,0,0,0.8)",
+          color: "white",
+          padding: "5px 10px",
+          borderRadius: "5px",
+          fontSize: "12px",
+          zIndex: 1000,
+        }}
+      >
+        {loadTime} | {cacheStatus}
+      </div>
+    )}
+  </>
+);
 
-    if (!pms || !Array.isArray(pms)) {
-      console.error("[getStaticProps] 'pms' is missing or invalid.");
-      return { notFound: true };
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  const startTime = performance.now();
+
+  const logTiming = (step: string) => {
+    const elapsed = performance.now() - startTime;
+    console.log(`⏱️ [ExchangersPage-${step}] ${elapsed.toFixed(2)}ms elapsed`);
+
+    // Alert if getting close to timeout
+    if (elapsed > 25000) {
+      console.error(`🚨 TIMEOUT RISK: ${step} took ${elapsed.toFixed(2)}ms`);
     }
-    const dir = slugToCodes?.[slug];
-    const [giveCode, getCode] = dir?.split("_") ?? [];
-    const givePm = pms?.find((pm) => pm.code === giveCode) ?? null;
-    const getPm = pms?.find((pm) => pm.code === getCode) ?? null;
-    if (!dir || !givePm || !getPm) {
-      console.error("[getStaticProps] Invalid direction or PM data.");
+  };
+
+  try {
+    console.log(`🚀 Loading exchangers page for locale: ${locale}`);
+    logTiming("START");
+
+    // Use cached exchangers data with optimized fetching
+    const exchangers = await safeFetchRedis(
+      "exchangers_list_page",
+      async () => {
+        console.log("🔄 Fetching fresh exchangers data...");
+        const data = await loadExchangers();
+
+        if (!data?.length) {
+          console.warn("⚠️ No exchangers data returned from loadExchangers");
+          return null;
+        }
+
+        console.log(`📊 Loaded ${data.length} exchangers successfully`);
+        return data;
+      },
+      {
+        ttl: 3600, // 1 hour - exchangers change more frequently than paths
+        logMetrics: true,
+        fallbackToStale: true, // Use stale data if fresh fetch fails
+      }
+    );
+
+    logTiming("EXCHANGERS_LOAD_COMPLETE");
+
+    // Handle no exchangers case
+    if (!exchangers?.length) {
+      console.log("❌ No exchangers available, returning empty state");
+
       return {
-        redirect: {
-          destination: "/",
-          permanent: false,
+        props: {
+          exchangers: null,
+          seo: nullSeo,
+          loadTime: ((performance.now() - startTime) / 1000).toFixed(2) + "s",
+          cacheStatus: "NO_DATA",
+          ...(await serverSideTranslations(locale || "ru", ["main"])),
         },
+        revalidate: 300, // 5 minutes - retry sooner when no data
       };
     }
-    const similarPmPairs = findSimilarPmPairs(
-      givePm,
-      getPm,
-      pms,
-      Object.values(slugToCodes)
+
+    // Load translations with caching
+    const translations = await safeFetchRedis(
+      `translations_exchangers_${locale}`,
+      async () => {
+        console.log(`🔄 Loading translations for locale: ${locale}`);
+        const t = await getT(locale || "ru");
+        return {
+          title: t("exchangers-meta-title"),
+          description: t("exchangers-meta-description"),
+        };
+      },
+      {
+        ttl: 7200, // 2 hours - translations are very stable
+        logMetrics: true,
+      }
     );
-    // обработка городов
-    const city = cityParam
-      ? cities?.find(
-          (c) => c.en_name?.toLowerCase() === cityParam.toLowerCase()
-        ) || null
-      : null;
-    if (!cities || !Array.isArray(cities)) {
-      console.error("[getStaticProps] 'cities' is missing or invalid.");
-      return { notFound: true };
-    }
-    // города доноры это те, у которых нет курса по нарпавлению но есть в соседнем
-    // const donorName =
-    //   (city?.en_name && donors?.[dir]?.[city.en_name]) || null;
-    // const donorCity =
-    //   (donorName &&
-    //     cities?.find(
-    //       (c) => c.en_name?.toLowerCase() === donorName.toLowerCase()
-    //     )) ||
-    //   null;
-    // обработка текстов
 
-    // первое : достаем коробки описания секций пм, это также ссылки на артиклы пм
-    // и втрое : достаем шаблоны для направления с местами для вставки
+    logTiming("TRANSLATIONS_LOAD_COMPLETE");
 
-    const givePmLayout =
-      pmLayouts?.find((l) => l.section == givePm?.section) || null;
-    const getPmLayout =
-      pmLayouts?.find((l) => l.section == getPm?.section) || null;
-    const dirText =
-      dirTexts?.find(
-        (text) =>
-          text?.section_give == givePm?.section &&
-          text?.section_get == getPm?.section
-      ) || dirTexts[0];
-    //если есть текст для направления - внедряем
-    //const textBoxFetcher = initCMSFetcher();
-    // const textBoxes = (await textBoxFetcher(TextBoxQuery, {
-    //   locale,
-    //   key: dir.toUpperCase(),
-    // })) as ITextBox[];
-    // if (dirText && textBoxes?.length && textBoxes[0]?.text) {
-    //   dirText.text = await enrichText(
-    //     textBoxes[0]?.text,
-    //     articleCodes,
-    //     pms,
-    //     locale
-    //   );
-    // }
-    let [giveArticleExists, getArticleExists] = [false, false];
-    if (articleCodes.length) {
-      giveArticleExists = !!articleCodes?.find(
-        (code) => code?.toUpperCase() == givePm.en_name.toUpperCase()
-      );
-      getArticleExists = !!articleCodes?.find(
-        (code) => code?.toUpperCase() == getPm.en_name.toUpperCase()
-      );
-    }
-    const givePmData = {
-      pm: givePm,
-      pmLayout: givePmLayout,
-      articleExists: giveArticleExists,
-      // possiblePairs: possiblePairs[givePm.code],
-    } as IPmData;
-    const getPmData = {
-      pm: getPm,
-      pmLayout: getPmLayout,
-      articleExists: getArticleExists,
-      // possiblePairs: possiblePairs[getPm.code],
-    } as IPmData;
-    const title1 = generateTitle({
-      locale,
-      givePm,
-      getPm,
-    });
-    const giveCur = givePm.currency.code.toUpperCase();
-    const getCur = getPm.currency.code.toUpperCase();
-    let [description, cityAddon, site_name] = ["", "", ""];
-    if (locale == "ru") {
-      description = `Обмен ${givePm.ru_name || givePm.en_name} ${giveCur} ${
-        givePm.subgroup_name || ""
-      } на ${getPm.ru_name || getPm.en_name} ${getCur}`;
-      if (city) cityAddon = ` в ${city.ru_name}, ${city.ru_country_name}`;
-      site_name = `${process.env.NEXT_PUBLIC_NAME} мониторинг обменников`;
-    } else {
-      if (city) cityAddon = ` в ${city.en_name}, ${city.en_country_name}`;
-      description = `Exchange ${givePm.en_name} ${giveCur} ${
-        givePm.subgroup_name || ""
-      } for ${getPm.en_name} ${getCur}`;
-      site_name = `${process.env.NEXT_PUBLIC_NAME} Exchange Monitoring`;
-    }
     const seo = {
       title: title1,
       description: description + cityAddon,
@@ -218,163 +156,171 @@ export async function getStaticProps({
         },
       ],
     };
+
+    const finalTime = ((performance.now() - startTime) / 1000).toFixed(2);
+    console.log(`✅ ExchangersPage getStaticProps completed: ${finalTime}s`);
+    logTiming("PROPS_READY");
+
     return {
       props: {
-        locale,
         seo: seo || nullSeo,
-        slug: slug || null,
-        cities: cities || null,
-        givePmData: givePmData || null,
-        getPmData: getPmData || null,
-        dirText: dirText || null,
-        city: city || null,
-        similarPmPairs: similarPmPairs || null,
-        //donorCity: donorCity || null,
+        exchangers: exchangers || null,
+        loadTime: finalTime + "s",
+        cacheStatus: "SUCCESS",
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
-      revalidate: 2400,
+      revalidate: 2400, // 40 minutes - good balance for this page
     };
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    const elapsed = performance.now() - startTime;
+    console.error(
+      `🚨 ExchangersPage getStaticProps error after ${elapsed.toFixed(2)}ms:`,
+      error
+    );
+
+    // Emergency fallback with basic SEO
+    const fallbackSeo: ISEO = {
+      title:
+        locale === "en"
+          ? "Cryptocurrency Exchangers"
+          : "Криптовалютные Обменники",
+      description:
+        locale === "en"
+          ? "List of cryptocurrency exchangers and their ratings"
+          : "Список криптовалютных обменников и их рейтинги",
+      canonicalPath: `${locale}/exchangers`,
+      locale: locale as "en" | "ru",
+    };
+
     return {
       props: {
-        locale,
-        seo: nullSeo,
-        slug: null,
-        cities: null,
-        givePmData: null,
-        getPmData: null,
-        dirText: null,
-        city: null,
-        similarPmPairs: null,
-        donorCity: null,
+        exchangers: null,
+        seo: fallbackSeo,
+        loadTime: ((performance.now() - startTime) / 1000).toFixed(2) + "s",
+        cacheStatus: "ERROR",
+        error: true,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
-      revalidate: 2400,
+      revalidate: 60, // Quick retry on error
     };
+  }
+};
+
+export default ExchangersPage;
+
+// =============================================================================
+// ADDITIONAL UTILITY FUNCTIONS
+// =============================================================================
+
+// Cache warming function specifically for exchangers page
+export async function warmExchangersPageCache() {
+  if (process.env.NODE_ENV !== "development") {
+    console.warn("Cache warming should be done via API routes in production");
+    return;
+  }
+
+  const { warmCache } = await import("../../utils/cache");
+
+  try {
+    console.log("🔥 Warming ExchangersPage cache...");
+
+    const tasks = [
+      {
+        key: "exchangers_list_page",
+        fetcher: async () => {
+          const data = await loadExchangers();
+          console.log(`📊 Warmed exchangers data: ${data?.length || 0} items`);
+          return data;
+        },
+        ttl: 3600,
+      },
+      {
+        key: "translations_exchangers_en",
+        fetcher: async () => {
+          const t = await getT("en");
+          return {
+            title: t("exchangers-meta-title"),
+            description: t("exchangers-meta-description"),
+          };
+        },
+        ttl: 7200,
+      },
+      {
+        key: "translations_exchangers_ru",
+        fetcher: async () => {
+          const t = await getT("ru");
+          return {
+            title: t("exchangers-meta-title"),
+            description: t("exchangers-meta-description"),
+          };
+        },
+        ttl: 7200,
+      },
+    ];
+
+    await warmCache(tasks);
+    console.log("✅ ExchangersPage cache warming completed");
+  } catch (error) {
+    console.error("🚨 ExchangersPage cache warming failed:", error);
   }
 }
 
-//.....................................................................................................
-export async function getStaticPaths() {
-  const locales = ["en", "ru"];
-  const possiblePairs = await loadPossiblePairs();
-  const pms = await loadPms();
-  const cities = await loadCities();
-  const slugToCodes = getSlugToCodes(possiblePairs, pms);
-
-  if (!slugToCodes || !cities) {
-    console.error(
-      "[getStaticPaths] 'slugToCodes' or 'cities' is missing or invalid."
-    );
-    return {
-      paths: [],
-      fallback: "blocking",
-    };
+// Development helper for cache management
+export async function clearExchangersPageCache() {
+  if (process.env.NODE_ENV !== "development") {
+    console.warn("Cache clearing only available in development");
+    return;
   }
 
-  const allPaths = Object.keys(slugToCodes).reduce(
-    (
-      res: {
-        params: { exchange: string };
-        locale: string;
-      }[],
-      slug: string
-    ) => [
-      ...res,
-      ...locales.map((locale) => ({
-        params: { exchange: slug },
-        locale,
-      })),
-    ],
-    []
-  );
+  const { invalidateCache } = await import("../../utils/cache");
 
-  // const parserFetcher = initParserFetcher();
-  // const nonEmpty = (await parserFetcher(`non_empty_cities`)) as {
-  //   [key: string]: { [key: string]: number };
-  // };
+  await invalidateCache([
+    "exchangers_list_page",
+    "translations_exchangers_en",
+    "translations_exchangers_ru",
+  ]);
 
-  // if (!nonEmpty) {
-  //   console.error("[getStaticPaths] nonEmpty data is missing or invalid.");
-  //   return {
-  //     paths: [],
-  //     fallback: "blocking",
-  //   };
-  // }
+  console.log("🗑️ Cleared ExchangersPage cache");
+}
 
-  // const nonEmptyCities = new Set(
-  //   Object.keys(nonEmpty).map((key) => key.toLowerCase())
-  // );
-
-  // const tryDonor = (city: ICity) =>
-  //   city.closest_cities?.find((c) =>
-  //     nonEmptyCities.has(c.en_name.toLowerCase())
-  //   )?.en_name;
-
-  // let donors = {} as IDonors;
-
-  // await Promise.all(
-  //   cities.map(async (city) => {
-  //     Object.entries(slugToCodes).forEach(([slug, dir]) => {
-  //       // если направление не кэш или город имеет меньше 2 курсов  - скипаем его
-  //       if (!(slug.startsWith("cash-") || slug.includes("-cash-"))) return;
-  //       const rateIsEmpty = nonEmpty?.[city?.en_name.toLowerCase()]?.[dir] < 2;
-  //       const donorName = tryDonor(city);
-  //       if (rateIsEmpty && !donorName) return;
-  //       if (rateIsEmpty && donorName && dir) {
-  //         donors[dir] = donors[dir] || {};
-  //         donors[dir][donorName] = city.en_name;
-  //       }
-
-  //       locales.forEach((locale) => {
-  //         allPaths.push({
-  //           params: {
-  //             exchange: `${slug}-in-${[city.en_name.toLowerCase()]}`,
-  //           },
-  //           locale,
-  //         });
-  //       });
-  //     });
-  //   })
-  // );
-
-  //writeCache({ ...cachedData, donors });
-
-  const needPrerender = (exchangePath: string) => {
-    if (!exchangePath.includes("-in-")) return true; // dont prerender cities
-    const city = cities?.find((city) =>
-      exchangePath.includes(city.en_name.toLowerCase())
-    );
-    if (!city) {
-      console.warn(
-        "[getStaticPaths] City not found for exchangePath:",
-        exchangePath
-      );
-    }
-    const countryName = city?.en_country_name?.toLowerCase();
-    // пререндерим крупные города и определенные страны
+// Enhanced component with error boundary
+export function ExchangersPageWithErrorBoundary(props: any) {
+  if (props.error) {
     return (
-      city &&
-      countryName &&
-      city?.population > 3 &&
-      prerenderCountries.includes(countryName)
+      <div
+        style={{
+          padding: "2rem",
+          textAlign: "center",
+          background: "#fee",
+          border: "1px solid #fcc",
+          borderRadius: "8px",
+          margin: "2rem",
+        }}
+      >
+        <h2>⚠️ Loading Error</h2>
+        <p>
+          There was an issue loading the exchangers data. Please try refreshing
+          the page.
+        </p>
+        {process.env.NODE_ENV === "development" && (
+          <details style={{ marginTop: "1rem", textAlign: "left" }}>
+            <summary>Debug Info</summary>
+            <pre
+              style={{
+                background: "#f5f5f5",
+                padding: "1rem",
+                overflow: "auto",
+              }}
+            >
+              Load Time: {props.loadTime}
+              Cache Status: {props.cacheStatus}
+              Error: Check server logs for details
+            </pre>
+          </details>
+        )}
+      </div>
     );
-  };
+  }
 
-  const paths = allPaths.filter((p) => needPrerender(p.params.exchange));
-  // .slice(0, 2); // это потом нужно убрать
-
-  // ПУТИ ЕСТЬ ПОЛНЫЕ ДЛЯ САЙТМАП, А  ЕСТЬ ДЛЯ ПРЕРЕНДЕРИНГА
-  return {
-    paths: paths.slice(
-      0,
-      process.env.NEXT_PUBLIC_PRERENDER_LIMIT
-        ? Number(process.env.NEXT_PUBLIC_PRERENDER_LIMIT)
-        : 10000
-    ),
-    fallback: "blocking", // Use "blocking" to dynamically generate pages on demand
-  };
+  return <ExchangersPage {...props} />;
 }
-
-export default ExchangePage;

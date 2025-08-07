@@ -20,6 +20,7 @@
     "@types/react-icons": "^3.0.0",
     "@types/styled-components": "^5.1.26",
     "@types/uuid": "^9.0.7",
+    "@upstash/redis": "^1.35.3",
     "@vercel/speed-insights": "^1.2.0",
     "axios": "^0.27.2",
     "cors": "^2.8.5",
