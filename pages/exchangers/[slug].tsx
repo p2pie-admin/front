@@ -80,10 +80,10 @@ export async function getStaticProps({
 
     const start = performance.now();
 
-    const [cmsExchanger, articleCodes, pms] = await Promise.all([
+    const [cmsExchanger] = await Promise.all([
       loadExchanger(name),
-      loadArticleCodes(),
-      loadPms(),
+      // loadArticleCodes(),
+      // loadPms(),
     ]);
 
     if (!cmsExchanger) {
@@ -91,14 +91,14 @@ export async function getStaticProps({
         notFound: true,
       };
     }
-    const enrichedExchanger = await addExchangerCrossLinking(
-      cmsExchanger,
-      articleCodes,
-      pms,
-      locale
-    );
+    // const enrichedExchanger = await addExchangerCrossLinking(
+    //   cmsExchanger,
+    //   articleCodes,
+    //   pms,
+    //   locale
+    // );
 
-    const exchanger = enrichedExchanger || cmsExchanger;
+    //const exchanger = enrichedExchanger || cmsExchanger;
 
     const title = ` ${locale == "en" ? "Exchanger" : "Обменник"} ${capitalize(
       cmsExchanger.name
@@ -134,9 +134,9 @@ export async function getStaticProps({
     console.log(`Data fetching took ${time} seconds`);
     return {
       props: {
-        exchanger: exchanger || null,
-        articleCodes,
-        pms,
+        exchanger: cmsExchanger || null,
+        articleCodes: [],
+        pms: [],
         seo: seo || nullSeo,
         time,
         locale,

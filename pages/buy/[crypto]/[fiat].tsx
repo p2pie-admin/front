@@ -50,18 +50,18 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: any = async ({
+export const getStaticProps = async ({
   params,
-}: //locale,
-{
+  locale,
+}: {
   params: { crypto: string; fiat: string };
-  //locale: "en" | "ru";
+  locale: "en" | "ru";
 }) => {
   const { crypto, fiat } = params as { crypto: string; fiat: string };
 
   const [mainTexts, rootText, popularPms] = await Promise.all([
-    loadMainTexts("ru"),
-    loadRootText("ru"),
+    loadMainTexts(locale),
+    loadRootText(locale),
     loadPms(),
   ]);
 
@@ -69,12 +69,12 @@ export const getStaticProps: any = async ({
 
   try {
     // Load translations and other page-specific data
-    //const t = await getT(locale || "ru");
+    const t = await getT(locale || "ru");
 
     const seo: ISEO = {
       title: "header",
       description: "descr",
-      canonicalPath: `${"en"}/buy/${crypto}/${fiat}`,
+      canonicalPath: `${locale}/buy/${crypto}/${fiat}`,
       locale: "ru",
       updatedAt: new Date().toISOString(),
       breadcrumbs: [],
@@ -86,8 +86,8 @@ export const getStaticProps: any = async ({
         seo,
         crypto,
         fiat,
-        //locale,
-        //...(await serverSideTranslations(locale || "ru", ["main"])),
+        locale,
+        ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
       revalidate: 3000,
     };
@@ -99,8 +99,8 @@ export const getStaticProps: any = async ({
         seo: nullSeo,
         crypto,
         fiat,
-        //locale,
-        //...(await serverSideTranslations(locale || "ru", ["main"])),
+        locale,
+        ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
       revalidate: 3000,
     };

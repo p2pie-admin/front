@@ -44,29 +44,6 @@ export const safeFetch = async <T>(
   key: FetchKey,
   fetcher: () => Promise<T>
 ): Promise<T> => {
-  // Skip cache if not build time
-  // if (!isBuildTime) {
-  //   try {
-  //     return await fetcher();
-  //   } catch (e) {
-  //     console.error(`Failed to fetch ${key}:`, e);
-  //     return {} as T;
-  //   }
-  // }
-
-  // // Use in-memory cache
-  // if (memoryCache[key]) {
-  //   return memoryCache[key] as T;
-  // }
-
-  // Use disk cache if available
-  // const cachedData = readCacheItem(key);
-  // if (cachedData) {
-  //   memoryCache[key] = cachedData;
-  //   return cachedData;
-  // }
-
-  // Fetch fresh data and cache it
   try {
     const data = await fetcher();
     // memoryCache[key] = data;

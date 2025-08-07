@@ -10,6 +10,7 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+
   images: {
     domains: ["localhost", "p2pie.com", "p2pie.help"],
   },

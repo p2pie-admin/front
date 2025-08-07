@@ -127,19 +127,19 @@ export async function getStaticProps({
           text?.section_get == getPm?.section
       ) || dirTexts[0];
     //если есть текст для направления - внедряем
-    const textBoxFetcher = initCMSFetcher();
-    const textBoxes = (await textBoxFetcher(TextBoxQuery, {
-      locale,
-      key: dir.toUpperCase(),
-    })) as ITextBox[];
-    if (dirText && textBoxes?.length && textBoxes[0]?.text) {
-      dirText.text = await enrichText(
-        textBoxes[0]?.text,
-        articleCodes,
-        pms,
-        locale
-      );
-    }
+    //const textBoxFetcher = initCMSFetcher();
+    // const textBoxes = (await textBoxFetcher(TextBoxQuery, {
+    //   locale,
+    //   key: dir.toUpperCase(),
+    // })) as ITextBox[];
+    // if (dirText && textBoxes?.length && textBoxes[0]?.text) {
+    //   dirText.text = await enrichText(
+    //     textBoxes[0]?.text,
+    //     articleCodes,
+    //     pms,
+    //     locale
+    //   );
+    // }
     let [giveArticleExists, getArticleExists] = [false, false];
     if (articleCodes.length) {
       giveArticleExists = !!articleCodes?.find(
