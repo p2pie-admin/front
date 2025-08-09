@@ -143,25 +143,24 @@ export async function getStaticProps({
 export async function getStaticPaths() {
   try {
     const exchangers = await loadExchangers();
-    if (!exchangers || exchangers.length === 0) {
-      console.warn("⚠️ No exchangers found, returning empty paths");
-      return {
-        paths: [],
-        fallback: "blocking",
-      };
-    }
+
+    // Warm up cache for exchangers
+    await Promise.all(
+      ["en", "ru"].map((locale) =>
+        Promise.all(
+          exchangers.map((ex) =>
+            redis.set(`exchanger_${exchangerNameToSlug(ex.name)}_${locale}`, {
+              data: ex,
+              updatedAt: Date.now(),
+            })
+          )
+        )
+      )
+    );
 
     const locales = ["en", "ru"];
-
-    // Generate all possible paths
     const allPaths = exchangers.reduce(
-      (
-        res: {
-          params: { slug: string };
-          locale: string;
-        }[],
-        exchanger: IExchanger
-      ) => [
+      (res, exchanger) => [
         ...res,
         ...locales.map((locale) => ({
           params: { slug: exchangerNameToSlug(exchanger.name) },
@@ -171,17 +170,15 @@ export async function getStaticPaths() {
       []
     );
 
-    // Limit pre-rendered paths for testing
-    const prerenderLimit = process.env.NEXT_PUBLIC_PRERENDER_LIMIT
-      ? Number(process.env.NEXT_PUBLIC_PRERENDER_LIMIT)
-      : 5000;
-
-    const paths = allPaths.slice(0, prerenderLimit);
+    const prerenderLimit = Number(
+      process.env.NEXT_PUBLIC_PRERENDER_LIMIT || 5000
+    );
     return {
-      paths,
+      paths: allPaths.slice(0, prerenderLimit),
       fallback: "blocking",
     };
   } catch (error) {
+    console.error(error);
     return {
       paths: [],
       fallback: "blocking",
