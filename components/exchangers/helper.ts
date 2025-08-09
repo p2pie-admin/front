@@ -5,10 +5,6 @@ import { IPm } from "../../types/selector";
 
 import { enrichText } from "../shared/helper";
 
-export function hasCyrillic(text: string): boolean {
-  return /[\u0400-\u04FF]/.test(text);
-}
-
 export function exchangerNameToSlug(name: string): string {
   return name
     .trim()

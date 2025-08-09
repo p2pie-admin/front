@@ -20,12 +20,6 @@ import {
   loadPms,
   TTL,
 } from "../../cache/loadX";
-import { Redis } from "@upstash/redis";
-
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN,
-});
 
 export default function ExchangerPage({
   exchanger,
@@ -149,22 +143,17 @@ export async function getStaticProps({
 export async function getStaticPaths() {
   try {
     const exchangers = await loadExchangers();
-
-    // Warm up cache for exchangers
-    await Promise.all(
-      ["en", "ru"].map((locale) =>
-        Promise.all(
-          exchangers.map((ex) =>
-            redis.set(`exchanger_${exchangerNameToSlug(ex.name)}_${locale}`, {
-              data: ex,
-              updatedAt: Date.now(),
-            })
-          )
-        )
-      )
-    );
+    if (!exchangers || exchangers.length === 0) {
+      console.warn("⚠️ No exchangers found, returning empty paths");
+      return {
+        paths: [],
+        fallback: "blocking",
+      };
+    }
 
     const locales = ["en", "ru"];
+
+    // Generate all possible paths
     const allPaths = exchangers.reduce(
       (
         res: {
@@ -182,15 +171,17 @@ export async function getStaticPaths() {
       []
     );
 
-    const prerenderLimit = Number(
-      process.env.NEXT_PUBLIC_PRERENDER_LIMIT || 5000
-    );
+    // Limit pre-rendered paths for testing
+    const prerenderLimit = process.env.NEXT_PUBLIC_PRERENDER_LIMIT
+      ? Number(process.env.NEXT_PUBLIC_PRERENDER_LIMIT)
+      : 5000;
+
+    const paths = allPaths.slice(0, prerenderLimit);
     return {
-      paths: allPaths.slice(0, prerenderLimit),
+      paths,
       fallback: "blocking",
     };
   } catch (error) {
-    console.error(error);
     return {
       paths: [],
       fallback: "blocking",

@@ -132,7 +132,7 @@ export const loadExchangers = async () => {
 
   const merged = mergeExchangers(cmsExchangers, parserExchangers);
 
-  await Promise.all(
+  Promise.all(
     // вызываем в getStaticPaths чтобы потом подхватить кэш из getStaticProps
     merged.map((ex) => {
       const slug = exchangerNameToSlug(ex.name);
