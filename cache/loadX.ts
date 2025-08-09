@@ -90,9 +90,10 @@ export const loadArticles = async (locale: "en" | "ru") =>
   });
 
 export const loadArticle = (code: string, locale: "en" | "ru") =>
-  cachedFetch(`article_${code}_${locale}`, TTL.slow, () =>
-    cmsFetcher(articleQuery, { code, locale })
-  );
+  cachedFetch(`article_${code.toLowerCase()}_${locale}`, TTL.slow, async () => {
+    const res = await cmsFetcher(articleQuery, { code, locale });
+    return res?.[0] || null;
+  });
 
 export const loadPossiblePairs = () =>
   cachedFetch("possible_pairs", TTL.fast, () =>
