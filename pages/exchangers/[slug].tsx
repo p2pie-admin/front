@@ -20,6 +20,12 @@ import {
   loadPms,
   TTL,
 } from "../../cache/loadX";
+import { Redis } from "@upstash/redis";
+
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN,
+});
 
 export default function ExchangerPage({
   exchanger,
@@ -160,7 +166,13 @@ export async function getStaticPaths() {
 
     const locales = ["en", "ru"];
     const allPaths = exchangers.reduce(
-      (res, exchanger) => [
+      (
+        res: {
+          params: { slug: string };
+          locale: string;
+        }[],
+        exchanger: IExchanger
+      ) => [
         ...res,
         ...locales.map((locale) => ({
           params: { slug: exchangerNameToSlug(exchanger.name) },
