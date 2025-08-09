@@ -12,6 +12,7 @@ import { getSlugToCodes } from "../../cache/helper";
 import {
   loadArticle,
   loadArticleCodes,
+  loadArticles,
   loadPms,
   loadPossiblePairs,
   TTL,
@@ -173,6 +174,9 @@ export async function getStaticPaths() {
     const locales = ["en", "ru"] as ("en" | "ru")[];
     const paths: { params: { code: string }; locale: "en" | "ru" }[] = [];
     const articleCodes = (await loadArticleCodes()) as string[];
+
+    loadArticles("ru");
+    loadArticles("en");
 
     locales.forEach((locale) => {
       articleCodes.forEach((code) => {

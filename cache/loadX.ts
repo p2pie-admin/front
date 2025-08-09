@@ -20,6 +20,7 @@ import {
   exchangerNameToSlug,
   exchangerSlugToName,
 } from "../components/exchangers/helper";
+import { IArticle } from "../types/pages";
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL!,
@@ -80,8 +81,23 @@ export const loadArticleCodes = () =>
     return res.map((a: any) => a.code) as string[];
   });
 
-export const loadArticles = () =>
-  cachedFetch("articles", TTL.articles, () => cmsFetcher(articlesQuery));
+export const loadArticles = async (locale: "en" | "ru") =>
+  cachedFetch(`articles_${locale}`, TTL.articles, async () => {
+    const articles = (await cmsFetcher(articlesQuery, { locale }))
+      ?.articles as IArticle[];
+
+    await Promise.all(
+      // вызываем в getStaticPaths чтобы потом подхватить кэш из getStaticProps
+      articles.map((a) =>
+        redis.set(
+          `article_${a.code}_${locale}`,
+          { data: a, updatedAt: Date.now() } // SWR format
+        )
+      )
+    );
+
+    return articles;
+  });
 
 export const loadArticle = (code: string, locale: "en" | "ru") =>
   cachedFetch(`article_${code}_${locale}`, TTL.article, () =>
@@ -100,8 +116,9 @@ export const loadPms = async () => {
   return getPmsFromSelector(selector);
 };
 
-export const loadExchanger = (name: string) =>
-  cachedFetch(`exchanger_${name}`, TTL.exchanger, async () => {
+export const loadExchanger = (slug: string) =>
+  cachedFetch(`exchanger_${slug}`, TTL.exchanger, async () => {
+    const name = exchangerSlugToName(slug);
     const res = await cmsFetcher(exchangerQuery, { name });
     return res?.[0] || null;
   });
@@ -119,10 +136,13 @@ export const loadExchangers = async () => {
   const merged = mergeExchangers(cmsExchangers, parserExchangers);
 
   await Promise.all(
+    // вызываем в getStaticPaths чтобы потом подхватить кэш из getStaticProps
     merged.map((ex) => {
       const slug = exchangerNameToSlug(ex.name);
-      const name = exchangerSlugToName(slug);
-      redis.set(`exchanger_${name}`, ex, { ex: TTL.exchanger });
+      return redis.set(`exchanger_${slug}`, {
+        data: ex,
+        updatedAt: Date.now(),
+      });
     })
   );
 
