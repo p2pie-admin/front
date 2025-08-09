@@ -150,7 +150,7 @@ export async function getStaticProps({
         },
       ],
     };
-    console.log(" linkedArticle:", linkedArticle);
+
     return {
       props: {
         seo: seo || nullSeo,

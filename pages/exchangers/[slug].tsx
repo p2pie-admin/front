@@ -164,6 +164,7 @@ export async function getStaticPaths() {
         fallback: "blocking",
       };
     }
+
     const locales = ["en", "ru"];
 
     // Generate all possible paths

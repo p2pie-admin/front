@@ -15,6 +15,16 @@ import {
 import { getPmsFromSelector, mergeExchangers } from "./helper";
 import { cachedFetch } from "./cache";
 import { ICity, IDirText, IPmLayout } from "../types/exchange";
+import { Redis } from "@upstash/redis";
+import {
+  exchangerNameToSlug,
+  exchangerSlugToName,
+} from "../components/exchangers/helper";
+
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+});
 
 const cmsFetcher = initCMSFetcher();
 const parserFetcher = initParserFetcher();
@@ -105,7 +115,18 @@ export const loadExchangers = async () => {
       parserFetcher("exchangers")
     ),
   ]);
-  return mergeExchangers(cmsExchangers, parserExchangers);
+
+  const merged = mergeExchangers(cmsExchangers, parserExchangers);
+
+  await Promise.all(
+    merged.map((ex) => {
+      const slug = exchangerNameToSlug(ex.name);
+      const name = exchangerSlugToName(slug);
+      redis.set(`exchanger_${name}`, ex, { ex: TTL.exchanger });
+    })
+  );
+
+  return merged;
 };
 
 export const loadCities = () =>
