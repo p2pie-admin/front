@@ -80,7 +80,7 @@ export const loadArticles = async (locale: "en" | "ru") =>
       // вызываем в getStaticPaths чтобы потом подхватить кэш из getStaticProps
       articles.map((a) =>
         redis.set(
-          `article_${a.code}_${locale}`,
+          `article_${a.code.toLowerCase()}_${locale}`,
           { data: a, updatedAt: Date.now() } // SWR format
         )
       )

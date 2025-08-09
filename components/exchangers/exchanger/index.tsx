@@ -14,15 +14,9 @@ import { IPm } from "../../../types/selector";
 export default function Exchanger({
   exchanger,
   seo,
-  articleCodes = [],
-  pms = [],
-  time,
 }: {
   exchanger: IExchanger & IParserExchanger;
   seo: ISEO;
-  articleCodes: string[];
-  pms: IPm[];
-  time: string;
 }) {
   if (!exchanger || !exchanger.ref_link) {
     return (
@@ -47,27 +41,7 @@ export default function Exchanger({
   return (
     <>
       <UniversalSeo seo={seo} />
-      <ResponsiveText
-        fontWeight="bold"
-        size="4xl"
-        variant="primary"
-        color="green.500"
-        textAlign="center"
-        mb="4"
-      >
-        {"time: " + time}
-      </ResponsiveText>
-      <ResponsiveText
-        fontWeight="bold"
-        size="4xl"
-        variant="primary"
-        color="red.500"
-        textAlign="center"
-        mb="4"
-      >
-        {" articleCodes: " + articleCodes.length}
-        {" | pms: " + pms.length}
-      </ResponsiveText>
+
       <Box3D p="4" variant="no_contrast" mt="10">
         <LinkWrapper
           url={exchanger.ref_link}

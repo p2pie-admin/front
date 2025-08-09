@@ -10,7 +10,7 @@ export function middleware(req: NextRequest) {
   if (
     pathname &&
     (pathname.startsWith("cash-") || pathname.includes("-cash-")) &&
-    !pathname.endsWith("-in-moscow")
+    !pathname.includes("-in-")
   ) {
     url.pathname = `${pathname}-in-moscow`;
     return NextResponse.redirect(url);

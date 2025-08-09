@@ -24,15 +24,9 @@ import {
 export default function ExchangerPage({
   exchanger,
   seo,
-  articleCodes,
-  pms,
-  time,
 }: {
   exchanger: (IExchanger & IParserExchanger) | null;
   seo: ISEO;
-  articleCodes: string[];
-  pms: IPm[];
-  time: string;
 }) {
   // Handle non-existent exchanger
   if (!exchanger) {
@@ -51,15 +45,7 @@ export default function ExchangerPage({
     );
   }
 
-  return (
-    <Exchanger
-      exchanger={exchanger}
-      seo={seo}
-      articleCodes={articleCodes}
-      pms={pms}
-      time={time}
-    />
-  );
+  return <Exchanger exchanger={exchanger} seo={seo} />;
 }
 
 // Optimized getStaticProps with Redis caching
