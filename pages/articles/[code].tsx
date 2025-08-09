@@ -47,14 +47,13 @@ export async function getStaticProps({
 }) {
   try {
     const code = params.code;
-    const [articleData, articleCodes, pms, possiblePairs] = await Promise.all([
+    const [article, articleCodes, pms, possiblePairs] = await Promise.all([
       loadArticle(code, locale),
       loadArticleCodes(),
       loadPms(),
       loadPossiblePairs(),
     ]);
 
-    const article = articleData?.[0];
     const slugToCodes = getSlugToCodes(possiblePairs, pms);
     if (!article) {
       console.warn(

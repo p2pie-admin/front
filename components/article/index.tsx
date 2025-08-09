@@ -40,7 +40,7 @@ const Article = ({
     const [y, m, d] = ts ? ts?.split("T")[0]?.split("-") : ["-", "-", "-"];
     return `${d}.${m}.${y}`;
   };
-  if (!article) return <></>;
+  if (!article) return <>no article</>;
 
   const refChapters = article.chapters.map((chapter) => ({
     ...chapter,
