@@ -22,7 +22,7 @@ const Popular = ({
     <>
       {Object.entries(popularRates).map(([cryptoCode, buySell], index) => {
         const cryptoPm = popularPms?.find((pm) => pm?.code == cryptoCode);
-        if (!cryptoPm) return <></>;
+        if (!cryptoPm) return null; // ✅ Changed from <></> to null
         return (
           <Box3D
             key={cryptoCode} // Use cryptoCode as the unique key

@@ -117,7 +117,7 @@ export async function getStaticProps({
           locale,
           ...(await serverSideTranslations(locale || "ru", ["main"])),
         },
-        revalidate: TTL.articleCodes,
+        revalidate: TTL.slow,
       };
     }
 
@@ -161,7 +161,7 @@ export async function getStaticProps({
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
-      revalidate: 60,
+      revalidate: TTL.slow,
     };
   } catch (e) {
     console.error("[getStaticProps] Error:", e);

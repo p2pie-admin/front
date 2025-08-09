@@ -6,18 +6,21 @@ import { IMainText, ITextBox } from "../types/pages";
 import UniversalSeo, { nullSeo } from "../components/shared/UniversalSeo";
 import { ISEO } from "../types/general";
 import { getT } from "../components/shared/getT";
-import { loadMainTexts, loadRootText, loadPms } from "../cache/loadX";
+import {
+  loadMainTexts,
+  loadRootText,
+  loadPms,
+  loadPopular,
+} from "../cache/loadX";
 
 export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
   // must be async
 
   try {
-    const parserFetcher = initParserFetcher();
-
     const [mainTexts, rootText, popularRatesRaw, pmsRaw] = await Promise.all([
       loadMainTexts(locale),
       loadRootText(locale),
-      parserFetcher("top"),
+      loadPopular(),
       loadPms(),
     ]);
 

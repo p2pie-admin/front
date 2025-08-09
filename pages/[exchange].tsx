@@ -254,11 +254,34 @@ export async function getStaticProps({
 }
 
 //.....................................................................................................
+//.....................................................................................................
+//.....................................................................................................
+//.....................................................................................................
+//.....................................................................................................
+
 export async function getStaticPaths() {
   const locales = ["en", "ru"];
-  const possiblePairs = await loadPossiblePairs();
-  const pms = await loadPms();
-  const cities = await loadCities();
+
+  const [
+    pms,
+    possiblePairs,
+    cities,
+    pmLayoutsRu,
+    dirTextsRu,
+    pmLayoutsEn,
+    dirTextsEn,
+    articleCodes,
+  ] = await Promise.all([
+    loadPms(),
+    loadPossiblePairs(),
+    loadCities(),
+    loadPmLayouts("ru"),
+    loadDirsTexts("ru"),
+    loadPmLayouts("en"),
+    loadDirsTexts("en"),
+    loadArticleCodes(),
+  ]);
+
   const slugToCodes = getSlugToCodes(possiblePairs, pms);
 
   if (!slugToCodes || !cities) {
@@ -361,7 +384,8 @@ export async function getStaticPaths() {
   };
 
   const paths = allPaths.filter((p) => needPrerender(p.params.exchange));
-  // .slice(0, 2); // это потом нужно убрать
+
+  // далее кешируем все направления
 
   // ПУТИ ЕСТЬ ПОЛНЫЕ ДЛЯ САЙТМАП, А  ЕСТЬ ДЛЯ ПРЕРЕНДЕРИНГА
   return {

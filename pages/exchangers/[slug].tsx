@@ -132,7 +132,7 @@ export async function getStaticProps({
         error: true,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
-      revalidate: TTL.exchangers,
+      revalidate: TTL.fast,
     };
   } catch (error) {
     console.error("🚨 getStaticProps error:", error);

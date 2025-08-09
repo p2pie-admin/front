@@ -7,9 +7,9 @@ const Bricks = ({ n }: { n: number }) => {
   const color = n > 4 ? "green" : n > 3 ? "yellow" : n > 2 ? "orange" : "red";
   return (
     <Wrap gap="2">
-      {new Array(n).fill(undefined).map((idx) => (
+      {new Array(n).fill(undefined).map((_, i) => (
         <Box
-          key={idx}
+          key={i}
           minW="3"
           minH="1"
           bgColor={color + ".500"}

@@ -26,7 +26,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
         exchangers: null,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
-      revalidate: 4000,
+      revalidate: 400,
     };
   }
 
@@ -45,7 +45,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
       exchangers: exchangers || null,
       ...(await serverSideTranslations(locale || "ru", ["main"])),
     },
-    revalidate: TTL.exchangers, // Revalidate every 10 minutes
+    revalidate: TTL.fast,
   };
 };
 
