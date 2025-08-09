@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "clean-cache": "rm -rf cache/*.json",
-    "prebuild": "node cache/clearRedis.js",
+    "prebuild": "node cache/cleanRedis.js",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
