@@ -1,12 +1,12 @@
 import { GetStaticProps, GetStaticPaths } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-//import { getT } from "../../../components/shared/getT";
-import UniversalSeo, { nullSeo } from "../../../components/shared/UniversalSeo";
+
 import { ISEO } from "../../../types/general";
-import { loadPms } from "../../../cache/loadInitialData";
+
 import { IPm } from "../../../types/selector";
-import { Box3D } from "../../../styles/theme/custom";
-import { Wrap } from "@chakra-ui/react";
+import { nullSeo } from "../../../components/shared/UniversalSeo";
+import { loadPms } from "../../../cache/loadX";
+import { getT } from "../../../components/shared/getT";
 
 type Props = {
   seo: ISEO;
@@ -47,25 +47,25 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   const { crypto, fiat } = params as { crypto: string; fiat: string };
 
-  // const pms = await loadPms();
+  const pms = await loadPms();
 
   try {
     // Load translations and other page-specific data
-    //const t = await getT(locale || "ru");
+    const t = await getT(locale || "ru");
 
-    //  const seo: ISEO = {
-    //    title: t("main:meta-title"),
-    //    description: t("main:meta-description"),
-    //    canonicalPath: `${locale}/sell/${crypto}/${fiat}`,
-    //    locale: "ru",
-    //    updatedAt: new Date().toISOString(),
-    //    breadcrumbs: [],
-    //  };
+    const seo: ISEO = {
+      title: t("main:meta-title"),
+      description: t("main:meta-description"),
+      canonicalPath: `${locale}/sell/${crypto}/${fiat}`,
+      locale: "ru",
+      updatedAt: new Date().toISOString(),
+      breadcrumbs: [],
+    };
 
     return {
       props: {
-        // pms,
-        //   seo,
+        pms,
+        seo,
         crypto,
         fiat,
         locale,

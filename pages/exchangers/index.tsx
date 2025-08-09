@@ -1,6 +1,5 @@
 import { GetStaticProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { loadExchangers } from "../../cache/loadInitialData";
 
 import { IExchanger, IParserExchanger } from "../../types/exchanger";
 import ExchangersList from "../../components/exchangers";
@@ -8,6 +7,7 @@ import ExchangersList from "../../components/exchangers";
 import { ISEO } from "../../types/general";
 import { getT } from "../../components/shared/getT";
 import { nullSeo } from "../../components/shared/UniversalSeo";
+import { loadExchangers, TTL } from "../../cache/loadX";
 
 const ExchangersPage = ({
   exchangers,
@@ -45,7 +45,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
       exchangers: exchangers || null,
       ...(await serverSideTranslations(locale || "ru", ["main"])),
     },
-    revalidate: 4000,
+    revalidate: TTL.exchangers, // Revalidate every 10 minutes
   };
 };
 

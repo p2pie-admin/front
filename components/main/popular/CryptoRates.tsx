@@ -32,7 +32,12 @@ const CryptoRates = ({
         {buySell.buy.map((rate, index) => {
           const pm = popularPms?.find((pm) => pm?.code == rate?.fiat);
           return (
-            <ResponsiveText size="sm" _hover={{ color: "bg.200" }} my="1">
+            <ResponsiveText
+              key={String(pm?.code) + index}
+              size="sm"
+              _hover={{ color: "bg.200" }}
+              my="1"
+            >
               {`${capitalize(pm?.[`${locale}_name`])}`}
             </ResponsiveText>
           );
@@ -47,7 +52,7 @@ const CryptoRates = ({
           )} ${format(rate?.course, 2)} `;
           return (
             <RateLink
-              key={rate.exchangerId + "buy" + index}
+              key={String(rate?.exchangerId) + index + "buy"}
               slug={slug}
               rateNumber={rateNumber}
               side="buy"
@@ -64,7 +69,7 @@ const CryptoRates = ({
           )} ${format(rate?.course, 2)} `;
           return (
             <RateLink
-              key={rate.exchangerId + "sell" + index}
+              key={String(rate?.exchangerId) + index + "sell"}
               slug={slug}
               rateNumber={rateNumber}
               side="sell"

@@ -2,6 +2,7 @@ import {
   extractPmsFromPmGroup,
   pmsToSlug,
 } from "../components/main/side/selector/section/PmGroup/helper";
+import { mylog } from "../services/utils";
 import { IPossiblePmPair } from "../types/exchange";
 import { IExchanger, IParserExchanger } from "../types/exchanger";
 import { ISelector, IPm, IPmGroup, ISection } from "../types/selector";
@@ -46,9 +47,14 @@ export const getSlugToCodes = (
 };
 
 export const mergeExchangers = (
-  allExchangers: IExchanger[],
-  parserExchangers: Record<string, IParserExchanger>
+  allExchangers?: IExchanger[],
+  parserExchangers?: Record<string, IParserExchanger>
 ) => {
+  if (!allExchangers || !parserExchangers) {
+    mylog("NO EXCHANGERS", "error");
+    return (allExchangers || parserExchangers || []) as (IExchanger &
+      IParserExchanger)[];
+  }
   return allExchangers.map((ex) => {
     const parserExchanger = parserExchangers?.[ex.id];
     return {

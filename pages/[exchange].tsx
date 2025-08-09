@@ -15,18 +15,17 @@ import { TextBoxQuery } from "../services/initialQueries";
 import { initCMSFetcher } from "../services/fetchers";
 import { ITextBox } from "../types/pages";
 import { enrichText } from "../components/shared/helper";
-import { t } from "i18next";
 import { ISEO } from "../types/general";
 import { nullSeo } from "../components/shared/UniversalSeo";
 import { getSlugToCodes } from "../cache/helper";
 import {
-  fetchDirsTexts,
-  fetchPmLayouts,
-  loadArticleCodes,
-  loadCities,
   loadPms,
   loadPossiblePairs,
-} from "../cache/loadInitialData";
+  loadCities,
+  loadArticleCodes,
+  loadDirsTexts,
+  loadPmLayouts,
+} from "../cache/loadX";
 
 const prerenderCountries = ["ukraine", "russia", "belarus"];
 
@@ -62,8 +61,8 @@ export async function getStaticProps({
         loadPms(),
         loadPossiblePairs(),
         loadCities(),
-        fetchPmLayouts(locale),
-        fetchDirsTexts(locale),
+        loadPmLayouts(locale),
+        loadDirsTexts(locale),
         loadArticleCodes(),
       ]);
     const slugToCodes = getSlugToCodes(possiblePairs, pms);

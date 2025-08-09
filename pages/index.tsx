@@ -6,7 +6,7 @@ import { IMainText, ITextBox } from "../types/pages";
 import UniversalSeo, { nullSeo } from "../components/shared/UniversalSeo";
 import { ISEO } from "../types/general";
 import { getT } from "../components/shared/getT";
-import { loadMainTexts, loadPms, loadRootText } from "../cache/loadInitialData";
+import { loadMainTexts, loadRootText, loadPms } from "../cache/loadX";
 
 export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
   // must be async

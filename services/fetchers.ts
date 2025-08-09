@@ -2,11 +2,11 @@ import axios from "axios";
 import { GraphQLClient } from "graphql-request";
 import normalize from "./normalizer";
 
-const retry = <T>(fn: () => Promise<T>, retries = 2): Promise<T> => {
+const retry = async <T>(fn: () => Promise<T>, retries = 2): Promise<T> => {
   let lastErr;
   for (let i = 0; i < retries; i++) {
     try {
-      return fn();
+      return await fn(); // <-- added await
     } catch (err) {
       lastErr = err;
     }

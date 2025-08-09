@@ -7,13 +7,15 @@ import { IPm } from "../../types/selector";
 import { ISEO } from "../../types/general";
 import { getT } from "../../components/shared/getT";
 import { nullSeo } from "../../components/shared/UniversalSeo";
+
+import { getSlugToCodes } from "../../cache/helper";
 import {
   loadArticle,
+  loadArticleCodes,
   loadPms,
   loadPossiblePairs,
-  loadArticleCodes,
-} from "../../cache/loadInitialData";
-import { getSlugToCodes } from "../../cache/helper";
+  TTL,
+} from "../../cache/loadX";
 
 const emptyProps = async (locale: "en" | "ru") => ({
   props: {
@@ -114,7 +116,7 @@ export async function getStaticProps({
           locale,
           ...(await serverSideTranslations(locale || "ru", ["main"])),
         },
-        revalidate: 600,
+        revalidate: TTL.articleCodes,
       };
     }
 
@@ -158,7 +160,7 @@ export async function getStaticProps({
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
-      revalidate: 600,
+      revalidate: 60,
     };
   } catch (e) {
     console.error("[getStaticProps] Error:", e);
@@ -170,7 +172,7 @@ export async function getStaticPaths() {
   try {
     const locales = ["en", "ru"] as ("en" | "ru")[];
     const paths: { params: { code: string }; locale: "en" | "ru" }[] = [];
-    const articleCodes = await loadArticleCodes();
+    const articleCodes = (await loadArticleCodes()) as string[];
 
     locales.forEach((locale) => {
       articleCodes.forEach((code) => {

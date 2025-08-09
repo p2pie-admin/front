@@ -3,14 +3,11 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { getT } from "../../../components/shared/getT";
 import UniversalSeo, { nullSeo } from "../../../components/shared/UniversalSeo";
 import { ISEO } from "../../../types/general";
-import {
-  loadMainTexts,
-  loadPms,
-  loadRootText,
-} from "../../../cache/loadInitialData";
+
 import { IPm } from "../../../types/selector";
 import { Box3D } from "../../../styles/theme/custom";
 import { Wrap } from "@chakra-ui/react";
+import { loadMainTexts, loadRootText, loadPms } from "../../../cache/loadX";
 
 type Props = {
   seo: ISEO;
