@@ -14,8 +14,6 @@ import {
 } from "../cache/loadX";
 
 export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
-  // must be async
-
   try {
     const [mainTexts, rootText, popularRatesRaw, pmsRaw] = await Promise.all([
       loadMainTexts(locale),
