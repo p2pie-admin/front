@@ -1,6 +1,7 @@
 import axios from "axios";
 import { GraphQLClient } from "graphql-request";
 import normalize from "./normalizer";
+import { mylog } from "./utils";
 
 const retry = async <T>(fn: () => Promise<T>, retries = 2): Promise<T> => {
   let lastErr;
@@ -39,6 +40,10 @@ export const initCMSFetcher = () => {
       const data = await retry(() => graphQLClient.request(query, variables));
       return unwrap(normalize(data));
     } catch (e) {
+      mylog("variables", "important");
+      mylog(variables, "important");
+      mylog("query", "important");
+      mylog(query.slice(0, 100), "important");
       console.error("CMS FETCHER ERROR after 3 retries: ", e);
       return null;
     }
@@ -57,6 +62,8 @@ export const initParserFetcher = () => {
       const { data } = await retry(() => axios.get(url + "/" + slug));
       return data;
     } catch (e) {
+      mylog("url", "important");
+      mylog(url, "important");
       console.error("PARSER FETCHER ERROR after 3 retries: ", e);
       return null;
     }
