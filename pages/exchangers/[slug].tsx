@@ -24,37 +24,32 @@ import {
   loadPms,
   TTL,
 } from "../../cache/loadX";
-import { ResponsiveText } from "../../styles/theme/custom";
 
-// export default function ExchangerPage({
-//   exchanger,
-//   seo,
-// }: {
-//   exchanger: (IExchanger & IParserExchanger) | null;
-//   seo: ISEO;
-// }) {
-//   // Handle non-existent exchanger
-//   if (!exchanger) {
-//     console.log("exchanger", exchanger);
-//     return (
-//       <Center
-//         w="100%"
-//         h="100%"
-//         justifyContent="center"
-//         alignItems="center"
-//         minW="100"
-//         minH="100"
-//       >
-//         <Spinner size="xl" color="bg.500" />
-//       </Center>
-//     );
-//   }
+export default function ExchangerPage({
+  exchanger,
+  seo,
+}: {
+  exchanger: (IExchanger & IParserExchanger) | null;
+  seo: ISEO;
+}) {
+  // Handle non-existent exchanger
+  if (!exchanger) {
+    console.log("exchanger", exchanger);
+    return (
+      <Center
+        w="100%"
+        h="100%"
+        justifyContent="center"
+        alignItems="center"
+        minW="100"
+        minH="100"
+      >
+        <Spinner size="xl" color="bg.500" />
+      </Center>
+    );
+  }
 
-//   return <Exchanger exchanger={exchanger} seo={seo} />;
-// }
-
-export default function ExchangerPage({ name }: { name: string }) {
-  return <ResponsiveText>{name}</ResponsiveText>;
+  return <Exchanger exchanger={exchanger} seo={seo} />;
 }
 
 // Optimized getStaticProps with Redis caching
@@ -69,63 +64,62 @@ export async function getStaticProps({
     const { slug } = params;
     const name = exchangerSlugToName(slug);
 
-    // const [exchanger, articleCodes, pms] = await Promise.all([
-    //   loadExchanger(slug),
-    //   loadArticleCodes(),
-    //   loadPms(),
-    // ]);
+    const [exchanger, articleCodes, pms] = await Promise.all([
+      loadExchanger(slug),
+      loadArticleCodes(),
+      loadPms(),
+    ]);
 
-    // if (!exchanger) {
-    //   console.log(`❌ Exchanger not found: ${name}`);
-    //   return { notFound: true };
-    // }
+    if (!exchanger) {
+      console.log(`❌ Exchanger not found: ${name}`);
+      return { notFound: true };
+    }
 
-    // // Add cross-linking if we have all the data
-    // const enrichedExchanger = await addExchangerCrossLinking(
-    //   exchanger,
-    //   articleCodes as string[],
-    //   pms as IPm[],
-    //   locale
-    // );
+    // Add cross-linking if we have all the data
+    const enrichedExchanger = await addExchangerCrossLinking(
+      exchanger,
+      articleCodes as string[],
+      pms as IPm[],
+      locale
+    );
 
-    // const title = `${locale === "en" ? "Exchanger" : "Обменник"} ${capitalize(
-    //   exchanger.name
-    // )}`;
+    const title = `${locale === "en" ? "Exchanger" : "Обменник"} ${capitalize(
+      exchanger.name
+    )}`;
 
-    // const description = `${capitalize(exchanger.name)}: ${
-    //   locale === "en"
-    //     ? "Exchanger card, rating and info"
-    //     : "Карточка обменника, рейтинг и информация"
-    // }`;
+    const description = `${capitalize(exchanger.name)}: ${
+      locale === "en"
+        ? "Exchanger card, rating and info"
+        : "Карточка обменника, рейтинг и информация"
+    }`;
 
-    // const seo = {
-    //   title,
-    //   description,
-    //   canonicalPath: `${locale}/exchangers/${slug}`,
-    //   updatedAt: exchanger.updatedAt || new Date().toISOString(),
-    //   locale,
-    //   alternateLangs: [
-    //     {
-    //       rel: "alternate",
-    //       hrefLang: "en",
-    //       href: `https://p2pie.com/en/exchangers/${slug}`,
-    //     },
-    //     {
-    //       rel: "alternate",
-    //       hrefLang: "ru",
-    //       href: `https://p2pie.com/ru/exchangers/${slug}`,
-    //     },
-    //   ],
-    // };
+    const seo = {
+      title,
+      description,
+      canonicalPath: `${locale}/exchangers/${slug}`,
+      updatedAt: exchanger.updatedAt || new Date().toISOString(),
+      locale,
+      alternateLangs: [
+        {
+          rel: "alternate",
+          hrefLang: "en",
+          href: `https://p2pie.com/en/exchangers/${slug}`,
+        },
+        {
+          rel: "alternate",
+          hrefLang: "ru",
+          href: `https://p2pie.com/ru/exchangers/${slug}`,
+        },
+      ],
+    };
 
-    // // Emergency fallback to prevent 500 errors
+    // Emergency fallback to prevent 500 errors
     return {
       props: {
-        name,
-        //exchanger: enrichedExchanger || exchanger,
-        // seo,
-        // locale,
-        // error: true,
+        exchanger: enrichedExchanger || exchanger,
+        seo,
+        locale,
+        error: true,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
       revalidate: TTL.fast,
@@ -136,12 +130,12 @@ export async function getStaticProps({
     // Return minimal data to avoid 500 errors
     return {
       props: {
-        // exchanger: null,
-        // articleCodes: [],
-        // pms: [],
-        // seo: nullSeo,
-        // locale,
-        // error: true,
+        exchanger: null,
+        articleCodes: [],
+        pms: [],
+        seo: nullSeo,
+        locale,
+        error: true,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },
       revalidate: 60, // Quick retry on error
