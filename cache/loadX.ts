@@ -21,6 +21,7 @@ import {
   exchangerSlugToName,
 } from "../components/exchangers/helper";
 import { IArticle } from "../types/pages";
+import { IExchanger, IExchangerPreview } from "../types/exchanger";
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL!,
@@ -123,27 +124,27 @@ export const loadExchanger = (slug: string) =>
   });
 
 export const loadExchangers = async () => {
-  const [cmsExchangers, parserExchangers] = await Promise.all([
+  const [cmsExchangers] = (await Promise.all([
     cachedFetch("cms_exchangers", TTL.fast, () => cmsFetcher(exchangersQuery)),
-    cachedFetch("parser_exchangers", TTL.fast, () =>
-      parserFetcher("exchangers")
-    ),
-  ]);
+    // cachedFetch("parser_exchangers", TTL.fast, () =>
+    //   parserFetcher("exchangers")
+    // ),
+  ])) as IExchangerPreview[][];
 
-  const merged = mergeExchangers(cmsExchangers, parserExchangers);
+  //const merged = mergeExchangers(cmsExchangers, parserExchangers);
 
-  Promise.all(
-    // вызываем в getStaticPaths чтобы потом подхватить кэш из getStaticProps
-    merged.map((ex) => {
-      const slug = exchangerNameToSlug(ex.name);
-      return redis.set(`exchanger_${slug}`, {
-        data: ex,
-        updatedAt: Date.now(),
-      });
-    })
-  );
+  // Promise.all(
+  //   // вызываем в getStaticPaths чтобы потом подхватить кэш из getStaticProps
+  //   cmsExchangers.map((ex) => {
+  //     const slug = exchangerNameToSlug(ex.name);
+  //     return redis.set(`exchanger_${slug}`, {
+  //       data: ex,
+  //       updatedAt: Date.now(),
+  //     });
+  //   })
+  // );
 
-  return merged;
+  return cmsExchangers;
 };
 
 export const loadCities = () =>

@@ -10,7 +10,11 @@ import {
 import { capitalize } from "../../components/main/side/selector/section/PmGroup/helper";
 import { nullSeo } from "../../components/shared/UniversalSeo";
 
-import { IExchanger, IParserExchanger } from "../../types/exchanger";
+import {
+  IExchanger,
+  IExchangerPreview,
+  IParserExchanger,
+} from "../../types/exchanger";
 import { ISEO } from "../../types/general";
 import { IPm } from "../../types/selector";
 import {
@@ -142,7 +146,7 @@ export async function getStaticProps({
 // Optimized getStaticPaths with Redis caching
 export async function getStaticPaths() {
   try {
-    const exchangers = await loadExchangers();
+    const exchangers = (await loadExchangers()) as IExchangerPreview[];
     if (!exchangers || exchangers.length === 0) {
       console.warn("⚠️ No exchangers found, returning empty paths");
       return {
@@ -160,7 +164,7 @@ export async function getStaticPaths() {
           params: { slug: string };
           locale: string;
         }[],
-        exchanger: IExchanger
+        exchanger: IExchangerPreview
       ) => [
         ...res,
         ...locales.map((locale) => ({

@@ -16,6 +16,12 @@ export type IExchanger = {
   };
 };
 
+export type IExchangerPreview = {
+  id: string;
+  name: string;
+  ref_link: string;
+};
+
 export type IExchangerStatus = "active" | "suspended" | "disabled";
 
 export type IErrorCode =
