@@ -9,7 +9,7 @@ import { appWithTranslation } from "next-i18next";
 import { DefaultSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { defaultConfig } from "../next-seo.config";
-// import { SpeedInsights } from "@vercel/speed-insights/next";
+import { SpeedInsights, SpeedInsights } from "@vercel/speed-insights/next";
 import Head from "next/head";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -26,11 +26,11 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <ChakraProvider theme={theme}>
         <Provider store={store}>
-          {/* <Layout> */}
-          {/* <SpeedInsights /> */}
-          <DefaultSeo {...seoConfig} />
-          <Component {...pageProps} />
-          {/* </Layout> */}
+          <Layout>
+            <SpeedInsights />
+            <DefaultSeo {...seoConfig} />
+            <Component {...pageProps} />
+          </Layout>
         </Provider>
       </ChakraProvider>
     </>
