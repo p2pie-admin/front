@@ -9,7 +9,7 @@ import { appWithTranslation } from "next-i18next";
 import { DefaultSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { defaultConfig } from "../next-seo.config";
-import { SpeedInsights, SpeedInsights } from "@vercel/speed-insights/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import Head from "next/head";
 
 function MyApp({ Component, pageProps }: AppProps) {
