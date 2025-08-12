@@ -1,26 +1,14 @@
-import React, { ReactChild, useEffect } from "react";
+import React, { useEffect } from "react";
 import Header from "./header";
 import Footer from "./footer";
 import {
   useToast,
-  Text,
   Box,
   VStack,
   useColorModeValue,
-  Grid,
   Progress,
 } from "@chakra-ui/react";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-
-import axios from "axios";
-import { setIP, setCity } from "../../redux/mainReducer";
-import { initCurrencyConverterFetcher } from "../../services/fetchers";
-
-import Nav from "./nav";
-import { batch } from "react-redux";
-
-import { useRouter } from "next/router";
-import { ICity } from "../../types/exchange";
+import { useAppSelector } from "../../redux/hooks";
 
 const Layout = ({ children }: { children: any }) => {
   // const maxW = useBreakpointValue({ base: "100%", lg: "980" });

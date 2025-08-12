@@ -1,32 +1,32 @@
-// // scripts/clearRedis.js
-// const { Redis } = require("@upstash/redis");
+// scripts/clearRedis.js
+const { Redis } = require("@upstash/redis");
 
-// const redis = new Redis({
-//   url: process.env.UPSTASH_REDIS_REST_URL,
-//   token: process.env.UPSTASH_REDIS_REST_TOKEN,
-// });
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN,
+});
 
-// async function clearAllKeys() {
-//   try {
-//     let cursor = "0";
-//     let totalDeleted = 0;
+async function clearAllKeys() {
+  try {
+    let cursor = "0";
+    let totalDeleted = 0;
 
-//     do {
-//       const [nextCursor, keys] = await redis.scan(cursor, { count: 100 }); // Get up to 100 keys at a time
-//       cursor = nextCursor;
+    do {
+      const [nextCursor, keys] = await redis.scan(cursor, { count: 100 }); // Get up to 100 keys at a time
+      cursor = nextCursor;
 
-//       if (keys.length > 0) {
-//         await Promise.all(keys.map((key) => redis.del(key)));
-//         totalDeleted += keys.length;
-//         console.log(`🗑 Deleted ${keys.length} keys`);
-//       }
-//     } while (cursor !== "0");
+      if (keys.length > 0) {
+        await Promise.all(keys.map((key) => redis.del(key)));
+        totalDeleted += keys.length;
+        console.log(`🗑 Deleted ${keys.length} keys`);
+      }
+    } while (cursor !== "0");
 
-//     console.log(`✅ Redis cache cleared (${totalDeleted} keys removed)`);
-//   } catch (err) {
-//     console.error("❌ Failed to clear Redis cache:", err);
-//     process.exit(1);
-//   }
-// }
+    console.log(`✅ Redis cache cleared (${totalDeleted} keys removed)`);
+  } catch (err) {
+    console.error("❌ Failed to clear Redis cache:", err);
+    process.exit(1);
+  }
+}
 
-// clearAllKeys();
+clearAllKeys();

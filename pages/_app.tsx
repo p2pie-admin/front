@@ -26,11 +26,11 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <ChakraProvider theme={theme}>
         <Provider store={store}>
-          <Layout>
-            {/* <SpeedInsights /> */}
-            <DefaultSeo {...seoConfig} />
-            <Component {...pageProps} />
-          </Layout>
+          {/* <Layout> */}
+          {/* <SpeedInsights /> */}
+          <DefaultSeo {...seoConfig} />
+          <Component {...pageProps} />
+          {/* </Layout> */}
         </Provider>
       </ChakraProvider>
     </>
