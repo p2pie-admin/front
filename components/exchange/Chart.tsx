@@ -1,113 +1,139 @@
+const fallbackSRC = "https://i.ibb.co/fpSb8gZ/fallback.png";
+import { memo, useMemo, useState } from "react";
 import {
-  Image,
-  Button,
-  HStack,
-  useColorModeValue,
   Box,
+  HStack,
   Text,
+  Button,
   Center,
+  useColorModeValue,
   Spinner,
 } from "@chakra-ui/react";
-import { Box3D, ResponsiveText } from "../../styles/theme/custom";
-import Shader from "../shared/Shader";
-import { useState } from "react";
+import Image from "next/image";
+
 import { useAppSelector } from "../../redux/hooks";
-import { ICurrencyConverterRate } from "../../types/p2p";
+import { Box3D } from "../../styles/theme/custom";
 import { format, localFormat, R } from "../../redux/amountsHelper";
 
-const fallbackSRC = "https://i.ibb.co/fpSb8gZ/fallback.png";
+const Chart = memo(
+  ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
+    const bgColor = useColorModeValue("violet.700", "bg.900");
+    const primaryColor = useColorModeValue("bg.100", "peach.300");
+    const color = useColorModeValue("bg.200", "bg.500");
 
-const Chart = ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
-  const color = useColorModeValue("bg.200", "bg.500");
-  const bgColor = useColorModeValue("violet.700", "bg.900");
-  const env = process.env.NODE_ENV;
-  const SRC =
-    env === "production"
-      ? process.env.NEXT_PUBLIC_CONVERTER_PROD_URL
-      : process.env.NEXT_PUBLIC_CONVERTER_DEV_URL;
+    const SRC = useMemo(() => {
+      const env = process.env.NODE_ENV;
+      return env === "production"
+        ? process.env.NEXT_PUBLIC_CONVERTER_PROD_URL
+        : process.env.NEXT_PUBLIC_CONVERTER_DEV_URL;
+    }, []);
 
-  const [isLongTimeFrame, setTimeframe] = useState(true);
-  const primaryColor = useColorModeValue("bg.100", "peach.300");
-  const ccRates = useAppSelector(
-    (state) => state.main.ccRates || ({} as ICurrencyConverterRate)
-  );
-  const { rate, giveToUSD, getToUSD, dayTrend, hourTrend } = ccRates;
-  const trend = isLongTimeFrame ? dayTrend : hourTrend;
-  const giveUsdRate =
-    giveToUSD < 1
-      ? `1 ${giveCur} ~ ${format(1 / giveToUSD, 2)} USD`
-      : `1 USD ~ ${format(giveToUSD, 2)} ${giveCur}`;
-  const getUsdRate =
-    getToUSD < 1
-      ? `1 ${getCur} ~ ${format(1 / getToUSD, 2)} USD`
-      : `1 USD ~ ${format(getToUSD, 2)} ${getCur}`;
+    const [isLongTimeFrame, setTimeframe] = useState(true);
 
-  const alt = `${giveCur} to ${getCur} in last ${
-    isLongTimeFrame ? "day" : "hour"
-  }`;
-  return (
-    <Box3D bgColor={bgColor} overflow="hidden" position="relative">
-      <Image
-        w={400}
-        h={164}
-        objectFit="cover"
-        fallback={
-          <Center
-            w={400}
-            h={164}
-            justifyContent="center"
-            alignItems="center"
-            minW="100"
-            minH="100"
-          >
-            <Spinner size="xl" color="bg.500" />
-          </Center>
-        }
-        src={`${SRC}/${getCur}_${giveCur}/${isLongTimeFrame ? "day" : "hour"}`}
-        alt={alt}
-      />
-      <HStack position="absolute" top="1" left="1" zIndex="35" px="2">
-        <Text fontSize="md" fontWeight="bold" color={primaryColor}>
-          {`${giveCur} / ${getCur}`}
-        </Text>
-        <Text fontSize="md" color={trend > 0 ? "red.500" : "green.500"}>{`${
-          trend > 0 ? "-" : "+"
-        } ${format(Math.abs(trend), 3)}% ${trend > 0 ? "▼" : "▲"}`}</Text>
-      </HStack>
-      <Box
-        position="absolute"
-        top="0"
-        right="0"
-        zIndex="35"
-        borderRadius="lg"
-        px="2"
+    const ccRates = useAppSelector(
+      (state) => state.main.ccRates || ({} as any)
+    );
+    const { rate, giveToUSD, getToUSD, dayTrend, hourTrend } = ccRates;
+
+    const trend = isLongTimeFrame ? dayTrend : hourTrend;
+
+    const giveUsdRate = useMemo(
+      () =>
+        giveToUSD < 1
+          ? `1 ${giveCur} ~ ${format(1 / giveToUSD, 2)} USD`
+          : `1 USD ~ ${format(giveToUSD, 2)} ${giveCur}`,
+      [giveCur, giveToUSD]
+    );
+
+    const getUsdRate = useMemo(
+      () =>
+        getToUSD < 1
+          ? `1 ${getCur} ~ ${format(1 / getToUSD, 2)} USD`
+          : `1 USD ~ ${format(getToUSD, 2)} ${getCur}`,
+      [getCur, getToUSD]
+    );
+
+    const alt = useMemo(
+      () =>
+        `${giveCur} to ${getCur} in last ${isLongTimeFrame ? "day" : "hour"}`,
+      [giveCur, getCur, isLongTimeFrame]
+    );
+
+    const imgSrc = useMemo(
+      () => `${SRC}/${getCur}_${giveCur}/${isLongTimeFrame ? "day" : "hour"}`,
+      [SRC, getCur, giveCur, isLongTimeFrame]
+    );
+
+    return (
+      <Box3D
+        bgColor={bgColor}
+        overflow="hidden"
+        position="relative"
+        w="100%"
+        h="164px"
       >
-        <HStack>
-          <Button
-            variant="default"
-            m="0"
-            size="xs"
-            onClick={() => setTimeframe(false)}
-            color={!isLongTimeFrame ? primaryColor : "whiteAlpha.400"}
-          >
-            1h
-          </Button>
-          <Button
-            variant="default"
-            size="xs"
-            m="0"
-            onClick={() => setTimeframe(true)}
-            color={isLongTimeFrame ? primaryColor : "whiteAlpha.400"}
-          >
-            24h
-          </Button>
+        <Image
+          src={imgSrc}
+          alt={alt}
+          width={400}
+          height={164}
+          objectFit="cover"
+          placeholder="blur"
+          blurDataURL="/placeholder.png"
+        />
+        <HStack position="absolute" top="1" left="1" zIndex="35" px="2">
+          <Text fontSize="md" fontWeight="bold" color={primaryColor}>
+            {`${giveCur} / ${getCur}`}
+          </Text>
+          <Text fontSize="md" color={trend > 0 ? "red.500" : "green.500"}>
+            {`${trend > 0 ? "-" : "+"} ${format(Math.abs(trend), 3)}% ${
+              trend > 0 ? "▼" : "▲"
+            }`}
+          </Text>
         </HStack>
-      </Box>
-      <Text fontSize="sm" color={color} position="absolute" bottom="1" left="1">
-        {giveUsdRate + " | " + getUsdRate}
-      </Text>
-    </Box3D>
-  );
-};
-//▲▼
+
+        <Box
+          position="absolute"
+          top="0"
+          right="0"
+          zIndex="35"
+          borderRadius="lg"
+          px="2"
+        >
+          <HStack>
+            <Button
+              variant="default"
+              size="xs"
+              m="0"
+              color={!isLongTimeFrame ? primaryColor : "whiteAlpha.400"}
+              onClick={() => setTimeframe(false)}
+            >
+              1h
+            </Button>
+            <Button
+              variant="default"
+              size="xs"
+              m="0"
+              color={isLongTimeFrame ? primaryColor : "whiteAlpha.400"}
+              onClick={() => setTimeframe(true)}
+            >
+              24h
+            </Button>
+          </HStack>
+        </Box>
+
+        <Text
+          fontSize="sm"
+          color={color}
+          position="absolute"
+          bottom="1"
+          left="1"
+        >
+          {giveUsdRate + " | " + getUsdRate}
+        </Text>
+      </Box3D>
+    );
+  }
+);
+
 export default Chart;
