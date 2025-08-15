@@ -13,34 +13,30 @@ export default function ExchangerPreview({
 }) {
   const { name, total_rates } = exchanger;
   return (
-    <Link
-      key={name}
+    <Box3D
+      as={Link}
       href={`/exchangers/${exchangerNameToSlug(name)}`}
       prefetch={false}
-      passHref
+      px="4"
+      py="2"
+      variant="extra_contrast"
+      minW={{ base: "90vw", md: "250px" }}
+      justifyContent="start"
+      alignItems="center"
+      h="12"
+      key={name}
     >
-      <Box3D
-        as="a"
-        px="4"
-        py="2"
-        variant="extra_contrast"
-        minW={{ base: "90vw", md: "250px" }}
-        justifyContent="start"
-        alignItems="center"
-        h="12"
-      >
-        <HStack w="100%">
-          <Dot color={getStatus(exchanger)} />
-          <HStack w="100%" justifyContent="space-between">
-            <ResponsiveText size={name.length > 10 ? "sm" : "md"}>
-              {name}
-            </ResponsiveText>
-            {total_rates && (
-              <ResponsiveText fontWeight="regular">{`(${total_rates})`}</ResponsiveText>
-            )}
-          </HStack>
+      <HStack w="100%">
+        <Dot color={getStatus(exchanger)} />
+        <HStack w="100%" justifyContent="space-between">
+          <ResponsiveText size={name.length > 10 ? "sm" : "md"}>
+            {name}
+          </ResponsiveText>
+          {total_rates && (
+            <ResponsiveText fontWeight="regular">{`(${total_rates})`}</ResponsiveText>
+          )}
         </HStack>
-      </Box3D>
-    </Link>
+      </HStack>
+    </Box3D>
   );
 }
