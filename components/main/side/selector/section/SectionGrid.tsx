@@ -13,6 +13,7 @@ const SectionGrid = ({ children }: { children: JSX.Element[] }) => {
       }}
       gap="1"
       pb={2}
+      mx="2"
     >
       {children}
     </Grid>

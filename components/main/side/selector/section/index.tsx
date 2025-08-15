@@ -64,7 +64,7 @@ const Section = ({
         <Spacer />
       </RegularBox>
 
-      <Box p="2" pb="1">
+      <Box pb="1">
         <SectionGridWrapper>
           {pmGroups.slice(0, itemsToShow).map((pm_group) => {
             return <PmGroup pm_group={pm_group} key={pm_group.id} />;

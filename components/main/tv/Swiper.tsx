@@ -11,7 +11,7 @@ import { IRate } from "../../../types/rates";
 import Item from "./Item";
 import debounce from "./utils/debounce";
 
-const [elastic, stiffness, damping, debounceTime] = [0.2, 60, 10, 300];
+const [elastic, stiffness, damping, debounceTime] = [0.1, 50, 10, 500];
 
 export const Swiper = (props: {
   isMobile: boolean;

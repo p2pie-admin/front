@@ -12,8 +12,16 @@ const nextConfig = {
   },
 
   images: {
-    domains: ["localhost", "p2pie.com", "p2pie.help"],
+    domains: [
+      "localhost",
+      "p2pie.com",
+      "p2pie.help",
+      "cms.p2pie.help", // <-- Strapi prod
+      "converter.p2pie.help", // <-- Strapi dev, if you have it
+      "server.p2pie.help",
+    ],
   },
+
   async redirects() {
     return [
       {

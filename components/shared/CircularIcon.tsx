@@ -1,11 +1,17 @@
-import {
-  Image,
-  Box,
-  Center,
-  useToken,
-  useColorModeValue,
-} from "@chakra-ui/react";
-import { IImage } from "../../types/selector";
+import { Box, useToken, useColorModeValue } from "@chakra-ui/react";
+import Image from "next/image";
+
+interface IImageFormat {
+  url: string;
+}
+interface IImage {
+  url: string;
+  alternativeText?: string;
+  formats?: {
+    thumbnail?: IImageFormat;
+    small?: IImageFormat;
+  };
+}
 
 const CircularIcon = ({
   icon,
@@ -83,55 +89,53 @@ const CircularIcon = ({
     dark_cyan,
     dark_purple,
     dark_pink,
-  } as any;
+  } as Record<string, string>;
 
   const colorHEX = colors?.[color] || "#aaa";
-  const env = process.env.NODE_ENV;
-  const baseColor = "#45ffff";
   const filter = useColorModeValue(
     "hue-rotate(70deg) brightness(0.3) opacity(0.8)",
     "hue-rotate(-140deg) brightness(0.1)"
   );
+
+  const env = process.env.NODE_ENV;
   const SRC =
     env === "production"
       ? process.env.NEXT_PUBLIC_STRAPI_PROD_BASE_URL
       : process.env.NEXT_PUBLIC_STRAPI_DEV_BASE_URL;
 
-  const iconSize = size == "lg" ? [10, 12] : size == "sm" ? [5, 6] : [6, 7];
+  const optimizedUrl =
+    icon?.formats?.thumbnail?.url ||
+    icon?.formats?.small?.url ||
+    icon?.url ||
+    "";
+
+  // Map size keyword to relative rem size
+  const sizeMap = { sm: "1rem", md: "1.25rem", lg: "1.5rem" };
+
   return (
-    <Center w={iconSize} h={iconSize} position="relative">
-      <Image
-        zIndex="6"
-        filter={filter}
-        // filter={shaded ? "grayscale(0.6) brightness(0.3)" : "none"}
-        // fallbackSrc={fallbackSRC}
-
-        src={icon ? SRC + icon.url : ""}
-        alt={icon ? icon.alternativeText : iconAlt}
-      />
-
-      <Box
-        position="absolute"
-        zIndex="5"
-        borderRadius="50%"
-        w="100%"
-        h="100%"
-        boxShadow={`0px 0px 14px -7px ${colorHEX}`}
-        filter="saturate(1.5)"
-        bg={`radial-gradient(circle, ${colorHEX} 60%, rgba(0,0,0,0) 70%)`}
-        // position="absolute"
-      />
-
-      <Box
-        position="absolute"
-        w="10"
-        h="10"
-        bgColor="rgba(0,0,0,0.5)"
-        borderRadius="50%"
-        filter="opacity(0.2)"
-        bg={`radial-gradient(circle, ${colorHEX}  10%, rgba(0,0,0,0) 60%)`}
-      ></Box>
-    </Center>
+    <Box
+      as="span"
+      position="relative"
+      display="inline-block"
+      w={sizeMap[size]}
+      h={sizeMap[size]}
+      borderRadius="50%"
+      overflow="hidden"
+      flexShrink={0}
+      bg={colorHEX}
+      boxShadow={`0 0 5px 0px ${colorHEX}`} // glow directly here
+    >
+      {icon && (
+        <Box
+          as="img"
+          src={SRC + optimizedUrl}
+          alt={icon?.alternativeText || iconAlt || ""}
+          width="100%"
+          height="100%"
+          style={{ objectFit: "cover", filter }}
+        />
+      )}
+    </Box>
   );
 };
 
