@@ -131,12 +131,7 @@ export async function getStaticProps({
       key: dir.toUpperCase(),
     })) as ITextBox[];
     if (dirText && textBoxes?.length && textBoxes[0]?.text) {
-      dirText.text = await enrichText(
-        textBoxes[0]?.text,
-        articleCodes,
-        pms,
-        locale
-      );
+      dirText.text = enrichText(textBoxes[0]?.text, articleCodes, pms, locale);
     }
     let [giveArticleExists, getArticleExists] = [false, false];
     if (articleCodes.length) {

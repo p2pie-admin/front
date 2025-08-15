@@ -5,6 +5,7 @@ import { IPm } from "../../types/selector";
 import { useAppSelector } from "../../redux/hooks";
 import { ICity, IDirText } from "../../types/exchange";
 import { useRouter } from "next/router";
+import { TextToHTML } from "../shared/helper";
 
 const DirText = ({
   dirText,
@@ -37,8 +38,7 @@ const DirText = ({
       <Heading as="h2" fontSize="3xl">
         {fillWords({ title, givePm, getPm, cityCountry })}
       </Heading>
-
-      <div dangerouslySetInnerHTML={{ __html: text }} />
+      <TextToHTML text={text} />;
     </Box>
   );
 };

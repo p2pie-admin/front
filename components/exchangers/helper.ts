@@ -61,7 +61,7 @@ export const addExchangerCrossLinking = async (
   )
     return exchanger;
 
-  const text = await enrichText(
+  const text = enrichText(
     exchanger.exchanger_card[`${locale}_description`] || "",
     articleCodes,
     pms,

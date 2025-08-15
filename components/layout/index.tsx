@@ -67,7 +67,7 @@ const Layout = ({ children }: { children: any }) => {
         zIndex={-1}
         bgGradient={`radial-gradient(circle at 50% -10%, ${ambientColor} 0%, transparent 40%)`}
       ></Box>
-      {/* <Header /> */}
+      <Header />
       {dirRatesStatus !== "fulfilled" ? (
         <Progress size="xs" isIndeterminate colorScheme="peach" />
       ) : (
