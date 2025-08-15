@@ -20,6 +20,7 @@ import TopImage from "./TopImage";
 import UniversalSeo from "../shared/UniversalSeo";
 import { IPm } from "../../types/selector";
 import { ISEO } from "../../types/general";
+import { TextToHTML } from "../shared/helper";
 
 const Article = ({
   seo,
@@ -118,9 +119,7 @@ const Article = ({
                     {chapter.title || ""}
                   </Text>
                 </HStack>
-
-                <div dangerouslySetInnerHTML={{ __html: chapter.text }} />
-
+                <TextToHTML text={chapter.text} />;
                 {/* {chapter.disclaimer && (
                   <Disclaimer disclaimer={chapter.disclaimer} />
                 )} */}

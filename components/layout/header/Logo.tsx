@@ -19,6 +19,7 @@ const Logo = () => {
         router.push("/");
       }}
       cursor="pointer"
+      ml="2"
     >
       <Image
         alt={`${process.env.NEXT_PUBLIC_NAME} logo`}

@@ -28,28 +28,16 @@ const Header = () => {
       zIndex="modal"
       justifyContent="center"
       boxShadow="lg"
-      // bgGradient={useColorModeValue(
-      //   `linear(to-t, ${bg100}, rgba(0,0,0,0))`,
-      //   `linear(to-t, ${bg900}, rgba(0,0,0,0))`
-      // )}
     >
       <Nav />
-      <HStack
-        w={{ base: "100%", md: "888px" }}
-        justifyContent="space-between"
-        alignItems="center"
-      >
-        <HStack>
-          <SwipeableDrawer />
-          <Logo />
-        </HStack>
+      <HStack w={{ base: "100%", md: "888px" }} justifyContent="space-between">
+        <Logo />
+        <SwipeableDrawer />
 
-        <HStack>
-          {/* <CitySelector /> */}
-          <Box display={{ base: "none", xl: "block" }}>
-            <NavHeading />
-          </Box>
-        </HStack>
+        {/* <CitySelector /> */}
+        <Box display={{ base: "none", xl: "block" }}>
+          <NavHeading />
+        </Box>
       </HStack>
     </Flex>
   );

@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import UniversalSeo from "../../shared/UniversalSeo";
 import { ISEO } from "../../../types/general";
 import { IPm } from "../../../types/selector";
+import { TextToHTML } from "../../shared/helper";
 
 export default function Exchanger({
   exchanger,
@@ -60,11 +61,7 @@ export default function Exchanger({
           </HStack>
         </LinkWrapper>
 
-        <Box>
-          {description && (
-            <div dangerouslySetInnerHTML={{ __html: description }} />
-          )}
-        </Box>
+        <Box>{description && <TextToHTML text={description} />}</Box>
       </Box3D>
     </>
   );
