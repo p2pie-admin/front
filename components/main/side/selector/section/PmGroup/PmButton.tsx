@@ -1,5 +1,7 @@
 import { Button, useColorModeValue } from "@chakra-ui/react";
 import CircularIcon from "../../../../../shared/CircularIcon";
+import { sendToast } from "../../../../../../redux/mainReducer";
+import { useAppDispatch } from "../../../../../../redux/hooks";
 
 export default function PmButton({
   children,
@@ -16,6 +18,7 @@ export default function PmButton({
   shaded: boolean;
   iconAlt?: string;
 }) {
+  const dispatch = useAppDispatch();
   return (
     <Button
       w="100%"
@@ -23,7 +26,17 @@ export default function PmButton({
       variant="default"
       filter={shaded ? "opacity(0.3) grayscale(0.8)" : "none"}
       justifyContent="start"
-      onClick={handleToggle} // works as choosePm or as open subitems
+      onClick={
+        shaded
+          ? () =>
+              dispatch(
+                sendToast({
+                  status: "info",
+                  title: "Платежная система временно недоступна",
+                })
+              )
+          : handleToggle
+      } // works as choosePm or as open subitems
       leftIcon={<CircularIcon iconAlt={iconAlt} icon={icon} color={color} />}
       color="transparent"
       transition="filter 0.5s ease"
