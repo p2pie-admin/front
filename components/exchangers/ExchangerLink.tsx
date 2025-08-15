@@ -14,13 +14,13 @@ export default function ExchangerPreview({
   const { name, total_rates } = exchanger;
   return (
     <Link
-      href={`/exchangers/${exchangerNameToSlug(name)}`}
       key={name}
+      href={`/exchangers/${exchangerNameToSlug(name)}`}
       prefetch={false}
+      passHref
     >
       <Box3D
-        key={name}
-        as={Button}
+        as="a"
         px="4"
         py="2"
         variant="extra_contrast"
