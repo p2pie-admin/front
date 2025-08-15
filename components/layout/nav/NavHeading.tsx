@@ -6,9 +6,9 @@ import DarkLightTheme from "./DarkLightTheme";
 export const NavHeading = () => {
   return (
     <HStack>
-      <SearchExchanger />
+      {/* <SearchExchanger />
       <Language />
-      <DarkLightTheme />
+      <DarkLightTheme /> */}
     </HStack>
   );
 };

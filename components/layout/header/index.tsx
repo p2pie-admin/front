@@ -40,14 +40,14 @@ const Header = () => {
         alignItems="center"
       >
         <HStack>
-          {/* <SwipeableDrawer /> */}
+          <SwipeableDrawer />
           <Logo />
         </HStack>
 
         <HStack>
           {/* <CitySelector /> */}
           <Box display={{ base: "none", xl: "block" }}>
-            {/* <NavHeading /> */}
+            <NavHeading />
           </Box>
         </HStack>
       </HStack>
