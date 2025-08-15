@@ -1,12 +1,7 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
-
-export interface IPm {
-  en_name: string;
-  ru_name?: string;
-  currency: { code: string };
-}
+import { IPm } from "../../types/selector";
 
 /**
  * Markdown renderer with Next.js <Link> for internal navigation

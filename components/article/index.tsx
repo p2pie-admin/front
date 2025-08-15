@@ -1,26 +1,17 @@
-import { HStack, Box, Text, Heading, Flex, Center } from "@chakra-ui/react";
+import { Heading, Box, HStack, Text } from "@chakra-ui/react";
 
-import { useRef, useState } from "react";
-import Disclaimer from "./Disclaimer";
+import React, { useMemo, useRef, useState } from "react";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
-import { IArticle } from "../../types/pages";
-
-import { FaExpandArrowsAlt } from "react-icons/fa";
-import { BsTelegram } from "react-icons/bs";
-
-import FoundError from "./FoundError";
-
 import { IPmPairs } from "../../types/exchange";
-import { useRouter } from "next/router";
-import CircularIcon from "../shared/CircularIcon";
-import Stats from "./Stats";
-import OtherDirs from "./OtherDirs";
-
-import TopImage from "./TopImage";
-import UniversalSeo from "../shared/UniversalSeo";
-import { IPm } from "../../types/selector";
 import { ISEO } from "../../types/general";
+import { IArticle } from "../../types/pages";
 import { TextToHTML } from "../shared/helper";
+import UniversalSeo from "../shared/UniversalSeo";
+import FoundError from "./FoundError";
+import OtherDirs from "./OtherDirs";
+import TopImage from "./TopImage";
+import Stats from "./Stats";
+import { IPm } from "../../types/selector";
 
 const Article = ({
   seo,
@@ -35,32 +26,46 @@ const Article = ({
   otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] } | null;
   locale: "en" | "ru";
 }) => {
-  const [highlited, setHighlited] = useState(undefined);
+  // Early fallback before any hooks
+  if (!article) {
+    return <div>No article</div>;
+  }
+  if (!pm) {
+    return <div>Nothing was found!</div>;
+  }
 
-  const timestampToDate = (ts?: string) => {
-    const [y, m, d] = ts ? ts?.split("T")[0]?.split("-") : ["-", "-", "-"];
-    return `${d}.${m}.${y}`;
-  };
-  if (!article) return <>no article</>;
+  const [highlited, setHighlited] =
+    useState<React.RefObject<HTMLElement> | null>(null);
 
-  const refChapters = article.chapters.map((chapter) => ({
+  // Stable refs for chapters
+  const chapterRefs = useMemo(
+    () => article.chapters.map(() => React.createRef<HTMLDivElement>()),
+    [article.chapters.length]
+  );
+
+  const refChapters = article.chapters.map((chapter, idx) => ({
     ...chapter,
-    ref: useRef(null),
+    ref: chapterRefs[idx],
   }));
 
-  const executeScroll = (ref: any) => {
-    ref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+  const timestampToDate = (ts?: string) => {
+    const [y, m, d] = ts ? ts.split("T")[0].split("-") : ["-", "-", "-"];
+    return `${d}.${m}.${y}`;
+  };
+
+  const executeScroll = (ref: React.RefObject<HTMLElement>) => {
+    ref.current?.scrollIntoView({ behavior: "smooth", block: "center" });
     setHighlited(ref);
   };
 
   const symbols = article.chapters.reduce(
-    (length, chapter) => (length += chapter.text.length),
+    (length, chapter) => length + chapter.text.length,
     0
   );
 
   const minToRead = Math.round(symbols / 1000);
-  const pmName = pm?.[`${locale}_name`] + " " + pm?.code;
-  if (!pm) return <>Nothing was found!</>;
+  const pmName = `${pm?.[`${locale}_name`] || ""} ${pm?.code || ""}`.trim();
+
   return (
     <>
       <UniversalSeo seo={seo} />
@@ -87,6 +92,7 @@ const Article = ({
 
         <Stats stats={article.stats} />
 
+        {/* Table of contents */}
         <Box>
           {refChapters.map((chapter, idx) => (
             <ResponsiveText
@@ -106,26 +112,26 @@ const Article = ({
           ))}
         </Box>
 
+        {/* Chapters */}
         <Box>
-          {refChapters.map((chapter, idx) => {
-            return (
-              <Box key={"chapter:" + idx}>
-                <HStack fontSize={["md", "lg"]} fontWeight="bold" mt="4">
-                  <Text color="peach.300">#</Text>
-                  <Text
-                    ref={chapter.ref}
-                    color={chapter.ref == highlited ? "peach.300" : "unset"}
-                  >
-                    {chapter.title || ""}
-                  </Text>
-                </HStack>
-                <TextToHTML text={chapter.text} />;
-                {/* {chapter.disclaimer && (
-                  <Disclaimer disclaimer={chapter.disclaimer} />
-                )} */}
-              </Box>
-            );
-          })}
+          {refChapters.map((chapter, idx) => (
+            <Box key={"chapter:" + idx}>
+              <HStack fontSize={["md", "lg"]} fontWeight="bold" mt="4">
+                <Text color="peach.300">#</Text>
+                <Text
+                  ref={chapter.ref}
+                  color={chapter.ref === highlited ? "peach.300" : "unset"}
+                >
+                  {chapter.title || ""}
+                </Text>
+              </HStack>
+              <TextToHTML text={chapter.text} />
+              {/* Uncomment if disclaimer handling is needed */}
+              {/* {chapter.disclaimer && (
+                <Disclaimer disclaimer={chapter.disclaimer} />
+              )} */}
+            </Box>
+          ))}
         </Box>
 
         {otherDirs && <OtherDirs pmName={pmName} otherDirs={otherDirs} />}
