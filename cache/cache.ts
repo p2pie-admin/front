@@ -4,34 +4,49 @@ const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL!,
   token: process.env.UPSTASH_REDIS_REST_TOKEN!,
 });
-
-// Stale-While-Revalidate caching
 export async function cachedFetch<T>(
   key: string,
   ttlSeconds: number,
   fetcher: () => Promise<T>
 ): Promise<T> {
-  // Try to read cached object { data, updatedAt }
-  const cached = await redis.get<{ data: T; updatedAt: number }>(key);
+  let cached: { data: T; updatedAt: number } | null = null;
+
+  try {
+    cached = await redis.get<{ data: T; updatedAt: number }>(key);
+  } catch (err) {
+    console.error(`Redis GET failed for "${key}":`, err);
+  }
 
   if (cached) {
-    const isStale = Date.now() - cached.updatedAt > ttlSeconds * 1000;
+    const isStale =
+      ttlSeconds > 0 && Date.now() - cached.updatedAt > ttlSeconds * 1000;
 
     if (isStale) {
-      // Trigger async refresh, but don't block response
+      // Refresh in background
       fetcher()
-        .then((data) => redis.set(key, { data, updatedAt: Date.now() }))
+        .then((data) => {
+          if (data !== null && data !== undefined) {
+            return redis.set(key, { data, updatedAt: Date.now() });
+          }
+        })
         .catch((err) =>
-          console.error(`SWV refresh failed for key "${key}":`, err)
+          console.error(`SWR refresh failed for key "${key}":`, err)
         );
     }
 
-    // Always return immediately
     return cached.data;
   }
 
-  // No cache — fetch synchronously and store
+  // No cache → fetch synchronously
   const data = await fetcher();
-  await redis.set(key, { data, updatedAt: Date.now() });
+
+  if (data !== null && data !== undefined) {
+    redis
+      .set(key, { data, updatedAt: Date.now() })
+      .catch((err) => console.error(`Redis SET failed for "${key}":`, err));
+  } else {
+    console.warn(`Fetcher for "${key}" returned empty result`);
+  }
+
   return data;
 }

@@ -4,7 +4,7 @@ import useSWR from "swr";
 
 import ErrorWrapper from "../../shared/ErrorWrapper";
 
-import { Box, HStack, Link } from "@chakra-ui/react";
+import { Box, HStack, Link, useBreakpointValue } from "@chakra-ui/react";
 import { IParameter, IRate } from "../../../types/rates";
 import Swiper from "./Swiper";
 import { useIsMobile } from "./hooks";
@@ -30,12 +30,13 @@ const TV = ({
   donorCity: ICity | null;
   slug: string;
 }) => {
-  const [initial, setInitial] = useState(true);
+  const containerHeight = useBreakpointValue({ base: 300, md: 416 }) || 416;
+
   const router = useRouter();
   const { t } = useTranslation();
   const { locale } = router as { locale: "en" | "ru" };
   const { exchange } = router.query as { exchange: string };
-  const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
+
   const dirRates = useAppSelector((state) => state.main.dirRates) || [];
   // const cityName = useAppSelector((state) => state.main.city.en_name);
   const isCash =
@@ -49,15 +50,9 @@ const TV = ({
     );
   }, [dir, city]);
 
-  useEffect(() => {
-    dispatch(fetchTopParameters());
-    setInitial(false);
-  }, []);
-
   const isMobile = useIsMobile();
   const itemHeight = isMobile ? 100 : 130; // Height of each text box
   const visibleItems = 3; // Number of items visible in the container
-  const containerHeight = itemHeight * visibleItems;
 
   const props = {
     isMobile,
@@ -67,25 +62,15 @@ const TV = ({
     dirRates,
   };
 
-  const isError =
-    dirRatesStatus === "rejected" || (!initial && !dirRates.length);
-  const isLoading = dirRatesStatus === "pending";
-
   return (
-    <Box minH={`${itemHeight * visibleItems}`}>
+    <Box h="416px">
       <CustomModal id="rate-details" header="Exchanger details">
         <RateDetails />
       </CustomModal>
-      <ErrorWrapper
-        isError={isError}
-        isLoading={isLoading}
-        primaryMessage="No rates available!"
-        secondaryMessage="check your network connection"
-      >
-        <Swiper {...props} />
-      </ErrorWrapper>
-      {!isLoading && isError && donorCity && (
-        <HStack justifyContent="center">
+
+      <Swiper {...props} />
+
+      {/* <HStack justifyContent="center">
           <ResponsiveText fontSize="2xl" variant="primary">
             {t("main:closest_cities")}{" "}
             {city?.closest_cities.map((c, index) => (
@@ -98,8 +83,7 @@ const TV = ({
               </Link>
             ))}
           </ResponsiveText>
-        </HStack>
-      )}
+        </HStack> */}
     </Box>
   );
 };

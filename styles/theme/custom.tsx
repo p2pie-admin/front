@@ -49,9 +49,16 @@ export const Box3D = (props: any) => {
   const { children, ...chakraProps }: { children: ReactJSXElement } = props;
   return (
     <RegularBox
-      border="1px solid"
-      borderColor="rgba(200,200,200,0.1)"
-      boxShadow="inset -2px -2px 5px rgba(200,200,200,0.05), inset 2px 2px 5px  rgba(0,0,0,0.15), 3px 3px 10px -5px rgba(0,0,0,0.5), -3px -3px 10px -5px rgba(200,200,200,0.2)"
+      // remove real border
+      border="none"
+      // use inset shadow for border look
+      boxShadow={`
+        inset 0 0 0 1px rgba(200,200,200,0.1), 
+        inset -2px -2px 5px rgba(200,200,200,0.05), 
+        inset 2px 2px 5px rgba(0,0,0,0.15), 
+        3px 3px 10px -5px rgba(0,0,0,0.5), 
+        -3px -3px 10px -5px rgba(200,200,200,0.2)
+      `}
       {...chakraProps}
     >
       {children}

@@ -118,7 +118,7 @@ const Exchange = ({
     getPm,
   });
 
-  const isLong = h1.length > 40;
+  const isLong = h1.length > 30;
 
   if (!slug) return <></>;
 
@@ -145,15 +145,11 @@ const Exchange = ({
         <Column index={0}>
           <Chart giveCur={giveCur} getCur={getCur} />
           <VStack mt="4" w="100%" gap="4">
-            <HStack gap="4" w="100%" mb="0">
+            {/* <HStack gap="4" w="100%" mb="0">
               <PmLayout pmData={givePmData} />
               <PmLayout pmData={getPmData} />
-              {/* <PmsDescription
-                givePm={givePm}
-                getPm={getPm}
-                pmLayouts={pmLayouts}
-              /> */}
-            </HStack>
+   
+            </HStack> */}
 
             {similarPmPairs && <Similar similarPmPairs={similarPmPairs} />}
           </VStack>
@@ -161,9 +157,12 @@ const Exchange = ({
 
         <Column index={1}>
           {/* <ColumnHeader text={title2} as="h2" query={[]} /> */}
-          <Calculator />
+          <HStack mb="4" h="200px" gap="4">
+            <Calculator />
 
-          <LimitsRange />
+            <LimitsRange />
+          </HStack>
+
           <TV dir={dir} city={city} donorCity={donorCity} slug={slug} />
         </Column>
         <Box3D

@@ -110,10 +110,15 @@ export const loadPms = async () => {
     console.error(
       "Selector is undefined - check selectorQuery and CMS response"
     );
-    return []; // Return empty array or throw error
+    return []; // safe fallback
   }
 
-  return getPmsFromSelector(selector);
+  try {
+    return getPmsFromSelector(selector);
+  } catch (err) {
+    console.error("Failed to build PMs from selector:", err);
+    return [];
+  }
 };
 
 export const loadExchanger = (slug: string) =>

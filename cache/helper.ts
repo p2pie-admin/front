@@ -27,9 +27,9 @@ export const getSlugToCodes = (
   possiblePairs: Record<string, string[]>,
   pms: IPm[]
 ) => {
-  const dirs = Object.entries(
-    possiblePairs as Record<string, string[]>
-  ).flatMap(([code, pairs]) => pairs.map((pair) => `${code}_${pair}`));
+  const dirs = Object.entries(possiblePairs ?? {}).flatMap(([code, pairs]) =>
+    (pairs || []).map((pair) => `${code}_${pair}`)
+  );
 
   const pmMap = new Map(pms.map((pm) => [pm.code.toUpperCase(), pm]));
 

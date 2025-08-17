@@ -65,7 +65,7 @@ const ReverseButton = () => {
   }
 
   return (
-    <Center position="relative" w="100%" minH="5">
+    <Center position="relative" w="100%" minH="4">
       <Box position="absolute">
         {bothPmsSelected && oppositeDirExists ? (
           <NextLink href={`/${reversedExchange}`}>

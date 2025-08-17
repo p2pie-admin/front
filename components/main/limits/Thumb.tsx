@@ -7,7 +7,12 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 
-import { BsArrowRightShort, BsArrowLeftShort } from "react-icons/bs";
+import {
+  BsArrowRightShort,
+  BsArrowLeftShort,
+  BsArrowDownShort,
+  BsArrowUpShort,
+} from "react-icons/bs";
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { symbols, kFormatter } from "../../../redux/amountsHelper";
@@ -34,8 +39,8 @@ const Thumb = ({
   const mainColor = useColorModeValue("violet.600", "peach.300");
 
   const shake = keyframes`
-  from {transform: translateX(-5px)}
-  to {transform: translateX(0)}
+  from {transform: translateY(-5px)}
+  to {transform: translateY(0)}
   `;
   const shakeAnimation = `${shake} infinite 1s ease-in-out alternate`;
 
@@ -49,10 +54,12 @@ const Thumb = ({
   return (
     <Tooltip
       hasArrow
-      bg={colorHint}
-      color={mainColor}
-      placement="top"
+      bg={mainColor}
+      color={colorHint}
+      placement="left" // 👈 tooltip appears to the right of the thumb
       isOpen={showTooltip}
+      size="lg"
+      fontSize="lg"
       label={localFormat(stickyAmount)}
     >
       <SliderThumb
@@ -60,38 +67,39 @@ const Thumb = ({
         bgColor="transparent"
         position="relative"
         boxShadow="none"
-        top="4"
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
         onTouchStart={() => setShowTooltip(true)}
         onTouchEnd={() => setShowTooltip(false)}
         zIndex="10"
       >
+        {/* Thumb visual (no extra rotation) */}
         <Box
-          w="4"
-          h="5"
+          w="5"
+          h="4"
           position="relative"
           borderRadius="md"
           bgColor={mainColor}
           boxShadow={`0 0 10px -2px ${colorKey}`}
           color={colorHint}
           as={RxDragHandleDots2}
-          transform="rotate(90deg)"
         />
 
+        {/* Arrows adapted to vertical */}
         <Box
           position="absolute"
+          top={stickyAmount <= MAX ? "-6" : "6"} // 👈 above or below
+          left="50%"
+          transform="translateX(-50%)"
           color={mainColor}
-          right={stickyAmount <= MAX ? "-5" : "6"}
           zIndex="6"
           animation={shakeAnimation}
         >
-          {stickyAmount >= MIN && stickyAmount <= MAX ? (
-            <></>
-          ) : stickyAmount <= MAX ? (
-            <BsArrowRightShort size="2rem" />
+          {stickyAmount >= MIN && stickyAmount <= MAX ? null : stickyAmount <=
+            MAX ? (
+            <BsArrowUpShort size="2rem" />
           ) : (
-            <BsArrowLeftShort size="2rem" />
+            <BsArrowDownShort size="2rem" />
           )}
         </Box>
       </SliderThumb>

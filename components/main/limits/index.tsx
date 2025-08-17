@@ -15,7 +15,7 @@ import {
   Tooltip,
   keyframes,
   useColorModeValue,
-  HStack,
+  VStack,
 } from "@chakra-ui/react";
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { useState } from "react";
@@ -37,22 +37,27 @@ import Thumb from "./Thumb";
 import side from "../side";
 
 import { useRouter } from "next/router";
-
 const CustomRangeSlider = ({
   resMin,
   resMax,
+  orientation = "horizontal",
   children,
 }: {
   resMin: number;
   resMax: number;
-  children: ReactJSXElement[];
+  orientation?: "horizontal" | "vertical";
+  children: React.ReactNode;
 }) => {
   const smoothResMin = useSmooth(resMin);
   const smoothResMax = useSmooth(resMax);
+
   return (
     <RangeSlider
       value={[smoothResMin, smoothResMax]}
       aria-label={["min", "max"]}
+      min={0}
+      max={100}
+      orientation={orientation}
     >
       {children}
     </RangeSlider>
@@ -85,7 +90,10 @@ const LimitsRange = () => {
   const dirRates = useAppSelector((state) => state.main.dirRates || []);
   const allMins = dirRates?.map((r) => R(r.min?.[side], 2));
   const allMaxes = dirRates?.map((r) => R(r.max?.[side], 2));
-  const [highestMax, lowestMin] = [Math.max(...allMaxes), Math.min(...allMins)];
+  const [highestMax, lowestMin] = [
+    Math.max(...allMaxes) / 100,
+    Math.min(...allMins),
+  ];
 
   const amount =
     useAppSelector(
@@ -107,8 +115,10 @@ const LimitsRange = () => {
 
   const log = (base: number, n: number) => Math.log(n) / Math.log(base);
   const curvingStrength = 100 / (1 - log(highestMax, lowestMin));
-  const percToAmount = (x: number) =>
-    R(highestMax ** (1 + (x - 100) / curvingStrength), 4);
+  const percToAmount = (x: number) => {
+    if (x == 100) return Math.max(...allMaxes);
+    return R(highestMax ** (1 + (x - 100) / curvingStrength), 4);
+  };
 
   const amountToPerc = (x?: number) => {
     if (!x) return 0;
@@ -133,21 +143,49 @@ const LimitsRange = () => {
     stickyAmount >= MIN && stickyAmount <= MAX ? mainColor : colorTrackInactive;
 
   const props = { mainCur, stickyAmount, MIN, MAX };
-  if (!MIN || !MAX) return <></>;
+  if (!MIN || !MAX) return <Box3D minW="40px" h="200px" />;
+  // --- LimitsRange (vertical layout) ---
   return (
-    <Box3D py="2" my={[2, 3, 4]} cursor="pointer" display="flex" flexDir="row">
-      {/* <Text>highestMax: {highestMax}</Text> */}
-      <HStack minW="25%" justifyContent="center" onClick={changeSide}>
+    <Box3D
+      py="2"
+      // my={[2, 3, 4]}
+      cursor="pointer"
+      display="flex"
+      flexDir="column"
+      alignItems="center"
+      h="200px"
+    >
+      {/* give/get toggle on top */}
+      {/* <VStack spacing={1} mb="3" onClick={changeSide}>
         <Text fontSize="xs" color={side === "give" ? mainColor : "bg.500"}>
           {giveCur}
         </Text>
         <Text fontSize="xs" color={side === "get" ? mainColor : "bg.500"}>
           {getCur}
         </Text>
-      </HStack>
-      <Box position="relative" mb="2" w="75%">
-        <Box w="98%" position="absolute" top="0" zIndex="3">
+      </VStack> */}
+
+      {/* vertical sliders */}
+      <VStack
+        position="relative"
+        h="100%"
+        w="10"
+        justifyContent="center"
+        alignItems="center"
+      >
+        {/* user amount (single) */}
+        <Box
+          position="absolute"
+          left="20px"
+          transform="translateX(-50%)"
+          zIndex="3"
+          h="96%"
+          // w="64px" // <-- force same width as range track box
+          display="flex"
+          justifyContent="center" // center track inside
+        >
           <Slider
+            orientation="vertical"
             aria-label="limits"
             focusThumbOnChange={false}
             value={amountToPerc(stickyAmount)}
@@ -156,105 +194,67 @@ const LimitsRange = () => {
               const newAmount = stick(percToAmount(x));
               if (amount !== newAmount) {
                 dispatch(
-                  setAmount({
-                    side,
-                    num: newAmount,
-                    str: String(newAmount),
-                  })
+                  setAmount({ side, num: newAmount, str: String(newAmount) })
                 );
               }
             }}
+            h="100%"
+            w="4px" // <-- make the actual slider narrow (just like track)
           >
             <Thumb {...props} />
-
-            <SliderTrack bgColor="transparent"></SliderTrack>
+            <SliderTrack bgColor="transparent" />
           </Slider>
         </Box>
 
-        <Box w="98%" pointerEvents="none" color="bg.500">
-          <CustomRangeSlider resMin={percMin} resMax={percMax}>
+        {/* min/max range (readonly) */}
+        <Box h="96%" pointerEvents="none" color="bg.500">
+          <CustomRangeSlider
+            resMin={percMin}
+            resMax={percMax}
+            orientation="vertical"
+          >
             <RangeSliderTrack bgColor={colorTrackBG}>
               <RangeSliderFilledTrack bgColor={colorTrackFilled} />
             </RangeSliderTrack>
-            {percMax - percMin < 35 ? (
-              <Flex
-                justifyContent="center"
-                position="absolute"
-                minW="100px"
-                maxW="100px"
-                minH="20"
-                left={`calc(${smoothCenter.toFixed(0)}% - 50px)`}
-              >
-                <Box
-                  h="fit-content"
-                  mt="3"
-                  bgColor={colorHint}
-                  boxShadow="lg"
-                  borderRadius="md"
-                  px="1"
-                  py="0.5"
-                >
-                  <ResponsiveText size="xs">
-                    {MIN == MAX
-                      ? localFormat(MIN, mainCur, locale)
-                      : `${limitsWord}: ${localFormat(
-                          MIN,
-                          mainCur,
-                          locale
-                        )} — ${localFormat(MAX, mainCur, locale)}`}
-                  </ResponsiveText>
-                </Box>
-              </Flex>
-            ) : (
-              <>
-                <RangeSliderThumb
-                  boxSize={1}
-                  index={0}
-                  zIndex="2"
-                  bgColor={mainColor}
-                >
-                  <ResponsiveText
-                    mt="12"
-                    ml={isClose(lowestMin, MIN) ? 6 : 0}
-                    size="xs"
-                    whiteSpace="nowrap"
-                    textAlign="center"
-                    bgColor={colorHint}
-                    boxShadow="lg"
-                    borderRadius="md"
-                    px="1"
-                    py="0.5"
-                  >
-                    {`${minWord}: ${localFormat(MIN, mainCur, locale)}`}
-                  </ResponsiveText>
-                </RangeSliderThumb>
 
-                <RangeSliderThumb
-                  boxSize={1}
-                  index={1}
-                  zIndex="1"
-                  bgColor={mainColor}
-                >
-                  <ResponsiveText
-                    mt="12"
-                    mr={isClose(highestMax, MAX) ? 6 : 0}
-                    size="xs"
-                    whiteSpace="nowrap"
-                    textAlign="center"
-                    bgColor={colorHint}
-                    boxShadow="lg"
-                    borderRadius="md"
-                    px="1"
-                    py="0.5"
-                  >
-                    {`${maxWord}: ${localFormat(MAX, mainCur, locale)}`}
-                  </ResponsiveText>
-                </RangeSliderThumb>
-              </>
-            )}
+            {/* Min thumb */}
+            <RangeSliderThumb boxSize={1} index={0} bgColor={mainColor}>
+              {/* <Box
+                position="absolute"
+                left="100%" // push label to the right of slider
+                ml="2"
+                bgColor={colorHint}
+                boxShadow="lg"
+                borderRadius="md"
+                px="1"
+                py="0.5"
+              >
+                <ResponsiveText size="xs">
+                  {`${minWord}: ${localFormat(MIN, mainCur, locale)}`}
+                </ResponsiveText>
+              </Box> */}
+            </RangeSliderThumb>
+
+            {/* Max thumb */}
+            <RangeSliderThumb boxSize={1} index={1} bgColor={mainColor}>
+              {/* <Box
+                position="absolute"
+                left="100%"
+                ml="2"
+                bgColor={colorHint}
+                boxShadow="lg"
+                borderRadius="md"
+                px="1"
+                py="0.5"
+              >
+                <ResponsiveText size="xs">
+                  {`${maxWord}: ${localFormat(MAX, mainCur, locale)}`}
+                </ResponsiveText>
+              </Box> */}
+            </RangeSliderThumb>
           </CustomRangeSlider>
         </Box>
-      </Box>
+      </VStack>
     </Box3D>
   );
 };

@@ -38,7 +38,7 @@ const DirText = ({
       <Heading as="h2" fontSize="3xl">
         {fillWords({ title, givePm, getPm, cityCountry })}
       </Heading>
-      <TextToHTML text={text} />;
+      <TextToHTML text={text} />
     </Box>
   );
 };

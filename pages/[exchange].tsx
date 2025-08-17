@@ -26,6 +26,7 @@ import {
   loadDirsTexts,
   loadPmLayouts,
 } from "../cache/loadX";
+import { C } from "@upstash/redis/zmscore-CgRD7oFR";
 
 const prerenderCountries = ["ukraine", "russia", "belarus"];
 
@@ -65,6 +66,7 @@ export async function getStaticProps({
         loadDirsTexts(locale),
         loadArticleCodes(),
       ]);
+
     const slugToCodes = getSlugToCodes(possiblePairs, pms);
 
     if (!pms || !Array.isArray(pms)) {

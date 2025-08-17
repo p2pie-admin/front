@@ -52,10 +52,6 @@ const MainPageContent = ({
         </Column>
 
         <Column index={1}>
-          {/* <ColumnHeader
-            text={t("main:sellBuy")}
-            query={["отдаете", "получаете", "sell", "buy"]}
-          /> */}
           <Calculator />
         </Column>
 

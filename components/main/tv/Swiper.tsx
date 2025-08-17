@@ -5,11 +5,13 @@ import { Box, Grid, useColorModeValue } from "@chakra-ui/react";
 import Shader from "../../shared/Shader";
 import { Box3D } from "../../../styles/theme/custom";
 import ControlPanel from "./ControlPanel";
-import { useAppDispatch } from "../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { setSwiperIdVisible } from "../../../redux/mainReducer";
 import { IRate } from "../../../types/rates";
 import Item from "./Item";
 import debounce from "./utils/debounce";
+import { fetchTopParameters } from "../../../redux/thunks";
+import ErrorWrapper from "../../shared/ErrorWrapper";
 
 const [elastic, stiffness, damping, debounceTime] = [0.1, 50, 10, 500];
 
@@ -22,6 +24,17 @@ export const Swiper = (props: {
 }) => {
   const { isMobile, itemHeight, visibleItems, containerHeight, dirRates } =
     props;
+
+  const [initial, setInitial] = useState(true);
+  useEffect(() => {
+    dispatch(fetchTopParameters());
+    setInitial(false);
+  }, []);
+  const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
+  const isError =
+    dirRatesStatus === "rejected" || (!initial && !dirRates.length);
+  const isLoading = dirRatesStatus === "pending";
+
   const length = dirRates.length;
   const dispatch = useAppDispatch();
   const bgColor = useColorModeValue("bg.50", "bg.800");
@@ -128,64 +141,75 @@ export const Swiper = (props: {
     document.body.style.paddingRight = "0px";
     setMouseEntered(false);
   };
-  if (!length) return <></>;
+
   return (
-    <Grid gridTemplateColumns="1fr auto" gridGap={["2", "4"]} h="100%">
+    <Grid
+      gridTemplateColumns="1fr auto"
+      gridGap={["2", "4"]}
+      h={`${containerHeight}px`}
+    >
       <Box3D variant="extra_contrast" px="2">
-        <Box
-          position="relative"
-          overflow="hidden"
-          h={`${containerHeight + 34}px`}
-          bgColor={bgColor}
-          px="1"
-          py="4"
-          borderRadius={`${4}% ${4}% ${4}% ${4}% / 50% 50% 50% 50%`}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+        <ErrorWrapper
+          isError={isError}
+          isLoading={isLoading}
+          primaryMessage="No rates available!"
+          secondaryMessage="check your network connection"
         >
-          <Shader direction="top" />
-          <motion.div
-            drag="y"
-            dragConstraints={{
-              top:
-                -itemHeight * (length - visibleItems) +
-                containerHeight / 2 -
-                itemHeight * 3,
-              bottom: containerHeight / 2,
-            }}
-            style={{ y, width: "100%" }}
-            dragElastic={elastic}
-            onDragEnd={async () => {
-              await new Promise((r) =>
-                setTimeout(r, Math.abs(y.getVelocity() / 2))
-              );
-              debouncedSetSwiperIdVisible(getIndex());
-              move(snapToNearest(y.get()));
-            }}
-            animate={controls}
+          <Box
+            position="relative"
+            overflow="hidden"
+            h={`${containerHeight}px`}
+            bgColor={bgColor}
+            px="1"
+            py="4"
+            borderRadius={`${4}% ${4}% ${4}% ${4}% / 50% 50% 50% 50%`}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           >
-            {dirRates.map((rate, index) => (
-              <Item
-                key={"exchanger_" + rate.exchangerId}
-                rate={rate}
-                y={y}
-                index={index}
-                itemHeight={itemHeight}
-                containerHeight={containerHeight}
-              />
-            ))}
-          </motion.div>
-          <Shader direction="bottom" />
-        </Box>
-        <Box
-          position="absolute"
-          right="0"
-          top={`calc(${containerHeight / 2}px + 0.5rem)`}
-          color={triangleColor}
-          transform="rotate(90deg)"
-        >
-          <TbTriangleInvertedFilled size="1.2rem" />
-        </Box>
+            <Shader direction="top" />
+            <motion.div
+              drag="y"
+              dragConstraints={{
+                top:
+                  -itemHeight * (length - visibleItems) +
+                  containerHeight / 2 -
+                  itemHeight * 3,
+                bottom: containerHeight / 2,
+              }}
+              style={{ y, width: "100%" }}
+              dragElastic={elastic}
+              onDragEnd={async () => {
+                await new Promise((r) =>
+                  setTimeout(r, Math.abs(y.getVelocity() / 2))
+                );
+                debouncedSetSwiperIdVisible(getIndex());
+                move(snapToNearest(y.get()));
+              }}
+              animate={controls}
+            >
+              {dirRates.map((rate, index) => (
+                <Item
+                  key={"exchanger_" + rate.exchangerId}
+                  rate={rate}
+                  y={y}
+                  index={index}
+                  itemHeight={itemHeight}
+                  containerHeight={containerHeight}
+                />
+              ))}
+            </motion.div>
+            <Shader direction="bottom" />
+          </Box>
+          <Box
+            position="absolute"
+            right="0"
+            top={`calc(${containerHeight / 2}px + 0.5rem)`}
+            color={triangleColor}
+            transform="rotate(90deg)"
+          >
+            <TbTriangleInvertedFilled size="1.2rem" />
+          </Box>
+        </ErrorWrapper>
       </Box3D>
       <ControlPanel length={length} stepUp={stepUp} stepDown={stepDown} />
     </Grid>

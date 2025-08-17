@@ -33,34 +33,33 @@ const Chart = memo(
     const ccRates = useAppSelector(
       (state) => state.main.ccRates || ({} as any)
     );
-    const { rate, giveToUSD, getToUSD, dayTrend, hourTrend } = ccRates;
+    const { currentRate, giveToUSD, getToUSD, dayTrend, hourTrend } = ccRates;
 
     const trend = isLongTimeFrame ? dayTrend : hourTrend;
 
-    const giveUsdRate = useMemo(
-      () =>
-        giveToUSD < 1
-          ? `1 ${giveCur} ~ ${format(1 / giveToUSD, 2)} USD`
-          : `1 USD ~ ${format(giveToUSD, 2)} ${giveCur}`,
-      [giveCur, giveToUSD]
-    );
+    // const giveUsdRate = useMemo(
+    //   () =>
+    //     giveToUSD < 1
+    //       ? `1 ${giveCur} ~ ${format(1 / giveToUSD, 2)} USD`
+    //       : `1 USD ~ ${format(giveToUSD, 2)} ${giveCur}`,
+    //   [giveCur, giveToUSD]
+    // );
 
-    const getUsdRate = useMemo(
-      () =>
-        getToUSD < 1
-          ? `1 ${getCur} ~ ${format(1 / getToUSD, 2)} USD`
-          : `1 USD ~ ${format(getToUSD, 2)} ${getCur}`,
-      [getCur, getToUSD]
-    );
+    // const getUsdRate = useMemo(
+    //   () =>
+    //     getToUSD < 1
+    //       ? `1 ${getCur} ~ ${format(1 / getToUSD, 2)} USD`
+    //       : `1 USD ~ ${format(getToUSD, 2)} ${getCur}`,
+    //   [getCur, getToUSD]
+    //);
 
     const alt = useMemo(
-      () =>
-        `${giveCur} to ${getCur} in last ${isLongTimeFrame ? "day" : "hour"}`,
+      () => `${giveCur} to ${getCur} in last ${isLongTimeFrame ? "24h" : "1h"}`,
       [giveCur, getCur, isLongTimeFrame]
     );
 
     const imgSrc = useMemo(
-      () => `${SRC}/${getCur}_${giveCur}/${isLongTimeFrame ? "day" : "hour"}`,
+      () => `${SRC}/${getCur}_${giveCur}/${isLongTimeFrame ? "24h" : "1h"}`,
       [SRC, getCur, giveCur, isLongTimeFrame]
     );
 
@@ -70,14 +69,14 @@ const Chart = memo(
         overflow="hidden"
         position="relative"
         w="100%"
-        h="164px"
+        h="200px"
       >
         <Image
           src={imgSrc}
           alt={alt}
-          width={400}
-          height={164}
-          objectFit="cover"
+          width={420}
+          height={200}
+          style={{ objectFit: "cover" }}
           placeholder="blur"
           blurDataURL="/placeholder.png"
         />
@@ -122,15 +121,20 @@ const Chart = memo(
           </HStack>
         </Box>
 
-        <Text
-          fontSize="sm"
-          color={color}
+        <Box
+          py="0.5"
+          px="1"
+          bgColor="bg.1000"
+          filter="opacity(0.9)"
+          borderRadius="lg"
           position="absolute"
-          bottom="1"
-          left="1"
+          bottom={`${Math.max(40, Math.min(trend * 50 + 100, 160))}px`}
+          right="4"
         >
-          {giveUsdRate + " | " + getUsdRate}
-        </Text>
+          <Text fontSize="sm" color={color}>
+            {`1 ${getCur} ≈ ${format(currentRate, 3)} ${giveCur}`}
+          </Text>
+        </Box>
       </Box3D>
     );
   }

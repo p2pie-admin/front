@@ -23,11 +23,12 @@ const Side = () => {
   return (
     <Box3D>
       <Grid
-        gridTemplateRows="1fr 36px 1fr"
+        gridTemplateRows="1fr 30px 1fr"
         gridTemplateColumns="auto 1fr"
         alignItems="center"
         px={["2", "4"]}
         gridAutoFlow=""
+        h="92px"
       >
         <Text color="bg.600" fontSize="sm" mt="2">
           {t(`main:${side}Title`)}

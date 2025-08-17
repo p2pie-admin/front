@@ -1,4 +1,4 @@
-import { Box, Grid, HStack, Text } from "@chakra-ui/react";
+import { Box, Grid, HStack, Text, useBreakpointValue } from "@chakra-ui/react";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
 import { IPm } from "../../types/selector";
 import { pmsToSlug } from "../main/side/selector/section/PmGroup/helper";
@@ -14,6 +14,7 @@ import ErrorWrapper from "../shared/ErrorWrapper";
 import { useTranslation } from "next-i18next";
 
 const Similar = ({ similarPmPairs }: { similarPmPairs: IPm[][] }) => {
+  const h = useBreakpointValue({ base: 300, md: 416 }) || 416;
   const fetcher = initParserFetcher();
   const { t } = useTranslation();
   const dirs = similarPmPairs.reduce(
@@ -46,7 +47,7 @@ const Similar = ({ similarPmPairs }: { similarPmPairs: IPm[][] }) => {
         : `1 ${getCur} ~ ${format(course, 2)} ${giveCur}`;
 
     return (
-      <HStack mt="3" w="100%" justifyContent="space-between">
+      <HStack w="100%" justifyContent="space-between" mt="2">
         <ResponsiveText size="sm" variant="no_contrast">{`${t(
           "main:exchangers"
         )} ${amountOfCourses}`}</ResponsiveText>
@@ -58,8 +59,8 @@ const Similar = ({ similarPmPairs }: { similarPmPairs: IPm[][] }) => {
   };
 
   return (
-    <Box3D px="4" w="100%" minH={{ base: "unset", lg: "370px" }}>
-      <ResponsiveText mt="4" variant="no_contrast">
+    <Box3D px="4" w="100%" h={`${h}px`}>
+      <ResponsiveText mt="4" mb="-2" variant="no_contrast">
         {t("main:similarDirs")}
       </ResponsiveText>
       {similarPmPairs.map((pair, index) => {

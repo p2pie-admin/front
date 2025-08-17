@@ -26,21 +26,13 @@ const ControlPanel = ({
   const secondaryColor = useColorModeValue("bg.100", "bg.800");
   const index = useAppSelector((state) => state.main.swiperIdVisible);
   return (
-    <VStack justifyContent="space-between" spacing={["2", "4"]} w="100%">
-      <Button
-        p={["0.5", "1"]}
-        minW={["6", "10"]}
-        variant="extra_contrast"
-        onClick={() => stepDown()}
-        color="bg.500"
-      >
-        <IoIosArrowUp size="1.2rem" />
-      </Button>
-      <Box3D w={["6", "10"]} flex="1">
+    <Box3D w={"10"} flex="1">
+      <VStack h="100%">
+        <Button variant="default" onClick={() => stepDown()} color="bg.400">
+          <IoIosArrowUp size="1.2rem" />
+        </Button>
         <VStack
           w="100%"
-          spacing={length > 10 ? "1" : length > 20 ? "0.5" : "3"}
-          py={["2", "4"]}
           px={["0.5", "2"]}
           h="100%"
           justifyContent={length >= 10 ? "space-around" : "center"}
@@ -57,17 +49,11 @@ const ControlPanel = ({
             />
           ))}
         </VStack>
-      </Box3D>
-      <Button
-        p={["0.5", "1"]}
-        minW={["6", "10"]}
-        variant="extra_contrast"
-        onClick={() => stepUp()}
-        color="bg.500"
-      >
-        <IoIosArrowDown size="1.2rem" />
-      </Button>
-    </VStack>
+        <Button variant="default" onClick={() => stepUp()} color="bg.400">
+          <IoIosArrowDown size="1.2rem" />
+        </Button>
+      </VStack>
+    </Box3D>
   );
 };
 

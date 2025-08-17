@@ -142,7 +142,7 @@ export const findSimilarPmPairs = (
           pair[0].code == pair[1].code
         )
     )
-    .slice(0, 3);
+    .slice(0, 4);
 };
 
 export const generateTitle = ({
