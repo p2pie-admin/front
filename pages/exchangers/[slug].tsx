@@ -147,11 +147,11 @@ export async function getStaticProps({
 export async function getStaticPaths() {
   try {
     const exchangers = (await loadExchangers()) as IExchangerPreview[];
-    if (!exchangers || exchangers.length === 0) {
+    if (!exchangers || !Array.isArray(exchangers)) {
       console.warn("⚠️ No exchangers found, returning empty paths");
       return {
         paths: [],
-        fallback: "blocking",
+        fallback: false,
       };
     }
 

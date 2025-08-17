@@ -24,10 +24,12 @@ export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
 
     const popularRates = popularRatesRaw as IPopularDirRates;
     const pms = pmsRaw || [];
+    const firstRate = Object.values(popularRates)[0];
     const popularPmCodes = [
-      ...Object.keys(popularRates),
-      ...Object.values(popularRates)[0]?.buy.map((i) => i.fiat),
+      ...Object.keys(popularRates ?? {}),
+      ...(firstRate?.buy?.map((i) => i.fiat) ?? []),
     ];
+    console.log("(popularRates)[0]", Object.values(popularRates)[0]);
     const popularPms = pms?.filter((pm) =>
       popularPmCodes.find((code) => code === pm.code)
     );

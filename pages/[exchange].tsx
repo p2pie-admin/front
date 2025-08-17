@@ -79,12 +79,7 @@ export async function getStaticProps({
     const getPm = pms?.find((pm) => pm.code === getCode) ?? null;
     if (!dir || !givePm || !getPm) {
       console.error("[getStaticProps] Invalid direction or PM data.");
-      return {
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
+      return { notFound: true };
     }
     const similarPmPairs = findSimilarPmPairs(
       givePm,
