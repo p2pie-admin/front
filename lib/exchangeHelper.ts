@@ -5,63 +5,70 @@ import { ICity, IDirText, ISeoData } from "../types/exchange";
 import { IPm } from "../types/selector";
 import { loadDirText } from "../cache/loadX";
 
-export const generateH1 = (
-  givePm: IPm,
-  getPm: IPm,
-  locale: string,
-  city: ICity | null
-) => {
-  const giveCur = givePm.currency.code.toUpperCase();
-  const getCur = getPm.currency.code.toUpperCase();
-  let [description, cityAddon, site_name] = ["", "", ""];
-  if (locale == "ru") {
-    description = `Обмен ${givePm.ru_name || givePm.en_name} ${giveCur} ${
-      givePm.subgroup_name || ""
-    } на ${getPm.ru_name || getPm.en_name} ${getCur}`;
-    if (city) cityAddon = ` в ${city.ru_name}, ${city.ru_country_name}`;
-    site_name = `${process.env.NEXT_PUBLIC_NAME} мониторинг обменников`;
-  } else {
-    if (city) cityAddon = ` в ${city.en_name}, ${city.en_country_name}`;
-    description = `Exchange ${givePm.en_name} ${giveCur} ${
-      givePm.subgroup_name || ""
-    } for ${getPm.en_name} ${getCur}`;
-    site_name = `${process.env.NEXT_PUBLIC_NAME} Exchange Monitoring`;
-  }
-  return description + cityAddon;
-};
-
-export const dirTextHandler = async (
-  customDirText: IDirText,
-  description: string,
-  givePm: IPm,
-  getPm: IPm
-) => {
-  if (!customDirText.id) {
-    // генерируем из шаблонов
-    const dirTextLayout = await loadDirText();
-  }
-  if (!customDirText.title) {
-    // генерируем из шаблонов
-    mylog("description was generated from default layout", "warning");
-    return { ...customDirText, title: description };
-  }
-  return customDirText;
-};
-
-export const fillWords = ({
+export const dirTextHandler = async ({
+  locale,
   givePm,
   getPm,
-  cityCountry,
-  title,
+  customDirText,
+  city,
 }: {
+  locale: "en" | "ru";
   givePm: IPm;
   getPm: IPm;
-  cityCountry?: string;
-  title?: string;
+  customDirText?: IDirText;
+  city: ICity | null;
 }) => {
-  const { locale } = useRouter() as { locale: "en" | "ru" };
+  if (!customDirText?.id || !customDirText?.seo_title) {
+    mylog(
+      `${givePm.code}_${getPm.code} description was generated from default layout`,
+      "warning"
+    );
 
-  return (title || "")
+    const dirTextLayout = await loadDirText(
+      locale,
+      givePm.section,
+      getPm.section
+    );
+
+    const replacer = (text?: string) =>
+      fillWords({
+        locale,
+        givePm,
+        getPm,
+        cityName: city?.[`${locale}_name`],
+        text,
+      });
+
+    const fields = [
+      "header",
+      "subheader",
+      "seo_description",
+      "seo_title",
+      "text",
+    ] as const;
+
+    return {
+      ...dirTextLayout,
+      ...Object.fromEntries(fields.map((f) => [f, replacer(dirTextLayout[f])])),
+    };
+  }
+
+  return customDirText;
+};
+export const fillWords = ({
+  locale,
+  givePm,
+  getPm,
+  cityName,
+  text,
+}: {
+  locale: "en" | "ru";
+  givePm: IPm;
+  getPm: IPm;
+  cityName?: string;
+  text?: string;
+}) =>
+  (text || "")
     .replaceAll(
       "give_name",
       capitalize(givePm[`${locale}_name`] || givePm.en_name)
@@ -72,13 +79,7 @@ export const fillWords = ({
     )
     .replaceAll("give_currency", givePm.currency.code.toUpperCase())
     .replaceAll("get_currency", getPm.currency.code.toUpperCase())
-    .replaceAll(
-      "city_name",
-      cityCountry
-        ? `${cityCountry.split(" / ")[0]}, ${cityCountry.split(" / ")[1]}`
-        : ""
-    );
-};
+    .replaceAll("city_name", cityName || "");
 
 // export const convertCities = (cities: ICity[]): ICities => {
 //   const newCities = {} as ICities; //changes key from BTM -> batumi
@@ -220,37 +221,49 @@ export const slugCityToExchange = (slug: string, city?: string) => {
 //   return `${locale}/${startWord}-${slug}`
 // }
 
-export const generateExchangeSeo = (seoData: ISeoData) => {
-  const { givePm, getPm, locale, customDescription, slug, city } = seoData;
+export const generateExchangeTitle = (
+  locale: string,
+  givePm: IPm,
+  getPm: IPm,
+  city: ICity | null
+) => {
+  const giveCur = givePm.currency.code.toUpperCase();
+  const getCur = getPm.currency.code.toUpperCase();
+  let [description, cityAddon, site_name] = ["", "", ""];
+  if (locale == "ru") {
+    description = `Обмен ${givePm.ru_name || givePm.en_name} ${giveCur} ${
+      givePm.subgroup_name || ""
+    } на ${getPm.ru_name || getPm.en_name} ${getCur}`;
+    if (city) cityAddon = ` в ${city.ru_name}, ${city.ru_country_name}`;
+    site_name = `${process.env.NEXT_PUBLIC_NAME} мониторинг обменников`;
+  } else {
+    if (city) cityAddon = ` в ${city.en_name}, ${city.en_country_name}`;
+    description = `Exchange ${givePm.en_name} ${giveCur} ${
+      givePm.subgroup_name || ""
+    } for ${getPm.en_name} ${getCur}`;
+    site_name = `${process.env.NEXT_PUBLIC_NAME} Exchange Monitoring`;
+  }
+  return description + cityAddon;
+};
 
-  const title = generateH1({
-    locale,
-    givePm,
-    getPm,
-    city,
-  });
+export const generateExchangeSeo = (seoData: ISeoData) => {
+  const { givePm, getPm, locale, seo_description, seo_title, slug, city } =
+    seoData;
+
+  const title = generateExchangeTitle(locale, givePm, getPm, city);
+
+  const slugPath = slugCityToExchange(slug, city?.en_name);
 
   return {
-    title,
-    description,
-    canonicalPath: `${locale}/${slugCityToExchange(slug, city?.en_name)}`,
+    title: seo_title || title,
+    description: seo_description || "",
+    canonical: `https://${process.env.NEXT_PUBLIC_NAME}.com/${locale}/${slugPath}`,
     locale,
-    alternateLangs: [
-      {
-        rel: "alternate",
-        hrefLang: "en",
-        href: `https://${
-          process.env.NEXT_PUBLIC_NAME
-        }.com/en/${slugCityToExchange(slug, city?.en_name)}`,
-      },
-      {
-        rel: "alternate",
-        hrefLang: "ru",
-        href: `https://${
-          process.env.NEXT_PUBLIC_NAME
-        }.com/ru/${slugCityToExchange(slug, city?.en_name)}`,
-      },
-    ],
+    alternateLangs: ["en", "ru"].map((l) => ({
+      rel: "alternate",
+      hrefLang: l,
+      href: `https://${process.env.NEXT_PUBLIC_NAME}.com/${l}/${slugPath}`,
+    })),
     breadcrumbs: [
       {
         position: 1,
@@ -259,10 +272,8 @@ export const generateExchangeSeo = (seoData: ISeoData) => {
       },
       {
         position: 2,
-        name: title,
-        item: `https://${
-          process.env.NEXT_PUBLIC_NAME
-        }.com/${locale}/${slugCityToExchange(slug, city?.en_name)}`,
+        name: seo_title || `${givePm} → ${getPm}`,
+        item: `https://${process.env.NEXT_PUBLIC_NAME}.com/${locale}/${slugPath}`,
       },
     ],
   };

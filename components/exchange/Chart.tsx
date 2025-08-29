@@ -77,8 +77,8 @@ const Chart = memo(
           width={420}
           height={200}
           style={{ objectFit: "cover" }}
-          placeholder="blur"
-          blurDataURL="/placeholder.png"
+          // placeholder="blur"
+          // blurDataURL="/placeholder.png"
         />
         <HStack position="absolute" top="1" left="1" zIndex="35" px="2">
           <Text fontSize="md" fontWeight="bold" color={primaryColor}>

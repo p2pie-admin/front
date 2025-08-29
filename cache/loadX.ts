@@ -179,8 +179,6 @@ export const loadDirText = (
   sectionGive: string,
   sectionGet: string
 ) =>
-  cachedFetch(
-    `dirText_${locale}_${sectionGive}_${sectionGet}`,
-    TTL.slow,
-    () => cmsFetcher(dirsTextQuery, { locale }) as Promise<IDirText[]>
-  );
+  cachedFetch(`dirText_${locale}_${sectionGive}_${sectionGet}`, TTL.slow, () =>
+    cmsFetcher(dirsTextQuery, { locale })
+  ).then((r) => r[0]) as Promise<IDirText>;

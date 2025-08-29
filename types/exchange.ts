@@ -25,7 +25,10 @@ export interface IDirText {
   section_give: ISectionName;
   section_get: ISectionName;
   text: string;
-  title: string;
+  seo_title: string;
+  seo_description: string;
+  header: string;
+  subheader: string;
   updatedAt: string;
 }
 
@@ -89,7 +92,8 @@ export interface ISeoData {
   givePm: IPm;
   getPm: IPm;
   locale: "en" | "ru";
-  customDescription?: string;
+  seo_title: string;
+  seo_description: string;
   slug: string;
   city: ICity | null;
 }

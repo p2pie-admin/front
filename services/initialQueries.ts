@@ -92,7 +92,10 @@ export const dirsTextQuery = gql`
         attributes {
           section_give
           section_get
-          title
+          seo_title
+          seo_description
+          header
+          subheader
           text
         }
       }

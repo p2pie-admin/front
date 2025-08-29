@@ -39,7 +39,7 @@ import { useTranslation } from "next-i18next";
 import PmLayout from "./pmLayout";
 import UniversalSeo from "../shared/UniversalSeo";
 import { ISEO } from "../../types/general";
-import { generateH1 } from "../../lib/exchangeHelper";
+import { generateExchangeTitle } from "../../lib/exchangeHelper";
 
 const Exchange = ({
   locale,
@@ -104,13 +104,7 @@ const Exchange = ({
   const giveCur = givePm.currency.code.toUpperCase();
   const getCur = getPm.currency.code.toUpperCase();
 
-  const h1 = generateH1({
-    locale,
-    givePm,
-    getPm,
-  });
-
-  const isLong = h1.length > 30;
+  const isLong = dirText?.header ? dirText?.header.length > 30 : true;
 
   return (
     <VStack>
@@ -127,7 +121,7 @@ const Exchange = ({
           fontWeight="bold"
           color="inherit"
         >
-          {h1}
+          {dirText?.header}
         </Heading>
       </Box>
 
@@ -161,12 +155,7 @@ const Exchange = ({
           gridColumn={{ base: "unset", lg: "1/3" }}
           gridRow={{ base: "3", lg: "2" }}
         >
-          <DirText
-            dirText={dirText}
-            givePm={givePmData.pm}
-            getPm={getPmData.pm}
-            city={city}
-          />
+          <DirText dirText={dirText} />
         </Box3D>
       </ColumnGrid>
     </VStack>

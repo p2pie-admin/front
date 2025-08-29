@@ -22,8 +22,8 @@ import {
   dirTextHandler,
   exchangeToSlugCity,
   findSimilarPmPairs,
-  generateExchangeTitle,
   generateExchangeSeo,
+  generateExchangeTitle,
 } from "../lib/exchangeHelper";
 
 const prerenderCountries = ["ukraine", "russia", "belarus"];
@@ -51,6 +51,7 @@ export async function getStaticProps({
   try {
     const { exchange } = params;
     const [slug, cityParam] = exchangeToSlugCity(exchange);
+
     const isCash =
       (slug && slug.startsWith("cash-")) || slug.includes("-cash-");
 
@@ -119,20 +120,22 @@ export async function getStaticProps({
       // possiblePairs: possiblePairs[getPm.code],
     } as IPmData;
 
-    const description = generateExchangeTitle(givePm, getPm, locale, city);
-
-    const dirText = (await dirTextHandler(
-      customDirText,
-      description,
+    const dirText = (await dirTextHandler({
+      locale,
       givePm,
-      getPm
-    )) as IDirText;
+      getPm,
+      customDirText,
+      city,
+    })) as IDirText;
+
+    mylog(JSON.stringify(dirText, undefined, 4), "success");
 
     const seo = generateExchangeSeo({
       givePm,
       getPm,
       locale,
-      description,
+      seo_title: dirText.seo_title,
+      seo_description: dirText.seo_description,
       slug,
       city,
     });
@@ -144,7 +147,7 @@ export async function getStaticProps({
         cities: cities || null,
         givePmData: givePmData || null,
         getPmData: getPmData || null,
-        dirText: null,
+        dirText,
         city: city || null,
         similarPmPairs: similarPmPairs || null,
         //donorCity: donorCity || null,
