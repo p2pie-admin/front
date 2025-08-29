@@ -1,28 +1,28 @@
 import { Text, Box, Heading, Link } from "@chakra-ui/react";
 import { ResponsiveText } from "../../styles/theme/custom";
-import { fillWords } from "./helper";
+
 import { IPm } from "../../types/selector";
 import { useAppSelector } from "../../redux/hooks";
 import { ICity, IDirText } from "../../types/exchange";
 import { useRouter } from "next/router";
 import { TextToHTML } from "../shared/helper";
+import { fillWords } from "../../lib/exchangeHelper";
 
 const DirText = ({
   dirText,
   givePm,
   getPm,
-  slug,
+
   city,
 }: {
-  dirText?: IDirText;
+  dirText: IDirText | null;
   givePm: IPm;
   getPm: IPm;
-  slug: string;
+
   city: ICity | null;
 }) => {
   const { locale } = useRouter() as { locale: "en" | "ru" };
   const cityCountry = useAppSelector((state) => {
-    if (!(slug.startsWith("cash-") || slug.includes("-cash-"))) return "";
     return `${
       locale === "ru"
         ? state.main.city.preposition

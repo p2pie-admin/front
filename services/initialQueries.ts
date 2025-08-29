@@ -80,7 +80,7 @@ export const pmGroupsByNamesQuery = gql`
   }
 `;
 
-export const dirsTextsQuery = gql`
+export const dirsTextQuery = gql`
   query dirsText(
     $locale: I18NLocaleCode # $section_give: String # $section_get: String
   ) {
@@ -94,7 +94,6 @@ export const dirsTextsQuery = gql`
           section_get
           title
           text
-          updatedAt
         }
       }
     }
@@ -329,6 +328,22 @@ export const TextBoxQuery = gql`
           title
           subtitle
           text
+        }
+      }
+    }
+  }
+`;
+
+export const CustomDirTextQuery = gql`
+  query TextBox($locale: I18NLocaleCode, $slug: String) {
+    textBoxes(locale: $locale, filters: { subtitle: { eqi: $slug } }) {
+      data {
+        id
+        attributes {
+          title
+          subtitle
+          text
+          key
         }
       }
     }

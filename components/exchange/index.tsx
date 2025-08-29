@@ -30,8 +30,6 @@ import { useEffect } from "react";
 import { batch } from "react-redux";
 import Similar from "./Similar";
 import { Column } from "../layout/Column";
-import ColumnHeader from "../layout/ColumnHeader";
-import { generateH1, generateTitle, slugCityToExchange } from "./helper";
 
 import { ICity, IDirText, IPmData, IPmLayout } from "../../types/exchange";
 import ColumnGrid from "../layout/ColumnGrid";
@@ -41,11 +39,12 @@ import { useTranslation } from "next-i18next";
 import PmLayout from "./pmLayout";
 import UniversalSeo from "../shared/UniversalSeo";
 import { ISEO } from "../../types/general";
+import { generateH1 } from "../../lib/exchangeHelper";
 
 const Exchange = ({
   locale,
   seo,
-  slug,
+
   dirText,
   givePmData,
   getPmData,
@@ -56,7 +55,7 @@ const Exchange = ({
   //article?: IArticle | null;
   locale: "en" | "ru";
   seo: ISEO;
-  slug: string | null;
+
   givePmData: IPmData | null;
   getPmData: IPmData | null;
   dirText: IDirText | null;
@@ -66,14 +65,12 @@ const Exchange = ({
 }) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const [peripheryColor, centerColor] = useToken(
+    "colors",
+    useColorModeValue(["bg.500", "violet.700"], ["bg.400", "peach.300"])
+  );
 
-  if (
-    !givePmData ||
-    !getPmData ||
-    !dirText ||
-    !givePmData.pm ||
-    !getPmData.pm
-  ) {
+  if (!givePmData?.pm || !getPmData?.pm) {
     console.log("givePmData", givePmData);
     console.log("getPmData", getPmData);
     console.log("dirText", dirText);
@@ -104,11 +101,6 @@ const Exchange = ({
     });
   }, [dir, city]);
 
-  const [peripheryColor, centerColor] = useToken(
-    "colors",
-    useColorModeValue(["bg.500", "violet.700"], ["bg.400", "peach.300"])
-  );
-
   const giveCur = givePm.currency.code.toUpperCase();
   const getCur = getPm.currency.code.toUpperCase();
 
@@ -119,8 +111,6 @@ const Exchange = ({
   });
 
   const isLong = h1.length > 30;
-
-  if (!slug) return <></>;
 
   return (
     <VStack>
@@ -163,7 +153,7 @@ const Exchange = ({
             <LimitsRange />
           </HStack>
 
-          <TV dir={dir} city={city} donorCity={donorCity} slug={slug} />
+          <TV dir={dir} city={city} donorCity={donorCity} />
         </Column>
         <Box3D
           p="4"
@@ -175,7 +165,6 @@ const Exchange = ({
             dirText={dirText}
             givePm={givePmData.pm}
             getPm={getPmData.pm}
-            slug={slug}
             city={city}
           />
         </Box3D>

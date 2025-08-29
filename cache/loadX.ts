@@ -3,7 +3,7 @@ import {
   TextBoxQuery,
   MainTextsQuery,
   pmLayoutsQuery,
-  dirsTextsQuery,
+  dirsTextQuery,
   articleCodesQuery,
   articlesQuery,
   articleQuery,
@@ -11,6 +11,7 @@ import {
   exchangerQuery,
   exchangersQuery,
   citiesQuery,
+  CustomDirTextQuery,
 } from "../services/initialQueries";
 import { getPmsFromSelector, mergeExchangers } from "./helper";
 import { cachedFetch } from "./cache";
@@ -57,13 +58,6 @@ export const loadPmLayouts = (locale: "en" | "ru") =>
     `pmLayouts_${locale}`,
     TTL.slow,
     () => cmsFetcher(pmLayoutsQuery, { locale }) as Promise<IPmLayout[]>
-  );
-
-export const loadDirsTexts = (locale: "en" | "ru") =>
-  cachedFetch(
-    `dirsTexts_${locale}`,
-    TTL.slow,
-    () => cmsFetcher(dirsTextsQuery, { locale }) as Promise<IDirText[]>
   );
 
 export const loadArticleCodes = () =>
@@ -163,3 +157,30 @@ export const loadPopular = () =>
     const res = await parserFetcher("top");
     return res || [];
   });
+
+export const preloadCustomDirTexts = (locale: string, slug: string) => {};
+
+export const loadCustomDirText = (locale: string, slug: string) =>
+  cachedFetch(`custom_dir_text_${slug}`, TTL.instant, async () => {
+    const res = await cmsFetcher(CustomDirTextQuery, { locale, slug });
+    return res?.[0] as IDirText;
+  });
+
+// export const loadDirsTexts = (locale: "en" | "ru") =>
+//   cachedFetch(
+//     `dirsTexts_${locale}`,
+//     TTL.slow,
+//     () => cmsFetcher(dirsTextQuery, { locale }) as Promise<IDirText[]>
+//   );
+export const preloadDirTexts = () => {};
+
+export const loadDirText = (
+  locale: "en" | "ru",
+  sectionGive: string,
+  sectionGet: string
+) =>
+  cachedFetch(
+    `dirText_${locale}_${sectionGive}_${sectionGet}`,
+    TTL.slow,
+    () => cmsFetcher(dirsTextQuery, { locale }) as Promise<IDirText[]>
+  );

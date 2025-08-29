@@ -13,22 +13,17 @@ import CustomModal from "../../shared/CustomModal";
 import RateDetails from "../../shared/RateDetails";
 import { useRouter } from "next/router";
 import { ICity } from "../../../types/exchange";
-import NextLink from "next/link";
-import { slugCityToExchange } from "../../exchange/helper";
-import { capitalize } from "../side/selector/section/PmGroup/helper";
-import { ResponsiveText } from "../../../styles/theme/custom";
+
 import { useTranslation } from "react-i18next";
 
 const TV = ({
   dir,
   city,
   donorCity,
-  slug,
 }: {
   dir: string;
   city: ICity | null;
   donorCity: ICity | null;
-  slug: string;
 }) => {
   const containerHeight = useBreakpointValue({ base: 300, md: 416 }) || 416;
 
@@ -63,7 +58,7 @@ const TV = ({
   };
 
   return (
-    <Box h="416px">
+    <Box h={{ base: "fit-content", lg: "416px" }}>
       <CustomModal id="rate-details" header="Exchanger details">
         <RateDetails />
       </CustomModal>

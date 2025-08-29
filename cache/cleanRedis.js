@@ -1,5 +1,7 @@
 // scripts/clearRedis.js
+
 const { Redis } = require("@upstash/redis");
+require("dotenv").config(); // load env vars
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,

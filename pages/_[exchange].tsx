@@ -5,6 +5,10 @@ import React from "react";
 import Exchange from "../components/exchange";
 import { ICache, ICity, IDirText, IPmData } from "../types/exchange";
 
+import { TextBoxQuery } from "../services/initialQueries";
+import { initCMSFetcher } from "../services/fetchers";
+import { ITextBox } from "../types/pages";
+import { enrichText } from "../components/shared/helper";
 import { ISEO } from "../types/general";
 import { nullSeo } from "../components/shared/UniversalSeo";
 import { getSlugToCodes } from "../cache/helper";
@@ -13,26 +17,29 @@ import {
   loadPossiblePairs,
   loadCities,
   loadArticleCodes,
+  loadDirsTexts,
   loadPmLayouts,
   loadCustomDirText,
 } from "../cache/loadX";
-import { mylog } from "../services/utils";
-
+import { C } from "@upstash/redis/zmscore-CgRD7oFR";
 import {
-  dirTextHandler,
   exchangeToSlugCity,
   findSimilarPmPairs,
-  generateExchangeTitle,
-  generateExchangeSeo,
+  generateTitle,
+  slugCityToExchange,
 } from "../lib/exchangeHelper";
 
 const prerenderCountries = ["ukraine", "russia", "belarus"];
 
 const ExchangePage = (props: {
+  //article?: IArticle | null;
+  //cities: ICity[];
+  //possiblePairs: { [key: string]: string[] };
   seo: ISEO;
   givePmData: IPmData | null;
   getPmData: IPmData | null;
   locale: "en" | "ru";
+  slug: string | null;
   dirText: IDirText | null;
   city: ICity | null;
   similarPmPairs: IPm[][] | null;
@@ -91,12 +98,43 @@ export async function getStaticProps({
           (c) => c.en_name?.toLowerCase() === cityParam.toLowerCase()
         ) || null
       : null;
+    // if (!cities || !Array.isArray(cities)) {
+    //   console.error("[getStaticProps] 'cities' is missing or invalid.");
+    //   return { notFound: true };
+    // }
+    // города доноры это те, у которых нет курса по нарпавлению но есть в соседнем
+    // const donorName =
+    //   (city?.en_name && donors?.[dir]?.[city.en_name]) || null;
+    // const donorCity =
+    //   (donorName &&
+    //     cities?.find(
+    //       (c) => c.en_name?.toLowerCase() === donorName.toLowerCase()
+    //     )) ||
+    //   null;
+    // обработка текстов
+
+    // первое : достаем коробки описания секций пм, это также ссылки на артиклы пм
+    // и втрое : достаем шаблоны для направления с местами для вставки
 
     const givePmLayout =
       pmLayouts?.find((l) => l.section == givePm?.section) || null;
     const getPmLayout =
       pmLayouts?.find((l) => l.section == getPm?.section) || null;
-
+    // const dirText =
+    //   dirTexts?.find(
+    //     (text) =>
+    //       text?.section_give == givePm?.section &&
+    //       text?.section_get == getPm?.section
+    //   ) || null;
+    // //если есть текст для направления - внедряем
+    // const dirTextFetcher = initCMSFetcher();
+    // const textBoxes = (await dirTextFetcher(TextBoxQuery, {
+    //   locale,
+    //   key: dir.toUpperCase(),
+    // })) as ITextBox[];
+    // if (dirText && textBoxes?.length && textBoxes[0]?.text) {
+    //   dirText.text = enrichText(textBoxes[0]?.text, articleCodes, pms, locale);
+    // }
     let [giveArticleExists, getArticleExists] = [false, false];
     if (articleCodes.length) {
       giveArticleExists = !!articleCodes?.find(
@@ -118,33 +156,72 @@ export async function getStaticProps({
       articleExists: getArticleExists,
       // possiblePairs: possiblePairs[getPm.code],
     } as IPmData;
-
-    const description = generateExchangeTitle(givePm, getPm, locale, city);
-
-    const dirText = (await dirTextHandler(
-      customDirText,
-      description,
-      givePm,
-      getPm
-    )) as IDirText;
-
-    const seo = generateExchangeSeo({
+    const title1 = generateTitle({
+      locale,
       givePm,
       getPm,
-      locale,
-      description,
-      slug,
-      city,
     });
-
+    const giveCur = givePm.currency.code.toUpperCase();
+    const getCur = getPm.currency.code.toUpperCase();
+    let [description, cityAddon, site_name] = ["", "", ""];
+    if (locale == "ru") {
+      description = `Обмен ${givePm.ru_name || givePm.en_name} ${giveCur} ${
+        givePm.subgroup_name || ""
+      } на ${getPm.ru_name || getPm.en_name} ${getCur}`;
+      if (city) cityAddon = ` в ${city.ru_name}, ${city.ru_country_name}`;
+      site_name = `${process.env.NEXT_PUBLIC_NAME} мониторинг обменников`;
+    } else {
+      if (city) cityAddon = ` в ${city.en_name}, ${city.en_country_name}`;
+      description = `Exchange ${givePm.en_name} ${giveCur} ${
+        givePm.subgroup_name || ""
+      } for ${getPm.en_name} ${getCur}`;
+      site_name = `${process.env.NEXT_PUBLIC_NAME} Exchange Monitoring`;
+    }
+    const seo = {
+      title: title1,
+      description: description + cityAddon,
+      canonicalPath: `${locale}/${slugCityToExchange(slug, city?.en_name)}`,
+      locale,
+      alternateLangs: [
+        {
+          rel: "alternate",
+          hrefLang: "en",
+          href: `https://${
+            process.env.NEXT_PUBLIC_NAME
+          }.com/en/${slugCityToExchange(slug, city?.en_name)}`,
+        },
+        {
+          rel: "alternate",
+          hrefLang: "ru",
+          href: `https://${
+            process.env.NEXT_PUBLIC_NAME
+          }.com/ru/${slugCityToExchange(slug, city?.en_name)}`,
+        },
+      ],
+      breadcrumbs: [
+        {
+          position: 1,
+          name: locale === "en" ? "Home" : "Главная",
+          item: `https://${process.env.NEXT_PUBLIC_NAME}.com/${locale}`,
+        },
+        {
+          position: 2,
+          name: title1,
+          item: `https://${
+            process.env.NEXT_PUBLIC_NAME
+          }.com/${locale}/${slugCityToExchange(slug, city?.en_name)}`,
+        },
+      ],
+    };
     return {
       props: {
         locale,
         seo: seo || nullSeo,
+        slug: slug || null,
         cities: cities || null,
         givePmData: givePmData || null,
         getPmData: getPmData || null,
-        dirText: null,
+        dirText: dirText || null,
         city: city || null,
         similarPmPairs: similarPmPairs || null,
         //donorCity: donorCity || null,
@@ -158,7 +235,7 @@ export async function getStaticProps({
       props: {
         locale,
         seo: nullSeo,
-
+        slug: null,
         cities: null,
         givePmData: null,
         getPmData: null,
@@ -182,15 +259,25 @@ export async function getStaticProps({
 export async function getStaticPaths() {
   const locales = ["en", "ru"];
 
-  const [pms, possiblePairs, cities, pmLayoutsRu, pmLayoutsEn, articleCodes] =
-    await Promise.all([
-      loadPms(),
-      loadPossiblePairs(),
-      loadCities(),
-      loadPmLayouts("ru"),
-      loadPmLayouts("en"),
-      loadArticleCodes(),
-    ]);
+  const [
+    pms,
+    possiblePairs,
+    cities,
+    pmLayoutsRu,
+    dirTextsRu,
+    pmLayoutsEn,
+    dirTextsEn,
+    articleCodes,
+  ] = await Promise.all([
+    loadPms(),
+    loadPossiblePairs(),
+    loadCities(),
+    loadPmLayouts("ru"),
+    loadDirsTexts("ru"),
+    loadPmLayouts("en"),
+    loadDirsTexts("en"),
+    loadArticleCodes(),
+  ]);
 
   const slugToCodes = getSlugToCodes(possiblePairs, pms);
 
@@ -220,6 +307,57 @@ export async function getStaticPaths() {
     ],
     []
   );
+
+  // const parserFetcher = initParserFetcher();
+  // const nonEmpty = (await parserFetcher(`non_empty_cities`)) as {
+  //   [key: string]: { [key: string]: number };
+  // };
+
+  // if (!nonEmpty) {
+  //   console.error("[getStaticPaths] nonEmpty data is missing or invalid.");
+  //   return {
+  //     paths: [],
+  //     fallback: "blocking",
+  //   };
+  // }
+
+  // const nonEmptyCities = new Set(
+  //   Object.keys(nonEmpty).map((key) => key.toLowerCase())
+  // );
+
+  // const tryDonor = (city: ICity) =>
+  //   city.closest_cities?.find((c) =>
+  //     nonEmptyCities.has(c.en_name.toLowerCase())
+  //   )?.en_name;
+
+  // let donors = {} as IDonors;
+
+  // await Promise.all(
+  //   cities.map(async (city) => {
+  //     Object.entries(slugToCodes).forEach(([slug, dir]) => {
+  //       // если направление не кэш или город имеет меньше 2 курсов  - скипаем его
+  //       if (!(slug.startsWith("cash-") || slug.includes("-cash-"))) return;
+  //       const rateIsEmpty = nonEmpty?.[city?.en_name.toLowerCase()]?.[dir] < 2;
+  //       const donorName = tryDonor(city);
+  //       if (rateIsEmpty && !donorName) return;
+  //       if (rateIsEmpty && donorName && dir) {
+  //         donors[dir] = donors[dir] || {};
+  //         donors[dir][donorName] = city.en_name;
+  //       }
+
+  //       locales.forEach((locale) => {
+  //         allPaths.push({
+  //           params: {
+  //             exchange: `${slug}-in-${[city.en_name.toLowerCase()]}`,
+  //           },
+  //           locale,
+  //         });
+  //       });
+  //     });
+  //   })
+  // );
+
+  //writeCache({ ...cachedData, donors });
 
   const needPrerender = (exchangePath: string) => {
     if (!exchangePath.includes("-in-")) return true; // dont prerender cities

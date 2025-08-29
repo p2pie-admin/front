@@ -84,3 +84,12 @@ export interface IPmPairs {
   givePm?: IPm;
   getPm?: IPm;
 }
+
+export interface ISeoData {
+  givePm: IPm;
+  getPm: IPm;
+  locale: "en" | "ru";
+  customDescription?: string;
+  slug: string;
+  city: ICity | null;
+}

@@ -83,7 +83,7 @@ const Layout = ({ children }: { children: any }) => {
           {children}
         </Box>
 
-        {/* <Footer /> */}
+        <Footer />
       </VStack>
     </Box>
   );

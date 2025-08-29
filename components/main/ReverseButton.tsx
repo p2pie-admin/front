@@ -10,8 +10,12 @@ import { CgArrowsExchange } from "react-icons/cg";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { clearDirRates, reverseDir } from "../../redux/mainReducer";
 import { useRouter } from "next/router";
-import { exchangeToSlugCity, slugCityToExchange } from "../exchange/helper";
+
 import NextLink from "next/link";
+import {
+  exchangeToSlugCity,
+  slugCityToExchange,
+} from "../../lib/exchangeHelper";
 
 const Patch = () => {
   const [bg10, bg900] = useToken("colors", ["bg.10", "bg.900"]);

@@ -13,7 +13,7 @@
 //   selectorQuery,
 //   citiesQuery,
 //   pmLayoutsQuery,
-//   dirsTextsQuery,
+//   dirsTextQuery,
 //   exchangersQuery,
 //   articleCodesQuery,
 //   articlesQuery,
@@ -97,7 +97,7 @@
 //     IPmLayout[]
 //   >;
 // export const loadDirsTexts = () =>
-//   safeFetch("dirsTexts", () => cmsFetcher(dirsTextsQuery)) as Promise<
+//   safeFetch("dirsTexts", () => cmsFetcher(dirsTextQuery)) as Promise<
 //     IDirText[]
 //   >;
 
@@ -170,7 +170,7 @@
 //   locale: "en" | "ru"
 // ): Promise<IDirText[]> => {
 //   const fetcher = initCMSFetcher();
-//   const dirsTextsRes = await fetcher(dirsTextsQuery, { locale });
+//   const dirsTextsRes = await fetcher(dirsTextQuery, { locale });
 //   return dirsTextsRes as IDirText[];
 // };
 // //// SELECTORS

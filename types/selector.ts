@@ -77,7 +77,7 @@ interface IPm {
   possible_pairs?: string[];
   color: string;
   popular_as?: IPopularAs | null;
-  section?: string;
+  section: string;
 }
 
 type ISide = "give" | "get";

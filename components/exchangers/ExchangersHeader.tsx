@@ -23,8 +23,13 @@ export default function ExchangersHeader({
   }, [exchangers]);
   return (
     <HStack justifyContent={"space-between"} px="4" py="2">
-      <ResponsiveText fontWeight="bold" fontSize="2xl" variant="primary">
-        {t("Exchangers")}
+      <ResponsiveText
+        fontWeight="bold"
+        fontSize="2xl"
+        variant="primary"
+        as="h1"
+      >
+        {t("exchangersPage")}
       </ResponsiveText>
       <Flex
         gap={{ base: "1", lg: "8" }}

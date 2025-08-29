@@ -178,12 +178,25 @@ export const Swiper = (props: {
               }}
               style={{ y, width: "100%" }}
               dragElastic={elastic}
-              onDragEnd={async () => {
-                await new Promise((r) =>
-                  setTimeout(r, Math.abs(y.getVelocity() / 2))
-                );
-                debouncedSetSwiperIdVisible(getIndex());
-                move(snapToNearest(y.get()));
+              onDragEnd={(_, info) => {
+                const velocity = info.velocity.y;
+                const currentIndex = getIndex();
+
+                if (velocity > 50) {
+                  // swipe down
+                  const newIndex = Math.max(currentIndex - 1, 0);
+                  debouncedSetSwiperIdVisible(newIndex);
+                  scrollToItem(newIndex);
+                } else if (velocity < -50) {
+                  // swipe up
+                  const newIndex = Math.min(currentIndex + 1, length - 1);
+                  debouncedSetSwiperIdVisible(newIndex);
+                  scrollToItem(newIndex);
+                } else {
+                  // low velocity: just snap back
+                  debouncedSetSwiperIdVisible(currentIndex);
+                  move(snapToNearest(y.get()));
+                }
               }}
               animate={controls}
             >

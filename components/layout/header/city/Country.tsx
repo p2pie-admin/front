@@ -1,16 +1,9 @@
 import React, { useState } from "react";
 import { ISelectorCountry } from "../../../../types/city";
 import { Box, Text, Collapse, Grid } from "@chakra-ui/react";
-import Link from "next/link";
-import { slugCityToExchange } from "../../../exchange/helper";
+
 import { useRouter } from "next/router";
 
-import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { pmsToSlug } from "../../../main/side/selector/section/PmGroup/helper";
-
-import { ICity } from "../../../../types/exchange";
-import { fetchCity } from "../../../../redux/thunks";
-import { weights } from "./helper";
 import City from "./City";
 
 export default function Country({

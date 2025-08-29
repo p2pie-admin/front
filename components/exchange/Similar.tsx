@@ -14,7 +14,6 @@ import ErrorWrapper from "../shared/ErrorWrapper";
 import { useTranslation } from "next-i18next";
 
 const Similar = ({ similarPmPairs }: { similarPmPairs: IPm[][] }) => {
-  const h = useBreakpointValue({ base: 300, md: 416 }) || 416;
   const fetcher = initParserFetcher();
   const { t } = useTranslation();
   const dirs = similarPmPairs.reduce(
@@ -59,7 +58,7 @@ const Similar = ({ similarPmPairs }: { similarPmPairs: IPm[][] }) => {
   };
 
   return (
-    <Box3D px="4" w="100%" h={`${h}px`}>
+    <Box3D px="4" w="100%" h={{ base: "fit-content", lg: "416px" }}>
       <ResponsiveText mt="4" mb="-2" variant="no_contrast">
         {t("main:similarDirs")}
       </ResponsiveText>
@@ -70,7 +69,7 @@ const Similar = ({ similarPmPairs }: { similarPmPairs: IPm[][] }) => {
         });
 
         return (
-          <Box my={{ base: "2", lg: "4" }} key={slug + index}>
+          <Box my="4" key={slug + index}>
             <Dir givePm={pair[0]} getPm={pair[1]} slug={slug}>
               {data?.[index] && renderRate(pair, data[index])}
             </Dir>

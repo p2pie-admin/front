@@ -1,8 +1,52 @@
 import { useRouter } from "next/router";
+import { capitalize } from "../components/main/side/selector/section/PmGroup/helper";
+import { mylog } from "../services/utils";
+import { ICity, IDirText, ISeoData } from "../types/exchange";
+import { IPm } from "../types/selector";
+import { loadDirText } from "../cache/loadX";
 
-import { IPm } from "../../types/selector";
+export const generateH1 = (
+  givePm: IPm,
+  getPm: IPm,
+  locale: string,
+  city: ICity | null
+) => {
+  const giveCur = givePm.currency.code.toUpperCase();
+  const getCur = getPm.currency.code.toUpperCase();
+  let [description, cityAddon, site_name] = ["", "", ""];
+  if (locale == "ru") {
+    description = `Обмен ${givePm.ru_name || givePm.en_name} ${giveCur} ${
+      givePm.subgroup_name || ""
+    } на ${getPm.ru_name || getPm.en_name} ${getCur}`;
+    if (city) cityAddon = ` в ${city.ru_name}, ${city.ru_country_name}`;
+    site_name = `${process.env.NEXT_PUBLIC_NAME} мониторинг обменников`;
+  } else {
+    if (city) cityAddon = ` в ${city.en_name}, ${city.en_country_name}`;
+    description = `Exchange ${givePm.en_name} ${giveCur} ${
+      givePm.subgroup_name || ""
+    } for ${getPm.en_name} ${getCur}`;
+    site_name = `${process.env.NEXT_PUBLIC_NAME} Exchange Monitoring`;
+  }
+  return description + cityAddon;
+};
 
-import { capitalize } from "../main/side/selector/section/PmGroup/helper";
+export const dirTextHandler = async (
+  customDirText: IDirText,
+  description: string,
+  givePm: IPm,
+  getPm: IPm
+) => {
+  if (!customDirText.id) {
+    // генерируем из шаблонов
+    const dirTextLayout = await loadDirText();
+  }
+  if (!customDirText.title) {
+    // генерируем из шаблонов
+    mylog("description was generated from default layout", "warning");
+    return { ...customDirText, title: description };
+  }
+  return customDirText;
+};
 
 export const fillWords = ({
   givePm,
@@ -145,52 +189,6 @@ export const findSimilarPmPairs = (
     .slice(0, 4);
 };
 
-export const generateTitle = ({
-  locale,
-  givePm,
-  getPm,
-}: {
-  locale: "en" | "ru";
-  givePm: IPm;
-  getPm: IPm;
-}) => {
-  const U = (str?: string | null) => (str ? str.toUpperCase() : "");
-  return locale === "ru"
-    ? `Обмен ${capitalize(givePm.ru_name)} ${U(givePm.currency.code)} ${U(
-        givePm.subgroup_name
-      )} на ${capitalize(getPm.ru_name)} ${U(getPm.currency.code)} ${U(
-        getPm.subgroup_name
-      )}`
-    : `Exchange ${capitalize(givePm.en_name)} ${U(givePm.currency.code)} ${U(
-        givePm.subgroup_name
-      )} to ${capitalize(getPm.en_name)} ${U(getPm.currency.code)} ${U(
-        getPm.subgroup_name
-      )}`;
-};
-
-export const generateH1 = ({
-  locale,
-  givePm,
-  getPm,
-}: {
-  locale: "en" | "ru";
-  givePm: IPm;
-  getPm: IPm;
-}) => {
-  const U = (str?: string | null) => (str ? str.toUpperCase() : "");
-  return locale === "ru"
-    ? `Обмен ${capitalize(givePm.ru_name)} ${U(givePm.currency.code)} ${U(
-        givePm.subgroup_name
-      )} на ${capitalize(getPm.ru_name)} ${U(getPm.currency.code)} ${U(
-        getPm.subgroup_name
-      )}`
-    : `Exchange ${capitalize(givePm.en_name)} ${U(givePm.currency.code)} ${U(
-        givePm.subgroup_name
-      )} to ${capitalize(getPm.en_name)} ${U(getPm.currency.code)} ${U(
-        getPm.subgroup_name
-      )}`;
-};
-
 export const exchangeToSlugCity = (exchange: string) => {
   return exchange.includes("-in-")
     ? [exchange.split("-in-")[0], exchange.split("-in-")[1]]
@@ -221,3 +219,51 @@ export const slugCityToExchange = (slug: string, city?: string) => {
 //   const middleWord = locale == "ru" ? "na" : "to"
 //   return `${locale}/${startWord}-${slug}`
 // }
+
+export const generateExchangeSeo = (seoData: ISeoData) => {
+  const { givePm, getPm, locale, customDescription, slug, city } = seoData;
+
+  const title = generateH1({
+    locale,
+    givePm,
+    getPm,
+    city,
+  });
+
+  return {
+    title,
+    description,
+    canonicalPath: `${locale}/${slugCityToExchange(slug, city?.en_name)}`,
+    locale,
+    alternateLangs: [
+      {
+        rel: "alternate",
+        hrefLang: "en",
+        href: `https://${
+          process.env.NEXT_PUBLIC_NAME
+        }.com/en/${slugCityToExchange(slug, city?.en_name)}`,
+      },
+      {
+        rel: "alternate",
+        hrefLang: "ru",
+        href: `https://${
+          process.env.NEXT_PUBLIC_NAME
+        }.com/ru/${slugCityToExchange(slug, city?.en_name)}`,
+      },
+    ],
+    breadcrumbs: [
+      {
+        position: 1,
+        name: locale === "en" ? "Home" : "Главная",
+        item: `https://${process.env.NEXT_PUBLIC_NAME}.com/${locale}`,
+      },
+      {
+        position: 2,
+        name: title,
+        item: `https://${
+          process.env.NEXT_PUBLIC_NAME
+        }.com/${locale}/${slugCityToExchange(slug, city?.en_name)}`,
+      },
+    ],
+  };
+};

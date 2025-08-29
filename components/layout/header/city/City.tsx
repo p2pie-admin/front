@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Text } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { slugCityToExchange } from "../../../exchange/helper";
+
 import { pmsToSlug } from "../../../main/side/selector/section/PmGroup/helper";
 import { fetchCity, fetchDirRates } from "../../../../redux/thunks";
 import router, { useRouter } from "next/router";
@@ -9,6 +9,7 @@ import { ISelectorCity } from "../../../../types/city";
 import { weights } from "./helper";
 import { setDirRatesStatus, triggerModal } from "../../../../redux/mainReducer";
 import { batch } from "react-redux";
+import { slugCityToExchange } from "../../../../lib/exchangeHelper";
 
 export default function City({
   city,
