@@ -66,23 +66,23 @@ export const loadArticleCodes = () =>
     return res.map((a: any) => a.code) as string[];
   });
 
-export const loadArticles = async (locale: "en" | "ru") =>
-  cachedFetch(`articles_${locale}`, TTL.slow, async () => {
-    const articles = (await cmsFetcher(articlesQuery, { locale }))
-      ?.articles as IArticle[];
+// export const loadArticles = async (locale: "en" | "ru") =>
+//   cachedFetch(`articles_${locale}`, TTL.slow, async () => {
+//     const articles = (await cmsFetcher(articlesQuery, { locale }))
+//       ?.articles as IArticle[];
 
-    await Promise.all(
-      // вызываем в getStaticPaths чтобы потом подхватить кэш из getStaticProps
-      articles.map((a) =>
-        redis.set(
-          `article_${a.code.toLowerCase()}_${locale}`,
-          { data: a, updatedAt: Date.now() } // SWR format
-        )
-      )
-    );
+//     await Promise.all(
+//       // вызываем в getStaticPaths чтобы потом подхватить кэш из getStaticProps
+//       articles.map((a) =>
+//         redis.set(
+//           `article_${a.code.toLowerCase()}_${locale}`,
+//           { data: a, updatedAt: Date.now() } // SWR format
+//         )
+//       )
+//     );
 
-    return articles;
-  });
+//     return articles;
+//   });
 
 export const loadArticle = (code: string, locale: "en" | "ru") =>
   cachedFetch(`article_${code.toLowerCase()}_${locale}`, TTL.slow, async () => {

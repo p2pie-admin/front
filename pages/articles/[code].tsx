@@ -12,7 +12,7 @@ import { getSlugToCodes } from "../../cache/helper";
 import {
   loadArticle,
   loadArticleCodes,
-  loadArticles,
+  // loadArticles,
   loadPms,
   loadPossiblePairs,
   TTL,
@@ -174,8 +174,8 @@ export async function getStaticPaths() {
     const paths: { params: { code: string }; locale: "en" | "ru" }[] = [];
     const articleCodes = (await loadArticleCodes()) as string[];
 
-    loadArticles("ru");
-    loadArticles("en");
+    // loadArticles("ru");
+    // loadArticles("en");
 
     locales.forEach((locale) => {
       articleCodes.forEach((code) => {
@@ -187,7 +187,7 @@ export async function getStaticPaths() {
         });
       });
     });
-
+    console.log("paths", paths);
     return {
       paths: paths.slice(
         0,
