@@ -52,14 +52,15 @@ export const Swiper = (props: {
   };
 
   const snapToNearest = useCallback(
-    (currentY) => {
+    (currentY: number) => {
       const offset = containerHeight / 2 - itemHeight / 2;
       const index = Math.round((-currentY + offset) / itemHeight);
-      if (index <= 0) return itemHeight;
-      if (index >= length) return -itemHeight * (length - 2);
+
+      if (index <= 0) return offset; // snap to first element
+      if (index >= length - 1) return -itemHeight * (length - 1) + offset; // snap to last
       return -index * itemHeight + offset;
     },
-    [containerHeight, itemHeight]
+    [containerHeight, itemHeight, length]
   );
 
   const move = (y: number) => {
