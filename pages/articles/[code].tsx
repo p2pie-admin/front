@@ -17,6 +17,7 @@ import {
   loadPossiblePairs,
   TTL,
 } from "../../cache/loadX";
+import { addPathsToSitemap } from "../../cache/cache";
 
 const emptyProps = async (locale: "en" | "ru") => ({
   props: {
@@ -187,14 +188,16 @@ export async function getStaticPaths() {
         });
       });
     });
-    console.log("paths", paths);
+
+    const prerenderLimit = process.env.NEXT_PUBLIC_PRERENDER_LIMIT
+      ? Number(process.env.NEXT_PUBLIC_PRERENDER_LIMIT)
+      : 5000;
+
+    const slicedPaths = paths.slice(0, prerenderLimit);
+    await addPathsToSitemap(slicedPaths);
+
     return {
-      paths: paths.slice(
-        0,
-        process.env.NEXT_PUBLIC_PRERENDER_LIMIT
-          ? Number(process.env.NEXT_PUBLIC_PRERENDER_LIMIT)
-          : 10000
-      ),
+      paths: slicedPaths,
       fallback: "blocking", // Use "blocking" to dynamically generate pages on demand
     };
   } catch (e) {

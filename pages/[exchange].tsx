@@ -25,6 +25,7 @@ import {
   generateExchangeSeo,
   generateExchangeTitle,
 } from "../lib/exchangeHelper";
+import { addPathsToSitemap } from "../cache/cache";
 
 const prerenderCountries = ["ukraine", "russia", "belarus"];
 
@@ -246,17 +247,17 @@ export async function getStaticPaths() {
   };
 
   const paths = allPaths.filter((p) => needPrerender(p.params.exchange));
+  const prerenderLimit = process.env.NEXT_PUBLIC_PRERENDER_LIMIT
+    ? Number(process.env.NEXT_PUBLIC_PRERENDER_LIMIT)
+    : 5000;
 
+  const slicedPaths = paths.slice(0, prerenderLimit);
+  await addPathsToSitemap(slicedPaths);
   // далее кешируем все направления
 
   // ПУТИ ЕСТЬ ПОЛНЫЕ ДЛЯ САЙТМАП, А  ЕСТЬ ДЛЯ ПРЕРЕНДЕРИНГА
   return {
-    paths: paths.slice(
-      0,
-      process.env.NEXT_PUBLIC_PRERENDER_LIMIT
-        ? Number(process.env.NEXT_PUBLIC_PRERENDER_LIMIT)
-        : 10000
-    ),
+    paths: slicedPaths,
     fallback: "blocking", // Use "blocking" to dynamically generate pages on demand
   };
 }

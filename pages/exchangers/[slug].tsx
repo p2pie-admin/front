@@ -24,6 +24,7 @@ import {
   loadPms,
   TTL,
 } from "../../cache/loadX";
+import { addPathsToSitemap } from "../../cache/cache";
 
 export default function ExchangerPage({
   exchanger,
@@ -158,7 +159,7 @@ export async function getStaticPaths() {
     const locales = ["en", "ru"];
 
     // Generate all possible paths
-    const allPaths = exchangers.reduce(
+    const paths = exchangers.reduce(
       (
         res: {
           params: { slug: string };
@@ -180,9 +181,11 @@ export async function getStaticPaths() {
       ? Number(process.env.NEXT_PUBLIC_PRERENDER_LIMIT)
       : 5000;
 
-    const paths = allPaths.slice(0, prerenderLimit);
+    const slicedPaths = paths.slice(0, prerenderLimit);
+    await addPathsToSitemap(slicedPaths);
+
     return {
-      paths,
+      paths: slicedPaths,
       fallback: "blocking",
     };
   } catch (error) {

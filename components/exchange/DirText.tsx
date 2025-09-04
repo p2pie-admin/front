@@ -11,7 +11,7 @@ const DirText = ({ dirText }: { dirText: IDirText | null }) => {
 
   return (
     <Box p="2">
-      <Heading as="h2" fontSize="3xl">
+      <Heading as="h2" fontSize="2xl">
         {dirText.subheader}
       </Heading>
       <Divider my="5" />

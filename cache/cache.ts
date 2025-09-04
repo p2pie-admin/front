@@ -4,6 +4,7 @@ const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL!,
   token: process.env.UPSTASH_REDIS_REST_TOKEN!,
 });
+
 export async function cachedFetch<T>(
   key: string,
   ttlSeconds: number,
@@ -49,4 +50,38 @@ export async function cachedFetch<T>(
   }
 
   return data;
+}
+
+/**
+ * Add one or more paths to the sitemap:paths key in Redis
+ */
+type StaticPath = {
+  params: { [key: string]: string };
+  locale?: string;
+};
+
+export async function addPathsToSitemap(paths: StaticPath | StaticPath[]) {
+  const key = "sitemap:paths";
+  const normalized = Array.isArray(paths) ? paths : [paths];
+
+  // Convert objects to URL paths
+  const stringPaths = normalized.map((p) => {
+    const segments = Object.values(p.params).map(encodeURIComponent).join("/");
+    return p.locale ? `/${p.locale}/${segments}` : `/${segments}`;
+  });
+
+  try {
+    const cached = await redis.get<{ data: string[]; updatedAt: number }>(key);
+    const existing = cached?.data || [];
+
+    // Merge and deduplicate
+    const merged = Array.from(new Set([...existing, ...stringPaths]));
+
+    await redis.set(key, { data: merged, updatedAt: Date.now() });
+    console.log(
+      `Added ${stringPaths.length} path(s) to sitemap. Total now: ${merged.length}`
+    );
+  } catch (err) {
+    console.error(`Failed to add paths to sitemap:`, err);
+  }
 }

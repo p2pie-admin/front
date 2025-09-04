@@ -19,6 +19,11 @@ const nextConfig = {
       "cms.p2pie.help", // <-- Strapi prod
       "converter.p2pie.help", // <-- Strapi dev, if you have it
       "server.p2pie.help",
+      "rusrates.com",
+      "rusrates.help",
+      "cms.rusrates.help", // <-- Strapi prod
+      "converter.rusrates.help", // <-- Strapi dev, if you have it
+      "server.rusrates.help",
     ],
   },
 
