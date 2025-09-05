@@ -35,7 +35,6 @@ export default function ExchangerPage({
 }) {
   // Handle non-existent exchanger
   if (!exchanger) {
-    console.log("exchanger", exchanger);
     return (
       <Center
         w="100%"

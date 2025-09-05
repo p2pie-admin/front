@@ -73,8 +73,7 @@ const Exchange = ({
   if (!givePmData?.pm || !getPmData?.pm) {
     console.log("givePmData", givePmData);
     console.log("getPmData", getPmData);
-    console.log("dirText", dirText);
-    console.log("city", city);
+
     return (
       <Center h="100vh">
         <Spinner />

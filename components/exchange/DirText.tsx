@@ -7,7 +7,6 @@ import { TextToHTML } from "../shared/helper";
 const DirText = ({ dirText }: { dirText: IDirText | null }) => {
   if (!dirText) return <></>;
   const { text, seo_title } = dirText;
-  console.log("seo_title", seo_title);
 
   return (
     <Box p="2">

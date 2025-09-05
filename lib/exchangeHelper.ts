@@ -19,11 +19,6 @@ export const dirTextHandler = async ({
   city: ICity | null;
 }) => {
   if (!customDirText?.id || !customDirText?.seo_title) {
-    mylog(
-      `${givePm.code}_${getPm.code} description was generated from default layout`,
-      "warning"
-    );
-
     const dirTextLayout = await loadDirText(
       locale,
       givePm.section,
