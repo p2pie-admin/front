@@ -9,12 +9,13 @@ import ColumnGrid from "../layout/ColumnGrid";
 import ColumnHeader from "../layout/ColumnHeader";
 import Column from "../layout/Column";
 import { ResponsiveText } from "../../styles/theme/custom";
-import { IMainText, ITextBox } from "../../types/pages";
+import { IMainText } from "../../types/pages";
 import { IPopularDirRates } from "../../types/rates";
 import { IPm } from "../../types/selector";
 import CircularTexts from "./CircularTexts";
 import Popular from "./popular";
 import { useTranslation } from "next-i18next";
+import { IDirText } from "../../types/exchange";
 
 const MainPageContent = ({
   popularPms,
@@ -25,7 +26,7 @@ const MainPageContent = ({
   popularPms?: IPm[];
   popularRates?: IPopularDirRates;
   mainTexts?: IMainText[];
-  rootText: ITextBox;
+  rootText: IDirText;
 }) => {
   const { t } = useTranslation();
   const router = useRouter();
@@ -57,11 +58,11 @@ const MainPageContent = ({
 
         <Column index={4}>
           <ColumnHeader
-            text={rootText?.title}
+            text={rootText?.header}
             query={[`${process.env.NEXT_PUBLIC_NAME}`]}
           />
-          <ResponsiveText variant="contrast" as="h3">
-            {rootText?.subtitle || ""}
+          <ResponsiveText variant="contrast" as="h3" whiteSpace="normal">
+            {rootText?.subheader || ""}
           </ResponsiveText>
           <ResponsiveText variant="no_contrast" whiteSpace="normal">
             {rootText?.text || ""}

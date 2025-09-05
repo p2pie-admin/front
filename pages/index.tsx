@@ -2,7 +2,7 @@ import MainPageContent from "../components/main";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IPopularDirRates } from "../types/rates";
 import { initParserFetcher } from "../services/fetchers";
-import { IMainText, ITextBox } from "../types/pages";
+import { IMainText } from "../types/pages";
 import UniversalSeo, { nullSeo } from "../components/shared/UniversalSeo";
 import { ISEO } from "../types/general";
 import { getT } from "../components/shared/getT";
@@ -12,6 +12,7 @@ import {
   loadPms,
   loadPopular,
 } from "../cache/loadX";
+import { IDirText } from "../types/exchange";
 
 export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
   try {
@@ -36,8 +37,8 @@ export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
 
     const t = await getT(locale || "ru");
     const seo = {
-      title: t("main:meta-title"),
-      description: t("main:meta-description"),
+      title: rootText.seo_title || t("main:meta-title"),
+      description: rootText.seo_description || t("main:meta-description"),
       canonicalPath: `${locale}`,
       locale: locale,
     } as ISEO;
@@ -48,7 +49,7 @@ export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
         popularPms: popularPms || null,
         popularRates: popularRates || null,
         mainTexts: (mainTexts || []) as IMainText[],
-        rootText: (rootText || null) as ITextBox | null,
+        rootText: (rootText || null) as IDirText | null,
         locale,
         ...(await serverSideTranslations(locale || "ru", ["main"])),
       },

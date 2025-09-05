@@ -39,7 +39,6 @@ import { useTranslation } from "next-i18next";
 import PmLayout from "./pmLayout";
 import UniversalSeo from "../shared/UniversalSeo";
 import { ISEO } from "../../types/general";
-import { generateExchangeTitle } from "../../lib/exchangeHelper";
 
 const Exchange = ({
   locale,
@@ -120,7 +119,7 @@ const Exchange = ({
           fontWeight="bold"
           color="inherit"
         >
-          {dirText?.header}
+          {dirText?.default_header}
         </Heading>
       </Box>
 

@@ -63,6 +63,8 @@ const Chart = memo(
       [SRC, getCur, giveCur, isLongTimeFrame]
     );
 
+    console.log(imgSrc);
+
     return (
       <Box3D
         bgColor={bgColor}

@@ -18,7 +18,8 @@ export const dirTextHandler = async ({
   customDirText?: IDirText;
   city: ICity | null;
 }) => {
-  if (!customDirText?.id || !customDirText?.seo_title) {
+  const default_header = generateExchangeHeader(locale, givePm, getPm, city);
+  if (!customDirText?.seo_title) {
     const dirTextLayout = await loadDirText(
       locale,
       givePm.section,
@@ -35,7 +36,6 @@ export const dirTextHandler = async ({
       });
 
     const fields = [
-      "header",
       "subheader",
       "seo_description",
       "seo_title",
@@ -43,12 +43,16 @@ export const dirTextHandler = async ({
     ] as const;
 
     return {
+      default_header,
       ...dirTextLayout,
       ...Object.fromEntries(fields.map((f) => [f, replacer(dirTextLayout[f])])),
     };
   }
 
-  return customDirText;
+  return {
+    ...customDirText,
+    default_header,
+  };
 };
 export const fillWords = ({
   locale,
@@ -216,7 +220,7 @@ export const slugCityToExchange = (slug: string, city?: string) => {
 //   return `${locale}/${startWord}-${slug}`
 // }
 
-export const generateExchangeTitle = (
+export const generateExchangeHeader = (
   locale: string,
   givePm: IPm,
   getPm: IPm,
@@ -226,16 +230,18 @@ export const generateExchangeTitle = (
   const getCur = getPm.currency.code.toUpperCase();
   let [description, cityAddon, site_name] = ["", "", ""];
   if (locale == "ru") {
-    description = `Обмен ${givePm.ru_name || givePm.en_name} ${giveCur} ${
-      givePm.subgroup_name || ""
-    } на ${getPm.ru_name || getPm.en_name} ${getCur}`;
+    description = `Обмен ${capitalize(
+      givePm.ru_name || givePm.en_name
+    )} ${giveCur} ${givePm.subgroup_name || ""} на ${capitalize(
+      getPm.ru_name || getPm.en_name
+    )} ${getCur}`;
     if (city) cityAddon = ` в ${city.ru_name}, ${city.ru_country_name}`;
     site_name = `${process.env.NEXT_PUBLIC_NAME} мониторинг обменников`;
   } else {
     if (city) cityAddon = ` в ${city.en_name}, ${city.en_country_name}`;
-    description = `Exchange ${givePm.en_name} ${giveCur} ${
+    description = `Exchange ${capitalize(givePm.en_name)} ${giveCur} ${
       givePm.subgroup_name || ""
-    } for ${getPm.en_name} ${getCur}`;
+    } for ${capitalize(getPm.en_name)} ${getCur}`;
     site_name = `${process.env.NEXT_PUBLIC_NAME} Exchange Monitoring`;
   }
   return description + cityAddon;
@@ -245,12 +251,12 @@ export const generateExchangeSeo = (seoData: ISeoData) => {
   const { givePm, getPm, locale, seo_description, seo_title, slug, city } =
     seoData;
 
-  const title = generateExchangeTitle(locale, givePm, getPm, city);
+  const defaultTitle = generateExchangeHeader(locale, givePm, getPm, city);
 
   const slugPath = slugCityToExchange(slug, city?.en_name);
 
   return {
-    title: seo_title || title,
+    title: seo_title || defaultTitle,
     description: seo_description || "",
     canonical: `https://${process.env.NEXT_PUBLIC_NAME}.com/${locale}/${slugPath}`,
     locale,

@@ -36,10 +36,3 @@ export interface IMainText {
   image?: IImage;
   link: ILink;
 }
-
-export interface ITextBox {
-  id: string;
-  title?: string;
-  subtitle?: string;
-  text?: string;
-}

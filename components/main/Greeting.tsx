@@ -26,14 +26,22 @@ const Greeting = () => {
       bgGradient={`radial-gradient(circle at 50% -10%, ${centerColor} 0%, ${peripheryColor} 60%)`}
       bgClip="text"
     >
-      <Heading as="h1" textAlign="center" fontWeight="bold" color="inherit">
-        <Text fontSize={{ base: "3xl", md: "5xl" }}>
-          {t("main:title")}
-          <br />
-          <Text as="span" fontSize={{ base: "lg", md: "3xl" }} mt={2}>
-            {t("main:subtitle")}
-          </Text>
-        </Text>
+      <Heading
+        as="h1"
+        textAlign="center"
+        fontWeight="bold"
+        color="inherit"
+        fontSize={{ base: "xl", md: "4xl" }}
+      >
+        {t("main:title")}
+      </Heading>
+      <Heading
+        as="p"
+        textAlign="center"
+        fontSize={{ base: "lg", md: "3xl" }}
+        mt={2}
+      >
+        {t("main:subtitle")}
       </Heading>
     </Box>
   );

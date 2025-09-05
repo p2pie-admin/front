@@ -21,15 +21,13 @@ export interface IPmLayoutsData {
 }
 
 export interface IDirText {
-  id: string;
-  section_give: ISectionName;
-  section_get: ISectionName;
   text: string;
   seo_title: string;
   seo_description: string;
   header: string;
+  default_header?: string;
   subheader: string;
-  updatedAt: string;
+  updatedAt?: string;
 }
 
 export interface IPath {

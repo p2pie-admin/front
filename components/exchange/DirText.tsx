@@ -11,9 +11,12 @@ const DirText = ({ dirText }: { dirText: IDirText | null }) => {
   return (
     <Box p="2">
       <Heading as="h2" fontSize="2xl">
-        {dirText.subheader}
+        {dirText.header}
       </Heading>
       <Divider my="5" />
+      <Heading as="h3" fontSize="lg" mb="2">
+        {dirText.subheader}
+      </Heading>
       <TextToHTML text={text} />
     </Box>
   );

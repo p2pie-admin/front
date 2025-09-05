@@ -11,7 +11,6 @@ import {
   exchangerQuery,
   exchangersQuery,
   citiesQuery,
-  CustomDirTextQuery,
 } from "../services/initialQueries";
 import { getPmsFromSelector, mergeExchangers } from "./helper";
 import { cachedFetch } from "./cache";
@@ -41,7 +40,10 @@ export const TTL = {
 
 export const loadRootText = (locale: "en" | "ru") =>
   cachedFetch(`root_text_${locale}`, TTL.slow, async () => {
-    const res = await cmsFetcher(TextBoxQuery, { locale, key: "root" });
+    const res = (await cmsFetcher(TextBoxQuery, {
+      locale,
+      key: "root",
+    })) as IDirText[];
     return res?.[0] || null;
   });
 
@@ -162,7 +164,7 @@ export const preloadCustomDirTexts = (locale: string, slug: string) => {};
 
 export const loadCustomDirText = (locale: string, slug: string) =>
   cachedFetch(`custom_dir_text_${slug}`, TTL.instant, async () => {
-    const res = await cmsFetcher(CustomDirTextQuery, { locale, slug });
+    const res = await cmsFetcher(TextBoxQuery, { locale, key: slug });
     return res?.[0] as IDirText;
   });
 

@@ -23,7 +23,6 @@ import {
   exchangeToSlugCity,
   findSimilarPmPairs,
   generateExchangeSeo,
-  generateExchangeTitle,
 } from "../lib/exchangeHelper";
 import { addPathsToSitemap } from "../cache/cache";
 

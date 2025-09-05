@@ -323,30 +323,17 @@ export const TextBoxQuery = gql`
     textBoxes(
       locale: $locale
       filters: { key: { eqi: $key } }
-      pagination: { start: 0, limit: 2000 }
+      pagination: { start: 0, limit: 200000 }
     ) {
       data {
         id
         attributes {
-          title
-          subtitle
+          header
+          subheader
           text
-        }
-      }
-    }
-  }
-`;
-
-export const CustomDirTextQuery = gql`
-  query TextBox($locale: I18NLocaleCode, $slug: String) {
-    textBoxes(locale: $locale, filters: { subtitle: { eqi: $slug } }) {
-      data {
-        id
-        attributes {
-          title
-          subtitle
-          text
-          key
+          seo_description
+          seo_title
+          updatedAt
         }
       }
     }
