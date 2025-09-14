@@ -7,13 +7,13 @@ export const addArticleCrossLinking = async (
   article: IArticle,
   articleCodes: string[],
   pms: IPm[] = [],
-  locale: "en" | "ru" = "en",
-  pmToIgnore: IPm | null = null
+  locale: "en" | "ru" = "en"
 ): Promise<IArticle> => {
+  const seen = new Set<string>();
   const chapters = await Promise.all(
     article.chapters.map(async (chapter) => ({
       ...chapter,
-      text: enrichText(chapter.text, articleCodes, pms, locale, pmToIgnore),
+      text: enrichText({ seen, text: chapter.text, articleCodes, pms, locale }),
     }))
   );
 

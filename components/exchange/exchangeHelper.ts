@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
-import { capitalize } from "../components/main/side/selector/section/PmGroup/helper";
-import { mylog } from "../services/utils";
-import { ICity, IDirText, ISeoData } from "../types/exchange";
-import { IPm } from "../types/selector";
-import { loadDirText } from "../cache/loadX";
+import { capitalize } from "../main/side/selector/section/PmGroup/helper";
+import { mylog } from "../../services/utils";
+import { ICity, IDirText, ISeoData } from "../../types/exchange";
+import { IPm } from "../../types/selector";
+import { loadDirText } from "../../cache/loadX";
 
 export const dirTextHandler = async ({
   locale,
@@ -11,49 +11,40 @@ export const dirTextHandler = async ({
   getPm,
   customDirText,
   city,
+  pms,
+  articleCodes,
 }: {
   locale: "en" | "ru";
   givePm: IPm;
   getPm: IPm;
   customDirText?: IDirText;
   city: ICity | null;
+  pms: IPm[];
+  articleCodes: string[];
 }) => {
   const default_header = generateExchangeHeader(locale, givePm, getPm, city);
-  if (!customDirText?.seo_title) {
-    const dirTextLayout = await loadDirText(
+  const replacer = (text?: string) =>
+    fillWords({
       locale,
-      givePm.section,
-      getPm.section
-    );
+      givePm,
+      getPm,
+      cityName: city?.[`${locale}_name`],
+      text,
+    });
 
-    const replacer = (text?: string) =>
-      fillWords({
-        locale,
-        givePm,
-        getPm,
-        cityName: city?.[`${locale}_name`],
-        text,
-      });
+  const fields = ["seo_description", "seo_title"] as const;
 
-    const fields = [
-      "subheader",
-      "seo_description",
-      "seo_title",
-      "text",
-    ] as const;
-
-    return {
-      default_header,
-      ...dirTextLayout,
-      ...Object.fromEntries(fields.map((f) => [f, replacer(dirTextLayout[f])])),
-    };
-  }
+  const base = customDirText?.seo_title
+    ? customDirText
+    : await loadDirText(locale, givePm.section, getPm.section);
 
   return {
-    ...customDirText,
+    ...base,
+    ...Object.fromEntries(fields.map((f) => [f, replacer(base[f])])),
     default_header,
   };
 };
+
 export const fillWords = ({
   locale,
   givePm,
@@ -79,19 +70,6 @@ export const fillWords = ({
     .replaceAll("give_currency", givePm.currency.code.toUpperCase())
     .replaceAll("get_currency", getPm.currency.code.toUpperCase())
     .replaceAll("city_name", cityName || "");
-
-// export const convertCities = (cities: ICity[]): ICities => {
-//   const newCities = {} as ICities; //changes key from BTM -> batumi
-//   mylog(cities);
-//   for (const key in cities) {
-//     if (cities.hasOwnProperty(key)) {
-//       const newKey = cities[key][1].toLowerCase().split(", ")[0];
-//       newCities[newKey] = cities[key];
-//     }
-//   }
-
-//   return newCities;
-// };
 
 export const findSimilarPmPairs = (
   givePm: IPm,
@@ -202,23 +180,6 @@ export const slugCityToExchange = (slug: string, city?: string) => {
       : ""
   }`;
 };
-
-// export const createLocation = (fullCity?: [string, string]) => {
-//   if (!fullCity || !fullCity.length) return null;
-//   const location = {
-//     en_city_name: fullCity[1].split(", ")[0],
-//     en_country_name: fullCity[1].split(", ")[1],
-//     ru_city_name: fullCity[0].split(", ")[0],
-//     ru_country_name: fullCity[0].split(", ")[1],
-//   } as ICity;
-//   return location;
-// };
-
-// const createURL = ({slug, locale, city}: {slug: string, locale: "en" | "ru", city: string}) => {
-//   const startWord = locale == "ru" ? "obmen" : "exchange"
-//   const middleWord = locale == "ru" ? "na" : "to"
-//   return `${locale}/${startWord}-${slug}`
-// }
 
 export const generateExchangeHeader = (
   locale: string,

@@ -17,7 +17,7 @@ import P2PContext from "../../../../../shared/contexts/p2pContext";
 import SideContext from "../../../../../shared/contexts/SideContext";
 import PmButton from "./PmButton";
 import { fetchPossiblePairs } from "../../../../../../redux/thunks";
-import { slugCityToExchange } from "../../../../../../lib/exchangeHelper";
+import { slugCityToExchange } from "../../../../../exchange/exchangeHelper";
 
 const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   const router = useRouter();

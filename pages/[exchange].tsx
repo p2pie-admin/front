@@ -23,7 +23,7 @@ import {
   exchangeToSlugCity,
   findSimilarPmPairs,
   generateExchangeSeo,
-} from "../lib/exchangeHelper";
+} from "../components/exchange/exchangeHelper";
 import { addPathsToSitemap } from "../cache/cache";
 
 const prerenderCountries = ["ukraine", "russia", "belarus"];
@@ -126,6 +126,8 @@ export async function getStaticProps({
       getPm,
       customDirText,
       city,
+      pms,
+      articleCodes,
     })) as IDirText;
 
     mylog(JSON.stringify(dirText, undefined, 4), "success");

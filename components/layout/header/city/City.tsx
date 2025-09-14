@@ -9,7 +9,7 @@ import { ISelectorCity } from "../../../../types/city";
 import { weights } from "./helper";
 import { setDirRatesStatus, triggerModal } from "../../../../redux/mainReducer";
 import { batch } from "react-redux";
-import { slugCityToExchange } from "../../../../lib/exchangeHelper";
+import { slugCityToExchange } from "../../../exchange/exchangeHelper";
 
 export default function City({
   city,

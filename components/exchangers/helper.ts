@@ -61,12 +61,14 @@ export const addExchangerCrossLinking = async (
   )
     return exchanger;
 
-  const text = enrichText(
-    exchanger.exchanger_card[`${locale}_description`] || "",
+  const seen = new Set<string>();
+  const text = enrichText({
+    seen,
+    text: exchanger.exchanger_card[`${locale}_description`] || "",
     articleCodes,
     pms,
-    locale
-  );
+    locale,
+  });
 
   exchanger.exchanger_card[`${locale}_description`] = text;
 

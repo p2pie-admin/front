@@ -63,8 +63,6 @@ const Chart = memo(
       [SRC, getCur, giveCur, isLongTimeFrame]
     );
 
-    console.log(imgSrc);
-
     return (
       <Box3D
         bgColor={bgColor}
@@ -130,7 +128,7 @@ const Chart = memo(
           filter="opacity(0.9)"
           borderRadius="lg"
           position="absolute"
-          bottom={`${Math.max(40, Math.min(trend * 50 + 100, 160))}px`}
+          bottom={`${100 - trend * 5}px`}
           right="4"
         >
           <Text fontSize="sm" color={color}>

@@ -2,6 +2,7 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
 import { IPm } from "../../types/selector";
+import { capitalize } from "../main/side/selector/section/PmGroup/helper";
 
 /**
  * Markdown renderer with Next.js <Link> for internal navigation
@@ -44,44 +45,60 @@ export const TextToHTML = ({ text }: { text?: string }) => {
 /**
  * Enrich text with markdown links to article pages.
  */
-export const enrichText = (
-  text: string,
-  articleCodes: string[] = [],
-  pms: IPm[] = [],
-  locale: "en" | "ru" = "en",
-  pmToIgnore: IPm | null = null
-): string => {
-  const articlePms = articleCodes
-    .map((code) => {
-      if (typeof code !== "string") return null;
+export const enrichText = ({
+  seen,
+  text,
+  articleCodes = [],
+  pms = [],
+  locale,
+}: {
+  seen: Set<string>;
+  text: string;
+  articleCodes: string[];
+  pms?: IPm[];
+  locale: "en" | "ru";
+}): string => {
+  if (!text || !articleCodes.length || !pms.length) return text;
 
-      return pms.find(
-        (pm) =>
-          pm.en_name.toLowerCase().replaceAll(" ", "_") === code.toLowerCase()
-      );
-    })
-    .filter(
-      (pm): pm is IPm =>
-        !!pm && (!pmToIgnore || pm.en_name !== pmToIgnore.en_name)
+  const lookup: { key: string; pm: IPm }[] = [];
+
+  articleCodes.forEach((code) => {
+    const pm = pms.find(
+      (pm) =>
+        pm.en_name.toLowerCase().replace(/\s+/g, "_") === code.toLowerCase()
+    );
+    if (!pm) return;
+
+    const addVariant = (v?: string | null) => {
+      if (!v) return;
+      // normalize hyphens → spaces, lowercase
+      const normalized = v.replace(/-/g, " ").trim();
+      lookup.push({ key: normalized, pm });
+    };
+
+    addVariant(pm.currency.code);
+    addVariant(capitalize(pm.en_name));
+    addVariant(capitalize(pm.ru_name));
+  });
+
+  return text.replace(/\b[\p{L}\p{N}_-]+\b/gu, (word) => {
+    const match = lookup.find(
+      ({ key }) =>
+        // Match exact word OR word starts with key (handles cases: банка, банку, банке)
+        word.replace(/-/g, " ") === key.replace(/-/g, " ")
     );
 
-  const seen = new Set<string>();
+    if (!match) return word;
 
-  return text.replace(/\b\w+\b/g, (word) => {
-    const lower = word.toLowerCase();
-    const pm = articlePms.find((pm) =>
-      [pm.currency.code, pm.en_name.split(" ")[0], pm.ru_name]
-        .filter(Boolean)
-        .some((v) => v?.toLowerCase() === lower)
-    );
+    const slug =
+      "/" +
+      locale +
+      "/articles/" +
+      match.pm.en_name.toLowerCase().replace(/\s+/g, "-");
 
-    if (pm) {
-      const slug = `/${locale}/articles/${pm.en_name.toLowerCase()}`;
-      if (seen.has(slug)) return word;
-      seen.add(slug);
-      return `[**${word}**](${slug})`; // markdown bold link
-    }
+    if (seen.has(slug)) return word;
+    seen.add(slug);
 
-    return word;
+    return `[**${word}**](${slug})`;
   });
 };

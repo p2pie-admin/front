@@ -153,7 +153,13 @@ const Exchange = ({
           gridColumn={{ base: "unset", lg: "1/3" }}
           gridRow={{ base: "3", lg: "2" }}
         >
-          <DirText dirText={dirText} />
+          <DirText
+            dirText={dirText}
+            givePm={givePm}
+            getPm={getPm}
+            locale={locale}
+            city={city}
+          />
         </Box3D>
       </ColumnGrid>
     </VStack>
