@@ -5,6 +5,42 @@ import { ICity, IDirText, ISeoData } from "../../types/exchange";
 import { IPm } from "../../types/selector";
 import { loadDirText } from "../../cache/loadX";
 
+export const generateExchangeHeader = (
+  locale: "en" | "ru",
+  givePm: IPm,
+  getPm: IPm,
+  city: ICity | null
+) => {
+  const giveCur = givePm.currency.code.toUpperCase();
+  const getCur = getPm.currency.code.toUpperCase();
+
+  // Proper locale-specific names
+  const giveName =
+    locale === "ru" ? givePm.ru_name ?? "" : givePm.en_name ?? "";
+  const getName = locale === "ru" ? getPm.ru_name ?? "" : getPm.en_name ?? "";
+
+  // City addon
+  const cityAddon = city
+    ? locale === "ru"
+      ? ` в ${city.ru_name ?? ""}, ${city.ru_country_name ?? ""}`
+      : ` in ${city.en_name ?? ""}, ${city.en_country_name ?? ""}`
+    : "";
+
+  // Subgroup
+  const subgroup = givePm.subgroup_name ? ` ${givePm.subgroup_name}` : "";
+
+  return locale === "ru"
+    ? `Обмен ${capitalize(giveName)} ${giveCur}${subgroup} на ${capitalize(
+        getName
+      )} ${getCur}${cityAddon}`
+    : `Exchange ${capitalize(giveName)} ${giveCur}${subgroup} for ${capitalize(
+        getName
+      )} ${getCur}${cityAddon}`;
+};
+
+// -----------------------------------
+// dirTextHandler.ts
+// -----------------------------------
 export const dirTextHandler = async ({
   locale,
   givePm,
@@ -22,25 +58,49 @@ export const dirTextHandler = async ({
   pms: IPm[];
   articleCodes: string[];
 }) => {
+  // Default header
   const default_header = generateExchangeHeader(locale, givePm, getPm, city);
+
+  // City name for fillWords
+  const cityName = city?.[`${locale}_name`] ?? city?.en_name ?? "";
+
+  // Placeholder replacer
   const replacer = (text?: string) =>
     fillWords({
       locale,
       givePm,
       getPm,
-      cityName: city?.[`${locale}_name`],
+      cityName,
       text,
     });
 
+  // SEO fields
   const fields = ["seo_description", "seo_title"] as const;
 
-  const base = customDirText?.seo_title
-    ? customDirText
-    : await loadDirText(locale, givePm.section, getPm.section);
+  // Merge fallback text with customDirText
+  const fallbackDirText = await loadDirText(
+    locale,
+    givePm.section,
+    getPm.section
+  );
+  const base = {
+    ...fallbackDirText,
+    ...customDirText,
+  };
+
+  // Replace placeholders in SEO fields
+  const replacedFields = Object.fromEntries(
+    fields.map((f) => [
+      f,
+      replacer(
+        base[f] ?? `${givePm[`${locale}_name`]} → ${getPm[`${locale}_name`]}`
+      ),
+    ])
+  );
 
   return {
     ...base,
-    ...Object.fromEntries(fields.map((f) => [f, replacer(base[f])])),
+    ...replacedFields,
     default_header,
   };
 };
@@ -179,33 +239,6 @@ export const slugCityToExchange = (slug: string, city?: string) => {
       ? "-in-" + city?.replaceAll(" ", "-").toLowerCase()
       : ""
   }`;
-};
-
-export const generateExchangeHeader = (
-  locale: string,
-  givePm: IPm,
-  getPm: IPm,
-  city: ICity | null
-) => {
-  const giveCur = givePm.currency.code.toUpperCase();
-  const getCur = getPm.currency.code.toUpperCase();
-  let [description, cityAddon, site_name] = ["", "", ""];
-  if (locale == "ru") {
-    description = `Обмен ${capitalize(
-      givePm.ru_name || givePm.en_name
-    )} ${giveCur} ${givePm.subgroup_name || ""} на ${capitalize(
-      getPm.ru_name || getPm.en_name
-    )} ${getCur}`;
-    if (city) cityAddon = ` в ${city.ru_name}, ${city.ru_country_name}`;
-    site_name = `${process.env.NEXT_PUBLIC_NAME} мониторинг обменников`;
-  } else {
-    if (city) cityAddon = ` в ${city.en_name}, ${city.en_country_name}`;
-    description = `Exchange ${capitalize(givePm.en_name)} ${giveCur} ${
-      givePm.subgroup_name || ""
-    } for ${capitalize(getPm.en_name)} ${getCur}`;
-    site_name = `${process.env.NEXT_PUBLIC_NAME} Exchange Monitoring`;
-  }
-  return description + cityAddon;
 };
 
 export const generateExchangeSeo = (seoData: ISeoData) => {
