@@ -7,7 +7,7 @@ export const addArticleCrossLinking = async (
   article: IArticle,
   articleCodes: string[],
   pms: IPm[] = [],
-  locale: "en" | "ru" = "en"
+  locale: "en" | "ru"
 ): Promise<IArticle> => {
   const seen = new Set<string>();
   const chapters = await Promise.all(

@@ -51,7 +51,7 @@ export const addExchangerCrossLinking = async (
   exchanger: IExchanger | null,
   articleCodes: string[] | undefined,
   pms: IPm[] | undefined,
-  locale: "en" | "ru" = "en"
+  locale: "en" | "ru"
 ) => {
   if (
     !articleCodes ||

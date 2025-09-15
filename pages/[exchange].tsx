@@ -3,7 +3,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IPm } from "../types/selector";
 import React from "react";
 import Exchange from "../components/exchange";
-import { ICache, ICity, IDirText, IPmData } from "../types/exchange";
+import { ICity, IDirText, IPmData } from "../types/exchange";
 
 import { ISEO } from "../types/general";
 import { nullSeo } from "../components/shared/UniversalSeo";
@@ -130,8 +130,6 @@ export async function getStaticProps({
       articleCodes,
     })) as IDirText;
 
-    mylog(JSON.stringify(dirText, undefined, 4), "success");
-
     const seo = generateExchangeSeo({
       givePm,
       getPm,
@@ -163,7 +161,6 @@ export async function getStaticProps({
       props: {
         locale,
         seo: nullSeo,
-
         cities: null,
         givePmData: null,
         getPmData: null,

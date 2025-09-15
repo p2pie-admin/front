@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { submitOrder } from "../../../redux/thunks";
 import { ResponsiveButton } from "../../../styles/theme/custom";
-import NextLink from "next/link";
 import { TbExternalLink } from "react-icons/tb";
 import { useEffect } from "react";
 import { createUID } from "../../../redux/helper";
