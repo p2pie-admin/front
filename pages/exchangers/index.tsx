@@ -17,20 +17,20 @@ const ExchangersPage = ({
   seo: ISEO;
 }) => <ExchangersList exchangers={exchangers} seo={seo} />;
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
+export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
   const exchangers = await loadExchangers();
 
   if (!exchangers?.length) {
     return {
       props: {
         exchangers: null,
-        ...(await serverSideTranslations(locale || "ru", ["main"])),
+        ...(await serverSideTranslations(locale, ["main"])),
       },
       revalidate: 400,
     };
   }
 
-  const t = await getT(locale || "ru");
+  const t = await getT(locale);
 
   const seo = {
     title: t("exchangers-meta-title"),
@@ -43,7 +43,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     props: {
       seo: seo || nullSeo,
       exchangers: exchangers || null,
-      ...(await serverSideTranslations(locale || "ru", ["main"])),
+      ...(await serverSideTranslations(locale, ["main"])),
     },
     revalidate: TTL.fast,
   };

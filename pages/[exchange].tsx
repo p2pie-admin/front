@@ -151,7 +151,7 @@ export async function getStaticProps({
         city: city || null,
         similarPmPairs: similarPmPairs || null,
         //donorCity: donorCity || null,
-        ...(await serverSideTranslations(locale || "ru", ["main"])),
+        ...(await serverSideTranslations(locale, ["main"])),
       },
       revalidate: 2400,
     };
@@ -168,7 +168,7 @@ export async function getStaticProps({
         city: null,
         similarPmPairs: null,
         donorCity: null,
-        ...(await serverSideTranslations(locale || "ru", ["main"])),
+        ...(await serverSideTranslations(locale, ["main"])),
       },
       revalidate: 2400,
     };

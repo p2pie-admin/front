@@ -26,7 +26,7 @@ const emptyProps = async (locale: "en" | "ru") => ({
     article: null,
     otherDirs: null,
     locale,
-    ...(await serverSideTranslations(locale || "ru", ["main"])),
+    ...(await serverSideTranslations(locale, ["main"])),
   },
   revalidate: 600,
 });
@@ -115,7 +115,7 @@ export async function getStaticProps({
           article: null,
           otherDirs: null,
           locale,
-          ...(await serverSideTranslations(locale || "ru", ["main"])),
+          ...(await serverSideTranslations(locale, ["main"])),
         },
         revalidate: TTL.slow,
       };
@@ -125,8 +125,8 @@ export async function getStaticProps({
       article,
       articleCodes,
       pms,
-      locale,
-      articlePms[0]
+      locale
+      //articlePms[0]
     );
 
     const normalizedCode = article?.code.toLowerCase();
@@ -159,13 +159,13 @@ export async function getStaticProps({
         article: linkedArticle || null,
         otherDirs: otherDirs || null,
         locale,
-        ...(await serverSideTranslations(locale || "ru", ["main"])),
+        ...(await serverSideTranslations(locale, ["main"])),
       },
       revalidate: TTL.slow,
     };
   } catch (e) {
     console.error("[getStaticProps] Error:", e);
-    return await emptyProps(locale || "ru");
+    return await emptyProps(locale);
   }
 }
 /////////////////////////////////////////////////////////////////////////////////////////////

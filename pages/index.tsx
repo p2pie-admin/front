@@ -51,7 +51,7 @@ export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
         mainTexts: (mainTexts || []) as IMainText[],
         rootText: (rootText || null) as IDirText | null,
         locale,
-        ...(await serverSideTranslations(locale || "ru", ["main"])),
+        ...(await serverSideTranslations(locale, ["main"])),
       },
       revalidate: 3000, // Revalidate every 3000 seconds (50 minutes)
     };
@@ -67,7 +67,7 @@ export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
         mainTexts: null,
         rootText: null,
         locale,
-        ...(await serverSideTranslations(locale || "ru", ["main"])),
+        ...(await serverSideTranslations(locale, ["main"])),
       },
       revalidate: 3000, // try again in 3000 seconds (50 minutes)
     };

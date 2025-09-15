@@ -84,7 +84,7 @@ export const getStaticProps = async ({
         crypto,
         fiat,
         locale,
-        ...(await serverSideTranslations(locale || "ru", ["main"])),
+        ...(await serverSideTranslations(locale, ["main"])),
       },
       revalidate: 3000,
     };
@@ -97,7 +97,7 @@ export const getStaticProps = async ({
         crypto,
         fiat,
         locale,
-        ...(await serverSideTranslations(locale || "ru", ["main"])),
+        ...(await serverSideTranslations(locale, ["main"])),
       },
       revalidate: 3000,
     };

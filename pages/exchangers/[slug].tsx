@@ -120,7 +120,7 @@ export async function getStaticProps({
         seo,
         locale,
         error: true,
-        ...(await serverSideTranslations(locale || "ru", ["main"])),
+        ...(await serverSideTranslations(locale, ["main"])),
       },
       revalidate: TTL.fast,
     };
@@ -136,7 +136,7 @@ export async function getStaticProps({
         seo: nullSeo,
         locale,
         error: true,
-        ...(await serverSideTranslations(locale || "ru", ["main"])),
+        ...(await serverSideTranslations(locale, ["main"])),
       },
       revalidate: 60, // Quick retry on error
     };
