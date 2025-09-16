@@ -8,7 +8,14 @@ const redis = new Redis({
 module.exports = {
   siteUrl: process.env.SITE_URL || "https://p2pie.com",
   generateRobotsTxt: true,
-
+  robotsTxtOptions: {
+    policies: [
+      {
+        userAgent: "*",
+        disallow: ["/"], // block everything
+      },
+    ],
+  },
   // Collect extra paths from Redis
   additionalPaths: async (config) => {
     const cached = await redis.get("sitemap:paths");
