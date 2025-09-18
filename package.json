@@ -4,7 +4,7 @@
   "scripts": {
     "clean-cache": "rm -rf cache/*.json",
     "prebuild": "node cache/cleanRedis.js",
-    "dev": "node cache/cleanRedis.js && next dev",
+    "dev": "node cache/cleanRedis.js & next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

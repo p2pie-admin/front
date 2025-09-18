@@ -3,6 +3,8 @@ import {
   pmsToSlug,
 } from "../components/main/side/selector/section/PmGroup/helper";
 import { mylog } from "../services/utils";
+import { IMassDirTextId } from "../types/dir";
+
 import { IPossiblePmPair } from "../types/exchange";
 import { IExchanger, IParserExchanger } from "../types/exchanger";
 import { ISelector, IPm, IPmGroup, ISection } from "../types/selector";
@@ -62,4 +64,22 @@ export const mergeExchangers = (
       ...ex,
     } as IExchanger & IParserExchanger;
   });
+};
+
+export const convertMassDirTextIntoSlug = (
+  massDirTextId: IMassDirTextId
+): string => {
+  const { isSell, code, currency } = massDirTextId;
+  return `${
+    isSell ? "sell" : "buy"
+  }-${code.toLowerCase()}-for-${currency.code.toLowerCase()}`;
+};
+
+export const convertSlugIntoMassDirText = (slug: string): IMassDirTextId => {
+  const [action, code, _for, currencyCode] = slug.split("-");
+  return {
+    isSell: action === "sell",
+    code: code.toUpperCase(),
+    currency: { code: currencyCode.toUpperCase() },
+  };
 };

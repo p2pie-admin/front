@@ -5,7 +5,7 @@ import {
   TopParametersQuery,
   pmGroupsByNamesQuery,
   pmsQuery,
-} from "../services/initialQueries";
+} from "../services/queries";
 import {
   initCMSFetcher,
   initCurrencyConverterFetcher,
@@ -71,7 +71,7 @@ const _fetchRates = async ({
 }) => {
   //const isCash = (dir.split("_")[0].startsWith("CASH") || dir.split("_")[1].startsWith("CASH"));
   const response = await axios
-    .get(`${courseFilterLink}/dir=${dir}/part/${cityName?.toLowerCase()}`)
+    .get(`${courseFilterLink}/dir=${dir}/all/${cityName?.toLowerCase()}`)
     .catch((err) => console.error("could not fetch, ", err));
   return response?.data as IRate[];
 };
@@ -173,7 +173,7 @@ export const fetchPossiblePairs = createAsyncThunk(
   "currencies/fetchPossiblePairs",
   async ({ code, side }: { code: string; side: ISide }) => {
     const response = await axios
-      .get(`${courseFilterLink}/possible_pairs/${code}`)
+      .get(`${courseFilterLink}/possible_pairs/${side}/${code}`)
       .catch((err) => console.error(err));
     const possiblePairs = response?.data as string[];
     return {

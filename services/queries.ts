@@ -368,3 +368,72 @@ export const TopParametersQuery = gql`
     }
   }
 `;
+
+export const massDirTextIdsQuery = gql`
+  query massDirTextIdsQuery($locale: I18NLocaleCode, $isSell: Boolean) {
+    massDirsTexts(
+      locale: $locale
+      pagination: { start: 0, limit: 200000 }
+      filters: { isSell: { eq: $isSell } }
+    ) {
+      data {
+        attributes {
+          code
+          currency {
+            data {
+              attributes {
+                code
+              }
+            }
+          }
+          isSell
+          # header
+          # subheader
+          # seo_title
+          # seo_description
+          # text
+        }
+      }
+    }
+  }
+`;
+
+export const massDirTextQuery = gql`
+  query massDirTextQuery(
+    $locale: I18NLocaleCode
+    $isSell: Boolean
+    $code: String
+    $currencyCode: String
+  ) {
+    massDirsTexts(
+      locale: $locale
+      pagination: { start: 0, limit: 200000 }
+      filters: {
+        isSell: { eq: $isSell }
+        code: { eqi: $code }
+        currency: { code: { eqi: $currencyCode } }
+      }
+    ) {
+      data {
+        id
+        attributes {
+          code
+          currency {
+            data {
+              id
+              attributes {
+                code
+              }
+            }
+          }
+          isSell
+          header
+          subheader
+          seo_title
+          seo_description
+          text
+        }
+      }
+    }
+  }
+`;

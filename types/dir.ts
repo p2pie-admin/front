@@ -23,3 +23,19 @@ export interface IActivePetal {
   pm: IPm;
   side: ISide;
 }
+
+export interface IMassDirTextId {
+  code: string;
+  currency: {
+    code: string;
+  };
+  isSell: boolean;
+}
+
+export type IMassDirText = {
+  header: string;
+  subheader: string;
+  seo_title: string;
+  seo_description: string;
+  text: string;
+} & IMassDirTextId;

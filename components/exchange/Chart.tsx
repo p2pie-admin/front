@@ -1,4 +1,3 @@
-const fallbackSRC = "https://i.ibb.co/fpSb8gZ/fallback.png";
 import { memo, useMemo, useState } from "react";
 import {
   Box,

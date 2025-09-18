@@ -35,7 +35,7 @@ import { BsTelegram } from "react-icons/bs";
 import useSWR from "swr";
 import { initCMSFetcher } from "../../../../services/fetchers";
 import { memo } from "react";
-import { selectorQuery } from "../../../../services/initialQueries";
+import { selectorQuery } from "../../../../services/queries";
 
 import { useTranslation } from "next-i18next";
 

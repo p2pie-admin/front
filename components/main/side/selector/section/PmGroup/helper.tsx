@@ -28,7 +28,6 @@ const getOptionCode = (option: IOption, prefix?: string): string => {
     option?.currency?.code.toUpperCase()
   ); // BTC
 };
-
 export const extractPmsFromPmGroup = (
   pm_group: IPmGroup,
   popular_as?: IPopularAs
@@ -50,7 +49,7 @@ export const extractPmsFromPmGroup = (
       icon,
       color,
       popular_as: popular_as || null,
-      section,
+      section: section ?? "", // ✅ fallback to empty string
     };
   });
 };

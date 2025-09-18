@@ -77,16 +77,17 @@ export const dirTextHandler = async ({
   // SEO fields
   const fields = ["seo_description", "seo_title"] as const;
 
-  // Merge fallback text with customDirText
-  const fallbackDirText = await loadDirText(
-    locale,
-    givePm.section,
-    getPm.section
-  );
-  const base = {
-    ...fallbackDirText,
-    ...customDirText,
-  };
+  let base = {} as IDirText;
+  if (customDirText?.header) {
+    base = customDirText;
+  } else {
+    const fallbackDirText = await loadDirText(
+      locale,
+      givePm.section,
+      getPm.section
+    );
+    base = fallbackDirText;
+  }
 
   // Replace placeholders in SEO fields
   const replacedFields = Object.fromEntries(

@@ -11,9 +11,15 @@ import {
   exchangerQuery,
   exchangersQuery,
   citiesQuery,
-} from "../services/initialQueries";
-import { getPmsFromSelector, mergeExchangers } from "./helper";
-import { cachedFetch } from "./cache";
+  massDirTextIdsQuery,
+  massDirTextQuery,
+} from "../services/queries";
+import {
+  convertSlugIntoMassDirText,
+  getPmsFromSelector,
+  mergeExchangers,
+} from "./helper";
+import { cachedArrayFetch, cachedFetch } from "./cache";
 import { ICity, IDirText, IPmLayout } from "../types/exchange";
 import { Redis } from "@upstash/redis";
 import {
@@ -22,6 +28,7 @@ import {
 } from "../components/exchangers/helper";
 import { IArticle } from "../types/pages";
 import { IExchanger, IExchangerPreview } from "../types/exchanger";
+import { IMassDirText, IMassDirTextId } from "../types/dir";
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL!,
@@ -184,3 +191,39 @@ export const loadDirText = (
   cachedFetch(`dirText_${locale}_${sectionGive}_${sectionGet}`, TTL.slow, () =>
     cmsFetcher(dirsTextQuery, { locale })
   ).then((r) => r[0]) as Promise<IDirText>;
+
+export const loadMassDirTextIds = ({
+  locale,
+  isSell,
+}: {
+  locale: "en" | "ru";
+  isSell: boolean;
+}) =>
+  cachedFetch(
+    `massDirTexts_${locale}_${isSell ? "sell" : "buy"}`,
+    TTL.slow,
+    async () => {
+      const massDirTextIds = (await cmsFetcher(massDirTextIdsQuery, {
+        locale,
+        isSell,
+      })) as IMassDirTextId[];
+      return massDirTextIds;
+    }
+  );
+
+export const loadMassDirText = ({
+  locale,
+  slug,
+}: {
+  locale: "en" | "ru";
+  slug: string;
+}) =>
+  cachedFetch(`${slug}`, TTL.slow, async () => {
+    const massDirTextId = convertSlugIntoMassDirText(slug);
+    const massDirText = (await cmsFetcher(massDirTextQuery, {
+      locale,
+      ...massDirTextId,
+      currencyCode: massDirTextId.currency.code,
+    })) as IMassDirText;
+    return massDirText;
+  });
