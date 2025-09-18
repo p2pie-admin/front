@@ -9,7 +9,6 @@ import { IMassDirText } from "../../types/dir";
 type Props = {
   seo: ISEO;
   slug: string;
-  //locale: string;
 };
 
 const SellPage = ({ seo, slug }: Props) => {
@@ -32,7 +31,6 @@ export const getStaticProps = async ({
   const { slug } = params;
 
   const massDirText = (await loadMassDirText({ locale, slug })) as IMassDirText;
-  console.log(massDirText);
 
   try {
     // Load translations and other page-specific data
@@ -53,7 +51,7 @@ export const getStaticProps = async ({
         locale,
         ...(await serverSideTranslations(locale, ["main"])),
       },
-      revalidate: 3000,
+      revalidate: 300,
     };
   } catch (e) {
     console.error("Error during getStaticProps:", e);
