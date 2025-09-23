@@ -1,15 +1,14 @@
 import { Button, HStack, Tooltip, useColorModeValue } from "@chakra-ui/react";
 import { FaArrowUpWideShort, FaArrowDownShortWide } from "react-icons/fa6";
-import React from "react";
 import { useTranslation } from "react-i18next";
 
 interface SortButtonsProps {
-  sortCriteria: "name" | "total_rates" | "admin_rating";
+  sortCriteria: "min" | "course" | "admin_rating";
   sortDirection: "asc" | "desc";
-  toggleSort: (criteria: "name" | "total_rates" | "admin_rating") => void;
+  toggleSort: (criteria: "min" | "course" | "admin_rating") => void;
 }
 
-const SortButtons: React.FC<SortButtonsProps> = ({
+const MassSortButtons: React.FC<SortButtonsProps> = ({
   sortCriteria,
   sortDirection,
   toggleSort,
@@ -27,12 +26,13 @@ const SortButtons: React.FC<SortButtonsProps> = ({
     ) : undefined; // ✅ instead of `null`
 
   const buttons = [
-    { key: "name", label: t("Name"), tooltip: t("Sort by name") },
     {
-      key: "total_rates",
-      label: t("Rates"),
-      tooltip: t("Sort by total rates"),
+      key: "course",
+      label: t("Course"),
+      tooltip: t("Sort by course"),
     },
+    { key: "min", label: t("Min"), tooltip: t("Sort by min amount") },
+
     {
       key: "admin_rating",
       label: t("Rating"),
@@ -69,4 +69,4 @@ const SortButtons: React.FC<SortButtonsProps> = ({
   );
 };
 
-export default SortButtons;
+export default MassSortButtons;

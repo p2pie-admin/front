@@ -4,6 +4,7 @@ import {
   HStack,
   Image,
   useColorModeValue,
+  Box,
 } from "@chakra-ui/react";
 
 import { IoInformation } from "react-icons/io5";
@@ -23,7 +24,7 @@ const Parameter = ({
     state.main.topParameters.find((p) => p.code == code)
   );
 
-  if (!topParameter) return <></>;
+  if (!topParameter) return <Box display="none"></Box>;
   const { id, parameter, en_name, ru_name, color } = topParameter;
   const { en_description, ru_description, icon } = parameter;
 

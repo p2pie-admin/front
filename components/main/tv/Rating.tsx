@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, HStack } from "@chakra-ui/react";
 import React from "react";
 import { FaStar } from "react-icons/fa";
 import { ResponsiveText } from "../../../styles/theme/custom";
@@ -17,13 +17,13 @@ export default function Rating({ rating }: { rating: number }) {
 
   if (!rating) return <></>;
   return (
-    <>
+    <HStack gap="1">
       <Box color={ratingColor} mb="1">
-        <FaStar size="1rem" />
+        <FaStar size="0.8rem" />
       </Box>
-      <ResponsiveText size="lg" color={ratingColor}>
+      <ResponsiveText size="sm" color={ratingColor}>
         {rating}
       </ResponsiveText>
-    </>
+    </HStack>
   );
 }

@@ -28,36 +28,57 @@ const getOptionCode = (option: IOption, prefix?: string): string => {
     option?.currency?.code.toUpperCase()
   ); // BTC
 };
-export const extractPmsFromPmGroup = (
+export const getPmsFromPmGroup = (
   pm_group: IPmGroup,
-  popular_as?: IPopularAs
+  popular_as?: IPopularAs,
+  isAlternative = true
 ): IPm[] | undefined => {
   if (!pm_group) return;
-  return pm_group.options.map((option) => {
-    const code = getOptionCode(option, pm_group?.prefix);
-    const subgroup_name = (option.name && option.name.toUpperCase()) || null;
 
+  const result: IPm[] = [];
+
+  for (const option of pm_group.options) {
+    const baseCode = getOptionCode(option, pm_group?.prefix);
+    const subgroup_name = (option.name && option.name.toUpperCase()) || null;
     const { id, en_name, ru_name, section, icon, color } = pm_group;
 
-    return {
-      pm_group_id: id,
-      code, // USDTERC20
-      en_name, // Tether
-      ru_name,
-      subgroup_name, // ERC-20
-      currency: option?.currency, // USDT
-      icon,
-      color,
-      popular_as: popular_as || null,
-      section: section ?? "", // ✅ fallback to empty string
+    // helper to push a PM entry
+    const pushPm = (code: string) => {
+      result.push({
+        pm_group_id: id,
+        code,
+        en_name,
+        ru_name,
+        subgroup_name,
+        currency: option?.currency,
+        icon,
+        color,
+        popular_as: popular_as || null,
+        section: section ?? "",
+      });
     };
-  });
+
+    if (baseCode) pushPm(baseCode);
+
+    // handle alternative codes
+    if (isAlternative && option.alternative_codes) {
+      // split by comma OR just separate codes without separator
+      const altCodes = option.alternative_codes
+        .split(/[,]+/) // split by comma or space
+        .filter(Boolean); // remove empty strings
+      for (const altCode of altCodes) {
+        pushPm(altCode.trim().toUpperCase());
+      }
+    }
+  }
+
+  return result.length ? result : undefined;
 };
 
 export const getPmByCode = (pmPointer: IPmPointer): IPm | undefined => {
   const { code, pm_group, popular_as } = pmPointer;
   if (!pm_group?.options) return;
-  const pms = extractPmsFromPmGroup(pm_group, popular_as);
+  const pms = getPmsFromPmGroup(pm_group, popular_as);
   if (!pms) return;
   if (!code) return pms[0];
   return pms.find((pm) => pm.code.toLowerCase() == code.toLowerCase());
@@ -148,7 +169,7 @@ export const pmFromPmGroups = (
   });
 
   if (!pmGroup) return;
-  const pms = extractPmsFromPmGroup(pmGroup[0]);
+  const pms = getPmsFromPmGroup(pmGroup[0]);
   return (
     pms &&
     pms.find(

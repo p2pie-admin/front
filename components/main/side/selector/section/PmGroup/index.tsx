@@ -1,7 +1,7 @@
 import Subitems from "./Subitems";
 
 import Name from "./Name";
-import { extractPmsFromPmGroup, pmsToSlug } from "./helper";
+import { getPmsFromPmGroup, pmsToSlug } from "./helper";
 import { useAppDispatch, useAppSelector } from "../../../../../../redux/hooks";
 import { batch } from "react-redux";
 import { IPmGroup, IPm } from "../../../../../../types/selector";
@@ -29,14 +29,16 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
   );
   const currentPm = useAppSelector((state) => state.main[`${side}Pm`]);
   const cityName = useAppSelector((state) => state.main.city?.en_name);
-  const pms = extractPmsFromPmGroup(pm_group);
+  const pms = getPmsFromPmGroup(pm_group, undefined, false);
   if (!pms || !pms.length) {
     return <></>;
   }
   const possiblePairs = oppositePm?.possible_pairs;
 
   const shaded =
-    !!oppositePm && !possiblePairs?.find((pair) => pms[0].code === pair);
+    !!possiblePairs &&
+    !!oppositePm &&
+    !possiblePairs?.find((pair) => pms[0].code === pair);
 
   const choosePm = (sub?: string) => {
     const pm =

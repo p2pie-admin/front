@@ -10,7 +10,7 @@
 // import { getSlugToCodes } from "../cache/helper";
 // import {
 //   loadPms,
-//   loadPossiblePairs,
+//   loadPossibleDirs,
 //   loadCities,
 //   loadArticleCodes,
 //   loadDirsTexts,
@@ -60,7 +60,7 @@
 //     const [pms, possiblePairs, cities, pmLayouts, articleCodes, customDirText] =
 //       await Promise.all([
 //         loadPms(),
-//         loadPossiblePairs(),
+//         loadPossibleDirs(),
 //         isCash ? loadCities() : null,
 //         loadPmLayouts(locale),
 //         loadArticleCodes(),
@@ -266,7 +266,7 @@
 //     articleCodes,
 //   ] = await Promise.all([
 //     loadPms(),
-//     loadPossiblePairs(),
+//     loadPossibleDirs(),
 //     loadCities(),
 //     loadPmLayouts("ru"),
 //     loadDirsTexts("ru"),

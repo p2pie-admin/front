@@ -12,7 +12,7 @@ const SectionGrid = ({ children }: { children: JSX.Element[] }) => {
         sm: `repeat(${columns}, 1fr)`,
       }}
       gap="1"
-      pb={2}
+      py={2}
       mx="2"
     >
       {children}

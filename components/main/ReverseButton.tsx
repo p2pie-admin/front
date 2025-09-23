@@ -51,11 +51,14 @@ const ReverseButton = () => {
   const bothPmsSelected = useAppSelector(
     (state) => state.main.givePm?.code && state.main.getPm?.code
   );
-  const oppositeDirExists = useAppSelector((state) =>
-    state.main?.getPm?.possible_pairs?.find(
-      (c) => c == state.main?.givePm?.code
-    )
-  );
+  const oppositeDirExists = useAppSelector((state) => {
+    if (state.main?.getPm?.possible_pairs) {
+      return state.main?.getPm?.possible_pairs?.find(
+        (c) => c == state.main?.givePm?.code
+      );
+    }
+    return;
+  });
   const router = useRouter();
   const { exchange } = router.query as { exchange: string };
   let reversedExchange = "";

@@ -28,7 +28,7 @@ import {
 } from "../components/exchangers/helper";
 import { IArticle } from "../types/pages";
 import { IExchanger, IExchangerPreview } from "../types/exchanger";
-import { IMassDirText, IMassDirTextId } from "../types/dir";
+import { IMassDirTextId, IMassDirText, IMassRate } from "../types/mass";
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL!,
@@ -99,29 +99,30 @@ export const loadArticle = (code: string, locale: "en" | "ru") =>
     return res?.[0] || null;
   });
 
-export const loadPossiblePairs = () =>
-  cachedFetch("possible_pairs", TTL.fast, () =>
-    parserFetcher("possible_pairs")
-  );
+export const loadPossibleDirs = () =>
+  cachedFetch("dirs", TTL.fast, async () => {
+    const pdirs = await parserFetcher("dirs"); // {"BTC_USDTTRC20": 119, "BTC_ETH": 34, ...}
+    return Object.keys(pdirs);
+  });
 
 export const loadPms = async () => {
-  const selector = await cachedFetch("selector", TTL.slow, () =>
-    cmsFetcher(selectorQuery)
-  );
+  const pms = await cachedFetch("pms", TTL.slow, async () => {
+    try {
+      const selector = await cmsFetcher(selectorQuery);
+      if (!selector) {
+        console.error(
+          "Selector is undefined - check selectorQuery and CMS response"
+        );
+        return []; // safe fallback
+      }
 
-  if (!selector) {
-    console.error(
-      "Selector is undefined - check selectorQuery and CMS response"
-    );
-    return []; // safe fallback
-  }
-
-  try {
-    return getPmsFromSelector(selector);
-  } catch (err) {
-    console.error("Failed to build PMs from selector:", err);
-    return [];
-  }
+      return getPmsFromSelector(selector);
+    } catch (e) {
+      console.log("error loading pms: ", e);
+      return [];
+    }
+  });
+  return pms;
 };
 
 export const loadExchanger = (slug: string) =>
@@ -213,17 +214,41 @@ export const loadMassDirTextIds = ({
 
 export const loadMassDirText = ({
   locale,
-  slug,
+  massDirTextId,
+  isSell,
 }: {
   locale: "en" | "ru";
-  slug: string;
+  massDirTextId: IMassDirTextId;
+  isSell: boolean;
 }) =>
-  cachedFetch(`${slug}`, TTL.slow, async () => {
-    const massDirTextId = convertSlugIntoMassDirText(slug);
-    const massDirText = (await cmsFetcher(massDirTextQuery, {
-      locale,
-      ...massDirTextId,
-      currencyCode: massDirTextId.currency.code,
-    })) as IMassDirText;
-    return massDirText;
-  });
+  cachedFetch(
+    `${locale}_${isSell ? "sell" : "buy"}_${massDirTextId.code}_${
+      massDirTextId.currency
+    }`,
+    TTL.slow,
+    async () => {
+      const massDirText = (
+        await cmsFetcher(massDirTextQuery, {
+          locale,
+          ...massDirTextId,
+          currencyCode: massDirTextId.currency.code,
+        })
+      )[0] as IMassDirText;
+      return massDirText;
+    }
+  );
+
+export const loadMassRates = ({
+  currencyCode,
+  code,
+  isSell,
+}: {
+  currencyCode: string;
+  code: string;
+  isSell: boolean;
+}) =>
+  parserFetcher(
+    `crypto=${code.toLowerCase()}/${currencyCode.toLowerCase()}/${
+      isSell ? "sell" : "buy"
+    }`
+  ) as Promise<IMassRate[]>;

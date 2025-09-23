@@ -42,7 +42,9 @@ const Subitems = ({
   const shaded =
     !!oppositePm && !pms.some((pm) => possiblePairs?.includes(pm.code));
   const subShaded = (pm: IPm) =>
-    !!oppositePm && !possiblePairs?.find((pair) => pm.code === pair);
+    !!possiblePairs &&
+    !!oppositePm &&
+    !possiblePairs?.find((pair) => pm.code === pair);
   return (
     // сама обложка раскрывалки
     <VStack>

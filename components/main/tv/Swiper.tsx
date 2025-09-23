@@ -26,6 +26,7 @@ export const Swiper = (props: {
     props;
 
   const [initial, setInitial] = useState(true);
+  const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchTopParameters());
     setInitial(false);
@@ -36,7 +37,7 @@ export const Swiper = (props: {
   const isLoading = dirRatesStatus === "pending";
 
   const length = dirRates.length;
-  const dispatch = useAppDispatch();
+
   const bgColor = useColorModeValue("bg.50", "bg.800");
   const triangleColor = useColorModeValue("violet.700", "peach.600");
   const [mouseEntered, setMouseEntered] = useState(false);

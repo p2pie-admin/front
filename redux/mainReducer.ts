@@ -96,6 +96,7 @@ export interface MainState {
   p2p: IOrder;
   fingerprint?: IFingerprint;
   topParameters: IParameter[];
+  massPmsFilter: string[];
 }
 
 const initialState: MainState = {
@@ -111,6 +112,7 @@ const initialState: MainState = {
   city: defaultCity,
   p2p: initialOrder,
   topParameters: [],
+  massPmsFilter: [],
 };
 
 export const mainSlice = createSlice({
@@ -379,6 +381,9 @@ export const mainSlice = createSlice({
     ) => {
       state.dirRatesStatus = action.payload;
     },
+    setMassPmsFilter: (state: MainState, action: PayloadAction<string[]>) => {
+      state.massPmsFilter = action.payload;
+    },
     // setCities: (state: MainState, action: PayloadAction<ICities>) => {
     //   state.cities = action.payload;
     // },
@@ -532,6 +537,7 @@ export const {
   clean,
   sendToast,
   setDirRatesStatus,
+  setMassPmsFilter,
 } = mainSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

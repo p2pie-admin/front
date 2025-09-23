@@ -10,7 +10,7 @@ import { nullSeo } from "../components/shared/UniversalSeo";
 import { getSlugToCodes } from "../cache/helper";
 import {
   loadPms,
-  loadPossiblePairs,
+  loadPossibleDirs,
   loadCities,
   loadArticleCodes,
   loadPmLayouts,
@@ -55,17 +55,17 @@ export async function getStaticProps({
     const isCash =
       (slug && slug.startsWith("cash-")) || slug.includes("-cash-");
 
-    const [pms, possiblePairs, cities, pmLayouts, articleCodes, customDirText] =
+    const [pms, dirs, cities, pmLayouts, articleCodes, customDirText] =
       await Promise.all([
         loadPms(),
-        loadPossiblePairs(),
+        loadPossibleDirs(),
         isCash ? loadCities() : null,
         loadPmLayouts(locale),
         loadArticleCodes(),
         loadCustomDirText(locale, slug),
       ]);
 
-    const slugToCodes = getSlugToCodes(possiblePairs, pms);
+    const slugToCodes = getSlugToCodes(dirs, pms);
 
     if (!pms || !Array.isArray(pms)) {
       console.error("[getStaticProps] 'pms' is missing or invalid.");
@@ -187,7 +187,7 @@ export async function getStaticPaths() {
   const [pms, possiblePairs, cities, pmLayoutsRu, pmLayoutsEn, articleCodes] =
     await Promise.all([
       loadPms(),
-      loadPossiblePairs(),
+      loadPossibleDirs(),
       loadCities(),
       loadPmLayouts("ru"),
       loadPmLayouts("en"),

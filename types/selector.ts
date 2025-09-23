@@ -48,6 +48,7 @@ interface IOption {
   name?: string;
   code?: string;
   currency: ICurrency;
+  alternative_codes?: string;
 }
 
 interface ICurrency {

@@ -18,6 +18,6 @@ export type ISEO = {
   canonicalPath: string;
   locale: "en" | "ru";
   updatedAt: string;
-  breadcrumbs: BreadcrumbItem[];
+  breadcrumbs?: BreadcrumbItem[];
   alternateLangs?: { rel: string; hrefLang: string; href: string }[];
 };

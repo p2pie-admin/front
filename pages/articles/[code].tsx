@@ -14,7 +14,7 @@ import {
   loadArticleCodes,
   // loadArticles,
   loadPms,
-  loadPossiblePairs,
+  loadPossibleDirs,
   TTL,
 } from "../../cache/loadX";
 import { addPathsToSitemap } from "../../cache/cache";
@@ -48,14 +48,14 @@ export async function getStaticProps({
 }) {
   try {
     const code = params.code;
-    const [article, articleCodes, pms, possiblePairs] = await Promise.all([
+    const [article, articleCodes, pms, dirs] = await Promise.all([
       loadArticle(code, locale),
       loadArticleCodes(),
       loadPms(),
-      loadPossiblePairs(),
+      loadPossibleDirs(),
     ]);
 
-    const slugToCodes = getSlugToCodes(possiblePairs, pms);
+    const slugToCodes = getSlugToCodes(dirs, pms);
     if (!article) {
       console.warn(
         `[getStaticProps] No article found for code: ${params.code}`

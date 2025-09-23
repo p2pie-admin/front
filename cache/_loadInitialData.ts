@@ -116,7 +116,7 @@
 //     cmsFetcher(articleQuery, { code, locale })
 //   ) as Promise<IArticle[]>;
 
-// export const loadPossiblePairs = () =>
+// export const loadPossibleDirs = () =>
 //   safeFetch("possible_pairs", () => parserFetcher("possible_pairs")) as Promise<
 //     Record<string, string[]>
 //   >;

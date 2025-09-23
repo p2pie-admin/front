@@ -1,24 +1,44 @@
 import { GetStaticPaths } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { convertMassDirTextIntoSlug } from "../../cache/helper";
-import { loadMassDirText, loadMassDirTextIds } from "../../cache/loadX";
+import {
+  convertMassDirTextIntoSlug,
+  convertSlugIntoMassDirText,
+} from "../../cache/helper";
+import {
+  loadMassDirText,
+  loadMassDirTextIds,
+  loadMassRates,
+  loadPms,
+} from "../../cache/loadX";
 import UniversalSeo, { nullSeo } from "../../components/shared/UniversalSeo";
 import { ISEO } from "../../types/general";
-import { IMassDirText } from "../../types/dir";
+
+import {
+  generateMassSeo,
+  getPmsByCodes,
+  replaceCodesWithPms,
+} from "../../components/mass/helper";
+import Mass from "../../components/mass";
+import { IMassDirText, IMassDirTextId, IMassRate } from "../../types/mass";
+import { IPm } from "../../types/selector";
+import { addPathsToSitemap } from "../../cache/cache";
+
+const isSell = true;
 
 type Props = {
   seo: ISEO;
-  slug: string;
+  pmsByCodes: Record<string, IPm>;
+  massDirTextId: IMassDirTextId;
+  massDirText: IMassDirText;
+  massRates: IMassRate[];
 };
 
-const SellPage = ({ seo, slug }: Props) => {
-  return (
-    <>
-      <UniversalSeo seo={seo} />
-      <h1>{slug}</h1>
-    </>
-  );
-};
+const SellPage = (props: Props) => (
+  <>
+    <UniversalSeo seo={props.seo} />
+    <Mass {...props} />
+  </>
+);
 
 /////////////////////////////////////////////////////////////////////////
 export const getStaticProps = async ({
@@ -29,25 +49,43 @@ export const getStaticProps = async ({
   locale: "en" | "ru";
 }) => {
   const { slug } = params;
+  const massDirTextId = convertSlugIntoMassDirText(slug, isSell);
 
-  const massDirText = (await loadMassDirText({ locale, slug })) as IMassDirText;
+  const massDirText = (await loadMassDirText({
+    locale,
+    massDirTextId,
+    isSell,
+  })) as IMassDirText;
+
+  const { seo_title, seo_description, currency, code } = massDirText;
+
+  const [pms, massRates] = await Promise.all([
+    loadPms(),
+    loadMassRates({
+      currencyCode: currency.code,
+      code,
+      isSell,
+    }),
+  ]);
+
+  const pmsByCodes = getPmsByCodes(massRates, pms) as Record<string, IPm>;
 
   try {
-    // Load translations and other page-specific data
-
-    const seo: ISEO = {
-      title: "header",
-      description: "descr",
-      canonicalPath: `${locale}/sell/${slug}`,
-      locale: "ru",
-      updatedAt: new Date().toISOString(),
-      breadcrumbs: [],
-    };
+    const seo = generateMassSeo({
+      title: seo_title || "",
+      description: seo_description || "",
+      locale,
+      slug,
+      isSell,
+    });
 
     return {
       props: {
         seo,
-        slug,
+        pmsByCodes,
+        massDirText,
+        massRates,
+        massDirTextId,
         locale,
         ...(await serverSideTranslations(locale, ["main"])),
       },
@@ -59,7 +97,10 @@ export const getStaticProps = async ({
     return {
       props: {
         seo: nullSeo,
-        slug,
+        pmsByCodes: null,
+        massDirText: null,
+        massRates: null,
+        massDirTextId: null,
         locale,
         ...(await serverSideTranslations(locale, ["main"])),
       },
@@ -75,19 +116,21 @@ export const getStaticPaths: GetStaticPaths = async () => {
     (["en", "ru"] as const).map(async (locale) => {
       const massDirTextIds = await loadMassDirTextIds({
         locale,
-        isSell: true,
+        isSell,
       });
 
-      return massDirTextIds.map((mdtid) => ({
-        params: { slug: convertMassDirTextIntoSlug(mdtid) },
+      const paths = massDirTextIds.map((mdtid) => ({
+        params: { slug: convertMassDirTextIntoSlug(mdtid, isSell) },
         locale,
       }));
+      return paths;
     })
   );
 
   // Flatten the arrays of paths
   const paths = allPaths.flat();
 
+  await addPathsToSitemap(paths);
   return {
     paths,
     fallback: "blocking",

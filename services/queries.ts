@@ -14,6 +14,7 @@ const pmGroup = gql`
             id
             name
             code
+            alternative_codes
             currency {
               data {
                 id

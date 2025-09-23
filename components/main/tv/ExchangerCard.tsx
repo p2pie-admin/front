@@ -128,7 +128,7 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
             >
               {capitalize(name)}
             </ResponsiveText>
-            {/* Rating removed for perf test */}
+            <Rating rating={rate.admin_rating} />
           </HStack>
           {/* Info icon removed */}
         </HStack>

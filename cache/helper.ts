@@ -1,12 +1,12 @@
 import {
-  extractPmsFromPmGroup,
+  getPmsFromPmGroup,
   pmsToSlug,
 } from "../components/main/side/selector/section/PmGroup/helper";
 import { mylog } from "../services/utils";
-import { IMassDirTextId } from "../types/dir";
 
 import { IPossiblePmPair } from "../types/exchange";
 import { IExchanger, IParserExchanger } from "../types/exchanger";
+import { IMassDirTextId } from "../types/mass";
 import { ISelector, IPm, IPmGroup, ISection } from "../types/selector";
 
 export const getPmsFromSelector = (selector: ISelector): IPm[] => {
@@ -18,23 +18,16 @@ export const getPmsFromSelector = (selector: ISelector): IPm[] => {
   );
 
   const pms: IPm[] = pmGroups.flatMap((pmGroup) => {
-    const extracted = extractPmsFromPmGroup(pmGroup);
+    const extracted = getPmsFromPmGroup(pmGroup);
+    console.log(extracted);
     if (!extracted?.length) console.log("Missing PMs in group:", pmGroup);
     return extracted || [];
   });
   return pms;
 };
 
-export const getSlugToCodes = (
-  possiblePairs: Record<string, string[]>,
-  pms: IPm[]
-) => {
-  const dirs = Object.entries(possiblePairs ?? {}).flatMap(([code, pairs]) =>
-    (pairs || []).map((pair) => `${code}_${pair}`)
-  );
-
+export const getSlugToCodes = (dirs: string[], pms: IPm[]) => {
   const pmMap = new Map(pms.map((pm) => [pm.code.toUpperCase(), pm]));
-
   const slugToCodes: Record<string, string> = dirs.reduce((acc, dir) => {
     const [give, get] = dir.split("_");
     const pair: IPossiblePmPair = {
@@ -67,19 +60,29 @@ export const mergeExchangers = (
 };
 
 export const convertMassDirTextIntoSlug = (
-  massDirTextId: IMassDirTextId
+  massDirTextId: IMassDirTextId,
+  isSell: boolean
 ): string => {
-  const { isSell, code, currency } = massDirTextId;
-  return `${
-    isSell ? "sell" : "buy"
-  }-${code.toLowerCase()}-for-${currency.code.toLowerCase()}`;
+  const { code, currency } = massDirTextId;
+  return isSell
+    ? `${code.toLowerCase()}-for-${currency.code.toLowerCase()}`
+    : `${currency.code.toLowerCase()}-for-${code.toLowerCase()}`;
 };
 
-export const convertSlugIntoMassDirText = (slug: string): IMassDirTextId => {
-  const [action, code, _for, currencyCode] = slug.split("-");
-  return {
-    isSell: action === "sell",
-    code: code.toUpperCase(),
-    currency: { code: currencyCode.toUpperCase() },
-  };
+export const convertSlugIntoMassDirText = (
+  slug: string,
+  isSell: boolean
+): IMassDirTextId => {
+  const [leftSide, _for, rightSide] = slug.split("-");
+  return isSell
+    ? {
+        isSell,
+        code: leftSide.toUpperCase(),
+        currency: { code: rightSide.toUpperCase() },
+      }
+    : {
+        isSell,
+        code: rightSide.toUpperCase(),
+        currency: { code: leftSide.toUpperCase() },
+      };
 };
