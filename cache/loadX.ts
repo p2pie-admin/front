@@ -223,7 +223,7 @@ export const loadMassDirText = ({
 }) =>
   cachedFetch(
     `${locale}_${isSell ? "sell" : "buy"}_${massDirTextId.code}_${
-      massDirTextId.currency
+      massDirTextId.currency.code
     }`,
     TTL.slow,
     async () => {
@@ -249,6 +249,6 @@ export const loadMassRates = ({
 }) =>
   parserFetcher(
     `crypto=${code.toLowerCase()}/${currencyCode.toLowerCase()}/${
-      isSell ? "sell" : "buy"
+      isSell ? "give" : "get"
     }`
   ) as Promise<IMassRate[]>;

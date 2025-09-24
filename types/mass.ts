@@ -29,3 +29,8 @@ export type IMassRate = {
   codes: string[];
   logo: IImage;
 };
+
+export interface IMassSort {
+  key: "limit" | "course" | "admin_rating";
+  direction: "asc" | "desc";
+}

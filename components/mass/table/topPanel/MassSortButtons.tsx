@@ -1,24 +1,24 @@
 import { Button, HStack, Tooltip, useColorModeValue } from "@chakra-ui/react";
 import { FaArrowUpWideShort, FaArrowDownShortWide } from "react-icons/fa6";
 import { useTranslation } from "react-i18next";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { IMassSort } from "../../../../types/mass";
+import { setMassSort } from "../../../../redux/mainReducer";
 
-interface SortButtonsProps {
-  sortCriteria: "min" | "course" | "admin_rating";
-  sortDirection: "asc" | "desc";
-  toggleSort: (criteria: "min" | "course" | "admin_rating") => void;
-}
-
-const MassSortButtons: React.FC<SortButtonsProps> = ({
-  sortCriteria,
-  sortDirection,
-  toggleSort,
-}) => {
+const MassSortButtons = () => {
   const { t } = useTranslation();
   const activeBg = useColorModeValue("bg.100", "bg.600");
 
-  const getIcon = (criteria: SortButtonsProps["sortCriteria"]) =>
-    sortCriteria === criteria ? (
-      sortDirection === "asc" ? (
+  const massSort = useAppSelector((state) => state.main.massSort);
+
+  const dispatch = useAppDispatch();
+  const toggleSort = (key: IMassSort["key"]) => {
+    dispatch(setMassSort(key));
+  };
+
+  const getIcon = (key: string) =>
+    massSort.key === key ? (
+      massSort.direction === "asc" ? (
         <FaArrowDownShortWide />
       ) : (
         <FaArrowUpWideShort />
@@ -28,14 +28,17 @@ const MassSortButtons: React.FC<SortButtonsProps> = ({
   const buttons = [
     {
       key: "course",
-      label: t("Course"),
+      label: t("Курс"),
       tooltip: t("Sort by course"),
     },
-    { key: "min", label: t("Min"), tooltip: t("Sort by min amount") },
-
+    {
+      key: "limit",
+      label: t("Лимиты"),
+      tooltip: t("Sort by min amount"),
+    },
     {
       key: "admin_rating",
-      label: t("Rating"),
+      label: t("Рейтинг"),
       tooltip: t("Sort by admin rating"),
     },
   ] as const;
@@ -51,7 +54,7 @@ const MassSortButtons: React.FC<SortButtonsProps> = ({
       {buttons.map(({ key, label, tooltip }) => (
         <Tooltip key={key} label={tooltip} fontSize="sm">
           <Button
-            bgColor={sortCriteria === key ? activeBg : "transparent"}
+            bgColor={massSort.key === key ? activeBg : "transparent"}
             onClick={() => toggleSort(key)}
             rightIcon={getIcon(key)}
             borderRadius="none"

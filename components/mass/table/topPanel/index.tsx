@@ -4,20 +4,19 @@ import AmountInput from "./AmountInput";
 import MassSortButtons from "./MassSortButtons";
 import { useState } from "react";
 import { IPm } from "../../../../types/selector";
+import { IMassDirTextId } from "../../../../types/mass";
 
 export type Option = { value: string; label: string };
 
 const TopPanel = ({
-  toggleFilter,
   pmsByCodes,
-  activeFilter,
+
+  massDirTextId,
 }: {
   pmsByCodes: Record<string, IPm>;
-  toggleFilter: (status: string | null) => void;
-  activeFilter: string;
-}) => {
-  const [sel, setSel] = useState<string[]>(["usd", "eur"]);
 
+  massDirTextId: IMassDirTextId;
+}) => {
   return (
     <HStack
       gap="4"
@@ -25,19 +24,10 @@ const TopPanel = ({
       w="100%"
       display={{ base: "none", lg: "flex" }}
     >
-      <MultiSelectMenu
-        pmsByCodes={pmsByCodes}
-        value={sel}
-        onChange={(next) => setSel(next)}
-        placeholder="Choose currencies"
-      />
+      <MultiSelectMenu pmsByCodes={pmsByCodes} />
 
-      <AmountInput onAmountChange={() => {}} />
-      <MassSortButtons
-        sortCriteria={"course"}
-        sortDirection={"asc"}
-        toggleSort={() => {}}
-      />
+      <AmountInput massDirTextId={massDirTextId} />
+      <MassSortButtons />
     </HStack>
   );
 };

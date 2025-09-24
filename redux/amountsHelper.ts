@@ -128,7 +128,7 @@ export const kFormatter = (num: number, locale?: "en" | "ru") => {
   if (abs <= 1000) return num % 1 === 0 ? num.toFixed(0) : num.toFixed(2);
 
   return abs > 999999999
-    ? "∞"
+    ? "✖"
     : abs > 9999999
     ? (num / 1000000).toFixed(0) + (locale == "en" ? " m" : " млн")
     : abs > 999999
@@ -184,6 +184,7 @@ export const format = (v: number, strength?: number): string =>
 export const addSpaces = (x: string | number) => {
   const s = String(x);
   if (!x && x !== 0) return s;
+  if (s.length > 9) return "✖";
   let parts = s.split(".");
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   return parts.join(".");

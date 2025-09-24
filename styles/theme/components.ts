@@ -66,6 +66,15 @@ const components: Record<string, StyleConfig> = {
       primary: (props: any) => ({
         color: mode("violet.700", "peach.300")(props),
       }),
+      shaded: (props: any) => ({
+        color: mode("bg.500", "bg.500")(props),
+      }),
+      red: (props: any) => ({
+        color: mode("red.700", "red.300")(props),
+      }),
+      green: (props: any) => ({
+        color: mode("green.700", "green.300")(props),
+      }),
     },
   },
 

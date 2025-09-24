@@ -1,5 +1,5 @@
 // MultiSelectMenu.tsx
-import React from "react";
+import React, { useContext } from "react";
 import {
   Menu,
   MenuButton,
@@ -20,6 +20,7 @@ import PmName from "../../../shared/PmName";
 import { IoIosArrowDown } from "react-icons/io";
 import { useAppDispatch } from "../../../../redux/hooks";
 import { setMassPmsFilter } from "../../../../redux/mainReducer";
+import MassSideContext from "../../sideContext";
 
 export type Option = { value: string; label: string };
 
@@ -37,17 +38,20 @@ export const MultiSelectMenu: React.FC<Props> = ({
   pmsByCodes,
   value,
   defaultValue = [],
-
-  placeholder = "Select…",
 }) => {
-  const maxTagToShow = 7;
+  const maxTagToShow = 8;
   const [selected, setSelected] = React.useState<string[]>(defaultValue);
+  const isSell = useContext(MassSideContext) as boolean;
 
   const dispatch = useAppDispatch();
 
   const saveSelection = () => {
-    console.log(selected);
     dispatch(setMassPmsFilter(selected));
+  };
+
+  const removeAll = () => {
+    setSelected([]);
+    dispatch(setMassPmsFilter([]));
   };
 
   const toggle = (val: string) => {
@@ -64,14 +68,14 @@ export const MultiSelectMenu: React.FC<Props> = ({
   const buttonContent = (
     <>
       {selectedOptions.length === 0 ? (
-        <Text
-          color="gray.500"
-          whiteSpace="nowrap"
+        <ResponsiveText
           overflow="hidden"
           textOverflow="ellipsis"
+          variant="no_contrast"
+          size="sm"
         >
-          {placeholder}
-        </Text>
+          {isSell ? "Получить" : "Способы оплаты"}
+        </ResponsiveText>
       ) : (
         <HStack align="center" mt="1">
           {selectedOptions.slice(0, maxTagToShow).map((code) => (
@@ -94,7 +98,7 @@ export const MultiSelectMenu: React.FC<Props> = ({
       <MenuButton
         as={Button}
         rightIcon={<IoIosArrowDown />}
-        width="400px"
+        width="520px"
         textAlign="left"
         h="45px"
       >
@@ -111,8 +115,8 @@ export const MultiSelectMenu: React.FC<Props> = ({
       </MenuButton>
 
       <MenuList bgColor="bg.800" maxH="400" overflowY="auto">
-        <Button w="100%" borderRadius="none">
-          disselect all
+        <Button w="100%" borderRadius="none" onClick={removeAll}>
+          снять выбор
         </Button>
         <VStack spacing={0} align="stretch" width="200px" p="1">
           {Object.entries(pmsByCodes).map(([code, pm]) => {

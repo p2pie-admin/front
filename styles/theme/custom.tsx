@@ -7,7 +7,7 @@ import {
   useToken,
 } from "@chakra-ui/react";
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
-import { ITone, IVariant } from "../../types/shared";
+import { ITextVariant, ITone, IVariant } from "../../types/shared";
 import { colors3D } from "./colors";
 
 export const CustomBox3D = (props: any) => {
@@ -97,7 +97,7 @@ export const ResponsiveText = (props: any) => {
   }: {
     children: ReactJSXElement;
     size?: "xs" | "sm" | "md" | "lg" | "xl";
-    variant: IVariant;
+    variant: ITextVariant;
   } = props;
   const sizes = {
     xs: ["0.65rem", "0.65rem", "xs", "sm"],

@@ -50,6 +50,7 @@ import {
   writeLocalOrder,
 } from "../components/order/localStorageHandler";
 import { ICity } from "../types/exchange";
+import { IMassSort } from "../types/mass";
 
 type ISide = "give" | "get";
 
@@ -97,6 +98,8 @@ export interface MainState {
   fingerprint?: IFingerprint;
   topParameters: IParameter[];
   massPmsFilter: string[];
+  massAmount: { value: string; code?: string };
+  massSort: IMassSort;
 }
 
 const initialState: MainState = {
@@ -113,6 +116,8 @@ const initialState: MainState = {
   p2p: initialOrder,
   topParameters: [],
   massPmsFilter: [],
+  massAmount: { value: "" },
+  massSort: { key: "course", direction: "asc" },
 };
 
 export const mainSlice = createSlice({
@@ -384,6 +389,21 @@ export const mainSlice = createSlice({
     setMassPmsFilter: (state: MainState, action: PayloadAction<string[]>) => {
       state.massPmsFilter = action.payload;
     },
+    setMassAmount: (
+      state: MainState,
+      action: PayloadAction<{ value: string; code?: string }>
+    ) => {
+      state.massAmount = action.payload;
+    },
+
+    setMassSort: (
+      state: MainState,
+      action: PayloadAction<IMassSort["key"]>
+    ) => {
+      state.massSort.key = action.payload;
+      const oldDirection = state.massSort.direction as IMassSort["direction"];
+      state.massSort.direction = oldDirection == "asc" ? "desc" : "asc";
+    },
     // setCities: (state: MainState, action: PayloadAction<ICities>) => {
     //   state.cities = action.payload;
     // },
@@ -538,6 +558,8 @@ export const {
   sendToast,
   setDirRatesStatus,
   setMassPmsFilter,
+  setMassAmount,
+  setMassSort,
 } = mainSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

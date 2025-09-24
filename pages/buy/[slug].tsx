@@ -23,7 +23,7 @@ import { IMassDirText, IMassDirTextId, IMassRate } from "../../types/mass";
 import { IPm } from "../../types/selector";
 import { addPathsToSitemap } from "../../cache/cache";
 
-const isSell = true;
+const isSell = false;
 
 type Props = {
   seo: ISEO;
@@ -87,8 +87,8 @@ export const getStaticProps = async ({
         massDirText,
         massRates,
         massDirTextId,
-        isSell,
         locale,
+        isSell,
         ...(await serverSideTranslations(locale, ["main"])),
       },
       revalidate: 300,

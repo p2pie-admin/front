@@ -19,7 +19,6 @@ export const getPmsFromSelector = (selector: ISelector): IPm[] => {
 
   const pms: IPm[] = pmGroups.flatMap((pmGroup) => {
     const extracted = getPmsFromPmGroup(pmGroup);
-    console.log(extracted);
     if (!extracted?.length) console.log("Missing PMs in group:", pmGroup);
     return extracted || [];
   });
@@ -74,15 +73,9 @@ export const convertSlugIntoMassDirText = (
   isSell: boolean
 ): IMassDirTextId => {
   const [leftSide, _for, rightSide] = slug.split("-");
-  return isSell
-    ? {
-        isSell,
-        code: leftSide.toUpperCase(),
-        currency: { code: rightSide.toUpperCase() },
-      }
-    : {
-        isSell,
-        code: rightSide.toUpperCase(),
-        currency: { code: leftSide.toUpperCase() },
-      };
+  return {
+    isSell,
+    code: leftSide.toUpperCase(),
+    currency: { code: rightSide.toUpperCase() },
+  };
 };

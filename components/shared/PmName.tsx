@@ -7,7 +7,7 @@ import CircularIcon from "./CircularIcon";
 const PmName = ({ pm, isFull = true }: { pm?: IPm; isFull?: boolean }) => {
   if (!pm) return <></>;
   return (
-    <HStack gap="2">
+    <HStack gap="2" position="relative">
       <CircularIcon
         iconAlt={pm.en_name}
         icon={pm.icon}
@@ -16,6 +16,15 @@ const PmName = ({ pm, isFull = true }: { pm?: IPm; isFull?: boolean }) => {
       <ResponsiveText>{`${capitalize(pm.en_name.slice(0, 12))} ${
         isFull ? pm.currency.code.toUpperCase() : ""
       }`}</ResponsiveText>
+      <ResponsiveText
+        position="absolute"
+        fontSize="8"
+        variant="no_contrast"
+        right="0"
+        bottom="-2"
+      >
+        {pm.subgroup_name || ""}
+      </ResponsiveText>
     </HStack>
   );
 };

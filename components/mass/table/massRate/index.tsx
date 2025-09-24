@@ -7,43 +7,47 @@ import {
   VStack,
   Wrap,
 } from "@chakra-ui/react";
-import { IMassDirTextId, IMassRate } from "../../../types/mass";
-import { IPm } from "../../../types/selector";
-import NextLink from "next/link";
-import course from "next-seo/lib/jsonld/course";
-import logo from "next-seo/lib/jsonld/logo";
 
 import {
-  addSpaces,
-  R,
-  localFormat,
   curToSymbol,
-} from "../../../redux/amountsHelper";
-import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
-import { capitalize } from "../../main/side/selector/section/PmGroup/helper";
-import CustomImage from "../../shared/CustomImage";
-import { redirect } from "../../../redux/thunks";
-import { useAppDispatch } from "../../../redux/hooks";
-import { useIsMobile } from "../../main/tv/hooks";
-import PmName from "../../shared/PmName";
-import CircularIcon from "../../shared/CircularIcon";
-import MassFiat from "./MassFiat";
-import Rating from "../../main/tv/Rating";
-import TopParameter from "../../main/tv/TopParameter";
-import SmartGrid from "./SmartGrid";
+  R,
+  addSpaces,
+  localFormat,
+} from "../../../../redux/amountsHelper";
+import { useAppDispatch } from "../../../../redux/hooks";
+import { Box3D, ResponsiveText } from "../../../../styles/theme/custom";
+import { IMassRate, IMassDirTextId } from "../../../../types/mass";
+import { IPm } from "../../../../types/selector";
+import { capitalize } from "../../../main/side/selector/section/PmGroup/helper";
+import { useIsMobile } from "../../../main/tv/hooks";
+import Rating from "../../../main/tv/Rating";
+import TopParameter from "../../../main/tv/TopParameter";
+import CustomImage from "../../../shared/CustomImage";
+import MassFiat from "../MassFiat";
+import SmartGrid from "../SmartGrid";
+import { redirect } from "../../../../redux/thunks";
+import MassRateAmount from "./MassRateAmount";
 
 const MassRate = ({
   rate,
   pmsByCodes,
   massDirTextId,
+  massAmount,
 }: {
   rate: IMassRate;
   pmsByCodes: Record<string, IPm>;
   massDirTextId: IMassDirTextId;
+  massAmount: { code?: string; value: string };
 }) => {
   const { name, admin_rating, course, min, max, ref_link, codes, logo } = rate;
   const { code, currency } = massDirTextId;
-  const symbol = curToSymbol(currency.code);
+
+  const amount =
+    massDirTextId.code == massAmount.code
+      ? course < 1
+        ? (1 / course) * Number(massAmount.value)
+        : course * Number(massAmount.value)
+      : Number(massAmount.value);
 
   const side = course > 1 ? "give" : "get";
 
@@ -56,7 +60,11 @@ const MassRate = ({
   if (!rate) return <></>;
 
   return (
-    <Box3D variant="extra_contrast">
+    <Box3D
+      variant={
+        amount && (MIN > amount || MAX < amount) ? "contrast" : "extra_contrast"
+      }
+    >
       <Grid
         key={rate.exchangerId + rate.course}
         gridTemplateColumns="1fr 3rem 100px 1fr  1fr"
@@ -98,17 +106,28 @@ const MassRate = ({
           ))}
         </SmartGrid>
         <VStack alignItems="end" gap="0">
-          <ResponsiveText size="sm" mt="1" variant="contrast">
-            {`1 ${code} ≈ ${
-              course < 1 ? addSpaces(R(1 / course, 1)) : addSpaces(R(course, 1))
-            } ${symbol}`}
-          </ResponsiveText>
-          <ResponsiveText size="xs" variant="no_contrast">
-            {`${localFormat(MIN, currency.code)} — ${localFormat(
-              MAX,
-              currency.code
-            )}`}
-          </ResponsiveText>
+          <MassRateAmount
+            massDirTextId={massDirTextId}
+            course={course}
+            massAmount={massAmount}
+          />
+          <HStack gap="0.5">
+            <ResponsiveText
+              size="xs"
+              variant={amount && MIN > amount ? "red" : "no_contrast"}
+            >
+              {`от ${localFormat(MIN, currency.code)}`}
+            </ResponsiveText>
+            <ResponsiveText size="xs" variant="no_contrast">
+              {"—"}
+            </ResponsiveText>
+            <ResponsiveText
+              size="xs"
+              variant={amount && MAX < amount ? "red" : "no_contrast"}
+            >
+              {`до ${localFormat(MAX, currency.code)}`}
+            </ResponsiveText>
+          </HStack>
         </VStack>
 
         <MassFiat codes={rate.codes} pmsByCodes={pmsByCodes} />

@@ -1,44 +1,59 @@
 import {
   HStack,
-  Input,
   InputGroup,
-  InputRightElement,
   NumberInput,
   NumberInputField,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ResponsiveText } from "../../../../styles/theme/custom";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { setMassAmount } from "../../../../redux/mainReducer";
+import { IMassDirTextId } from "../../../../types/mass";
 
-interface ExchangerSearchProps {
-  onAmountChange: (query: string) => void;
-}
+const AmountInput = ({ massDirTextId }: { massDirTextId: IMassDirTextId }) => {
+  const dispatch = useAppDispatch();
+  const massAmount = useAppSelector((state) => state.main.massAmount);
 
-const AmountInput: React.FC<ExchangerSearchProps> = ({ onAmountChange }) => {
+  const fiatCode = massDirTextId.currency.code;
+  const cryptoCode = massDirTextId.code;
+
   const { t } = useTranslation();
   const [value, setValue] = useState("");
   const [debouncedValue, setDebouncedValue] = useState("");
 
+  const setCode = (code: string) => {
+    setValue("");
+    dispatch(
+      setMassAmount({
+        value: "",
+        code,
+      })
+    );
+  };
+
   useEffect(() => {
+    dispatch(
+      setMassAmount({
+        value: debouncedValue,
+        code: massAmount.code || fiatCode,
+      })
+    );
+  }, [debouncedValue]);
+
+  useEffect(() => {
+    // это для дебаунса
     const handler = setTimeout(() => {
       setDebouncedValue(value);
     }, 500);
-
-    return () => {
-      clearTimeout(handler);
-    };
+    return () => clearTimeout(handler);
   }, [value]);
-
-  useEffect(() => {
-    onAmountChange(debouncedValue.trim().toLowerCase());
-  }, [debouncedValue, onAmountChange]);
 
   return (
     <InputGroup>
       <NumberInput
-        placeholder={t("Set amount")}
-        value={value}
-        //onChange={(e) => setValue(e.target.value)}
+        value={value.length > 9 ? "✖" : value}
+        onChange={(v: any) => setValue(v)}
         borderWidth="2px"
         borderRadius="xl"
         borderColor="bg.500"
@@ -46,6 +61,8 @@ const AmountInput: React.FC<ExchangerSearchProps> = ({ onAmountChange }) => {
         h="45px"
         focusBorderColor="peach.200"
         position="relative"
+        max={100000000}
+        min={0} // no negative
       >
         <HStack
           mr="20"
@@ -55,30 +72,34 @@ const AmountInput: React.FC<ExchangerSearchProps> = ({ onAmountChange }) => {
           position="absolute"
           left="0"
           top="1"
+          zIndex="10"
         >
-          <ResponsiveText variant="primary" fontWeight="bold">
-            BTC
-          </ResponsiveText>
-          <ResponsiveText variant="no_contrast">USD</ResponsiveText>
+          {[cryptoCode, fiatCode].map((code) => (
+            <ResponsiveText
+              cursor="pointer"
+              variant={
+                (massAmount.code || fiatCode) == code ? "primary" : "shaded"
+              }
+              fontWeight={
+                (massAmount.code || fiatCode) == code ? "bold" : "unset"
+              }
+              onClick={() => setCode(code)}
+            >
+              {code}
+            </ResponsiveText>
+          ))}
         </HStack>
 
         <NumberInputField
           px="2"
           float="right"
           textAlign="end"
-          placeholder="0.00"
+          placeholder={"0.00"}
           fontFamily="Inconsolata, sans-serif"
           fontSize={["2xl", "3xl"]}
+          value={value} // use raw value for instant update
           border="hidden"
-          //color={outRange ? "bg.500" : useColorModeValue("bg.800", "bg.100")}
-          //onClick={(e: any) => e.target.select()}
           _placeholder={{ color: "bg.500" }}
-          // onClick={handleClick}
-          // color={
-          //   tooBig && amount > tooBig
-          //     ? "red.400"
-          //     : useColorModeValue("bg.400", "bg.100")
-          // }
           w="100%"
         />
       </NumberInput>

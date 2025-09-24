@@ -47,10 +47,10 @@ const AmountInput = () => {
         onChange={onAmountChange}
         minW="10"
         zIndex="3"
-        value={stringValue.length > 11 ? "∞" : stringValue}
+        value={stringValue.length > 11 ? "✖" : stringValue}
         keepWithinRange={true}
         clampValueOnBlur={true}
-        max={9999999}
+        max={100000000}
         min={0} // no negative
       >
         <NumberInputField
