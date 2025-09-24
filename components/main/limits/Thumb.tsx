@@ -3,18 +3,11 @@ import {
   SliderThumb,
   Box,
   useToken,
-  keyframes,
   Tooltip,
 } from "@chakra-ui/react";
-
-import {
-  BsArrowRightShort,
-  BsArrowLeftShort,
-  BsArrowDownShort,
-  BsArrowUpShort,
-} from "react-icons/bs";
+import { keyframes } from "@emotion/react";
+import { BsArrowDownShort, BsArrowUpShort } from "react-icons/bs";
 import { RxDragHandleDots2 } from "react-icons/rx";
-import { ResponsiveText } from "../../../styles/theme/custom";
 import { symbols, kFormatter } from "../../../redux/amountsHelper";
 import { useState } from "react";
 
@@ -38,11 +31,12 @@ const Thumb = ({
   const colorHint = useColorModeValue("bg.10", "bg.800");
   const mainColor = useColorModeValue("violet.600", "peach.300");
 
-  const shake = keyframes`
-  from {transform: translateY(-5px)}
-  to {transform: translateY(0)}
-  `;
-  const shakeAnimation = `${shake} infinite 1s ease-in-out alternate`;
+  // ✅ Fixed: Chakra keyframes with object syntax
+  const shake = keyframes({
+    from: { transform: "translateY(-5px)" },
+    to: { transform: "translateY(0)" },
+  });
+  const shakeAnimation = `${shake} 1s ease-in-out infinite alternate`;
 
   const localFormat = (n: number) => {
     const cur = mainCur.toLocaleLowerCase() as keyof typeof symbols;
@@ -56,7 +50,7 @@ const Thumb = ({
       hasArrow
       bg={mainColor}
       color={colorHint}
-      placement="left" // 👈 tooltip appears to the right of the thumb
+      placement="left"
       isOpen={showTooltip}
       size="lg"
       fontSize="lg"
@@ -73,7 +67,7 @@ const Thumb = ({
         onTouchEnd={() => setShowTooltip(false)}
         zIndex="10"
       >
-        {/* Thumb visual (no extra rotation) */}
+        {/* Thumb visual */}
         <Box
           w="5"
           h="4"
@@ -85,10 +79,10 @@ const Thumb = ({
           as={RxDragHandleDots2}
         />
 
-        {/* Arrows adapted to vertical */}
+        {/* Up/Down arrow depending on stickyAmount */}
         <Box
           position="absolute"
-          top={stickyAmount <= MAX ? "-6" : "6"} // 👈 above or below
+          top={stickyAmount <= MAX ? "-6" : "6"}
           left="50%"
           transform="translateX(-50%)"
           color={mainColor}

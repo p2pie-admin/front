@@ -26,7 +26,7 @@ const ControlPanel = ({
   const secondaryColor = useColorModeValue("bg.100", "bg.800");
   const index = useAppSelector((state) => state.main.swiperIdVisible);
   return (
-    <Box3D w={"10"} flex="1">
+    <Box3D w={"10"} flex="1" overflow="hidden">
       <VStack h="100%">
         <Button variant="default" onClick={() => stepDown()} color="bg.400">
           <IoIosArrowUp size="1.2rem" />
@@ -36,6 +36,7 @@ const ControlPanel = ({
           px={["0.5", "2"]}
           h="100%"
           justifyContent={length >= 10 ? "space-around" : "center"}
+          gap={length >= 20 ? 0 : length >= 10 ? 0.5 : 1}
         >
           {Array.from({ length }).map((_, idx) => (
             <Box

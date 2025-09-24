@@ -47,8 +47,6 @@ export async function cachedFetch<T>(
     redis
       .set(key, { data, updatedAt: Date.now() })
       .catch((err) => console.error(`Redis SET failed for "${key}":`, err));
-  } else {
-    console.warn(`Fetcher for "${key}" returned empty result`);
   }
 
   return data;
@@ -143,8 +141,6 @@ export async function cachedArrayFetch<T>(
   if (data.length > 0) {
     await setArray(key, data, toKey, ttlSeconds);
     await redis.set(`${key}:__meta`, JSON.stringify({ updatedAt: Date.now() }));
-  } else {
-    console.warn(`Fetcher for "${key}" returned empty result`);
   }
 
   return data;
