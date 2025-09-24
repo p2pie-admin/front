@@ -8,22 +8,21 @@ import {
   ModalBody,
   Text,
   Box,
-  useToken,
-  useColorMode,
 } from "@chakra-ui/react";
-import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
+
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { triggerModal } from "../../redux/mainReducer";
 import Shader from "./Shader";
+import { ReactElement } from "react";
 
 const CustomModal = ({
   children,
   id,
   header,
 }: {
-  children: ReactJSXElement;
+  children: ReactElement;
   id: string;
-  header: string | ReactJSXElement;
+  header: string | ReactElement;
 }) => {
   const dispatch = useAppDispatch();
   const isOpen = useAppSelector((state) => state.main.modal === id);

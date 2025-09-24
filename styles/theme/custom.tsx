@@ -6,12 +6,12 @@ import {
   useColorModeValue,
   useToken,
 } from "@chakra-ui/react";
-import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
+import { ReactElement } from "react";
 import { ITextVariant, ITone, IVariant } from "../../types/shared";
 import { colors3D } from "./colors";
 
 export const CustomBox3D = (props: any) => {
-  const { children, ...chakraProps }: { children: ReactJSXElement } = props;
+  const { children, ...chakraProps }: { children: ReactElement } = props;
   return (
     <Box3D w="100%" py="4" px="2" {...chakraProps}>
       {children}
@@ -24,7 +24,7 @@ export const RegularBox = (props: any) => {
     children,
     variant = "extra_contrast",
     ...chakraProps
-  }: { children: ReactJSXElement; variant: IVariant } = props;
+  }: { children: ReactElement; variant: IVariant } = props;
   const bgVarinats = {
     no_contrast: useColorModeValue("bg.100", "bg.700"),
     contrast: useColorModeValue("bg.50", "bg.800"),
@@ -46,7 +46,7 @@ export const RegularBox = (props: any) => {
 };
 
 export const Box3D = (props: any) => {
-  const { children, ...chakraProps }: { children: ReactJSXElement } = props;
+  const { children, ...chakraProps }: { children: ReactElement } = props;
   return (
     <RegularBox
       // remove real border
@@ -67,7 +67,7 @@ export const Box3D = (props: any) => {
 };
 
 export const ShadedButton = (props: any) => {
-  const { children, ...chakraProps }: { children: ReactJSXElement } = props;
+  const { children, ...chakraProps }: { children: ReactElement } = props;
   return (
     <Box
       transition="all .3s ease"
@@ -95,7 +95,7 @@ export const ResponsiveText = (props: any) => {
     variant,
     ...chakraProps
   }: {
-    children: ReactJSXElement;
+    children: ReactElement;
     size?: "xs" | "sm" | "md" | "lg" | "xl";
     variant: ITextVariant;
   } = props;
@@ -132,7 +132,7 @@ export const ResponsiveButton = (props: any) => {
     children,
     size,
     ...chakraProps
-  }: { children: ReactJSXElement; size?: string } = props;
+  }: { children: ReactElement; size?: string } = props;
   // const rSize =
   //   size === "lg"
   //     ? { base: "md", md: "lg", lg: "xl" }

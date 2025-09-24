@@ -123,7 +123,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       });
 
       const paths = massDirTextIds.map((mdtid) => ({
-        params: { slug: convertMassDirTextIntoSlug(mdtid, isSell) },
+        params: { slug: convertMassDirTextIntoSlug(mdtid) },
         locale,
       }));
       return paths;

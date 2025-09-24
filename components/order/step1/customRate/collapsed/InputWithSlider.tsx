@@ -12,8 +12,14 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
-import { ReactComponentElement, useContext, useEffect, useState } from "react";
+
+import {
+  ReactComponentElement,
+  ReactElement,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import P2PContext from "../../../../../components/shared/contexts/p2pContext";
 import { format, addSpaces, R } from "../../../../../redux/amountsHelper";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
@@ -33,7 +39,7 @@ const InputWithSlider = ({
   leftSide: string;
   rightSide: string;
   id: keyof IUsersRate;
-  adornment: ReactJSXElement;
+  adornment: ReactElement;
   isError?: boolean;
 }) => {
   const trackColor = useColorModeValue("bg.300", "bg.900");

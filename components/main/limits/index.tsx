@@ -13,11 +13,10 @@ import {
   SliderThumb,
   SliderTrack,
   Tooltip,
-  keyframes,
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
+
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import useSmooth from "../../../services/hooks/smooth";

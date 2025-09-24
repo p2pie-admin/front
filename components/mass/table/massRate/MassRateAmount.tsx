@@ -1,14 +1,8 @@
-import course from "next-seo/lib/jsonld/course";
-import React from "react";
-import {
-  addSpaces,
-  curToSymbol,
-  localFormat,
-  R,
-} from "../../../../redux/amountsHelper";
+import React, { useContext } from "react";
+import { addSpaces, curToSymbol, R } from "../../../../redux/amountsHelper";
 import { ResponsiveText } from "../../../../styles/theme/custom";
-import { IMassDirTextId, IMassRate } from "../../../../types/mass";
-import { VStack } from "@chakra-ui/react";
+import { IMassDirTextId } from "../../../../types/mass";
+import MassSideContext from "../../sideContext";
 
 export default function MassRateAmount({
   course,
@@ -21,36 +15,43 @@ export default function MassRateAmount({
 }) {
   const { code, currency } = massDirTextId;
   const symbol = curToSymbol(currency.code);
+  const isSell = useContext(MassSideContext);
 
-  if (massAmount.value == "") {
-    return (
-      <ResponsiveText size="sm" mt="1" variant="contrast">
-        {`${1} ${code} ≈ ${
-          course < 1 ? addSpaces(R(1 / course, 1)) : addSpaces(R(course, 1))
-        } ${symbol}`}
-      </ResponsiveText>
-    );
+  let left = "";
+  let right = "";
+
+  if (massAmount.value === "") {
+    // default: 1 code → ? symbol
+    left = `1 ${code}`;
+    right = `${
+      course < 1 ? addSpaces(R(1 / course, 1)) : addSpaces(R(course, 1))
+    } ${symbol}`;
+  } else if (code === massAmount.code) {
+    // input is base code
+    left = `${addSpaces(R(Number(massAmount.value), 1))} ${code}`;
+    right = `${
+      course < 1
+        ? addSpaces(R((1 / course) * Number(massAmount.value), 1))
+        : addSpaces(R(course * Number(massAmount.value), 1))
+    } ${symbol}`;
+  } else {
+    // input is fiat
+    left = `${
+      course < 1
+        ? addSpaces(R(course * Number(massAmount.value), 1))
+        : addSpaces(R((1 / course) * Number(massAmount.value), 1))
+    } ${code}`;
+    right = `${addSpaces(R(Number(massAmount.value), 1))} ${symbol}`;
   }
 
-  if (code == massAmount.code) {
-    return (
-      <ResponsiveText size="sm" mt="1" variant="contrast">
-        {`${addSpaces(R(Number(massAmount.value), 1))} ${code} ≈ ${
-          course < 1
-            ? addSpaces(R((1 / course) * Number(massAmount.value), 1))
-            : addSpaces(R(course * Number(massAmount.value), 1))
-        } ${symbol}`}
-      </ResponsiveText>
-    );
+  // swap if not selling
+  if (!isSell) {
+    [left, right] = [right, left];
   }
-  // input fiat
+
   return (
     <ResponsiveText size="sm" mt="1" variant="contrast">
-      {`${
-        course < 1
-          ? addSpaces(R(course * Number(massAmount.value), 1))
-          : addSpaces(R((1 / course) * Number(massAmount.value), 1))
-      } ${code} ≈ ${addSpaces(R(Number(massAmount.value), 1))}  ${symbol}`}
+      {`${left} ≈ ${right}`}
     </ResponsiveText>
   );
 }

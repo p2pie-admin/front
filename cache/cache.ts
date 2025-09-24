@@ -21,7 +21,6 @@ export async function cachedFetch<T>(
   }
 
   if (cached && env.NODE_ENV !== "development") {
-    console.log(`Reading from cache: ${key}`);
     const isStale =
       ttlSeconds > 0 && Date.now() - cached.updatedAt > ttlSeconds * 1000;
 

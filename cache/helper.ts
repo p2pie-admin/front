@@ -59,13 +59,10 @@ export const mergeExchangers = (
 };
 
 export const convertMassDirTextIntoSlug = (
-  massDirTextId: IMassDirTextId,
-  isSell: boolean
+  massDirTextId: IMassDirTextId
 ): string => {
   const { code, currency } = massDirTextId;
-  return isSell
-    ? `${code.toLowerCase()}-for-${currency.code.toLowerCase()}`
-    : `${currency.code.toLowerCase()}-for-${code.toLowerCase()}`;
+  return `${code.toLowerCase()}-for-${currency.code.toLowerCase()}`;
 };
 
 export const convertSlugIntoMassDirText = (
