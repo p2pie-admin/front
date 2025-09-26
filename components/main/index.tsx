@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { VStack, Text } from "@chakra-ui/react";
+import { VStack, Text, Box } from "@chakra-ui/react";
 import Greeting from "./Greeting";
 import Calculator from "./Calculator";
 import { useAppDispatch } from "../../redux/hooks";
@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import ColumnGrid from "../layout/ColumnGrid";
 import ColumnHeader from "../layout/ColumnHeader";
 import Column from "../layout/Column";
-import { ResponsiveText } from "../../styles/theme/custom";
+import { Box3D, ResponsiveText } from "../../styles/theme/custom";
 import { IMainText } from "../../types/pages";
 import { IPopularDirRates } from "../../types/rates";
 import { IPm } from "../../types/selector";
@@ -16,6 +16,7 @@ import CircularTexts from "./CircularTexts";
 import Popular from "./popular";
 import { useTranslation } from "next-i18next";
 import { IDirText } from "../../types/exchange";
+import MassSelector from "../mass/massSelector";
 
 const MainPageContent = ({
   popularPms,
@@ -47,30 +48,35 @@ const MainPageContent = ({
     <VStack>
       <Greeting />
 
+      <MassSelector />
+      <VStack my="10">
+        <ResponsiveText
+          as="h2"
+          fontSize="4xl"
+          fontWeight="bold"
+          variant="primary"
+        >
+          {rootText?.header}
+        </ResponsiveText>
+        <ResponsiveText as="h3" fontSize="2xl" variant="no_contrast">
+          {rootText?.subheader}
+        </ResponsiveText>
+      </VStack>
+
       <ColumnGrid>
         <Column index={2}>
-          <CircularTexts mainTexts={mainTexts} />
-        </Column>
-
-        <Column index={1}>
           <Calculator />
         </Column>
-
+        <Column index={1}>
+          <CircularTexts mainTexts={mainTexts} />
+        </Column>
+        <Column index={3}>
+          <Popular popularRates={popularRates} popularPms={popularPms} />
+        </Column>
         <Column index={4}>
-          <ColumnHeader
-            text={rootText?.header}
-            query={[`${process.env.NEXT_PUBLIC_NAME}`]}
-          />
-          <ResponsiveText variant="contrast" as="h3" whiteSpace="normal">
-            {rootText?.subheader || ""}
-          </ResponsiveText>
           <ResponsiveText variant="no_contrast" whiteSpace="normal">
             {rootText?.text || ""}
           </ResponsiveText>
-        </Column>
-        <Column index={3}>
-          <ColumnHeader text={t("main:popularTitle")} />
-          <Popular popularRates={popularRates} popularPms={popularPms} />
         </Column>
       </ColumnGrid>
     </VStack>

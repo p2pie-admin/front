@@ -28,7 +28,7 @@ const CircularTexts = ({ mainTexts }: { mainTexts?: IMainText[] }) => {
   }, []);
   if (!mainTexts?.length) return <></>;
   return (
-    <Box overflow="hidden" pos="relative">
+    <Box overflow="hidden" pos="relative" w="100%">
       <Shader direction="top" no_contrast />
       <Box position="relative" w="100%" minH="100%" h="200px">
         {mainTexts.map((mt, index) => (

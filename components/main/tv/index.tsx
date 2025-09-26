@@ -19,17 +19,13 @@ import { useTranslation } from "react-i18next";
 const TV = ({
   dir,
   city,
-  donorCity,
 }: {
   dir: string;
   city: ICity | null;
   donorCity: ICity | null;
 }) => {
   const containerHeight = useBreakpointValue({ base: 300, md: 416 }) || 416;
-
   const router = useRouter();
-  const { t } = useTranslation();
-  const { locale } = router as { locale: "en" | "ru" };
   const { exchange } = router.query as { exchange: string };
 
   const dirRates = useAppSelector((state) => state.main.dirRates) || [];

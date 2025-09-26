@@ -1,10 +1,4 @@
-import {
-  Box,
-  HStack,
-  IconButton,
-  Text,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, HStack } from "@chakra-ui/react";
 import Link from "next/link";
 
 import { IPm } from "../../../types/selector";

@@ -15,7 +15,10 @@ import NavHeading from "../nav/NavHeading";
 import CitySelector from "./city";
 
 const Header = () => {
-  const [bg100, bg900] = useToken("colors", ["bg.100", "bg.1000"]);
+  const [bg100, bg900] = useToken("colors", [
+    "blackAlpha.300",
+    "blackAlpha.400",
+  ]);
   const shadowColor = useColorModeValue(bg100, bg900);
 
   return (

@@ -1,0 +1,264 @@
+import {
+  useColorModeValue,
+  Grid,
+  Box,
+  VStack,
+  Button,
+  useTheme,
+} from "@chakra-ui/react";
+import { useMotionValue, useAnimation, motion } from "framer-motion";
+import React from "react";
+import { TbTriangleInvertedFilled } from "react-icons/tb";
+import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
+import { useRouter } from "next/router";
+import Shader from "../../shared/Shader";
+import MassShader from "../MassShader";
+
+const elastic = 0.1;
+const stiffness = 50;
+const damping = 10;
+
+export const MassSwiper = ({
+  initialId,
+  items,
+  set,
+}: {
+  initialId?: string;
+  set: Function;
+  items: { id: string; ru_label: string; en_label: string }[];
+}) => {
+  const { locale } = useRouter() as { locale: "en" | "ru" };
+  const isMobile = false;
+  const itemHeight = 40;
+  const containerHeight = 120;
+
+  const length = items.length;
+  const bgColor = useColorModeValue("bg.50", "bg.800");
+  const [mouseEntered, setMouseEntered] = React.useState(false);
+
+  const y = useMotionValue(0);
+  const controls = useAnimation();
+  const theme = useTheme();
+
+  const parseSpaceToPx = React.useCallback((val: any) => {
+    if (!val && val !== 0) return 0;
+    if (typeof val === "number") return val;
+    const s = String(val).trim();
+    if (s.endsWith("px")) return parseFloat(s);
+    if (s.endsWith("rem")) {
+      const root =
+        typeof window !== "undefined"
+          ? parseFloat(
+              getComputedStyle(document.documentElement).fontSize || "16"
+            )
+          : 16;
+      return parseFloat(s) * root;
+    }
+    if (s.endsWith("em")) {
+      const root =
+        typeof window !== "undefined"
+          ? parseFloat(
+              getComputedStyle(document.documentElement).fontSize || "16"
+            )
+          : 16;
+      return parseFloat(s) * root;
+    }
+    const maybeNum = Number(s);
+    if (!isNaN(maybeNum)) return maybeNum;
+    return 0;
+  }, []);
+
+  const gapPx = parseSpaceToPx((theme as any).space?.[2] ?? 0);
+  const padY = parseSpaceToPx((theme as any).space?.[4] ?? 0);
+  const paddingTopPx = padY;
+  const step = itemHeight + gapPx;
+  const centerOffset = containerHeight / 2 - itemHeight / 2 - paddingTopPx;
+
+  const getIndex = () => {
+    const index = Math.round((-y.get() + centerOffset) / step);
+    return Math.min(length - 1, Math.max(0, index));
+  };
+
+  const snapToNearest = React.useCallback(
+    (currentY: number) => {
+      const index = Math.round((-currentY + centerOffset) / step);
+      if (index <= 0) return centerOffset;
+      if (index >= length - 1) return -step * (length - 1) + centerOffset;
+      return -index * step + centerOffset;
+    },
+    [centerOffset, step, length]
+  );
+
+  const move = (yPos: number) => {
+    controls.start({
+      y: yPos,
+      transition: { type: "spring", stiffness, damping },
+    });
+  };
+
+  const scrollToItem = (index: number) => {
+    const targetY = -index * step + centerOffset;
+    move(targetY);
+  };
+
+  const stepDown = () => {
+    const currentIndex = getIndex();
+    scrollToItem(Math.max(currentIndex - 1, 0));
+  };
+
+  const stepUp = () => {
+    const currentIndex = getIndex();
+    scrollToItem(Math.min(currentIndex + 1, length - 1));
+  };
+
+  // 1) CLICK HANDLER → go to next item (loop back to top)
+  const handleClick = () => {
+    // const currentIndex = getIndex();
+    // if (currentIndex < length - 1) {
+    //   scrollToItem(currentIndex + 1);
+    // } else {
+    //   scrollToItem(0);
+    // }
+  };
+
+  const handleWheel = (event: any) => {
+    if (isMobile || !mouseEntered) return;
+    if (event.deltaY < 0) stepDown();
+    else if (event.deltaY > 0) stepUp();
+  };
+
+  const handleKeyDown = (event: any) => {
+    if (isMobile) return;
+    if (event.key === "ArrowUp" || event.key === "ArrowRight") stepDown();
+    else if (event.key === "ArrowDown" || event.key === "ArrowLeft") stepUp();
+  };
+
+  React.useEffect(() => {
+    if (isMobile) return;
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleWheel, handleKeyDown]);
+
+  // === FIXED INITIALIZATION ===
+  // Use layout effect so we set the motion value before paint/other effects.
+  const didMount = React.useRef(false);
+  React.useLayoutEffect(() => {
+    if (length === 0) return;
+
+    let startIndex = 0;
+    if (initialId) {
+      const idx = items.findIndex((it) => it.id === initialId);
+      if (idx !== -1) {
+        startIndex = idx;
+      }
+    } else if (length > 1) {
+      startIndex = 1;
+    }
+
+    const targetY = -startIndex * step + centerOffset;
+
+    // instead of setting instantly → animate to it
+    controls.start({
+      y: targetY,
+      transition: { type: "spring", stiffness, damping },
+    });
+
+    // still notify parent which item is selected
+    set(items[startIndex].id);
+  }, [initialId, length, step, centerOffset, items, set, controls]);
+
+  // 3) LOG selected item whenever it changes (keeps parent in sync on interactions)
+  React.useEffect(() => {
+    let lastIndex = getIndex();
+    set(items[lastIndex].id);
+
+    const unsubscribe = y.onChange(() => {
+      const idx = getIndex();
+      if (idx !== lastIndex) {
+        lastIndex = idx;
+        set(items[idx].id);
+      }
+    });
+    return unsubscribe;
+  }, [y, items, set, centerOffset, step]);
+
+  const handleMouseEnter = () => {
+    if (isMobile) return;
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.overflow = "hidden";
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
+    setMouseEntered(true);
+  };
+
+  const handleMouseLeave = () => {
+    if (isMobile) return;
+    document.body.style.overflow = "auto";
+    document.body.style.paddingRight = "0px";
+    setMouseEntered(false);
+  };
+
+  return (
+    <Box h={`${containerHeight}px`} minW="33%">
+      <Box
+        cursor="grab"
+        position="relative"
+        overflow="hidden"
+        h={`${containerHeight}px`}
+        px="1"
+        py="4"
+        borderRadius={`${8}% ${8}% ${8}% ${8}% / 50% 50% 50% 50%`}
+        onClick={handleClick}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <MassShader direction="top" />
+        <motion.div
+          drag="y"
+          dragConstraints={{
+            top: -step * (length - 1) + centerOffset,
+            bottom: centerOffset,
+          }}
+          style={{ y, width: "100%" }}
+          dragElastic={elastic}
+          onDragEnd={(_, info) => {
+            const velocity = info.velocity.y;
+            const currentIndex = getIndex();
+            if (velocity > 50) {
+              scrollToItem(Math.max(currentIndex - 1, 0));
+            } else if (velocity < -50) {
+              scrollToItem(Math.min(currentIndex + 1, length - 1));
+            } else {
+              move(snapToNearest(y.get()));
+            }
+          }}
+          animate={controls}
+        >
+          {items.map((item) => (
+            <Box
+              bgColor={bgColor}
+              key={item[`${locale}_label`] + item.id}
+              h={`${itemHeight}px`}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              borderRadius="lg"
+              mb="2"
+            >
+              <ResponsiveText variant="contrast" size="xl">
+                {item[`${locale}_label`]}
+              </ResponsiveText>
+            </Box>
+          ))}
+        </motion.div>
+        <MassShader direction="bottom" />
+      </Box>
+    </Box>
+  );
+};
+
+export default MassSwiper;

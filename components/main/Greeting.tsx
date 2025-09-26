@@ -22,7 +22,7 @@ const Greeting = () => {
 
   return (
     <Box
-      mb={[3, 5]}
+      my={[5, 12]}
       bgGradient={`radial-gradient(circle at 50% -10%, ${centerColor} 0%, ${peripheryColor} 60%)`}
       bgClip="text"
     >
@@ -31,14 +31,14 @@ const Greeting = () => {
         textAlign="center"
         fontWeight="bold"
         color="inherit"
-        fontSize={{ base: "xl", md: "4xl" }}
+        fontSize={{ base: "4xl", md: "6xl" }}
       >
         {t("main:title")}
       </Heading>
       <Heading
         as="p"
         textAlign="center"
-        fontSize={{ base: "lg", md: "3xl" }}
+        fontSize={{ base: "2xl", md: "4xl" }}
         mt={2}
       >
         {t("main:subtitle")}

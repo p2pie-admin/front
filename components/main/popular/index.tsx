@@ -6,6 +6,8 @@ import { Box, Divider, Grid, Text, useColorModeValue } from "@chakra-ui/react";
 import CryptoPm from "./CryptoPm";
 import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
 import { useTranslation } from "next-i18next";
+import Shader from "../../shared/Shader";
+import MassShader from "../../mass/MassShader";
 
 const Popular = ({
   popularRates,
@@ -19,7 +21,7 @@ const Popular = ({
   if (!popularRates || !popularPms) return <></>;
 
   return (
-    <>
+    <Box cursor="grab" position="relative">
       {Object.entries(popularRates).map(([cryptoCode, buySell], index) => {
         const cryptoPm = popularPms?.find((pm) => pm?.code == cryptoCode);
         if (!cryptoPm) return null; // ✅ Changed from <></> to null
@@ -28,7 +30,7 @@ const Popular = ({
             key={cryptoCode} // Use cryptoCode as the unique key
             variant="extra_contrast"
             p="2"
-            my="2"
+            position="relative"
           >
             <Grid
               gridTemplateColumns="auto 1fr 1fr"
@@ -54,7 +56,7 @@ const Popular = ({
           </Box3D>
         );
       })}
-    </>
+    </Box>
   );
 };
 

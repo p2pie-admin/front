@@ -23,16 +23,15 @@ const Parameter = ({
   const topParameter = useAppSelector((state) =>
     state.main.topParameters.find((p) => p.code == code)
   );
-
-  if (!topParameter) return <Box display="none"></Box>;
-  const { id, parameter, en_name, ru_name, color } = topParameter;
-  const { en_description, ru_description, icon } = parameter;
-
-  const rotationColor = 50 * (+id || 0);
+  const rotationColor = 50 * +(topParameter?.id || 0);
   const filter = `invert(60%) sepia(97%) ${useColorModeValue(
     "saturate(550%)",
     "saturate(150%)"
   )} hue-rotate(${rotationColor}deg)`;
+
+  if (!topParameter) return <Box display="none"></Box>;
+  const { id, parameter, en_name, ru_name, color } = topParameter;
+  const { en_description, ru_description, icon } = parameter;
 
   return (
     <MyTooltip label={en_description} placement="left">

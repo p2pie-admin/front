@@ -100,6 +100,7 @@ export interface MainState {
   massPmsFilter: string[];
   massAmount: { value: string; code?: string };
   massSort: IMassSort;
+  massSelectorSlug: string;
 }
 
 const initialState: MainState = {
@@ -118,6 +119,7 @@ const initialState: MainState = {
   massPmsFilter: [],
   massAmount: { value: "" },
   massSort: { key: "course", direction: "asc" },
+  massSelectorSlug: "/sell/btc-for-rub",
 };
 
 export const mainSlice = createSlice({
@@ -395,6 +397,9 @@ export const mainSlice = createSlice({
     ) => {
       state.massAmount = action.payload;
     },
+    setMassSelectorSlug: (state: MainState, action: PayloadAction<string>) => {
+      state.massSelectorSlug = action.payload;
+    },
 
     setMassSort: (
       state: MainState,
@@ -560,6 +565,7 @@ export const {
   setMassPmsFilter,
   setMassAmount,
   setMassSort,
+  setMassSelectorSlug,
 } = mainSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

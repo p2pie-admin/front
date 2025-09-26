@@ -7,6 +7,7 @@ import { fetchTopParameters } from "../../redux/thunks";
 import { useAppDispatch } from "../../redux/hooks";
 import MassTable from "./table";
 import MassSideContext from "./sideContext";
+import MassSelector from "./massSelector";
 
 const Mass = ({
   massDirTextId,
@@ -14,12 +15,14 @@ const Mass = ({
   massRates,
   pmsByCodes,
   isSell,
+  slug,
 }: {
   massDirTextId: IMassDirTextId;
   massDirText: IMassDirText;
   massRates: IMassRate[];
   pmsByCodes: Record<string, IPm>;
   isSell: boolean;
+  slug: string;
 }) => {
   const { header, subheader, text } = massDirText;
 
@@ -30,27 +33,32 @@ const Mass = ({
 
   return (
     <MassSideContext.Provider value={isSell}>
+      <Heading
+        fontSize={{ base: "2xl", lg: "4xl" }}
+        as="h1"
+        fontWeight="bold"
+        variant="extra_contrast"
+      >
+        {header}
+      </Heading>
+      <ResponsiveText
+        fontSize={{ base: "xl", lg: "2xl" }}
+        as="h2"
+        variant="contrast"
+      >
+        {subheader}
+      </ResponsiveText>
+      <ResponsiveText
+        fontSize={{ base: "lg", lg: "xl" }}
+        whiteSpace="unset"
+        variant="no_contrast"
+      >
+        {text}
+      </ResponsiveText>
+      <MassSelector initialSlug={`/${isSell ? "sell" : "buy"}/${slug}`} />
+
       <VStack gap="5" mt={["2", "8"]}>
         <Box3D variant="no_contrast" w="100%" px={["2", "8"]} py={["4", "8"]}>
-          <Heading
-            fontSize={{ base: "2xl", lg: "4xl" }}
-            as="h1"
-            fontWeight="bold"
-            variant="extra_contrast"
-          >
-            {header}
-          </Heading>
-          <ResponsiveText
-            fontSize={{ base: "lg", lg: "xl" }}
-            as="h2"
-            variant="contrast"
-          >
-            {subheader}
-          </ResponsiveText>
-          <ResponsiveText whiteSpace="unset" variant="no_contrast">
-            {text}
-          </ResponsiveText>
-
           <MassTable
             massRates={massRates}
             pmsByCodes={pmsByCodes}

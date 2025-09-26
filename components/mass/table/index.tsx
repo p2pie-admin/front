@@ -4,9 +4,7 @@ import { IMassRate, IMassDirTextId } from "../../../types/mass";
 import { IPm } from "../../../types/selector";
 import { pickKeys } from "../helper";
 import MassRate from "./massRate";
-
 import { Box } from "@chakra-ui/react";
-
 import TopPanel from "./topPanel";
 import { useAppSelector } from "../../../redux/hooks";
 
@@ -56,7 +54,7 @@ function MassTable({
   }, [massAmount, filteredMassRates, massSort]);
 
   return (
-    <Box mt={["4", "8"]}>
+    <Box>
       <Box3D px={["1", "4"]} py={["2", "4"]} variant="extra_contrast">
         <TopPanel pmsByCodes={pmsByCodes} massDirTextId={massDirTextId} />
       </Box3D>

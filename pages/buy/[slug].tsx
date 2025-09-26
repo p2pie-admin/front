@@ -32,6 +32,7 @@ type Props = {
   massDirText: IMassDirText;
   massRates: IMassRate[];
   isSell: boolean;
+  slug: string;
 };
 
 const SellPage = (props: Props) => (
@@ -89,6 +90,7 @@ export const getStaticProps = async ({
         massDirTextId,
         locale,
         isSell,
+        slug,
         ...(await serverSideTranslations(locale, ["main"])),
       },
       revalidate: 300,
@@ -105,6 +107,7 @@ export const getStaticProps = async ({
         massDirTextId: null,
         isSell,
         locale,
+        slug,
         ...(await serverSideTranslations(locale, ["main"])),
       },
       revalidate: 3000,

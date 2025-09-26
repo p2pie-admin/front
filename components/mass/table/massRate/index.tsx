@@ -69,7 +69,7 @@ const MassRate = ({
         key={rate.exchangerId + rate.course}
         gridTemplateColumns="1fr 3rem 100px 1fr  1fr"
         w="100%"
-        gap="2"
+        gap={["2", "4"]}
         my="2"
         px="2"
         py="1.5"
@@ -88,7 +88,7 @@ const MassRate = ({
 
           <ResponsiveText
             variant="primary"
-            size={name.length > 10 ? "md" : "lg"}
+            size={name.length > 14 ? "sm" : name.length > 10 ? "md" : "lg"}
             fontWeight="bold"
           >
             {capitalize(name)}

@@ -50,7 +50,6 @@ const Layout = ({ children }: { children: any }) => {
   return (
     <Box // careful! populars may stop working!
       w="100%"
-      overflowX="hidden"
       position="relative"
       fontFamily="Roboto, sans-serif"
       sx={{
@@ -60,14 +59,16 @@ const Layout = ({ children }: { children: any }) => {
         "&::WebkitOverflowScrolling": "touch",
       }}
     >
+      <Header />
       <Box
         position="absolute"
         w="100%"
         h="80vh"
-        zIndex={-1}
+        zIndex={100}
+        pointerEvents="none" // <-- lets all clicks/touches pass through
         bgGradient={`radial-gradient(circle at 50% -10%, ${ambientColor} 0%, transparent 40%)`}
-      ></Box>
-      <Header />
+      />
+
       {dirRatesStatus !== "fulfilled" ? (
         <Progress size="xs" isIndeterminate colorScheme="peach" />
       ) : (
