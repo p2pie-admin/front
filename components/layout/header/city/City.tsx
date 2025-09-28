@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 
 import { pmsToSlug } from "../../../main/side/selector/section/PmGroup/helper";
 import { fetchCity, fetchDirRates } from "../../../../redux/thunks";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { ISelectorCity } from "../../../../types/city";
 import { weights } from "./helper";
 import { setDirRatesStatus, triggerModal } from "../../../../redux/mainReducer";

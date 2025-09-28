@@ -20,6 +20,8 @@ const Dir = ({
   return (
     <Link href={`/${slug}`} passHref>
       <Box3D
+        h="77px"
+        flex="1"
         p="2"
         cursor="pointer"
         transition="filter 0.2s ease-in"
@@ -31,10 +33,10 @@ const Dir = ({
           color="bg.500"
           alignItems="center"
         >
-          <PmName pm={givePm} />
+          <PmName pm={givePm} isFull={false} />
 
           <BsArrowRightShort size="1.5rem" />
-          <PmName pm={getPm} />
+          <PmName pm={getPm} isFull={false} />
         </Grid>
         {children || ""}
       </Box3D>

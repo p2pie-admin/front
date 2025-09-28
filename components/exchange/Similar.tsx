@@ -1,4 +1,11 @@
-import { Box, Grid, HStack, Text, useBreakpointValue } from "@chakra-ui/react";
+import {
+  Box,
+  Grid,
+  HStack,
+  Text,
+  useBreakpointValue,
+  VStack,
+} from "@chakra-ui/react";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
 import { IPm } from "../../types/selector";
 import { pmsToSlug } from "../main/side/selector/section/PmGroup/helper";
@@ -12,14 +19,31 @@ import PmName from "../shared/PmName";
 import Dir from "./Dir";
 import ErrorWrapper from "../shared/ErrorWrapper";
 import { useTranslation } from "next-i18next";
+import SimilarMass from "./SimilarMass";
+import { IMassDirTextId } from "../../types/mass";
 
-const Similar = ({ similarPmPairs }: { similarPmPairs: IPm[][] }) => {
+const Similar = ({
+  similarPmPairs,
+  givePm,
+  getPm,
+  dirTextIds,
+}: {
+  similarPmPairs: IPm[][];
+  givePm: IPm;
+  getPm: IPm;
+  dirTextIds: IMassDirTextId[];
+}) => {
   const fetcher = initParserFetcher();
   const { t } = useTranslation();
-  const dirs = similarPmPairs.reduce(
-    (res: string[], pair: IPm[]) => [...res, `${pair[0].code}_${pair[1].code}`],
-    []
-  );
+  const dirs = similarPmPairs
+    .slice(0, 3)
+    .reduce(
+      (res: string[], pair: IPm[]) => [
+        ...res,
+        `${pair[0].code}_${pair[1].code}`,
+      ],
+      []
+    );
 
   const { data, error } = useSWR(
     `similar/dirs=${JSON.stringify(dirs)
@@ -62,18 +86,24 @@ const Similar = ({ similarPmPairs }: { similarPmPairs: IPm[][] }) => {
       <ResponsiveText mt="4" mb="-2" variant="no_contrast">
         {t("main:similarDirs")}
       </ResponsiveText>
-      {similarPmPairs.map((pair, index) => {
+      <SimilarMass
+        similarPmPairs={similarPmPairs.slice(3, 11)}
+        givePm={givePm}
+        getPm={getPm}
+        dirTextIds={dirTextIds}
+      />
+      {similarPmPairs.slice(0, 3).map((pair, index) => {
         const slug = pmsToSlug({
           givePm: pair[0],
           getPm: pair[1],
         });
 
         return (
-          <Box my="4" key={slug + index}>
+          <VStack spacing={4} align="stretch" my="4" key={slug + index}>
             <Dir givePm={pair[0]} getPm={pair[1]} slug={slug}>
               {data?.[index] && renderRate(pair, data[index])}
             </Dir>
-          </Box>
+          </VStack>
         );
       })}
     </Box3D>

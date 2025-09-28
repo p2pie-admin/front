@@ -16,8 +16,8 @@ const PmName = ({ pm, isFull = true }: { pm?: IPm; isFull?: boolean }) => {
       <Box position="relative" mt="0.5">
         <ResponsiveText>{`${capitalize(pm.en_name.slice(0, 12))} ${
           isFull ? pm.currency.code.toUpperCase() : ""
-        }`}</ResponsiveText>
-        <ResponsiveText
+        } ${pm.subgroup_name || ""}`}</ResponsiveText>
+        {/* <ResponsiveText
           position="absolute"
           fontSize="10"
           variant="no_contrast"
@@ -25,7 +25,7 @@ const PmName = ({ pm, isFull = true }: { pm?: IPm; isFull?: boolean }) => {
           bottom="-10px"
         >
           {pm.subgroup_name || ""}
-        </ResponsiveText>
+        </ResponsiveText> */}
       </Box>
     </HStack>
   );

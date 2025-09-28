@@ -13,20 +13,21 @@ import SwipeableDrawer from "./drawer";
 import Nav from "../nav";
 import NavHeading from "../nav/NavHeading";
 import CitySelector from "./city";
+import { transparentize } from "@chakra-ui/theme-tools";
 
 const Header = () => {
-  const [bg100, bg900] = useToken("colors", [
-    "blackAlpha.300",
-    "blackAlpha.400",
-  ]);
-  const shadowColor = useColorModeValue(bg100, bg900);
+  const [bg100, bg1000] = useToken("colors", ["bg.100", "bg.1000"]);
+  const bgColor = useColorModeValue(
+    transparentize(bg100, 0.95), // 0.2 → 20% more transparent
+    transparentize(bg1000, 0.95)
+  );
 
   return (
     <Flex
       h="56px" // строго
       position="sticky"
       top="0"
-      bgColor={shadowColor}
+      bgColor={bgColor as any}
       p={[2, 4]}
       zIndex="modal"
       justifyContent="center"

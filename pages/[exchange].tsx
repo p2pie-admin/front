@@ -15,6 +15,7 @@ import {
   loadArticleCodes,
   loadPmLayouts,
   loadCustomDirText,
+  loadMassDirTextIds,
 } from "../cache/loadX";
 import { mylog } from "../services/utils";
 
@@ -25,6 +26,7 @@ import {
   generateExchangeSeo,
 } from "../components/exchange/exchangeHelper";
 import { addPathsToSitemap } from "../cache/cache";
+import { IMassDirTextId } from "../types/mass";
 
 const prerenderCountries = ["ukraine", "russia", "belarus"];
 
@@ -37,6 +39,7 @@ const ExchangePage = (props: {
   city: ICity | null;
   similarPmPairs: IPm[][] | null;
   donorCity: ICity | null;
+  dirTextIds: IMassDirTextId[];
 }) => {
   return <Exchange {...props} />;
 };
@@ -55,15 +58,23 @@ export async function getStaticProps({
     const isCash =
       (slug && slug.startsWith("cash-")) || slug.includes("-cash-");
 
-    const [pms, dirs, cities, pmLayouts, articleCodes, customDirText] =
-      await Promise.all([
-        loadPms(),
-        loadPossibleDirs(),
-        isCash ? loadCities() : null,
-        loadPmLayouts(locale),
-        loadArticleCodes(),
-        loadCustomDirText(locale, slug),
-      ]);
+    const [
+      pms,
+      dirs,
+      cities,
+      pmLayouts,
+      articleCodes,
+      customDirText,
+      dirTextIds,
+    ] = await Promise.all([
+      loadPms(),
+      loadPossibleDirs(),
+      isCash ? loadCities() : null,
+      loadPmLayouts(locale),
+      loadArticleCodes(),
+      loadCustomDirText(locale, slug),
+      loadMassDirTextIds({ locale, isSell: true }),
+    ]);
 
     const slugToCodes = getSlugToCodes(dirs, pms);
 
@@ -150,6 +161,7 @@ export async function getStaticProps({
         dirText,
         city: city || null,
         similarPmPairs: similarPmPairs || null,
+        dirTextIds: dirTextIds || null,
         //donorCity: donorCity || null,
         ...(await serverSideTranslations(locale, ["main"])),
       },

@@ -85,7 +85,7 @@ const AmountInput = ({ massDirTextId }: { massDirTextId: IMassDirTextId }) => {
               }
               onClick={() => setCode(code)}
             >
-              {code}
+              {code.slice(0, 4)}
             </ResponsiveText>
           ))}
         </HStack>

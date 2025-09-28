@@ -22,13 +22,13 @@ export default function MassRateAmount({
 
   if (massAmount.value === "") {
     // default: 1 code → ? symbol
-    left = `1 ${code}`;
+    left = `1 ${code.slice(0, 4)}`;
     right = `${
       course < 1 ? addSpaces(R(1 / course, 1)) : addSpaces(R(course, 1))
     } ${symbol}`;
   } else if (code === massAmount.code) {
     // input is base code
-    left = `${addSpaces(R(Number(massAmount.value), 1))} ${code}`;
+    left = `${addSpaces(R(Number(massAmount.value), 1))} ${code.slice(0, 4)}`;
     right = `${
       course < 1
         ? addSpaces(R((1 / course) * Number(massAmount.value), 1))
@@ -40,7 +40,7 @@ export default function MassRateAmount({
       course < 1
         ? addSpaces(R(course * Number(massAmount.value), 1))
         : addSpaces(R((1 / course) * Number(massAmount.value), 1))
-    } ${code}`;
+    } ${code.slice(0, 4)}`;
     right = `${addSpaces(R(Number(massAmount.value), 1))} ${symbol}`;
   }
 

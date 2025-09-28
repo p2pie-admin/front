@@ -151,6 +151,32 @@ export const pmsToSlug = ({
   return slug.toLowerCase().replaceAll(" ", "").replaceAll("/", "");
 };
 
+export const slugToPms = (slug: string) => {
+  if (!slug) return { givePm: null, getPm: null };
+
+  // restore raw format
+  const cleaned = slug.toLowerCase().replaceAll(" ", "").replaceAll("/", "");
+  const [giveStr, getStr] = cleaned.split("-to-");
+  if (!giveStr || !getStr) return { givePm: null, getPm: null };
+
+  const parsePm = (str: string) => {
+    const parts = str.split("-");
+    // always at least [en_name, currency]
+    if (parts.length < 2) return null;
+
+    return {
+      en_name: parts[0],
+      currency: { code: parts[1] },
+      subgroup_name: parts.length > 2 ? parts.slice(2).join("-") : undefined,
+    };
+  };
+
+  return {
+    givePm: parsePm(giveStr),
+    getPm: parsePm(getStr),
+  };
+};
+
 export const pmFromPmGroups = (
   name: string,
   curCode: string,

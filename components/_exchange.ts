@@ -38,7 +38,7 @@
 //   slug: string | null;
 //   dirText: IDirText | null;
 //   city: ICity | null;
-//   similarPmPairs: IPm[][] | null;
+//   similarPmPairs: [IPm,IPm][] | null;
 //   donorCity: ICity | null;
 // }) => {
 //   return <Exchange {...props} />;

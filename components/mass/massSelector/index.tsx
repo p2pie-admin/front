@@ -46,39 +46,40 @@ const MassSelector = ({ initialSlug }: { initialSlug?: string }) => {
         <MassSwiper initialId={second} items={secondItems} set={setSecond} />
         <MassSwiper initialId={third} items={thirdItems} set={setThird} />
       </HStack>
-      <NextLink href={slug}>
-        <Button
-          mt={initialSlug ? "10" : "20"}
-          h={initialSlug ? "40px" : "70px"}
-          variant="primary"
-          size="lg"
-          onClick={() => dispatch(setMassSelectorSlug(slug))}
-        >
-          <HStack color="white">
-            <ResponsiveText color="inherit" size="xl">
-              Искать курсы
-            </ResponsiveText>
+      {initialSlug ? (
+        <NextLink href={slug}>
+          <Button
+            color="white"
+            variant="primary"
+            position="absolute"
+            h="50px"
+            sx={{ top: "calc(50% - 28px )" }}
+            right="-80px"
+            onClick={() => dispatch(setMassSelectorSlug(slug))}
+          >
             <FaSearch size="1.5rem" />
-          </HStack>
-        </Button>
-      </NextLink>
+          </Button>
+        </NextLink>
+      ) : (
+        <NextLink href={slug}>
+          <Button
+            mt={"20"}
+            h={"70px"}
+            variant="primary"
+            size="lg"
+            onClick={() => dispatch(setMassSelectorSlug(slug))}
+          >
+            <HStack color="white">
+              <ResponsiveText color="inherit" size="xl">
+                Искать курсы
+              </ResponsiveText>
+              <FaSearch size="1.5rem" />
+            </HStack>
+          </Button>
+        </NextLink>
+      )}
     </VStack>
   );
 };
 
 export default MassSelector;
-
-//   <NextLink href={slug}>
-//     <Center
-//       position="absolute"
-//       sx={{ top: "calc(50% - 2.2rem / 2 )" }}
-//       right="-40px"
-//       onClick={() => dispatch(setMassSelectorSlug(slug))}
-//       color="peach.400"
-//       transform="unset"
-//       _hover={{ color: "peach.300", transform: "scale(1.05)" }}
-//       cursor="pointer"
-//     >
-//       <IoIosArrowDropdownCircle size="2.2rem" />
-//     </Center>
-//   </NextLink>

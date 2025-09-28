@@ -13,7 +13,7 @@ export const firstItems = [
 
 export const secondItems = [
   {
-    id: "usdt-trc20",
+    id: "usdttrc20",
     ru_label: "USDT TRC-20",
     en_label: "USDT TRC-20",
   },

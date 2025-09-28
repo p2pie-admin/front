@@ -39,6 +39,7 @@ import { useTranslation } from "next-i18next";
 import PmLayout from "./pmLayout";
 import UniversalSeo from "../shared/UniversalSeo";
 import { ISEO } from "../../types/general";
+import { IMassDirTextId } from "../../types/mass";
 
 const Exchange = ({
   locale,
@@ -50,6 +51,7 @@ const Exchange = ({
   city,
   similarPmPairs,
   donorCity,
+  dirTextIds,
 }: {
   //article?: IArticle | null;
   locale: "en" | "ru";
@@ -61,6 +63,7 @@ const Exchange = ({
   city: ICity | null;
   similarPmPairs: IPm[][] | null;
   donorCity: ICity | null;
+  dirTextIds: IMassDirTextId[];
 }) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -133,7 +136,14 @@ const Exchange = ({
    
             </HStack> */}
 
-            {similarPmPairs && <Similar similarPmPairs={similarPmPairs} />}
+            {similarPmPairs && (
+              <Similar
+                similarPmPairs={similarPmPairs}
+                givePm={givePm}
+                getPm={getPm}
+                dirTextIds={dirTextIds}
+              />
+            )}
           </VStack>
         </Column>
 

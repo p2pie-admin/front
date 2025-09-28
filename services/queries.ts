@@ -378,10 +378,12 @@ export const massDirTextIdsQuery = gql`
       filters: { isSell: { eq: $isSell } }
     ) {
       data {
+        id
         attributes {
           code
           currency {
             data {
+              id
               attributes {
                 code
               }

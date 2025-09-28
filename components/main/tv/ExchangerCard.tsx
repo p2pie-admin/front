@@ -123,7 +123,7 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
               <CustomImage img={logo} w="35px" h="35px" />
             </Box>
             <ResponsiveText
-              size={name.length > 15 ? "lg" : "xl"}
+              size={name.length > 15 ? "md" : name.length > 10 ? "lg" : "xl"}
               fontWeight="bold"
             >
               {capitalize(name)}

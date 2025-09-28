@@ -225,7 +225,7 @@ export const findSimilarPmPairs = (
           pair[0].code == pair[1].code
         )
     )
-    .slice(0, 4);
+    .slice(0, 11);
 };
 
 export const exchangeToSlugCity = (exchange: string) => {
@@ -273,4 +273,31 @@ export const generateExchangeSeo = (seoData: ISeoData) => {
       },
     ],
   };
+};
+
+export const getOtherMass = (
+  pairs: IPm[][],
+  givePm?: IPm,
+  getPm?: IPm
+): IPm[] => {
+  if (!pairs.length) return [];
+
+  const seen = new Set<string>();
+  const result: IPm[] = [];
+
+  const excludeKeys = new Set<string>();
+  if (givePm) excludeKeys.add(givePm.code + "|" + (givePm.subgroup_name ?? ""));
+  if (getPm) excludeKeys.add(getPm.code + "|" + (getPm.subgroup_name ?? ""));
+
+  for (const pair of pairs) {
+    for (const pm of pair) {
+      const key = pm.code + "|" + (pm.subgroup_name ?? "");
+      if (!seen.has(key) && !excludeKeys.has(key)) {
+        seen.add(key);
+        result.push(pm);
+      }
+    }
+  }
+
+  return result;
 };
