@@ -52,15 +52,13 @@ const Chart = memo(
     //   [getCur, getToUSD]
     //);
 
-    const alt = useMemo(
-      () => `${giveCur} to ${getCur} in last ${isLongTimeFrame ? "24h" : "1h"}`,
-      [giveCur, getCur, isLongTimeFrame]
-    );
+    const alt = `${giveCur} to ${getCur} in last ${
+      isLongTimeFrame ? "24h" : "1h"
+    }`;
 
-    const imgSrc = useMemo(
-      () => `${SRC}/${getCur}_${giveCur}/${isLongTimeFrame ? "24h" : "1h"}`,
-      [SRC, getCur, giveCur, isLongTimeFrame]
-    );
+    const imgSrc = `${SRC}/${getCur}_${giveCur}/${
+      isLongTimeFrame ? "24h" : "1h"
+    }`;
 
     return (
       <Box3D
