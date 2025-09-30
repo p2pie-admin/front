@@ -21,7 +21,7 @@ export const generateMassSeo = ({
       isSell ? "sell" : "buy"
     }/${slug}`,
     locale,
-    alternateLangs: ["en", "ru"].map((l) => ({
+    alternateLangs: ["ru"].map((l) => ({
       rel: "alternate",
       hrefLang: l,
       href: `https://${process.env.NEXT_PUBLIC_NAME}.com/${l}/${slug}`,

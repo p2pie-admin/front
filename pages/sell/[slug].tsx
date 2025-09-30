@@ -119,7 +119,7 @@ export const getStaticProps = async ({
 export const getStaticPaths: GetStaticPaths = async () => {
   // Collect paths for both locales
   const allPaths = await Promise.all(
-    (["en", "ru"] as const).map(async (locale) => {
+    (["ru"] as const).map(async (locale) => {
       const massDirTextIds = await loadMassDirTextIds({
         locale,
         isSell,

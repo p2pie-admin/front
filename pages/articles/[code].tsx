@@ -171,7 +171,7 @@ export async function getStaticProps({
 /////////////////////////////////////////////////////////////////////////////////////////////
 export async function getStaticPaths() {
   try {
-    const locales = ["en", "ru"] as ("en" | "ru")[];
+    const locales = ["ru"] as ("en" | "ru")[];
     const paths: { params: { code: string }; locale: "en" | "ru" }[] = [];
     const articleCodes = (await loadArticleCodes()) as string[];
 

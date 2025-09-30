@@ -194,7 +194,7 @@ export async function getStaticProps({
 //.....................................................................................................
 
 export async function getStaticPaths() {
-  const locales = ["en", "ru"];
+  const locales = ["ru"];
 
   const [pms, possiblePairs, cities, pmLayoutsRu, pmLayoutsEn, articleCodes] =
     await Promise.all([

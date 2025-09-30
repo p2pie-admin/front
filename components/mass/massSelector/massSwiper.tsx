@@ -146,7 +146,7 @@ export const MassSwiper = ({
   // === FIXED INITIALIZATION ===
   // Use layout effect so we set the motion value before paint/other effects.
   const didMount = React.useRef(false);
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     if (length === 0) return;
 
     let startIndex = 0;

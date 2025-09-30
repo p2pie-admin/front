@@ -155,7 +155,7 @@ export async function getStaticPaths() {
       };
     }
 
-    const locales = ["en", "ru"];
+    const locales = ["ru"];
 
     // Generate all possible paths
     const paths = exchangers.reduce(
