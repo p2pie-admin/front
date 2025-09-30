@@ -17,7 +17,6 @@ import {
   loadCustomDirText,
   loadMassDirTextIds,
 } from "../cache/loadX";
-import { mylog } from "../services/utils";
 
 import {
   dirTextHandler,
@@ -28,13 +27,14 @@ import {
 import { addPathsToSitemap } from "../cache/cache";
 import { IMassDirTextId } from "../types/mass";
 
+const locale = (process.env.NEXT_PUBLIC_SITE_LANG || "ru") as "ru" | "en";
 const prerenderCountries = ["ukraine", "russia", "belarus"];
 
 const ExchangePage = (props: {
   seo: ISEO;
   givePmData: IPmData | null;
   getPmData: IPmData | null;
-  locale: "en" | "ru";
+  locale: "ru";
   dirText: IDirText | null;
   city: ICity | null;
   similarPmPairs: IPm[][] | null;
@@ -45,10 +45,8 @@ const ExchangePage = (props: {
 };
 
 export async function getStaticProps({
-  locale,
   params,
 }: {
-  locale: "en" | "ru";
   params: { exchange: string };
 }) {
   try {
@@ -70,10 +68,10 @@ export async function getStaticProps({
       loadPms(),
       loadPossibleDirs(),
       isCash ? loadCities() : null,
-      loadPmLayouts(locale),
+      loadPmLayouts(),
       loadArticleCodes(),
-      loadCustomDirText(locale, slug),
-      loadMassDirTextIds({ locale, isSell: true }),
+      loadCustomDirText(slug),
+      loadMassDirTextIds({ isSell: true }),
     ]);
 
     const slugToCodes = getSlugToCodes(dirs, pms);
@@ -82,10 +80,12 @@ export async function getStaticProps({
       console.error("[getStaticProps] 'pms' is missing or invalid.");
       return { notFound: true };
     }
+
     const dir = slugToCodes?.[slug];
     const [giveCode, getCode] = dir?.split("_") ?? [];
     const givePm = pms?.find((pm) => pm.code === giveCode) ?? null;
     const getPm = pms?.find((pm) => pm.code === getCode) ?? null;
+
     if (!dir || !givePm || !getPm) {
       console.error("[getStaticProps] Invalid direction or PM data.");
       return { notFound: true };
@@ -97,7 +97,7 @@ export async function getStaticProps({
       pms,
       Object.values(slugToCodes)
     );
-    // обработка городов
+
     const city = cityParam
       ? cities?.find(
           (c) => c.en_name?.toLowerCase() === cityParam.toLowerCase()
@@ -118,17 +118,16 @@ export async function getStaticProps({
         (code) => code?.toUpperCase() == getPm.en_name.toUpperCase()
       );
     }
+
     const givePmData = {
       pm: givePm,
       pmLayout: givePmLayout,
       articleExists: giveArticleExists,
-      // possiblePairs: possiblePairs[givePm.code],
     } as IPmData;
     const getPmData = {
       pm: getPm,
       pmLayout: getPmLayout,
       articleExists: getArticleExists,
-      // possiblePairs: possiblePairs[getPm.code],
     } as IPmData;
 
     const dirText = (await dirTextHandler({
@@ -156,13 +155,12 @@ export async function getStaticProps({
         locale,
         seo: seo || nullSeo,
         cities: cities || null,
-        givePmData: givePmData || null,
-        getPmData: getPmData || null,
+        givePmData,
+        getPmData,
         dirText,
         city: city || null,
         similarPmPairs: similarPmPairs || null,
         dirTextIds: dirTextIds || null,
-        //donorCity: donorCity || null,
         ...(await serverSideTranslations(locale, ["main"])),
       },
       revalidate: 2400,
@@ -187,67 +185,32 @@ export async function getStaticProps({
   }
 }
 
-//.....................................................................................................
-//.....................................................................................................
-//.....................................................................................................
-//.....................................................................................................
-//.....................................................................................................
-
 export async function getStaticPaths() {
-  const locales = ["ru"];
-
-  const [pms, possiblePairs, cities, pmLayoutsRu, pmLayoutsEn, articleCodes] =
-    await Promise.all([
-      loadPms(),
-      loadPossibleDirs(),
-      loadCities(),
-      loadPmLayouts("ru"),
-      loadPmLayouts("en"),
-      loadArticleCodes(),
-    ]);
+  const [pms, possiblePairs, cities] = await Promise.all([
+    loadPms(),
+    loadPossibleDirs(),
+    loadCities(),
+  ]);
 
   const slugToCodes = getSlugToCodes(possiblePairs, pms);
 
   if (!slugToCodes || !cities) {
     console.error(
-      "[getStaticPaths] 'slugToCodes' or 'cities' is missing or invalid."
+      "[getStaticPaths] 'slugToCodes' or 'cities' missing/invalid."
     );
-    return {
-      paths: [],
-      fallback: "blocking",
-    };
+    return { paths: [], fallback: "blocking" };
   }
 
-  const allPaths = Object.keys(slugToCodes).reduce(
-    (
-      res: {
-        params: { exchange: string };
-        locale: string;
-      }[],
-      slug: string
-    ) => [
-      ...res,
-      ...locales.map((locale) => ({
-        params: { exchange: slug },
-        locale,
-      })),
-    ],
-    []
-  );
+  const allPaths = Object.keys(slugToCodes).map((slug) => ({
+    params: { exchange: slug },
+  }));
 
   const needPrerender = (exchangePath: string) => {
-    if (!exchangePath.includes("-in-")) return true; // dont prerender cities
+    if (!exchangePath.includes("-in-")) return true; // don't prerender cities
     const city = cities?.find((city) =>
       exchangePath.includes(city.en_name.toLowerCase())
     );
-    if (!city) {
-      console.warn(
-        "[getStaticPaths] City not found for exchangePath:",
-        exchangePath
-      );
-    }
     const countryName = city?.en_country_name?.toLowerCase();
-    // пререндерим крупные города и определенные страны
     return (
       city &&
       countryName &&
@@ -263,13 +226,8 @@ export async function getStaticPaths() {
 
   const slicedPaths = paths.slice(0, prerenderLimit);
   await addPathsToSitemap(slicedPaths);
-  // далее кешируем все направления
 
-  // ПУТИ ЕСТЬ ПОЛНЫЕ ДЛЯ САЙТМАП, А  ЕСТЬ ДЛЯ ПРЕРЕНДЕРИНГА
-  return {
-    paths: slicedPaths,
-    fallback: "blocking", // Use "blocking" to dynamically generate pages on demand
-  };
+  return { paths: slicedPaths, fallback: "blocking" };
 }
 
 export default ExchangePage;

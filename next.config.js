@@ -24,7 +24,6 @@ const nextConfig = {
       "cms.rusrates.help", // <-- Strapi prod
       "converter.rusrates.help", // <-- Strapi dev
       "server.rusrates.help",
-
       // 👇 Add your reverse-proxied domains
       "1nginx.space",
       "cms.1nginx.space",

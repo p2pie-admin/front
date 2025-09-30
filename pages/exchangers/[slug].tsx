@@ -33,7 +33,6 @@ export default function ExchangerPage({
   exchanger: (IExchanger & IParserExchanger) | null;
   seo: ISEO;
 }) {
-  // Handle non-existent exchanger
   if (!exchanger) {
     return (
       <Center
@@ -52,14 +51,10 @@ export default function ExchangerPage({
   return <Exchanger exchanger={exchanger} seo={seo} />;
 }
 
-// Optimized getStaticProps with Redis caching
-export async function getStaticProps({
-  locale,
-  params,
-}: {
-  locale: "en" | "ru";
-  params: { slug: string };
-}) {
+const locale = (process.env.NEXT_PUBLIC_SITE_LANG || "ru") as "en" | "ru";
+
+// Single-locale getStaticProps
+export async function getStaticProps({ params }: { params: { slug: string } }) {
   try {
     const { slug } = params;
     const name = exchangerSlugToName(slug);
@@ -75,7 +70,6 @@ export async function getStaticProps({
       return { notFound: true };
     }
 
-    // Add cross-linking if we have all the data
     const enrichedExchanger = await addExchangerCrossLinking(
       exchanger,
       articleCodes as string[],
@@ -93,33 +87,19 @@ export async function getStaticProps({
         : "Карточка обменника, рейтинг и информация"
     }`;
 
-    const seo = {
+    const seo: ISEO = {
       title,
       description,
-      canonicalPath: `${locale}/exchangers/${slug}`,
+      canonicalPath: `/exchangers/${slug}`,
       updatedAt: exchanger.updatedAt || new Date().toISOString(),
       locale,
-      alternateLangs: [
-        {
-          rel: "alternate",
-          hrefLang: "en",
-          href: `https://p2pie.com/en/exchangers/${slug}`,
-        },
-        {
-          rel: "alternate",
-          hrefLang: "ru",
-          href: `https://p2pie.com/ru/exchangers/${slug}`,
-        },
-      ],
     };
 
-    // Emergency fallback to prevent 500 errors
     return {
       props: {
         exchanger: enrichedExchanger || exchanger,
         seo,
         locale,
-        error: true,
         ...(await serverSideTranslations(locale, ["main"])),
       },
       revalidate: TTL.fast,
@@ -127,23 +107,19 @@ export async function getStaticProps({
   } catch (error) {
     console.error("🚨 getStaticProps error:", error);
 
-    // Return minimal data to avoid 500 errors
     return {
       props: {
         exchanger: null,
-        articleCodes: [],
-        pms: [],
         seo: nullSeo,
         locale,
-        error: true,
         ...(await serverSideTranslations(locale, ["main"])),
       },
-      revalidate: 60, // Quick retry on error
+      revalidate: 60,
     };
   }
 }
 
-// Optimized getStaticPaths with Redis caching
+// Single-locale getStaticPaths
 export async function getStaticPaths() {
   try {
     const exchangers = (await loadExchangers()) as IExchangerPreview[];
@@ -155,27 +131,10 @@ export async function getStaticPaths() {
       };
     }
 
-    const locales = ["ru"];
+    const paths = exchangers.map((exchanger) => ({
+      params: { slug: exchangerNameToSlug(exchanger.name) },
+    }));
 
-    // Generate all possible paths
-    const paths = exchangers.reduce(
-      (
-        res: {
-          params: { slug: string };
-          locale: string;
-        }[],
-        exchanger: IExchangerPreview
-      ) => [
-        ...res,
-        ...locales.map((locale) => ({
-          params: { slug: exchangerNameToSlug(exchanger.name) },
-          locale,
-        })),
-      ],
-      []
-    );
-
-    // Limit pre-rendered paths for testing
     const prerenderLimit = process.env.NEXT_PUBLIC_PRERENDER_LIMIT
       ? Number(process.env.NEXT_PUBLIC_PRERENDER_LIMIT)
       : 5000;

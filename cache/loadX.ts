@@ -30,6 +30,8 @@ import { IArticle } from "../types/pages";
 import { IExchanger, IExchangerPreview } from "../types/exchanger";
 import { IMassDirTextId, IMassDirText, IMassRate } from "../types/mass";
 
+const locale = process.env.NEXT_PUBLIC_SITE_LANG || "ru";
+
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL!,
   token: process.env.UPSTASH_REDIS_REST_TOKEN!,
@@ -45,7 +47,7 @@ export const TTL = {
   never: -1,
 };
 
-export const loadRootText = (locale: "en" | "ru") =>
+export const loadRootText = () =>
   cachedFetch(`root_text_${locale}`, TTL.slow, async () => {
     const res = (await cmsFetcher(TextBoxQuery, {
       locale,
@@ -54,7 +56,7 @@ export const loadRootText = (locale: "en" | "ru") =>
     return res?.[0] || null;
   });
 
-export const loadMainTexts = (locale: "en" | "ru") =>
+export const loadMainTexts = () =>
   cachedFetch(`main_texts_${locale}`, TTL.slow, () =>
     cmsFetcher(MainTextsQuery, { locale })
   );
@@ -62,7 +64,7 @@ export const loadMainTexts = (locale: "en" | "ru") =>
 export const loadParserExchangers = () =>
   cachedFetch("exchangers", TTL.fast, () => parserFetcher("exchangers"));
 
-export const loadPmLayouts = (locale: "en" | "ru") =>
+export const loadPmLayouts = () =>
   cachedFetch(
     `pmLayouts_${locale}`,
     TTL.slow,
@@ -93,7 +95,7 @@ export const loadArticleCodes = () =>
 //     return articles;
 //   });
 
-export const loadArticle = (code: string, locale: "en" | "ru") =>
+export const loadArticle = (code: string) =>
   cachedFetch(`article_${code.toLowerCase()}_${locale}`, TTL.slow, async () => {
     const res = await cmsFetcher(articleQuery, { code, locale });
     return res?.[0] || null;
@@ -168,9 +170,7 @@ export const loadPopular = () =>
     return res || [];
   });
 
-export const preloadCustomDirTexts = (locale: string, slug: string) => {};
-
-export const loadCustomDirText = (locale: string, slug: string) =>
+export const loadCustomDirText = (slug: string) =>
   cachedFetch(`custom_dir_text_${slug}`, TTL.instant, async () => {
     const res = await cmsFetcher(TextBoxQuery, { locale, key: slug });
     return res?.[0] as IDirText;
@@ -184,28 +184,17 @@ export const loadCustomDirText = (locale: string, slug: string) =>
 //   );
 export const preloadDirTexts = () => {};
 
-export const loadDirText = (
-  locale: "en" | "ru",
-  sectionGive: string,
-  sectionGet: string
-) =>
+export const loadDirText = (sectionGive: string, sectionGet: string) =>
   cachedFetch(`dirText_${locale}_${sectionGive}_${sectionGet}`, TTL.slow, () =>
     cmsFetcher(dirsTextQuery, { locale })
   ).then((r) => r[0]) as Promise<IDirText>;
 
-export const loadMassDirTextIds = ({
-  locale,
-  isSell,
-}: {
-  locale: "en" | "ru";
-  isSell: boolean;
-}) =>
+export const loadMassDirTextIds = ({ isSell }: { isSell: boolean }) =>
   cachedFetch(
     `massDirTexts_${locale}_${isSell ? "sell" : "buy"}`,
     TTL.slow,
     async () => {
       const massDirTextIds = (await cmsFetcher(massDirTextIdsQuery, {
-        locale,
         isSell,
       })) as IMassDirTextId[];
       return massDirTextIds;
@@ -213,11 +202,9 @@ export const loadMassDirTextIds = ({
   );
 
 export const loadMassDirText = ({
-  locale,
   massDirTextId,
   isSell,
 }: {
-  locale: "en" | "ru";
   massDirTextId: IMassDirTextId;
   isSell: boolean;
 }) =>

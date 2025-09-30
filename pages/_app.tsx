@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { defaultConfig } from "../next-seo.config";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Head from "next/head";
+import "../i18n"; //
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { locale } = useRouter() as { locale: "en" | "ru" };

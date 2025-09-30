@@ -1,11 +1,12 @@
 const path = require("path");
+const siteLang = process.env.NEXT_PUBLIC_SITE_LANG || "ru";
 
 module.exports = {
   i18n: {
-    locales: ["ru"], // Add your locales
-    defaultLocale: "ru", // Set default locale to 'ru'
-    localeDetection: false, // Disable automatic locale detection
+    defaultLocale: siteLang,
+    locales: [siteLang], // only one locale per build
   },
+
   localePath: path.resolve("./public/locales"),
   ns: ["main"], // Your namespaces
   defaultNS: "main",

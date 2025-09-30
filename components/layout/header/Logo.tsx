@@ -25,7 +25,7 @@ const Logo = () => {
         alt={`${process.env.NEXT_PUBLIC_NAME} logo`}
         src={useColorModeValue(darkPie, lightPie)}
         width={36}
-        fetchPriority="high"
+        priority
       />
 
       <ResponsiveText variant="primary" fontSize="2xl" fontWeight="bold" mx="2">

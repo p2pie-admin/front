@@ -17,7 +17,7 @@ export type ISEO = {
   description: string;
   canonicalPath: string;
   locale: "en" | "ru";
-  updatedAt: string;
+  updatedAt?: string;
   breadcrumbs?: BreadcrumbItem[];
   alternateLangs?: { rel: string; hrefLang: string; href: string }[];
 };

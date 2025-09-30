@@ -48,21 +48,6 @@ const MainPageContent = ({
     <VStack>
       <Greeting />
 
-      <MassSelector />
-      <VStack my="10">
-        <ResponsiveText
-          as="h2"
-          fontSize="4xl"
-          fontWeight="bold"
-          variant="primary"
-        >
-          {rootText?.header}
-        </ResponsiveText>
-        <ResponsiveText as="h3" fontSize="2xl" variant="no_contrast">
-          {rootText?.subheader}
-        </ResponsiveText>
-      </VStack>
-
       <ColumnGrid>
         <Column index={2}>
           <Calculator />
@@ -79,6 +64,21 @@ const MainPageContent = ({
           </ResponsiveText>
         </Column>
       </ColumnGrid>
+
+      <VStack my="10">
+        <ResponsiveText
+          as="h2"
+          fontSize="4xl"
+          fontWeight="bold"
+          variant="primary"
+        >
+          {rootText?.header}
+        </ResponsiveText>
+        <ResponsiveText as="h3" fontSize="2xl" variant="no_contrast">
+          {rootText?.subheader}
+        </ResponsiveText>
+      </VStack>
+      <MassSelector />
     </VStack>
   );
 };

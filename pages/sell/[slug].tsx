@@ -54,7 +54,6 @@ export const getStaticProps = async ({
   const massDirTextId = convertSlugIntoMassDirText(slug, isSell);
 
   const massDirText = (await loadMassDirText({
-    locale,
     massDirTextId,
     isSell,
   })) as IMassDirText;
@@ -121,7 +120,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const allPaths = await Promise.all(
     (["ru"] as const).map(async (locale) => {
       const massDirTextIds = await loadMassDirTextIds({
-        locale,
         isSell,
       });
 

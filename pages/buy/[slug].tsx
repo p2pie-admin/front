@@ -13,17 +13,14 @@ import {
 import UniversalSeo, { nullSeo } from "../../components/shared/UniversalSeo";
 import { ISEO } from "../../types/general";
 
-import {
-  generateMassSeo,
-  getPmsByCodes,
-  replaceCodesWithPms,
-} from "../../components/mass/helper";
+import { generateMassSeo, getPmsByCodes } from "../../components/mass/helper";
 import Mass from "../../components/mass";
 import { IMassDirText, IMassDirTextId, IMassRate } from "../../types/mass";
 import { IPm } from "../../types/selector";
 import { addPathsToSitemap } from "../../cache/cache";
 
 const isSell = false;
+const locale = (process.env.NEXT_PUBLIC_SITE_LANG || "ru") as "en" | "ru";
 
 type Props = {
   seo: ISEO;
@@ -35,7 +32,7 @@ type Props = {
   slug: string;
 };
 
-const SellPage = (props: Props) => (
+const BuyPage = (props: Props) => (
   <>
     <UniversalSeo seo={props.seo} />
     <Mass {...props} />
@@ -45,16 +42,13 @@ const SellPage = (props: Props) => (
 /////////////////////////////////////////////////////////////////////////
 export const getStaticProps = async ({
   params,
-  locale,
 }: {
   params: { slug: string };
-  locale: "en" | "ru";
 }) => {
   const { slug } = params;
   const massDirTextId = convertSlugIntoMassDirText(slug, isSell);
 
   const massDirText = (await loadMassDirText({
-    locale,
     massDirTextId,
     isSell,
   })) as IMassDirText;
@@ -117,24 +111,14 @@ export const getStaticProps = async ({
 ////////////////////////////
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  // Collect paths for both locales
-  const allPaths = await Promise.all(
-    (["ru"] as const).map(async (locale) => {
-      const massDirTextIds = await loadMassDirTextIds({
-        locale,
-        isSell,
-      });
+  const massDirTextIds = await loadMassDirTextIds({
+    isSell,
+  });
 
-      const paths = massDirTextIds.map((mdtid) => ({
-        params: { slug: convertMassDirTextIntoSlug(mdtid) },
-        locale,
-      }));
-      return paths;
-    })
-  );
-
-  // Flatten the arrays of paths
-  const paths = allPaths.flat();
+  const paths = massDirTextIds.map((mdtid) => ({
+    params: { slug: convertMassDirTextIntoSlug(mdtid) },
+    locale,
+  }));
 
   await addPathsToSitemap(paths);
   return {
@@ -143,4 +127,4 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export default SellPage;
+export default BuyPage;

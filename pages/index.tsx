@@ -1,7 +1,6 @@
 import MainPageContent from "../components/main";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IPopularDirRates } from "../types/rates";
-import { initParserFetcher } from "../services/fetchers";
 import { IMainText } from "../types/pages";
 import UniversalSeo, { nullSeo } from "../components/shared/UniversalSeo";
 import { ISEO } from "../types/general";
@@ -14,11 +13,14 @@ import {
 } from "../cache/loadX";
 import { IDirText } from "../types/exchange";
 
-export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
+// take locale from env
+const locale = (process.env.NEXT_PUBLIC_SITE_LANG || "ru") as "ru" | "en";
+
+export const getStaticProps = async () => {
   try {
     const [mainTexts, rootText, popularRatesRaw, pmsRaw] = await Promise.all([
-      loadMainTexts(locale),
-      loadRootText(locale),
+      loadMainTexts(),
+      loadRootText(),
       loadPopular(),
       loadPms(),
     ]);
@@ -35,13 +37,13 @@ export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
       popularPmCodes.find((code) => code === pm.code)
     );
 
-    const t = await getT(locale || "ru");
-    const seo = {
+    const t = await getT(locale);
+    const seo: ISEO = {
       title: rootText.seo_title || t("main:meta-title"),
       description: rootText.seo_description || t("main:meta-description"),
-      canonicalPath: `${locale}`,
-      locale: locale,
-    } as ISEO;
+      canonicalPath: "/",
+      locale,
+    };
 
     return {
       props: {
@@ -53,13 +55,12 @@ export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
         locale,
         ...(await serverSideTranslations(locale, ["main"])),
       },
-      revalidate: 3000, // Revalidate every 3000 seconds (50 minutes)
+      revalidate: 3000,
     };
   } catch (e) {
     console.error("Error during getStaticProps:", e);
 
     return {
-      // возвращаем пустые данные чтобы сработал ревалидейт
       props: {
         seo: nullSeo,
         popularPms: null,
@@ -69,7 +70,7 @@ export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
         locale,
         ...(await serverSideTranslations(locale, ["main"])),
       },
-      revalidate: 3000, // try again in 3000 seconds (50 minutes)
+      revalidate: 3000,
     };
   }
 };
