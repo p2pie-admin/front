@@ -14,23 +14,16 @@ const nextConfig = {
   images: {
     domains: [
       "localhost",
-      "p2pie.com",
-      "p2pie.help",
-      "cms.p2pie.help", // <-- Strapi prod
-      "converter.p2pie.help", // <-- Strapi dev
-      "server.p2pie.help",
       "rusrates.com",
       "rusrates.help",
-      "cms.rusrates.help", // <-- Strapi prod
-      "converter.rusrates.help", // <-- Strapi dev
+      "cms.rusrates.help",
+      "converter.rusrates.help",
       "server.rusrates.help",
-      // 👇 Add your reverse-proxied domains
       "1nginx.space",
       "cms.1nginx.space",
       "converter.1nginx.space",
       "server.1nginx.space",
       "stats.1nginx.space",
-
       "2nginx.space",
       "cms.2nginx.space",
       "converter.2nginx.space",
@@ -49,6 +42,12 @@ const nextConfig = {
       {
         source: "/ru/:path*",
         destination: "/:path*",
+        permanent: true,
+      },
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.rusrates.com" }],
+        destination: "https://rusrates.com/:path*",
         permanent: true,
       },
     ];
