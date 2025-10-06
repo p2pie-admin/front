@@ -23,7 +23,7 @@ export const fillWords = ({
   if (!text) return null;
 
   const makeSlug = (pm: IPm) =>
-    `/${locale}/articles/${pm.en_name.toLowerCase().replace(/\s+/g, "-")}`;
+    `/articles/${pm.en_name.toLowerCase().replace(/\s+/g, "-")}`;
 
   const parts = text.split(
     /(give_name|get_name|give_currency|get_currency|city_name)/g
@@ -37,12 +37,14 @@ export const fillWords = ({
             {capitalize(givePm[`${locale}_name`] || givePm.en_name)}
           </Link>
         );
+
       case "get_name":
         return (
           <Link key={index} href={makeSlug(getPm)}>
             {capitalize(getPm[`${locale}_name`] || getPm.en_name)}
           </Link>
         );
+
       case "give_currency":
         return givePm.currency.code.toUpperCase();
       case "get_currency":

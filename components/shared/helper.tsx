@@ -65,7 +65,7 @@ export const enrichText = ({
   articleCodes.forEach((code) => {
     const pm = pms.find(
       (pm) =>
-        pm.en_name.toLowerCase().replace(/\s+/g, "_") === code.toLowerCase()
+        pm.en_name.toLowerCase().replace(/\s+/g, "-") === code.toLowerCase()
     );
     if (!pm) return;
 

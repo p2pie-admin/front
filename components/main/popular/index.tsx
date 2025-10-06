@@ -2,12 +2,10 @@ import { IPopularDirRates } from "../../../types/rates";
 import { IPm } from "../../../types/selector";
 
 import CryptoRates from "./CryptoRates";
-import { Box, Divider, Grid, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Grid } from "@chakra-ui/react";
 import CryptoPm from "./CryptoPm";
 import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
 import { useTranslation } from "next-i18next";
-import Shader from "../../shared/Shader";
-import MassShader from "../../mass/MassShader";
 
 const Popular = ({
   popularRates,

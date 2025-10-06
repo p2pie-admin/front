@@ -14,21 +14,22 @@ const nextConfig = {
   images: {
     domains: [
       "localhost",
-      "rusrates.com",
-      "rusrates.help",
+
       "cms.rusrates.help",
       "converter.rusrates.help",
       "server.rusrates.help",
-      "1nginx.space",
+
       "cms.1nginx.space",
       "converter.1nginx.space",
       "server.1nginx.space",
-      "stats.1nginx.space",
-      "2nginx.space",
+
       "cms.2nginx.space",
       "converter.2nginx.space",
       "server.2nginx.space",
-      "stats.2nginx.space",
+
+      "cms.p2pie.help",
+      "converter.p2pie.help",
+      "server.p2pie.help",
     ],
   },
 

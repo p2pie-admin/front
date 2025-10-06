@@ -119,6 +119,9 @@ export async function getStaticProps({
       );
     }
 
+    if (giveArticleExists) givePm.article_exists = true;
+    if (giveArticleExists) getPm.article_exists = true;
+
     const givePmData = {
       pm: givePm,
       pmLayout: givePmLayout,

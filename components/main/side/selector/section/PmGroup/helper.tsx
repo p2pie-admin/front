@@ -143,11 +143,14 @@ export const pmsToSlug = ({
   getPm?: IPm;
 }): string => {
   if (!givePm || !getPm) return "";
+  const isCash =
+    givePm.section.toLowerCase() == "cash" ||
+    getPm.section.toLowerCase() == "cash";
   const slug = `${givePm.en_name}-${givePm.currency.code}${
     givePm.subgroup_name ? "-" + givePm.subgroup_name : ""
   }-to-${getPm.en_name}-${getPm.currency.code}${
     getPm.subgroup_name ? "-" + getPm.subgroup_name : ""
-  }`;
+  }${isCash ? "-in-moscow" : ""}`;
   return slug.toLowerCase().replaceAll(" ", "").replaceAll("/", "");
 };
 
