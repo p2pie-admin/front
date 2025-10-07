@@ -87,7 +87,7 @@ export async function getStaticProps({
     const getPm = pms?.find((pm) => pm.code === getCode) ?? null;
 
     if (!dir || !givePm || !getPm) {
-      console.error("[getStaticProps] Invalid direction or PM data.");
+      console.error("[getStaticProps] !dir || !givePm || !getPm.");
       return { notFound: true };
     }
 
@@ -118,9 +118,6 @@ export async function getStaticProps({
         (code) => code?.toUpperCase() == getPm.en_name.toUpperCase()
       );
     }
-
-    if (giveArticleExists) givePm.article_exists = true;
-    if (giveArticleExists) getPm.article_exists = true;
 
     const givePmData = {
       pm: givePm,

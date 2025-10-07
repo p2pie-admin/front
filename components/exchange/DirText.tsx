@@ -2,25 +2,27 @@
 
 import Link from "next/link";
 import { Box, Text, Heading, Divider } from "@chakra-ui/react";
-import { ICity, IDirText } from "../../types/exchange";
+import { ICity, IDirText, IPmData } from "../../types/exchange";
 import { IPm } from "../../types/selector";
 import { capitalize } from "../main/side/selector/section/PmGroup/helper";
 import { TextToHTML } from "../shared/helper";
 
 export const fillWords = ({
   locale,
-  givePm,
-  getPm,
+  givePmData,
+  getPmData,
   cityName,
   text,
 }: {
   locale: "en" | "ru";
-  givePm: IPm;
-  getPm: IPm;
+  givePmData: IPmData;
+  getPmData: IPmData;
   cityName?: string;
   text?: string;
 }) => {
   if (!text) return null;
+
+  const [givePm, getPm] = [givePmData?.pm, getPmData?.pm];
 
   const makeSlug = (pm: IPm) =>
     `/articles/${pm.en_name.toLowerCase().replace(/\s+/g, "-")}`;
@@ -32,17 +34,21 @@ export const fillWords = ({
   return parts.map((part, index) => {
     switch (part) {
       case "give_name":
-        return (
+        return givePmData.articleExists ? (
           <Link key={index} href={makeSlug(givePm)}>
-            {capitalize(givePm[`${locale}_name`] || givePm.en_name)}
+            {capitalize(givePm?.[`${locale}_name`] || givePm.en_name)}
           </Link>
+        ) : (
+          <>{capitalize(givePm?.[`${locale}_name`] || givePm.en_name)}</>
         );
 
       case "get_name":
-        return (
+        return getPmData.articleExists ? (
           <Link key={index} href={makeSlug(getPm)}>
             {capitalize(getPm[`${locale}_name`] || getPm.en_name)}
           </Link>
+        ) : (
+          <>{capitalize(getPm[`${locale}_name`] || getPm.en_name)}</>
         );
 
       case "give_currency":
@@ -60,13 +66,13 @@ export const fillWords = ({
 const DirText = ({
   dirText,
   locale,
-  givePm,
-  getPm,
+  givePmData,
+  getPmData,
   city,
 }: {
   locale: "en" | "ru";
-  givePm: IPm;
-  getPm: IPm;
+  givePmData: IPmData;
+  getPmData: IPmData;
   city: ICity | null;
   dirText: IDirText | null;
 }) => {
@@ -79,8 +85,8 @@ const DirText = ({
       <Heading as="h2" fontSize="2xl">
         {fillWords({
           locale,
-          givePm,
-          getPm,
+          givePmData,
+          getPmData,
           cityName,
           text: dirText.header,
         })}
@@ -91,8 +97,8 @@ const DirText = ({
       <Heading as="h3" fontSize="lg" mb="2">
         {fillWords({
           locale,
-          givePm,
-          getPm,
+          givePmData,
+          getPmData,
           cityName,
           text: dirText.subheader,
         })}

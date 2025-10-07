@@ -79,7 +79,6 @@ interface IPm {
   color: string;
   popular_as?: IPopularAs | null;
   section: string;
-  article_exists?: boolean;
 }
 
 type ISide = "give" | "get";

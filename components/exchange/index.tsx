@@ -73,9 +73,6 @@ const Exchange = ({
   );
 
   if (!givePmData?.pm || !getPmData?.pm) {
-    console.log("givePmData", givePmData);
-    console.log("getPmData", getPmData);
-
     return (
       <Center h="100vh">
         <Spinner />
@@ -165,8 +162,8 @@ const Exchange = ({
         >
           <DirText
             dirText={dirText}
-            givePm={givePm}
-            getPm={getPm}
+            givePmData={givePmData}
+            getPmData={getPmData}
             locale={locale}
             city={city}
           />

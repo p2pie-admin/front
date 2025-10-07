@@ -150,7 +150,7 @@ export const pmsToSlug = ({
     givePm.subgroup_name ? "-" + givePm.subgroup_name : ""
   }-to-${getPm.en_name}-${getPm.currency.code}${
     getPm.subgroup_name ? "-" + getPm.subgroup_name : ""
-  }${isCash ? "-in-moscow" : ""}`;
+  }`;
   return slug.toLowerCase().replaceAll(" ", "").replaceAll("/", "");
 };
 
