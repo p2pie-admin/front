@@ -13,18 +13,8 @@ import {
 } from "../services/fetchers";
 import { MainState } from "./mainReducer";
 import { IPm, IPmGroup, IPmPointer } from "../types/selector";
-import { IOrder } from "../types/p2p";
-import { createOrder, createUID, destructureDirSlug } from "./helper";
-import { IToast } from "../types/general";
-import {
-  readLocalOrder,
-  writeLocalOrder,
-} from "../components/order/localStorageHandler";
-import { OrderByUIDQuery } from "../components/order/queries";
-import {
-  UpdateOrderMutation,
-  CreateOrderMutation,
-} from "../components/order/step3/queries";
+
+import { destructureDirSlug } from "./helper";
 
 import { pmFromPmGroups } from "../components/main/side/selector/section/PmGroup/helper";
 import { CreateRedirectMutation } from "../components/main/tv/queries";
@@ -194,53 +184,6 @@ export const fetchCity = createAsyncThunk(
     const fetcher = initParserFetcher();
     const response = await fetcher(`city=${en_name}`);
     return response as ICity;
-  }
-);
-
-export const submitOrder = createAsyncThunk(
-  "order/submitOrder",
-  async (_, thunkAPI): Promise<IToast> => {
-    const { main } = thunkAPI.getState() as { main: MainState };
-
-    const uid = main.p2p.uid; // запрещаем создавать кучу ордеров с разных IP
-    // если localStorage уже хранит uid и он отличается (ip другой) то не создатся
-    let id = main.p2p.id; // уже существует
-    const fingerprint = main.fingerprint;
-    if (!fingerprint?.ip) return { title: "Network error", status: "error" };
-    const uid_new = createUID(fingerprint);
-    const order = createOrder(main.p2p, uid || uid_new);
-    const orderNotChanged =
-      JSON.stringify(order) == JSON.stringify(readLocalOrder());
-    if (!order.dirs[0].defRate) {
-      return { title: "Order is empty!", status: "warning" };
-    }
-    if (orderNotChanged) {
-      return { title: "No changes!", status: "warning" };
-    }
-    if (!id) {
-      // creating
-      const fetcher = initCMSFetcher();
-      const response = await fetcher(CreateOrderMutation, { order });
-      response?.createP2P?.id && writeLocalOrder(order);
-      return { title: "Order was created!", status: "success" };
-    }
-    // updating
-    const fetcher = initCMSFetcher();
-    await fetcher(UpdateOrderMutation, { id, ...order });
-    writeLocalOrder(order);
-    return { title: "Order was updated!", status: "info" };
-  }
-);
-
-export const getOrderByUID = createAsyncThunk(
-  "order/getOrderByUID",
-  async (uidFromLink: string | undefined, thunkAPI) => {
-    const { main } = thunkAPI.getState() as { main: MainState };
-    const uidFromIP = createUID(main.fingerprint);
-    const uid = uidFromLink || uidFromIP;
-    const fetcher = initCMSFetcher();
-    const response = await fetcher(OrderByUIDQuery, { uid });
-    return response?.p2Ps?.[0] as IOrder | undefined;
   }
 );
 
