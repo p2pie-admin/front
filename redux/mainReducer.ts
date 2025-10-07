@@ -1,4 +1,5 @@
 import {
+  ICurrencyConverterRate,
   IOrder,
   IP2PDir,
   IP2PRegulationCodes,
@@ -17,8 +18,6 @@ import {
   fetchPossiblePairs,
   restorePmsFromSlug,
   fetchCurrencyConverterRates,
-  submitOrder,
-  getOrderByUID,
   fetchTopParameters,
   fetchCity,
 } from "./thunks";
@@ -37,11 +36,10 @@ import {
   convertP2PRatioToCourse,
   getDefaultRegulationCodes,
 } from "./helper";
-import Side from "../components/main/side";
 
 import { getPmByCode } from "../components/main/side/selector/section/PmGroup/helper";
 import { IFingerprint } from "../types/shared";
-import { ICurrencyConverterRate } from "../types/p2p";
+
 import { format, R } from "./amountsHelper";
 
 import { IDirRatesStatus, IToast } from "../types/general";
@@ -495,23 +493,10 @@ export const mainSlice = createSlice({
       state.p2p.dirs[p2pDirIndex].giveBiggerValueThanGet = giveToUSD > getToUSD;
     });
 
-    builder.addCase(submitOrder.rejected, (state, _) => {
-      writeLocalOrder(); // чистим localStorage
-      state.p2p = initialOrder;
-      state.toast = { title: "Failed!", status: "error" };
-    });
-
-    builder.addCase(submitOrder.fulfilled, (state, action) => {
-      state.toast = action.payload;
-    });
-
     builder.addCase(fetchTopParameters.fulfilled, (state, action) => {
       state.topParameters = action.payload || [];
     });
 
-    builder.addCase(getOrderByUID.fulfilled, (state, action) => {
-      if (action.payload && action.payload.uid) state.p2p = action.payload;
-    });
     // popular rates
     // builder.addCase(fetchPopularRates.pending, (state) => {
     //   state.pendingPopularRates = true;
