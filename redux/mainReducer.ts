@@ -553,7 +553,4 @@ export const {
   setMassSelectorSlug,
 } = mainSlice.actions;
 
-// Other code such as selectors can use the imported `RootState` type
-//export const selectAmounts = (state: RootState) => state.main;
-
 export default mainSlice.reducer;
