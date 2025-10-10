@@ -1,4 +1,4 @@
-import { Grid, Box } from "@chakra-ui/react";
+import { Grid } from "@chakra-ui/react";
 
 import Link from "next/link";
 import { BsArrowRightShort } from "react-icons/bs";
