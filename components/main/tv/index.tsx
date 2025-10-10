@@ -37,7 +37,7 @@ const TV = ({
 
   useEffect(() => {
     dispatch(
-      fetchDirRates({ dir, cityName: city && isCash ? city.en_name : "" })
+      fetchDirRates({ dir, cityName: isCash ? city?.en_name || "moscow" : "" })
     );
   }, [dir, city]);
 

@@ -4,6 +4,7 @@ import { mylog } from "../../services/utils";
 import { ICity, IDirText, ISeoData } from "../../types/exchange";
 import { IPm } from "../../types/selector";
 import { loadDirText } from "../../cache/loadX";
+import { curNames } from "../../redux/amountsHelper";
 
 export const generateExchangeHeader = (
   locale: "en" | "ru",
@@ -11,9 +12,6 @@ export const generateExchangeHeader = (
   getPm: IPm,
   city: ICity | null
 ) => {
-  const giveCur = givePm.currency.code.toUpperCase();
-  const getCur = getPm.currency.code.toUpperCase();
-
   // Proper locale-specific names
   const giveName =
     locale === "ru" ? givePm.ru_name ?? "" : givePm.en_name ?? "";
@@ -22,33 +20,37 @@ export const generateExchangeHeader = (
   // City addon
   const cityAddon = city
     ? locale === "ru"
-      ? ` в ${city.ru_name ?? ""}, ${city.ru_country_name ?? ""}`
-      : ` in ${city.en_name ?? ""}, ${city.en_country_name ?? ""}`
+      ? ` в ${(city.preposition || city.ru_name) ?? ""}`
+      : ` in ${city.en_name ?? ""}`
     : "";
 
   // Subgroup
   const subgroup = givePm.subgroup_name ? ` ${givePm.subgroup_name}` : "";
 
+  const giveCur = givePm.currency.code.toUpperCase();
+  const getCur = getPm.currency.code.toUpperCase();
+
+  const giveCurName = curNames[giveCur.toLowerCase() as keyof typeof curNames];
+  const getCurName = curNames[getCur.toLowerCase() as keyof typeof curNames];
   return locale === "ru"
-    ? `Обмен ${capitalize(giveName)} ${giveCur}${subgroup} на ${capitalize(
-        getName
-      )} ${getCur}${cityAddon}`
-    : `Exchange ${capitalize(giveName)} ${giveCur}${subgroup} for ${capitalize(
-        getName
-      )} ${getCur}${cityAddon}`;
+    ? `Обмен ${capitalize(giveName)} ${
+        giveCurName?.ru_name || giveCur
+      }${subgroup} на ${capitalize(getName)} ${
+        getCurName?.ru_name || getCur
+      }${cityAddon}`
+    : `Exchange ${capitalize(giveName)} ${
+        giveCurName?.en_name || giveCur
+      }${subgroup} for ${capitalize(getName)} ${
+        getCurName?.en_name || getCur
+      }${cityAddon}`;
 };
 
-// -----------------------------------
-// dirTextHandler.ts
-// -----------------------------------
 export const dirTextHandler = async ({
   locale,
   givePm,
   getPm,
   customDirText,
   city,
-  pms,
-  articleCodes,
 }: {
   locale: "en" | "ru";
   givePm: IPm;
@@ -81,11 +83,7 @@ export const dirTextHandler = async ({
   if (customDirText?.header) {
     base = customDirText;
   } else {
-    const fallbackDirText = await loadDirText(
-      locale,
-      givePm.section,
-      getPm.section
-    );
+    const fallbackDirText = await loadDirText(givePm.section, getPm.section);
     base = fallbackDirText;
   }
 
@@ -253,23 +251,23 @@ export const generateExchangeSeo = (seoData: ISeoData) => {
   return {
     title: seo_title || defaultTitle,
     description: seo_description || "",
-    canonical: `https://${process.env.NEXT_PUBLIC_NAME}.com/${locale}/${slugPath}`,
+    canonical: `https://${process.env.NEXT_PUBLIC_NAME}.com/${slugPath}`,
     locale,
     alternateLangs: ["ru"].map((l) => ({
       rel: "alternate",
       hrefLang: l,
-      href: `https://${process.env.NEXT_PUBLIC_NAME}.com/${l}/${slugPath}`,
+      href: `https://${process.env.NEXT_PUBLIC_NAME}.com/${slugPath}`,
     })),
     breadcrumbs: [
       {
         position: 1,
         name: locale === "en" ? "Home" : "Главная",
-        item: `https://${process.env.NEXT_PUBLIC_NAME}.com/${locale}`,
+        item: `https://${process.env.NEXT_PUBLIC_NAME}.com`,
       },
       {
         position: 2,
         name: seo_title || `${givePm} → ${getPm}`,
-        item: `https://${process.env.NEXT_PUBLIC_NAME}.com/${locale}/${slugPath}`,
+        item: `https://${process.env.NEXT_PUBLIC_NAME}.com/${slugPath}`,
       },
     ],
   };

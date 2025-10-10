@@ -22,3 +22,11 @@ export type ITextVariant =
 export interface IFingerprint {
   ip: string;
 }
+
+export interface ICurrencyConverterRate {
+  rate: number;
+  giveToUSD: number;
+  getToUSD: number;
+  dayTrend: number;
+  hourTrend: number;
+}

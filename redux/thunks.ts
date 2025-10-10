@@ -15,10 +15,12 @@ import { MainState } from "./mainReducer";
 import { IPm, IPmGroup, IPmPointer } from "../types/selector";
 
 import { destructureDirSlug } from "./helper";
+import { IToast } from "../types/general";
 
 import { pmFromPmGroups } from "../components/main/side/selector/section/PmGroup/helper";
 import { CreateRedirectMutation } from "../components/main/tv/queries";
 import { ICity } from "../types/exchange";
+import { serverLinkPROD, serverLinkDEV } from "../services/utils";
 //import { redirect } from "next/navigation";
 
 // export async function navigate() {
@@ -27,10 +29,7 @@ import { ICity } from "../types/exchange";
 
 type ISide = "give" | "get";
 const env = process.env.NODE_ENV;
-const courseFilterLink =
-  env === "production"
-    ? process.env.NEXT_PUBLIC_PARSER_PROD_URL
-    : process.env.NEXT_PUBLIC_PARSER_DEV_URL;
+const courseFilterLink = env === "production" ? serverLinkPROD : serverLinkDEV;
 
 // export const fetchFiat = createAsyncThunk("initial/fetchFiat", async () => {
 //   const response = await axios

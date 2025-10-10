@@ -95,13 +95,7 @@ const DirText = ({
       <Divider my="5" />
 
       <Heading as="h3" fontSize="lg" mb="2">
-        {fillWords({
-          locale,
-          givePmData,
-          getPmData,
-          cityName,
-          text: dirText.subheader,
-        })}
+        {dirText.subheader}
       </Heading>
 
       <Text>{dirText.text}</Text>

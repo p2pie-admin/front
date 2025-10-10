@@ -1,5 +1,6 @@
 import { Box, useToken, useColorModeValue } from "@chakra-ui/react";
 import Image from "next/image";
+import { cmsLinkPROD, cmsLinkDEV } from "../../services/utils";
 
 interface IImageFormat {
   url: string;
@@ -98,10 +99,7 @@ const CircularIcon = ({
   );
 
   const env = process.env.NODE_ENV;
-  const SRC =
-    env === "production"
-      ? process.env.NEXT_PUBLIC_STRAPI_PROD_BASE_URL
-      : process.env.NEXT_PUBLIC_STRAPI_DEV_BASE_URL;
+  const SRC = env === "production" ? cmsLinkPROD : cmsLinkDEV;
 
   const optimizedUrl =
     icon?.formats?.thumbnail?.url ||

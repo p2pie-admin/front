@@ -1,23 +1,8 @@
 import { AmountInput, AmountOutputs } from "../types/amount";
 import { IRate } from "../types/rates";
 
-export const symbols = {
-  usd: "$",
-  rub: "₽",
-  uah: "₴",
-  eur: "Є",
-  gbp: "£",
-  gel: "₾",
-  try: "₺",
-  thb: "฿",
-  inr: "₹",
-  jpy: "¥",
-  cny: "¥",
-  btc: "₿",
-};
-
 export const codeToSymbol = (code: string) =>
-  symbols[code.toLowerCase() as keyof typeof symbols] || "";
+  curNames[code.toLowerCase() as keyof typeof curNames]?.symbol || "";
 
 export class FeesCalculator {
   rate: IRate;
@@ -198,12 +183,14 @@ export const beautifyAmount = (number: number, currency: string) =>
 
 export const localFormat = (n: number, cur: string, locale?: "en" | "ru") => {
   return `${kFormatter(R(n, 2), locale)} ${
-    symbols?.[cur.toLocaleLowerCase() as keyof typeof symbols] || ""
+    curNames?.[cur.toLocaleLowerCase() as keyof typeof curNames]?.symbol || ""
   }`;
 };
 
 export const curToSymbol = (cur?: string) => {
-  return cur ? symbols?.[cur.toLocaleLowerCase() as keyof typeof symbols] : "";
+  return cur
+    ? curNames?.[cur.toLocaleLowerCase() as keyof typeof curNames]?.symbol
+    : "";
 };
 
 export function powerOfTenOrder(num?: number): number {
@@ -214,3 +201,66 @@ export function powerOfTenOrder(num?: number): number {
 
   return Math.pow(10, exponent);
 }
+
+export const curNames = {
+  usd: {
+    symbol: "$",
+    ru_name: "доллары",
+    en_name: "dollars",
+  },
+  rub: {
+    symbol: "₽",
+    ru_name: "рубли",
+    en_name: "rubles",
+  },
+  uah: {
+    symbol: "₴",
+    ru_name: "гривны",
+    en_name: "hryvnias",
+  },
+  eur: {
+    symbol: "€",
+    ru_name: "евро",
+    en_name: "euros",
+  },
+  gbp: {
+    symbol: "£",
+    ru_name: "фунты",
+    en_name: "pounds",
+  },
+  gel: {
+    symbol: "₾",
+    ru_name: "лари",
+    en_name: "lari",
+  },
+  try: {
+    symbol: "₺",
+    ru_name: "лиры",
+    en_name: "lira",
+  },
+  thb: {
+    symbol: "฿",
+    ru_name: "баты",
+    en_name: "baht",
+  },
+  inr: {
+    symbol: "₹",
+    ru_name: "рупии",
+    en_name: "rupees",
+  },
+  jpy: {
+    symbol: "¥",
+    ru_name: "иены",
+    en_name: "yen",
+  },
+  cny: {
+    symbol: "¥",
+    ru_name: "юани",
+    en_name: "yuan",
+  },
+  btc: {
+    symbol: "₿",
+    ru_name: "биткоины",
+    en_name: "bitcoins",
+  },
+};

@@ -17,7 +17,7 @@ export const generateMassSeo = ({
   return {
     title,
     description,
-    canonical: `https://${process.env.NEXT_PUBLIC_NAME}.com/${locale}/${
+    canonical: `https://${process.env.NEXT_PUBLIC_NAME}.com/${
       isSell ? "sell" : "buy"
     }/${slug}`,
     locale,

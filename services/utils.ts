@@ -1,3 +1,14 @@
+export const base = process.env.NEXT_PUBLIC_BASE;
+
+export const converterLinkPROD = `https://converter.${base}`;
+export const serverLinkPROD = `https://server.${base}`;
+export const cmsLinkPROD = `https://cms.${base}`;
+
+export const converterLinkDEV = `https://converter.${base}`;
+export const serverLinkDEV = `https://server.${base}`;
+export const cmsLinkDEV = `https://cms.${base}`;
+//"http://127.0.0.1:5000"
+
 export const mylog = (
   message: any,
   color:

@@ -115,7 +115,7 @@ export async function getStaticProps({ params }: { params: { code: string } }) {
         {
           rel: "alternate",
           hrefLang: locale,
-          href: `https://${process.env.NEXT_PUBLIC_NAME}.com/${locale}/articles/${normalizedCode}`,
+          href: `https://${process.env.NEXT_PUBLIC_NAME}.com/articles/${normalizedCode}`,
         },
       ],
     };

@@ -13,6 +13,7 @@ import Image from "next/image";
 import { useAppSelector } from "../../redux/hooks";
 import { Box3D } from "../../styles/theme/custom";
 import { format, localFormat, R } from "../../redux/amountsHelper";
+import { converterLinkPROD, converterLinkDEV } from "../../services/utils";
 
 const Chart = memo(
   ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
@@ -22,9 +23,7 @@ const Chart = memo(
 
     const SRC = useMemo(() => {
       const env = process.env.NODE_ENV;
-      return env === "production"
-        ? process.env.NEXT_PUBLIC_CONVERTER_PROD_URL
-        : process.env.NEXT_PUBLIC_CONVERTER_DEV_URL;
+      return env === "production" ? converterLinkPROD : converterLinkDEV;
     }, []);
 
     const [isLongTimeFrame, setTimeframe] = useState(true);

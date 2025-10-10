@@ -1,10 +1,8 @@
 import { Center, Image } from "@chakra-ui/react";
+import { cmsLinkPROD, cmsLinkDEV } from "../../services/utils";
 
 const env = process.env.NODE_ENV;
-const SRC =
-  env === "production"
-    ? process.env.NEXT_PUBLIC_STRAPI_PROD_BASE_URL
-    : process.env.NEXT_PUBLIC_STRAPI_DEV_BASE_URL;
+const SRC = env === "production" ? cmsLinkPROD : cmsLinkDEV;
 
 const RegularIcon = ({ url, index }: { url: string; index: number }) => {
   return (

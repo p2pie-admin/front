@@ -32,9 +32,6 @@ const UniversalSeo = ({ seo }: { seo: ISEO }) => {
     description,
     site_name: `${process.env.NEXT_PUBLIC_NAME}`,
     locale: locale === "en" ? "en_US" : "ru_RU",
-    ...(alternateLangs.length > 0 && {
-      localeAlternate: alternateLangs.map((lang) => lang.hrefLang),
-    }),
     ...(updatedAt
       ? {
           article: {
@@ -49,7 +46,7 @@ const UniversalSeo = ({ seo }: { seo: ISEO }) => {
     {
       position: 1,
       name: locale === "en" ? "Home" : "Главная",
-      item: `https://${process.env.NEXT_PUBLIC_NAME}.com/${locale || "ru"}`,
+      item: `https://${process.env.NEXT_PUBLIC_NAME}.com`,
     },
     {
       position: 2,

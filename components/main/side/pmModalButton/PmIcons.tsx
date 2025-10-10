@@ -1,13 +1,12 @@
 import { HStack, Box } from "@chakra-ui/react";
 
 import CircularIcon from "../../../shared/CircularIcon";
-import AddPm from "./AddPm";
+
 import { IPm } from "../../../../types/selector";
 
 const PmIcons = ({ pms }: { pms: IPm[] }) => {
   return (
     <HStack position="relative">
-      <AddPm />
       <HStack minW={`${pms.length * 8 + 12}px`}>
         {pms.map((pm, index) => (
           <Box

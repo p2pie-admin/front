@@ -26,7 +26,6 @@ const PmModalButton = () => {
   const side = useContext(SideContext) as "give" | "get";
   const isP2P = p2pIndex !== undefined;
   const pms = useAppSelector((state) => {
-    if (isP2P) return state.main.p2p.dirs[p2pIndex]?.[side]?.slice(0, 3);
     const pm = state.main?.[`${side}Pm`];
     return pm ? [pm] : [];
     //      state.main[`${side == "give" ? "get" : "give"}Pm`],

@@ -2,6 +2,7 @@ import { Image, Box } from "@chakra-ui/react";
 import React from "react";
 import { IImage } from "../../types/selector";
 import fallbackImage from "../../public/fallback.png"; // Import local fallback image
+import { cmsLinkPROD, cmsLinkDEV } from "../../services/utils";
 
 const CustomImage = ({
   img,
@@ -19,10 +20,7 @@ const CustomImage = ({
   objectFit?: "cover" | "contain";
 }) => {
   const env = process.env.NODE_ENV;
-  const SRC =
-    env === "production"
-      ? process.env.NEXT_PUBLIC_STRAPI_PROD_BASE_URL
-      : process.env.NEXT_PUBLIC_STRAPI_DEV_BASE_URL;
+  const SRC = env === "production" ? cmsLinkPROD : cmsLinkDEV;
 
   const imageSrc = img ? SRC + img.url : fallbackImage.src; // Use local fallback
 

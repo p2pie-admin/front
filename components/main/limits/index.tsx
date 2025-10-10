@@ -27,7 +27,6 @@ import {
   kFormatter,
   localFormat,
   R,
-  symbols,
 } from "../../../redux/amountsHelper";
 import { setAmount } from "../../../redux/mainReducer";
 import { RxDragHandleDots2 } from "react-icons/rx";

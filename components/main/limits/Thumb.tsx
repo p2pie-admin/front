@@ -8,7 +8,7 @@ import {
 import { keyframes } from "@emotion/react";
 import { BsArrowDownShort, BsArrowUpShort } from "react-icons/bs";
 import { RxDragHandleDots2 } from "react-icons/rx";
-import { symbols, kFormatter } from "../../../redux/amountsHelper";
+import { curNames, kFormatter } from "../../../redux/amountsHelper";
 import { useState } from "react";
 
 const Thumb = ({
@@ -39,8 +39,8 @@ const Thumb = ({
   const shakeAnimation = `${shake} 1s ease-in-out infinite alternate`;
 
   const localFormat = (n: number) => {
-    const cur = mainCur.toLocaleLowerCase() as keyof typeof symbols;
-    return `${symbols[cur] || ""} ${kFormatter(n)}`;
+    const cur = mainCur.toLocaleLowerCase() as keyof typeof curNames;
+    return `${curNames?.[cur]?.symbol || ""} ${kFormatter(n)}`;
   };
 
   const [showTooltip, setShowTooltip] = useState(false);

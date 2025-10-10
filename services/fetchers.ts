@@ -1,7 +1,15 @@
 import axios from "axios";
 import { GraphQLClient } from "graphql-request";
 import normalize from "./normalizer";
-import { mylog } from "./utils";
+import {
+  cmsLinkDEV,
+  cmsLinkPROD,
+  converterLinkDEV,
+  converterLinkPROD,
+  mylog,
+  serverLinkDEV,
+  serverLinkPROD,
+} from "./utils";
 
 const retry = async <T>(fn: () => Promise<T>, retries = 3): Promise<T> => {
   let lastErr;
@@ -29,9 +37,7 @@ const unwrap = (data: any) => {
 export const initCMSFetcher = () => {
   const env = process.env.NODE_ENV;
   const url =
-    env === "production"
-      ? process.env.NEXT_PUBLIC_STRAPI_PROD_BASE_URL + "/graphql"
-      : process.env.NEXT_PUBLIC_STRAPI_DEV_BASE_URL + "/graphql";
+    env === "production" ? cmsLinkPROD + "/graphql" : cmsLinkDEV + "/graphql";
 
   const graphQLClient = new GraphQLClient(url || "", { timeout: 15000 });
 
@@ -52,10 +58,7 @@ export const initCMSFetcher = () => {
 
 export const initParserFetcher = () => {
   const env = process.env.NODE_ENV;
-  const url =
-    env === "production"
-      ? process.env.NEXT_PUBLIC_PARSER_PROD_URL
-      : process.env.NEXT_PUBLIC_PARSER_DEV_URL;
+  const url = env === "production" ? serverLinkPROD : serverLinkDEV;
 
   return async (slug: string) => {
     try {
@@ -72,10 +75,7 @@ export const initParserFetcher = () => {
 
 export const initCurrencyConverterFetcher = (p2pDirIndex?: number) => {
   const env = process.env.NODE_ENV;
-  const url =
-    env === "production"
-      ? process.env.NEXT_PUBLIC_CONVERTER_PROD_URL
-      : process.env.NEXT_PUBLIC_CONVERTER_DEV_URL;
+  const url = env === "production" ? converterLinkPROD : converterLinkDEV;
 
   return async (currenciesPair?: string) => {
     const fullUrl =
