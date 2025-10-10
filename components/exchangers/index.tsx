@@ -2,7 +2,6 @@ import { Box, Center, Grid, Spinner } from "@chakra-ui/react";
 import { useState, useMemo, useEffect, useCallback, useRef } from "react";
 import { IExchanger, IParserExchanger } from "../../types/exchanger";
 import { Box3D } from "../../styles/theme/custom";
-import ExchangerPreview from "./index";
 import { getStatus } from "./helper";
 import TopPanel from "./TopPanel";
 import ExchangersHeader from "./ExchangersHeader";
