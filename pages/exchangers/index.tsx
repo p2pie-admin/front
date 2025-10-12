@@ -32,10 +32,10 @@ export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
 
   const t = await getT(locale);
 
-  const seo = {
+  const seo: ISEO = {
     title: t("exchangers-meta-title"),
     description: t("exchangers-meta-description"),
-    canonicalPath: `${locale}/exchangers`,
+    canonicalPath: "exchangers", // ✅ plain path, no leading slash, no locale
     locale,
   };
 

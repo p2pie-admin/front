@@ -111,16 +111,14 @@ export const getStaticProps = async ({
 ////////////////////////////
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const massDirTextIds = await loadMassDirTextIds({
-    isSell,
-  });
+  const massDirTextIds = await loadMassDirTextIds({ isSell });
 
   const paths = massDirTextIds.map((mdtid) => ({
     params: { slug: convertMassDirTextIntoSlug(mdtid) },
-    locale,
   }));
 
   await addPathsToSitemap(paths);
+
   return {
     paths,
     fallback: "blocking",

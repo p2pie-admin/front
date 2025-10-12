@@ -19,5 +19,4 @@ export type ISEO = {
   locale: "en" | "ru";
   updatedAt?: string;
   breadcrumbs?: BreadcrumbItem[];
-  alternateLangs?: { rel: string; hrefLang: string; href: string }[];
 };

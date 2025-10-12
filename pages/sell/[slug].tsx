@@ -116,25 +116,14 @@ export const getStaticProps = async ({
 ////////////////////////////
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  // Collect paths for both locales
-  const allPaths = await Promise.all(
-    (["ru"] as const).map(async (locale) => {
-      const massDirTextIds = await loadMassDirTextIds({
-        isSell,
-      });
+  const massDirTextIds = await loadMassDirTextIds({ isSell });
 
-      const paths = massDirTextIds.map((mdtid) => ({
-        params: { slug: convertMassDirTextIntoSlug(mdtid) },
-        locale,
-      }));
-      return paths;
-    })
-  );
-
-  // Flatten the arrays of paths
-  const paths = allPaths.flat();
+  const paths = massDirTextIds.map((mdtid) => ({
+    params: { slug: convertMassDirTextIntoSlug(mdtid) },
+  }));
 
   await addPathsToSitemap(paths);
+
   return {
     paths,
     fallback: "blocking",

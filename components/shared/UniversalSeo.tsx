@@ -6,7 +6,6 @@ export const nullSeo = {
   description: null,
   canonicalPath: null,
   locale: null,
-  alternateLangs: [],
   breadcrumbs: [],
   updatedAt: null,
   isArticle: false,
@@ -20,7 +19,6 @@ const UniversalSeo = ({ seo }: { seo: ISEO }) => {
     locale = "ru",
     updatedAt = new Date().toISOString(),
     breadcrumbs,
-    alternateLangs = [],
   } = seo;
   const fullCanonicalUrl = `https://${process.env.NEXT_PUBLIC_NAME}.com/${canonicalPath}`;
   const ogType = updatedAt ? "article" : "website";
@@ -61,7 +59,6 @@ const UniversalSeo = ({ seo }: { seo: ISEO }) => {
         title={title}
         description={description}
         canonical={fullCanonicalUrl}
-        additionalLinkTags={alternateLangs}
         openGraph={openGraph}
       />
       <BreadcrumbJsonLd

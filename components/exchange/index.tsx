@@ -36,7 +36,7 @@ import ColumnGrid from "../layout/ColumnGrid";
 
 import { NextSeo, BreadcrumbJsonLd } from "next-seo";
 import { useTranslation } from "next-i18next";
-import PmLayout from "./pmLayout";
+
 import UniversalSeo from "../shared/UniversalSeo";
 import { ISEO } from "../../types/general";
 import { IMassDirTextId } from "../../types/mass";

@@ -108,16 +108,9 @@ export async function getStaticProps({ params }: { params: { code: string } }) {
     const seo = {
       title: article.header,
       description: article.subheader,
-      canonicalPath: `${locale}/articles/${normalizedCode}`,
+      canonicalPath: `articles/${normalizedCode}`,
       updatedAt: article.updatedAt || new Date().toISOString(),
       locale,
-      alternateLangs: [
-        {
-          rel: "alternate",
-          hrefLang: locale,
-          href: `https://${process.env.NEXT_PUBLIC_NAME}.com/articles/${normalizedCode}`,
-        },
-      ],
     };
 
     return {

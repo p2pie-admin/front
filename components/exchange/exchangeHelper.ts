@@ -253,11 +253,6 @@ export const generateExchangeSeo = (seoData: ISeoData) => {
     description: seo_description || "",
     canonical: `https://${process.env.NEXT_PUBLIC_NAME}.com/${slugPath}`,
     locale,
-    alternateLangs: ["ru"].map((l) => ({
-      rel: "alternate",
-      hrefLang: l,
-      href: `https://${process.env.NEXT_PUBLIC_NAME}.com/${slugPath}`,
-    })),
     breadcrumbs: [
       {
         position: 1,
