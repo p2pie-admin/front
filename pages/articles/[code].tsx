@@ -108,10 +108,9 @@ export async function getStaticProps({ params }: { params: { code: string } }) {
     const seo = {
       title: article.header,
       description: article.subheader,
-      canonicalPath: `articles/${normalizedCode}`,
+      canonicalSlug: `articles/${normalizedCode}`,
       updatedAt: article.updatedAt || new Date().toISOString(),
-      locale,
-    };
+    } as ISEO;
 
     return {
       props: {

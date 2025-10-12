@@ -1,26 +1,23 @@
 import { NextSeo, BreadcrumbJsonLd } from "next-seo";
 import { ISEO, BreadcrumbItem } from "../../types/general";
-
+const siteLang = process.env.NEXT_PUBLIC_SITE_LANG || "ru";
 export const nullSeo = {
   title: null,
   description: null,
-  canonicalPath: null,
-  locale: null,
+  canonicalSlug: null,
   breadcrumbs: [],
   updatedAt: null,
-  isArticle: false,
 };
 
 const UniversalSeo = ({ seo }: { seo: ISEO }) => {
   const {
     title,
     description,
-    canonicalPath,
-    locale = "ru",
+    canonicalSlug,
     updatedAt = new Date().toISOString(),
     breadcrumbs,
   } = seo;
-  const fullCanonicalUrl = `https://${process.env.NEXT_PUBLIC_NAME}.com/${canonicalPath}`;
+  const fullCanonicalUrl = `https://${process.env.NEXT_PUBLIC_NAME}.com/${canonicalSlug}`;
   const ogType = updatedAt ? "article" : "website";
 
   const openGraph = {
@@ -29,7 +26,7 @@ const UniversalSeo = ({ seo }: { seo: ISEO }) => {
     title,
     description,
     site_name: `${process.env.NEXT_PUBLIC_NAME}`,
-    locale: locale === "en" ? "en_US" : "ru_RU",
+    locale: siteLang === "en" ? "en_US" : "ru_RU",
     ...(updatedAt
       ? {
           article: {
@@ -43,7 +40,7 @@ const UniversalSeo = ({ seo }: { seo: ISEO }) => {
   const defaultBreadcrumbs: BreadcrumbItem[] = [
     {
       position: 1,
-      name: locale === "en" ? "Home" : "Главная",
+      name: siteLang === "en" ? "Home" : "Главная",
       item: `https://${process.env.NEXT_PUBLIC_NAME}.com`,
     },
     {

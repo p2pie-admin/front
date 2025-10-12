@@ -148,7 +148,7 @@ export async function getStaticProps({
       seo_description: dirText.seo_description,
       slug,
       city,
-    });
+    }) as ISEO;
 
     return {
       props: {

@@ -5,6 +5,7 @@ import { ICity, IDirText, ISeoData } from "../../types/exchange";
 import { IPm } from "../../types/selector";
 import { loadDirText } from "../../cache/loadX";
 import { curNames } from "../../redux/amountsHelper";
+import { ISEO } from "../../types/general";
 
 export const generateExchangeHeader = (
   locale: "en" | "ru",
@@ -240,7 +241,7 @@ export const slugCityToExchange = (slug: string, city?: string) => {
   }`;
 };
 
-export const generateExchangeSeo = (seoData: ISeoData) => {
+export const generateExchangeSeo = (seoData: ISeoData): ISEO => {
   const { givePm, getPm, locale, seo_description, seo_title, slug, city } =
     seoData;
 
@@ -251,8 +252,7 @@ export const generateExchangeSeo = (seoData: ISeoData) => {
   return {
     title: seo_title || defaultTitle,
     description: seo_description || "",
-    canonical: `https://${process.env.NEXT_PUBLIC_NAME}.com/${slugPath}`,
-    locale,
+    canonicalSlug: slugPath,
     breadcrumbs: [
       {
         position: 1,

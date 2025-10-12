@@ -15,8 +15,7 @@ export type BreadcrumbItem = {
 export type ISEO = {
   title: string;
   description: string;
-  canonicalPath: string;
-  locale: "en" | "ru";
+  canonicalSlug: string;
   updatedAt?: string;
   breadcrumbs?: BreadcrumbItem[];
 };

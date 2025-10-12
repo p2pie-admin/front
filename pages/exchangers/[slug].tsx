@@ -90,9 +90,8 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     const seo: ISEO = {
       title,
       description,
-      canonicalPath: `exchangers/${slug}`, // ❌ no leading slash, ❌ no locale
+      canonicalSlug: `exchangers/${slug}`,
       updatedAt: exchanger.updatedAt || new Date().toISOString(),
-      locale, // you can keep this internally if needed, but it won't affect URLs
     };
 
     return {

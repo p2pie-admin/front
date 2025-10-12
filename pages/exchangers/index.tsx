@@ -35,8 +35,7 @@ export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
   const seo: ISEO = {
     title: t("exchangers-meta-title"),
     description: t("exchangers-meta-description"),
-    canonicalPath: "exchangers", // ✅ plain path, no leading slash, no locale
-    locale,
+    canonicalSlug: "exchangers", // ✅ plain path, no leading slash, no locale
   };
 
   return {

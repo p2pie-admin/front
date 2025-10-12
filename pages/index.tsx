@@ -41,8 +41,7 @@ export const getStaticProps = async () => {
     const seo: ISEO = {
       title: rootText.seo_title || t("main:meta-title"),
       description: rootText.seo_description || t("main:meta-description"),
-      canonicalPath: "/",
-      locale,
+      canonicalSlug: "/",
     };
 
     return {

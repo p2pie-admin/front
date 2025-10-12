@@ -70,7 +70,6 @@ export const getStaticProps = async ({
     const seo = generateMassSeo({
       title: seo_title || "",
       description: seo_description || "",
-      locale,
       slug,
       isSell,
     });

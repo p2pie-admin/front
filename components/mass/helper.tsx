@@ -2,13 +2,11 @@ import { IMassRate } from "../../types/mass";
 import { IPm } from "../../types/selector";
 
 export const generateMassSeo = ({
-  locale,
   title,
   description,
   slug,
   isSell,
 }: {
-  locale: "en" | "ru";
   title: string;
   description: string;
   slug: string;
@@ -17,10 +15,7 @@ export const generateMassSeo = ({
   return {
     title,
     description,
-    canonical: `https://${process.env.NEXT_PUBLIC_NAME}.com/${
-      isSell ? "sell" : "buy"
-    }/${slug}`,
-    locale,
+    canonical: `${isSell ? "sell" : "buy"}/${slug}`,
   };
 };
 
