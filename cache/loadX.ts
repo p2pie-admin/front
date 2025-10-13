@@ -98,7 +98,7 @@ export const loadArticleCodes = () =>
 export const loadArticle = (code: string) =>
   cachedFetch(`article_${code.toLowerCase()}_${locale}`, TTL.slow, async () => {
     const res = await cmsFetcher(articleQuery, { code, locale });
-    return res?.[0] || null;
+    return (res?.[0] || null) as IArticle | null;
   });
 
 export const loadPossibleDirs = () =>

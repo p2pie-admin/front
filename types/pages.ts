@@ -7,6 +7,8 @@ export interface IArticle {
   updatedAt?: string;
   header: string;
   subheader: string;
+  seo_title: string;
+  seo_description: string;
   stats: { [key: string]: number };
   chapters: {
     title: string;

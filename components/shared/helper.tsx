@@ -89,7 +89,7 @@ export const enrichText = ({
     if (!match) return word;
 
     const slug =
-      "articles/" + match.pm.en_name.toLowerCase().replace(/\s+/g, "-");
+      "/articles/" + match.pm.en_name.toLowerCase().replace(/\s+/g, "-");
 
     if (seen.has(slug)) return word;
     seen.add(slug);

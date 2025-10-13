@@ -76,20 +76,14 @@ const DirText = ({
   city: ICity | null;
   dirText: IDirText | null;
 }) => {
-  const cityName = city ? city[`${locale}_name`] : "";
+  //  const cityName = city ? city[`${locale}_name`] : "";
 
   if (!dirText) return <></>;
 
   return (
     <Box p="2">
-      <Heading as="h2" fontSize="2xl">
-        {fillWords({
-          locale,
-          givePmData,
-          getPmData,
-          cityName,
-          text: dirText.header,
-        })}
+      <Heading as="h2" fontSize="xl">
+        {dirText.header}
       </Heading>
 
       <Divider my="5" />

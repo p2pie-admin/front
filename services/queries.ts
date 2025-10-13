@@ -267,6 +267,8 @@ export const articleQuery = gql`
           code
           header
           subheader
+          seo_title
+          seo_description
           updatedAt
           chapters
           stats

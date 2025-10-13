@@ -28,6 +28,7 @@ export interface IDirText {
   default_header?: string;
   subheader: string;
   updatedAt?: string;
+  h1?: string;
 }
 
 export interface IPath {

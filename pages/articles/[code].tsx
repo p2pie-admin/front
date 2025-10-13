@@ -104,8 +104,8 @@ export async function getStaticProps({ params }: { params: { code: string } }) {
     const normalizedCode = article?.code.toLowerCase();
 
     const seo = {
-      title: article.header,
-      description: article.subheader,
+      title: article.seo_title,
+      description: article.seo_description,
       canonicalSlug: `articles/${normalizedCode}`,
       updatedAt: article.updatedAt || new Date().toISOString(),
     } as ISEO;

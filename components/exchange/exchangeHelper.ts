@@ -8,7 +8,7 @@ import { curNames } from "../../redux/amountsHelper";
 import { ISEO } from "../../types/general";
 const locale = (process.env.NEXT_PUBLIC_DEFAULT_LOCALE || "ru") as "en" | "ru";
 
-export const generateExchangeHeader = (
+export const generateExchangeH1 = (
   givePm: IPm,
   getPm: IPm,
   city: ICity | null
@@ -61,9 +61,9 @@ export const dirTextHandler = async ({
   city: ICity | null;
   // pms: IPm[];
   // articleCodes: string[];
-}) => {
+}): Promise<IDirText> => {
   // Default header
-  const default_header = generateExchangeHeader(givePm, getPm, city);
+  const h1 = generateExchangeH1(givePm, getPm, city);
 
   // City name for fillWords
   const cityName = city?.[`${locale}_name`] ?? city?.en_name ?? "";
@@ -78,31 +78,41 @@ export const dirTextHandler = async ({
     });
 
   // SEO fields
-  const fields = ["seo_description", "seo_title"] as const;
+  const fields = [
+    "seo_description",
+    "seo_title",
+    "text",
+    "header",
+    "subheader",
+  ] as const;
 
-  let base = {} as IDirText;
+  let dirText = {} as IDirText;
   if (customDirText?.header) {
-    base = customDirText;
+    dirText = customDirText;
+    return {
+      ...dirText,
+      h1, // хардкодим чтобы было маленьким
+    };
   } else {
     const fallbackDirText = await loadDirText(givePm.section, getPm.section);
-    base = fallbackDirText;
+    dirText = fallbackDirText;
+
+    const replacedFields = Object.fromEntries(
+      fields.map((f) => [
+        f,
+        replacer(
+          dirText[f] ??
+            `${givePm[`${locale}_name`]} → ${getPm[`${locale}_name`]}`
+        ),
+      ])
+    );
+
+    return {
+      ...dirText,
+      ...replacedFields,
+      h1, // хардкодим чтобы было маленьким
+    };
   }
-
-  // Replace placeholders in SEO fields
-  const replacedFields = Object.fromEntries(
-    fields.map((f) => [
-      f,
-      replacer(
-        base[f] ?? `${givePm[`${locale}_name`]} → ${getPm[`${locale}_name`]}`
-      ),
-    ])
-  );
-
-  return {
-    ...base,
-    ...replacedFields,
-    default_header,
-  };
 };
 
 export const fillWords = ({

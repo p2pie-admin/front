@@ -119,7 +119,7 @@ const Exchange = ({
           fontWeight="bold"
           color="inherit"
         >
-          {dirText?.default_header}
+          {dirText?.h1}
         </Heading>
       </Box>
 
