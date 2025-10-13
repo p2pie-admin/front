@@ -1,3 +1,4 @@
+import { ISEO } from "../../types/general";
 import { IMassRate } from "../../types/mass";
 import { IPm } from "../../types/selector";
 
@@ -15,8 +16,8 @@ export const generateMassSeo = ({
   return {
     title,
     description,
-    canonical: `${isSell ? "sell" : "buy"}/${slug}`,
-  };
+    canonicalSlug: `${isSell ? "sell" : "buy"}/${slug}`,
+  } as ISEO;
 };
 
 export const replaceCodesWithPms = (rates: IMassRate[], pms: IPm[]) => {

@@ -34,7 +34,6 @@ const emptyProps = async (locale: "en" | "ru") => ({
 const ArticlePage = (props: {
   seo: ISEO;
   pm: IPm | null;
-  locale: "en" | "ru";
   article: IArticle | null;
   otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] } | null;
 }) => <Article {...props} />;
@@ -99,8 +98,7 @@ export async function getStaticProps({ params }: { params: { code: string } }) {
     const linkedArticle = await addArticleCrossLinking(
       article,
       articleCodes,
-      pms,
-      locale
+      pms
     );
 
     const normalizedCode = article?.code.toLowerCase();

@@ -131,28 +131,22 @@ export async function getStaticProps({
     } as IPmData;
 
     const dirText = (await dirTextHandler({
-      locale,
       givePm,
       getPm,
       customDirText,
       city,
-      pms,
-      articleCodes,
+      // pms,
+      // articleCodes,
     })) as IDirText;
 
     const seo = generateExchangeSeo({
-      givePm,
-      getPm,
-      locale,
-      seo_title: dirText.seo_title,
-      seo_description: dirText.seo_description,
+      dirText,
       slug,
       city,
     }) as ISEO;
 
     return {
       props: {
-        locale,
         seo: seo || nullSeo,
         cities: cities || null,
         givePmData,
@@ -169,7 +163,6 @@ export async function getStaticProps({
     console.error(e);
     return {
       props: {
-        locale,
         seo: nullSeo,
         cities: null,
         givePmData: null,

@@ -50,13 +50,11 @@ export const enrichText = ({
   text,
   articleCodes = [],
   pms = [],
-  locale,
 }: {
   seen: Set<string>;
   text: string;
   articleCodes: string[];
   pms?: IPm[];
-  locale: "en" | "ru";
 }): string => {
   if (!text || !articleCodes.length || !pms.length) return text;
 
@@ -91,10 +89,7 @@ export const enrichText = ({
     if (!match) return word;
 
     const slug =
-      "/" +
-      locale +
-      "/articles/" +
-      match.pm.en_name.toLowerCase().replace(/\s+/g, "-");
+      "articles/" + match.pm.en_name.toLowerCase().replace(/\s+/g, "-");
 
     if (seen.has(slug)) return word;
     seen.add(slug);

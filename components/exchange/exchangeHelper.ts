@@ -6,9 +6,9 @@ import { IPm } from "../../types/selector";
 import { loadDirText } from "../../cache/loadX";
 import { curNames } from "../../redux/amountsHelper";
 import { ISEO } from "../../types/general";
+const locale = (process.env.NEXT_PUBLIC_DEFAULT_LOCALE || "ru") as "en" | "ru";
 
 export const generateExchangeHeader = (
-  locale: "en" | "ru",
   givePm: IPm,
   getPm: IPm,
   city: ICity | null
@@ -26,7 +26,8 @@ export const generateExchangeHeader = (
     : "";
 
   // Subgroup
-  const subgroup = givePm.subgroup_name ? ` ${givePm.subgroup_name}` : "";
+  const giveSubgroup = givePm.subgroup_name ? ` ${givePm.subgroup_name}` : "";
+  const getSubgroup = getPm.subgroup_name ? ` ${getPm.subgroup_name}` : "";
 
   const giveCur = givePm.currency.code.toUpperCase();
   const getCur = getPm.currency.code.toUpperCase();
@@ -36,33 +37,33 @@ export const generateExchangeHeader = (
   return locale === "ru"
     ? `Обмен ${capitalize(giveName)} ${
         giveCurName?.ru_name || giveCur
-      }${subgroup} на ${capitalize(getName)} ${
+      } ${giveSubgroup} на ${capitalize(getName)} ${
         getCurName?.ru_name || getCur
-      }${cityAddon}`
+      } ${getSubgroup} ${cityAddon}`
     : `Exchange ${capitalize(giveName)} ${
         giveCurName?.en_name || giveCur
-      }${subgroup} for ${capitalize(getName)} ${
+      } ${giveSubgroup} for ${capitalize(getName)} ${
         getCurName?.en_name || getCur
-      }${cityAddon}`;
+      } ${getSubgroup} ${cityAddon}`;
 };
 
 export const dirTextHandler = async ({
-  locale,
   givePm,
   getPm,
   customDirText,
   city,
-}: {
-  locale: "en" | "ru";
+}: // pms,
+// articleCodes,
+{
   givePm: IPm;
   getPm: IPm;
   customDirText?: IDirText;
   city: ICity | null;
-  pms: IPm[];
-  articleCodes: string[];
+  // pms: IPm[];
+  // articleCodes: string[];
 }) => {
   // Default header
-  const default_header = generateExchangeHeader(locale, givePm, getPm, city);
+  const default_header = generateExchangeHeader(givePm, getPm, city);
 
   // City name for fillWords
   const cityName = city?.[`${locale}_name`] ?? city?.en_name ?? "";
@@ -70,7 +71,6 @@ export const dirTextHandler = async ({
   // Placeholder replacer
   const replacer = (text?: string) =>
     fillWords({
-      locale,
       givePm,
       getPm,
       cityName,
@@ -106,13 +106,11 @@ export const dirTextHandler = async ({
 };
 
 export const fillWords = ({
-  locale,
   givePm,
   getPm,
   cityName,
   text,
 }: {
-  locale: "en" | "ru";
   givePm: IPm;
   getPm: IPm;
   cityName?: string;
@@ -127,8 +125,14 @@ export const fillWords = ({
       "get_name",
       capitalize(getPm[`${locale}_name`] || getPm.en_name)
     )
-    .replaceAll("give_currency", givePm.currency.code.toUpperCase())
-    .replaceAll("get_currency", getPm.currency.code.toUpperCase())
+    .replaceAll(
+      "give_currency",
+      `${givePm.currency.code.toUpperCase()} ${givePm.subgroup_name || ""}`
+    )
+    .replaceAll(
+      "get_currency",
+      `${getPm.currency.code.toUpperCase()} ${getPm.subgroup_name || ""}`
+    )
     .replaceAll("city_name", cityName || "");
 
 export const findSimilarPmPairs = (
@@ -241,17 +245,20 @@ export const slugCityToExchange = (slug: string, city?: string) => {
   }`;
 };
 
-export const generateExchangeSeo = (seoData: ISeoData): ISEO => {
-  const { givePm, getPm, locale, seo_description, seo_title, slug, city } =
-    seoData;
-
-  const defaultTitle = generateExchangeHeader(locale, givePm, getPm, city);
-
+export const generateExchangeSeo = ({
+  dirText,
+  slug,
+  city,
+}: {
+  dirText: IDirText;
+  slug: string;
+  city: ICity | null;
+}): ISEO => {
   const slugPath = slugCityToExchange(slug, city?.en_name);
 
   return {
-    title: seo_title || defaultTitle,
-    description: seo_description || "",
+    title: dirText?.seo_title || "",
+    description: dirText?.seo_description || "",
     canonicalSlug: slugPath,
     breadcrumbs: [
       {
@@ -261,7 +268,7 @@ export const generateExchangeSeo = (seoData: ISeoData): ISEO => {
       },
       {
         position: 2,
-        name: seo_title || `${givePm} → ${getPm}`,
+        name: dirText?.seo_title || `${dirText.default_header}`,
         item: `https://${process.env.NEXT_PUBLIC_NAME}.com/${slugPath}`,
       },
     ],

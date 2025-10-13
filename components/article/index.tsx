@@ -13,18 +13,18 @@ import TopImage from "./TopImage";
 import Stats from "./Stats";
 import { IPm } from "../../types/selector";
 
+const locale = (process.env.NEXT_PUBLIC_SITE_LANG || "ru") as "en" | "ru";
+
 const Article = ({
   seo,
   pm,
   article,
   otherDirs,
-  locale,
 }: {
   seo: ISEO;
   pm: IPm | null;
   article?: IArticle | null;
   otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] } | null;
-  locale: "en" | "ru";
 }) => {
   // Early fallback before any hooks
   if (!article) {

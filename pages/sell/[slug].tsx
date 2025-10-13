@@ -13,17 +13,14 @@ import {
 import UniversalSeo, { nullSeo } from "../../components/shared/UniversalSeo";
 import { ISEO } from "../../types/general";
 
-import {
-  generateMassSeo,
-  getPmsByCodes,
-  replaceCodesWithPms,
-} from "../../components/mass/helper";
+import { generateMassSeo, getPmsByCodes } from "../../components/mass/helper";
 import Mass from "../../components/mass";
 import { IMassDirText, IMassDirTextId, IMassRate } from "../../types/mass";
 import { IPm } from "../../types/selector";
 import { addPathsToSitemap } from "../../cache/cache";
 
 const isSell = true;
+const locale = (process.env.NEXT_PUBLIC_SITE_LANG || "ru") as "en" | "ru";
 
 type Props = {
   seo: ISEO;
@@ -45,10 +42,8 @@ const SellPage = (props: Props) => (
 /////////////////////////////////////////////////////////////////////////
 export const getStaticProps = async ({
   params,
-  locale,
 }: {
   params: { slug: string };
-  locale: "en" | "ru";
 }) => {
   const { slug } = params;
   const massDirTextId = convertSlugIntoMassDirText(slug, isSell);
@@ -77,7 +72,7 @@ export const getStaticProps = async ({
       description: seo_description || "",
       slug,
       isSell,
-    });
+    }) as ISEO;
 
     return {
       props: {
@@ -87,7 +82,6 @@ export const getStaticProps = async ({
         massRates,
         massDirTextId,
         isSell,
-        locale,
         slug,
         ...(await serverSideTranslations(locale, ["main"])),
       },

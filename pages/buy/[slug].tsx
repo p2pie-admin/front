@@ -72,7 +72,7 @@ export const getStaticProps = async ({
       description: seo_description || "",
       slug,
       isSell,
-    });
+    }) as ISEO;
 
     return {
       props: {
@@ -81,7 +81,6 @@ export const getStaticProps = async ({
         massDirText,
         massRates,
         massDirTextId,
-        locale,
         isSell,
         slug,
         ...(await serverSideTranslations(locale, ["main"])),
