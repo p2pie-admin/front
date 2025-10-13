@@ -127,12 +127,6 @@ const Exchange = ({
         <Column index={0}>
           <Chart giveCur={giveCur} getCur={getCur} />
           <VStack mt="4" w="100%" gap="4">
-            {/* <HStack gap="4" w="100%" mb="0">
-              <PmLayout pmData={givePmData} />
-              <PmLayout pmData={getPmData} />
-   
-            </HStack> */}
-
             {similarPmPairs && (
               <Similar
                 similarPmPairs={similarPmPairs}
