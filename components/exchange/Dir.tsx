@@ -20,7 +20,6 @@ const Dir = ({
   return (
     <Link href={`/${slug}`} passHref>
       <Box3D
-        h="77px"
         flex="1"
         p="2"
         cursor="pointer"
