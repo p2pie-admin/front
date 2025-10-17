@@ -132,13 +132,13 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
           </HStack>
           {/* Info icon removed */}
         </HStack>
-        <Box>
-          <ResponsiveText size="sm">
+        <Box mt="1">
+          <ResponsiveText size="sm" fontWeight="bold">
             {`Курс: 1 ${bigCur} ≈ ${
               course < 1 ? addSpaces(R(1 / course, 1)) : addSpaces(R(course, 1))
             } ${smallCur}`}
           </ResponsiveText>
-          <ResponsiveText size="sm">
+          <ResponsiveText size="sm" variant="no_contrast">
             {`Лимиты: ${localFormat(MIN, smallCur)} — ${localFormat(
               MAX,
               smallCur
