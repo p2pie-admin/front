@@ -58,7 +58,7 @@ const AmountInput = () => {
           float="right"
           textAlign="end"
           placeholder="0.00"
-          fontFamily="Inconsolata, sans-serif"
+          fontFamily="'Inconsolata', monospace"
           fontSize={["2xl", "3xl"]}
           color={outRange ? "bg.500" : useColorModeValue("bg.800", "bg.100")}
           onClick={(e: any) => e.target.select()}
