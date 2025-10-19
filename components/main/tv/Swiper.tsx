@@ -12,6 +12,14 @@ import Item from "./Item";
 import debounce from "./utils/debounce";
 import { fetchTopParameters } from "../../../redux/thunks";
 import ErrorWrapper from "../../shared/ErrorWrapper";
+import BottomLabel from "./BottomLabel";
+import TopLabel from "./TopLabel";
+import { IDirText } from "../../../types/exchange";
+
+// You asked to keep TopLabel/BottomLabel separate files; if you haven't created them,
+// simple presentational components are provided below inline — replace with your imports if you prefer.
+
+const MotionBox = motion(Box);
 
 const [elastic, stiffness, damping, debounceTime] = [0.1, 50, 10, 500];
 
@@ -21,6 +29,7 @@ export const Swiper = (props: {
   visibleItems: number;
   containerHeight: number;
   dirRates: IRate[];
+  dirText: IDirText | null;
 }) => {
   const { isMobile, itemHeight, visibleItems, containerHeight, dirRates } =
     props;
@@ -30,7 +39,8 @@ export const Swiper = (props: {
   useEffect(() => {
     dispatch(fetchTopParameters());
     setInitial(false);
-  }, []);
+  }, [dispatch]);
+
   const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
   const isError =
     dirRatesStatus === "rejected" || (!initial && !dirRates.length);
@@ -64,9 +74,9 @@ export const Swiper = (props: {
     [containerHeight, itemHeight, length]
   );
 
-  const move = (y: number) => {
+  const move = (yVal: number) => {
     controls.start({
-      y,
+      y: yVal,
       transition: { type: "spring", stiffness, damping },
     });
   };
@@ -112,6 +122,14 @@ export const Swiper = (props: {
   };
 
   useEffect(() => {
+    if (!initial && dirRates.length > 0) {
+      scrollToItem(0);
+      debouncedSetSwiperIdVisible(0);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initial, dirRates.length]);
+
+  useEffect(() => {
     if (isMobile) return;
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("keydown", handleKeyDown);
@@ -120,7 +138,7 @@ export const Swiper = (props: {
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [handleWheel, handleKeyDown]);
+  }, [handleWheel, handleKeyDown, isMobile]);
 
   const scrollToItem = (index: number) => {
     const targetY =
@@ -143,6 +161,9 @@ export const Swiper = (props: {
     document.body.style.paddingRight = "0px";
     setMouseEntered(false);
   };
+
+  const topLabelBaseTop = -itemHeight;
+  const bottomLabelBaseTop = length * itemHeight;
 
   return (
     <Grid
@@ -169,6 +190,8 @@ export const Swiper = (props: {
             onMouseLeave={handleMouseLeave}
           >
             <Shader direction="top" />
+
+            {/* motion div with items exactly as before */}
             <motion.div
               drag="y"
               dragConstraints={{
@@ -213,8 +236,38 @@ export const Swiper = (props: {
                 />
               ))}
             </motion.div>
+
+            <MotionBox
+              position="absolute"
+              left="0"
+              right="0"
+              style={{ top: `${topLabelBaseTop}px`, y }}
+              height={`${itemHeight}px`}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              pointerEvents="none"
+            >
+              <TopLabel text={props?.dirText?.h1} length={dirRates.length} />
+            </MotionBox>
+
+            <MotionBox
+              position="absolute"
+              left="0"
+              right="0"
+              style={{ top: `${bottomLabelBaseTop}px`, y }}
+              height={`${itemHeight}px`}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              pointerEvents="none"
+            >
+              <BottomLabel text="End of List" />
+            </MotionBox>
+
             <Shader direction="bottom" />
           </Box>
+
           <Box
             position="absolute"
             right="0"

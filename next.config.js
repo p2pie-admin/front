@@ -27,9 +27,9 @@ const nextConfig = {
       "converter.2nginx.space",
       "server.2nginx.space",
 
-      "cms.p2pie.help",
-      "converter.p2pie.help",
-      "server.p2pie.help",
+      "cms.rusrates.help",
+      "converter.rusrates.help",
+      "server.rusrates.help",
     ],
   },
 

@@ -102,13 +102,11 @@ const Exchange = ({
   const giveCur = givePm.currency.code.toUpperCase();
   const getCur = getPm.currency.code.toUpperCase();
 
-  const isLong = dirText?.header ? dirText?.header.length > 30 : true;
-
   return (
-    <VStack>
+    <VStack mt={[0, 4]}>
       <UniversalSeo seo={seo} />
 
-      <Box
+      {/* <Box
         bgGradient={`radial-gradient(circle at 50% -10%, ${centerColor} 0%, ${peripheryColor} 60%)`}
         bgClip="text"
         mx="6"
@@ -121,7 +119,7 @@ const Exchange = ({
         >
           {dirText?.h1}
         </Heading>
-      </Box>
+      </Box> */}
 
       <ColumnGrid>
         <Column index={0}>
@@ -146,7 +144,7 @@ const Exchange = ({
             <LimitsRange />
           </HStack>
 
-          <TV dir={dir} city={city} donorCity={donorCity} />
+          <TV dir={dir} city={city} donorCity={donorCity} dirText={dirText} />
         </Column>
         <Box3D
           p="4"

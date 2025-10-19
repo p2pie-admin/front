@@ -37,7 +37,7 @@ const NavBody = () => {
       />
       {/* <LinkButton
         message={t("main:botPage")}
-        href={"https://t.me/p2pie_bot"}
+        href={"https://t.me/rusrates_bot"}
         CustomIcon={RiRobot2Line}
       /> */}
     </>

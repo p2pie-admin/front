@@ -258,9 +258,4 @@ export const curNames = {
     ru_name: "юани",
     en_name: "yuan",
   },
-  btc: {
-    symbol: "₿",
-    ru_name: "биткоины",
-    en_name: "bitcoins",
-  },
 };

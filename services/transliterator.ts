@@ -1,4 +1,3 @@
-import React from "react";
 type Dict = { [key: string]: string };
 
 export default class Transliterator {

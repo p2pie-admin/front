@@ -32,11 +32,6 @@ import { IMassDirTextId, IMassDirText, IMassRate } from "../types/mass";
 
 const locale = process.env.NEXT_PUBLIC_SITE_LANG || "ru";
 
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL!,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
-});
-
 const cmsFetcher = initCMSFetcher();
 const parserFetcher = initParserFetcher();
 

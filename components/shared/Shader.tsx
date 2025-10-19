@@ -18,7 +18,7 @@ const Shader = ({
   return (
     <Box
       w="100%"
-      boxShadow={`0 0 70px 30px ${shaderColor}`}
+      boxShadow={`0 0 70px 40px ${shaderColor}`}
       position="absolute"
       left="0"
       top={direction === "bottom" ? "0" : "unset"}

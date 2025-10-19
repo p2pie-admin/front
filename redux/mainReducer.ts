@@ -80,7 +80,7 @@ const initialState: MainState = {
   searchBarInputValue: "",
   dirRatesStatus: "fulfilled",
   amountOutputs: initialAmountOutputs,
-  swiperIdVisible: 1,
+  swiperIdVisible: 0,
   pms: [],
   isScrollLocked: false,
   bestRatesPreview: {},

@@ -103,7 +103,7 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
       borderRadius="inherit"
       bgColor={bgColor}
       filter="none"
-      // transition="filter 200ms linear"
+      transition="filter 200ms linear"
       _hover={{
         filter: "brightness(1.05)",
       }}

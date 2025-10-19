@@ -36,12 +36,15 @@ const Header = () => {
       <Nav />
       <HStack w={{ base: "100%", md: "888px" }} justifyContent="space-between">
         <Logo />
-        <SwipeableDrawer />
 
-        {/* <CitySelector /> */}
-        <Box display={{ base: "none", xl: "block" }}>
-          <NavHeading />
-        </Box>
+        <HStack>
+          <CitySelector />
+          <SwipeableDrawer />
+
+          <Box display={{ base: "none", xl: "block" }}>
+            <NavHeading />
+          </Box>
+        </HStack>
       </HStack>
     </Flex>
   );

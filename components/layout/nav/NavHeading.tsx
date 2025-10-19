@@ -1,14 +1,15 @@
 import { HStack } from "@chakra-ui/react";
 import Language from "./Language";
-import SearchExchanger from "./SearchExchanger";
+
 import DarkLightTheme from "./DarkLightTheme";
+import SearchAll from "./search";
 
 export const NavHeading = () => {
   return (
     <HStack>
-      {/* <SearchExchanger />
-      <Language />
-      <DarkLightTheme /> */}
+      <SearchAll />
+      {/* <Language /> */}
+      <DarkLightTheme />
     </HStack>
   );
 };

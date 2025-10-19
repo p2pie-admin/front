@@ -24,7 +24,7 @@ import {
   loadPms,
   TTL,
 } from "../../cache/loadX";
-import { addPathsToSitemap } from "../../cache/cache";
+import { addHeadersToSearchIndex, addPathsToSitemap } from "../../cache/cache";
 
 export default function ExchangerPage({
   exchanger,
@@ -93,6 +93,12 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
       canonicalSlug: `exchangers/${slug}`,
       updatedAt: exchanger.updatedAt || new Date().toISOString(),
     };
+
+    await addHeadersToSearchIndex({
+      slug,
+      header: `Обменник ${capitalize(exchanger.name)}`,
+      wordsToSearchFrom: exchanger.name,
+    });
 
     return {
       props: {

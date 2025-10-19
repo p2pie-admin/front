@@ -52,7 +52,8 @@ const SwipeableDrawer = () => {
       >
         <DrawerOverlay bgColor="blackAlpha.200" />
         <DrawerContent
-          maxW="260"
+          w="fit-content"
+          minW="260"
           onTouchStart={handleSwipeStart}
           bgColor={bgColor}
         >

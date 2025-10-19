@@ -1,6 +1,7 @@
 import { Redis } from "@upstash/redis";
 import { env } from "process";
 import { getArray, getItem, setArray } from "./redis";
+const locale = process.env.NEXT_PUBLIC_SITE_LANG || "ru";
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL!,
@@ -84,6 +85,84 @@ export async function addPathsToSitemap(paths: StaticPath | StaticPath[]) {
   } catch (err) {
     console.error(`Failed to add paths to sitemap:`, err);
   }
+}
+export async function addHeadersToSearchIndex(
+  entries:
+    | { slug: string; header?: string; wordsToSearchFrom?: string }
+    | { slug: string; header?: string; wordsToSearchFrom?: string }[]
+) {
+  const key = "search:index";
+  const locale = (process.env.NEXT_PUBLIC_SITE_LANG || "ru") as "ru" | "en";
+  const normalizedEntries = Array.isArray(entries) ? entries : [entries];
+
+  try {
+    const cached = await redis.get<{ data: any[]; updatedAt: number }>(key);
+    const existing = cached?.data || [];
+
+    // Map existing entries by locale/slug for fast deduplication
+    const mergedMap = new Map(
+      existing.map((e) => [`${e.locale || ""}/${e.slug}`, e])
+    );
+
+    for (const entry of normalizedEntries) {
+      const newKey = `${locale}/${entry.slug}`;
+      const cleanedWords = cleanWords(
+        entry.wordsToSearchFrom || entry.header || ""
+      );
+
+      const newValue = {
+        ...entry,
+        locale,
+        wordsToSearchFrom: cleanedWords,
+      };
+
+      // Skip duplicates (same normalized cleaned words)
+      const alreadyExists = Array.from(mergedMap.values()).some(
+        (e) =>
+          normalizeText(e.wordsToSearchFrom) === normalizeText(cleanedWords)
+      );
+
+      if (!alreadyExists) {
+        mergedMap.set(newKey, newValue);
+      }
+    }
+
+    const merged = Array.from(mergedMap.values());
+
+    await redis.set(key, { data: merged, updatedAt: Date.now() });
+
+    console.log(
+      `✅ Added ${normalizedEntries.length} header(s) to search index. Total now: ${merged.length}`
+    );
+  } catch (err) {
+    console.error(`❌ Failed to add headers to search index:`, err);
+  }
+}
+
+function normalizeText(str: string): string {
+  return str
+    ?.toLowerCase()
+    .replace(/\s+/g, " ")
+    .trim()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+function cleanWords(str: string): string {
+  if (!str) return "";
+
+  // remove "undefined" or "null" and extra spaces
+  const cleaned = str
+    .replace(/\b(undefined|null)\b/gi, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  // split into words, remove duplicates (case-insensitive)
+  const uniqueWords = Array.from(
+    new Set(cleaned.split(/\s+/).map((w) => w.toLowerCase()))
+  );
+
+  return uniqueWords.join(" ");
 }
 
 //...

@@ -1,10 +1,8 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-
 import { IPm } from "../types/selector";
 import React from "react";
 import Exchange from "../components/exchange";
 import { ICity, IDirText, IPmData } from "../types/exchange";
-
 import { ISEO } from "../types/general";
 import { nullSeo } from "../components/shared/UniversalSeo";
 import { getSlugToCodes } from "../cache/helper";
@@ -17,14 +15,13 @@ import {
   loadCustomDirText,
   loadMassDirTextIds,
 } from "../cache/loadX";
-
 import {
   dirTextHandler,
   exchangeToSlugCity,
   findSimilarPmPairs,
   generateExchangeSeo,
 } from "../components/exchange/exchangeHelper";
-import { addPathsToSitemap } from "../cache/cache";
+import { addHeadersToSearchIndex, addPathsToSitemap } from "../cache/cache";
 import { IMassDirTextId } from "../types/mass";
 
 const locale = (process.env.NEXT_PUBLIC_SITE_LANG || "ru") as "ru" | "en";
@@ -144,6 +141,12 @@ export async function getStaticProps({
       slug,
       city,
     }) as ISEO;
+
+    await addHeadersToSearchIndex({
+      slug,
+      header: dirText.h1 || dirText.seo_title,
+      wordsToSearchFrom: `${dirText.h1} ${dirText.seo_title} ${dirText.header}`,
+    });
 
     return {
       props: {

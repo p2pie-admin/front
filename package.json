@@ -1,5 +1,5 @@
 {
-  "name": "p2pie",
+  "name": "rusrates",
   "private": true,
   "scripts": {
     "clean-cache": "rm -rf cache/*.json",

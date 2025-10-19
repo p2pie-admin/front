@@ -14,23 +14,22 @@ export default function MyDocument() {
           href="/apple-touch-icon.png"
         />
 
-        {/* Preconnects */}
-        {/* <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
-        /> */}
+        />
 
-        {/* Fonts */}
-        {/* <link
+        <link
           href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
           rel="stylesheet"
-        /> */}
-        {/* <link
-          href="https://fonts.googleapis.com/css?family=Inconsolata&text=1234567890,.-+&display=swap"
+        />
+
+        <link
+          href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400&text=1234567890,.-+&display=swap"
           rel="stylesheet"
-        /> */}
+        />
 
         {/* Meta tags */}
         <meta name="google" content="notranslate" />

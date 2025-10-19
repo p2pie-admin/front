@@ -17,7 +17,7 @@ import { generateMassSeo, getPmsByCodes } from "../../components/mass/helper";
 import Mass from "../../components/mass";
 import { IMassDirText, IMassDirTextId, IMassRate } from "../../types/mass";
 import { IPm } from "../../types/selector";
-import { addPathsToSitemap } from "../../cache/cache";
+import { addHeadersToSearchIndex, addPathsToSitemap } from "../../cache/cache";
 
 const isSell = false;
 const locale = (process.env.NEXT_PUBLIC_SITE_LANG || "ru") as "en" | "ru";
@@ -53,7 +53,7 @@ export const getStaticProps = async ({
     isSell,
   })) as IMassDirText;
 
-  const { seo_title, seo_description, currency, code } = massDirText;
+  const { seo_title, seo_description, currency, code, header } = massDirText;
 
   const [pms, massRates] = await Promise.all([
     loadPms(),
@@ -73,6 +73,12 @@ export const getStaticProps = async ({
       slug,
       isSell,
     }) as ISEO;
+
+    await addHeadersToSearchIndex({
+      slug,
+      header: seo_title,
+      wordsToSearchFrom: `${header} ${seo_title}`,
+    });
 
     return {
       props: {

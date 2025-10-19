@@ -12,17 +12,17 @@ import { fetchDirRates, fetchTopParameters } from "../../../redux/thunks";
 import CustomModal from "../../shared/CustomModal";
 import RateDetails from "../../shared/RateDetails";
 import { useRouter } from "next/router";
-import { ICity } from "../../../types/exchange";
-
-import { useTranslation } from "react-i18next";
+import { ICity, IDirText } from "../../../types/exchange";
 
 const TV = ({
   dir,
   city,
+  dirText,
 }: {
   dir: string;
   city: ICity | null;
   donorCity: ICity | null;
+  dirText: IDirText | null;
 }) => {
   const containerHeight = useBreakpointValue({ base: 300, md: 416 }) || 416;
   const router = useRouter();
@@ -51,6 +51,7 @@ const TV = ({
     visibleItems,
     containerHeight,
     dirRates,
+    dirText,
   };
 
   return (

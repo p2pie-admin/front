@@ -67,7 +67,6 @@ export const addExchangerCrossLinking = async (
     text: exchanger.exchanger_card[`${locale}_description`] || "",
     articleCodes,
     pms,
-    locale,
   });
 
   exchanger.exchanger_card[`${locale}_description`] = text;
