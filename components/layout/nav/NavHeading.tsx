@@ -9,7 +9,7 @@ export const NavHeading = () => {
     <HStack>
       <SearchAll />
       {/* <Language /> */}
-      <DarkLightTheme />
+      {/* <DarkLightTheme /> */}
     </HStack>
   );
 };
