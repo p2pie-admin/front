@@ -11,6 +11,7 @@ import UniversalSeo from "../../shared/UniversalSeo";
 import { ISEO } from "../../../types/general";
 import { IPm } from "../../../types/selector";
 import { TextToHTML } from "../../shared/helper";
+import { locale } from "../../../services/utils";
 
 export default function Exchanger({
   exchanger,
@@ -34,10 +35,9 @@ export default function Exchanger({
     );
   }
 
-  const { locale } = useRouter() as { locale: "en" | "ru" };
-
   const description =
     exchanger.exchanger_card[`${locale}_description`] || "no description";
+  console.log(exchanger);
 
   return (
     <>

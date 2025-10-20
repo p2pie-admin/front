@@ -2,12 +2,12 @@ import { HStack } from "@chakra-ui/react";
 import Language from "./Language";
 
 import DarkLightTheme from "./DarkLightTheme";
-import SearchAll from "./search";
+import GlobalSearch from "./globalSearch";
 
 export const NavHeading = () => {
   return (
     <HStack>
-      <SearchAll />
+      <GlobalSearch />
       {/* <Language /> */}
       {/* <DarkLightTheme /> */}
     </HStack>

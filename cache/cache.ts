@@ -1,7 +1,6 @@
 import { Redis } from "@upstash/redis";
 import { env } from "process";
 import { getArray, getItem, setArray } from "./redis";
-const locale = process.env.NEXT_PUBLIC_SITE_LANG || "ru";
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL!,

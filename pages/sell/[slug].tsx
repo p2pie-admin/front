@@ -75,7 +75,7 @@ export const getStaticProps = async ({
     }) as ISEO;
 
     await addHeadersToSearchIndex({
-      slug,
+      slug: `${isSell ? "sell" : "buy"}/${slug}`,
       header: seo_title,
       wordsToSearchFrom: `${header} ${seo_title}`,
     });

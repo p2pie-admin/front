@@ -47,6 +47,7 @@ const Thumb = ({
 
   return (
     <Tooltip
+      openDelay={500}
       hasArrow
       bg={mainColor}
       color={colorHint}

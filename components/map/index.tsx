@@ -44,6 +44,7 @@ const CustomMarker = ({
   } as any);
   return (
     <Tooltip
+      openDelay={500}
       placement="bottom-start"
       isOpen={active || hovered}
       label={<PhysicalExchangerCard physicalExchanger={physicalExchanger} />}

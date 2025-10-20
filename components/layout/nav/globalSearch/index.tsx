@@ -30,10 +30,12 @@ const fetcher = async (url: string) => {
   return res.json();
 };
 
-const SearchAll = () => {
+const GlobalSearch = () => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
+  // чтобы открывалось мгновенно и чуть позже заполнялось:
+  const [value2, setValue2] = useState("");
   const [menuVisible, setMenuVisible] = useState(false);
   const [inputRect, setInputRect] = useState<DOMRect | null>(null);
   const ref = useRef<HTMLDivElement | null>(null);
@@ -60,14 +62,17 @@ const SearchAll = () => {
 
   const handleOpen = () => {
     setOpen(true);
+    setTimeout(() => {
+      setValue(value2);
+    }, 500); // wait for width animation
   };
 
   const handleClose = () => {
     setMenuVisible(false);
     setOpen(false);
-    setTimeout(() => {
-      setValue("");
-    }, 300); // wait for width animation
+
+    setValue("");
+    setValue2(value);
   };
 
   // close on outside click
@@ -207,6 +212,7 @@ const SearchAll = () => {
                   }}
                 >
                   <Tooltip
+                    openDelay={500}
                     hasArrow
                     bg={"bg.500"}
                     placement="top"
@@ -234,4 +240,4 @@ const SearchAll = () => {
   );
 };
 
-export default SearchAll;
+export default GlobalSearch;

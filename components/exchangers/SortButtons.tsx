@@ -49,7 +49,7 @@ const SortButtons: React.FC<SortButtonsProps> = ({
       h="45px"
     >
       {buttons.map(({ key, label, tooltip }) => (
-        <Tooltip key={key} label={tooltip} fontSize="sm">
+        <Tooltip openDelay={500} key={key} label={tooltip} fontSize="sm">
           <Button
             bgColor={sortCriteria === key ? activeBg : "transparent"}
             onClick={() => toggleSort(key)}

@@ -126,7 +126,7 @@ export const loadExchanger = (slug: string) =>
   cachedFetch(`exchanger_${slug}`, TTL.fast, async () => {
     const name = exchangerSlugToName(slug);
     const res = await cmsFetcher(exchangerQuery, { name });
-    return res?.[0] || null;
+    return (res?.[0] as IExchanger) || null;
   });
 
 export const loadExchangers = async () => {
