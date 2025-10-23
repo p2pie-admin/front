@@ -5,8 +5,8 @@ export const defaultConfig = {
     openGraph: {
       type: "website",
       locale: "en_US",
-      url: "https://rusrates.com/en",
-      site_name: "rusrates",
+      url: "https://p2pie.com/en",
+      site_name: "p2pie",
     },
     twitter: {
       handle: "@handle",
@@ -21,8 +21,8 @@ export const defaultConfig = {
     openGraph: {
       type: "website",
       locale: "ru_RU",
-      url: "https://rusrates.com/ru",
-      site_name: "rusrates",
+      url: "https://p2pie.com/ru",
+      site_name: "p2pie",
     },
     twitter: {
       handle: "@handle",

@@ -3,7 +3,7 @@ User-agent: *
 Disallow: /
 
 # Host
-Host: https://rusrates.com
+Host: https://p2pie.com
 
 # Sitemaps
-Sitemap: https://rusrates.com/sitemap.xml
+Sitemap: https://p2pie.com/sitemap.xml

@@ -8,8 +8,13 @@ import {
 import { keyframes } from "@emotion/react";
 import { BsArrowDownShort, BsArrowUpShort } from "react-icons/bs";
 import { RxDragHandleDots2 } from "react-icons/rx";
-import { curNames, kFormatter } from "../../../redux/amountsHelper";
+import {
+  curNames,
+  kFormatter,
+  localFormat,
+} from "../../../redux/amountsHelper";
 import { useState } from "react";
+import { useAppSelector } from "../../../redux/hooks";
 
 const Thumb = ({
   mainCur,
@@ -22,6 +27,8 @@ const Thumb = ({
   MAX: number;
   stickyAmount: number;
 }) => {
+  const isEdited = useAppSelector((state) => !!state.main.amountInput);
+
   const [primary300, secondary600] = useToken("colors", [
     "peach.400",
     "violet.700",
@@ -38,11 +45,6 @@ const Thumb = ({
   });
   const shakeAnimation = `${shake} 1s ease-in-out infinite alternate`;
 
-  const localFormat = (n: number) => {
-    const cur = mainCur.toLocaleLowerCase() as keyof typeof curNames;
-    return `${curNames?.[cur]?.symbol || ""} ${kFormatter(n)}`;
-  };
-
   const [showTooltip, setShowTooltip] = useState(false);
 
   return (
@@ -55,7 +57,7 @@ const Thumb = ({
       isOpen={showTooltip}
       size="lg"
       fontSize="lg"
-      label={localFormat(stickyAmount)}
+      label={localFormat(stickyAmount, mainCur)}
     >
       <SliderThumb
         boxSize={9}
@@ -82,6 +84,7 @@ const Thumb = ({
 
         {/* Up/Down arrow depending on stickyAmount */}
         <Box
+          display={isEdited ? "unset" : "none"}
           position="absolute"
           top={stickyAmount <= MAX ? "-6" : "6"}
           left="50%"

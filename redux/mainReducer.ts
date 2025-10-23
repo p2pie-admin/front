@@ -55,7 +55,7 @@ export interface MainState {
   amountInput?: AmountInput;
   amountOutputs: AmountOutputs;
   swiperIdVisible: number;
-  activePopularSide?: string;
+  side: string;
   selectedPopular?: IPm;
   pms: IPm[];
   popularCompleted?: ISide;
@@ -78,6 +78,7 @@ export interface MainState {
 
 const initialState: MainState = {
   searchBarInputValue: "",
+  side: "get",
   dirRatesStatus: "fulfilled",
   amountOutputs: initialAmountOutputs,
   swiperIdVisible: 0,
@@ -146,12 +147,9 @@ export const mainSlice = createSlice({
         action.payload
       );
     },
-    setActivePopularSide: (
-      state: MainState,
-      action: PayloadAction<string | undefined>
-    ) => {
-      state.activePopularSide = action.payload;
-      // state.activePetal = undefined;
+
+    setSide: (state: MainState, action: PayloadAction<string>) => {
+      state.side = action.payload;
     },
     reverseDir: (state: MainState) => {
       [state.givePm, state.getPm] = [state.getPm, state.givePm];
@@ -337,6 +335,7 @@ export const mainSlice = createSlice({
 
 export const {
   setAmount,
+  setSide,
   setPm,
   setSearchBarInputValue,
   setSwiperIdVisible,

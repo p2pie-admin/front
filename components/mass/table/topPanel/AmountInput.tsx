@@ -95,7 +95,7 @@ const AmountInput = ({ massDirTextId }: { massDirTextId: IMassDirTextId }) => {
           float="right"
           textAlign="end"
           placeholder={"0.00"}
-          fontFamily="'Oxanium', monospace"
+          fontFamily="'Mozilla Text', monospace"
           fontSize={["2xl", "3xl"]}
           value={value} // use raw value for instant update
           border="hidden"

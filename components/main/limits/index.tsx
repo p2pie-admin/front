@@ -67,14 +67,12 @@ const LimitsRange = () => {
   const currentDirRate = useAppSelector(
     (state) => state.main?.dirRates?.[state.main.swiperIdVisible]
   );
-  const { locale } = useRouter() as { locale: "en" | "ru" };
 
-  const [minWord, maxWord, limitsWord] =
-    locale == "en" ? ["min", "max", "limits"] : ["мин", "макс", "лимиты"];
+  const side = useAppSelector((state) => state.main.side as "give" | "get");
+
+  // const [minWord, maxWord, limitsWord] =
+  //   locale == "en" ? ["min", "max", "limits"] : ["мин", "макс", "лимиты"];
   // if(!currentDirRate) return <></>
-  const [side, setSide]: [side: "give" | "get", setSide: Function] = useState(
-    "get" as "give" | "get" // (currentDirRate.course) > 1 ? "give" : "get"
-  );
 
   const giveCur = useAppSelector(
     (state) => state.main.givePm?.currency.code.toUpperCase() || ""
@@ -88,17 +86,16 @@ const LimitsRange = () => {
   const dirRates = useAppSelector((state) => state.main.dirRates || []);
   const allMins = dirRates?.map((r) => R(r.min?.[side], 2));
   const allMaxes = dirRates?.map((r) => R(r.max?.[side], 2));
-  const [highestMax, lowestMin] = [
-    Math.max(...allMaxes) / 100,
+  let [highestMax, lowestMin] = [
+    Math.max(...allMaxes) / 10,
     Math.min(...allMins),
   ];
+  if (highestMax > lowestMin * 10000) highestMax = highestMax / 100;
 
   const amount =
     useAppSelector(
       (state) => +state.main.amountOutputs[side].replaceAll(" ", "")
     ) || 0;
-
-  const changeSide = () => setSide(side === "get" ? "give" : "get");
 
   const { min, max } = currentDirRate
     ? currentDirRate
@@ -109,7 +106,7 @@ const LimitsRange = () => {
   // needMargin если min близок к highestMin && max далек от highestMax
   // const needMarginMin = MIN / lowestMin > 5; //&& MAX / lowestMax < 10;
   // const needMarginMax = highestMax / MAX > 5;
-  const tooCloseMinMax = MIN / MAX < 5 || MAX / MIN < 5;
+  //const tooCloseMinMax = MIN / MAX < 5 || MAX / MIN < 5;
 
   const log = (base: number, n: number) => Math.log(n) / Math.log(base);
   const curvingStrength = 100 / (1 - log(highestMax, lowestMin));
@@ -123,7 +120,7 @@ const LimitsRange = () => {
     return 100 + curvingStrength * (log(highestMax, x) - 1);
   };
   const [percMin, percMax] = [amountToPerc(MIN), amountToPerc(MAX)];
-  const smoothCenter = useSmooth(percMin + (percMax - percMin) / 2);
+  //const smoothCenter = useSmooth(percMin + (percMax - percMin) / 2);
 
   const stickTo = [1, 10, 100, 1_000, 10_000, 100_000, 1_000_000, MIN, MAX];
   const stick = (a: number) => stickTo.find((s) => isClose(s, a)) || a;
@@ -132,16 +129,17 @@ const LimitsRange = () => {
 
   const mainColor = useColorModeValue("violet.600", "peach.300");
 
-  const color1 = useColorModeValue("bg.300", "bg.800");
+  //const color1 = useColorModeValue("bg.300", "bg.800");
   const colorTrackInactive = useColorModeValue("bg.300", "bg.600");
   const colorTrackBG = useColorModeValue("bg.100", "bg.800");
-  const colorHint = useColorModeValue("bg.10", "bg.800");
+  //const colorHint = useColorModeValue("bg.10", "bg.800");
 
   const colorTrackFilled =
     stickyAmount >= MIN && stickyAmount <= MAX ? mainColor : colorTrackInactive;
 
   const props = { mainCur, stickyAmount, MIN, MAX };
   if (!MIN || !MAX) return <Box3D minW="40px" h="200px" />;
+
   // --- LimitsRange (vertical layout) ---
   return (
     <Box3D

@@ -95,7 +95,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     };
 
     await addHeadersToSearchIndex({
-      slug,
+      slug: `exchangers/${slug}`,
       header: `Обменник ${capitalize(exchanger.name)}`,
       wordsToSearchFrom: exchanger.name,
     });

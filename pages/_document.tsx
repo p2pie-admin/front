@@ -27,7 +27,7 @@ export default function MyDocument() {
         />
 
         <link
-          href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400&text=1234567890,.-+&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Mozilla+Text:wght@400&text=1234567890,.-+&display=swap"
           rel="stylesheet"
         />
 

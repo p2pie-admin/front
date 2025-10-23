@@ -27,6 +27,7 @@ const Fiat = ({
   const sideCurrencyCode = useAppSelector((state) =>
     state.main[`${side}Pm`]?.currency.code.toUpperCase()
   );
+  const isEdited = useAppSelector((state) => !!state.main.amountInput);
 
   const Min = min?.[side] || 0;
   const Max = max?.[side] || 0;
@@ -34,10 +35,14 @@ const Fiat = ({
 
   return (
     <HStack fontSize="sm" color="bg.500" justifySelf="end" mb="1">
-      {Min > 0 && value < Min ? (
-        <Text>{renderHint("min: ", Min, sideCurrencyCode)}</Text>
-      ) : Max > 0 && value > Max ? (
-        <Text>{renderHint("max: ", Max, sideCurrencyCode)}</Text>
+      {isEdited && Min > 0 && value < Min ? (
+        <Text color="red.500">
+          {renderHint("min: ", Min, sideCurrencyCode)}
+        </Text>
+      ) : isEdited && Max > 0 && value > Max ? (
+        <Text color="red.500">
+          {renderHint("max: ", Max, sideCurrencyCode)}
+        </Text>
       ) : (
         <Text>{renderHint("~ $", toUSD)}</Text>
       )}

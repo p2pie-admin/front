@@ -40,7 +40,6 @@ const GlobalSearch = () => {
   const [inputRect, setInputRect] = useState<DOMRect | null>(null);
   const ref = useRef<HTMLDivElement | null>(null);
   const color = useColorModeValue("violet.700", "peach.300");
-  const locale = process.env.NEXT_PUBLIC_SITE_LANG || "ru";
 
   const { data, error } = useSWR(open ? "/api/search-index" : null, fetcher, {
     revalidateOnFocus: false,
@@ -207,7 +206,7 @@ const GlobalSearch = () => {
                   _hover={{ bg: "bg.900", cursor: "pointer" }}
                   onClick={() => {
                     console.log("Selected slug:", r.slug);
-                    router.push(r.slug);
+                    router.push("/" + r.slug);
                     handleClose();
                   }}
                 >

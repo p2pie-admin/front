@@ -15,9 +15,9 @@ const nextConfig = {
     domains: [
       "localhost",
 
-      "cms.rusrates.help",
-      "converter.rusrates.help",
-      "server.rusrates.help",
+      "cms.p2pie.help",
+      "converter.p2pie.help",
+      "server.p2pie.help",
 
       "cms.1nginx.space",
       "converter.1nginx.space",
@@ -27,9 +27,9 @@ const nextConfig = {
       "converter.2nginx.space",
       "server.2nginx.space",
 
-      "cms.rusrates.help",
-      "converter.rusrates.help",
-      "server.rusrates.help",
+      "cms.p2pie.help",
+      "converter.p2pie.help",
+      "server.p2pie.help",
     ],
   },
 
@@ -47,8 +47,8 @@ const nextConfig = {
       },
       {
         source: "/:path*",
-        has: [{ type: "host", value: "www.rusrates.com" }],
-        destination: "https://rusrates.com/:path*",
+        has: [{ type: "host", value: "www.p2pie.com" }],
+        destination: "https://p2pie.com/:path*",
         permanent: true,
       },
     ];

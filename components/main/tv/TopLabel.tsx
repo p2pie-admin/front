@@ -31,13 +31,13 @@ const TopLabel: React.FC<TopLabelProps> = ({ text, length }) => {
   return (
     <VStack
       position="absolute"
-      top="1.5"
-      w="full"
+      top="auto"
+      w="90%"
       py="2"
       pointerEvents="none"
       gap="1"
     >
-      <Text as="h1" textAlign="center" fontSize={isLong ? "lg" : "xl"} mb="1">
+      <Text as="h1" textAlign="center" fontSize={isLong ? "md" : "lg"} mb="1">
         {text}
       </Text>
 

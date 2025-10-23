@@ -141,7 +141,7 @@ const RateDetails = () => {
             dispatch(
               sendToast({
                 status: "warning",
-                title: "Пожалуйста свяжитесь с нами t.me/rusrates",
+                title: "Пожалуйста свяжитесь с нами t.me/p2pie",
               })
             )
           }

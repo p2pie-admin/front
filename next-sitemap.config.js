@@ -6,7 +6,7 @@ const redis = new Redis({
 });
 
 module.exports = {
-  siteUrl: process.env.SITE_URL || "https://rusrates.com",
+  siteUrl: process.env.SITE_URL || "https://p2pie.com",
   generateRobotsTxt: true,
   robotsTxtOptions: {
     policies: [
@@ -30,7 +30,7 @@ module.exports = {
 
 // const { readCache } = require("./cache"); // Adjust the path as necessary
 
-// const siteUrl = "https://rusrates.com";
+// const siteUrl = "https://p2pie.com";
 // const locales = ["en", "ru"];
 
 // const config = {
