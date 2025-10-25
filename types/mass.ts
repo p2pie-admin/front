@@ -34,3 +34,10 @@ export interface IMassSort {
   key: "limit" | "course" | "admin_rating";
   direction: "asc" | "desc";
 }
+
+export interface ICryptoCodesName {
+  code: string;
+  currencyCode: string;
+  name: string;
+  subgroup_name: string;
+}

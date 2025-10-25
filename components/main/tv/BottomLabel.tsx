@@ -8,17 +8,7 @@ interface BottomLabelProps {
 
 const BottomLabel: React.FC<BottomLabelProps> = ({ text = "End of List" }) => {
   return (
-    <Box
-      position="absolute"
-      bottom="0"
-      w="full"
-      textAlign="center"
-      py="2"
-      fontSize="sm"
-      color="gray.500"
-      pointerEvents="none"
-      opacity={0.8}
-    >
+    <Box w="90%" py="2" pointerEvents="none" gap="1">
       {text}
     </Box>
   );

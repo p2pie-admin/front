@@ -12,7 +12,7 @@ import {
   VStack,
   Text,
 } from "@chakra-ui/react";
-import { BsArrowDownShort } from "react-icons/bs";
+import { IoMdClose } from "react-icons/io";
 import { IPm } from "../../../../types/selector";
 import MassPmIcon from "../MassPmIcon";
 import { ResponsiveText } from "../../../../styles/theme/custom";
@@ -31,11 +31,11 @@ type Props = {
   placeholder?: string;
   maxTagToShow?: number; // how many tags to show in the button before "+N more"
   menuWidth?: string | number;
-  pmsByCodes: Record<string, IPm>;
+  fiatPms: Record<string, IPm>;
 };
 
 export const MultiSelectMenu: React.FC<Props> = ({
-  pmsByCodes,
+  fiatPms,
   value,
   defaultValue = [],
 }) => {
@@ -61,7 +61,7 @@ export const MultiSelectMenu: React.FC<Props> = ({
     setSelected(next);
   };
 
-  const selectedOptions = Object.keys(pmsByCodes).filter((code) =>
+  const selectedOptions = Object.keys(fiatPms).filter((code) =>
     selected.includes(code)
   );
 
@@ -74,13 +74,13 @@ export const MultiSelectMenu: React.FC<Props> = ({
           variant="no_contrast"
           size="sm"
         >
-          {isSell ? "Получить" : "Способы оплаты"}
+          Способы оплаты
         </ResponsiveText>
       ) : (
         <HStack align="center" mt="1">
           {selectedOptions.slice(0, maxTagToShow).map((code) => (
             <Box key={code} mx="-1.5">
-              <MassPmIcon pm={pmsByCodes[code]} />
+              <MassPmIcon pm={fiatPms[code]} />
             </Box>
           ))}
           {selectedOptions.length > maxTagToShow && (
@@ -115,11 +115,18 @@ export const MultiSelectMenu: React.FC<Props> = ({
       </MenuButton>
 
       <MenuList bgColor="bg.800" maxH="400" overflowY="auto">
-        <Button w="100%" borderRadius="none" onClick={removeAll}>
-          снять выбор
-        </Button>
+        {!!selected.length && (
+          <Button
+            w="100%"
+            borderRadius="none"
+            onClick={removeAll}
+            leftIcon={<IoMdClose size="1.2rem" />}
+          >
+            Снять выбор
+          </Button>
+        )}
         <VStack spacing={0} align="stretch" width="200px" p="1">
-          {Object.entries(pmsByCodes).map(([code, pm]) => {
+          {Object.entries(fiatPms).map(([code, pm]) => {
             const isChecked = selected.includes(code);
             return (
               <MenuItem

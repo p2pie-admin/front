@@ -11,14 +11,14 @@ const LinkButton = ({
 }: {
   href: string;
   message: string;
-  CustomIcon?: any;
+  CustomIcon?: React.ComponentType<any>;
   variant?: string;
 }) => {
   const dispatch = useAppDispatch();
   const color = useColorModeValue("bg.700", "bg.300");
   const iconColor = useColorModeValue("violet.700", "peach.300");
 
-  const MyButton = ({ handleClick }: { handleClick: Function }) => (
+  const MyButton = ({ handleClick }: { handleClick: () => void }) => (
     <Button
       w="100%"
       justifyContent="start"
@@ -28,9 +28,11 @@ const LinkButton = ({
       my="1"
       onClick={() => handleClick()}
       leftIcon={
-        <Box color={iconColor}>
-          <CustomIcon size="1.2rem" />
-        </Box>
+        CustomIcon ? (
+          <Box color={iconColor}>
+            <CustomIcon size="1.2rem" />
+          </Box>
+        ) : undefined
       }
     >
       {message}
@@ -39,13 +41,14 @@ const LinkButton = ({
 
   if (href.includes("http")) {
     return (
-      <Link href={href || ""} isExternal>
+      <Link href={href} isExternal>
         <MyButton handleClick={() => {}} />
       </Link>
     );
   }
+
   return (
-    <NextLink href={href || ""}>
+    <NextLink href={href} passHref>
       <MyButton handleClick={() => dispatch(clean())} />
     </NextLink>
   );

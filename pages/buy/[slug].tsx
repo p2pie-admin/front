@@ -13,9 +13,18 @@ import {
 import UniversalSeo, { nullSeo } from "../../components/shared/UniversalSeo";
 import { ISEO } from "../../types/general";
 
-import { generateMassSeo, getPmsByCodes } from "../../components/mass/helper";
+import {
+  generateMassSeo,
+  getCryptoCodesNames,
+  getPmsByCodes,
+} from "../../components/mass/helper";
 import Mass from "../../components/mass";
-import { IMassDirText, IMassDirTextId, IMassRate } from "../../types/mass";
+import {
+  ICryptoCodesName,
+  IMassDirText,
+  IMassDirTextId,
+  IMassRate,
+} from "../../types/mass";
 import { IPm } from "../../types/selector";
 import { addHeadersToSearchIndex, addPathsToSitemap } from "../../cache/cache";
 
@@ -24,7 +33,8 @@ const locale = (process.env.NEXT_PUBLIC_SITE_LANG || "ru") as "en" | "ru";
 
 type Props = {
   seo: ISEO;
-  pmsByCodes: Record<string, IPm>;
+  fiatPms: Record<string, IPm>;
+  cryptoCodesNames: ICryptoCodesName[];
   massDirTextId: IMassDirTextId;
   massDirText: IMassDirText;
   massRates: IMassRate[];
@@ -64,7 +74,8 @@ export const getStaticProps = async ({
     }),
   ]);
 
-  const pmsByCodes = getPmsByCodes(massRates, pms) as Record<string, IPm>;
+  const fiatPms = getPmsByCodes(massRates, pms) as Record<string, IPm>;
+  const cryptoCodesNames = getCryptoCodesNames(pms) as ICryptoCodesName[];
 
   try {
     const seo = generateMassSeo({
@@ -83,7 +94,8 @@ export const getStaticProps = async ({
     return {
       props: {
         seo,
-        pmsByCodes,
+        fiatPms,
+        cryptoCodesNames,
         massDirText,
         massRates,
         massDirTextId,
@@ -99,7 +111,7 @@ export const getStaticProps = async ({
     return {
       props: {
         seo: nullSeo,
-        pmsByCodes: null,
+        fiatPms: null,
         massDirText: null,
         massRates: null,
         massDirTextId: null,

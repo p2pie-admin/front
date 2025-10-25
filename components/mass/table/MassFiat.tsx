@@ -9,20 +9,18 @@ import MassPmIcon from "./MassPmIcon";
 
 const MassFiat = ({
   codes,
-  pmsByCodes,
+  fiatPms,
 }: {
   codes: string[];
-  pmsByCodes: Record<string, IPm>;
+  fiatPms: Record<string, IPm>;
 }) => (
   <SmartGrid wrapThreshold={6} direction={"end"}>
     {codes.map((code) => (
       <HStack key={code} borderRadius="lg" mx="0.5" cursor="pointer">
-        <MassPmIcon pm={pmsByCodes[code]} />
+        <MassPmIcon pm={fiatPms[code]} />
 
         {codes.length < 2 && (
-          <ResponsiveText>
-            {capitalize(pmsByCodes[code]?.en_name)}
-          </ResponsiveText>
+          <ResponsiveText>{capitalize(fiatPms[code]?.en_name)}</ResponsiveText>
         )}
       </HStack>
     ))}

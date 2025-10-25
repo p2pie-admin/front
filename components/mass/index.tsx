@@ -1,6 +1,11 @@
 import { Heading, HStack, VStack, Text } from "@chakra-ui/react";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
-import { IMassDirText, IMassDirTextId, IMassRate } from "../../types/mass";
+import {
+  ICryptoCodesName,
+  IMassDirText,
+  IMassDirTextId,
+  IMassRate,
+} from "../../types/mass";
 import { IPm } from "../../types/selector";
 import { useEffect } from "react";
 import { fetchTopParameters } from "../../redux/thunks";
@@ -8,19 +13,22 @@ import { useAppDispatch } from "../../redux/hooks";
 import MassTable from "./table";
 import MassSideContext from "./sideContext";
 import MassSelector from "./massSelector";
+import MassTableSelector from "./massTableSelector";
 
 const Mass = ({
   massDirTextId,
   massDirText,
   massRates,
-  pmsByCodes,
+  fiatPms,
+  cryptoCodesNames,
   isSell,
   slug,
 }: {
   massDirTextId: IMassDirTextId;
   massDirText: IMassDirText;
   massRates: IMassRate[];
-  pmsByCodes: Record<string, IPm>;
+  fiatPms: Record<string, IPm>;
+  cryptoCodesNames: ICryptoCodesName[];
   isSell: boolean;
   slug: string;
 }) => {
@@ -55,16 +63,15 @@ const Mass = ({
       >
         {text}
       </ResponsiveText>
-      <MassSelector initialSlug={`/${isSell ? "sell" : "buy"}/${slug}`} />
 
       <VStack gap="5" mt={["2", "8"]}>
-        <Box3D variant="no_contrast" w="100%" px={["2", "8"]} py={["4", "8"]}>
-          <MassTable
-            massRates={massRates}
-            pmsByCodes={pmsByCodes}
-            massDirTextId={massDirTextId}
-          />
-        </Box3D>
+        <MassTableSelector slug={slug} cryptoCodesNames={cryptoCodesNames} />
+
+        <MassTable
+          massRates={massRates}
+          fiatPms={fiatPms}
+          massDirTextId={massDirTextId}
+        />
       </VStack>
     </MassSideContext.Provider>
   );

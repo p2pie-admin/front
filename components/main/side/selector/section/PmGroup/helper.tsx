@@ -61,15 +61,15 @@ export const getPmsFromPmGroup = (
     if (baseCode) pushPm(baseCode);
 
     // handle alternative codes
-    if (isAlternative && option.alternative_codes) {
-      // split by comma OR just separate codes without separator
-      const altCodes = option.alternative_codes
-        .split(/[,]+/) // split by comma or space
-        .filter(Boolean); // remove empty strings
-      for (const altCode of altCodes) {
-        pushPm(altCode.trim().toUpperCase());
-      }
-    }
+    // if (isAlternative && option.alternative_codes) {
+    //   // split by comma OR just separate codes without separator
+    //   const altCodes = option.alternative_codes
+    //     .split(/[,]+/) // split by comma or space
+    //     .filter(Boolean); // remove empty strings
+    //   for (const altCode of altCodes) {
+    //     pushPm(altCode.trim().toUpperCase());
+    //   }
+    // }
   }
 
   return result.length ? result : undefined;

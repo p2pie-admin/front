@@ -271,7 +271,7 @@ export const Swiper = (props: {
               justifyContent="center"
               pointerEvents="none"
             >
-              <BottomLabel text="End of List" />
+              <BottomLabel text="Показать все курсы?" />
             </MotionBox>
 
             <Shader direction="bottom" />

@@ -29,17 +29,17 @@ const MassSortButtons = () => {
     {
       key: "course",
       label: t("Курс"),
-      tooltip: t("Sort by course"),
+      tooltip: t("Сортировать по курсу"),
     },
     {
       key: "limit",
       label: t("Лимиты"),
-      tooltip: t("Sort by min amount"),
+      tooltip: t("Сортировать по лимитам"),
     },
     {
       key: "admin_rating",
       label: t("Рейтинг"),
-      tooltip: t("Sort by admin rating"),
+      tooltip: t("Сортировать по рейтингу"),
     },
   ] as const;
 

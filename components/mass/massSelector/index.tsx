@@ -41,11 +41,6 @@ const MassSelector = ({ initialSlug }: { initialSlug?: string }) => {
       w="100%"
       position="relative"
     >
-      <HStack w="100%" justifyContent="center">
-        <MassSwiper initialId={first} items={firstItems} set={setFirst} />
-        <MassSwiper initialId={second} items={secondItems} set={setSecond} />
-        <MassSwiper initialId={third} items={thirdItems} set={setThird} />
-      </HStack>
       {initialSlug ? (
         <NextLink href={slug}>
           <Button

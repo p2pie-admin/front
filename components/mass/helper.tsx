@@ -1,6 +1,7 @@
 import { ISEO } from "../../types/general";
 import { IMassRate } from "../../types/mass";
 import { IPm } from "../../types/selector";
+import { capitalize } from "../main/side/selector/section/PmGroup/helper";
 
 export const generateMassSeo = ({
   title,
@@ -62,3 +63,16 @@ export function pickKeys<T extends object, K extends keyof T>(
     return acc;
   }, {} as Pick<T, K>);
 }
+
+export const getCryptoCodesNames = (pms: IPm[]) => {
+  const cryptoPms = pms.filter((pm) => pm.section === "crypto");
+
+  return cryptoPms.map((pm) => ({
+    code: pm.code,
+    currencyCode: pm.currency.code.toUpperCase(),
+    name: `${capitalize(
+      pm.ru_name || pm.en_name
+    )} ${pm.currency.code.toUpperCase()}`,
+    subgroup_name: pm.subgroup_name,
+  }));
+};

@@ -4,7 +4,13 @@ import useSWR from "swr";
 
 import ErrorWrapper from "../../shared/ErrorWrapper";
 
-import { Box, HStack, Link, useBreakpointValue } from "@chakra-ui/react";
+import {
+  Box,
+  HStack,
+  Link,
+  useBreakpointValue,
+  useTimeout,
+} from "@chakra-ui/react";
 import { IParameter, IRate } from "../../../types/rates";
 import Swiper from "./Swiper";
 import { useIsMobile } from "./hooks";
@@ -36,10 +42,21 @@ const TV = ({
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(
-      fetchDirRates({ dir, cityName: isCash ? city?.en_name || "moscow" : "" })
-    );
-  }, [dir, city]);
+    if (!dir) return;
+
+    const cityName = isCash ? city?.en_name || "moscow" : "";
+
+    // Fetch immediately once on mount / dir change
+    dispatch(fetchDirRates({ dir, cityName }));
+
+    // Set up interval to repeat every 2 minutes
+    const interval = setInterval(() => {
+      dispatch(fetchDirRates({ dir, cityName }));
+    }, 2 * 60 * 1000); // 2 minutes
+
+    // Cleanup on unmount or when dir/city changes
+    return () => clearInterval(interval);
+  }, [dir, city?.en_name, isCash, dispatch]);
 
   const isMobile = useIsMobile();
   const itemHeight = isMobile ? 100 : 130; // Height of each text box

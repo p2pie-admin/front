@@ -9,11 +9,11 @@ import { IMassDirTextId } from "../../../../types/mass";
 export type Option = { value: string; label: string };
 
 const TopPanel = ({
-  pmsByCodes,
+  fiatPms,
 
   massDirTextId,
 }: {
-  pmsByCodes: Record<string, IPm>;
+  fiatPms: Record<string, IPm>;
 
   massDirTextId: IMassDirTextId;
 }) => {
@@ -24,8 +24,7 @@ const TopPanel = ({
       w="100%"
       display={{ base: "none", lg: "flex" }}
     >
-      <MultiSelectMenu pmsByCodes={pmsByCodes} />
-
+      <MultiSelectMenu fiatPms={fiatPms} />
       <AmountInput massDirTextId={massDirTextId} />
       <MassSortButtons />
     </HStack>
