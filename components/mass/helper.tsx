@@ -64,15 +64,7 @@ export function pickKeys<T extends object, K extends keyof T>(
   }, {} as Pick<T, K>);
 }
 
-export const getCryptoCodesNames = (pms: IPm[]) => {
+export const getCryptoPms = (pms: IPm[]) => {
   const cryptoPms = pms.filter((pm) => pm.section === "crypto");
-
-  return cryptoPms.map((pm) => ({
-    code: pm.code,
-    currencyCode: pm.currency.code.toUpperCase(),
-    name: `${capitalize(
-      pm.ru_name || pm.en_name
-    )} ${pm.currency.code.toUpperCase()}`,
-    subgroup_name: pm.subgroup_name,
-  }));
+  return cryptoPms;
 };

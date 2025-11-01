@@ -4,18 +4,18 @@ import { HStack, Button } from "@chakra-ui/react";
 import SideButtons from "./SideButtons";
 import CryptoList from "./CryptoList";
 // import FiatSelector from "./FiatSelector";
-import { IPm } from "../../../types/selector";
-import { ICryptoCodesName } from "../../../types/mass";
+
 import FiatSelector from "./FiatSelector";
+import { IPm } from "../../../types/selector";
 
 export default function MassTableSelector({
   slug,
 
-  cryptoCodesNames,
+  cryptoPms,
 }: {
   slug: string;
 
-  cryptoCodesNames: ICryptoCodesName[];
+  cryptoPms: IPm[];
 }) {
   return (
     <Box3D
@@ -27,7 +27,7 @@ export default function MassTableSelector({
     >
       <HStack>
         <SideButtons slug={slug} />
-        <CryptoList slug={slug} cryptoCodesNames={cryptoCodesNames} />
+        <CryptoList slug={slug} cryptoPms={cryptoPms} />
         <FiatSelector slug={slug} />
       </HStack>
     </Box3D>

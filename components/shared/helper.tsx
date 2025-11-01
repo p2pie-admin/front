@@ -97,3 +97,16 @@ export const enrichText = ({
     return `[**${word}**](${slug})`;
   });
 };
+
+export function secondsAgo(timestamp?: number | string): string {
+  if (!timestamp) return "";
+  const ts = typeof timestamp === "string" ? Number(timestamp) : timestamp;
+  const now = Date.now();
+  const diffSec = Math.floor((now - ts) / 1000);
+
+  if (diffSec < 0) return "в будущем";
+  if (diffSec < 60) return `${diffSec} сек. назад`;
+  if (diffSec < 3600) return `${Math.floor(diffSec / 60)} мин. назад`;
+  if (diffSec < 86400) return `${Math.floor(diffSec / 3600)} ч. назад`;
+  return `${Math.floor(diffSec / 86400)} дн. назад`;
+}

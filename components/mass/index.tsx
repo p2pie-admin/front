@@ -1,11 +1,6 @@
 import { Heading, HStack, VStack, Text } from "@chakra-ui/react";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
-import {
-  ICryptoCodesName,
-  IMassDirText,
-  IMassDirTextId,
-  IMassRate,
-} from "../../types/mass";
+import { IPm, IMassDirText, IMassDirTextId, IMassRate } from "../../types/mass";
 import { IPm } from "../../types/selector";
 import { useEffect } from "react";
 import { fetchTopParameters } from "../../redux/thunks";
@@ -20,7 +15,7 @@ const Mass = ({
   massDirText,
   massRates,
   fiatPms,
-  cryptoCodesNames,
+  cryptoPms,
   isSell,
   slug,
 }: {
@@ -28,7 +23,7 @@ const Mass = ({
   massDirText: IMassDirText;
   massRates: IMassRate[];
   fiatPms: Record<string, IPm>;
-  cryptoCodesNames: ICryptoCodesName[];
+  cryptoPms: IPm[];
   isSell: boolean;
   slug: string;
 }) => {
@@ -65,7 +60,7 @@ const Mass = ({
       </ResponsiveText>
 
       <VStack gap="5" mt={["2", "8"]}>
-        <MassTableSelector slug={slug} cryptoCodesNames={cryptoCodesNames} />
+        <MassTableSelector slug={slug} cryptoPms={cryptoPms} />
 
         <MassTable
           massRates={massRates}

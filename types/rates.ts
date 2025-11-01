@@ -20,6 +20,7 @@ export interface IRate {
   cities?: { [key: string]: string[] };
   ref_link: string;
   logo: IImage;
+  last_time_updated?: number;
 }
 
 export interface IParameter {

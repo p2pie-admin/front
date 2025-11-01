@@ -35,7 +35,7 @@ export interface IMassSort {
   direction: "asc" | "desc";
 }
 
-export interface ICryptoCodesName {
+export interface IPm {
   code: string;
   currencyCode: string;
   name: string;

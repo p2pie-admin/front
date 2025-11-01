@@ -7,17 +7,17 @@ import {
   convertSlugIntoMassDirText,
 } from "../../../cache/helper";
 import MassSideContext from "../sideContext";
-import { ICryptoCodesName, IMassDirTextId } from "../../../types/mass";
+import { IMassDirTextId } from "../../../types/mass";
 import { IPm } from "../../../types/selector";
 
 export default function CryptoList({
   slug,
 
-  cryptoCodesNames,
+  cryptoPms,
 }: {
   slug: string;
 
-  cryptoCodesNames: ICryptoCodesName[];
+  cryptoPms: IPm[];
 }) {
   const isSell = useContext(MassSideContext);
   const { code: currentCode, currency } = convertSlugIntoMassDirText(
@@ -25,7 +25,7 @@ export default function CryptoList({
     isSell
   );
 
-  const ccnVisible = cryptoCodesNames.slice(0, 16);
+  const ccnVisible = cryptoPms.slice(0, 16);
 
   return (
     <Grid
@@ -35,9 +35,9 @@ export default function CryptoList({
       columnGap={6}
       rowGap="0"
     >
-      {ccnVisible.map(({ code, name, subgroup_name, currencyCode }) => {
+      {ccnVisible.map((pm) => {
         const newData = {
-          code,
+          code: pm.code,
           currency,
           isSell,
         } as IMassDirTextId;
@@ -45,18 +45,18 @@ export default function CryptoList({
         const newSlug = convertMassDirTextIntoSlug(newData);
 
         return (
-          <Tooltip label={name} fontSize="sm">
-            <Link href={`${newSlug}`} key={code}>
+          <Tooltip label={pm.en_name} fontSize="sm">
+            <Link href={`${newSlug}`} key={pm.code}>
               <ResponsiveText
                 as="div"
                 position="relative"
                 textAlign="start"
                 cursor="pointer"
-                fontWeight={code == currentCode ? "bold" : "unset"}
-                variant={code == currentCode ? "primary" : "no_contrast"}
+                fontWeight={pm.code == currentCode ? "bold" : "unset"}
+                variant={pm.code == currentCode ? "primary" : "no_contrast"}
               >
-                {currencyCode}
-                {code == currentCode && (
+                {pm.currency.code}
+                {pm.code == currentCode && (
                   <Box
                     w="6px"
                     h="6px"
@@ -68,7 +68,7 @@ export default function CryptoList({
                   />
                 )}
 
-                {subgroup_name && (
+                {pm.subgroup_name && (
                   <Box
                     borderRadius="sm"
                     px="1px"
@@ -80,9 +80,11 @@ export default function CryptoList({
                   >
                     <ResponsiveText
                       fontSize="10"
-                      variant={code == currentCode ? "primary" : "no_contrast"}
+                      variant={
+                        pm.code == currentCode ? "primary" : "no_contrast"
+                      }
                     >
-                      {subgroup_name}
+                      {pm.subgroup_name}
                     </ResponsiveText>
                   </Box>
                 )}

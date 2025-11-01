@@ -22,6 +22,7 @@ import TopParameter from "./TopParameter";
 import { useIsMobile } from "./hooks";
 import Rating from "./Rating";
 import CustomImage from "../../shared/CustomImage";
+import { secondsAgo } from "../../shared/helper";
 
 const DesktopParameters = ({
   parameterCodes,
@@ -75,7 +76,7 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
   const isMobile = useIsMobile();
   if (!rate) return <></>;
 
-  const { name, course, min, max, ref_link, logo } = rate;
+  const { name, course, min, max, ref_link, logo, last_time_updated } = rate;
   const giveCur = useAppSelector(
     (state) => state.main.givePm?.currency.code.toUpperCase() || ""
   );
@@ -143,6 +144,9 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
               MAX,
               smallCur
             )}`}
+          </ResponsiveText>
+          <ResponsiveText size="xs" variant="no_contrast">
+            {`Обновлено: ${secondsAgo(last_time_updated)}`}
           </ResponsiveText>
         </Box>
       </Box>
