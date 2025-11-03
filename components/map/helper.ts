@@ -51,6 +51,10 @@ export const testMarkers = [
 export const getPricesUSD = (
   physicalExchangers: IPhysicalExchanger[]
 ): [number, number] => {
+  if (!physicalExchangers?.length) {
+    return [0, 0];
+  }
+
   const prices = physicalExchangers
     .map((exchanger) =>
       !exchanger.opened
@@ -60,6 +64,10 @@ export const getPricesUSD = (
           )?.selling || 0
     )
     .filter((i) => i !== 0);
+
+  if (!prices.length) {
+    return [0, 0];
+  }
 
   return [Math.max(...prices), Math.min(...prices)];
 };

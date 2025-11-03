@@ -23,6 +23,7 @@ import { useIsMobile } from "./hooks";
 import Rating from "./Rating";
 import CustomImage from "../../shared/CustomImage";
 import { secondsAgo } from "../../shared/helper";
+import { enrichLink } from "../../../redux/helper";
 
 const DesktopParameters = ({
   parameterCodes,
@@ -77,12 +78,14 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
   if (!rate) return <></>;
 
   const { name, course, min, max, ref_link, logo, last_time_updated } = rate;
-  const giveCur = useAppSelector(
-    (state) => state.main.givePm?.currency.code.toUpperCase() || ""
-  );
-  const getCur = useAppSelector(
-    (state) => state.main.getPm?.currency.code.toUpperCase() || ""
-  );
+  const givePm = useAppSelector((state) => state.main.givePm);
+  const getPm = useAppSelector((state) => state.main.getPm);
+
+  const giveCur = givePm?.currency.code.toUpperCase() || "";
+  const getCur = getPm?.currency.code.toUpperCase() || "";
+
+  const giveCode = givePm?.code;
+  const getCode = getPm?.code;
 
   const side = course > 1 ? "give" : "get";
   const smallCur = side === "give" ? giveCur : getCur;
@@ -90,7 +93,7 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
   const bgColor = useColorModeValue("bg.10", "bg.700");
   const [MIN, MAX] =
     min?.[side] && max?.[side] ? [R(min[side], 2), R(max[side], 2)] : [0, 0];
-  console.log("rate", rate);
+
   return (
     <VStack
       alignItems="start"
@@ -117,7 +120,8 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
             cursor="pointer"
             onClick={() => {
               dispatch(redirect());
-              window.open(ref_link, "_blank");
+              const fullLink = enrichLink(ref_link, giveCode, getCode);
+              window.open(fullLink, "_blank");
             }}
           >
             <Box borderRadius="xl" overflow="hidden">

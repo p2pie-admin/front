@@ -345,7 +345,7 @@ export const TextBoxQuery = gql`
 
 export const TopParametersQuery = gql`
   {
-    topParameters(pagination: { limit: 200 }) {
+    topParameters(pagination: { limit: 2000 }) {
       data {
         id
         attributes {

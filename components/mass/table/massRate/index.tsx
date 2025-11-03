@@ -27,6 +27,7 @@ import MassFiat from "../MassFiat";
 import SmartGrid from "../SmartGrid";
 import { redirect } from "../../../../redux/thunks";
 import MassRateAmount from "./MassRateAmount";
+import { enrichLink } from "../../../../redux/helper";
 
 const MassRate = ({
   rate,
@@ -78,7 +79,8 @@ const MassRate = ({
         cursor="pointer"
         onClick={() => {
           dispatch(redirect());
-          window.open(ref_link, "_blank");
+          const fullLink = enrichLink(ref_link, rate.course);
+          window.open(fullLink, "_blank");
         }}
       >
         <Box borderRadius="xl" overflow="hidden">
