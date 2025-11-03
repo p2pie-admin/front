@@ -90,7 +90,7 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
   const bgColor = useColorModeValue("bg.10", "bg.700");
   const [MIN, MAX] =
     min?.[side] && max?.[side] ? [R(min[side], 2), R(max[side], 2)] : [0, 0];
-
+  console.log("rate", rate);
   return (
     <VStack
       alignItems="start"

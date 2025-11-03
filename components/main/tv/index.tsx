@@ -47,12 +47,13 @@ const TV = ({
     const cityName = isCash ? city?.en_name || "moscow" : "";
 
     // Fetch immediately once on mount / dir change
+
     dispatch(fetchDirRates({ dir, cityName }));
 
     // Set up interval to repeat every 2 minutes
     const interval = setInterval(() => {
       dispatch(fetchDirRates({ dir, cityName }));
-    }, 2 * 60 * 1000); // 2 minutes
+    }, 60 * 1000); // 2 minutes
 
     // Cleanup on unmount or when dir/city changes
     return () => clearInterval(interval);

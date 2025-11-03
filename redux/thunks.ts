@@ -59,8 +59,10 @@ const _fetchRates = async ({
   cityName?: string;
 }) => {
   //const isCash = (dir.split("_")[0].startsWith("CASH") || dir.split("_")[1].startsWith("CASH"));
+  const link = `${courseFilterLink}/dir=${dir}/all/${cityName?.toLowerCase()}`;
+
   const response = await axios
-    .get(`${courseFilterLink}/dir=${dir}/all/${cityName?.toLowerCase()}`)
+    .get(link)
     .catch((err) => console.error("could not fetch, ", err));
   return response?.data as IRate[];
 };
@@ -198,7 +200,6 @@ export const redirect = createAsyncThunk(
       give: +main.amountOutputs.give,
       get: +main.amountOutputs.get,
       id_related_to: currentRate?.exchangerId,
-      isP2P: !!currentRate?.tag,
       ip: main.fingerprint?.ip,
     });
   }
