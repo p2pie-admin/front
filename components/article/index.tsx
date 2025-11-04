@@ -12,8 +12,7 @@ import OtherDirs from "./OtherDirs";
 import TopImage from "./TopImage";
 import Stats from "./Stats";
 import { IPm } from "../../types/selector";
-
-const locale = (process.env.NEXT_PUBLIC_SITE_LANG || "ru") as "en" | "ru";
+import { locale } from "../../services/utils";
 
 const Article = ({
   seo,

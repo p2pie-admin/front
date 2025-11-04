@@ -12,9 +12,7 @@ import {
   loadPopular,
 } from "../cache/loadX";
 import { IDirText } from "../types/exchange";
-
-// take locale from env
-const locale = (process.env.NEXT_PUBLIC_SITE_LANG || "ru") as "ru" | "en";
+import { locale } from "../services/utils";
 
 export const getStaticProps = async () => {
   try {

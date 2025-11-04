@@ -16,7 +16,7 @@ export default function City({
   dir,
 }: {
   city?: ISelectorCity;
-  dir: string;
+  dir?: string;
 }) {
   const { locale } = useRouter();
   const slug = useAppSelector((state) =>

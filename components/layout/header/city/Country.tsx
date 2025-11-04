@@ -11,7 +11,7 @@ export default function Country({
   dir,
 }: {
   country: ISelectorCountry;
-  dir: string;
+  dir?: string;
 }) {
   const { locale } = useRouter();
 

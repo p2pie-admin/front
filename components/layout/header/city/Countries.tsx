@@ -14,11 +14,14 @@ export default function Countries() {
     if (givePm && getPm) return `${givePm.code}_${getPm.code}`;
     return undefined;
   });
-  const { data, error } = useSWR(`city_selector=${dir}`, fetcher) as {
+  const { data, error } = useSWR(
+    dir ? `city_selector=${dir}` : "city_selector",
+    fetcher
+  ) as {
     data: ISelectorCountry[];
     error: boolean;
   };
-  if (!dir) return <></>;
+  console.log(data);
 
   return (
     <ErrorWrapper isError={error} isLoading={!data}>

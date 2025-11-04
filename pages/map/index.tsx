@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { useLoadScript, GoogleMap, OverlayView } from "@react-google-maps/api";
 import type { GetStaticProps, NextPage } from "next";
 import { useEffect, useMemo, useState } from "react";
@@ -11,15 +10,21 @@ import { getPricesUSD } from "../../components/map/helper";
 import { FAKE_PHYSICAL_EXCHANGERS } from "../../components/map/fakeData";
 import { PhysicalExchangersQuery } from "../../components/map/queries";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useAppSelector } from "../../redux/hooks";
+import { createMapStyles } from "../../components/map/styles";
 
 const MapPageContent = () => {
   const fetcher = initCMSFetcher();
+
   const { data, error } = useSWR(PhysicalExchangersQuery, fetcher) as {
     data: {
       physicalExchangers: IPhysicalExchanger[];
     };
     error: boolean;
   };
+
+  const city = useAppSelector((state) => state.main.city);
+  const [lat, lng] = city.coordinates;
 
   const libraries = useMemo(() => ["places"], []);
 
@@ -42,134 +47,30 @@ const MapPageContent = () => {
     ]
   );
 
+  const mapStyles = useMemo(
+    () =>
+      createMapStyles({
+        peach200,
+        bg100,
+        bg300,
+        bg500,
+        bg600,
+        bg700,
+        bg800,
+        bg900,
+      }),
+    [peach200, bg100, bg300, bg500, bg600, bg700, bg800, bg900]
+  );
+
   const mapOptions = useMemo<google.maps.MapOptions>(
     () => ({
       disableDefaultUI: true,
       clickableIcons: true,
       gestureHandling: "greedy",
       fullscreenControl: true,
-
-      styles: [
-        {
-          featureType: "poi.business",
-          stylers: [{ visibility: "off" }],
-        },
-        {
-          featureType: "poi.attraction",
-          stylers: [{ visibility: "off" }],
-        },
-        {
-          featureType: "poi.medical",
-          stylers: [{ visibility: "off" }],
-        },
-        {
-          featureType: "poi.park",
-          stylers: [{ visibility: "off" }],
-        },
-        {
-          featureType: "poi.government",
-          stylers: [{ visibility: "off" }],
-        },
-        {
-          featureType: "poi.school",
-          stylers: [{ visibility: "off" }],
-        },
-        {
-          featureType: "poi.place_of_worship",
-          stylers: [{ visibility: "off" }],
-        },
-        {
-          featureType: "poi.sports_complex",
-          stylers: [{ visibility: "off" }],
-        },
-        {
-          elementType: "geometry",
-          stylers: [{ color: bg700 }],
-        },
-        { elementType: "labels.text.stroke", stylers: [{ color: bg600 }] },
-        { elementType: "labels.text.fill", stylers: [{ color: bg100 }] },
-        {
-          featureType: "administrative.locality",
-          elementType: "labels.text.fill",
-          stylers: [{ color: peach200 }],
-        },
-        {
-          featureType: "poi",
-          elementType: "labels.text.fill",
-          stylers: [{ color: bg100 }],
-        },
-        {
-          featureType: "poi.park",
-          elementType: "labels.text.fill",
-          stylers: [{ color: bg300 }],
-        },
-        {
-          featureType: "road",
-          elementType: "geometry",
-          stylers: [{ color: bg500 }],
-        },
-        {
-          featureType: "road",
-          elementType: "geometry.stroke",
-          stylers: [{ color: bg600 }],
-        },
-        {
-          featureType: "road",
-          elementType: "labels.text.fill",
-          stylers: [{ color: bg100 }],
-        },
-        {
-          featureType: "road.highway",
-          elementType: "geometry",
-          stylers: [{ color: bg300 }],
-        },
-        {
-          featureType: "road.highway",
-          elementType: "geometry.stroke",
-          stylers: [{ color: bg800 }],
-        },
-        {
-          featureType: "road.highway",
-          elementType: "labels.text.fill",
-          stylers: [{ color: bg300 }],
-        },
-        {
-          featureType: "transit",
-          elementType: "geometry",
-          stylers: [{ color: bg600 }],
-        },
-        {
-          featureType: "transit.station",
-          elementType: "labels.text.fill",
-          stylers: [{ color: bg100 }],
-        },
-        {
-          featureType: "water",
-          elementType: "geometry",
-          stylers: [{ color: bg900 }],
-        },
-        {
-          featureType: "water",
-          elementType: "labels.text.fill",
-          stylers: [{ color: bg500 }],
-        },
-        {
-          featureType: "water",
-          elementType: "labels.text.stroke",
-          stylers: [{ color: bg700 }],
-        },
-      ],
+      styles: mapStyles,
     }),
-    [
-      peach200,
-      bg100,
-      bg300,
-      bg500,
-      bg600,
-      bg700,
-      bg800,
-      bg900,
-    ]
+    [mapStyles]
   );
 
   const { isLoaded } = useLoadScript({
@@ -199,8 +100,8 @@ const MapPageContent = () => {
         options={mapOptions}
         zoom={13}
         center={{
-          lat: 41.02571061642778,
-          lng: 28.974107139116633,
+          lat,
+          lng,
         }}
         mapContainerStyle={containerStyle}
       >

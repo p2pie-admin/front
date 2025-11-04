@@ -1,6 +1,6 @@
 import { NextSeo, BreadcrumbJsonLd } from "next-seo";
 import { ISEO, BreadcrumbItem } from "../../types/general";
-const siteLang = process.env.NEXT_PUBLIC_SITE_LANG || "ru";
+import { locale as siteLang } from "../../services/utils";
 export const nullSeo = {
   title: null,
   description: null,
