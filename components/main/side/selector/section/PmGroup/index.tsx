@@ -89,7 +89,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
       icon={pm_group.icon}
       iconAlt={name}
       handleToggle={choosePm}
-      shaded={false}
+      shaded={shaded}
     >
       <Name
         name={name}
