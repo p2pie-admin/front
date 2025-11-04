@@ -79,8 +79,8 @@ const MassRate = ({
         cursor="pointer"
         onClick={() => {
           dispatch(redirect());
-          const fullLink = enrichLink(ref_link, rate.course);
-          window.open(fullLink, "_blank");
+
+          window.open(ref_link, "_blank");
         }}
       >
         <Box borderRadius="xl" overflow="hidden">

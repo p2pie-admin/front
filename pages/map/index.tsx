@@ -11,17 +11,17 @@ import { getPricesUSD } from "../../components/map/helper";
 import { FAKE_PHYSICAL_EXCHANGERS } from "../../components/map/fakeData";
 import { PhysicalExchangersQuery } from "../../components/map/queries";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import React from "react";
 
 const Home: NextPage = () => {
   const fetcher = initCMSFetcher();
   const { data, error } = useSWR(PhysicalExchangersQuery, fetcher) as {
-    data: { physicalExchangers: IPhysicalExchanger[] };
+    data: {
+      physicalExchangers: IPhysicalExchanger[];
+    };
     error: boolean;
   };
 
-  // ✅ Remove unnecessary 'places' library
-  const libraries = useMemo(() => [], []);
+  const libraries = useMemo(() => ["places"], []);
 
   const containerStyle = {
     width: "100%",
@@ -45,23 +45,47 @@ const Home: NextPage = () => {
   const mapOptions = useMemo<google.maps.MapOptions>(
     () => ({
       disableDefaultUI: true,
-      clickableIcons: false, // ✅ reduce unnecessary POI requests
+      clickableIcons: true,
       gestureHandling: "greedy",
-      fullscreenControl: false, // ✅ unnecessary control
-      mapId: process.env.NEXT_PUBLIC_MAP_ID || undefined, // ✅ use map style ID if defined
+      fullscreenControl: true,
+
       styles: [
-        { featureType: "poi.business", stylers: [{ visibility: "off" }] },
-        { featureType: "poi.attraction", stylers: [{ visibility: "off" }] },
-        { featureType: "poi.medical", stylers: [{ visibility: "off" }] },
-        { featureType: "poi.park", stylers: [{ visibility: "off" }] },
-        { featureType: "poi.government", stylers: [{ visibility: "off" }] },
-        { featureType: "poi.school", stylers: [{ visibility: "off" }] },
+        {
+          featureType: "poi.business",
+          stylers: [{ visibility: "off" }],
+        },
+        {
+          featureType: "poi.attraction",
+          stylers: [{ visibility: "off" }],
+        },
+        {
+          featureType: "poi.medical",
+          stylers: [{ visibility: "off" }],
+        },
+        {
+          featureType: "poi.park",
+          stylers: [{ visibility: "off" }],
+        },
+        {
+          featureType: "poi.government",
+          stylers: [{ visibility: "off" }],
+        },
+        {
+          featureType: "poi.school",
+          stylers: [{ visibility: "off" }],
+        },
         {
           featureType: "poi.place_of_worship",
           stylers: [{ visibility: "off" }],
         },
-        { featureType: "poi.sports_complex", stylers: [{ visibility: "off" }] },
-        { elementType: "geometry", stylers: [{ color: bg700 }] },
+        {
+          featureType: "poi.sports_complex",
+          stylers: [{ visibility: "off" }],
+        },
+        {
+          elementType: "geometry",
+          stylers: [{ color: bg700 }],
+        },
         { elementType: "labels.text.stroke", stylers: [{ color: bg600 }] },
         { elementType: "labels.text.fill", stylers: [{ color: bg100 }] },
         {
@@ -75,9 +99,24 @@ const Home: NextPage = () => {
           stylers: [{ color: bg100 }],
         },
         {
+          featureType: "poi.park",
+          elementType: "labels.text.fill",
+          stylers: [{ color: bg300 }],
+        },
+        {
           featureType: "road",
           elementType: "geometry",
           stylers: [{ color: bg500 }],
+        },
+        {
+          featureType: "road",
+          elementType: "geometry.stroke",
+          stylers: [{ color: bg600 }],
+        },
+        {
+          featureType: "road",
+          elementType: "labels.text.fill",
+          stylers: [{ color: bg100 }],
         },
         {
           featureType: "road.highway",
@@ -85,9 +124,39 @@ const Home: NextPage = () => {
           stylers: [{ color: bg300 }],
         },
         {
+          featureType: "road.highway",
+          elementType: "geometry.stroke",
+          stylers: [{ color: bg800 }],
+        },
+        {
+          featureType: "road.highway",
+          elementType: "labels.text.fill",
+          stylers: [{ color: bg300 }],
+        },
+        {
+          featureType: "transit",
+          elementType: "geometry",
+          stylers: [{ color: bg600 }],
+        },
+        {
+          featureType: "transit.station",
+          elementType: "labels.text.fill",
+          stylers: [{ color: bg100 }],
+        },
+        {
           featureType: "water",
           elementType: "geometry",
           stylers: [{ color: bg900 }],
+        },
+        {
+          featureType: "water",
+          elementType: "labels.text.fill",
+          stylers: [{ color: bg500 }],
+        },
+        {
+          featureType: "water",
+          elementType: "labels.text.stroke",
+          stylers: [{ color: bg700 }],
         },
       ],
     }),
@@ -96,44 +165,18 @@ const Home: NextPage = () => {
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY as string,
-    libraries,
-    // ✅ prevent redundant script loads across renders
-    preventGoogleFontsLoading: true,
+    libraries: libraries as any,
   });
 
   const physicalExchangers = data?.physicalExchangers?.length
     ? data.physicalExchangers
     : FAKE_PHYSICAL_EXCHANGERS;
 
-  if (!isLoaded) return <Text>Loading map...</Text>;
+  if (!isLoaded) {
+    return <Text>Loading...</Text>;
+  }
 
   const priceBasis = getPricesUSD(physicalExchangers);
-
-  const MemoizedMap = React.memo(() => (
-    <GoogleMap
-      options={mapOptions}
-      zoom={13}
-      center={{ lat: 41.02571061642778, lng: 28.974107139116633 }}
-      mapContainerStyle={containerStyle}
-    >
-      {physicalExchangers.map(({ id, lat, lng }) => (
-        <OverlayView
-          key={id}
-          position={{ lat, lng }}
-          getPixelPositionOffset={(width, height) => ({
-            x: -width / 2,
-            y: -height / 2,
-          })}
-          mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
-        >
-          <CustomMarker
-            physicalExchanger={{ id, lat, lng }}
-            priceBasis={priceBasis}
-          />
-        </OverlayView>
-      ))}
-    </GoogleMap>
-  ));
 
   return (
     <Box
@@ -143,7 +186,35 @@ const Home: NextPage = () => {
       w={{ base: "100%", md: "888px" }}
       minW={{ base: "100%", lg: "888px" }}
     >
-      <MemoizedMap />
+      <GoogleMap
+        options={mapOptions}
+        zoom={13}
+        center={{
+          lat: 41.02571061642778,
+          lng: 28.974107139116633,
+        }}
+        mapContainerStyle={containerStyle}
+      >
+        {physicalExchangers.map((physicalExchanger) => {
+          const { id, lat, lng } = physicalExchanger;
+          return (
+            <OverlayView
+              getPixelPositionOffset={(width, height) => ({
+                x: -(width / 2),
+                y: -(height / 2),
+              })}
+              key={id}
+              position={{ lat, lng }}
+              mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+            >
+              <CustomMarker
+                physicalExchanger={physicalExchanger}
+                priceBasis={priceBasis}
+              />
+            </OverlayView>
+          );
+        })}
+      </GoogleMap>
     </Box>
   );
 };

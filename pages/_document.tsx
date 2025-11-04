@@ -14,6 +14,7 @@ export default function MyDocument() {
           href="/apple-touch-icon.png"
         />
 
+        {/* Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -26,11 +27,6 @@ export default function MyDocument() {
           rel="stylesheet"
         />
 
-        <link
-          href="https://fonts.googleapis.com/css2?family=Mozilla+Text:wght@400&text=1234567890,.-+&display=swap"
-          rel="stylesheet"
-        />
-
         {/* Meta tags */}
         <meta name="google" content="notranslate" />
         <meta
@@ -40,7 +36,6 @@ export default function MyDocument() {
       </Head>
       <body>
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-
         <Main />
         <NextScript />
       </body>

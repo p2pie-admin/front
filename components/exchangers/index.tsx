@@ -29,7 +29,18 @@ export default function ExchangersList({
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const loadMore = useCallback((node: HTMLDivElement | null) => {
-    if (observerRef.current) observerRef.current.disconnect();
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+      observerRef.current = null;
+    }
+
+    if (!node || !(node instanceof Element)) {
+      return;
+    }
+
+    if (typeof IntersectionObserver === "undefined") {
+      return;
+    }
 
     observerRef.current = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
@@ -37,7 +48,13 @@ export default function ExchangersList({
       }
     });
 
-    if (node) observerRef.current.observe(node);
+    try {
+      observerRef.current.observe(node);
+    } catch (error) {
+      console.error("Failed to observe sentinel element", error);
+      observerRef.current.disconnect();
+      observerRef.current = null;
+    }
   }, []);
 
   const toggleFilter = (status: string) => {
