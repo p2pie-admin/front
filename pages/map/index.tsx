@@ -1,7 +1,7 @@
 //@ts-nocheck
 import { useLoadScript, GoogleMap, OverlayView } from "@react-google-maps/api";
 import type { GetStaticProps, NextPage } from "next";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Box, Text, useToken } from "@chakra-ui/react";
 import { initCMSFetcher } from "../../services/fetchers";
 import useSWR from "swr";
@@ -12,7 +12,7 @@ import { FAKE_PHYSICAL_EXCHANGERS } from "../../components/map/fakeData";
 import { PhysicalExchangersQuery } from "../../components/map/queries";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-const Home: NextPage = () => {
+const MapPageContent = () => {
   const fetcher = initCMSFetcher();
   const { data, error } = useSWR(PhysicalExchangersQuery, fetcher) as {
     data: {
@@ -160,7 +160,16 @@ const Home: NextPage = () => {
         },
       ],
     }),
-    []
+    [
+      peach200,
+      bg100,
+      bg300,
+      bg500,
+      bg600,
+      bg700,
+      bg800,
+      bg900,
+    ]
   );
 
   const { isLoaded } = useLoadScript({
@@ -217,6 +226,20 @@ const Home: NextPage = () => {
       </GoogleMap>
     </Box>
   );
+};
+
+const Home: NextPage = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return <Text>Loading...</Text>;
+  }
+
+  return <MapPageContent />;
 };
 
 export default Home;
