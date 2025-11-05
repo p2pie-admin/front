@@ -49,19 +49,19 @@ const MainPageContent = ({
       <Greeting />
 
       <ColumnGrid>
-        <Column index={2}>
-          <Calculator />
-        </Column>
         <Column index={1}>
           <CircularTexts mainTexts={mainTexts} />
         </Column>
-        <Column index={3}>
-          <Popular popularRates={popularRates} popularPms={popularPms} />
+        <Column index={2}>
+          <Calculator />
         </Column>
         <Column index={4}>
           <ResponsiveText variant="no_contrast" whiteSpace="normal">
             {rootText?.text || ""}
           </ResponsiveText>
+        </Column>
+        <Column index={3}>
+          <Popular popularRates={popularRates} popularPms={popularPms} />
         </Column>
       </ColumnGrid>
 

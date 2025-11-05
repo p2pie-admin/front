@@ -41,6 +41,7 @@ const MassSelector = ({ initialSlug }: { initialSlug?: string }) => {
       w="100%"
       position="relative"
     >
+      <MassSwiper />
       {initialSlug ? (
         <NextLink href={slug}>
           <Button

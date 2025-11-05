@@ -40,23 +40,29 @@ const CustomMarker = ({ exchanger }: CustomMarkerProps) => {
           setActive((prev) => !prev);
         }}
       >
-        <Box color={isOpen ? "peach.400" : "peach.500"}>
-          <FaLocationPin size="2rem" />
-          <Center
-            top="15%"
-            position="absolute"
-            left="49%"
-            transform="translateX(-50%)"
-          >
-            {exchanger.logo ? (
-              <Box borderRadius="50%" overflow="hidden">
-                <CustomImage img={exchanger.logo} w="20px" h="20px" />
-              </Box>
-            ) : (
-              <Box w="8px" h="8px" bg="bg.800" borderRadius="50%" mt="2.5" />
-            )}
-          </Center>
+        <Box
+          bottom="8"
+          left="-4"
+          color={isOpen ? "red.300" : "red.400"}
+          position="absolute"
+        >
+          <FaLocationPin size="3rem" />
         </Box>
+
+        <Center
+          transform="translateX(-50%)"
+          bottom="46px"
+          left="20%"
+          position="absolute"
+        >
+          {exchanger.logo ? (
+            <Box borderRadius="50%" overflow="hidden">
+              <CustomImage img={exchanger.logo} w="30px" h="30px" />
+            </Box>
+          ) : (
+            <Box w="8px" h="8px" bg="bg.800" borderRadius="50%" mt="2.5" />
+          )}
+        </Center>
       </Box>
     </Tooltip>
   );
