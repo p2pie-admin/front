@@ -19,8 +19,8 @@ import {
   getPmsByCodes,
 } from "../../components/mass/helper";
 import Mass from "../../components/mass";
-import { IPm, IMassDirText, IMassDirTextId, IMassRate } from "../../types/mass";
-import { IPm } from "../../types/selector";
+import { IMassDirText, IMassDirTextId, IMassRate, IPm } from "../../types/mass";
+
 import { addHeadersToSearchIndex, addPathsToSitemap } from "../../cache/cache";
 
 const isSell = false;
@@ -69,8 +69,8 @@ export const getStaticProps = async ({
     }),
   ]);
 
-  const fiatPms = getPmsByCodes(massRates, pms) as Record<string, IPm>;
-  const cryptoPms = getCryptoPms(pms) as IPm[];
+  const fiatPms = getPmsByCodes(massRates, pms);
+  const cryptoPms = getCryptoPms(pms);
 
   try {
     const seo = generateMassSeo({
@@ -98,7 +98,7 @@ export const getStaticProps = async ({
         slug,
         ...(await serverSideTranslations(locale, ["main"])),
       },
-      revalidate: 300,
+      revalidate: 30000,
     };
   } catch (e) {
     console.error("Error during getStaticProps:", e);
@@ -115,7 +115,7 @@ export const getStaticProps = async ({
         slug,
         ...(await serverSideTranslations(locale, ["main"])),
       },
-      revalidate: 3000,
+      revalidate: 30000,
     };
   }
 };

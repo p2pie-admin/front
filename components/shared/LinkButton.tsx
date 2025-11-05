@@ -10,7 +10,7 @@ const LinkButton = ({
   variant,
 }: {
   href: string;
-  message: string;
+  message?: string;
   CustomIcon?: React.ComponentType<any>;
   variant?: string;
 }) => {

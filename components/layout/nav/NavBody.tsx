@@ -40,6 +40,11 @@ const NavBody = () => {
         href={"https://t.me/p2pie_bot"}
         CustomIcon={RiRobot2Line}
       /> */}
+      <LinkButton
+        message={t("main:mapPage")}
+        href={"map"}
+        CustomIcon={RiMapPinLine}
+      />
     </>
   );
 };

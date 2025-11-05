@@ -3,7 +3,9 @@ import React from "react";
 import { FaStar } from "react-icons/fa";
 import { ResponsiveText } from "../../../styles/theme/custom";
 
-export default function Rating({ rating }: { rating: number }) {
+export default function Rating({ rating }: { rating?: number | null }) {
+  if (!rating) return <></>;
+
   const ratingColor =
     rating < 3
       ? "red.500"
@@ -14,10 +16,8 @@ export default function Rating({ rating }: { rating: number }) {
       : rating < 4.7
       ? "#97bb48"
       : "green.400";
-
-  if (!rating) return <></>;
   return (
-    <HStack gap="1">
+    <HStack gap="1" mt="1">
       <Box color={ratingColor} mb="1">
         <FaStar size="0.8rem" />
       </Box>

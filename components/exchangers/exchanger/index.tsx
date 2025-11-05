@@ -12,6 +12,8 @@ import { ISEO } from "../../../types/general";
 import { IPm } from "../../../types/selector";
 import { TextToHTML } from "../../shared/helper";
 import { locale } from "../../../services/utils";
+import logo from "next-seo/lib/jsonld/logo";
+import ExchangerName from "../../shared/ExchangerNameRating";
 
 export default function Exchanger({
   exchanger,
@@ -36,8 +38,7 @@ export default function Exchanger({
   }
 
   const description =
-    exchanger.exchanger_card[`${locale}_description`] || "no description";
-  console.log(exchanger);
+    exchanger.exchanger_card?.[`${locale}_description`] || "no description";
 
   return (
     <>
@@ -49,14 +50,12 @@ export default function Exchanger({
           articleExists={!!exchanger.ref_link}
         >
           <HStack>
-            <ResponsiveText
-              fontWeight="bold"
-              size="4xl"
-              variant="primary"
-              as="h1"
-            >
-              {capitalize(exchanger.name)}
-            </ResponsiveText>
+            <ExchangerName
+              name={exchanger.name}
+              logo={exchanger.logo}
+              admin_rating={exchanger.admin_rating}
+              isH1={true}
+            />
             <TbExternalLink size="1.5rem" />
           </HStack>
         </LinkWrapper>

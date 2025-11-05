@@ -19,7 +19,7 @@ export interface IRate {
   parameterCodes?: string[];
   cities?: { [key: string]: string[] };
   ref_link: string;
-  logo: IImage;
+  logo?: IImage | null;
   last_time_updated?: number;
 }
 

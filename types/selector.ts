@@ -41,7 +41,8 @@ interface IPmGroup {
 interface IImage {
   id: string;
   url: string;
-  alternativeText: string;
+  alternativeText?: string | null;
+  name?: string | null;
 }
 
 interface IOption {

@@ -26,7 +26,7 @@ export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
         exchangers: null,
         ...(await serverSideTranslations(locale, ["main"])),
       },
-      revalidate: 400,
+      revalidate: 40000,
     };
   }
 

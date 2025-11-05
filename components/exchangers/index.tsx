@@ -159,11 +159,11 @@ export default function ExchangersList({
             ) : (
               <Grid
                 gap="4"
+                w="100%"
                 justifyItems="center"
                 gridTemplateColumns={{
                   base: "1fr",
                   md: "repeat(2, 1fr)",
-                  lg: "repeat(3, 1fr)",
                 }}
               >
                 {visibleExchangers?.map((exchanger) => (

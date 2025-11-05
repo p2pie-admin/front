@@ -12,7 +12,7 @@ const CustomImage = ({
   customAlt = "",
   objectFit = "cover",
 }: {
-  img?: IImage;
+  img?: IImage | null;
   w?: string;
   h?: string;
   shaded?: boolean;

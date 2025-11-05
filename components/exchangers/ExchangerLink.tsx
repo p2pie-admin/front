@@ -5,6 +5,8 @@ import { Box3D, ResponsiveText } from "../../styles/theme/custom";
 import { IExchanger, IParserExchanger } from "../../types/exchanger";
 import Dot from "./Dot";
 import { exchangerNameToSlug, getStatus } from "./helper";
+import logo from "next-seo/lib/jsonld/logo";
+import ExchangerName from "../shared/ExchangerNameRating";
 
 export default function ExchangerPreview({
   exchanger,
@@ -14,28 +16,26 @@ export default function ExchangerPreview({
   const { name, total_rates } = exchanger;
   return (
     <Box3D
+      w="100%"
       as={Link}
       href={`/exchangers/${exchangerNameToSlug(name)}`}
       prefetch={false}
       px="4"
-      py="2"
+      py="4"
       variant="extra_contrast"
       minW={{ base: "90vw", md: "250px" }}
       justifyContent="start"
       alignItems="center"
-      h="12"
       key={name}
     >
       <HStack w="100%">
         <Dot color={getStatus(exchanger)} />
-        <HStack w="100%" justifyContent="space-between">
-          <ResponsiveText size={name.length > 10 ? "sm" : "md"}>
-            {name}
-          </ResponsiveText>
-          {total_rates && (
-            <ResponsiveText fontWeight="regular">{`(${total_rates})`}</ResponsiveText>
-          )}
-        </HStack>
+
+        <ExchangerName
+          name={name}
+          logo={exchanger.logo}
+          admin_rating={exchanger.admin_rating}
+        />
       </HStack>
     </Box3D>
   );

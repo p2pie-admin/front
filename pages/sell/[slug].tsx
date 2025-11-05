@@ -98,7 +98,7 @@ export const getStaticProps = async ({
         slug,
         ...(await serverSideTranslations(locale, ["main"])),
       },
-      revalidate: 300,
+      revalidate: 30000,
     };
   } catch (e) {
     console.error("Error during getStaticProps:", e);
@@ -115,7 +115,7 @@ export const getStaticProps = async ({
         slug,
         ...(await serverSideTranslations(locale, ["main"])),
       },
-      revalidate: 3000,
+      revalidate: 30000,
     };
   }
 };

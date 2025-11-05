@@ -28,7 +28,7 @@ const emptyProps = async (locale: "en" | "ru") => ({
     locale,
     ...(await serverSideTranslations(locale, ["main"])),
   },
-  revalidate: 600,
+  revalidate: 60000,
 });
 
 const ArticlePage = (props: {

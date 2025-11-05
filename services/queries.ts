@@ -145,7 +145,7 @@ export const exchangerQuery = gql`
 export const exchangersQuery = gql`
   {
     exchangers(
-      pagination: { start: 0, limit: 1000 }
+      pagination: { start: 0, limit: 2000 }
       filters: {
         exchanger_card: {
           ru_description: { notNull: true }
@@ -169,6 +169,106 @@ export const exchangersQuery = gql`
             telegram
             email
             working_time
+          }
+          exchanger_templates {
+            data {
+              id
+              attributes {
+                include
+                exclude
+                cities
+                top_parameter {
+                  data {
+                    id
+                    attributes {
+                      code
+                    }
+                  }
+                }
+              }
+            }
+          }
+          offices(filters: { visible: { eq: true } }) {
+            data {
+              id
+              attributes {
+                visible
+              }
+            }
+          }
+          logo {
+            data {
+              id
+              attributes {
+                alternativeText
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const exchangersMapQuery = gql`
+  query ExchangersMap {
+    exchangers(
+      pagination: { start: 0, limit: 2000 }
+      filters: {
+        exchanger_card: {
+          ru_description: { notNull: true }
+          en_description: { notNull: true }
+        }
+        ref_link: { notNull: true }
+        rates_link: { notNull: true }
+        offices: { id: { notNull: true } }
+      }
+    ) {
+      data {
+        id
+        attributes {
+          name
+          ref_link
+          tag
+          admin_rating
+          updatedAt
+          exchanger_card {
+            telegram
+            email
+            working_time
+          }
+          logo {
+            data {
+              id
+              attributes {
+                alternativeText
+                url
+              }
+            }
+          }
+          offices {
+            data {
+              id
+              attributes {
+                visible
+                coordinates
+                city
+                working_time
+                description
+                address
+                image {
+                  data {
+                    id
+                    attributes {
+                      name
+                      alternativeText
+                      url
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }

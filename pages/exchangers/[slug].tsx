@@ -119,7 +119,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
         locale,
         ...(await serverSideTranslations(locale, ["main"])),
       },
-      revalidate: 60,
+      revalidate: 60000,
     };
   }
 }

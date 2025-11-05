@@ -160,7 +160,7 @@ export async function getStaticProps({
         dirTextIds: dirTextIds || null,
         ...(await serverSideTranslations(locale, ["main"])),
       },
-      revalidate: 2400,
+      revalidate: 54000,
     };
   } catch (e) {
     console.error(e);
@@ -176,7 +176,7 @@ export async function getStaticProps({
         donorCity: null,
         ...(await serverSideTranslations(locale, ["main"])),
       },
-      revalidate: 2400,
+      revalidate: 24000,
     };
   }
 }
