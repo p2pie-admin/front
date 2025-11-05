@@ -129,10 +129,6 @@ export async function addHeadersToSearchIndex(
     const merged = Array.from(mergedMap.values());
 
     await redis.set(key, { data: merged, updatedAt: Date.now() });
-
-    console.log(
-      `✅ Added ${normalizedEntries.length} header(s) to search index. Total now: ${merged.length}`
-    );
   } catch (err) {
     console.error(`❌ Failed to add headers to search index:`, err);
   }

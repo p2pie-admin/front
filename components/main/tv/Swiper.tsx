@@ -122,21 +122,20 @@ export const Swiper = (props: {
   };
 
   useEffect(() => {
-    if (!initial && dirRates.length > 0) {
-      // start at item 1
-      scrollToItem(1);
-      debouncedSetSwiperIdVisible(1);
+    if (initial) return;
+    if (dirRates.length === 0) return;
 
-      // then scroll back to item 0 after short delay
-      const timeout = setTimeout(() => {
-        scrollToItem(0);
-        debouncedSetSwiperIdVisible(0);
-      }, 1000); // adjust delay (in ms) as desired
+    scrollToItem(1);
+    debouncedSetSwiperIdVisible(1);
 
-      return () => clearTimeout(timeout);
-    }
+    const timeout = setTimeout(() => {
+      scrollToItem(0);
+      debouncedSetSwiperIdVisible(0);
+    }, 1000);
+
+    return () => clearTimeout(timeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initial, dirRates.length]);
+  }, []);
 
   useEffect(() => {
     if (isMobile) return;
