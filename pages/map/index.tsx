@@ -1,16 +1,16 @@
-import type { GetStaticProps } from "next";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 const DEFAULT_CITY_SLUG = "moscow";
 
-export const getStaticProps: GetStaticProps = async () => {
-  return {
-    redirect: {
-      destination: `/map/${DEFAULT_CITY_SLUG}`,
-      permanent: false,
-    },
-  };
-};
+const MapIndexRedirect = () => {
+  const router = useRouter();
 
-const MapIndexRedirect = () => null;
+  useEffect(() => {
+    router.replace(`/map/${DEFAULT_CITY_SLUG}`);
+  }, [router]);
+
+  return null;
+};
 
 export default MapIndexRedirect;
