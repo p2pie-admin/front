@@ -20,7 +20,7 @@ const Popular = ({
   if (!popularRates || !popularPms) return <></>;
 
   return (
-    <Box position="relative">
+    <Box position="relative" overflow="hidden">
       <Box maxH="400" overflowY="auto">
         {Object.entries(popularRates).map(([cryptoCode, buySell], index) => {
           const cryptoPm = popularPms?.find((pm) => pm?.code == cryptoCode);
@@ -61,7 +61,7 @@ const Popular = ({
         <Box h="100" />
       </Box>
 
-      <Shader direction="top" />
+      <Shader direction="top" no_contrast />
     </Box>
   );
 };

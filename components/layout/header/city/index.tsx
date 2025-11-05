@@ -20,8 +20,8 @@ const CitySelector = () => {
   );
 
   const dispatch = useAppDispatch();
-  // if (!slug || !(slug.startsWith("cash-") || slug.includes("-cash-")))
-  //   return <></>;
+  if (!slug || !(slug.startsWith("cash-") || slug.includes("-cash-")))
+    return <></>;
   return (
     <Box>
       <CustomModal id="location" header={t("main:chooseCity")}>

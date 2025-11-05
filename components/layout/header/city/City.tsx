@@ -26,34 +26,35 @@ export default function City({
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const handleChooseCity = () => {
-    // router.push(`/${slugCityToExchange(slug, en_name)}`);
-    // batch(() => {
-    //   dispatch(fetchCity(en_name));
-    //   dir && dispatch(fetchDirRates({ dir, cityName: en_name }));
-    //   dir && dispatch(setDirRatesStatus("pending"));
-    // });
+  const handleChooseCity = (en_name: string) => {
+    router.push(`/${slugCityToExchange(slug, en_name)}`);
+    batch(() => {
+      dispatch(fetchCity(en_name));
+      dir && dispatch(fetchDirRates({ dir, cityName: en_name }));
+      dir && dispatch(setDirRatesStatus("pending"));
+      dispatch(triggerModal(undefined));
+    });
   };
   if (!dir || !city) return <></>;
   const weight = weights[city.population || 0];
   return (
-    <Link
-      onClick={() => dispatch(triggerModal(undefined))}
-      href={`/${slugCityToExchange(slug, city.en_name)}`}
-      passHref
+    // <Link
+    //   onClick={() => dispatch(triggerModal(undefined))}
+    //   href={`/${slugCityToExchange(slug, city.en_name)}`}
+    //   passHref
+    // >
+    <Text
+      ml="1"
+      mt="1"
+      onClick={() => handleChooseCity(city.en_name)}
+      key={city.en_name}
+      cursor="pointer"
+      fontWeight={weight?.fontWeight || "bold"}
+      fontSize={city.en_name.length < 10 ? weight?.fontSize : "lg"}
+      variant={weight?.variant || "extra_contrast"}
     >
-      <Text
-        ml="1"
-        mt="1"
-        // onClick={() => handleChooseCity(city.en_name)}
-        key={city.en_name}
-        cursor="pointer"
-        fontWeight={weight?.fontWeight || "bold"}
-        fontSize={city.en_name.length < 10 ? weight?.fontSize : "lg"}
-        variant={weight?.variant || "extra_contrast"}
-      >
-        {city[`${locale as "en" | "ru"}_name`]}
-      </Text>
-    </Link>
+      {city[`${locale as "en" | "ru"}_name`]}
+    </Text>
+    // </Link>
   );
 }
