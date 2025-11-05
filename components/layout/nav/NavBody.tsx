@@ -42,7 +42,7 @@ const NavBody = () => {
       /> */}
       <LinkButton
         message={t("main:mapPage")}
-        href={"map"}
+        href={"/map"}
         CustomIcon={RiMapPinLine}
       />
     </>
