@@ -51,7 +51,7 @@ const Layout = ({ children }: { children: any }) => {
     <Box // careful! populars may stop working!
       w="100%"
       position="relative"
-      fontFamily="Roboto, sans-serif"
+      fontFamily="Rubik, sans-serif"
       sx={{
         "&::WebkitScrollbar": {
           width: "0",

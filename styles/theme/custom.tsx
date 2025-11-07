@@ -96,7 +96,7 @@ export const ResponsiveText = (props: any) => {
     ...chakraProps
   }: {
     children: ReactElement;
-    size?: "xs" | "sm" | "md" | "lg" | "xl";
+    size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl";
     variant: ITextVariant;
   } = props;
   const sizes = {
@@ -105,6 +105,8 @@ export const ResponsiveText = (props: any) => {
     md: ["sm", "sm", "md", "lg"],
     lg: ["md", "md", "lg", "xl"],
     xl: ["lg", "lg", "xl", "2xl"],
+    "2xl": ["xl", "xl", "2xl", "3xl"],
+    "3xl": ["2xl", "2xl", "3xl", "4xl"],
   };
   const variants = {
     xs: "no_contrast",
@@ -112,6 +114,8 @@ export const ResponsiveText = (props: any) => {
     md: "contrast",
     lg: "extra_contrast",
     xl: "extra_contrast",
+    "2xl": "extra_contrast",
+    "3xl": "extra_contrast",
   };
   const fontSize = sizes[size];
 
@@ -119,6 +123,9 @@ export const ResponsiveText = (props: any) => {
     <Text
       whiteSpace="nowrap"
       fontSize={fontSize}
+      fontFamily={
+        /\d/.test(size) ? `"Montserrat Alternates", sans-serif` : "unset"
+      }
       variant={variant || variants[size]}
       {...chakraProps}
     >

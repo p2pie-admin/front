@@ -117,7 +117,6 @@ export const pmLayoutsQuery = gql`
     }
   }
 `;
-
 export const exchangerQuery = gql`
   query ExchangerQuery($name: String!) {
     exchangers(filters: { name: { eqi: $name } }) {
@@ -125,22 +124,188 @@ export const exchangerQuery = gql`
         id
         attributes {
           name
+          status
           ref_link
-          tag
           admin_rating
-          updatedAt
           exchanger_card {
-            en_description
-            ru_description
+            id
             telegram
             email
+            phone_number
+            whatsapp
+            date_listed
             working_time
+            en_description
+            ru_description
+            total_reserve_usd
+          }
+          logo {
+            data {
+              id
+              attributes {
+                name
+                alternativeText
+                url
+              }
+            }
+          }
+          reviews {
+            data {
+              id
+              attributes {
+                fingerprint
+                text
+                type
+                isDispute
+                isClosed
+                isApproved
+                categories
+                userAgent
+                location
+                screenshots {
+                  data {
+                    id
+                    attributes {
+                      name
+                      alternativeText
+                      url
+                    }
+                  }
+                }
+                review_replies {
+                  data {
+                    id
+                    attributes {
+                      text
+                      from
+                      iaApproved
+                      screenshots {
+                        data {
+                          id
+                          attributes {
+                            name
+                            alternativeText
+                            url
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          offices {
+            data {
+              id
+              attributes {
+                coordinates
+                city
+                visible
+                working_time
+                description
+                address
+                image {
+                  data {
+                    id
+                    attributes {
+                      name
+                      alternativeText
+                      url
+                    }
+                  }
+                }
+              }
+            }
+          }
+          exchanger_templates {
+            data {
+              id
+              attributes {
+                show_in_rates
+                top_parameter {
+                  data {
+                    id
+                    attributes {
+                      code
+                      parameter {
+                        en_description
+                        ru_description
+                        icon {
+                          data {
+                            id
+                            attributes {
+                              name
+                              alternativeText
+                              url
+                            }
+                          }
+                        }
+                      }
+                      en_name
+                      ru_name
+                    }
+                  }
+                }
+              }
+            }
+          }
+          exchanger_tags {
+            data {
+              id
+              attributes {
+                name
+                description
+                color
+              }
+            }
           }
         }
       }
     }
   }
 `;
+// export const exchangerQuery = gql`
+//   query ExchangerQuery($name: String!) {
+//     exchangers(filters: { name: { eqi: $name } }) {
+//       data {
+//         id
+//         attributes {
+//           name
+//           ref_link
+
+//           admin_rating
+//           updatedAt
+//           exchanger_card {
+//             en_description
+//             ru_description
+//             telegram
+//             email
+//             working_time
+//           }
+
+//           offices(filters: { visible: { eq: true } }) {
+//             data {
+//               id
+//               attributes {
+//                 visible
+//               }
+//             }
+//           }
+//           logo {
+//             data {
+//               id
+//               attributes {
+//                 alternativeText
+//                 url
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// `;
 
 export const exchangersQuery = gql`
   {
@@ -160,7 +325,7 @@ export const exchangersQuery = gql`
         attributes {
           name
           ref_link
-          tag
+
           admin_rating
           updatedAt
           exchanger_card {
@@ -230,7 +395,7 @@ export const exchangersMapQuery = gql`
         attributes {
           name
           ref_link
-          tag
+
           admin_rating
           updatedAt
           exchanger_card {

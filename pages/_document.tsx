@@ -4,7 +4,7 @@ import theme from "../styles/theme";
 
 export default function MyDocument() {
   return (
-    <Html>
+    <Html lang="en">
       <Head>
         {/* Favicon */}
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -14,7 +14,7 @@ export default function MyDocument() {
           href="/apple-touch-icon.png"
         />
 
-        {/* Fonts */}
+        {/* Preconnect for font performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -22,8 +22,9 @@ export default function MyDocument() {
           crossOrigin="anonymous"
         />
 
+        {/* Optimized fonts with normal and bold weights */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Mozilla+Text:wght@400;700&family=Rubik:wght@300;700&family=Montserrat+Alternates:wght@300;700&display=swap"
           rel="stylesheet"
         />
 

@@ -45,7 +45,11 @@ export default function CryptoList({
         const newSlug = convertMassDirTextIntoSlug(newData);
 
         return (
-          <Tooltip label={pm.en_name} fontSize="sm">
+          <Tooltip
+            key={pm.code + currency + pm.en_name + isSell}
+            label={pm.en_name}
+            fontSize="sm"
+          >
             <Link href={`${newSlug}`} key={pm.code}>
               <ResponsiveText
                 as="div"

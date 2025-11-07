@@ -6,7 +6,6 @@ export type ILimit = { [key in ISides]: number };
 export interface IRate {
   exchangerId: string;
   name: string;
-  tag?: string; // pro , p2p, new ...
   admin_rating: number;
   course: number;
   p2pRatio?: number;

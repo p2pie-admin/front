@@ -25,23 +25,62 @@ export interface IExchangerOffice {
   image?: IImage | null;
 }
 
+export interface IExchangerCard {
+  id: string;
+  en_description?: string | null;
+  ru_description?: string | null;
+  telegram?: string | null;
+  email?: string | null;
+  working_time?: string | null;
+  phone_number?: string | null;
+  whatsapp?: string | null;
+  date_listed?: string | null;
+  total_reserve_usd?: number | string | null;
+}
+
+export interface IExchangerReviewReply {
+  id: string;
+  text?: string | null;
+  from?: string | null;
+  iaApproved?: boolean | null;
+  screenshots?: IImage[] | null;
+}
+
+export interface IExchangerReview {
+  id: string;
+  fingerprint?: string | null;
+  text?: string | null;
+  type?: string | null;
+  isDispute?: boolean | null;
+  isClosed?: boolean | null;
+  isApproved?: boolean | null;
+  categories?: string[] | string | null;
+  userAgent?: string | null;
+  location?: string | null;
+  screenshots?: IImage[] | null;
+  review_replies?: IExchangerReviewReply[] | null;
+}
+
+export interface IExchangerTag {
+  id: string;
+  name: string;
+  description?: string | null;
+  color?: string | null;
+}
+
 export type IExchanger = {
   id: string;
   name: string;
   ref_link: string;
   updatedAt?: string;
-  tag?: string | null;
+  status?: IExchangerStatus | null;
   admin_rating?: number | null;
   logo?: IImage | null;
-  exchanger_card?: {
-    en_description?: string;
-    ru_description?: string;
-    telegram?: string;
-    email?: string;
-    working_time?: string;
-  } | null;
+  exchanger_card?: IExchangerCard | null;
   exchanger_templates?: IExchangerTemplate[];
   offices?: IExchangerOffice[];
+  reviews?: IExchangerReview[] | null;
+  exchanger_tags?: IExchangerTag[] | null;
 };
 
 export type IExchangerPreview = {
@@ -113,7 +152,7 @@ export type IExchangerMapOffice = {
   description?: string | null;
   working_time?: string | null;
   ref_link?: string | null;
-  tag?: string | null;
+
   exchanger_card?: IExchanger["exchanger_card"];
   image?: IImage | null;
   visible?: boolean | null;
