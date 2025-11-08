@@ -49,6 +49,8 @@ export interface IExchangerReviewReply {
 export interface IExchangerReview {
   id: string;
   fingerprint?: string | null;
+  ipAddress?: string | null;
+  name?: string | null;
   text?: string | null;
   type?: string | null;
   isDispute?: boolean | null;

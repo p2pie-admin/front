@@ -131,25 +131,25 @@
 //     // if (dirText && textBoxes?.length && textBoxes[0]?.text) {
 //     //   dirText.text = enrichText(textBoxes[0]?.text, articleCodes, pms, locale);
 //     // }
-//     let [giveArticleExists, getArticleExists] = [false, false];
+//     let [giveExists, getExists] = [false, false];
 //     if (articleCodes.length) {
-//       giveArticleExists = !!articleCodes?.find(
+//       giveExists = !!articleCodes?.find(
 //         (code) => code?.toUpperCase() == givePm.en_name.toUpperCase()
 //       );
-//       getArticleExists = !!articleCodes?.find(
+//       getExists = !!articleCodes?.find(
 //         (code) => code?.toUpperCase() == getPm.en_name.toUpperCase()
 //       );
 //     }
 //     const givePmData = {
 //       pm: givePm,
 //       pmLayout: givePmLayout,
-//       articleExists: giveArticleExists,
+//       exists: giveExists,
 //       // possiblePairs: possiblePairs[givePm.code],
 //     } as IPmData;
 //     const getPmData = {
 //       pm: getPm,
 //       pmLayout: getPmLayout,
-//       articleExists: getArticleExists,
+//       exists: getExists,
 //       // possiblePairs: possiblePairs[getPm.code],
 //     } as IPmData;
 //     const title1 = generateTitle({

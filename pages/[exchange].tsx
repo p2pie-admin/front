@@ -106,12 +106,12 @@ export async function getStaticProps({
     const getPmLayout =
       pmLayouts?.find((l) => l.section == getPm?.section) || null;
 
-    let [giveArticleExists, getArticleExists] = [false, false];
+    let [giveExists, getExists] = [false, false];
     if (articleCodes.length) {
-      giveArticleExists = !!articleCodes?.find(
+      giveExists = !!articleCodes?.find(
         (code) => code?.toUpperCase() == givePm.en_name.toUpperCase()
       );
-      getArticleExists = !!articleCodes?.find(
+      getExists = !!articleCodes?.find(
         (code) => code?.toUpperCase() == getPm.en_name.toUpperCase()
       );
     }
@@ -119,12 +119,12 @@ export async function getStaticProps({
     const givePmData = {
       pm: givePm,
       pmLayout: givePmLayout,
-      articleExists: giveArticleExists,
+      exists: giveExists,
     } as IPmData;
     const getPmData = {
       pm: getPm,
       pmLayout: getPmLayout,
-      articleExists: getArticleExists,
+      exists: getExists,
     } as IPmData;
 
     const dirText = (await dirTextHandler({

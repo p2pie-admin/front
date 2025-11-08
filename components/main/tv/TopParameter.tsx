@@ -12,6 +12,7 @@ import { IParameter } from "../../../types/rates";
 import CustomImage from "../../shared/CustomImage";
 import { useAppSelector } from "../../../redux/hooks";
 import MyTooltip from "../../shared/MyTooltip";
+import { locale } from "../../../services/utils";
 
 const Parameter = ({
   code,
@@ -30,11 +31,14 @@ const Parameter = ({
   )} hue-rotate(${rotationColor}deg)`;
 
   if (!topParameter) return <Box display="none"></Box>;
-  const { id, parameter, en_name, ru_name, color } = topParameter;
-  const { en_description, ru_description, icon } = parameter;
+
+  const [name, description] = [
+    topParameter[`${locale}_name`],
+    topParameter.parameter[`${locale}_description`],
+  ];
 
   return (
-    <MyTooltip label={en_description} placement="left">
+    <MyTooltip label={description} placement="left">
       <HStack
         filter={filter}
         zIndex="4"
@@ -61,19 +65,17 @@ const Parameter = ({
           h: "100%",
         }}
       >
-        {icon ? (
+        {topParameter.parameter.icon ? (
           <CustomImage
             w="5"
             h="5"
-            img={icon}
-            customAlt={parameter.en_description}
+            img={topParameter.parameter.icon}
+            customAlt={description}
           />
         ) : (
           <IoInformation size="1rem" />
         )}
-        {isExtended && en_name && (
-          <Text fontSize={["xs", "sm"]}>{en_name}</Text>
-        )}
+        {isExtended && name && <Text fontSize={["xs", "sm"]}>{name}</Text>}
       </HStack>
     </MyTooltip>
   );

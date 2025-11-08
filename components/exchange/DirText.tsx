@@ -34,7 +34,7 @@ export const fillWords = ({
   return parts.map((part, index) => {
     switch (part) {
       case "give_name":
-        return givePmData.articleExists ? (
+        return givePmData.exists ? (
           <Link key={index} href={makeSlug(givePm)}>
             {capitalize(givePm?.[`${locale}_name`] || givePm.en_name)}
           </Link>
@@ -43,7 +43,7 @@ export const fillWords = ({
         );
 
       case "get_name":
-        return getPmData.articleExists ? (
+        return getPmData.exists ? (
           <Link key={index} href={makeSlug(getPm)}>
             {capitalize(getPm[`${locale}_name`] || getPm.en_name)}
           </Link>

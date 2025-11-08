@@ -8,14 +8,14 @@
 
 // const LinkWrapper = ({
 //   url,
-//   articleExists,
+//   exists,
 //   children,
 // }: {
 //   children: any;
-//   articleExists: boolean;
+//   exists: boolean;
 //   url: string;
 // }) => {
-//   if (articleExists)
+//   if (exists)
 //     return (
 //       <Link href={url} passHref>
 //         {children}
@@ -35,12 +35,12 @@
 // }) => {
 // //   const givePmLayout = pmLayouts?.find((t) => t.section == givePm.section);
 // //   const getPmLayout = pmLayouts?.find((t) => t.section == getPm.section);
-// //   const giveArticleExists =
+// //   const giveExists =
 // //     givePmLayout?.articles &&
 // //     Object.values(givePmLayout.articles).find(
 // //       (a) => a.code.toLowerCase() == givePm.en_name.toLowerCase()
 // //     );
-// //   const getArticleExists =
+// //   const getExists =
 // //     !!getPmLayout?.articles &&
 // //     !!Object.values(getPmLayout.articles).find(
 // //       (a) => a.code.toLowerCase() == getPm.en_name.toLowerCase()
@@ -52,15 +52,15 @@
 //         w="100%"
 //         variant="extra_contrast"
 //         p="2"
-//         //cursor={giveArticleExists ? "pointer" : "unset"}
+//         //cursor={giveExists ? "pointer" : "unset"}
 //         transition="filter 0.2s ease-in"
 //         _hover={{ filter: "brightness(1.1)" }}
 //       >
 //         <LinkWrapper
 //         url={""}
-//         articleExists={false}
+//         exists={false}
 //          //  url={`/articles/${givePmLayout?.articles[0]?.code}`}
-//          //  articleExists={giveArticleExists}
+//          //  exists={giveExists}
 //         >
 //           <VStack h="100%" justifyContent="space-around" color="bg.400">
 //             <HStack justifyContent="space-between" w="100%">
@@ -89,13 +89,13 @@
 //         h="100%"
 //         variant="extra_contrast"
 //         p="2"
-//         cursor={getArticleExists ? "pointer" : "unset"}
+//         cursor={getExists ? "pointer" : "unset"}
 //         transition="filter 0.1s ease-in"
 //         _hover={{ filter: "brightness(1.1)" }}
 //       >
 //         <LinkWrapper
 //           url={`/articles/${getPmLayout?.articles[0]?.code}`}
-//           articleExists={getArticleExists}
+//           exists={getExists}
 //         >
 //           <VStack h="100%" justifyContent="space-around" color="bg.400">
 //             <HStack justifyContent="space-between" w="100%">

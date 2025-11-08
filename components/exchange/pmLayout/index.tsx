@@ -12,13 +12,13 @@ export default function pmLayout({ pmData }: { pmData: IPmData }) {
       w="100%"
       variant="extra_contrast"
       p="2"
-      //cursor={giveArticleExists ? "pointer" : "unset"}
+      //cursor={giveExists ? "pointer" : "unset"}
       transition="filter 0.2s ease-in"
       _hover={{ filter: "brightness(1.1)" }}
     >
       <LinkWrapper
         url={`/articles/${pmData.pm.en_name.toLowerCase()}`}
-        articleExists={pmData.articleExists}
+        exists={pmData.exists}
       >
         <VStack h="100%" justifyContent="space-around" color="bg.400">
           <HStack justifyContent="space-between" w="100%">

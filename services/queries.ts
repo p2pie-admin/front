@@ -154,6 +154,7 @@ export const exchangerQuery = gql`
               id
               attributes {
                 fingerprint
+                name
                 text
                 type
                 isDispute

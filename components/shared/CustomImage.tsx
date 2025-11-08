@@ -25,7 +25,7 @@ const CustomImage = ({
   const imageSrc = img ? SRC + img.url : fallbackImage.src; // Use local fallback
 
   return (
-    <Box w={w} h={h} overflow="hidden">
+    <Box maxW={w} maxH={h} overflow="hidden">
       <Image
         key={img?.id}
         w="100%"

@@ -14,6 +14,19 @@ interface IImage {
   };
 }
 
+export const resolveColorToken = (value?: string | null) => {
+  if (!value) return "gray.300";
+  if (value.includes(".")) return value;
+  const normalized = value.toLowerCase();
+  if (normalized.startsWith("dark_")) {
+    return `${normalized.replace("dark_", "")}.500`;
+  }
+  if (normalized.startsWith("light_")) {
+    return `${normalized.replace("light_", "")}.200`;
+  }
+  return `${normalized}.300`;
+};
+
 const CircularIcon = ({
   icon,
   color,
@@ -25,74 +38,8 @@ const CircularIcon = ({
   size?: "sm" | "md" | "lg";
   iconAlt?: string;
 }) => {
-  const [
-    gray,
-    red,
-    orange,
-    yellow,
-    green,
-    teal,
-    blue,
-    cyan,
-    purple,
-    pink,
-    dark_gray,
-    dark_red,
-    dark_orange,
-    dark_yellow,
-    dark_green,
-    dark_teal,
-    dark_blue,
-    dark_cyan,
-    dark_purple,
-    dark_pink,
-  ] = useToken("colors", [
-    "gray.300",
-    "red.300",
-    "orange.300",
-    "yellow.300",
-    "green.300",
-    "teal.300",
-    "blue.300",
-    "cyan.300",
-    "purple.300",
-    "pink.300",
-    "gray.500",
-    "red.500",
-    "orange.500",
-    "yellow.500",
-    "green.500",
-    "teal.500",
-    "blue.500",
-    "cyan.500",
-    "purple.500",
-    "pink.500",
-  ]) as string[];
-
-  const colors = {
-    gray,
-    red,
-    orange,
-    yellow,
-    green,
-    teal,
-    blue,
-    cyan,
-    purple,
-    pink,
-    dark_gray,
-    dark_red,
-    dark_orange,
-    dark_yellow,
-    dark_green,
-    dark_teal,
-    dark_blue,
-    dark_cyan,
-    dark_purple,
-    dark_pink,
-  } as Record<string, string>;
-
-  const colorHEX = colors?.[color] || "#aaa";
+  const [resolvedColor] = useToken("colors", [resolveColorToken(color)]);
+  const colorHEX = resolvedColor || "#aaa";
   const filter = useColorModeValue(
     "hue-rotate(70deg) brightness(0.3) opacity(0.8)",
     "hue-rotate(-140deg) brightness(0.1)"

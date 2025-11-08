@@ -1,16 +1,25 @@
 import Link from "next/link";
+import { ReactNode } from "react";
+
 export const LinkWrapper = ({
   url,
-  articleExists,
+  exists,
   children,
+  _blank = false,
 }: {
-  children: any;
-  articleExists: boolean;
+  children: ReactNode;
+  exists: boolean;
   url: string;
+  _blank?: boolean;
 }) => {
-  if (articleExists)
+  if (exists)
     return (
-      <Link href={url} passHref>
+      <Link
+        href={url}
+        passHref
+        target={_blank ? "_blank" : undefined}
+        rel={_blank ? "noopener noreferrer" : undefined}
+      >
         {children}
       </Link>
     );

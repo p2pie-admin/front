@@ -16,8 +16,8 @@ export interface IPmLayout {
 export interface IPmLayoutsData {
   givePmLayout: IPmLayout;
   getPmLayout: IPmLayout;
-  giveArticleExists: boolean;
-  getArticleExists: boolean;
+  giveExists: boolean;
+  getExists: boolean;
 }
 
 export interface IDirText {
@@ -46,7 +46,7 @@ export type ILocalData = {
 export type IPmData = {
   pm: IPm;
   pmLayout?: IPmLayout;
-  articleExists: boolean;
+  exists: boolean;
 };
 
 export interface ICache {

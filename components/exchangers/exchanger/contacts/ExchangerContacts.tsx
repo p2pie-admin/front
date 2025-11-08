@@ -3,9 +3,9 @@ import React from "react";
 import { IExchangerCard } from "../../../../types/exchanger";
 import { FaTelegramPlane, FaWhatsapp, FaPhone } from "react-icons/fa";
 import { IoMailOpenSharp } from "react-icons/io5";
-import { formatPhoneNumber } from "./helper";
+import { formatPhoneNumber } from "../description/helper";
 
-export default function ExchangerSocials({
+export default function ExchangerContacts({
   exchangerCard,
 }: {
   exchangerCard?: IExchangerCard | null;
@@ -21,7 +21,7 @@ export default function ExchangerSocials({
   } = exchangerCard;
 
   return (
-    <HStack mt="4">
+    <HStack mt="4" justifyContent="end">
       <Button
         leftIcon={<FaTelegramPlane size="1rem" />}
         variant="outline"
