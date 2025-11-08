@@ -11,7 +11,7 @@ const cspHeader = `
   default-src 'self';
   script-src 'self' https://maps.googleapis.com https://maps.gstatic.com;
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-  img-src 'self' data: https://maps.googleapis.com https://maps.gstatic.com;
+  img-src 'self' data: https://maps.googleapis.com https://maps.gstatic.com https://cms.p2pie.help https://cms2.p2pie.help https://cms.1nginx.space https://cms2.1nginx.space https://cms.2nginx.space https://cms2.2nginx.space;
   font-src 'self' https://fonts.gstatic.com;
   connect-src 'self' https://maps.googleapis.com;
   frame-src 'self' https://www.google.com;
