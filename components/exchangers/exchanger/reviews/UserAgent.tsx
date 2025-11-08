@@ -6,6 +6,7 @@ import {
   TiVendorMicrosoft,
 } from "react-icons/ti";
 import { MdDevices } from "react-icons/md";
+import { capitalize } from "../../../main/side/selector/section/PmGroup/helper";
 
 type PlatformMeta = {
   keywords: string[];
@@ -22,7 +23,7 @@ const PLATFORM_META: PlatformMeta[] = [
   {
     keywords: ["android"],
     icon: TiVendorAndroid,
-    color: "green.400",
+    color: "green.500",
   },
   {
     keywords: ["iphone", "ipad", "ios", "mac os", "macos"],
@@ -51,7 +52,7 @@ const UserAgent = ({ userAgent }: { userAgent?: string | null }) => {
     platformMeta?.keywords?.[0] || userAgent.split(/[\/;\(\)]/)[0].trim();
 
   return (
-    <Tooltip label={label}>
+    <Tooltip label={capitalize(label)}>
       <Box
         borderRadius="full"
         bg={color}

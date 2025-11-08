@@ -5,9 +5,9 @@ import {
   Divider,
   HStack,
   Tag,
-  Text,
+  useColorModeValue,
   VStack,
-  Wrap,
+  Text,
   WrapItem,
 } from "@chakra-ui/react";
 import ExchangerReplies from "./ExchangerReplies";
@@ -30,7 +30,26 @@ export default function ExchangerRootReview({
     userAgent,
     review_replies,
     updatedAt,
+    isDispute,
   } = review;
+
+  const defaultAmbientColor = useColorModeValue(
+    "rgba(143,92,292,0.0)",
+    "rgba(177, 224, 247, 0.0)"
+  );
+  const positiveAmbientColor = useColorModeValue(
+    "rgba(58,220,136,0.18)",
+    "rgba(129,247,185,0.08)"
+  );
+  const negativeAmbientColor = useColorModeValue(
+    "rgba(255, 0, 25, 0.32)",
+    "rgba(124, 12, 12, 0.22)"
+  );
+  const ambientColor = useMemo(() => {
+    if (type === "positive") return positiveAmbientColor;
+    if (type === "negative") return negativeAmbientColor;
+    return defaultAmbientColor;
+  }, [type, defaultAmbientColor, positiveAmbientColor, negativeAmbientColor]);
 
   const avatarSeed = useMemo(
     () =>
@@ -52,8 +71,49 @@ export default function ExchangerRootReview({
       }).format(new Date(updatedAt))
     : "";
 
+  const tag = useMemo(() => {
+    if (isDispute === false) {
+      return (
+        <Tag size="sm" variant="outline" colorScheme="green">
+          ДИСПУТ РЕШЕН ✓
+        </Tag>
+      );
+    }
+
+    if (isDispute === true) {
+      return (
+        <Tag size="sm" variant="outline" colorScheme="red">
+          ДИСПУТ ОТКРЫТ ✕
+        </Tag>
+      );
+    }
+
+    return null;
+  }, [isDispute]);
+
+  const locationTag = useMemo(() => {
+    if (!location) return null;
+
+    const label = typeof location === "string" ? location.trim() : "";
+
+    if (!label) return null;
+
+    return (
+      <Tag size="sm" variant="outline" colorScheme="blue">
+        {label.toUpperCase()}
+      </Tag>
+    );
+  }, [location]);
+
   return (
-    <Box3D w="100%" p="4" my="6" variant="extra_contrast">
+    <Box3D
+      w="100%"
+      p="4"
+      my="6"
+      variant="extra_contrast"
+      position="relative"
+      overflow="hidden"
+    >
       <HStack justifyContent="space-between" spacing="4">
         <HStack gap="4">
           <Box borderRadius="full" overflow="hidden" w="30px" h="30px">
@@ -63,6 +123,8 @@ export default function ExchangerRootReview({
           <ResponsiveText size="lg" fontWeight="bold" variant="contrast">
             {displayName}
           </ResponsiveText>
+          {tag}
+          {locationTag}
         </HStack>
         <HStack gap="4">
           {formattedDate && (
@@ -78,6 +140,25 @@ export default function ExchangerRootReview({
       <Box mt="6">
         <ExchangerReplies />
       </Box>
+      <Box
+        position="absolute"
+        top="0"
+        w="100%"
+        h="100%"
+        zIndex={2000}
+        pointerEvents="none" // <-- lets all clicks/touches pass through
+        bgGradient={`radial-gradient(circle at 85% -10%, ${ambientColor} 0%, transparent 40%)`}
+      />
+      <Box
+        position="absolute"
+        bottom="0"
+        left="0"
+        w="100%"
+        h="100%"
+        zIndex={2000}
+        pointerEvents="none" // <-- lets all clicks/touches pass through
+        bgGradient={`radial-gradient(circle at 5% 70%, ${ambientColor} 0%, transparent 40%)`}
+      />
     </Box3D>
   );
 }
