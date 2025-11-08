@@ -49,7 +49,6 @@ export interface IExchangerReviewReply {
 export interface IExchangerReview {
   id: string;
   fingerprint?: string | null;
-  ipAddress?: string | null;
   name?: string | null;
   text?: string | null;
   type?: string | null;
@@ -60,6 +59,7 @@ export interface IExchangerReview {
   userAgent?: string | null;
   location?: string | null;
   screenshots?: IImage[] | null;
+  updatedAt?: string | null;
   review_replies?: IExchangerReviewReply[] | null;
 }
 

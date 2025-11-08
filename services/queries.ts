@@ -163,6 +163,7 @@ export const exchangerQuery = gql`
                 categories
                 userAgent
                 location
+                updatedAt
                 screenshots {
                   data {
                     id
