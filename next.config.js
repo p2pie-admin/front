@@ -48,6 +48,12 @@ const nextConfig = {
       "cms2.2nginx.space",
       "converter2.2nginx.space",
       "server2.2nginx.space",
+      "cms.1nginx.space",
+      "converter.1nginx.space",
+      "server.1nginx.space",
+      "cms.2nginx.space",
+      "converter.2nginx.space",
+      "server.2nginx.space",
     ],
   },
   async redirects() {

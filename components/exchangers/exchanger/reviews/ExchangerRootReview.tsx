@@ -38,12 +38,12 @@ export default function ExchangerRootReview({
     "rgba(177, 224, 247, 0.0)"
   );
   const positiveAmbientColor = useColorModeValue(
-    "rgba(58,220,136,0.18)",
-    "rgba(129,247,185,0.08)"
+    "rgba(29, 179, 37, 0.18)",
+    "rgba(29, 127, 75, 0.39)"
   );
   const negativeAmbientColor = useColorModeValue(
     "rgba(255, 0, 25, 0.32)",
-    "rgba(124, 12, 12, 0.22)"
+    "rgba(157, 17, 17, 0.3)"
   );
   const ambientColor = useMemo(() => {
     if (type === "positive") return positiveAmbientColor;
