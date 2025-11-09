@@ -4,7 +4,15 @@ import {
   IExchanger,
   IParserExchanger,
 } from "../../../types/exchanger";
-import { Box, Center, HStack, Spinner, Tooltip } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Divider,
+  Grid,
+  HStack,
+  Spinner,
+  Tooltip,
+} from "@chakra-ui/react";
 
 import { Box3D } from "../../../styles/theme/custom";
 
@@ -21,6 +29,9 @@ import { resolveColorToken } from "../../shared/CircularIcon";
 
 import TopPanel from "./topPanel";
 import ExchangerReviews from "./reviews";
+import LeaveReview from "./leaveReview";
+import ExchangerReviewsHeader from "./reviews/ExchangerReviewsHeader";
+import ExchangerStats from "./contacts/ExchangerStats";
 
 export default function Exchanger({
   exchanger,
@@ -57,12 +68,9 @@ export default function Exchanger({
     <>
       <UniversalSeo seo={seo} />
 
-      <Box p="4" mt="10">
+      <Box3D mt="4" p="4" variant="no_contrast">
         <HStack w="100%" justifyContent="space-between">
           <HStack gap="4" position="relative">
-            <Box position="absolute" left="-6">
-              <Dot color={color} />
-            </Box>
             <ExchangerName
               name={exchanger.name}
               logo={exchanger.logo}
@@ -93,13 +101,23 @@ export default function Exchanger({
           </HStack>
           <TopPanel exchanger={exchanger} />
         </HStack>
+        <Divider my="4" />
+        <ExchangerStats
+          reviews={exchanger.reviews}
+          ratesTotal={exchanger.total_rates}
+          reserveTotal={exchanger.exchanger_card?.total_reserve_usd}
+          workingTime={exchanger.exchanger_card?.working_time}
+        />
+      </Box3D>
 
-        <ExchangerDescription description={description} />
+      <ExchangerDescription description={description} />
 
-        <OfficesDescription offices={exchanger.offices} />
-        <ExchangerContacts exchangerCard={exchangerCard} />
-        <ExchangerReviews reviews={exchanger.reviews} />
-      </Box>
+      <OfficesDescription offices={exchanger.offices} />
+      <ExchangerContacts exchangerCard={exchangerCard} />
+
+      <ExchangerReviewsHeader />
+      <LeaveReview exchangerId={exchanger.id} />
+      <ExchangerReviews reviews={exchanger.reviews} />
     </>
   );
 }

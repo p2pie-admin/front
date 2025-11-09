@@ -5,7 +5,8 @@ import { Box3D, ResponsiveText } from "../../../../styles/theme/custom";
 import CustomImage from "../../../shared/CustomImage";
 import { LuMapPin } from "react-icons/lu";
 import { LinkWrapper } from "../../../exchange/pmLayout/LinkWrapper";
-
+import { TbMapPinFilled } from "react-icons/tb";
+import { CustomHeader } from "../shared";
 export default function OfficesDescription({
   offices,
 }: {
@@ -13,11 +14,8 @@ export default function OfficesDescription({
 }) {
   if (!offices) return <></>;
   return (
-    <Box3D mt="4" p="4" variant="contrast" w="100%">
-      <ResponsiveText size="xl" fontWeight="bold" variant="primary">
-        Адреса офисов
-      </ResponsiveText>
-
+    <Box3D my="8" p="4" variant="contrast" w="100%">
+      <CustomHeader text={` Адреса офисов`} Icon={TbMapPinFilled} />
       {offices.map((office) => (
         <React.Fragment key={office.id + office.address}>
           <Divider my="4" />
@@ -31,7 +29,6 @@ export default function OfficesDescription({
                 <ResponsiveText whiteSpace="unset" size="lg" fontWeight="bold">
                   {office.address}
                 </ResponsiveText>
-                <LuMapPin size="1.2rem" />
               </HStack>
 
               <ResponsiveText whiteSpace="unset">
@@ -44,7 +41,15 @@ export default function OfficesDescription({
                   </ResponsiveText>
                 )}
                 <LinkWrapper url={`/map/${office.city}`} exists={!!office.city}>
-                  <Button size="sm" variant="outline">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    leftIcon={
+                      <Box mb="0.5" color="red.500">
+                        <TbMapPinFilled size="1rem" />
+                      </Box>
+                    }
+                  >
                     Показать на карте
                   </Button>
                 </LinkWrapper>

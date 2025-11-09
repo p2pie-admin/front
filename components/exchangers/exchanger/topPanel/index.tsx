@@ -21,6 +21,7 @@ import { ResponsiveText } from "../../../../styles/theme/custom";
 import { IExchanger, IParserExchanger } from "../../../../types/exchanger";
 import { useAppDispatch } from "../../../../redux/hooks";
 import { triggerModal } from "../../../../redux/mainReducer";
+import { LEAVE_REVIEW_SECTION_ID } from "../leaveReview";
 
 const STORAGE_KEYS = {
   bookmark: (id: string) => `exchanger:${id}:bookmark`,
@@ -70,11 +71,24 @@ const TopPanel = ({
     }
   }, [bookmark, bookmarkLoaded, bookmarkStorageKey]);
 
-  const handleScrollToBottom = () => {
+  const handleScrollToLeaveReview = () => {
     if (typeof window === "undefined") return;
+    const target = document.getElementById(LEAVE_REVIEW_SECTION_ID);
+    if (target) {
+      const rect = target.getBoundingClientRect();
+      const absoluteTop = rect.top + window.pageYOffset;
+      window.scrollTo({
+        top: Math.max(absoluteTop - 100, 0),
+        behavior: "smooth",
+      });
+      return;
+    }
     const scrollHeight =
       document.documentElement?.scrollHeight ?? document.body.scrollHeight ?? 0;
-    window.scrollTo({ top: scrollHeight, behavior: "smooth" });
+    window.scrollTo({
+      top: Math.max(scrollHeight - 100, 0),
+      behavior: "smooth",
+    });
   };
 
   const handleLike = () => {
@@ -115,7 +129,7 @@ const TopPanel = ({
       <Button
         p="0"
         w="4"
-        variant="contrast"
+        variant="no_contrast"
         onClick={handleBookmarkOpen}
         color={bookmark ? "red.500" : "bg.200"}
       >
@@ -156,7 +170,7 @@ const TopPanel = ({
       </Button>
 
       <Button
-        variant="contrast"
+        variant="no_contrast"
         onClick={handleLike}
         fontWeight="unset"
         color={liked ? "red.500" : "bg.200"}
@@ -168,9 +182,9 @@ const TopPanel = ({
       </Button>
 
       <Button
-        variant="contrast"
+        variant="no_contrast"
         rightIcon={<IoChatbubbleEllipsesOutline size="1.2rem" />}
-        onClick={handleScrollToBottom}
+        onClick={handleScrollToLeaveReview}
       >
         Оставить отзыв
       </Button>

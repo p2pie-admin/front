@@ -1,4 +1,4 @@
-import { Button, HStack } from "@chakra-ui/react";
+import { Button, HStack, Wrap, WrapItem } from "@chakra-ui/react";
 import React from "react";
 import { IExchangerCard } from "../../../../types/exchanger";
 import { FaTelegramPlane, FaWhatsapp, FaPhone } from "react-icons/fa";
@@ -21,39 +21,47 @@ export default function ExchangerContacts({
   } = exchangerCard;
 
   return (
-    <HStack mt="4" justifyContent="end">
-      <Button
-        leftIcon={<FaTelegramPlane size="1rem" />}
-        variant="outline"
-        colorScheme="blue"
-      >
-        Telegram
-      </Button>
-      <Button
-        leftIcon={<FaWhatsapp size="1rem" />}
-        variant="outline"
-        colorScheme="green"
-      >
-        WhatsApp
-      </Button>
-      {phone_number && (
+    <Wrap justify="flex-end" spacing="20px">
+      <WrapItem>
         <Button
-          leftIcon={<FaPhone size="1rem" />}
+          leftIcon={<FaTelegramPlane size="1rem" />}
           variant="outline"
-          colorScheme="purple"
+          colorScheme="blue"
         >
-          {formatPhoneNumber(phone_number)}
+          Telegram
         </Button>
-      )}
-      {email && (
+      </WrapItem>
+      <WrapItem>
         <Button
-          leftIcon={<IoMailOpenSharp size="1rem" />}
+          leftIcon={<FaWhatsapp size="1rem" />}
           variant="outline"
-          colorScheme="orange"
+          colorScheme="green"
         >
-          {email}
+          WhatsApp
         </Button>
-      )}
-    </HStack>
+      </WrapItem>
+      <WrapItem>
+        {phone_number && (
+          <Button
+            leftIcon={<FaPhone size="1rem" />}
+            variant="outline"
+            colorScheme="purple"
+          >
+            {formatPhoneNumber(phone_number)}
+          </Button>
+        )}
+      </WrapItem>
+      <WrapItem>
+        {email && (
+          <Button
+            leftIcon={<IoMailOpenSharp size="1rem" />}
+            variant="outline"
+            colorScheme="orange"
+          >
+            {email}
+          </Button>
+        )}
+      </WrapItem>
+    </Wrap>
   );
 }

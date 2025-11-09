@@ -1,33 +1,59 @@
-import React from "react";
-import ExchangerReviewsHeader from "./ExchangerReviewsHeader";
-import ExchangerReplies from "./ExchangerReplies";
+import React, { useCallback, useMemo, useState } from "react";
+import { PiChatsFill } from "react-icons/pi";
 import ExchangerRootReview from "./ExchangerRootReview";
-import { IExchangerReview } from "../../../../types/exchanger";
+import { IExchangerReview, IDotColors } from "../../../../types/exchanger";
 import { Box3D, ResponsiveText } from "../../../../styles/theme/custom";
-import { Divider } from "@chakra-ui/react";
+import { Divider, HStack } from "@chakra-ui/react";
+import { CustomHeader } from "../shared";
+import ReviewsFilters from "./ReviewsFilters";
+
+const filterTypeMap: Record<IDotColors, IExchangerReview["type"] | null> = {
+  green: "positive",
+  gray: "neutral",
+  red: "negative",
+  orange: null,
+};
 
 export default function ExchangerReviews({
   reviews,
 }: {
   reviews?: IExchangerReview[] | null;
 }) {
-  return (
-    <>
-      <ExchangerReviewsHeader />
-      <Box3D mt="4" p="4" variant="contrast">
-        <ResponsiveText size="xl" fontWeight="bold" variant="primary">
-          {`Отзывы (${reviews?.length})`}
-        </ResponsiveText>
-        <Divider my="4" />
+  const [activeFilter, setActiveFilter] = useState<IDotColors | null>(null);
 
-        {!reviews ? (
-          <ResponsiveText>
-            Пока нет отзывов, оставьте отзыв первым
-          </ResponsiveText>
-        ) : (
-          reviews.map((review) => <ExchangerRootReview review={review} />)
-        )}
-      </Box3D>
-    </>
+  const handleToggleFilter = useCallback((color: IDotColors | null) => {
+    setActiveFilter((current) => (current === color ? null : color));
+  }, []);
+
+  const filteredReviews = useMemo(() => {
+    if (!reviews) return null;
+    if (!activeFilter) return reviews;
+    const targetType = filterTypeMap[activeFilter];
+    if (!targetType) return reviews;
+    return reviews.filter((review) => review.type === targetType);
+  }, [reviews, activeFilter]);
+
+  const reviewsCount = filteredReviews?.length ?? reviews?.length ?? 0;
+  const hasAnyReviews = !!(reviews && reviews.length);
+  return (
+    <Box3D my="8" p="4" variant="contrast">
+      <HStack justifyContent="space-between">
+        <CustomHeader text={`Отзывы (${reviewsCount})`} Icon={PiChatsFill} />
+        <ReviewsFilters
+          toggleFilter={handleToggleFilter}
+          activeFilter={activeFilter}
+        />
+      </HStack>
+
+      {!hasAnyReviews ? (
+        <ResponsiveText>Пока нет отзывов, оставьте отзыв первым</ResponsiveText>
+      ) : filteredReviews && filteredReviews.length > 0 ? (
+        filteredReviews.map((review) => (
+          <ExchangerRootReview key={review.id} review={review} />
+        ))
+      ) : (
+        <ResponsiveText>Нет отзывов по выбранному фильтру</ResponsiveText>
+      )}
+    </Box3D>
   );
 }

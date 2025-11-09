@@ -44,7 +44,7 @@ const Layout = ({ children }: { children: any }) => {
   const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
   const ambientColor = useColorModeValue(
     "rgba(143,92,292,0.2)",
-    "rgba(247,178,177,0.1)"
+    "rgba(247, 197, 177, 0.1)"
   );
 
   return (
@@ -63,8 +63,8 @@ const Layout = ({ children }: { children: any }) => {
       <Box
         position="absolute"
         w="100%"
-        h="80vh"
-        zIndex={100}
+        h="200vh"
+        zIndex={0}
         pointerEvents="none" // <-- lets all clicks/touches pass through
         bgGradient={`radial-gradient(circle at 50% -10%, ${ambientColor} 0%, transparent 40%)`}
       />

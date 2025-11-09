@@ -13,6 +13,12 @@ export interface IExchangerTemplate {
   top_parameter?: ITopParameter | null;
 }
 
+export interface IExchangerSummary {
+  id: string;
+  name?: string | null;
+  logo?: IImage | null;
+}
+
 export interface IExchangerOffice {
   id: string;
   visible?: boolean;
@@ -43,6 +49,7 @@ export interface IExchangerReviewReply {
   text?: string | null;
   from?: string | null;
   iaApproved?: boolean | null;
+  updatedAt?: string | null;
   screenshots?: IImage[] | null;
 }
 
@@ -61,6 +68,7 @@ export interface IExchangerReview {
   screenshots?: IImage[] | null;
   updatedAt?: string | null;
   review_replies?: IExchangerReviewReply[] | null;
+  exchanger?: IExchangerSummary | null;
 }
 
 export interface IExchangerTag {
@@ -163,4 +171,4 @@ export type IExchangerMapOffice = {
   city?: string | null;
 };
 
-export type IDotColors = "green" | "orange";
+export type IDotColors = "green" | "orange" | "gray" | "red";

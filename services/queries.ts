@@ -164,6 +164,23 @@ export const exchangerQuery = gql`
                 userAgent
                 location
                 updatedAt
+                exchanger {
+                  data {
+                    id
+                    attributes {
+                      name
+                      logo {
+                        data {
+                          id
+                          attributes {
+                            url
+                            alternativeText
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
                 screenshots {
                   data {
                     id
@@ -181,6 +198,7 @@ export const exchangerQuery = gql`
                       text
                       from
                       iaApproved
+                      updatedAt
                       screenshots {
                         data {
                           id

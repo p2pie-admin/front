@@ -8,12 +8,18 @@ import {
   useColorModeValue,
   VStack,
   Text,
-  WrapItem,
+  Icon,
 } from "@chakra-ui/react";
 import ExchangerReplies from "./ExchangerReplies";
 import { IExchangerReview } from "../../../../types/exchanger";
 import BoringAvatar from "boring-avatars";
 import UserAgent from "./UserAgent";
+import { FormatedDate, ReviewBorder } from "../shared";
+import {
+  MdOutlineSentimentNeutral,
+  MdSentimentSatisfiedAlt,
+  MdSentimentVeryDissatisfied,
+} from "react-icons/md";
 
 export default function ExchangerRootReview({
   review,
@@ -34,16 +40,16 @@ export default function ExchangerRootReview({
   } = review;
 
   const defaultAmbientColor = useColorModeValue(
-    "rgba(143,92,292,0.0)",
-    "rgba(177, 224, 247, 0.0)"
+    "rgba(143,92,292,0.2)",
+    "rgba(128, 125, 121, 0.25)"
   );
   const positiveAmbientColor = useColorModeValue(
     "rgba(29, 179, 37, 0.18)",
-    "rgba(29, 127, 75, 0.39)"
+    "rgba(15, 66, 39, 0.39)"
   );
   const negativeAmbientColor = useColorModeValue(
     "rgba(255, 0, 25, 0.32)",
-    "rgba(157, 17, 17, 0.3)"
+    "rgba(114, 13, 13, 0.3)"
   );
   const ambientColor = useMemo(() => {
     if (type === "positive") return positiveAmbientColor;
@@ -61,20 +67,11 @@ export default function ExchangerRootReview({
   );
 
   const displayName = name?.trim() || "Аноним";
-  const formattedDate = updatedAt
-    ? new Intl.DateTimeFormat("ru-RU", {
-        hour: "2-digit",
-        minute: "2-digit",
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      }).format(new Date(updatedAt))
-    : "";
 
   const tag = useMemo(() => {
     if (isDispute === false) {
       return (
-        <Tag size="sm" variant="outline" colorScheme="green">
+        <Tag size="sm" variant="outline" colorScheme="green" mt="1">
           ДИСПУТ РЕШЕН ✓
         </Tag>
       );
@@ -82,7 +79,7 @@ export default function ExchangerRootReview({
 
     if (isDispute === true) {
       return (
-        <Tag size="sm" variant="outline" colorScheme="red">
+        <Tag size="sm" variant="outline" colorScheme="red" mt="1">
           ДИСПУТ ОТКРЫТ ✕
         </Tag>
       );
@@ -99,7 +96,7 @@ export default function ExchangerRootReview({
     if (!label) return null;
 
     return (
-      <Tag size="sm" variant="outline" colorScheme="blue">
+      <Tag size="sm" variant="outline" colorScheme="blue" mt="1">
         {label.toUpperCase()}
       </Tag>
     );
@@ -114,38 +111,81 @@ export default function ExchangerRootReview({
       position="relative"
       overflow="hidden"
     >
-      <HStack justifyContent="space-between" spacing="4">
-        <HStack gap="4">
-          <Box borderRadius="full" overflow="hidden" w="30px" h="30px">
-            <BoringAvatar size={30} name={avatarSeed} variant="marble" />
-          </Box>
+      <ReviewBorder>
+        <HStack justifyContent="space-between" spacing="4">
+          <HStack gap="4" alignItems="flex-start">
+            <Box position="relative" w="30px" h="30px">
+              <Box borderRadius="full" overflow="hidden" w="30px" h="30px">
+                <BoringAvatar size={30} name={avatarSeed} variant="marble" />
+              </Box>
+              <Box
+                position="absolute"
+                bottom="-5px"
+                right="-5px"
+                bgColor="bg.800"
+                borderRadius="full"
+                w="20px"
+                h="20px"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Icon
+                  as={
+                    type === "positive"
+                      ? MdSentimentSatisfiedAlt
+                      : type === "negative"
+                      ? MdSentimentVeryDissatisfied
+                      : MdOutlineSentimentNeutral
+                  }
+                  w="4"
+                  h="4"
+                  color={
+                    type === "positive"
+                      ? "green.300"
+                      : type === "negative"
+                      ? "red.300"
+                      : "gray.300"
+                  }
+                />
+              </Box>
+            </Box>
 
-          <ResponsiveText size="lg" fontWeight="bold" variant="contrast">
-            {displayName}
-          </ResponsiveText>
-          {tag}
-          {locationTag}
+            <ResponsiveText size="lg" fontWeight="bold" variant="contrast">
+              {displayName}
+            </ResponsiveText>
+            {tag}
+            {locationTag}
+          </HStack>
+          <HStack gap="4">
+            <FormatedDate updatedAt={updatedAt} />
+
+            <UserAgent userAgent={userAgent} />
+          </HStack>
         </HStack>
-        <HStack gap="4">
-          {formattedDate && (
-            <ResponsiveText color="bg.500">{formattedDate}</ResponsiveText>
-          )}
-          <UserAgent userAgent={userAgent} />
-        </HStack>
-      </HStack>
+        <Divider my="4" />
+        <Text mt="6" whiteSpace="pre-wrap">
+          {text}
+        </Text>
+      </ReviewBorder>
 
-      <Divider my="4" />
-      <Text whiteSpace="pre-wrap">{text}</Text>
+      {review_replies &&
+        review_replies.map((reply) => (
+          <ExchangerReplies
+            reply={reply}
+            displayName={displayName}
+            avatarSeed={avatarSeed}
+            exchangerName={review?.exchanger?.name}
+            exchangerLogo={review?.exchanger?.logo}
+          />
+        ))}
 
-      <Box mt="6">
-        <ExchangerReplies />
-      </Box>
       <Box
         position="absolute"
         top="0"
         w="100%"
         h="100%"
-        zIndex={2000}
+        zIndex={0}
         pointerEvents="none" // <-- lets all clicks/touches pass through
         bgGradient={`radial-gradient(circle at 85% -10%, ${ambientColor} 0%, transparent 40%)`}
       />
@@ -155,7 +195,7 @@ export default function ExchangerRootReview({
         left="0"
         w="100%"
         h="100%"
-        zIndex={2000}
+        zIndex={0}
         pointerEvents="none" // <-- lets all clicks/touches pass through
         bgGradient={`radial-gradient(circle at 5% 70%, ${ambientColor} 0%, transparent 40%)`}
       />
