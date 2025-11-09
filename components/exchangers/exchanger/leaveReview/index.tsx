@@ -1,18 +1,54 @@
-import { Button, Divider, HStack, Text, Textarea } from "@chakra-ui/react";
+import { Button, Divider, HStack, Input, Textarea } from "@chakra-ui/react";
 import React, { useEffect, useMemo, useState } from "react";
 import { Box3D, ResponsiveText } from "../../../../styles/theme/custom";
 import { RiChatNewFill } from "react-icons/ri";
 import { CustomHeader } from "../shared";
 import { serverLinkPROD } from "../../../../services/utils";
-import { MdOutlineDone } from "react-icons/md";
+import {
+  MdOutlineDone,
+  MdOutlineSentimentNeutral,
+  MdSentimentSatisfiedAlt,
+  MdSentimentVeryDissatisfied,
+} from "react-icons/md";
 import { LuSend } from "react-icons/lu";
 import { LuTriangleAlert } from "react-icons/lu";
+import { useAppDispatch } from "../../../../redux/hooks";
+import { triggerModal } from "../../../../redux/mainReducer";
+import CustomModal from "../../../shared/CustomModal";
+import ReviewAddons from "./ReviewAddons";
+import { ReviewPowChallenge, solvePowChallenge } from "./helper";
 export const LEAVE_REVIEW_SECTION_ID = "leave-review-section";
 
+const sentimentOptions = [
+  {
+    value: "positive",
+    label: "Positive",
+    icon: MdSentimentSatisfiedAlt,
+    iconColor: "green.300",
+  },
+  {
+    value: "neutral",
+    label: "Neutral",
+    icon: MdOutlineSentimentNeutral,
+    iconColor: "gray.300",
+  },
+  {
+    value: "negative",
+    label: "Negative",
+    icon: MdSentimentVeryDissatisfied,
+    iconColor: "red.300",
+  },
+] as const;
+
+type SentimentValue = (typeof sentimentOptions)[number]["value"];
+
 export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
+  const dispatch = useAppDispatch();
   const [value, setValue] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [isSending, setIsSending] = useState(false);
+  const [sentiment, setSentiment] = useState<SentimentValue>("neutral");
   const storageKey = useMemo(
     () => `exchanger:${exchangerId}:review_sent`,
     [exchangerId]
@@ -24,10 +60,46 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
     setHasSubmitted(stored === "true");
   }, [storageKey]);
 
+  const runProofOfWork = async () => {
+    const challengeResponse = await fetch(
+      `/api/review-pow?exchangerId=${encodeURIComponent(exchangerId)}`
+    );
+    if (!challengeResponse.ok) {
+      throw new Error("Failed to request proof-of-work challenge");
+    }
+    const {
+      challenge,
+      difficulty,
+    }: { challenge: ReviewPowChallenge; difficulty: number } =
+      await challengeResponse.json();
+
+    const solution = await solvePowChallenge(challenge, difficulty);
+
+    const verificationResponse = await fetch("/api/review-pow", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ challenge, nonce: solution.nonce }),
+    });
+
+    if (!verificationResponse.ok) {
+      throw new Error("Failed to verify proof-of-work");
+    }
+
+    const verificationBody = await verificationResponse.json();
+    if (!verificationBody.success) {
+      throw new Error("Proof-of-work rejected by server");
+    }
+
+    console.info("Proof-of-work success", solution);
+  };
+
   const leaveReview = async () => {
     if (!value.trim() || hasSubmitted || isSending) return;
     try {
       setIsSending(true);
+      await runProofOfWork();
       const response = await fetch(
         process.env.NODE_ENV == "production"
           ? serverLinkPROD
@@ -37,7 +109,7 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ text: value }),
+          body: JSON.stringify({ text: value, sentiment }),
         }
       );
       if (!response.ok) {
@@ -48,6 +120,7 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
       }
       setHasSubmitted(true);
       setValue("");
+      dispatch(triggerModal(`review:${exchangerId}`));
     } catch (error) {
       console.error("Failed to send review", error);
     } finally {
@@ -66,10 +139,34 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
       w="100%"
       id={LEAVE_REVIEW_SECTION_ID}
     >
-      <CustomHeader text={"Оставить отзыв"} Icon={RiChatNewFill} />
-
+      <HStack justifyContent="space-between" flexWrap="wrap" gap="3">
+        <CustomHeader text={"Оставить отзыв"} Icon={RiChatNewFill} />
+        <HStack spacing="2">
+          {sentimentOptions.map((option) => (
+            <Button
+              key={option.value}
+              size="sm"
+              variant="ghost"
+              borderWidth="2px"
+              borderRadius="xl"
+              borderColor={
+                sentiment === option.value ? "bg.500" : "transparent"
+              }
+              bgColor={sentiment === option.value ? "bg.800" : "transparent"}
+              color={option.iconColor}
+              onClick={() => setSentiment(option.value)}
+              isDisabled={hasSubmitted}
+              _hover={{
+                bgColor: sentiment === option.value ? "bg.700" : "bg.900",
+              }}
+            >
+              <option.icon size="1.5rem" color={option.iconColor} />
+            </Button>
+          ))}
+        </HStack>
+      </HStack>
+      <Divider my="4" />
       <Textarea
-        mt="8"
         placeholder="Ваш отзыв"
         value={value}
         minH="100px"
@@ -77,16 +174,25 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
         isDisabled={hasSubmitted}
         borderWidth="2px"
         borderRadius="xl"
-        borderColor="bg.500"
+        borderColor="peach.500"
         focusBorderColor="peach.200"
       />
-
+      <CustomModal id={`review:${exchangerId}`} header={"Дополните отзыв"}>
+        <ReviewAddons />
+      </CustomModal>
       <HStack justifyContent="space-between" spacing="4" mt="4">
         <HStack color="bg.400" ml="2">
           <LuTriangleAlert size="0.8rem" />
           <ResponsiveText size="sm" color="inherit">
             Запрещены мат, оскорбления и публикация личных данных
           </ResponsiveText>
+          <Input
+            size="xs"
+            w="1"
+            variant="unstyled"
+            value={""}
+            onChange={(e: any) => setHoneypot(e.target.value)}
+          />
         </HStack>
         <Button
           disabled={isSubmitDisabled}

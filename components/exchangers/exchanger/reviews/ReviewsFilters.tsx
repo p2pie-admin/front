@@ -38,9 +38,9 @@ export default function ReviewsFilters({
         onClick={() => toggleFilter(null)}
       >
         {activeFilter ? (
-          <MdFilterAltOff size="1.2rem" />
+          <MdFilterAltOff size="1.5rem" />
         ) : (
-          <MdFilterAlt size="1.2rem" />
+          <MdFilterAlt size="1.5rem" />
         )}
       </Box>
 
@@ -61,8 +61,8 @@ export default function ReviewsFilters({
           >
             <Icon
               as={sentimentIcons[color]}
-              w="5"
-              h="5"
+              w="6"
+              h="6"
               color={`${color}.300`}
             />
           </Button>

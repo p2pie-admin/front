@@ -71,7 +71,7 @@ export default function ExchangerRootReview({
   const tag = useMemo(() => {
     if (isDispute === false) {
       return (
-        <Tag size="sm" variant="outline" colorScheme="green" mt="1">
+        <Tag size="sm" variant="outline" colorScheme="green" mt="1.5">
           ДИСПУТ РЕШЕН ✓
         </Tag>
       );
@@ -79,7 +79,7 @@ export default function ExchangerRootReview({
 
     if (isDispute === true) {
       return (
-        <Tag size="sm" variant="outline" colorScheme="red" mt="1">
+        <Tag size="sm" variant="outline" colorScheme="red" mt="1.5">
           ДИСПУТ ОТКРЫТ ✕
         </Tag>
       );
@@ -96,7 +96,7 @@ export default function ExchangerRootReview({
     if (!label) return null;
 
     return (
-      <Tag size="sm" variant="outline" colorScheme="blue" mt="1">
+      <Tag size="sm" variant="outline" colorScheme="blue" mt="1.5">
         {label.toUpperCase()}
       </Tag>
     );

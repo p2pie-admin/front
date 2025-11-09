@@ -44,7 +44,7 @@ export default function ExchangerReviews({
           activeFilter={activeFilter}
         />
       </HStack>
-
+      <Divider my="4" />
       {!hasAnyReviews ? (
         <ResponsiveText>Пока нет отзывов, оставьте отзыв первым</ResponsiveText>
       ) : filteredReviews && filteredReviews.length > 0 ? (
