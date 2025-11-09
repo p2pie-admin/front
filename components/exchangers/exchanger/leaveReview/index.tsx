@@ -3,7 +3,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Box3D, ResponsiveText } from "../../../../styles/theme/custom";
 import { RiChatNewFill } from "react-icons/ri";
 import { CustomHeader } from "../shared";
-import { serverLinkPROD } from "../../../../services/utils";
 import {
   MdOutlineDone,
   MdOutlineSentimentNeutral,
@@ -75,46 +74,32 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
 
     const solution = await solvePowChallenge(challenge, difficulty);
 
-    const verificationResponse = await fetch("/api/review-pow", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ challenge, nonce: solution.nonce }),
-    });
-
-    if (!verificationResponse.ok) {
-      throw new Error("Failed to verify proof-of-work");
-    }
-
-    const verificationBody = await verificationResponse.json();
-    if (!verificationBody.success) {
-      throw new Error("Proof-of-work rejected by server");
-    }
-
-    console.info("Proof-of-work success", solution);
+    return { challenge, nonce: solution.nonce };
   };
 
   const leaveReview = async () => {
     if (!value.trim() || hasSubmitted || isSending) return;
     try {
       setIsSending(true);
-      await runProofOfWork();
-      const response = await fetch(
-        process.env.NODE_ENV == "production"
-          ? serverLinkPROD
-          : "http://localhost:5000/createReview",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ text: value, sentiment }),
-        }
-      );
+      const proof = await runProofOfWork();
+      const response = await fetch("/api/review-submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          challenge: proof.challenge,
+          nonce: proof.nonce,
+          review: { value, honeypot },
+        }),
+      });
       if (!response.ok) {
-        throw new Error(`Request failed with status ${response.status}`);
+        const errorBody = await response.json().catch(() => null);
+        throw new Error(
+          errorBody?.error || `Request failed with status ${response.status}`
+        );
       }
+      console.info("Review submitted via Next.js proxy");
       if (typeof window !== "undefined") {
         localStorage.setItem(storageKey, "true");
       }
