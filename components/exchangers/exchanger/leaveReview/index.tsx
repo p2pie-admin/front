@@ -47,7 +47,7 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
   const [honeypot, setHoneypot] = useState("");
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [isSending, setIsSending] = useState(false);
-  const [sentiment, setSentiment] = useState<SentimentValue>("neutral");
+  const [sentiment, setSentiment] = useState<SentimentValue | null>(null);
   const storageKey = useMemo(
     () => `exchanger:${exchangerId}:review_sent`,
     [exchangerId]

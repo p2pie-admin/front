@@ -8,30 +8,35 @@ import {
   useColorModeValue,
   Progress,
 } from "@chakra-ui/react";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { batch } from "react-redux";
+import { setCity, setIP } from "../../redux/mainReducer";
+import { initCurrencyConverterFetcher } from "../../services/fetchers";
+import { ICity } from "../../types/exchange";
+import { useRouter } from "next/router";
 
 const Layout = ({ children }: { children: any }) => {
   // const maxW = useBreakpointValue({ base: "100%", lg: "980" });
   //const isScrollLocked = useAppSelector((state) => state.main.isScrollLocked);
   const myToast = useAppSelector((state) => state.main.toast);
   const toast = useToast();
-  //const { query } = useRouter();
-  //const cityInSlugExists = query?.exchange && query.exchange.includes("-in-");
+  const { query } = useRouter();
+  const cityInSlugExists = query?.exchange && query.exchange.includes("-in-");
 
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-  // useEffect(() => {
-  //   const fetcher = initCurrencyConverterFetcher();
-  //   fetcher().then((resp) => {
-  //     if (resp.data) {
-  //       const { ip, ...city } = resp.data as ICity & { ip: string };
-  //       batch(() => {
-  //         !cityInSlugExists && dispatch(setCity(city));
-  //         dispatch(setIP(ip));
-  //       });
-  //     }
-  //   });
-  // }, []);
+  useEffect(() => {
+    const fetcher = initCurrencyConverterFetcher();
+    fetcher().then((resp) => {
+      if (resp.data) {
+        const { ip, ...city } = resp.data as ICity & { ip: string };
+        batch(() => {
+          !cityInSlugExists && dispatch(setCity(city));
+          dispatch(setIP(ip));
+        });
+      }
+    });
+  }, []);
 
   useEffect(() => {
     myToast.title &&
@@ -63,7 +68,7 @@ const Layout = ({ children }: { children: any }) => {
       <Box
         position="absolute"
         w="100%"
-        h="200vh"
+        h="99vh"
         zIndex={0}
         pointerEvents="none" // <-- lets all clicks/touches pass through
         bgGradient={`radial-gradient(circle at 50% -10%, ${ambientColor} 0%, transparent 40%)`}
