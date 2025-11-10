@@ -38,13 +38,25 @@ export default async function handler(
         } as PowPostResponse);
     }
 
+    const requestedDifficultyRaw = Array.isArray(req.query.complexity)
+      ? req.query.complexity[0]
+      : req.query.complexity;
+    const parsedDifficulty = requestedDifficultyRaw
+      ? Number.parseInt(requestedDifficultyRaw, 10)
+      : NaN;
+    const allowedDifficulties = new Set([10, 18, 30]);
+    const difficulty = allowedDifficulties.has(parsedDifficulty)
+      ? parsedDifficulty
+      : POW_DIFFICULTY;
+
     const challenge: ReviewPowChallenge = {
       exchangerId,
       salt: createSalt(),
       issuedAt: Date.now(),
+      difficulty,
     };
 
-    return res.status(200).json({ challenge, difficulty: POW_DIFFICULTY });
+    return res.status(200).json({ challenge, difficulty });
   }
 
   if (req.method === "POST") {
@@ -54,6 +66,7 @@ export default async function handler(
       typeof challenge.exchangerId !== "string" ||
       typeof challenge.salt !== "string" ||
       typeof challenge.issuedAt !== "number" ||
+      typeof challenge.difficulty !== "number" ||
       typeof nonce !== "number"
     ) {
       return res
@@ -69,7 +82,7 @@ export default async function handler(
 
     const payload = `${createPowPayload(challenge)}:${nonce}`;
     const hashBytes = new Uint8Array(createHash("sha256").update(payload).digest());
-    const isValid = hashMeetsDifficulty(hashBytes, POW_DIFFICULTY);
+    const isValid = hashMeetsDifficulty(hashBytes, challenge.difficulty);
 
     return res.status(200).json({ success: isValid });
   }

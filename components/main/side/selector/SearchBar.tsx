@@ -36,7 +36,7 @@ const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {
 
   const placeholder = inputFocused
     ? search_bar?.[`${locale}_give_adornment`]
-    : t("Search...");
+    : "Поиск";
 
   const dispatch = useAppDispatch();
 

@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { createHash } from "crypto";
 import {
   POW_CHALLENGE_TTL_MS,
+  POW_DIFFICULTY,
   ReviewPowChallenge,
   createPowPayload,
   hashMeetsDifficulty,
@@ -36,7 +37,8 @@ const validateBody = (body: any): body is SubmitRequestBody => {
     !challenge ||
     typeof challenge.exchangerId !== "string" ||
     typeof challenge.salt !== "string" ||
-    typeof challenge.issuedAt !== "number"
+    typeof challenge.issuedAt !== "number" ||
+    typeof challenge.difficulty !== "number"
   ) {
     return false;
   }
@@ -60,7 +62,11 @@ const verifyProofOfWork = (challenge: ReviewPowChallenge, nonce: number) => {
   }
   const payload = `${createPowPayload(challenge)}:${nonce}`;
   const hashBytes = new Uint8Array(createHash("sha256").update(payload).digest());
-  const isValid = hashMeetsDifficulty(hashBytes);
+  const difficulty =
+    typeof challenge.difficulty === "number"
+      ? challenge.difficulty
+      : POW_DIFFICULTY;
+  const isValid = hashMeetsDifficulty(hashBytes, difficulty);
   if (!isValid) {
     return { isValid: false, error: "Invalid proof-of-work" } as const;
   }

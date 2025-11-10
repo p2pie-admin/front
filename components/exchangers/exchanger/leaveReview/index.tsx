@@ -1,5 +1,5 @@
 import { Button, Divider, HStack, Input, Textarea } from "@chakra-ui/react";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Box3D, ResponsiveText } from "../../../../styles/theme/custom";
 import { RiChatNewFill } from "react-icons/ri";
 import { CustomHeader } from "../shared";
@@ -52,6 +52,7 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
     fingerprintInfo: state.main.fingerprint,
     city: state.main.city as ICity,
   }));
+  const loadTimeRef = useRef(Date.now());
   const [value, setValue] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -68,20 +69,31 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
     setHasSubmitted(stored === "true");
   }, [storageKey]);
 
-  const runProofOfWork = async () => {
+  const determinePowDifficulty = () => {
+    const elapsedMs = Date.now() - loadTimeRef.current;
+    if (elapsedMs < 7000) return 30;
+    if (elapsedMs < 15000) return 18;
+    return 10;
+  };
+
+  const runProofOfWork = async (requestedDifficulty: number) => {
     const challengeResponse = await fetch(
-      `/api/review-pow?exchangerId=${encodeURIComponent(exchangerId)}`
+      `/api/review-pow?exchangerId=${encodeURIComponent(
+        exchangerId
+      )}&complexity=${requestedDifficulty}`
     );
     if (!challengeResponse.ok) {
       throw new Error("Failed to request proof-of-work challenge");
     }
     const {
       challenge,
-      difficulty,
+      difficulty: serverDifficulty,
     }: { challenge: ReviewPowChallenge; difficulty: number } =
       await challengeResponse.json();
 
-    const solution = await solvePowChallenge(challenge, difficulty);
+    const effectiveDifficulty =
+      challenge.difficulty ?? serverDifficulty ?? requestedDifficulty;
+    const solution = await solvePowChallenge(challenge, effectiveDifficulty);
 
     return { challenge, nonce: solution.nonce };
   };
@@ -91,7 +103,8 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
     try {
       dispatch(triggerModal(`review:${exchangerId}`));
       setIsSending(true);
-      const proof = await runProofOfWork();
+      const powDifficulty = determinePowDifficulty();
+      const proof = await runProofOfWork(powDifficulty);
       const reviewPayload: IReview = {
         honeypot,
         text: value,

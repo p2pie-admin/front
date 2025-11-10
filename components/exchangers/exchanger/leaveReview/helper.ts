@@ -5,6 +5,7 @@ export type ReviewPowChallenge = {
   exchangerId: string;
   salt: string;
   issuedAt: number;
+  difficulty: number;
 };
 
 export type ReviewPowSolution = {

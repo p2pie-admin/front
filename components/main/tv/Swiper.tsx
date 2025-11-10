@@ -270,7 +270,7 @@ export const Swiper = (props: {
               justifyContent="center"
               pointerEvents="none"
             >
-              <BottomLabel text="Показать все курсы?" />
+              <BottomLabel text="Конец списка" />
             </MotionBox>
 
             <Shader direction="bottom" />
