@@ -28,6 +28,7 @@
     "boring-avatars": "^1.10.5",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
+    "fingerprinter-js": "^1.0.3",
     "formik": "^2.4.1",
     "framer-motion": "^6",
     "graphql": "^16.3.0",

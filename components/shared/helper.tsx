@@ -110,3 +110,9 @@ export function secondsAgo(timestamp?: number | string): string {
   if (diffSec < 86400) return `${Math.floor(diffSec / 3600)}ч`;
   return `${Math.floor(diffSec / 86400)}д`;
 }
+
+export const waitSec = (seconds: number) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, seconds * 1000);
+  });
+};

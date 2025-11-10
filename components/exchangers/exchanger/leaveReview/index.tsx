@@ -11,11 +11,16 @@ import {
 } from "react-icons/md";
 import { LuSend } from "react-icons/lu";
 import { LuTriangleAlert } from "react-icons/lu";
-import { useAppDispatch } from "../../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { triggerModal } from "../../../../redux/mainReducer";
 import CustomModal from "../../../shared/CustomModal";
 import ReviewAddons from "./ReviewAddons";
 import { ReviewPowChallenge, solvePowChallenge } from "./helper";
+import { IReview } from "../../../../types/exchanger";
+import { $ } from "@upstash/redis/zmscore-DWj9Vh1g";
+import { ICity } from "../../../../types/exchange";
+import { locale } from "../../../../services/utils";
+import { waitSec } from "../../../shared/helper";
 export const LEAVE_REVIEW_SECTION_ID = "leave-review-section";
 
 const sentimentOptions = [
@@ -43,6 +48,10 @@ type SentimentValue = (typeof sentimentOptions)[number]["value"];
 
 export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
   const dispatch = useAppDispatch();
+  const { fingerprintInfo, city } = useAppSelector((state) => ({
+    fingerprintInfo: state.main.fingerprint,
+    city: state.main.city as ICity,
+  }));
   const [value, setValue] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -80,8 +89,20 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
   const leaveReview = async () => {
     if (!value.trim() || hasSubmitted || isSending) return;
     try {
+      dispatch(triggerModal(`review:${exchangerId}`));
       setIsSending(true);
       const proof = await runProofOfWork();
+      const reviewPayload: IReview = {
+        honeypot,
+        text: value,
+        exchangerId,
+        type: sentiment || undefined,
+        isDispute: null,
+        userAgent: fingerprintInfo?.userAgent,
+        fingerprint: fingerprintInfo?.fingerprint,
+        location: city?.[`${locale}_name`] || undefined,
+      };
+      await waitSec(1);
       const response = await fetch("/api/review-submit", {
         method: "POST",
         headers: {
@@ -90,7 +111,7 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
         body: JSON.stringify({
           challenge: proof.challenge,
           nonce: proof.nonce,
-          review: { value, honeypot },
+          review: reviewPayload,
         }),
       });
       if (!response.ok) {
@@ -105,7 +126,6 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
       }
       setHasSubmitted(true);
       setValue("");
-      dispatch(triggerModal(`review:${exchangerId}`));
     } catch (error) {
       console.error("Failed to send review", error);
     } finally {

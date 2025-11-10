@@ -2477,6 +2477,11 @@ find-root@^1.1.0:
   resolved "https://registry.yarnpkg.com/find-root/-/find-root-1.1.0.tgz#abcfc8ba76f708c42a97b3d685b7e9450bfb9ce4"
   integrity sha512-NKfW6bec6GfKc0SGx1e07QZY9PE99u0Bft/0rzSD5k3sO/vwkVUpDUKVm5Gpp5Ue3YfShPFTX2070tDs5kB9Ng==
 
+fingerprinter-js@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/fingerprinter-js/-/fingerprinter-js-1.0.3.tgz#3c0bdc1201f4bed0ea5748a3ed797a633cba7899"
+  integrity sha512-h8ntPifVu1at9BQDljVZirUg/OdUUPDFHQSXgUcdF1KMHgSN6iXrauBT598d2aE9U02h83KmOOJA7zaROEoK7w==
+
 flat-cache@^3.0.4:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/flat-cache/-/flat-cache-3.2.0.tgz#2c0c2d5040c99b1632771a9d105725c0115363ee"

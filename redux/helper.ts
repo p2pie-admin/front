@@ -34,8 +34,11 @@ export const getAmountOutputs = (
   return initialAmountOutputs;
 };
 
-export const createUID = (fingerprint?: IFingerprint) =>
-  "uid_" + Number(fingerprint?.ip.replaceAll(".", "")).toString(36);
+export const createUID = (fingerprint?: IFingerprint) => {
+  const ip = fingerprint?.ip;
+  if (!ip) return "uid_unknown";
+  return "uid_" + Number(ip.replaceAll(".", "")).toString(36);
+};
 
 export const destructureDirSlug = (slug: string) => {
   const [giveNameCurCode, getNameCurCode] = slug.split("-to-");

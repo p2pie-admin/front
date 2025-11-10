@@ -1,4 +1,14 @@
 import { ICurrency, IImage } from "./selector";
+export interface IReview {
+  honeypot: string;
+  text: string;
+  exchangerId: string;
+  type?: "positive" | "neutral" | "negative" | "question";
+  isDispute?: boolean | null;
+  userAgent?: string;
+  fingerprint?: string;
+  location?: string;
+}
 
 export interface ITopParameter {
   id: string;

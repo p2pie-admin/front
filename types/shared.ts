@@ -20,7 +20,9 @@ export type ITextVariant =
   | "primary";
 
 export interface IFingerprint {
-  ip: string;
+  ip?: string;
+  fingerprint?: string;
+  userAgent?: string;
 }
 
 export interface ICurrencyConverterRate {

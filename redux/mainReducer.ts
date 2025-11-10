@@ -213,6 +213,26 @@ export const mainSlice = createSlice({
       if (action.payload)
         state.fingerprint = { ...state.fingerprint, ip: action.payload };
     },
+    setFingerprintHash: (
+      state: MainState,
+      action: PayloadAction<string | undefined>
+    ) => {
+      if (action.payload)
+        state.fingerprint = {
+          ...state.fingerprint,
+          fingerprint: action.payload,
+        };
+    },
+    setUserAgent: (
+      state: MainState,
+      action: PayloadAction<string | undefined>
+    ) => {
+      if (action.payload)
+        state.fingerprint = {
+          ...state.fingerprint,
+          userAgent: action.payload,
+        };
+    },
     clearDirRates: (state: MainState) => {
       state.dirRates = [];
       state.dirRatesStatus = "pending";
@@ -349,6 +369,8 @@ export const {
   setCity,
   setCurrencyConverterRate,
   setIP,
+  setFingerprintHash,
+  setUserAgent,
   setInitialData,
   clearDirRates,
   clean,

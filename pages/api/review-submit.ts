@@ -7,16 +7,12 @@ import {
   hashMeetsDifficulty,
 } from "../../components/exchangers/exchanger/leaveReview/helper";
 import { serverLinkPROD } from "../../services/utils";
-
-type ReviewPayload = {
-  value: string;
-  honeypot: string;
-};
+import { IReview } from "../../types/exchanger";
 
 type SubmitRequestBody = {
   challenge: ReviewPowChallenge;
   nonce: number;
-  review: ReviewPayload;
+  review: IReview;
 };
 
 type SubmitResponse = {
@@ -49,8 +45,9 @@ const validateBody = (body: any): body is SubmitRequestBody => {
   }
   if (
     !review ||
-    typeof review.value !== "string" ||
-    typeof review.honeypot !== "string"
+    typeof review.text !== "string" ||
+    typeof review.honeypot !== "string" ||
+    typeof review.exchangerId !== "string"
   ) {
     return false;
   }

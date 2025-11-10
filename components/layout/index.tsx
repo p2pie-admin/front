@@ -10,10 +10,16 @@ import {
 } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { batch } from "react-redux";
-import { setCity, setIP } from "../../redux/mainReducer";
+import {
+  setCity,
+  setIP,
+  setFingerprintHash,
+  setUserAgent,
+} from "../../redux/mainReducer";
 import { initCurrencyConverterFetcher } from "../../services/fetchers";
 import { ICity } from "../../types/exchange";
 import { useRouter } from "next/router";
+import Fingerprint from "fingerprinter-js";
 
 const Layout = ({ children }: { children: any }) => {
   // const maxW = useBreakpointValue({ base: "100%", lg: "980" });
@@ -36,6 +42,16 @@ const Layout = ({ children }: { children: any }) => {
         });
       }
     });
+    Fingerprint.generate()
+      .then((res) => {
+        batch(() => {
+          dispatch(setFingerprintHash(res.fingerprint));
+          dispatch(setUserAgent(res.components.userAgent));
+        });
+      })
+      .catch((error) => {
+        console.error("Failed to generate fingerprint", error);
+      });
   }, []);
 
   useEffect(() => {
