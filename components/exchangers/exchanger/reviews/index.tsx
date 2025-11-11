@@ -33,6 +33,11 @@ export default function ExchangerReviews({
     return reviews.filter((review) => review.type === targetType);
   }, [reviews, activeFilter]);
 
+  const reviewsToRender = useMemo(() => {
+    if (!filteredReviews) return null;
+    return [...filteredReviews].reverse();
+  }, [filteredReviews]);
+
   const reviewsCount = filteredReviews?.length ?? reviews?.length ?? 0;
   const hasAnyReviews = !!(reviews && reviews.length);
   return (
@@ -47,8 +52,8 @@ export default function ExchangerReviews({
       <Divider my="4" />
       {!hasAnyReviews ? (
         <ResponsiveText>Пока нет отзывов, оставьте отзыв первым</ResponsiveText>
-      ) : filteredReviews && filteredReviews.length > 0 ? (
-        filteredReviews.map((review) => (
+      ) : reviewsToRender && reviewsToRender.length > 0 ? (
+        reviewsToRender.map((review) => (
           <ExchangerRootReview key={review.id} review={review} />
         ))
       ) : (

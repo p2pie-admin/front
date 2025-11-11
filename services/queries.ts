@@ -149,7 +149,7 @@ export const exchangerQuery = gql`
               }
             }
           }
-          reviews {
+          reviews(filters: { isApproved: { eq: true } }) {
             data {
               id
               attributes {

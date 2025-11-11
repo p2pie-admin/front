@@ -1,5 +1,5 @@
 import { Button, Divider, HStack, Input, Textarea } from "@chakra-ui/react";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Box3D, ResponsiveText } from "../../../../styles/theme/custom";
 import { RiChatNewFill } from "react-icons/ri";
 import { CustomHeader } from "../shared";
@@ -12,7 +12,7 @@ import {
 import { LuSend } from "react-icons/lu";
 import { LuTriangleAlert } from "react-icons/lu";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { triggerModal } from "../../../../redux/mainReducer";
+import { sendToast, triggerModal } from "../../../../redux/mainReducer";
 import CustomModal from "../../../shared/CustomModal";
 import ReviewAddons from "./ReviewAddons";
 import { ReviewPowChallenge, solvePowChallenge } from "./helper";
@@ -22,6 +22,7 @@ import { ICity } from "../../../../types/exchange";
 import { locale } from "../../../../services/utils";
 import { waitSec } from "../../../shared/helper";
 export const LEAVE_REVIEW_SECTION_ID = "leave-review-section";
+const REVIEW_COOLDOWN_MS = 60 * 60 * 1000;
 
 const sentimentOptions = [
   {
@@ -58,16 +59,62 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [sentiment, setSentiment] = useState<SentimentValue | null>(null);
+  const [cooldownUntil, setCooldownUntil] = useState<number | null>(null);
   const storageKey = useMemo(
     () => `exchanger:${exchangerId}:review_sent`,
     [exchangerId]
   );
 
+  const lockReviewSubmission = useCallback(() => {
+    const cooldownExpiresAt = Date.now() + REVIEW_COOLDOWN_MS;
+    setCooldownUntil(cooldownExpiresAt);
+    setHasSubmitted(true);
+    if (typeof window !== "undefined") {
+      localStorage.setItem(storageKey, `${cooldownExpiresAt}`);
+    }
+  }, [storageKey]);
+
   useEffect(() => {
     if (typeof window === "undefined") return;
     const stored = localStorage.getItem(storageKey);
-    setHasSubmitted(stored === "true");
+    if (!stored) {
+      setHasSubmitted(false);
+      setCooldownUntil(null);
+      return;
+    }
+    const expiresAt = Number(stored);
+    if (!Number.isFinite(expiresAt)) {
+      localStorage.removeItem(storageKey);
+      setHasSubmitted(false);
+      setCooldownUntil(null);
+      return;
+    }
+    if (Date.now() < expiresAt) {
+      setHasSubmitted(true);
+      setCooldownUntil(expiresAt);
+    } else {
+      localStorage.removeItem(storageKey);
+      setHasSubmitted(false);
+      setCooldownUntil(null);
+    }
   }, [storageKey]);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !cooldownUntil) return;
+    const remaining = cooldownUntil - Date.now();
+    if (remaining <= 0) {
+      setHasSubmitted(false);
+      setCooldownUntil(null);
+      localStorage.removeItem(storageKey);
+      return;
+    }
+    const timeoutId = window.setTimeout(() => {
+      setHasSubmitted(false);
+      setCooldownUntil(null);
+      localStorage.removeItem(storageKey);
+    }, remaining);
+    return () => window.clearTimeout(timeoutId);
+  }, [cooldownUntil, storageKey]);
 
   const determinePowDifficulty = () => {
     const elapsedMs = Date.now() - loadTimeRef.current;
@@ -105,6 +152,7 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
       setIsSending(true);
       const powDifficulty = determinePowDifficulty();
       const proof = await runProofOfWork(powDifficulty);
+      lockReviewSubmission();
       const reviewPayload: IReview = {
         honeypot,
         text: value,
@@ -134,11 +182,14 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
         );
       }
       console.info("Review submitted via Next.js proxy");
-      if (typeof window !== "undefined") {
-        localStorage.setItem(storageKey, "true");
-      }
-      setHasSubmitted(true);
       setValue("");
+      dispatch(
+        sendToast({
+          status: "success",
+          title:
+            "Спасибо за отзыв! После быстрой проверки он будет опубликован.",
+        })
+      );
     } catch (error) {
       console.error("Failed to send review", error);
     } finally {

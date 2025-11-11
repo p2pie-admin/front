@@ -12,7 +12,7 @@ export default function OfficesDescription({
 }: {
   offices?: IExchangerOffice[];
 }) {
-  if (!offices) return <></>;
+  if (!offices || !offices.length) return <></>;
   return (
     <Box3D my="8" p="4" variant="contrast" w="100%">
       <CustomHeader text={` Адреса офисов`} Icon={TbMapPinFilled} />

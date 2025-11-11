@@ -44,7 +44,6 @@ import { IMassDirTextId } from "../../types/mass";
 const Exchange = ({
   locale,
   seo,
-
   dirText,
   givePmData,
   getPmData,
@@ -66,7 +65,7 @@ const Exchange = ({
   dirTextIds: IMassDirTextId[];
 }) => {
   const dispatch = useAppDispatch();
-  const { t } = useTranslation();
+
   const [peripheryColor, centerColor] = useToken(
     "colors",
     useColorModeValue(["bg.500", "violet.700"], ["bg.400", "peach.300"])
