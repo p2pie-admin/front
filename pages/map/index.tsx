@@ -1,16 +1,14 @@
-import { useEffect } from "react";
-import { useRouter } from "next/router";
+import type { GetServerSideProps, NextPage } from "next";
 
 const DEFAULT_CITY_SLUG = "moscow";
 
-const MapIndexRedirect = () => {
-  const router = useRouter();
+const MapIndexRedirect: NextPage = () => null;
 
-  useEffect(() => {
-    router.replace(`/map/${DEFAULT_CITY_SLUG}`);
-  }, [router]);
-
-  return null;
-};
+export const getServerSideProps: GetServerSideProps = async () => ({
+  redirect: {
+    destination: `/map/${DEFAULT_CITY_SLUG}`,
+    permanent: false,
+  },
+});
 
 export default MapIndexRedirect;

@@ -52,21 +52,19 @@ export const dirTextHandler = async ({
   getPm,
   customDirText,
   city,
-}: // pms,
-// articleCodes,
-{
+}: {
   givePm: IPm;
   getPm: IPm;
   customDirText?: IDirText;
   city: ICity | null;
-  // pms: IPm[];
-  // articleCodes: string[];
 }): Promise<IDirText> => {
   // Default header
   const h1 = generateExchangeH1(givePm, getPm, city);
 
-  // City name for fillWords
-  const cityName = city?.[`${locale}_name`] ?? city?.en_name ?? "";
+  const cityName =
+    locale === "ru"
+      ? city?.preposition || city?.ru_name || city?.en_name || ""
+      : city?.en_name || city?.ru_name || "";
 
   // Placeholder replacer
   const replacer = (text?: string) =>
@@ -87,32 +85,31 @@ export const dirTextHandler = async ({
   ] as const;
 
   let dirText = {} as IDirText;
-  if (customDirText?.header) {
-    dirText = customDirText;
-    return {
-      ...dirText,
-      h1, // хардкодим чтобы было маленьким
-    };
-  } else {
-    const fallbackDirText = await loadDirText(givePm.section, getPm.section);
-    dirText = fallbackDirText;
-
-    const replacedFields = Object.fromEntries(
+  const applyFilledFields = (source: IDirText = {} as IDirText) => {
+    const filled = Object.fromEntries(
       fields.map((f) => [
         f,
         replacer(
-          dirText[f] ??
+          source[f] ??
             `${givePm[`${locale}_name`]} → ${getPm[`${locale}_name`]}`
         ),
       ])
     );
 
     return {
-      ...dirText,
-      ...replacedFields,
-      h1, // хардкодим чтобы было маленьким
+      ...source,
+      ...filled,
+      h1,
     };
+  };
+
+  if (customDirText?.header) {
+    return applyFilledFields(customDirText);
   }
+
+  const fallbackDirText = await loadDirText(givePm.section, getPm.section);
+  dirText = fallbackDirText;
+  return applyFilledFields(dirText);
 };
 
 export const fillWords = ({

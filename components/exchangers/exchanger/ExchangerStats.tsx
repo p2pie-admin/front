@@ -10,6 +10,9 @@ import {
   MdSentimentSatisfiedAlt,
   MdSentimentVeryDissatisfied,
 } from "react-icons/md";
+import { addSpaces } from "../../../redux/amountsHelper";
+import { ResponsiveText } from "../../../styles/theme/custom";
+import { IExchangerReview } from "../../../types/exchanger";
 export default function ExchangerStats({
   reviews,
   ratesTotal,

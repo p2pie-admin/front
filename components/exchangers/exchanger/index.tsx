@@ -31,7 +31,7 @@ import TopPanel from "./topPanel";
 import ExchangerReviews from "./reviews";
 import LeaveReview from "./leaveReview";
 import ExchangerReviewsHeader from "./reviews/ExchangerReviewsHeader";
-import ExchangerStats from "./contacts/ExchangerStats";
+import ExchangerStats from "./ExchangerStats";
 
 export default function Exchanger({
   exchanger,

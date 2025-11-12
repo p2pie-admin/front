@@ -14,8 +14,7 @@ export default function ExchangerReviewsHeader() {
         variant="no_contrast"
         textAlign="center"
       >
-        Оставьте отзыв и укрепите свою репутацию — это поможет при решении
-        спорных ситуаций
+        Оставьте отзыв, он поможет другим пользователям принять решение!
       </ResponsiveText>
     </VStack>
   );

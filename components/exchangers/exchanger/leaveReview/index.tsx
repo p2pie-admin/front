@@ -1,5 +1,11 @@
 import { Button, Divider, HStack, Input, Textarea } from "@chakra-ui/react";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Box3D, ResponsiveText } from "../../../../styles/theme/custom";
 import { RiChatNewFill } from "react-icons/ri";
 import { CustomHeader } from "../shared";
@@ -17,7 +23,6 @@ import CustomModal from "../../../shared/CustomModal";
 import ReviewAddons from "./ReviewAddons";
 import { ReviewPowChallenge, solvePowChallenge } from "./helper";
 import { IReview } from "../../../../types/exchanger";
-import { $ } from "@upstash/redis/zmscore-DWj9Vh1g";
 import { ICity } from "../../../../types/exchange";
 import { locale } from "../../../../services/utils";
 import { waitSec } from "../../../shared/helper";
@@ -49,9 +54,10 @@ type SentimentValue = (typeof sentimentOptions)[number]["value"];
 
 export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
   const dispatch = useAppDispatch();
-  const { fingerprintInfo, city } = useAppSelector((state) => ({
+  const { fingerprintInfo, city, modalId } = useAppSelector((state) => ({
     fingerprintInfo: state.main.fingerprint,
     city: state.main.city as ICity,
+    modalId: state.main.modal,
   }));
   const loadTimeRef = useRef(Date.now());
   const [value, setValue] = useState("");
@@ -60,10 +66,13 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
   const [isSending, setIsSending] = useState(false);
   const [sentiment, setSentiment] = useState<SentimentValue | null>(null);
   const [cooldownUntil, setCooldownUntil] = useState<number | null>(null);
+  const [shouldSubmitAfterModal, setShouldSubmitAfterModal] = useState(false);
   const storageKey = useMemo(
     () => `exchanger:${exchangerId}:review_sent`,
     [exchangerId]
   );
+  const reviewModalId = `review:${exchangerId}`;
+  const isReviewModalOpen = modalId === reviewModalId;
 
   const lockReviewSubmission = useCallback(() => {
     const cooldownExpiresAt = Date.now() + REVIEW_COOLDOWN_MS;
@@ -116,39 +125,41 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
     return () => window.clearTimeout(timeoutId);
   }, [cooldownUntil, storageKey]);
 
-  const determinePowDifficulty = () => {
+  const determinePowDifficulty = useCallback(() => {
     const elapsedMs = Date.now() - loadTimeRef.current;
     if (elapsedMs < 7000) return 30;
     if (elapsedMs < 15000) return 18;
     return 10;
-  };
+  }, []);
 
-  const runProofOfWork = async (requestedDifficulty: number) => {
-    const challengeResponse = await fetch(
-      `/api/review-pow?exchangerId=${encodeURIComponent(
-        exchangerId
-      )}&complexity=${requestedDifficulty}`
-    );
-    if (!challengeResponse.ok) {
-      throw new Error("Failed to request proof-of-work challenge");
-    }
-    const {
-      challenge,
-      difficulty: serverDifficulty,
-    }: { challenge: ReviewPowChallenge; difficulty: number } =
-      await challengeResponse.json();
+  const runProofOfWork = useCallback(
+    async (requestedDifficulty: number) => {
+      const challengeResponse = await fetch(
+        `/api/review-pow?exchangerId=${encodeURIComponent(
+          exchangerId
+        )}&complexity=${requestedDifficulty}`
+      );
+      if (!challengeResponse.ok) {
+        throw new Error("Failed to request proof-of-work challenge");
+      }
+      const {
+        challenge,
+        difficulty: serverDifficulty,
+      }: { challenge: ReviewPowChallenge; difficulty: number } =
+        await challengeResponse.json();
 
-    const effectiveDifficulty =
-      challenge.difficulty ?? serverDifficulty ?? requestedDifficulty;
-    const solution = await solvePowChallenge(challenge, effectiveDifficulty);
+      const effectiveDifficulty =
+        challenge.difficulty ?? serverDifficulty ?? requestedDifficulty;
+      const solution = await solvePowChallenge(challenge, effectiveDifficulty);
 
-    return { challenge, nonce: solution.nonce };
-  };
+      return { challenge, nonce: solution.nonce };
+    },
+    [exchangerId]
+  );
 
-  const leaveReview = async () => {
+  const leaveReview = useCallback(async () => {
     if (!value.trim() || hasSubmitted || isSending) return;
     try {
-      dispatch(triggerModal(`review:${exchangerId}`));
       setIsSending(true);
       const powDifficulty = determinePowDifficulty();
       const proof = await runProofOfWork(powDifficulty);
@@ -195,10 +206,36 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
     } finally {
       setIsSending(false);
     }
-  };
+  }, [
+    value,
+    hasSubmitted,
+    isSending,
+    exchangerId,
+    determinePowDifficulty,
+    runProofOfWork,
+    lockReviewSubmission,
+    honeypot,
+    sentiment,
+    fingerprintInfo,
+    city,
+    dispatch,
+  ]);
+
+  useEffect(() => {
+    if (!isReviewModalOpen && shouldSubmitAfterModal) {
+      setShouldSubmitAfterModal(false);
+      leaveReview();
+    }
+  }, [isReviewModalOpen, shouldSubmitAfterModal, leaveReview]);
 
   const isSubmitDisabled =
     value.trim().length < 10 || hasSubmitted || isSending;
+
+  const handleSubmitClick = () => {
+    if (isSubmitDisabled) return;
+    setShouldSubmitAfterModal(true);
+    dispatch(triggerModal(reviewModalId));
+  };
 
   return (
     <Box3D
@@ -246,7 +283,7 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
         borderColor="peach.500"
         focusBorderColor="peach.200"
       />
-      <CustomModal id={`review:${exchangerId}`} header={"Дополните отзыв"}>
+      <CustomModal id={reviewModalId} header={"Хотите дополнить отзыв?"}>
         <ReviewAddons />
       </CustomModal>
       <HStack justifyContent="space-between" spacing="4" mt="4">
@@ -266,7 +303,7 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
         <Button
           disabled={isSubmitDisabled}
           variant={isSubmitDisabled ? "unset" : "primary"}
-          onClick={leaveReview}
+          onClick={handleSubmitClick}
           rightIcon={
             hasSubmitted ? (
               <MdOutlineDone size="1rem" />

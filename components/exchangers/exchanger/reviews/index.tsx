@@ -57,8 +57,8 @@ export default function ExchangerReviews({
       {!hasAnyReviews ? (
         <ResponsiveText>Пока нет отзывов, оставьте отзыв первым</ResponsiveText>
       ) : filteredReviews && filteredReviews.length > 0 ? (
-        filteredReviews.map((review) => (
-          <ExchangerRootReview key={review.id} review={review} />
+        filteredReviews.map((review, idx) => (
+          <ExchangerRootReview key={review.id + idx} review={review} />
         ))
       ) : (
         <ResponsiveText>Нет отзывов по выбранному фильтру</ResponsiveText>

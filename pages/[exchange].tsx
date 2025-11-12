@@ -59,7 +59,6 @@ export async function getStaticProps({
       cities,
       pmLayouts,
       articleCodes,
-      customDirText,
       dirTextIds,
     ] = await Promise.all([
       loadPms(),
@@ -67,7 +66,6 @@ export async function getStaticProps({
       isCash ? loadCities() : null,
       loadPmLayouts(),
       loadArticleCodes(),
-      loadCustomDirText(slug),
       loadMassDirTextIds({ isSell: true }),
     ]);
 
@@ -100,6 +98,15 @@ export async function getStaticProps({
           (c) => c.en_name?.toLowerCase() === cityParam.toLowerCase()
         ) || null
       : null;
+
+    const normalizeCityKey = (value: string) =>
+      value.trim().toLowerCase().replace(/\s+/g, "-");
+    const citySlug = cityParam ? `${slug}-${normalizeCityKey(cityParam)}` : slug;
+    const textBoxKeys = cityParam ? [citySlug, slug] : [slug];
+    const [cityCustomDirText, defaultDirText] = await Promise.all(
+      textBoxKeys.map((key) => loadCustomDirText(key))
+    );
+    const customDirText = cityCustomDirText || defaultDirText || null;
 
     const givePmLayout =
       pmLayouts?.find((l) => l.section == givePm?.section) || null;
