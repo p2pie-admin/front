@@ -40,6 +40,17 @@ export const getSlugToCodes = (dirs: string[], pms: IPm[]) => {
   return slugToCodes;
 };
 
+export const getCodesToSlug = (dirs: string[], pms: IPm[]) => {
+  const slugToCodes = getSlugToCodes(dirs, pms);
+  return Object.entries(slugToCodes).reduce(
+    (acc, [slug, codes]) => ({
+      ...acc,
+      [codes]: slug,
+    }),
+    {} as Record<string, string>
+  );
+};
+
 export const mergeExchangers = (
   allExchangers?: IExchanger[],
   parserExchangers?: Record<string, IParserExchanger>

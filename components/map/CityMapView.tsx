@@ -7,21 +7,47 @@ import { createMapStyles } from "./styles";
 import CustomMarker from "./CustomMarker";
 import { useAppDispatch } from "../../redux/hooks";
 import { setCity } from "../../redux/mainReducer";
+import { IPm } from "../../types/selector";
+import { Box3D } from "../../styles/theme/custom";
+import Dir from "../exchange/Dir";
 
 export type MapHeadings = {
   h1: string;
   h2: string;
   description: string;
   empty: string;
+  directionsTitle: string;
+};
+
+export type CityCashEntry = {
+  slug: string;
+  cryptoPm: IPm;
+  count: number;
+};
+
+export type CityCashSection = {
+  currencyCode: string;
+  currencyName: string;
+  cashPm: IPm;
+  buyTitle: string;
+  sellTitle: string;
+  buy: CityCashEntry[];
+  sell: CityCashEntry[];
 };
 
 type CityMapViewProps = {
   city: ICity;
   exchangerList: IExchanger[];
   headings: MapHeadings;
+  cashSections: CityCashSection[];
 };
 
-const CityMapView = ({ city, exchangerList, headings }: CityMapViewProps) => {
+const CityMapView = ({
+  city,
+  exchangerList,
+  headings,
+  cashSections,
+}: CityMapViewProps) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -206,6 +232,73 @@ const CityMapView = ({ city, exchangerList, headings }: CityMapViewProps) => {
           ))}
         </GoogleMap>
       </Box>
+      {cashSections.length > 0 && (
+        <VStack align="stretch" spacing="3" mt="6" w="full">
+          <Heading as="h3" size="md" color="bg.200">
+            {headings.directionsTitle}
+          </Heading>
+          <VStack align="stretch" spacing="4">
+            {cashSections.map((section) => (
+              <Box3D key={section.currencyCode} p="4" variant="contrast" w="full">
+                <VStack align="stretch" spacing="4">
+                  {section.buy.length > 0 && (
+                    <Box>
+                      <Heading as="h4" size="sm" mb="3" color="bg.200">
+                        {section.buyTitle}
+                      </Heading>
+                      <VStack align="stretch" spacing="3">
+                        {section.buy.map((entry) => (
+                          <Dir
+                            key={entry.slug}
+                            slug={entry.slug}
+                            givePm={section.cashPm}
+                            getPm={entry.cryptoPm}
+                          >
+                            <Text
+                              mt="2"
+                              textAlign="right"
+                              color="bg.300"
+                              fontWeight="semibold"
+                            >
+                              {entry.count}
+                            </Text>
+                          </Dir>
+                        ))}
+                      </VStack>
+                    </Box>
+                  )}
+                  {section.sell.length > 0 && (
+                    <Box>
+                      <Heading as="h4" size="sm" mb="3" color="bg.200">
+                        {section.sellTitle}
+                      </Heading>
+                      <VStack align="stretch" spacing="3">
+                        {section.sell.map((entry) => (
+                          <Dir
+                            key={entry.slug}
+                            slug={entry.slug}
+                            givePm={entry.cryptoPm}
+                            getPm={section.cashPm}
+                          >
+                            <Text
+                              mt="2"
+                              textAlign="right"
+                              color="bg.300"
+                              fontWeight="semibold"
+                            >
+                              {entry.count}
+                            </Text>
+                          </Dir>
+                        ))}
+                      </VStack>
+                    </Box>
+                  )}
+                </VStack>
+              </Box3D>
+            ))}
+          </VStack>
+        </VStack>
+      )}
     </>
   );
 };

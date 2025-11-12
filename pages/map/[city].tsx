@@ -2,19 +2,34 @@ import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import UniversalSeo from "../../components/shared/UniversalSeo";
-import CityMapView, { MapHeadings } from "../../components/map/CityMapView";
-import { loadCities } from "../../cache/loadX";
-import { initCMSFetcher } from "../../services/fetchers";
+import CityMapView, {
+  MapHeadings,
+  CityCashSection,
+} from "../../components/map/CityMapView";
+import { loadCities, loadPms, loadPossibleDirs } from "../../cache/loadX";
+import { initCMSFetcher, initParserFetcher } from "../../services/fetchers";
 import { exchangersMapQuery } from "../../services/queries";
+import { getCodesToSlug } from "../../cache/helper";
 import { ICity } from "../../types/exchange";
 import { IExchanger } from "../../types/exchanger";
 import { ISEO } from "../../types/general";
+import { IPm } from "../../types/selector";
+import { curNames } from "../../redux/amountsHelper";
+
+type ParserCityDirections = Record<string, Record<string, number>>;
+type ParsedDirection = {
+  slug: string;
+  givePm: IPm;
+  getPm: IPm;
+  count: number;
+};
 
 type MapCityPageProps = {
   city: ICity;
   exchangerList: IExchanger[];
   seo: ISEO;
   headings: MapHeadings;
+  cashSections: CityCashSection[];
 };
 
 const MapCityPage: NextPage<MapCityPageProps> = ({
@@ -22,6 +37,7 @@ const MapCityPage: NextPage<MapCityPageProps> = ({
   exchangerList,
   seo,
   headings,
+  cashSections,
 }) => (
   <>
     <UniversalSeo seo={seo} />
@@ -29,6 +45,7 @@ const MapCityPage: NextPage<MapCityPageProps> = ({
       city={city}
       exchangerList={exchangerList}
       headings={headings}
+      cashSections={cashSections}
     />
   </>
 );
@@ -57,6 +74,7 @@ const buildCopy = (city: ICity, locale: "ru" | "en") => {
       title: `Офисы обмена валюты в ${cityRu} | P2P.Exchange`,
       seoDescription: description,
       empty: `Сейчас нет доступных офисов в ${preposition}. Мы обновляем данные карты.`,
+      directionsTitle: `Популярные обмены в ${preposition}`,
     };
   }
 
@@ -68,6 +86,7 @@ const buildCopy = (city: ICity, locale: "ru" | "en") => {
     title: `Currency exchange offices in ${cityEn} | P2P.Exchange`,
     seoDescription: description,
     empty: `No exchange offices found in ${cityEn} yet. We update the map regularly.`,
+    directionsTitle: `Active directions in ${cityEn}`,
   };
 };
 
@@ -78,7 +97,14 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
     (process.env.NEXT_PUBLIC_SITE_LANG as "ru" | "en") ||
     "ru";
 
-  const [cities] = await Promise.all([loadCities()]);
+  const parserFetcher = initParserFetcher();
+
+  const [cities, cityDirectionsData, pms, dirs] = await Promise.all([
+    loadCities(),
+    parserFetcher("non_empty_cities") as Promise<ParserCityDirections | null>,
+    loadPms(),
+    loadPossibleDirs(),
+  ]);
 
   const defaultCity =
     cities?.find((city) => toLower(city.en_name) === DEFAULT_CITY_SLUG) || null;
@@ -174,6 +200,108 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
 
   const copy = buildCopy(currentCity, currentLocale);
 
+  const pmMap = new Map((pms || []).map((pm) => [pm.code.toUpperCase(), pm]));
+  const codesToSlug =
+    dirs && pms && pms.length && dirs.length ? getCodesToSlug(dirs, pms) : {};
+  const citySlug = toLower(currentCity.en_name);
+
+  const rawCityDirections: Record<string, number> =
+    (citySlug && cityDirectionsData && cityDirectionsData[citySlug]) || {};
+
+  const directions: ParsedDirection[] = Object.entries(rawCityDirections)
+    .filter(([, count]) => typeof count === "number" && count > 3)
+    .map(([dir, count]) => {
+      const [give, get] = dir.split("_");
+      const givePm = pmMap.get(give?.toUpperCase() || "");
+      const getPm = pmMap.get(get?.toUpperCase() || "");
+      const slug = codesToSlug[dir];
+
+      if (!givePm || !getPm || !slug) {
+        return null;
+      }
+
+      return { slug, givePm, getPm, count };
+    })
+    .filter((item): item is ParsedDirection => Boolean(item))
+    .sort((a, b) => b.count - a.count);
+  const isCashPm = (pm?: IPm | null) =>
+    !!pm &&
+    ((pm.section && pm.section.toLowerCase() === "cash") ||
+      pm.code?.toUpperCase().includes("CASH") ||
+      pm.en_name?.toLowerCase().includes("cash"));
+
+  const cashMap = directions.reduce(
+    (acc, direction) => {
+      const giveIsCash = isCashPm(direction.givePm);
+      const getIsCash = isCashPm(direction.getPm);
+      if (giveIsCash === getIsCash) {
+        return acc;
+      }
+      const cashPm = giveIsCash ? direction.givePm : direction.getPm;
+      const cryptoPm = giveIsCash ? direction.getPm : direction.givePm;
+      const type = giveIsCash ? "buy" : "sell";
+      const cashCode = cashPm.currency.code.toUpperCase();
+
+      if (!acc[cashCode]) {
+        acc[cashCode] = {
+          cashPm,
+          buy: [] as CityCashSection["buy"],
+          sell: [] as CityCashSection["sell"],
+        };
+      }
+
+      acc[cashCode][type].push({
+        slug: direction.slug,
+        cryptoPm,
+        count: direction.count,
+      });
+      return acc;
+    },
+    {} as Record<
+      string,
+      {
+        cashPm: IPm;
+        buy: CityCashSection["buy"];
+        sell: CityCashSection["sell"];
+      }
+    >
+  );
+
+  const localeKey = currentLocale === "ru" ? "ru_name" : "en_name";
+
+  const cashSections: CityCashSection[] = Object.entries(cashMap)
+    .map(([code, data]) => {
+      const buy = [...data.buy].sort((a, b) => b.count - a.count);
+      const sell = [...data.sell].sort((a, b) => b.count - a.count);
+      const cashName =
+        curNames[code.toLowerCase() as keyof typeof curNames]?.[localeKey] ||
+        code;
+      const totalCount =
+        buy.reduce((sum, item) => sum + item.count, 0) +
+        sell.reduce((sum, item) => sum + item.count, 0);
+      const buyTitle =
+        currentLocale === "ru"
+          ? `Купить криптовалюту за наличные ${cashName}`
+          : `Buy crypto for cash ${cashName}`;
+      const sellTitle =
+        currentLocale === "ru"
+          ? `Продать криптовалюту за наличные ${cashName}`
+          : `Sell crypto for cash ${cashName}`;
+      return {
+        currencyCode: code,
+        currencyName: cashName,
+        cashPm: data.cashPm,
+        buyTitle,
+        sellTitle,
+        buy,
+        sell,
+        totalCount,
+      };
+    })
+    .filter((section) => section.buy.length || section.sell.length)
+    .sort((a, b) => b.totalCount - a.totalCount)
+    .map(({ totalCount, ...rest }) => rest);
+
   const seo: ISEO = {
     title: copy.title,
     description: copy.seoDescription,
@@ -204,7 +332,9 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
         h2: copy.h2,
         description: copy.description,
         empty: copy.empty,
+        directionsTitle: copy.directionsTitle,
       },
+      cashSections,
       ...(await serverSideTranslations(currentLocale, ["main"])),
     },
     revalidate: 40000,
