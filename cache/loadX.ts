@@ -21,7 +21,6 @@ import {
 } from "./helper";
 import { cachedArrayFetch, cachedFetch } from "./cache";
 import { ICity, IDirText, IPmLayout } from "../types/exchange";
-import { Redis } from "@upstash/redis";
 import {
   exchangerNameToSlug,
   exchangerSlugToName,

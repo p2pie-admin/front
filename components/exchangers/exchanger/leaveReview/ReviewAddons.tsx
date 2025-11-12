@@ -1,16 +1,17 @@
-import { Button, HStack, Text, VStack } from "@chakra-ui/react";
+import { Button, HStack, Input, Text, VStack } from "@chakra-ui/react";
 import React from "react";
 import { useAppDispatch } from "../../../../redux/hooks";
 import { triggerModal } from "../../../../redux/mainReducer";
+import { ResponsiveText } from "../../../../styles/theme/custom";
 
 type ReviewAddonsProps = {
   onClose?: () => void;
 };
 
 const hints = [
-  "Укажите курсы, которые вы получили на деле",
-  "Расскажите о скорости обмена и качестве поддержки",
-  "Если есть переписки или чеки, приложите их ссылкой",
+  "Номер заявки",
+  "Сумма",
+  "Если есть переписки или чеки, приложите их фотографией",
 ];
 
 export default function ReviewAddons({ onClose }: ReviewAddonsProps) {
@@ -29,26 +30,40 @@ export default function ReviewAddons({ onClose }: ReviewAddonsProps) {
       color="bg.200"
       fontSize="sm"
     >
-      <Text color="bg.100" fontWeight="semibold">
-        Добавьте к отзыву максимум деталей — так другим пользователям проще
-        доверять вашей истории.
+      <Text>
+        Не терпится получить обратную связь? Обсудите ваше впечатление от
+        обменника в чате телегам
+      </Text>
+
+      <Text>
+        Ваш отзыв получит галочку подтверждения, если вы дабавите следующую
+        информацию:
       </Text>
       <VStack align="stretch" spacing="2">
         {hints.map((hint) => (
-          <HStack key={hint} spacing="3">
-            <Text color="peach.300">•</Text>
-            <Text>{hint}</Text>
-          </HStack>
+          <Input
+            placeholder={hint}
+            borderWidth="2px"
+            borderRadius="xl"
+            borderColor="bg.500"
+            size="md"
+            h="45px"
+            focusBorderColor="peach.200"
+          />
         ))}
       </VStack>
-      <Button
-        alignSelf="flex-end"
-        variant="primary"
-        size="sm"
-        onClick={handleClose}
-      >
-        Продолжить
-      </Button>
+      <HStack w="100%" justifyContent={"end"}>
+        <Button
+          alignSelf="flex-end"
+          variant="no_contrast"
+          onClick={handleClose}
+        >
+          Пропустить
+        </Button>
+        <Button alignSelf="flex-end" variant="primary" onClick={handleClose}>
+          Отправить
+        </Button>
+      </HStack>
     </VStack>
   );
 }

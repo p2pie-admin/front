@@ -1,9 +1,23 @@
 const { Redis } = require("@upstash/redis");
 
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN,
-});
+function createRedis() {
+  const url = process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+  if (!url || !token) {
+    console.warn(
+      "[sitemap] Upstash credentials missing. Falling back to static paths."
+    );
+    return null;
+  }
+  try {
+    return new Redis({ url, token });
+  } catch (error) {
+    console.error("[sitemap] Failed to init Redis client:", error);
+    return null;
+  }
+}
+
+const redis = createRedis();
 
 module.exports = {
   siteUrl: process.env.SITE_URL || "https://p2pie.com",
@@ -17,14 +31,20 @@ module.exports = {
     ],
   },
   // Collect extra paths from Redis
-  additionalPaths: async (config) => {
-    const cached = await redis.get("sitemap:paths");
-    const paths = cached?.data || [];
+  additionalPaths: async () => {
+    if (!redis) return [];
+    try {
+      const cached = await redis.get("sitemap:paths");
+      const paths = cached?.data || [];
 
-    return paths.map((p) => ({
-      loc: p,
-      lastmod: new Date().toISOString(),
-    }));
+      return paths.map((p) => ({
+        loc: p,
+        lastmod: new Date().toISOString(),
+      }));
+    } catch (error) {
+      console.error("[sitemap] Failed to read cached paths:", error);
+      return [];
+    }
   },
 };
 

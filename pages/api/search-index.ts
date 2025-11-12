@@ -1,10 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { Redis } from "@upstash/redis";
-
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL!,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
-});
+import { redisGet } from "../../cache/redisClient";
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,6 +7,6 @@ export default async function handler(
 ) {
   if (req.method !== "GET") return res.status(405).end();
 
-  const cached = await redis.get("search:index");
+  const cached = await redisGet("search:index");
   res.status(200).json(cached || { data: [], updatedAt: null });
 }
