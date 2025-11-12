@@ -1,12 +1,7 @@
 import React from "react";
-import {
-  IExchangerCard,
-  IExchangerReview,
-  IExchangerReviewReply,
-} from "../../../../types/exchanger";
+
 import { HStack, Icon } from "@chakra-ui/react";
-import { Box3D, ResponsiveText } from "../../../../styles/theme/custom";
-import { addSpaces } from "../../../../redux/amountsHelper";
+
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { PiMoneyWavy } from "react-icons/pi";
 import { IoTimeOutline } from "react-icons/io5";

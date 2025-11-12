@@ -14,7 +14,7 @@ export default function ExchangerDescription({
   if (!description) return <></>;
 
   return (
-    <Box3D mt="8" p="4" variant="contrast">
+    <Box3D my="8" p="4" variant="contrast">
       <CustomHeader text={`Описание`} Icon={IoMdInformationCircle} />
       <Divider my="4" />
       {description && <TextToHTML text={description} />}

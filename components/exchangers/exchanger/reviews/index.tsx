@@ -25,18 +25,22 @@ export default function ExchangerReviews({
     setActiveFilter((current) => (current === color ? null : color));
   }, []);
 
-  const filteredReviews = useMemo(() => {
+  const sortedReviews = useMemo(() => {
     if (!reviews) return null;
-    if (!activeFilter) return reviews;
-    const targetType = filterTypeMap[activeFilter];
-    if (!targetType) return reviews;
-    return reviews.filter((review) => review.type === targetType);
-  }, [reviews, activeFilter]);
+    return [...reviews].sort((a, b) => {
+      const dateA = new Date(a.updatedAt ?? 0).getTime();
+      const dateB = new Date(b.updatedAt ?? 0).getTime();
+      return dateB - dateA;
+    });
+  }, [reviews]);
 
-  const reviewsToRender = useMemo(() => {
-    if (!filteredReviews) return null;
-    return [...filteredReviews].reverse();
-  }, [filteredReviews]);
+  const filteredReviews = useMemo(() => {
+    if (!sortedReviews) return null;
+    if (!activeFilter) return sortedReviews;
+    const targetType = filterTypeMap[activeFilter];
+    if (!targetType) return sortedReviews;
+    return sortedReviews.filter((review) => review.type === targetType);
+  }, [sortedReviews, activeFilter]);
 
   const reviewsCount = filteredReviews?.length ?? reviews?.length ?? 0;
   const hasAnyReviews = !!(reviews && reviews.length);
@@ -52,8 +56,8 @@ export default function ExchangerReviews({
       <Divider my="4" />
       {!hasAnyReviews ? (
         <ResponsiveText>Пока нет отзывов, оставьте отзыв первым</ResponsiveText>
-      ) : reviewsToRender && reviewsToRender.length > 0 ? (
-        reviewsToRender.map((review) => (
+      ) : filteredReviews && filteredReviews.length > 0 ? (
+        filteredReviews.map((review) => (
           <ExchangerRootReview key={review.id} review={review} />
         ))
       ) : (
