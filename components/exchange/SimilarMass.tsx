@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 
 import { IPm } from "../../types/selector";
 import { getOtherMass } from "./exchangeHelper";
-import MassPmIcon from "../mass/table/MassPmIcon";
+import PmIcon from "../shared/PmIcon";
 import SmartGrid from "../mass/table/SmartGrid";
 import { IMassDirTextId } from "../../types/mass";
 import PmName from "../shared/PmName";
@@ -46,7 +46,7 @@ const SimilarMass = ({
           mx="0.5"
           cursor="pointer"
         >
-          <MassPmIcon pm={pm} />
+          <PmIcon pm={pm} />
         </HStack>
       ))}
     </SmartGrid>

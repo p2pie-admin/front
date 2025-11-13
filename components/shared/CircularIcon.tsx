@@ -34,7 +34,7 @@ const CircularIcon = ({
   size = "md",
 }: {
   color: string;
-  icon?: IImage;
+  icon?: IImage | null;
   size?: "sm" | "md" | "lg";
   iconAlt?: string;
 }) => {

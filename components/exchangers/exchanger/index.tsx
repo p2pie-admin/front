@@ -14,8 +14,6 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 
-import { Box3D } from "../../../styles/theme/custom";
-
 import UniversalSeo from "../../shared/UniversalSeo";
 import { ISEO } from "../../../types/general";
 import ExchangerCard from "./description";
@@ -32,6 +30,7 @@ import ExchangerReviews from "./reviews";
 import LeaveReview from "./leaveReview";
 import ExchangerReviewsHeader from "./reviews/ExchangerReviewsHeader";
 import ExchangerStats from "./ExchangerStats";
+import { BoxWrapper } from "../../shared/BoxWrapper";
 
 export default function Exchanger({
   exchanger,
@@ -68,7 +67,7 @@ export default function Exchanger({
     <>
       <UniversalSeo seo={seo} />
 
-      <Box3D mt="4" p="4" variant="no_contrast">
+      <BoxWrapper mt="4" p="4" variant="no_contrast">
         <HStack w="100%" justifyContent="space-between">
           <HStack gap="4" position="relative">
             <ExchangerName
@@ -108,7 +107,7 @@ export default function Exchanger({
           reserveTotal={exchanger.exchanger_card?.total_reserve_usd}
           workingTime={exchanger.exchanger_card?.working_time}
         />
-      </Box3D>
+      </BoxWrapper>
 
       <ExchangerDescription description={description} />
 

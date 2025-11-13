@@ -2,19 +2,18 @@ import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import UniversalSeo from "../../components/shared/UniversalSeo";
-import CityMapView, {
-  MapHeadings,
-  CityCashSection,
-} from "../../components/map/CityMapView";
+import CityMapView from "../../components/map/CityMapView";
+import { MapHeadings, CityCashSection } from "../../components/map/types";
 import { loadCities, loadPms, loadPossibleDirs } from "../../cache/loadX";
 import { initCMSFetcher, initParserFetcher } from "../../services/fetchers";
-import { exchangersMapQuery } from "../../services/queries";
+import { exchangersMapQuery, TextBoxQuery } from "../../services/queries";
 import { getCodesToSlug } from "../../cache/helper";
 import { ICity } from "../../types/exchange";
 import { IExchanger } from "../../types/exchanger";
 import { ISEO } from "../../types/general";
 import { IPm } from "../../types/selector";
 import { curNames } from "../../redux/amountsHelper";
+import { IDirText } from "../../types/exchange";
 
 type ParserCityDirections = Record<string, Record<string, number>>;
 type ParsedDirection = {
@@ -30,6 +29,7 @@ type MapCityPageProps = {
   seo: ISEO;
   headings: MapHeadings;
   cashSections: CityCashSection[];
+  cityText: IDirText | null;
 };
 
 const MapCityPage: NextPage<MapCityPageProps> = ({
@@ -38,6 +38,7 @@ const MapCityPage: NextPage<MapCityPageProps> = ({
   seo,
   headings,
   cashSections,
+  cityText,
 }) => (
   <>
     <UniversalSeo seo={seo} />
@@ -46,6 +47,7 @@ const MapCityPage: NextPage<MapCityPageProps> = ({
       exchangerList={exchangerList}
       headings={headings}
       cashSections={cashSections}
+      cityText={cityText}
     />
   </>
 );
@@ -60,19 +62,28 @@ const normalizeCitySlug = (value?: string | string[] | null) => {
 const toLower = (value?: string | null) =>
   value ? value.toLowerCase() : value;
 
-const buildCopy = (city: ICity, locale: "ru" | "en") => {
+const buildCopy = (
+  city: ICity,
+  locale: "ru" | "en",
+  cityText?: IDirText | null
+) => {
   const cityEn = city.en_name;
   const cityRu = city.ru_name;
   const preposition = city.preposition || cityRu;
+  const header = cityText?.header?.trim();
+  const subheader = cityText?.subheader?.trim();
+  const bodyText = cityText?.text?.trim();
+  const seoTitle = cityText?.seo_title?.trim();
+  const seoDescription = cityText?.seo_description?.trim();
 
   if (locale === "ru") {
     const description = `Адреса, контакты и режим работы обменных пунктов в ${preposition}. Интерактивная карта с офисами обмена валюты города ${cityRu}.`;
     return {
-      h1: `Найти офисы обмена наличных в ${preposition}`,
-      h2: `Показать офисы обменников на карте города ${cityRu}`,
-      description,
-      title: `Офисы обмена валюты в ${cityRu} | P2P.Exchange`,
-      seoDescription: description,
+      h1: header || `Найти офисы обмена наличных в ${preposition}`,
+      h2: subheader || `Показать офисы обменников на карте города ${cityRu}`,
+      description: bodyText || description,
+      title: seoTitle || `Офисы обмена валюты в ${cityRu} | P2P.Exchange`,
+      seoDescription: seoDescription || description,
       empty: `Сейчас нет доступных офисов в ${preposition}. Мы обновляем данные карты.`,
       directionsTitle: `Популярные обмены в ${preposition}`,
     };
@@ -80,11 +91,11 @@ const buildCopy = (city: ICity, locale: "ru" | "en") => {
 
   const description = `Addresses, contacts and working hours of currency exchange offices in ${cityEn}. Explore the interactive map to plan your visit.`;
   return {
-    h1: `Find cash exchange offices in ${cityEn}`,
-    h2: `Show exchange bureaus on the map of ${cityEn}`,
-    description,
-    title: `Currency exchange offices in ${cityEn} | P2P.Exchange`,
-    seoDescription: description,
+    h1: header || `Find cash exchange offices in ${cityEn}`,
+    h2: subheader || `Show exchange bureaus on the map of ${cityEn}`,
+    description: bodyText || description,
+    title: seoTitle || `Currency exchange offices in ${cityEn} | P2P.Exchange`,
+    seoDescription: seoDescription || description,
     empty: `No exchange offices found in ${cityEn} yet. We update the map regularly.`,
     directionsTitle: `Active directions in ${cityEn}`,
   };
@@ -122,6 +133,11 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   const exchangerList: IExchanger[] = Array.isArray(exchangersResponse)
     ? exchangersResponse
     : exchangersResponse?.exchangers || [];
+  const cityTextRes = await fetcher(TextBoxQuery, {
+    locale: currentLocale,
+    key: currentCity.en_name?.toLowerCase(),
+  });
+  const cityText = (cityTextRes?.[0] || null) as IDirText | null;
 
   // const cityAliases = [
   //   toLower(currentCity.en_name),
@@ -198,7 +214,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   //   })
   //   .filter(Boolean);
 
-  const copy = buildCopy(currentCity, currentLocale);
+  const copy = buildCopy(currentCity, currentLocale, cityText);
 
   const pmMap = new Map((pms || []).map((pm) => [pm.code.toUpperCase(), pm]));
   const codesToSlug =
@@ -335,6 +351,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
         directionsTitle: copy.directionsTitle,
       },
       cashSections,
+      cityText,
       ...(await serverSideTranslations(currentLocale, ["main"])),
     },
     revalidate: 40000,

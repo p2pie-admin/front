@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { Box3D, ResponsiveText } from "../../../../styles/theme/custom";
+import { ResponsiveText } from "../../../../styles/theme/custom";
 import {
   Box,
   Divider,
@@ -14,12 +14,17 @@ import ExchangerReplies from "./ExchangerReplies";
 import { IExchangerReview } from "../../../../types/exchanger";
 import BoringAvatar from "boring-avatars";
 import UserAgent from "./UserAgent";
-import { FormatedDate, ReviewBorder } from "../shared";
+
 import {
   MdOutlineSentimentNeutral,
   MdSentimentSatisfiedAlt,
   MdSentimentVeryDissatisfied,
 } from "react-icons/md";
+import {
+  BoxWrapper,
+  ReviewBorder,
+  FormatedDate,
+} from "../../../shared/BoxWrapper";
 
 export default function ExchangerRootReview({
   review,
@@ -103,7 +108,7 @@ export default function ExchangerRootReview({
   }, [location]);
 
   return (
-    <Box3D
+    <BoxWrapper
       w="100%"
       p="4"
       my="6"
@@ -199,6 +204,6 @@ export default function ExchangerRootReview({
         pointerEvents="none" // <-- lets all clicks/touches pass through
         bgGradient={`radial-gradient(circle at 5% 70%, ${ambientColor} 0%, transparent 40%)`}
       />
-    </Box3D>
+    </BoxWrapper>
   );
 }

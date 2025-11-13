@@ -5,7 +5,7 @@ import PmName from "../../shared/PmName";
 import SmartGrid from "./SmartGrid";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { capitalize } from "../../main/side/selector/section/PmGroup/helper";
-import MassPmIcon from "./MassPmIcon";
+import PmIcon from "../../shared/PmIcon";
 
 const MassFiat = ({
   codes,
@@ -17,7 +17,7 @@ const MassFiat = ({
   <SmartGrid wrapThreshold={6} direction={"end"}>
     {codes.map((code) => (
       <HStack key={code} borderRadius="lg" mx="0.5" cursor="pointer">
-        <MassPmIcon pm={fiatPms[code]} />
+        <PmIcon pm={fiatPms[code]} />
 
         {codes.length < 2 && (
           <ResponsiveText>{capitalize(fiatPms[code]?.en_name)}</ResponsiveText>

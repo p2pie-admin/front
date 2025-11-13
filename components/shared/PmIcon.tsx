@@ -1,9 +1,9 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
-import { IPm } from "../../../types/selector";
-import CircularIcon from "../../shared/CircularIcon";
+import { IPm } from "../../types/selector";
+import CircularIcon from "./CircularIcon";
 
-function MassPmIcon({ pm }: { pm: IPm }) {
+function PmIcon({ pm }: { pm: IPm }) {
   return (
     <Box
       cursor="pointer"
@@ -21,4 +21,4 @@ function MassPmIcon({ pm }: { pm: IPm }) {
   );
 }
 
-export default MassPmIcon;
+export default PmIcon;

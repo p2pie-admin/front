@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { IoMdClose } from "react-icons/io";
 import { IPm } from "../../../../types/selector";
-import MassPmIcon from "../MassPmIcon";
+import PmIcon from "../../../shared/PmIcon";
 import { ResponsiveText } from "../../../../styles/theme/custom";
 import PmName from "../../../shared/PmName";
 import { IoIosArrowDown } from "react-icons/io";
@@ -80,7 +80,7 @@ export const MultiSelectMenu: React.FC<Props> = ({
         <HStack align="center" mt="1">
           {selectedOptions.slice(0, maxTagToShow).map((code) => (
             <Box key={code} mx="-1.5">
-              <MassPmIcon pm={fiatPms[code]} />
+              <PmIcon pm={fiatPms[code]} />
             </Box>
           ))}
           {selectedOptions.length > maxTagToShow && (

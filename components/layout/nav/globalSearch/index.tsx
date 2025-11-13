@@ -147,7 +147,7 @@ const GlobalSearch = () => {
                     h="10"
                     color={color}
                     border="none"
-                    placeholder="Поиск направления или обменника"
+                    placeholder="Поиск направления, обменника или города"
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                     autoFocus

@@ -1,12 +1,12 @@
 import { Button, HStack } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
-import { Box3D, ResponsiveText } from "../../styles/theme/custom";
+import { ResponsiveText } from "../../styles/theme/custom";
 import { IExchanger, IParserExchanger } from "../../types/exchanger";
 import Dot from "./Dot";
 import { exchangerNameToSlug, getStatus } from "./helper";
-import logo from "next-seo/lib/jsonld/logo";
 import ExchangerName from "../shared/ExchangerNameRating";
+import { BoxWrapper } from "../shared";
 
 export default function ExchangerPreview({
   exchanger,
@@ -15,7 +15,7 @@ export default function ExchangerPreview({
 }) {
   const { name, total_rates } = exchanger;
   return (
-    <Box3D
+    <BoxWrapper
       w="100%"
       as={Link}
       href={`/exchangers/${exchangerNameToSlug(name)}`}
@@ -37,6 +37,6 @@ export default function ExchangerPreview({
           admin_rating={exchanger.admin_rating}
         />
       </HStack>
-    </Box3D>
+    </BoxWrapper>
   );
 }

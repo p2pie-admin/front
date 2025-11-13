@@ -1,12 +1,12 @@
 import React from "react";
 import { IExchangerOffice } from "../../../../types/exchanger";
 import { Box, Button, Divider, HStack, VStack } from "@chakra-ui/react";
-import { Box3D, ResponsiveText } from "../../../../styles/theme/custom";
+import { ResponsiveText } from "../../../../styles/theme/custom";
 import CustomImage from "../../../shared/CustomImage";
-import { LuMapPin } from "react-icons/lu";
 import { LinkWrapper } from "../../../exchange/pmLayout/LinkWrapper";
 import { TbMapPinFilled } from "react-icons/tb";
-import { CustomHeader } from "../shared";
+import { BoxWrapper, CustomHeader } from "../../../shared/BoxWrapper";
+
 export default function OfficesDescription({
   offices,
 }: {
@@ -14,7 +14,7 @@ export default function OfficesDescription({
 }) {
   if (!offices || !offices.length) return <></>;
   return (
-    <Box3D my="8" p="4" variant="contrast" w="100%">
+    <BoxWrapper variant="contrast" w="100%">
       <CustomHeader text={` Адреса офисов`} Icon={TbMapPinFilled} />
       {offices.map((office) => (
         <React.Fragment key={office.id + office.address}>
@@ -59,6 +59,6 @@ export default function OfficesDescription({
           </HStack>
         </React.Fragment>
       ))}
-    </Box3D>
+    </BoxWrapper>
   );
 }

@@ -1,11 +1,11 @@
 import { Box, Center, Grid, Spinner } from "@chakra-ui/react";
 import { useState, useMemo, useEffect, useCallback, useRef } from "react";
 import { IExchanger, IParserExchanger } from "../../types/exchanger";
-import { Box3D } from "../../styles/theme/custom";
 import { getStatus } from "./helper";
 import TopPanel from "./TopPanel";
 import ExchangersHeader from "./ExchangersHeader";
 import ExchangerLink from "./ExchangerLink";
+import { BoxWrapper } from "../shared";
 
 import UniversalSeo from "../shared/UniversalSeo";
 
@@ -133,7 +133,7 @@ export default function ExchangersList({
     <>
       <UniversalSeo seo={seo} />
 
-      <Box3D p="4" variant="no_contrast" mt="10" minH="100vh">
+      <BoxWrapper p="4" variant="no_contrast" mt="10" minH="100vh">
         <ExchangersHeader exchangers={exchangers} />
 
         <TopPanel
@@ -174,7 +174,7 @@ export default function ExchangersList({
             <div ref={loadMore} style={{ height: "1px" }} />
           </Box>
         </Box>
-      </Box3D>
+      </BoxWrapper>
     </>
   );
 }

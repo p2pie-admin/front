@@ -1,5 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { redisGet } from "../../cache/redisClient";
+import { loadCities } from "../../cache/loadX";
+import { ICity } from "../../types/exchange";
 
 export default async function handler(
   req: NextApiRequest,
@@ -7,6 +9,44 @@ export default async function handler(
 ) {
   if (req.method !== "GET") return res.status(405).end();
 
-  const cached = await redisGet("search:index");
-  res.status(200).json(cached || { data: [], updatedAt: null });
+  const cached = (await redisGet("search:index")) || {
+    data: [],
+    updatedAt: null,
+  };
+
+  try {
+    const cities = (await loadCities()) || [];
+
+    const cityEntries = (cities as ICity[])
+      .filter((city) => city?.en_name)
+      .map((city) => {
+        const citySlug = city.en_name
+          ?.toLowerCase()
+          ?.replace(/\s+/g, "-")
+          ?.trim();
+        const slug = `map/${citySlug}`;
+        const headerLabel = city.ru_name || city.en_name || "Карта офисов";
+        const wordsToSearchFrom = `${city.en_name || ""} ${
+          city.ru_name || ""
+        } mapa map office ${citySlug || ""}`;
+        return {
+          slug,
+          header: `Карта офисов · ${headerLabel}`,
+          wordsToSearchFrom,
+        };
+      });
+
+    const combinedData = [
+      ...(Array.isArray(cached.data) ? cached.data : []),
+      ...cityEntries,
+    ];
+
+    return res.status(200).json({
+      data: combinedData,
+      updatedAt: cached.updatedAt,
+    });
+  } catch (error) {
+    console.error("[search-index] Failed to load cities:", error);
+    return res.status(200).json(cached);
+  }
 }

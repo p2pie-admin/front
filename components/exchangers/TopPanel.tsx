@@ -1,8 +1,8 @@
 import { Box, HStack, VStack } from "@chakra-ui/react";
-import { Box3D } from "../../styles/theme/custom";
 import FilterButtons from "./FilterButtons";
 import ExchangerSearch from "./ExchangerSearch";
 import SortButtons from "./SortButtons";
+import { BoxWrapper } from "../shared";
 
 export default function TopPanel({
   toggleFilter,
@@ -20,7 +20,7 @@ export default function TopPanel({
   toggleSort: (criteria: typeof sortCriteria) => void;
 }) {
   return (
-    <Box3D mt="4" p="4" variant="extra_contrast" w="100%">
+    <BoxWrapper mt="4" p="4" variant="extra_contrast" w="100%">
       <Box maxW="container.xl">
         {/* Large screens */}
         <HStack
@@ -62,6 +62,6 @@ export default function TopPanel({
           <ExchangerSearch onSearch={setSearchQuery} />
         </VStack>
       </Box>
-    </Box3D>
+    </BoxWrapper>
   );
 }

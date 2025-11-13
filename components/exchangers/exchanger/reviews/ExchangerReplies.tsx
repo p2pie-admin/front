@@ -2,7 +2,7 @@ import { Box, Divider, HStack, Text } from "@chakra-ui/react";
 import React from "react";
 import { IExchangerReviewReply } from "../../../../types/exchanger";
 import { HiReply } from "react-icons/hi";
-import { FormatedDate, ReviewBorder } from "../shared";
+import { FormatedDate, ReviewBorder } from "../../../shared/BoxWrapper";
 import { ResponsiveText } from "../../../../styles/theme/custom";
 import BoringAvatar from "boring-avatars";
 import CustomImage from "../../../shared/CustomImage";

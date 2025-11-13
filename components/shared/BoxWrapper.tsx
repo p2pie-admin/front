@@ -1,13 +1,44 @@
 import { Box, Divider, HStack, Icon } from "@chakra-ui/react";
 import React from "react";
 import { IconType } from "react-icons";
-import { ResponsiveText } from "../../../../styles/theme/custom";
+import { Box3D, ResponsiveText } from "../../styles/theme/custom";
 
-export function CustomHeader({ text, Icon }: { text: string; Icon: IconType }) {
+type BoxWrapperProps = React.ComponentProps<typeof Box3D> & {
+  variant?: "contrast" | "no_contrast" | "extra_contrast";
+};
+
+export function BoxWrapper({
+  variant = "contrast",
+  children,
+  my = 4,
+  p = 4,
+  ...props
+}: BoxWrapperProps) {
+  return (
+    <Box3D my={my} p={p} variant={variant} {...props}>
+      {children}
+    </Box3D>
+  );
+}
+
+export function CustomHeader({
+  text,
+  Icon,
+  as,
+}: {
+  text: string;
+  Icon: IconType;
+  as?: string;
+}) {
   return (
     <HStack color="peach.200">
       <Icon size="2rem" />
-      <ResponsiveText size="xl" fontWeight="bold" variant="primary">
+      <ResponsiveText
+        size="xl"
+        fontWeight="bold"
+        variant="primary"
+        as={as || "unset"}
+      >
         {text}
       </ResponsiveText>
     </HStack>

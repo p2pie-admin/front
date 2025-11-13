@@ -1,45 +1,45 @@
 import { useLoadScript, GoogleMap, OverlayView } from "@react-google-maps/api";
-import { Box, Heading, Text, VStack, useToken } from "@chakra-ui/react";
-import { useEffect, useMemo } from "react";
+import {
+  Box,
+  Center,
+  Divider,
+  Heading,
+  HStack,
+  Spinner,
+  Text,
+  useToken,
+  VStack,
+} from "@chakra-ui/react";
+import { useEffect, useMemo, useState } from "react";
 import { ICity } from "../../types/exchange";
 import { IExchanger } from "../../types/exchanger";
 import { createMapStyles } from "./styles";
 import CustomMarker from "./CustomMarker";
 import { useAppDispatch } from "../../redux/hooks";
 import { setCity } from "../../redux/mainReducer";
-import { IPm } from "../../types/selector";
-import { Box3D } from "../../styles/theme/custom";
-import Dir from "../exchange/Dir";
-
-export type MapHeadings = {
-  h1: string;
-  h2: string;
-  description: string;
-  empty: string;
-  directionsTitle: string;
-};
-
-export type CityCashEntry = {
-  slug: string;
-  cryptoPm: IPm;
-  count: number;
-};
-
-export type CityCashSection = {
-  currencyCode: string;
-  currencyName: string;
-  cashPm: IPm;
-  buyTitle: string;
-  sellTitle: string;
-  buy: CityCashEntry[];
-  sell: CityCashEntry[];
-};
+import { IDirText } from "../../types/exchange";
+import { CityCashSection, MapHeadings } from "./types";
+import CityDescription from "./description";
+import CashDirections from "./directions";
+import { BoxWrapper, CustomHeader } from "../shared/BoxWrapper";
+import { IoMdInformationCircle } from "react-icons/io";
+import OfficeSearchInput from "./OfficeSearchInput";
+import { TbMapPinFilled } from "react-icons/tb";
 
 type CityMapViewProps = {
   city: ICity;
   exchangerList: IExchanger[];
   headings: MapHeadings;
   cashSections: CityCashSection[];
+  cityText: IDirText | null;
+};
+
+type MapMarker = {
+  id: string;
+  exchanger: IExchanger;
+  position: google.maps.LatLngLiteral;
+  officeName: string;
+  searchIndex: string;
 };
 
 const CityMapView = ({
@@ -47,8 +47,10 @@ const CityMapView = ({
   exchangerList,
   headings,
   cashSections,
+  cityText,
 }: CityMapViewProps) => {
   const dispatch = useAppDispatch();
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     dispatch(setCity(city));
@@ -59,7 +61,9 @@ const CityMapView = ({
   const containerStyle = useMemo(
     () => ({
       width: "100%",
-      height: "80vh",
+      height: "70vh",
+      boxShadow: "5px 5px 15px 5px #222",
+      borderRadius: "10px",
     }),
     []
   );
@@ -142,7 +146,7 @@ const CityMapView = ({
     return null;
   };
 
-  const markers = useMemo(() => {
+  const markers = useMemo<MapMarker[]>(() => {
     return exchangerList
       .flatMap((exchanger) => {
         const offices = Array.isArray(exchanger.offices)
@@ -158,20 +162,26 @@ const CityMapView = ({
               id: `${exchanger.id}-${office.id}`,
               exchanger,
               position,
+              officeName: office.address || "",
+              searchIndex: `${exchanger.name || ""} ${
+                office.address || ""
+              }`.toLowerCase(),
             };
           })
-          .filter(
-            (
-              marker
-            ): marker is {
-              id: string;
-              exchanger: IExchanger;
-              position: google.maps.LatLngLiteral;
-            } => Boolean(marker)
-          );
+          .filter((marker): marker is MapMarker => Boolean(marker));
       })
       .filter(Boolean);
   }, [exchangerList]);
+
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+  const highlightedIds = useMemo(() => {
+    if (!normalizedSearch) return new Set<string>();
+    return new Set(
+      markers
+        .filter((marker) => marker.searchIndex.includes(normalizedSearch))
+        .map((marker) => marker.id)
+    );
+  }, [markers, normalizedSearch]);
 
   const center = useMemo(() => {
     if (city.coordinates && city.coordinates.length === 2) {
@@ -184,122 +194,75 @@ const CityMapView = ({
     );
   }, [city.coordinates, markers]);
 
-  if (!isLoaded) {
-    return <Text>Loading...</Text>;
-  }
-
   return (
-    <>
-      <VStack align="start" spacing="3" mb="4" w="full">
-        <Heading as="h1" size="lg">
-          {headings.h1}
-        </Heading>
-        <Heading as="h2" size="md" color="bg.200">
-          {headings.h2}
-        </Heading>
-        <Text color="bg.300">{headings.description}</Text>
-        {!markers.length && (
-          <Text color="bg.400" fontSize="sm">
-            {headings.empty}
-          </Text>
-        )}
-      </VStack>
-      <Box
-        bgColor="bg.800"
-        borderRadius="lg"
-        p="4"
-        w={{ base: "100%", md: "888px" }}
-        minW={{ base: "100%", lg: "888px" }}
-      >
-        <GoogleMap
-          options={mapOptions}
-          zoom={12}
-          center={center}
-          mapContainerStyle={containerStyle}
+    <Box>
+      <BoxWrapper>
+        <HStack
+          justifyContent="space-between"
+          alignItems="center"
+          flexWrap="wrap"
+          gap="3"
         >
-          {markers.map((marker) => (
-            <OverlayView
-              key={marker.id}
-              getPixelPositionOffset={(width, height) => ({
-                x: -(width / 2),
-                y: -(height / 2),
-              })}
-              position={marker.position}
-              mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+          <CustomHeader
+            text={`${cityText?.header || headings.h1} (${markers.length})`}
+            as="h1"
+            Icon={TbMapPinFilled}
+          />
+          <HStack spacing="3">
+            <OfficeSearchInput value={searchTerm} onChange={setSearchTerm} />
+            {normalizedSearch && (
+              <Text fontSize="sm" color="bg.300">
+                {highlightedIds.size
+                  ? `Найдено: ${highlightedIds.size}`
+                  : "Ничего не найдено"}
+              </Text>
+            )}
+          </HStack>
+        </HStack>
+
+        <Divider my="4" />
+        <Box borderRadius="lg" overflow="hidden" bg="bg.900">
+          {isLoaded ? (
+            <GoogleMap
+              options={mapOptions}
+              zoom={12}
+              center={center}
+              mapContainerStyle={containerStyle}
             >
-              <CustomMarker exchanger={marker.exchanger} />
-            </OverlayView>
-          ))}
-        </GoogleMap>
-      </Box>
-      {cashSections.length > 0 && (
-        <VStack align="stretch" spacing="3" mt="6" w="full">
-          <Heading as="h3" size="md" color="bg.200">
-            {headings.directionsTitle}
-          </Heading>
-          <VStack align="stretch" spacing="4">
-            {cashSections.map((section) => (
-              <Box3D key={section.currencyCode} p="4" variant="contrast" w="full">
-                <VStack align="stretch" spacing="4">
-                  {section.buy.length > 0 && (
-                    <Box>
-                      <Heading as="h4" size="sm" mb="3" color="bg.200">
-                        {section.buyTitle}
-                      </Heading>
-                      <VStack align="stretch" spacing="3">
-                        {section.buy.map((entry) => (
-                          <Dir
-                            key={entry.slug}
-                            slug={entry.slug}
-                            givePm={section.cashPm}
-                            getPm={entry.cryptoPm}
-                          >
-                            <Text
-                              mt="2"
-                              textAlign="right"
-                              color="bg.300"
-                              fontWeight="semibold"
-                            >
-                              {entry.count}
-                            </Text>
-                          </Dir>
-                        ))}
-                      </VStack>
-                    </Box>
-                  )}
-                  {section.sell.length > 0 && (
-                    <Box>
-                      <Heading as="h4" size="sm" mb="3" color="bg.200">
-                        {section.sellTitle}
-                      </Heading>
-                      <VStack align="stretch" spacing="3">
-                        {section.sell.map((entry) => (
-                          <Dir
-                            key={entry.slug}
-                            slug={entry.slug}
-                            givePm={entry.cryptoPm}
-                            getPm={section.cashPm}
-                          >
-                            <Text
-                              mt="2"
-                              textAlign="right"
-                              color="bg.300"
-                              fontWeight="semibold"
-                            >
-                              {entry.count}
-                            </Text>
-                          </Dir>
-                        ))}
-                      </VStack>
-                    </Box>
-                  )}
-                </VStack>
-              </Box3D>
-            ))}
-          </VStack>
-        </VStack>
-      )}
-    </>
+              {markers.map((marker) => (
+                <OverlayView
+                  key={marker.id}
+                  getPixelPositionOffset={(width, height) => ({
+                    x: -(width / 2),
+                    y: -(height / 2),
+                  })}
+                  position={marker.position}
+                  mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+                >
+                  <CustomMarker
+                    exchanger={marker.exchanger}
+                    highlighted={
+                      highlightedIds.size > 0 && highlightedIds.has(marker.id)
+                    }
+                  />
+                </OverlayView>
+              ))}
+            </GoogleMap>
+          ) : (
+            <Center h="70vh">
+              <Spinner
+                thickness="4px"
+                speed="0.7s"
+                color="peach.300"
+                size="xl"
+              />
+            </Center>
+          )}
+        </Box>
+      </BoxWrapper>
+      <CityDescription cityText={cityText} />
+      <CashDirections sections={cashSections} headings={headings} />
+    </Box>
   );
 };
 

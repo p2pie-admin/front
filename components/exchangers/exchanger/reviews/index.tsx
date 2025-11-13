@@ -2,10 +2,11 @@ import React, { useCallback, useMemo, useState } from "react";
 import { PiChatsFill } from "react-icons/pi";
 import ExchangerRootReview from "./ExchangerRootReview";
 import { IExchangerReview, IDotColors } from "../../../../types/exchanger";
-import { Box3D, ResponsiveText } from "../../../../styles/theme/custom";
+import { ResponsiveText } from "../../../../styles/theme/custom";
 import { Divider, HStack } from "@chakra-ui/react";
-import { CustomHeader } from "../shared";
+
 import ReviewsFilters from "./ReviewsFilters";
+import { BoxWrapper, CustomHeader } from "../../../shared/BoxWrapper";
 
 const filterTypeMap: Record<IDotColors, IExchangerReview["type"] | null> = {
   green: "positive",
@@ -45,7 +46,7 @@ export default function ExchangerReviews({
   const reviewsCount = filteredReviews?.length ?? reviews?.length ?? 0;
   const hasAnyReviews = !!(reviews && reviews.length);
   return (
-    <Box3D my="8" p="4" variant="contrast">
+    <BoxWrapper variant="contrast">
       <HStack justifyContent="space-between">
         <CustomHeader text={`Отзывы (${reviewsCount})`} Icon={PiChatsFill} />
         <ReviewsFilters
@@ -63,6 +64,6 @@ export default function ExchangerReviews({
       ) : (
         <ResponsiveText>Нет отзывов по выбранному фильтру</ResponsiveText>
       )}
-    </Box3D>
+    </BoxWrapper>
   );
 }

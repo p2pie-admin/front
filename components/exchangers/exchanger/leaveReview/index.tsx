@@ -6,9 +6,9 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { Box3D, ResponsiveText } from "../../../../styles/theme/custom";
+import { ResponsiveText } from "../../../../styles/theme/custom";
 import { RiChatNewFill } from "react-icons/ri";
-import { CustomHeader } from "../shared";
+import { BoxWrapper, CustomHeader } from "../../../shared/BoxWrapper";
 import {
   MdOutlineDone,
   MdOutlineSentimentNeutral,
@@ -238,13 +238,7 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
   };
 
   return (
-    <Box3D
-      my="8"
-      p="4"
-      variant="no_contrast"
-      w="100%"
-      id={LEAVE_REVIEW_SECTION_ID}
-    >
+    <BoxWrapper id={LEAVE_REVIEW_SECTION_ID}>
       <HStack justifyContent="space-between" flexWrap="wrap" gap="3">
         <CustomHeader text={"Оставить отзыв"} Icon={RiChatNewFill} />
         <HStack spacing="2">
@@ -319,6 +313,6 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
             : "Отправить"}
         </Button>
       </HStack>
-    </Box3D>
+    </BoxWrapper>
   );
 }
