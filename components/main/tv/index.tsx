@@ -44,12 +44,14 @@ const TV = ({
 
   useEffect(() => {
     if (!dir) return;
+    const cityName = isCash ? city?.en_name || "moscow" : "";
+    dispatch(fetchDirRates({ dir, cityName }));
+  }, [dir, city?.en_name, isCash, dispatch]);
 
+  useEffect(() => {
+    if (!dir) return;
     const cityName = isCash ? city?.en_name || "moscow" : "";
     const delay = dirRatesStatus === "fulfilled" ? 60_000 : 5_000;
-
-    // Always attempt to refresh immediately when dependencies change.
-    dispatch(fetchDirRates({ dir, cityName }));
 
     const timeout = setTimeout(() => {
       dispatch(fetchDirRates({ dir, cityName }));

@@ -123,7 +123,7 @@ export const Swiper = (props: {
 
   useEffect(() => {
     if (initial) return;
-    if (dirRates.length === 0) return;
+    if (!dirRates.length) return;
 
     scrollToItem(1);
     debouncedSetSwiperIdVisible(1);
@@ -134,8 +134,7 @@ export const Swiper = (props: {
     }, 1000);
 
     return () => clearTimeout(timeout);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [initial, dirRates.length, debouncedSetSwiperIdVisible]);
 
   useEffect(() => {
     if (isMobile) return;
