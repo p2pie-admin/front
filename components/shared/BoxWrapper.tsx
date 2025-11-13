@@ -10,7 +10,7 @@ type BoxWrapperProps = React.ComponentProps<typeof Box3D> & {
 export function BoxWrapper({
   variant = "contrast",
   children,
-  my = 4,
+  my = 6,
   p = 4,
   ...props
 }: BoxWrapperProps) {

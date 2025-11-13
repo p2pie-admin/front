@@ -54,7 +54,7 @@ export default function Exchanger({
     );
   }
 
-  //const status = exchanger.status == "active" ? "Активен" : "Приостановлен";
+  const status = exchanger.status == "active" ? "Активен" : "Приостановлен";
   const color =
     exchanger.status == "active" ? "green" : ("orange" as IDotColors);
 
@@ -67,9 +67,10 @@ export default function Exchanger({
     <>
       <UniversalSeo seo={seo} />
 
-      <BoxWrapper mt="4" p="4" variant="no_contrast">
+      <BoxWrapper variant="no_contrast">
         <HStack w="100%" justifyContent="space-between">
           <HStack gap="4" position="relative">
+            <Dot color={color} />
             <ExchangerName
               name={exchanger.name}
               logo={exchanger.logo}

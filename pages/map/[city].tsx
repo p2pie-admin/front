@@ -2,7 +2,7 @@ import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import UniversalSeo from "../../components/shared/UniversalSeo";
-import CityMapView from "../../components/map/CityMapView";
+
 import { MapHeadings, CityCashSection } from "../../components/map/types";
 import { loadCities, loadPms, loadPossibleDirs } from "../../cache/loadX";
 import { initCMSFetcher, initParserFetcher } from "../../services/fetchers";
@@ -18,6 +18,7 @@ import {
   getClosestCitiesByCoordinates,
   ClosestCityMatch,
 } from "../../components/map/helper";
+import CityMapView from "../../components/map";
 
 const MAX_COUNT = 2; // начиная со скольки курсов на направление показываем
 
@@ -233,19 +234,26 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   const rawCityDirections: Record<string, number> =
     (citySlug && cityDirectionsData && cityDirectionsData[citySlug]) || {};
 
-  const availableCitySlugs = Object.entries(cityDirectionsData || {})
-    .filter(([slug, directions]) => {
-      const cityExists = cities?.some(
-        (city) => toLower(city.en_name) === slug
-      );
-      if (!cityExists) {
-        return false;
+  const cityRatesTotals = Object.entries(cityDirectionsData || {}).reduce(
+    (acc, [slug, directions]) => {
+      const normalizedSlug = slug?.toLowerCase();
+      if (!normalizedSlug) {
+        return acc;
       }
-      const totalDirectionsCount = Object.values(directions || {}).reduce(
+      const totalCount = Object.values(directions || {}).reduce(
         (sum, count) => (typeof count === "number" ? sum + count : sum),
         0
       );
-      return totalDirectionsCount > MAX_COUNT;
+      acc[normalizedSlug] = totalCount;
+      return acc;
+    },
+    {} as Record<string, number>
+  );
+
+  const availableCitySlugs = Object.entries(cityRatesTotals)
+    .filter(([slug, total]) => {
+      const cityExists = cities?.some((city) => toLower(city.en_name) === slug);
+      return cityExists && total > MAX_COUNT;
     })
     .map(([slug]) => slug);
 
@@ -347,6 +355,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
     city: currentCity,
     cities: cities || [],
     allowedSlugs: availableCitySlugs,
+    cityRatesTotals,
     limit: 3,
   });
 

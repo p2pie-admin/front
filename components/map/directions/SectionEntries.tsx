@@ -92,7 +92,7 @@ const SectionEntries = ({
             mt="4"
             color="bg.400"
             w="100%"
-            variant="ghost"
+            bgColor="bg.700"
             onClick={() => setShowAll((prev) => !prev)}
             rightIcon={<Arrow isUp={showAll} />}
           >

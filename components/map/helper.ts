@@ -4,6 +4,7 @@ export type ClosestCityMatch = {
   city: ICity;
   slug: string;
   distanceKm: number;
+  ratesTotal: number;
 };
 
 const EARTH_RADIUS_KM = 6371;
@@ -50,11 +51,13 @@ export const getClosestCitiesByCoordinates = ({
   city,
   cities,
   allowedSlugs,
+  cityRatesTotals,
   limit = 2,
 }: {
   city: ICity;
   cities: ICity[];
   allowedSlugs?: string[];
+  cityRatesTotals?: Record<string, number>;
   limit?: number;
 }): ClosestCityMatch[] => {
   if (!hasCoordinates(city.coordinates) || !Array.isArray(cities)) {
@@ -75,14 +78,18 @@ export const getClosestCitiesByCoordinates = ({
       const slug = normalizeSlug(candidate.en_name);
       return slug !== currentSlug && allowed.has(slug);
     })
-    .map((candidate) => ({
-      city: candidate,
-      slug: normalizeSlug(candidate.en_name),
-      distanceKm: distanceBetween(
-        targetCoords,
-        candidate.coordinates as [number, number]
-      ),
-    }))
+    .map((candidate) => {
+      const slug = normalizeSlug(candidate.en_name);
+      return {
+        city: candidate,
+        slug,
+        distanceKm: distanceBetween(
+          targetCoords,
+          candidate.coordinates as [number, number]
+        ),
+        ratesTotal: cityRatesTotals?.[slug] ?? 0,
+      };
+    })
     .filter((item) => !Number.isNaN(item.distanceKm))
     .sort((a, b) => a.distanceKm - b.distanceKm)
     .slice(0, limit);
