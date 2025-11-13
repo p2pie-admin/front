@@ -1,6 +1,6 @@
 import { Heading, HStack, VStack, Text } from "@chakra-ui/react";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
-import { IPm, IMassDirText, IMassDirTextId, IMassRate } from "../../types/mass";
+import { IMassDirText, IMassDirTextId, IMassRate } from "../../types/mass";
 import { IPm } from "../../types/selector";
 import { useEffect } from "react";
 import { fetchTopParameters } from "../../redux/thunks";

@@ -9,7 +9,7 @@ import PmName from "../../shared/PmName";
 import PmIcon from "../../shared/PmIcon";
 import { IPm } from "../../../types/selector";
 import { BsArrowLeftShort, BsArrowRightShort } from "react-icons/bs";
-
+import { RiExchangeFill } from "react-icons/ri";
 import Arrow from "../../shared/Arrow";
 
 type SectionEntriesProps = {
@@ -33,7 +33,7 @@ const SectionEntries = ({
 
   return (
     <BoxWrapper>
-      <CustomHeader text={title} as="h3" Icon={IoMdInformationCircle} />
+      <CustomHeader text={title} as="h3" Icon={RiExchangeFill} />
       <Divider my="4" />
 
       <Grid gap="4" gridTemplateColumns="1fr 1fr 1fr">

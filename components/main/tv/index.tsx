@@ -30,6 +30,7 @@ const TV = ({
   donorCity: ICity | null;
   dirText: IDirText | null;
 }) => {
+  const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
   const containerHeight = useBreakpointValue({ base: 300, md: 416 }) || 416;
   const router = useRouter();
   const { exchange } = router.query as { exchange: string };
@@ -45,19 +46,17 @@ const TV = ({
     if (!dir) return;
 
     const cityName = isCash ? city?.en_name || "moscow" : "";
+    const delay = dirRatesStatus === "fulfilled" ? 60_000 : 5_000;
 
-    // Fetch immediately once on mount / dir change
-
+    // Always attempt to refresh immediately when dependencies change.
     dispatch(fetchDirRates({ dir, cityName }));
 
-    // Set up interval to repeat every 2 minutes
-    const interval = setInterval(() => {
+    const timeout = setTimeout(() => {
       dispatch(fetchDirRates({ dir, cityName }));
-    }, 60 * 1000); // 2 minutes
+    }, delay);
 
-    // Cleanup on unmount or when dir/city changes
-    return () => clearInterval(interval);
-  }, [dir, city?.en_name, isCash, dispatch]);
+    return () => clearTimeout(timeout);
+  }, [dir, city?.en_name, isCash, dirRatesStatus, dispatch]);
 
   const isMobile = useIsMobile();
   const itemHeight = isMobile ? 100 : 130; // Height of each text box

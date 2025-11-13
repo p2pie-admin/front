@@ -14,6 +14,12 @@ import { ISEO } from "../../types/general";
 import { IPm } from "../../types/selector";
 import { curNames } from "../../redux/amountsHelper";
 import { IDirText } from "../../types/exchange";
+import {
+  getClosestCitiesByCoordinates,
+  ClosestCityMatch,
+} from "../../components/map/helper";
+
+const MAX_COUNT = 2; // начиная со скольки курсов на направление показываем
 
 type ParserCityDirections = Record<string, Record<string, number>>;
 type ParsedDirection = {
@@ -30,6 +36,7 @@ type MapCityPageProps = {
   headings: MapHeadings;
   cashSections: CityCashSection[];
   cityText: IDirText | null;
+  closestCities: ClosestCityMatch[];
 };
 
 const MapCityPage: NextPage<MapCityPageProps> = ({
@@ -39,6 +46,7 @@ const MapCityPage: NextPage<MapCityPageProps> = ({
   headings,
   cashSections,
   cityText,
+  closestCities,
 }) => (
   <>
     <UniversalSeo seo={seo} />
@@ -48,6 +56,7 @@ const MapCityPage: NextPage<MapCityPageProps> = ({
       headings={headings}
       cashSections={cashSections}
       cityText={cityText}
+      closestCities={closestCities}
     />
   </>
 );
@@ -224,8 +233,24 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   const rawCityDirections: Record<string, number> =
     (citySlug && cityDirectionsData && cityDirectionsData[citySlug]) || {};
 
+  const availableCitySlugs = Object.entries(cityDirectionsData || {})
+    .filter(([slug, directions]) => {
+      const cityExists = cities?.some(
+        (city) => toLower(city.en_name) === slug
+      );
+      if (!cityExists) {
+        return false;
+      }
+      const totalDirectionsCount = Object.values(directions || {}).reduce(
+        (sum, count) => (typeof count === "number" ? sum + count : sum),
+        0
+      );
+      return totalDirectionsCount > MAX_COUNT;
+    })
+    .map(([slug]) => slug);
+
   const directions: ParsedDirection[] = Object.entries(rawCityDirections)
-    .filter(([, count]) => typeof count === "number" && count > 3)
+    .filter(([, count]) => typeof count === "number" && count > MAX_COUNT)
     .map(([dir, count]) => {
       const [give, get] = dir.split("_");
       const givePm = pmMap.get(give?.toUpperCase() || "");
@@ -318,6 +343,13 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
     .sort((a, b) => b.totalCount - a.totalCount)
     .map(({ totalCount, ...rest }) => rest);
 
+  const closestCities = getClosestCitiesByCoordinates({
+    city: currentCity,
+    cities: cities || [],
+    allowedSlugs: availableCitySlugs,
+    limit: 3,
+  });
+
   const seo: ISEO = {
     title: copy.title,
     description: copy.seoDescription,
@@ -352,6 +384,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
       },
       cashSections,
       cityText,
+      closestCities,
       ...(await serverSideTranslations(currentLocale, ["main"])),
     },
     revalidate: 40000,

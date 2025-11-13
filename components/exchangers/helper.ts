@@ -53,23 +53,25 @@ export const addExchangerCrossLinking = async (
   pms: IPm[] | undefined,
   locale: "en" | "ru"
 ) => {
+  const card = exchanger?.exchanger_card || null;
   if (
     !articleCodes ||
     !exchanger ||
-    !exchanger.exchanger_card.en_description ||
-    !exchanger.exchanger_card.ru_description
+    !card ||
+    !card.en_description ||
+    !card.ru_description
   )
     return exchanger;
 
   const seen = new Set<string>();
   const text = enrichText({
     seen,
-    text: exchanger.exchanger_card[`${locale}_description`] || "",
+    text: card[`${locale}_description`] || "",
     articleCodes,
     pms,
   });
 
-  exchanger.exchanger_card[`${locale}_description`] = text;
+  card[`${locale}_description`] = text;
 
   return exchanger;
 };

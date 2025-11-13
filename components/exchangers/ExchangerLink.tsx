@@ -6,7 +6,7 @@ import { IExchanger, IParserExchanger } from "../../types/exchanger";
 import Dot from "./Dot";
 import { exchangerNameToSlug, getStatus } from "./helper";
 import ExchangerName from "../shared/ExchangerNameRating";
-import { BoxWrapper } from "../shared";
+import { BoxWrapper } from "../shared/BoxWrapper";
 
 export default function ExchangerPreview({
   exchanger,

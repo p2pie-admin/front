@@ -25,6 +25,8 @@ import { BoxWrapper, CustomHeader } from "../shared/BoxWrapper";
 import { IoMdInformationCircle } from "react-icons/io";
 import OfficeSearchInput from "./OfficeSearchInput";
 import { TbMapPinFilled } from "react-icons/tb";
+import ClosestCities from "./closest";
+import { ClosestCityMatch } from "./helper";
 
 type CityMapViewProps = {
   city: ICity;
@@ -32,6 +34,7 @@ type CityMapViewProps = {
   headings: MapHeadings;
   cashSections: CityCashSection[];
   cityText: IDirText | null;
+  closestCities: ClosestCityMatch[];
 };
 
 type MapMarker = {
@@ -48,6 +51,7 @@ const CityMapView = ({
   headings,
   cashSections,
   cityText,
+  closestCities,
 }: CityMapViewProps) => {
   const dispatch = useAppDispatch();
   const [searchTerm, setSearchTerm] = useState("");
@@ -261,6 +265,7 @@ const CityMapView = ({
         </Box>
       </BoxWrapper>
       <CityDescription cityText={cityText} />
+      <ClosestCities city={city} closestCities={closestCities} />
       <CashDirections sections={cashSections} headings={headings} />
     </Box>
   );

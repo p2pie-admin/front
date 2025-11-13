@@ -31,13 +31,7 @@ import CircularIcon from "../../../../../shared/CircularIcon";
 import { useRouter } from "next/router";
 import { triggerModal } from "../../../../../../redux/mainReducer";
 
-const RateLayer = ({
-  code,
-  rates,
-}: {
-  code: string;
-  rates: IPopularRate[];
-}) => {
+const RateLayer = ({ code, rates }: { code: string; rates: IPopularRate[] }) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const pms = useAppSelector((state) => state.main.pms);
@@ -47,7 +41,9 @@ const RateLayer = ({
   const side = useContext(SideContext) as "buy" | "sell";
   const mainColor = useColorModeValue("violet.700", "peach.300");
 
-  if (!cryptoPm) return <></>;
+  if (!cryptoPm) return null;
+  const normalizedRates = Array.isArray(rates) ? rates : [];
+
   return (
     <Box3D p={["2", "4"]} mb="4" key={code}>
       <PmFullName pm={cryptoPm} />
@@ -64,17 +60,16 @@ const RateLayer = ({
             </Tr>
           </Thead>
           <Tbody>
-            §
-            {rates.map((rate) => {
+            {normalizedRates.map((rate) => {
               const pm = findPmByCode(rate.fiat);
-              if (!pm) return <Tr></Tr>;
+              if (!pm) return null;
               const name = capitalize(pm.en_name);
               const course = `~ ${codeToSymbol(pm.currency.code)} ${addSpaces(
                 R(rate.course)
               )}`;
               const slug = "";
               return (
-                <Tr>
+                <Tr key={`${rate.exchangerId}-${rate.fiat}`}>
                   <Td>
                     <HStack>
                       <CircularIcon color={pm.color} size="sm" icon={pm.icon} />{" "}
@@ -91,7 +86,9 @@ const RateLayer = ({
                       minH="6"
                       borderRadius="lg"
                       onClick={() => {
-                        router.push(slug);
+                        if (slug) {
+                          void router.push(slug);
+                        }
                         dispatch(triggerModal("popular-rates"));
                       }}
                     >

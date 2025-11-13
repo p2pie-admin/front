@@ -1,4 +1,4 @@
-import { IImage, IPm } from "./selector";
+import { IImage, IPm as SelectorPm } from "./selector";
 
 export interface IMassDirTextId {
   code: string;
@@ -35,9 +35,5 @@ export interface IMassSort {
   direction: "asc" | "desc";
 }
 
-export interface IPm {
-  code: string;
-  currencyCode: string;
-  name: string;
-  subgroup_name: string;
-}
+export type IMassPm = SelectorPm;
+export type IPm = IMassPm;

@@ -90,7 +90,7 @@ const Layout = ({ children }: { children: any }) => {
         bgGradient={`radial-gradient(circle at 50% -10%, ${ambientColor} 0%, transparent 40%)`}
       />
 
-      {dirRatesStatus !== "fulfilled" ? (
+      {dirRatesStatus === "pending" ? (
         <Progress size="xs" isIndeterminate colorScheme="peach" />
       ) : (
         <Box h="1" />

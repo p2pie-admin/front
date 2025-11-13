@@ -20,7 +20,7 @@ function Item({
   containerHeight: number;
 }) {
   const getScaleX = useCallback(
-    (itemIndex) => {
+    (itemIndex: number) => {
       const itemMiddleY = itemIndex * itemHeight + itemHeight / 2;
       const containerMiddle = containerHeight / 2;
       const distanceFromCenter = Math.abs(
@@ -33,7 +33,7 @@ function Item({
     [containerHeight, itemHeight, y]
   );
   const getShape = useCallback(
-    (itemIndex) => {
+    (itemIndex: number) => {
       const itemMiddleY = itemIndex * itemHeight + itemHeight / 2;
       const containerMiddle = containerHeight / 2;
       const distanceFromCenter = y.get() + itemMiddleY - containerMiddle;

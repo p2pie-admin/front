@@ -5,7 +5,7 @@ import { getStatus } from "./helper";
 import TopPanel from "./TopPanel";
 import ExchangersHeader from "./ExchangersHeader";
 import ExchangerLink from "./ExchangerLink";
-import { BoxWrapper } from "../shared";
+import { BoxWrapper } from "../shared/BoxWrapper";
 
 import UniversalSeo from "../shared/UniversalSeo";
 

@@ -2,7 +2,7 @@ import { Box, HStack, VStack } from "@chakra-ui/react";
 import FilterButtons from "./FilterButtons";
 import ExchangerSearch from "./ExchangerSearch";
 import SortButtons from "./SortButtons";
-import { BoxWrapper } from "../shared";
+import { BoxWrapper } from "../shared/BoxWrapper";
 
 export default function TopPanel({
   toggleFilter,

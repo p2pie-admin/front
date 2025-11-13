@@ -3,19 +3,11 @@ import { AnimatePresence } from "framer-motion";
 import { ToggleLayer } from "react-laag";
 
 import Petals from "./Petals";
-import {
-  Box,
-  Button,
-  Center,
-  useColorModeValue,
-  useOutsideClick,
-} from "@chakra-ui/react";
+import { Box, Center, useColorModeValue, useOutsideClick } from "@chakra-ui/react";
 import { useAppSelector } from "../../../../../redux/hooks";
-import { useContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import { IoAddSharp } from "react-icons/io5";
-import { BsCheckLg } from "react-icons/bs";
-import SideContext from "../../../../shared/contexts/SideContext";
 
 function PopularSide() {
   //const activeSide = useAppSelector((state) => state.main.activeSide);
@@ -29,14 +21,14 @@ function PopularSide() {
 
   const [isOpen, setOpen] = useState(false);
 
-  const ref = useRef();
+  const ref = useRef<HTMLDivElement | null>(null);
   useOutsideClick({
     ref,
     handler: () => setOpen(false),
   });
 
   return (
-    <Box>
+    <Box ref={ref}>
       <ToggleLayer
         isOpen={isOpen}
         ResizeObserver={ResizeObserver}

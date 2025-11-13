@@ -1,20 +1,27 @@
-import { Button, Center } from "@chakra-ui/react";
+import { Center } from "@chakra-ui/react";
 import React from "react";
 import { IPm } from "../../../../../types/selector";
 import Petal from "./Petal";
 
-const Petals = React.forwardRef(function Menu(
-  { style, pms }: { pms: IPm[] },
-  ref
-) {
+type PetalsProps = {
+  pms: IPm[];
+} & React.ComponentProps<typeof Center>;
+
+const Petals: React.FC<PetalsProps> = ({ pms, ...layerProps }) => {
+  const totalItems = pms.length + 1;
   return (
-    <Center style={style} ref={ref} borderRadius="50%">
+    <Center borderRadius="50%" position="relative" {...layerProps}>
       {pms.map((pm, index) => (
-        <Petal key={index} pm={pm} index={index} totalItems={pms.length + 1} />
+        <Petal
+          key={pm.code ?? index}
+          pm={pm}
+          index={index}
+          totalItems={totalItems}
+        />
       ))}
-      <Petal key={pms.length} index={pms.length} totalItems={pms.length + 1} />
+      <Petal index={pms.length} totalItems={totalItems} />
     </Center>
   );
-});
+};
 
 export default Petals;

@@ -82,6 +82,7 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
   const { name, course, min, max, ref_link, logo, last_time_updated } = rate;
   const givePm = useAppSelector((state) => state.main.givePm);
   const getPm = useAppSelector((state) => state.main.getPm);
+  const cityCode = useAppSelector((state) => state.main.city.codes[0]);
 
   const giveCur = givePm?.currency.code.toUpperCase() || "";
   const getCur = getPm?.currency.code.toUpperCase() || "";
@@ -128,7 +129,12 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
             cursor="pointer"
             onClick={() => {
               dispatch(redirect());
-              const fullLink = enrichLink(ref_link, giveCode, getCode);
+              const fullLink = enrichLink(
+                ref_link,
+                giveCode,
+                getCode,
+                cityCode
+              );
               window.open(fullLink, "_blank");
             }}
           >

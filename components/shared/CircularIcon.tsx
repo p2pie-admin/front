@@ -1,5 +1,4 @@
 import { Box, useToken, useColorModeValue } from "@chakra-ui/react";
-import Image from "next/image";
 import { cmsLinkPROD, cmsLinkDEV } from "../../services/utils";
 
 interface IImageFormat {
@@ -7,7 +6,7 @@ interface IImageFormat {
 }
 interface IImage {
   url: string;
-  alternativeText?: string;
+  alternativeText?: string | null;
   formats?: {
     thumbnail?: IImageFormat;
     small?: IImageFormat;

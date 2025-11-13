@@ -3,16 +3,28 @@ import { redisGet } from "../../cache/redisClient";
 import { loadCities } from "../../cache/loadX";
 import { ICity } from "../../types/exchange";
 
+type SearchIndexEntry = {
+  slug: string;
+  header: string;
+  wordsToSearchFrom: string;
+};
+
+type SearchIndexCache = {
+  data: SearchIndexEntry[];
+  updatedAt: string | null;
+};
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   if (req.method !== "GET") return res.status(405).end();
 
-  const cached = (await redisGet("search:index")) || {
-    data: [],
-    updatedAt: null,
-  };
+  const cached =
+    ((await redisGet("search:index")) as SearchIndexCache | null) || {
+      data: [],
+      updatedAt: null,
+    };
 
   try {
     const cities = (await loadCities()) || [];
@@ -36,14 +48,14 @@ export default async function handler(
         };
       });
 
-    const combinedData = [
+    const combinedData: SearchIndexEntry[] = [
       ...(Array.isArray(cached.data) ? cached.data : []),
       ...cityEntries,
     ];
 
     return res.status(200).json({
       data: combinedData,
-      updatedAt: cached.updatedAt,
+      updatedAt: cached.updatedAt ?? null,
     });
   } catch (error) {
     console.error("[search-index] Failed to load cities:", error);
