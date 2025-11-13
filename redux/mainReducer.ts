@@ -46,6 +46,18 @@ const defaultCity = {
   ru_country_name: "Россия",
 } as ICity;
 
+const normalizeCityKey = (value?: string | null) =>
+  value ? value.trim().toLowerCase() : "";
+
+const applyCityRateOverride = (rate: IRate, cityKey?: string) => {
+  if (!cityKey) return rate;
+  const override = rate.cityRates?.[cityKey]?.rate;
+  if (!override) return rate;
+  const merged = { ...rate, ...override };
+  merged.cityRates = rate.cityRates;
+  return merged;
+};
+
 export interface MainState {
   searchBarInputValue: string;
   givePm?: IPm;
@@ -317,7 +329,12 @@ export const mainSlice = createSlice({
         state.dirRatesStatus = "rejected";
         return;
       }
-      (state.dirRates = action.payload), (state.amountInput = undefined);
+      const cityKey = normalizeCityKey(action.meta.arg?.cityName);
+      const rates = cityKey
+        ? action.payload.map((rate) => applyCityRateOverride(rate, cityKey))
+        : action.payload;
+      state.dirRates = rates;
+      state.amountInput = undefined;
       state.amountOutputs = getAmountOutputs(state, 1);
       state.dirRatesStatus = "fulfilled";
       state.swiperIdVisible = 1;

@@ -3,15 +3,15 @@ import { IImage } from "./selector";
 export type ISides = "give" | "get";
 export type ILimit = { [key in ISides]: number };
 
-export interface IRate {
+interface IBaseRate {
   exchangerId: string;
   name: string;
   admin_rating: number;
   course: number;
   p2pRatio?: number;
-  min_fee: string;
-  from_fee: string;
-  to_fee: string;
+  min_fee?: string;
+  from_fee?: string;
+  to_fee?: string;
   min: ILimit;
   max: ILimit;
   reserve: ILimit;
@@ -20,6 +20,13 @@ export interface IRate {
   ref_link: string;
   logo?: IImage | null;
   last_time_updated?: number;
+  tag?: string | null;
+  offices?: Array<Record<string, unknown>>;
+  source_total_rates?: number;
+}
+
+export interface IRate extends IBaseRate {
+  cityRates?: Record<string, { rate: IBaseRate }>;
 }
 
 export interface IParameter {
