@@ -8,7 +8,7 @@ import { ResponsiveText } from "../../../styles/theme/custom";
 import PmName from "../../shared/PmName";
 import PmIcon from "../../shared/PmIcon";
 import { IPm } from "../../../types/selector";
-import { BsArrowLeftShort, BsArrowRightShort } from "react-icons/bs";
+import { BsArrowRightShort } from "react-icons/bs";
 import { RiExchangeFill } from "react-icons/ri";
 import Arrow from "../../shared/Arrow";
 
@@ -17,6 +17,7 @@ type SectionEntriesProps = {
   entries: CityCashEntry[];
   cashPm: IPm;
   direction: "buy" | "sell";
+  cityName: string;
 };
 
 const SectionEntries = ({
@@ -24,12 +25,28 @@ const SectionEntries = ({
   entries,
   cashPm,
   direction,
+  cityName,
 }: SectionEntriesProps) => {
   const [showAll, setShowAll] = useState(false);
   if (!entries.length) return null;
-  const ArrowIcon = direction === "sell" ? BsArrowLeftShort : BsArrowRightShort;
+  const ArrowIcon = BsArrowRightShort;
   const visibleEntries = entries.slice(0, 6);
   const hiddenEntries = entries.slice(6);
+
+  const renderEntryContent = (entry: CityCashEntry) =>
+    direction === "sell" ? (
+      <>
+        <PmName pm={entry.cryptoPm} isFull={false} />
+        <ArrowIcon size="1.5rem" />
+        <PmIcon pm={cashPm} />
+      </>
+    ) : (
+      <>
+        <PmIcon pm={cashPm} />
+        <ArrowIcon size="1.5rem" />
+        <PmName pm={entry.cryptoPm} isFull={false} />
+      </>
+    );
 
   return (
     <BoxWrapper>
@@ -40,7 +57,7 @@ const SectionEntries = ({
         {visibleEntries.map((entry) => (
           <Button
             as={NextLink}
-            href={`/${entry.slug}`}
+            href={`/${entry.slug}-in-${cityName.toLowerCase()}`}
             key={entry.slug}
             justifyContent="start"
             fontWeight="medium"
@@ -49,9 +66,7 @@ const SectionEntries = ({
             color="bg.300"
             w="full"
           >
-            <PmIcon pm={cashPm} />
-            <ArrowIcon size="1.5rem" />
-            <PmName pm={entry.cryptoPm} isFull={false} />
+            {renderEntryContent(entry)}
             <ResponsiveText color="peach.300" size="xs" fontWeight="semibold">
               {` (${entry.count})`}
             </ResponsiveText>
@@ -65,7 +80,7 @@ const SectionEntries = ({
               {hiddenEntries.map((entry) => (
                 <Button
                   as={NextLink}
-                  href={`/${entry.slug}`}
+                  href={`/${entry.slug}-in-${cityName.toLowerCase()}`}
                   key={entry.slug}
                   justifyContent="start"
                   fontWeight="medium"
@@ -74,9 +89,7 @@ const SectionEntries = ({
                   color="bg.300"
                   w="full"
                 >
-                  <PmIcon pm={cashPm} />
-                  <ArrowIcon size="1.5rem" />
-                  <PmName pm={entry.cryptoPm} isFull={false} />
+                  {renderEntryContent(entry)}
                   <ResponsiveText
                     color="peach.300"
                     size="xs"

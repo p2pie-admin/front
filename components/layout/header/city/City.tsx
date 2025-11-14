@@ -30,7 +30,8 @@ export default function City({
     router.push(`/${slugCityToExchange(slug, en_name)}`);
     batch(() => {
       dispatch(fetchCity(en_name));
-      dir && dispatch(fetchDirRates({ dir, cityName: en_name }));
+      dir &&
+        dispatch(fetchDirRates({ dir, cityName: en_name, trigger: "manual" }));
       dir && dispatch(setDirRatesStatus("pending"));
       dispatch(triggerModal(undefined));
     });

@@ -7,9 +7,14 @@ import SectionEntries from "./SectionEntries";
 type CashDirectionsProps = {
   sections: CityCashSection[];
   headings: MapHeadings;
+  cityName: string;
 };
 
-const CashDirections = ({ sections, headings }: CashDirectionsProps) => {
+const CashDirections = ({
+  sections,
+  headings,
+  cityName,
+}: CashDirectionsProps) => {
   if (!sections.length) return null;
 
   return (
@@ -24,6 +29,7 @@ const CashDirections = ({ sections, headings }: CashDirectionsProps) => {
                   entries={section.buy}
                   cashPm={section.cashPm}
                   direction="buy"
+                  cityName={cityName}
                 />
               )}
               {section.sell.length > 0 && (
@@ -32,6 +38,7 @@ const CashDirections = ({ sections, headings }: CashDirectionsProps) => {
                   entries={section.sell}
                   cashPm={section.cashPm}
                   direction="sell"
+                  cityName={cityName}
                 />
               )}
             </VStack>

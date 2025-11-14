@@ -26,7 +26,7 @@ const Chart = memo(
       return env === "production" ? converterLinkPROD : converterLinkDEV;
     }, []);
 
-    const [isLongTimeFrame, setTimeframe] = useState(true);
+    const [isLongTimeFrame, setTimeframe] = useState(false);
 
     const ccRates = useAppSelector(
       (state) => state.main.ccRates || ({} as any)

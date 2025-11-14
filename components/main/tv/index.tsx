@@ -11,7 +11,6 @@ import {
   useBreakpointValue,
   useTimeout,
 } from "@chakra-ui/react";
-import { IParameter, IRate } from "../../../types/rates";
 import Swiper from "./Swiper";
 import { useIsMobile } from "./hooks";
 import { fetchDirRates, fetchTopParameters } from "../../../redux/thunks";
@@ -36,6 +35,9 @@ const TV = ({
   const { exchange } = router.query as { exchange: string };
 
   const dirRates = useAppSelector((state) => state.main.dirRates) || [];
+  const dirRatesReloadTrigger = useAppSelector(
+    (state) => state.main.dirRatesReloadTrigger
+  );
   // const cityName = useAppSelector((state) => state.main.city.en_name);
   const isCash =
     (exchange && exchange.startsWith("cash-")) || exchange.includes("-cash-");
@@ -45,7 +47,7 @@ const TV = ({
   useEffect(() => {
     if (!dir) return;
     const cityName = isCash ? city?.en_name || "moscow" : "";
-    dispatch(fetchDirRates({ dir, cityName }));
+    dispatch(fetchDirRates({ dir, cityName, trigger: "manual" }));
   }, [dir, city?.en_name, isCash, dispatch]);
 
   useEffect(() => {
@@ -54,7 +56,7 @@ const TV = ({
     const delay = dirRatesStatus === "fulfilled" ? 60_000 : 5_000;
 
     const timeout = setTimeout(() => {
-      dispatch(fetchDirRates({ dir, cityName }));
+      dispatch(fetchDirRates({ dir, cityName, trigger: "auto" }));
     }, delay);
 
     return () => clearTimeout(timeout);
@@ -71,6 +73,7 @@ const TV = ({
     containerHeight,
     dirRates,
     dirText,
+    dirRatesReloadTrigger,
   };
 
   return (

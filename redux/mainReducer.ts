@@ -12,6 +12,7 @@ import {
   fetchTopParameters,
   fetchCity,
 } from "./thunks";
+import type { DirRatesReloadTrigger } from "./thunks";
 import { IPm, IPmGroup } from "../types/selector";
 import { IActivePetal, IDir } from "../types/dir";
 import { initialAmountOutputs, getAmountOutputs } from "./helper";
@@ -64,6 +65,7 @@ export interface MainState {
   getPm?: IPm;
   dirRates?: IRate[]; //  uniqueRates + bestRates
   dirRatesStatus: IDirRatesStatus;
+  dirRatesReloadTrigger?: DirRatesReloadTrigger;
   amountInput?: AmountInput;
   amountOutputs: AmountOutputs;
   swiperIdVisible: number;
@@ -92,6 +94,7 @@ const initialState: MainState = {
   searchBarInputValue: "",
   side: "get",
   dirRatesStatus: "fulfilled",
+  dirRatesReloadTrigger: "manual",
   amountOutputs: initialAmountOutputs,
   swiperIdVisible: 0,
   pms: [],
@@ -258,6 +261,7 @@ export const mainSlice = createSlice({
       state.amountInput = undefined;
       state.amountOutputs = getAmountOutputs(state, 1);
       state.swiperIdVisible = 1;
+      state.dirRatesReloadTrigger = "manual";
     },
     setInitialData: (
       state: MainState,
@@ -329,15 +333,22 @@ export const mainSlice = createSlice({
         state.dirRatesStatus = "rejected";
         return;
       }
+      const reloadTrigger: DirRatesReloadTrigger =
+        action.meta.arg?.trigger || "manual";
       const cityKey = normalizeCityKey(action.meta.arg?.cityName);
       const rates = cityKey
         ? action.payload.map((rate) => applyCityRateOverride(rate, cityKey))
         : action.payload;
       state.dirRates = rates;
       state.amountInput = undefined;
-      state.amountOutputs = getAmountOutputs(state, 1);
       state.dirRatesStatus = "fulfilled";
-      state.swiperIdVisible = 1;
+      state.dirRatesReloadTrigger = reloadTrigger;
+      const currentIndex = state.swiperIdVisible ?? 0;
+      const targetIndex = reloadTrigger === "auto" ? currentIndex : 1;
+      state.amountOutputs = getAmountOutputs(state, targetIndex);
+      if (reloadTrigger !== "auto") {
+        state.swiperIdVisible = 1;
+      }
     });
 
     builder.addCase(fetchPossiblePairs.fulfilled, (state, action) => {

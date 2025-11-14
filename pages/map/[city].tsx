@@ -20,7 +20,7 @@ import {
 } from "../../components/map/helper";
 import CityMapView from "../../components/map";
 
-const MAX_COUNT = 2; // начиная со скольки курсов на направление показываем
+const MAX_COUNT = 5; // начиная со скольки курсов на направление показываем
 
 type ParserCityDirections = Record<string, Record<string, number>>;
 type ParsedDirection = {
@@ -149,81 +149,6 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   });
   const cityText = (cityTextRes?.[0] || null) as IDirText | null;
 
-  // const cityAliases = [
-  //   toLower(currentCity.en_name),
-  //   toLower(currentCity.ru_name),
-  //   ...(currentCity.codes || []).map((code) => toLower(code)),
-  // ].filter(Boolean);
-
-  // const offices: IExchangerMapOffice[] = exchangerList
-  //   .flatMap((exchanger) => {
-  //     const list = Array.isArray(exchanger.offices)
-  //       ? exchanger.offices
-  //       : [];
-
-  //     return list
-  //       .map((office) => {
-  //         const coordinates = parseCoordinates(
-  //           office.coordinates,
-  //           currentCity.coordinates as [number, number]
-  //         );
-
-  //         if (!coordinates || office.visible === false) {
-  //           return null;
-  //         }
-
-  //         const officeCity = toLower(office.city);
-  //         const addressLower = toLower(office.address);
-
-  //         const matchesCity =
-  //           cityAliases.some(
-  //             (alias) =>
-  //               (officeCity && officeCity.includes(alias)) ||
-  //               (addressLower && addressLower.includes(alias))
-  //           ) || !officeCity;
-
-  //         const hasReference =
-  //           Array.isArray(currentCity.coordinates) &&
-  //           currentCity.coordinates.length === 2;
-
-  //         const distanceFromCity = hasReference
-  //           ? Math.abs(coordinates.lat - currentCity.coordinates[0]) +
-  //             Math.abs(coordinates.lng - currentCity.coordinates[1])
-  //           : Infinity;
-
-  //         if (!matchesCity && distanceFromCity > 2) {
-  //           return null;
-  //         }
-
-  //         return {
-  //           id: `${exchanger.id}-${office.id}`,
-  //           exchangerId: exchanger.id,
-  //           name: exchanger.name,
-  //           lat: coordinates.lat,
-  //           lng: coordinates.lng,
-  //           visible: office.visible,
-  //           image: office.image || null,
-  //           address: office.address,
-  //           description: office.description,
-  //           working_time:
-  //             office.working_time ||
-  //             exchanger.exchanger_card?.working_time ||
-  //             null,
-  //           contact:
-  //             exchanger.exchanger_card?.telegram ||
-  //             exchanger.exchanger_card?.email ||
-  //             null,
-  //           ref_link: exchanger.ref_link,
-  //           tag: exchanger.tag,
-  //           exchanger_card: exchanger.exchanger_card,
-  //           city: office.city,
-  //           usdRate: null,
-  //         } as IExchangerMapOffice;
-  //       })
-  //       .filter(Boolean) as IExchangerMapOffice[];
-  //   })
-  //   .filter(Boolean);
-
   const copy = buildCopy(currentCity, currentLocale, cityText);
 
   const pmMap = new Map((pms || []).map((pm) => [pm.code.toUpperCase(), pm]));
@@ -330,12 +255,12 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
         sell.reduce((sum, item) => sum + item.count, 0);
       const buyTitle =
         currentLocale === "ru"
-          ? `Купить криптовалюту за наличные ${cashName}`
-          : `Buy crypto for cash ${cashName}`;
+          ? `Купить криптовалюту за наличные ${cashName} ${currentCity.preposition}`
+          : `Buy crypto for cash ${cashName} ${currentCity.en_name}`;
       const sellTitle =
         currentLocale === "ru"
-          ? `Продать криптовалюту за наличные ${cashName}`
-          : `Sell crypto for cash ${cashName}`;
+          ? `Продать криптовалюту за наличные ${cashName} ${currentCity.preposition}`
+          : `Sell crypto for cash ${cashName} ${currentCity.en_name}`;
       return {
         currencyCode: code,
         currencyName: cashName,

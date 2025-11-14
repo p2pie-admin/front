@@ -124,6 +124,7 @@ export const exchangerQuery = gql`
         id
         attributes {
           name
+          display_name
           status
           ref_link
           admin_rating
@@ -169,6 +170,7 @@ export const exchangerQuery = gql`
                     id
                     attributes {
                       name
+                      display_name
                       logo {
                         data {
                           id
@@ -344,6 +346,7 @@ export const exchangersQuery = gql`
         id
         attributes {
           name
+          display_name
           ref_link
 
           admin_rating
@@ -414,6 +417,7 @@ export const exchangersMapQuery = gql`
         id
         attributes {
           name
+          display_name
           ref_link
 
           admin_rating

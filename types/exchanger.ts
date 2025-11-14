@@ -26,6 +26,7 @@ export interface IExchangerTemplate {
 export interface IExchangerSummary {
   id: string;
   name?: string | null;
+  display_name?: string | null;
   logo?: IImage | null;
 }
 
@@ -91,6 +92,7 @@ export interface IExchangerTag {
 export type IExchanger = {
   id: string;
   name: string;
+  display_name?: string | null;
   ref_link: string;
   updatedAt?: string;
   status?: IExchangerStatus | null;
@@ -106,6 +108,7 @@ export type IExchanger = {
 export type IExchangerPreview = {
   id: string;
   name: string;
+  display_name?: string | null;
   ref_link: string;
 };
 

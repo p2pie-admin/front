@@ -51,13 +51,15 @@ const courseFilterLink = env === "production" ? serverLinkPROD : serverLinkDEV;
 //   }
 // );
 
-const _fetchRates = async ({
-  dir,
-  cityName,
-}: {
+export type DirRatesReloadTrigger = "auto" | "manual";
+
+type FetchDirRatesArgs = {
   dir: string;
   cityName?: string;
-}) => {
+  trigger?: DirRatesReloadTrigger;
+};
+
+const _fetchRates = async ({ dir, cityName }: FetchDirRatesArgs) => {
   //const isCash = (dir.split("_")[0].startsWith("CASH") || dir.split("_")[1].startsWith("CASH"));
   const link = `${courseFilterLink}/dir=${dir}/all/${cityName?.toLowerCase()}`;
 
@@ -67,10 +69,10 @@ const _fetchRates = async ({
   return response?.data as IRate[];
 };
 
-export const fetchDirRates = createAsyncThunk(
-  "rates/fetchDirRates",
-  _fetchRates
-);
+export const fetchDirRates = createAsyncThunk<
+  IRate[] | undefined,
+  FetchDirRatesArgs
+>("rates/fetchDirRates", _fetchRates);
 
 export const fetchTopParameters = createAsyncThunk(
   "rates/fetchTopParameters",

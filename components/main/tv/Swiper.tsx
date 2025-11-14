@@ -1,4 +1,10 @@
-import React, { useEffect, useCallback, useState, useMemo } from "react";
+import React, {
+  useEffect,
+  useCallback,
+  useState,
+  useMemo,
+  useRef,
+} from "react";
 import { TbTriangleInvertedFilled } from "react-icons/tb";
 import { motion, useMotionValue, useAnimation } from "framer-motion";
 import { Box, Grid, useColorModeValue } from "@chakra-ui/react";
@@ -11,6 +17,7 @@ import { IRate } from "../../../types/rates";
 import Item from "./Item";
 import debounce from "./utils/debounce";
 import { fetchTopParameters } from "../../../redux/thunks";
+import type { DirRatesReloadTrigger } from "../../../redux/thunks";
 import ErrorWrapper from "../../shared/ErrorWrapper";
 import BottomLabel from "./BottomLabel";
 import TopLabel from "./TopLabel";
@@ -30,9 +37,17 @@ export const Swiper = (props: {
   containerHeight: number;
   dirRates: IRate[];
   dirText: IDirText | null;
+  dirRatesReloadTrigger?: DirRatesReloadTrigger;
 }) => {
-  const { isMobile, itemHeight, visibleItems, containerHeight, dirRates } =
-    props;
+  const {
+    isMobile,
+    itemHeight,
+    visibleItems,
+    containerHeight,
+    dirRates,
+    dirText,
+    dirRatesReloadTrigger,
+  } = props;
 
   const [initial, setInitial] = useState(true);
   const dispatch = useAppDispatch();
@@ -47,20 +62,22 @@ export const Swiper = (props: {
   const isLoading = dirRatesStatus === "pending";
 
   const length = dirRates.length;
+  const reloadTrigger: DirRatesReloadTrigger =
+    dirRatesReloadTrigger || "manual";
 
   const bgColor = useColorModeValue("bg.50", "bg.800");
   const triangleColor = useColorModeValue("violet.700", "peach.600");
-  const [mouseEntered, setMouseEntered] = useState(false);
+  const mouseEnteredRef = useRef(false);
 
   const y = useMotionValue(0);
   const controls = useAnimation();
 
-  const getIndex = () => {
+  const getIndex = useCallback(() => {
     const index = Math.round(
       (-y.get() + (containerHeight / 2 - itemHeight / 2)) / itemHeight
     );
     return Math.min(length - 1, Math.max(0, index));
-  };
+  }, [containerHeight, itemHeight, length, y]);
 
   const snapToNearest = useCallback(
     (currentY: number) => {
@@ -74,12 +91,15 @@ export const Swiper = (props: {
     [containerHeight, itemHeight, length]
   );
 
-  const move = (yVal: number) => {
-    controls.start({
-      y: yVal,
-      transition: { type: "spring", stiffness, damping },
-    });
-  };
+  const move = useCallback(
+    (yVal: number) => {
+      controls.start({
+        y: yVal,
+        transition: { type: "spring", stiffness, damping },
+      });
+    },
+    [controls]
+  );
 
   const debouncedSetSwiperIdVisible = useMemo(
     () =>
@@ -89,28 +109,42 @@ export const Swiper = (props: {
     [dispatch]
   );
 
-  const stepDown = () => {
-    const currentIndex = getIndex();
-    const newIndex = Math.max(currentIndex - 1, 0);
-    debouncedSetSwiperIdVisible(newIndex);
-    scrollToItem(newIndex);
-  };
+  const scrollToItem = useCallback(
+    (index: number) => {
+      const targetY =
+        -(itemHeight * index) + containerHeight / 2 - itemHeight / 2;
+      move(targetY);
+    },
+    [containerHeight, itemHeight, move]
+  );
 
-  const stepUp = () => {
-    const currentIndex = getIndex();
-    const newIndex = Math.min(currentIndex + 1, length - 1);
-    debouncedSetSwiperIdVisible(newIndex);
-    scrollToItem(newIndex);
-  };
+  const changeIndexByDelta = useCallback(
+    (delta: number) => {
+      if (!length) return;
+      const currentIndex = getIndex();
+      const newIndex = Math.min(length - 1, Math.max(0, currentIndex + delta));
+      debouncedSetSwiperIdVisible(newIndex);
+      scrollToItem(newIndex);
+    },
+    [debouncedSetSwiperIdVisible, getIndex, length, scrollToItem]
+  );
 
-  const handleWheel = (event: any) => {
-    if (isMobile || !mouseEntered) return;
-    if (event.deltaY < 0) {
-      stepDown();
-    } else if (event.deltaY > 0) {
-      stepUp();
-    }
-  };
+  const stepDown = () => changeIndexByDelta(-1);
+
+  const stepUp = () => changeIndexByDelta(1);
+
+  const handleWheel = useCallback(
+    (event: WheelEvent) => {
+      if (isMobile || !mouseEnteredRef.current) return;
+      if (!event.deltaY) return;
+      const normalized = Math.abs(event.deltaY);
+      const intensity = Math.min(5, Math.max(1, Math.round(normalized / 80)));
+      const direction = event.deltaY > 0 ? 1 : -1;
+      changeIndexByDelta(direction * intensity);
+      event.preventDefault();
+    },
+    [changeIndexByDelta, isMobile]
+  );
 
   const handleKeyDown = (event: any) => {
     if (isMobile) return;
@@ -123,18 +157,22 @@ export const Swiper = (props: {
 
   useEffect(() => {
     if (initial) return;
-    if (!dirRates.length) return;
-
-    scrollToItem(1);
-    debouncedSetSwiperIdVisible(1);
+    if (!length) return;
+    if (reloadTrigger === "auto") return;
 
     const timeout = setTimeout(() => {
       scrollToItem(0);
       debouncedSetSwiperIdVisible(0);
-    }, 1000);
+    }, 700);
 
     return () => clearTimeout(timeout);
-  }, [initial, dirRates.length, debouncedSetSwiperIdVisible]);
+  }, [
+    initial,
+    length,
+    reloadTrigger,
+    debouncedSetSwiperIdVisible,
+    scrollToItem,
+  ]);
 
   useEffect(() => {
     if (isMobile) return;
@@ -147,26 +185,20 @@ export const Swiper = (props: {
     };
   }, [handleWheel, handleKeyDown, isMobile]);
 
-  const scrollToItem = (index: number) => {
-    const targetY =
-      -(itemHeight * index) + containerHeight / 2 - itemHeight / 2;
-    move(targetY);
-  };
-
   const handleMouseEnter = () => {
     if (isMobile) return;
     const scrollbarWidth =
       window.innerWidth - document.documentElement.clientWidth;
     document.body.style.overflow = "hidden";
     document.body.style.paddingRight = `${scrollbarWidth}px`;
-    setMouseEntered(true);
+    mouseEnteredRef.current = true;
   };
 
   const handleMouseLeave = () => {
     if (isMobile) return;
     document.body.style.overflow = "auto";
     document.body.style.paddingRight = "0px";
-    setMouseEntered(false);
+    mouseEnteredRef.current = false;
   };
 
   const topLabelBaseTop = -itemHeight;
@@ -255,7 +287,7 @@ export const Swiper = (props: {
               justifyContent="center"
               pointerEvents="none"
             >
-              <TopLabel text={props?.dirText?.h1} length={dirRates.length} />
+              <TopLabel text={dirText?.h1} length={dirRates.length} />
             </MotionBox>
 
             <MotionBox

@@ -9,6 +9,8 @@ import {
   VStack,
   Text,
   Icon,
+  Grid,
+  Button,
 } from "@chakra-ui/react";
 import ExchangerReplies from "./ExchangerReplies";
 import { IExchangerReview } from "../../../../types/exchanger";
@@ -25,6 +27,8 @@ import {
   ReviewBorder,
   FormatedDate,
 } from "../../../shared/BoxWrapper";
+import { HiReply } from "react-icons/hi";
+import ReviewText from "../leaveReply";
 
 export default function ExchangerRootReview({
   review,
@@ -169,9 +173,7 @@ export default function ExchangerRootReview({
           </HStack>
         </HStack>
         <Divider my="4" />
-        <Text mt="6" whiteSpace="pre-wrap">
-          {text}
-        </Text>
+        <ReviewText text={text} />
       </ReviewBorder>
 
       {review_replies &&

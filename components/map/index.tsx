@@ -266,7 +266,11 @@ const CityMapView = ({
       </BoxWrapper>
       <CityDescription cityText={cityText} />
       <ClosestCities city={city} closestCities={closestCities} />
-      <CashDirections sections={cashSections} headings={headings} />
+      <CashDirections
+        sections={cashSections}
+        headings={headings}
+        cityName={city.en_name}
+      />
     </Box>
   );
 };

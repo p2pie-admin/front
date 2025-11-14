@@ -8,6 +8,7 @@ import BoringAvatar from "boring-avatars";
 import CustomImage from "../../../shared/CustomImage";
 import { IImage } from "../../../../types/selector";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
+import ReviewText from "../leaveReply";
 
 export default function ExchangerReplies({
   reply,
@@ -84,7 +85,7 @@ export default function ExchangerReplies({
           <FormatedDate updatedAt={reply.updatedAt} />
         </HStack>
         <Divider my="4" />
-        <Text>{reply.text}</Text>
+        <ReviewText text={reply.text} />
       </ReviewBorder>
     </HStack>
   );
