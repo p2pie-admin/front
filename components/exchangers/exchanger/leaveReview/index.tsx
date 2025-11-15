@@ -20,7 +20,7 @@ import { LuTriangleAlert } from "react-icons/lu";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { sendToast, triggerModal } from "../../../../redux/mainReducer";
 import CustomModal from "../../../shared/CustomModal";
-import ReviewAddons from "./ReviewAddons";
+import ReviewAddons from "./addons";
 import { ReviewPowChallenge, solvePowChallenge } from "./helper";
 import { IReview } from "../../../../types/exchanger";
 import { ICity } from "../../../../types/exchange";
@@ -278,7 +278,7 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
         focusBorderColor="peach.200"
       />
       <CustomModal id={reviewModalId} header={"Хотите дополнить отзыв?"}>
-        <ReviewAddons />
+        <ReviewAddons sentiment={sentiment} />
       </CustomModal>
       <HStack justifyContent="space-between" spacing="4" mt="4">
         <HStack color="bg.400" ml="2">

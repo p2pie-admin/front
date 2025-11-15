@@ -66,7 +66,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     ]);
 
     if (!exchanger) {
-      console.log(`❌ Exchanger not found: ${name}`);
+      console.log(`❌ Exchanger failed to load: ${name}`);
       return { notFound: true };
     }
 

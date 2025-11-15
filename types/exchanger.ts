@@ -64,6 +64,14 @@ export interface IExchangerReviewReply {
   screenshots?: IImage[] | null;
 }
 
+export interface IReviewCategory {
+  id?: string;
+  title?: string | null;
+  description?: string | null;
+  isNegative?: boolean | null;
+  image?: IImage[] | null;
+}
+
 export interface IExchangerReview {
   id: string;
   fingerprint?: string | null;
@@ -73,7 +81,8 @@ export interface IExchangerReview {
   isDispute?: boolean | null;
   isClosed?: boolean | null;
   isApproved?: boolean | null;
-  categories?: string[] | string | null;
+
+  review_categories?: IReviewCategory[] | null;
   userAgent?: string | null;
   location?: string | null;
   screenshots?: IImage[] | null;

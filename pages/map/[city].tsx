@@ -255,12 +255,12 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
         sell.reduce((sum, item) => sum + item.count, 0);
       const buyTitle =
         currentLocale === "ru"
-          ? `Купить криптовалюту за наличные ${cashName} ${currentCity.preposition}`
-          : `Buy crypto for cash ${cashName} ${currentCity.en_name}`;
+          ? `Купить криптовалюту за наличные ${cashName} в ${currentCity.preposition}`
+          : `Buy crypto for cash ${cashName} in ${currentCity.en_name}`;
       const sellTitle =
         currentLocale === "ru"
-          ? `Продать криптовалюту за наличные ${cashName} ${currentCity.preposition}`
-          : `Sell crypto for cash ${cashName} ${currentCity.en_name}`;
+          ? `Продать криптовалюту за наличные ${cashName} в ${currentCity.preposition}`
+          : `Sell crypto for cash ${cashName} in ${currentCity.en_name}`;
       return {
         currencyCode: code,
         currencyName: cashName,

@@ -161,7 +161,26 @@ export const exchangerQuery = gql`
                 isDispute
                 isClosed
                 isApproved
-                categories
+                review_categories {
+                  data {
+                    id
+                    attributes {
+                      title
+                      description
+                      isNegative
+                      image {
+                        data {
+                          id
+                          attributes {
+                            name
+                            alternativeText
+                            url
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
                 userAgent
                 location
                 updatedAt
@@ -652,6 +671,44 @@ export const TopParametersQuery = gql`
                   name
                   url
                 }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const reviewFingerprintQuery = gql`
+  query ReviewFingerprint($id: ID) {
+    reviews(filters: { id: { eq: $id } }) {
+      data {
+        id
+        attributes {
+          fingerprint
+        }
+      }
+    }
+  }
+`;
+
+export const exchangerReviewCategoriesQuery = gql`
+  query ExchangerReviewCategories {
+    reviewCategories(pagination: { limit: 2000 }) {
+      data {
+        id
+        attributes {
+          title
+          description
+          isNegative
+          image {
+            data {
+              id
+              attributes {
+                name
+                alternativeText
+                url
               }
             }
           }

@@ -38,7 +38,6 @@ export default function ExchangerRootReview({
   if (!review) return <></>;
   const {
     name,
-    categories,
     location,
     text,
     type,

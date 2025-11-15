@@ -15,7 +15,7 @@ const MyTooltip = ({
       hasArrow
       isOpen={isOpen}
       label={label || ""}
-      bg="bg.500"
+      bg="bg.300"
       borderRadius="2xl"
       openDelay={500}
       maxW="50vw"
