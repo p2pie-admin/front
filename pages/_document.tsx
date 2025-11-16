@@ -39,7 +39,7 @@ export default function MyDocument() {
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <Main />
         <NextScript />
-        <script src="//code.jivosite.com/widget/SuEyiBBWCg" async></script>
+        {/* <script src="//code.jivosite.com/widget/SuEyiBBWCg" async></script> */}
       </body>
     </Html>
   );

@@ -63,11 +63,11 @@ export const enrichLink = (
   if (!giveCode || !getCode) return ref_link;
   if (ref_link.includes("?")) {
     return `${ref_link}&cur_from=${giveCode}&cur_to=${getCode}${
-      cityCode ? `&${cityCode.toUpperCase()}` : ""
+      cityCode ? `&city=${cityCode.toUpperCase()}` : ""
     }`;
   }
 
   return `${ref_link}/?cur_from=${giveCode}&cur_to=${getCode}${
-    cityCode ? `&${cityCode.toUpperCase()}` : ""
+    cityCode ? `&city=${cityCode.toUpperCase()}` : ""
   }`;
 };
