@@ -25,12 +25,13 @@ const CustomImage = ({
   const imageSrc = img ? SRC + img.url : fallbackImage.src; // Use local fallback
 
   return (
-    <Box maxW={w} maxH={h} overflow="hidden">
+    <Box w={w} h={h} maxW={w} maxH={h} overflow="hidden">
       <Image
         key={img?.id}
         w="100%"
         h="100%"
         objectFit={objectFit}
+        fit={objectFit}
         filter={shaded ? "grayscale(0.6) brightness(0.3)" : "none"}
         src={imageSrc}
         alt={img?.alternativeText || customAlt}

@@ -8,20 +8,22 @@ import BoringAvatar from "boring-avatars";
 import CustomImage from "../../../shared/CustomImage";
 import { IImage } from "../../../../types/selector";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
-import ReviewText from "../leaveReply";
+import ReplyText from "../leaveReply";
 
-export default function ExchangerReplies({
+export default function ExchangerReply({
   reply,
   displayName,
   avatarSeed,
   exchangerName,
   exchangerLogo,
+  canReply,
 }: {
   reply: IExchangerReviewReply;
   displayName: string;
   avatarSeed: string;
   exchangerName?: string | null;
   exchangerLogo?: IImage | null;
+  canReply?: boolean;
 }) {
   const ReplyMonitoring = () => (
     <HStack gap="4" color="blue.500">
@@ -85,7 +87,7 @@ export default function ExchangerReplies({
           <FormatedDate updatedAt={reply.updatedAt} />
         </HStack>
         <Divider my="4" />
-        <ReviewText text={reply.text} />
+        <ReplyText text={reply.text} canReply={canReply} />
       </ReviewBorder>
     </HStack>
   );

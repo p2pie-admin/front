@@ -1,8 +1,10 @@
+import { ReactNode } from "react";
 import { IImage } from "./selector";
 
 export type IToast = {
-  title: string;
+  title: ReactNode;
   status: "success" | "error" | "warning" | "info";
+  timeBeforeClosing?: number;
 };
 
 export type IDirRatesStatus = "fulfilled" | "rejected" | "pending";

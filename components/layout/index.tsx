@@ -55,12 +55,14 @@ const Layout = ({ children }: { children: any }) => {
   }, []);
 
   useEffect(() => {
-    myToast.title &&
-      toast({
-        ...myToast,
-        isClosable: true,
-      });
-  }, [myToast]);
+    if (!myToast.title) return;
+    const { timeBeforeClosing, ...toastConfig } = myToast;
+    toast({
+      ...toastConfig,
+      duration: timeBeforeClosing,
+      isClosable: true,
+    });
+  }, [myToast, toast]);
 
   const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
   const ambientColor = useColorModeValue(

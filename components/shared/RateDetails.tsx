@@ -126,6 +126,7 @@ const RateDetails = () => {
               sendToast({
                 status: "info",
                 title: "Будет вскоре доступно",
+                timeBeforeClosing: 4000,
               })
             )
           }
@@ -142,6 +143,7 @@ const RateDetails = () => {
               sendToast({
                 status: "warning",
                 title: "Пожалуйста свяжитесь с нами t.me/p2pie",
+                timeBeforeClosing: 7000,
               })
             )
           }

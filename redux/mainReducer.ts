@@ -323,6 +323,10 @@ export const mainSlice = createSlice({
       state.modal = undefined;
     });
 
+    builder.addCase(fetchDirRates.pending, (state) => {
+      state.dirRatesStatus = "pending";
+    });
+
     builder.addCase(fetchDirRates.rejected, (state) => {
       state.dirRatesStatus = "rejected";
     });

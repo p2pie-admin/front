@@ -12,7 +12,7 @@ import {
   Grid,
   Button,
 } from "@chakra-ui/react";
-import ExchangerReplies from "./ExchangerReplies";
+import ExchangerReply from "./ExchangerReply";
 import { IExchangerReview } from "../../../../types/exchanger";
 import BoringAvatar from "boring-avatars";
 import UserAgent from "./UserAgent";
@@ -27,14 +27,16 @@ import {
   ReviewBorder,
   FormatedDate,
 } from "../../../shared/BoxWrapper";
-import { HiReply } from "react-icons/hi";
-import ReviewText from "../leaveReply";
+import { useAppSelector } from "../../../../redux/hooks";
+import { maskIP } from "../../../../pages/exchangers/[slug]";
 
 export default function ExchangerRootReview({
   review,
 }: {
   review: IExchangerReview;
 }) {
+  const userIP = useAppSelector((state) => maskIP(state.main.fingerprint?.ip));
+
   if (!review) return <></>;
   const {
     name,
@@ -165,19 +167,21 @@ export default function ExchangerRootReview({
             {tag}
             {locationTag}
           </HStack>
-          <HStack gap="4">
+          <HStack gap="4" color="bg.500">
+            <ResponsiveText size="xs">{`IP: ${review.ipAddress}`}</ResponsiveText>
             <FormatedDate updatedAt={updatedAt} />
 
             <UserAgent userAgent={userAgent} />
           </HStack>
         </HStack>
         <Divider my="4" />
-        <ReviewText text={text} />
+        <Text>{text}</Text>
       </ReviewBorder>
 
       {review_replies &&
         review_replies.map((reply) => (
-          <ExchangerReplies
+          <ExchangerReply
+            canReply={review.ipAddress == userIP && reply.from !== "author"}
             reply={reply}
             displayName={displayName}
             avatarSeed={avatarSeed}

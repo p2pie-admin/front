@@ -26,6 +26,31 @@ import {
 } from "../../cache/loadX";
 import { addHeadersToSearchIndex, addPathsToSitemap } from "../../cache/cache";
 
+export const maskIP = (ip?: string | null): string | null | undefined => {
+  if (ip == null) return ip;
+  const chars = ip.split("");
+  let replaced = 0;
+  for (let i = chars.length - 1; i >= 0 && replaced < 3; i--) {
+    if (/\d/.test(chars[i])) {
+      chars[i] = "*";
+      replaced++;
+    }
+  }
+  return chars.join("");
+};
+
+const maskExchangerReviewIPs = (
+  exchanger: (IExchanger & IParserExchanger) | null
+) => {
+  if (!exchanger || !Array.isArray(exchanger.reviews)) return exchanger;
+  return {
+    ...exchanger,
+    reviews: exchanger.reviews.map((review) =>
+      review ? { ...review, ipAddress: maskIP(review.ipAddress) } : review
+    ),
+  };
+};
+
 export default function ExchangerPage({
   exchanger,
   seo,
@@ -100,9 +125,13 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
       wordsToSearchFrom: exchanger.name,
     });
 
+    const exchangerWithMaskedIp = maskExchangerReviewIPs(
+      enrichedExchanger || exchanger
+    );
+
     return {
       props: {
-        exchanger: enrichedExchanger || exchanger,
+        exchanger: exchangerWithMaskedIp,
         seo,
         locale,
         ...(await serverSideTranslations(locale, ["main"])),

@@ -8,9 +8,13 @@ import { Box3D, ResponsiveText } from "../../../../../styles/theme/custom";
 export default function ReviewCategories({
   categories,
   sentiment,
+  selectedIds,
+  onToggle,
 }: {
   categories?: IReviewCategory[] | null;
   sentiment: "positive" | "neutral" | "negative" | null;
+  selectedIds: string[];
+  onToggle: (id?: string) => void;
 }) {
   if (!categories || !categories?.length) return <></>;
 
@@ -26,7 +30,11 @@ export default function ReviewCategories({
         <ResponsiveText mb="4">Чем порадовал обменник?</ResponsiveText>
         <Wrap gap="4">
           {positiveCategories.map((category) => (
-            <ReviewCategory category={category} />
+            <ReviewCategory
+              category={category}
+              isSelected={selectedIds.includes(category.id || "")}
+              onToggle={onToggle}
+            />
           ))}
         </Wrap>
       </Box3D>
@@ -35,7 +43,11 @@ export default function ReviewCategories({
         <ResponsiveText mb="4">Чем огорчил обменник?</ResponsiveText>
         <Wrap gap="4">
           {negativeCategories.map((category) => (
-            <ReviewCategory category={category} />
+            <ReviewCategory
+              category={category}
+              isSelected={selectedIds.includes(category.id || "")}
+              onToggle={onToggle}
+            />
           ))}
         </Wrap>
       </Box3D>

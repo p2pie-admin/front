@@ -9,9 +9,13 @@ import { ResponsiveText } from "../../../../../styles/theme/custom";
 export default function ReviewCategory({
   category,
   isExtended = true,
+  isSelected = false,
+  onToggle,
 }: {
   category?: IReviewCategory | null;
   isExtended?: boolean;
+  isSelected?: boolean;
+  onToggle?: (id?: string) => void;
 }) {
   if (!category) return <></>;
 
@@ -22,6 +26,13 @@ export default function ReviewCategory({
     "saturate(550%)",
     "saturate(150%)"
   )} hue-rotate(${rotationColor}deg)`;
+  const activeStyles = isSelected
+    ? {
+        filter: filter + " brightness(1.2)",
+        borderColor: "peach.300",
+        boxShadow: "0 0 10px 2px rgba(255,196,143,0.5)",
+      }
+    : {};
 
   return (
     <MyTooltip key={id} label={description || ""} placement="bottom">
@@ -51,6 +62,8 @@ export default function ReviewCategory({
           w: "100%",
           h: "100%",
         }}
+        onClick={() => onToggle?.(id)}
+        {...activeStyles}
       >
         {image ? (
           <CustomImage w="10" h="10" img={image[0]} />

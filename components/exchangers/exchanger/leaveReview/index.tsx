@@ -1,4 +1,11 @@
-import { Button, Divider, HStack, Input, Textarea } from "@chakra-ui/react";
+import {
+  Button,
+  Divider,
+  HStack,
+  Input,
+  Link,
+  Textarea,
+} from "@chakra-ui/react";
 import React, {
   useCallback,
   useEffect,
@@ -28,6 +35,8 @@ import { locale } from "../../../../services/utils";
 import { waitSec } from "../../../shared/helper";
 export const LEAVE_REVIEW_SECTION_ID = "leave-review-section";
 const REVIEW_COOLDOWN_MS = 60 * 60 * 1000;
+const TELEGRAM_CHAT_URL =
+  String(process.env.NEXT_PUBLIC_TELEGRAM_CHAT) || "https://t.me/p2pie_chat";
 
 const sentimentOptions = [
   {
@@ -67,6 +76,7 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
   const [sentiment, setSentiment] = useState<SentimentValue | null>(null);
   const [cooldownUntil, setCooldownUntil] = useState<number | null>(null);
   const [shouldSubmitAfterModal, setShouldSubmitAfterModal] = useState(false);
+  const [selectedCategoryIds, setSelectedCategoryIds] = useState<string[]>([]);
   const storageKey = useMemo(
     () => `exchanger:${exchangerId}:review_sent`,
     [exchangerId]
@@ -172,7 +182,12 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
         isDispute: null,
         userAgent: fingerprintInfo?.userAgent,
         fingerprint: fingerprintInfo?.fingerprint,
+        ipAddress: fingerprintInfo?.ip,
         location: city?.[`${locale}_name`] || undefined,
+        review_categories:
+          selectedCategoryIds && selectedCategoryIds.length
+            ? selectedCategoryIds
+            : undefined,
       };
       await waitSec(1);
       const response = await fetch("/api/review-submit", {
@@ -194,17 +209,29 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
       }
       console.info("Review submitted via Next.js proxy");
       setValue("");
-      dispatch(
-        sendToast({
-          status: "success",
-          title:
-            "Спасибо за отзыв! После быстрой проверки он будет опубликован.",
-        })
-      );
     } catch (error) {
       console.error("Failed to send review", error);
     } finally {
       setIsSending(false);
+      dispatch(
+        sendToast({
+          status: "success",
+          title: (
+            <span>
+              Спасибо за отзыв! Обсудите обменник в нашем{" "}
+              <Link
+                href={TELEGRAM_CHAT_URL}
+                isExternal
+                color="peach.900"
+                textDecoration="underline"
+              >
+                телеграм-чате
+              </Link>
+            </span>
+          ),
+          timeBeforeClosing: 8000,
+        })
+      );
     }
   }, [
     value,
@@ -235,6 +262,13 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
     if (isSubmitDisabled) return;
     setShouldSubmitAfterModal(true);
     dispatch(triggerModal(reviewModalId));
+  };
+
+  const handleToggleCategory = (id?: string) => {
+    if (!id) return;
+    setSelectedCategoryIds((prev) =>
+      prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]
+    );
   };
 
   return (
@@ -278,7 +312,11 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
         focusBorderColor="peach.200"
       />
       <CustomModal id={reviewModalId} header={"Хотите дополнить отзыв?"}>
-        <ReviewAddons sentiment={sentiment} />
+        <ReviewAddons
+          sentiment={sentiment}
+          selectedCategoryIds={selectedCategoryIds}
+          onToggleCategory={handleToggleCategory}
+        />
       </CustomModal>
       <HStack justifyContent="space-between" spacing="4" mt="4">
         <HStack color="bg.400" ml="2">

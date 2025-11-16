@@ -7,7 +7,9 @@ export interface IReview {
   isDispute?: boolean | null;
   userAgent?: string;
   fingerprint?: string;
+  ipAddress?: string;
   location?: string;
+  review_categories?: string[];
 }
 
 export interface ITopParameter {
@@ -75,6 +77,7 @@ export interface IReviewCategory {
 export interface IExchangerReview {
   id: string;
   fingerprint?: string | null;
+  ipAddress?: string | null;
   name?: string | null;
   text?: string | null;
   type?: string | null;

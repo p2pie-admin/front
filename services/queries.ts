@@ -155,6 +155,7 @@ export const exchangerQuery = gql`
               id
               attributes {
                 fingerprint
+                ipAddress
                 name
                 text
                 type

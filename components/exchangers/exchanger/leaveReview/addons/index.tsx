@@ -14,6 +14,8 @@ import ReviewCategories from "./ReviewCategories";
 type ReviewAddonsProps = {
   onClose?: () => void;
   sentiment: "positive" | "neutral" | "negative" | null;
+  selectedCategoryIds: string[];
+  onToggleCategory: (id?: string) => void;
 };
 
 const hints = [
@@ -25,6 +27,8 @@ const hints = [
 export default function ReviewAddons({
   onClose,
   sentiment,
+  selectedCategoryIds,
+  onToggleCategory,
 }: ReviewAddonsProps) {
   const fetcher = initCMSFetcher();
 
@@ -50,7 +54,12 @@ export default function ReviewAddons({
     >
       <VStack align="stretch" spacing="2" minH="300">
         <ErrorWrapper isLoading={!data} isError={!!error}>
-          <ReviewCategories categories={data} sentiment={sentiment} />
+          <ReviewCategories
+            categories={data}
+            sentiment={sentiment}
+            selectedIds={selectedCategoryIds}
+            onToggle={onToggleCategory}
+          />
         </ErrorWrapper>
       </VStack>
 
