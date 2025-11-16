@@ -73,8 +73,7 @@ export const FormatedDate = ({ updatedAt }: { updatedAt?: string | null }) => {
     : "";
   return (
     <ResponsiveText color="inherit" size="xs">
-      {" "}
-      {formattedDate}{" "}
+      {formattedDate}
     </ResponsiveText>
   );
 };
