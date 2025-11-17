@@ -33,7 +33,11 @@ const fiatCurrencies = {
     ru_name: "Рубли RUB",
     en_name: "rubles",
   },
-
+  uah: {
+    symbol: "₴",
+    ru_name: "Гривны UAH",
+    en_name: "hryvnias",
+  },
   eur: {
     symbol: "€",
     ru_name: "Евро EUR",
