@@ -60,14 +60,14 @@ export const FiatSelector = ({ slug }: { slug: string }) => {
   );
 
   return (
-    <Box w="20">
+    <Box w="16">
       <Menu>
         <MenuButton
           as={Button}
           rightIcon={<IoIosArrowDown />}
           width="70px"
           textAlign="left"
-          h="50px"
+          h="40px"
           ml="auto"
         >
           <Box

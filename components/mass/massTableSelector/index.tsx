@@ -1,11 +1,12 @@
 import React from "react";
-import { Box3D } from "../../../styles/theme/custom";
+import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
 import {
   HStack,
   Text,
   Button,
   useBreakpointValue,
   Box,
+  Divider,
 } from "@chakra-ui/react";
 import SideButtons from "./SideButtons";
 import CryptoList from "./CryptoList";
@@ -36,13 +37,15 @@ export default function MassTableSelector({
       py={["2", "4"]}
     >
       {isSmall ? (
-        <Box mt="2">
+        <Box mt="2" px="4" py="2">
           <CryptoList slug={slug} cryptoPms={cryptoPms} />
           <HStack mt="6" justifyContent="space-between">
             <SideButtons slug={slug} />
+            <Divider />
             <Text fontSize="xl" fontWeight="bold">
-              за
+              {"за"}
             </Text>
+            <Divider />
             <FiatSelector slug={slug} />
           </HStack>
         </Box>

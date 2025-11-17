@@ -1,4 +1,4 @@
-import { HStack, VStack } from "@chakra-ui/react";
+import { Box, HStack, VStack } from "@chakra-ui/react";
 import MultiSelectMenu from "./MultiSelectMenu";
 import AmountInput from "./AmountInput";
 import MassSortButtons from "./MassSortButtons";
@@ -10,21 +10,27 @@ export type Option = { value: string; label: string };
 
 const TopPanel = ({
   fiatPms,
-
+  isSmall,
   massDirTextId,
 }: {
   fiatPms: Record<string, IPm>;
-
+  isSmall: boolean;
   massDirTextId: IMassDirTextId;
 }) => {
+  if (isSmall) {
+    return (
+      <Box py="2" px="4">
+        <HStack gap="4" align="stretch" w="100%" mb="4">
+          <MultiSelectMenu fiatPms={fiatPms} isSmall={isSmall} />
+          <AmountInput massDirTextId={massDirTextId} />
+        </HStack>
+        <MassSortButtons />
+      </Box>
+    );
+  }
   return (
-    <HStack
-      gap="4"
-      align="stretch"
-      w="100%"
-      display={{ base: "none", lg: "flex" }}
-    >
-      <MultiSelectMenu fiatPms={fiatPms} />
+    <HStack gap="4" align="stretch" w="100%">
+      <MultiSelectMenu fiatPms={fiatPms} isSmall={isSmall} />
       <AmountInput massDirTextId={massDirTextId} />
       <MassSortButtons />
     </HStack>

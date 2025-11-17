@@ -6,7 +6,13 @@ import {
   useBreakpointValue,
   useColorModeValue,
 } from "@chakra-ui/react";
-import React, { useCallback, useContext, useRef } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import Link from "next/link";
 import {
@@ -37,6 +43,13 @@ export default function CryptoList({
   );
 
   const scrollRef = useRef<HTMLDivElement>(null);
+  const isSmall =
+    useBreakpointValue({
+      base: true,
+      md: false,
+    }) ?? false;
+  const [isAtStart, setIsAtStart] = useState(true);
+  const [isAtEnd, setIsAtEnd] = useState(false);
   const scrollStep = 220;
   const buttonBg = useColorModeValue("bg.200", "bg.800");
   const buttonColor = useColorModeValue("bg.900", "bg.100");
@@ -50,6 +63,26 @@ export default function CryptoList({
     });
   }, []);
 
+  const updateBoundaries = useCallback(() => {
+    const node = scrollRef.current;
+    if (!node) return;
+    const tolerance = 4;
+    const { scrollLeft, scrollWidth, clientWidth } = node;
+    setIsAtStart(scrollLeft <= tolerance);
+    setIsAtEnd(scrollLeft + clientWidth >= scrollWidth - tolerance);
+  }, []);
+
+  useEffect(() => {
+    const node = scrollRef.current;
+    if (!node) return;
+    const handleScroll = () => updateBoundaries();
+    node.addEventListener("scroll", handleScroll);
+    updateBoundaries();
+    return () => {
+      node.removeEventListener("scroll", handleScroll);
+    };
+  }, [updateBoundaries, cryptoPms.length]);
+
   return (
     <HStack
       w={"100%"}
@@ -60,6 +93,7 @@ export default function CryptoList({
       <IconButton
         aria-label="Scroll left"
         icon={<IoIosArrowBack />}
+        isDisabled={isAtStart}
         onClick={() => scrollBy("left")}
         variant="ghost"
         color={buttonColor}
@@ -67,10 +101,25 @@ export default function CryptoList({
         borderRadius="50%"
         zIndex="15"
       />
-      <HorizontalShader direction="right" />
-      <Box flex="1" overflow="hidden" ref={scrollRef} role="group">
-        <HStack spacing="6" w="max-content">
-          <Box w="3" />
+      {!isAtEnd && <HorizontalShader direction="right" />}
+      <Box
+        flex="1"
+        overflowX={isSmall ? "auto" : "hidden"}
+        overflowY="hidden"
+        ref={scrollRef}
+        role="group"
+        sx={
+          isSmall
+            ? {
+                "&::-webkit-scrollbar": { display: "none" },
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
+              }
+            : undefined
+        }
+      >
+        <Box w="3" />
+        <HStack spacing="6" w="max-content" mx="2">
           {cryptoPms.map((pm) => {
             const newData = {
               code: pm.code,
@@ -99,13 +148,14 @@ export default function CryptoList({
               </Tooltip>
             );
           })}
-          <Box w="3" />
         </HStack>
+        <Box w="3" />
       </Box>
-      <HorizontalShader direction="left" />
+      {!isAtStart && <HorizontalShader direction="left" />}
       <IconButton
         aria-label="Scroll right"
         icon={<IoIosArrowForward />}
+        isDisabled={isAtEnd}
         onClick={() => scrollBy("right")}
         variant="ghost"
         color={buttonColor}

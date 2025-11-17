@@ -50,7 +50,11 @@ export default function MassRateAmount({
   }
 
   return (
-    <ResponsiveText size="sm" mt="1" variant="contrast">
+    <ResponsiveText
+      fontSize={{ base: "xl", lg: "sm" }}
+      mt="1"
+      variant="contrast"
+    >
       {`${left} ≈ ${right}`}
     </ResponsiveText>
   );

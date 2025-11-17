@@ -43,8 +43,8 @@ export const thirdItems = [
   },
 
   {
-    id: "uah",
-    ru_label: "за Гривны",
-    en_label: "for Hryvnia",
+    id: "eur",
+    ru_label: "за Евро",
+    en_label: "for Euro",
   },
 ];

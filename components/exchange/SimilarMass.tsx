@@ -58,7 +58,7 @@ const SimilarMass = ({
       <ResponsiveText size="sm" variant="no_contrast">
         {`${
           side == "sell" ? "Продать" : "Купить"
-        } ${cryptoPm.currency.code.toUpperCase()} за ${fiatPm.currency.code.toUpperCase()}`}
+        } ${cryptoPm.currency.code.toUpperCase()} за  ${fiatPm.currency.code.toUpperCase()}`}
       </ResponsiveText>
     </VStack>
   );

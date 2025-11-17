@@ -36,7 +36,7 @@ const Mass = ({
 
   return (
     <MassSideContext.Provider value={isSell}>
-      <Box px="4">
+      <Box p="4">
         <Heading
           fontSize={{ base: "xl", lg: "4xl" }}
           as="h1"

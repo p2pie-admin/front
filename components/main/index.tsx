@@ -49,10 +49,10 @@ const MainPageContent = ({
       <Greeting />
 
       <ColumnGrid>
-        <Column index={1}>
+        <Column index={3}>
           <CircularTexts mainTexts={mainTexts} />
         </Column>
-        <Column index={2}>
+        <Column index={1}>
           <Calculator />
         </Column>
         <Column index={4}>
@@ -60,21 +60,29 @@ const MainPageContent = ({
             {rootText?.text || ""}
           </ResponsiveText>
         </Column>
-        <Column index={3}>
+        <Column index={2}>
           <Popular popularRates={popularRates} popularPms={popularPms} />
         </Column>
       </ColumnGrid>
 
-      <VStack my="10">
+      <VStack my="10" mx="4">
         <ResponsiveText
           as="h2"
           fontSize="4xl"
           fontWeight="bold"
           variant="primary"
+          textAlign="center"
+          whiteSpace="unset"
         >
           {rootText?.header}
         </ResponsiveText>
-        <ResponsiveText as="h3" fontSize="2xl" variant="no_contrast">
+        <ResponsiveText
+          as="h3"
+          fontSize="2xl"
+          variant="no_contrast"
+          textAlign="center"
+          whiteSpace="unset"
+        >
           {rootText?.subheader}
         </ResponsiveText>
       </VStack>

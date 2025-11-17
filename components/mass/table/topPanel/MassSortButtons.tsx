@@ -49,6 +49,7 @@ const MassSortButtons = () => {
       borderRadius="xl"
       borderColor="bg.500"
       spacing={0}
+      justifyContent="space-between"
       h="45px"
     >
       {buttons.map(({ key, label, tooltip }) => (

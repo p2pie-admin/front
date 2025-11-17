@@ -25,21 +25,18 @@ import MassSideContext from "../../sideContext";
 export type Option = { value: string; label: string };
 
 type Props = {
-  value?: string[]; // controlled selected values
   defaultValue?: string[]; // uncontrolled initial
+  isSmall: boolean;
 
-  placeholder?: string;
-  maxTagToShow?: number; // how many tags to show in the button before "+N more"
-  menuWidth?: string | number;
   fiatPms: Record<string, IPm>;
 };
 
 export const MultiSelectMenu: React.FC<Props> = ({
   fiatPms,
-  value,
+  isSmall,
   defaultValue = [],
 }) => {
-  const maxTagToShow = 8;
+  const maxTagToShow = isSmall ? 4 : 8;
   const [selected, setSelected] = React.useState<string[]>(defaultValue);
   const isSell = useContext(MassSideContext) as boolean;
 
@@ -61,44 +58,33 @@ export const MultiSelectMenu: React.FC<Props> = ({
     setSelected(next);
   };
 
-  const selectedOptions = Object.keys(fiatPms).filter((code) =>
-    selected.includes(code)
-  );
+  const selectedOptions =
+    selected.length === 0
+      ? Object.keys(fiatPms)
+      : Object.keys(fiatPms).filter((code) => selected.includes(code));
 
   const buttonContent = (
-    <>
-      {selectedOptions.length === 0 ? (
-        <ResponsiveText
-          overflow="hidden"
-          textOverflow="ellipsis"
-          variant="no_contrast"
-          size="sm"
-        >
-          Способы оплаты
+    <HStack align="center" mt="1">
+      {selectedOptions.slice(0, maxTagToShow).map((code) => (
+        <Box key={code} mx="-1.5">
+          <PmIcon pm={fiatPms[code]} />
+        </Box>
+      ))}
+      {selectedOptions.length > maxTagToShow && (
+        <ResponsiveText size="xs" mb="1">
+          +{selectedOptions.length - maxTagToShow}
         </ResponsiveText>
-      ) : (
-        <HStack align="center" mt="1">
-          {selectedOptions.slice(0, maxTagToShow).map((code) => (
-            <Box key={code} mx="-1.5">
-              <PmIcon pm={fiatPms[code]} />
-            </Box>
-          ))}
-          {selectedOptions.length > maxTagToShow && (
-            <ResponsiveText size="xs" mb="1">
-              +{selectedOptions.length - maxTagToShow}
-            </ResponsiveText>
-          )}
-        </HStack>
       )}
-    </>
+    </HStack>
   );
 
   return (
     <Menu closeOnSelect={false} autoSelect={false} onClose={saveSelection}>
       <MenuButton
         as={Button}
-        rightIcon={<IoIosArrowDown />}
-        width="520px"
+        rightIcon={isSmall ? <></> : <IoIosArrowDown />}
+        minW="100"
+        width={{ lg: "520px", base: "unset" }}
         textAlign="left"
         h="45px"
       >

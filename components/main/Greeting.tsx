@@ -31,14 +31,14 @@ const Greeting = () => {
         textAlign="center"
         fontWeight="bold"
         color="inherit"
-        fontSize={{ base: "4xl", md: "6xl" }}
+        fontSize={{ base: "3xl", md: "6xl" }}
       >
         {t("main:title")}
       </Heading>
       <Heading
         as="p"
         textAlign="center"
-        fontSize={{ base: "2xl", md: "4xl" }}
+        fontSize={{ base: "xl", md: "4xl" }}
         mt={2}
       >
         {t("main:subtitle")}

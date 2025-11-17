@@ -72,6 +72,7 @@ const Layout = ({ children }: { children: any }) => {
 
   return (
     <Box // careful! populars may stop working!
+      overflowX="hidden"
       w="100%"
       position="relative"
       fontFamily="Rubik, sans-serif"
