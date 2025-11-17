@@ -145,15 +145,21 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
             />
 
             <HStack>
-              <ResponsiveText size="xs" variant="no_contrast">
+              <ResponsiveText
+                size="xs"
+                variant="no_contrast"
+                display={{ base: "none", lg: "unset" }}
+              >
                 {secondsAgo(last_time_updated)}
               </ResponsiveText>
-              <Box onClick={(event) => handleInfoClick(event)}>
+              <Box
+                onClick={(event) => handleInfoClick(event)}
+                display={{ base: "none", lg: "unset" }}
+              >
                 <GrCircleInformation size="1.2rem" />
               </Box>
             </HStack>
           </HStack>
-          {/* Info icon removed */}
         </HStack>
         <Box mt="1">
           <ResponsiveText size="sm" fontWeight="bold">

@@ -1,4 +1,4 @@
-import { Button, Collapse, Divider, Grid } from "@chakra-ui/react";
+import { Box, Button, Collapse, Divider, Grid, HStack } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useState } from "react";
 import { CityCashEntry } from "../types";
@@ -53,7 +53,7 @@ const SectionEntries = ({
       <CustomHeader text={title} as="h3" Icon={RiExchangeFill} />
       <Divider my="4" />
 
-      <Grid gap="4" gridTemplateColumns="1fr 1fr 1fr">
+      <Grid gap="4" gridTemplateColumns={{ base: "1fr", lg: "1fr 1fr 1fr" }}>
         {visibleEntries.map((entry) => (
           <Button
             as={NextLink}
@@ -66,17 +66,35 @@ const SectionEntries = ({
             color="bg.300"
             w="full"
           >
-            {renderEntryContent(entry)}
-            <ResponsiveText color="peach.300" size="xs" fontWeight="semibold">
-              {` (${entry.count})`}
-            </ResponsiveText>
+            <Box
+              w="100%"
+              display={{ base: "grid", lg: "flex" }}
+              gap="2"
+              gridTemplateColumns={
+                direction == "sell" ? "3fr 1fr 1fr 1fr" : "1fr 1fr 3fr 1fr"
+              }
+            >
+              {renderEntryContent(entry)}
+              <ResponsiveText
+                color="peach.300"
+                size="xs"
+                fontWeight="semibold"
+                justifySelf="end"
+              >
+                {` (${entry.count})`}
+              </ResponsiveText>
+            </Box>
           </Button>
         ))}
       </Grid>
       {hiddenEntries.length > 0 && (
         <>
           <Collapse in={showAll} animateOpacity>
-            <Grid gap="4" gridTemplateColumns="1fr 1fr 1fr" mt="4">
+            <Grid
+              gap="4"
+              gridTemplateColumns={{ base: "1fr", lg: "1fr 1fr 1fr" }}
+              mt="4"
+            >
               {hiddenEntries.map((entry) => (
                 <Button
                   as={NextLink}
@@ -89,14 +107,26 @@ const SectionEntries = ({
                   color="bg.300"
                   w="full"
                 >
-                  {renderEntryContent(entry)}
-                  <ResponsiveText
-                    color="peach.300"
-                    size="xs"
-                    fontWeight="semibold"
+                  <Box
+                    w="100%"
+                    display={{ base: "grid", lg: "flex" }}
+                    gap="2"
+                    gridTemplateColumns={
+                      direction == "sell"
+                        ? "3fr 1fr 1fr 1fr"
+                        : "1fr 1fr 3fr 1fr"
+                    }
                   >
-                    {` (${entry.count})`}
-                  </ResponsiveText>
+                    {renderEntryContent(entry)}
+                    <ResponsiveText
+                      color="peach.300"
+                      size="xs"
+                      fontWeight="semibold"
+                      justifySelf="end"
+                    >
+                      {` (${entry.count})`}
+                    </ResponsiveText>
+                  </Box>
                 </Button>
               ))}
             </Grid>

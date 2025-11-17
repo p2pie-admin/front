@@ -206,13 +206,14 @@ const CityMapView = ({
           alignItems="center"
           flexWrap="wrap"
           gap="3"
+          w="100%"
         >
           <CustomHeader
             text={`${cityText?.header || headings.h1} (${markers.length})`}
             as="h1"
             Icon={TbMapPinFilled}
           />
-          <HStack spacing="3">
+          <HStack spacing="3" w={{ base: "100%", lg: "unset" }}>
             <OfficeSearchInput value={searchTerm} onChange={setSearchTerm} />
             {normalizedSearch && (
               <Text fontSize="sm" color="bg.300">

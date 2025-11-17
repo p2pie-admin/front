@@ -28,7 +28,7 @@ import { IDirText } from "../../../types/exchange";
 
 const MotionBox = motion(Box);
 
-const [elastic, stiffness, damping, debounceTime] = [0.1, 50, 10, 500];
+const [elastic, stiffness, damping, debounceTime] = [0.05, 50, 10, 500];
 
 export const Swiper = (props: {
   isMobile: boolean;
@@ -68,6 +68,8 @@ export const Swiper = (props: {
   const bgColor = useColorModeValue("bg.50", "bg.800");
   const triangleColor = useColorModeValue("violet.700", "peach.600");
   const mouseEnteredRef = useRef(false);
+  const originalOverflowRef = useRef<string | null>(null);
+  const originalPaddingRef = useRef<string | null>(null);
 
   const y = useMotionValue(0);
   const controls = useAnimation();
@@ -185,10 +187,20 @@ export const Swiper = (props: {
     };
   }, [handleWheel, handleKeyDown, isMobile]);
 
+  const restoreBodyStyles = useCallback(() => {
+    if (typeof document === "undefined") return;
+    document.body.style.overflow = originalOverflowRef.current ?? "";
+    document.body.style.paddingRight = originalPaddingRef.current ?? "";
+    originalOverflowRef.current = null;
+    originalPaddingRef.current = null;
+  }, []);
+
   const handleMouseEnter = () => {
-    if (isMobile) return;
+    if (isMobile || mouseEnteredRef.current) return;
     const scrollbarWidth =
       window.innerWidth - document.documentElement.clientWidth;
+    originalOverflowRef.current = document.body.style.overflow;
+    originalPaddingRef.current = document.body.style.paddingRight;
     document.body.style.overflow = "hidden";
     document.body.style.paddingRight = `${scrollbarWidth}px`;
     mouseEnteredRef.current = true;
@@ -196,10 +208,16 @@ export const Swiper = (props: {
 
   const handleMouseLeave = () => {
     if (isMobile) return;
-    document.body.style.overflow = "auto";
-    document.body.style.paddingRight = "0px";
+    restoreBodyStyles();
     mouseEnteredRef.current = false;
   };
+
+  useEffect(() => {
+    return () => {
+      mouseEnteredRef.current = false;
+      restoreBodyStyles();
+    };
+  }, [restoreBodyStyles]);
 
   const topLabelBaseTop = -itemHeight;
   const bottomLabelBaseTop = length * itemHeight;

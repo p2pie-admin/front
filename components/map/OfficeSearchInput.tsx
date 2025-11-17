@@ -21,7 +21,7 @@ const OfficeSearchInput = ({
   const isEmptyInput = value.trim().length === 0;
 
   return (
-    <InputGroup maxW="320px">
+    <InputGroup maxW={{ lg: "320px", base: "100%" }}>
       <Input
         value={value}
         onChange={(e) => onChange(e.target.value)}

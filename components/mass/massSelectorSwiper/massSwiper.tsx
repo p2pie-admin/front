@@ -35,6 +35,8 @@ export const MassSwiper = ({
   const length = items.length;
   const bgColor = useColorModeValue("bg.50", "bg.800");
   const [mouseEntered, setMouseEntered] = React.useState(false);
+  const originalOverflowRef = React.useRef<string | null>(null);
+  const originalPaddingRef = React.useRef<string | null>(null);
 
   const y = useMotionValue(0);
   const controls = useAnimation();
@@ -186,10 +188,20 @@ export const MassSwiper = ({
     return unsubscribe;
   }, [y, items, set, centerOffset, step]);
 
+  const restoreBodyStyles = React.useCallback(() => {
+    if (typeof document === "undefined") return;
+    document.body.style.overflow = originalOverflowRef.current ?? "";
+    document.body.style.paddingRight = originalPaddingRef.current ?? "";
+    originalOverflowRef.current = null;
+    originalPaddingRef.current = null;
+  }, []);
+
   const handleMouseEnter = () => {
-    if (isMobile) return;
+    if (isMobile || mouseEntered) return;
     const scrollbarWidth =
       window.innerWidth - document.documentElement.clientWidth;
+    originalOverflowRef.current = document.body.style.overflow;
+    originalPaddingRef.current = document.body.style.paddingRight;
     document.body.style.overflow = "hidden";
     document.body.style.paddingRight = `${scrollbarWidth}px`;
     setMouseEntered(true);
@@ -197,10 +209,15 @@ export const MassSwiper = ({
 
   const handleMouseLeave = () => {
     if (isMobile) return;
-    document.body.style.overflow = "auto";
-    document.body.style.paddingRight = "0px";
+    restoreBodyStyles();
     setMouseEntered(false);
   };
+
+  React.useEffect(() => {
+    return () => {
+      restoreBodyStyles();
+    };
+  }, [restoreBodyStyles]);
 
   return (
     <Box h={`${containerHeight}px`} minW="33%">

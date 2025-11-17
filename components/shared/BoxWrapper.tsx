@@ -32,12 +32,13 @@ export function CustomHeader({
 }) {
   return (
     <HStack color="peach.200">
-      <Icon size="2rem" />
+      <Icon size="1.6rem" />
       <ResponsiveText
-        size="xl"
+        size="lg"
         fontWeight="bold"
         variant="primary"
         as={as || "unset"}
+        whiteSpace={{ base: "unset", lg: "wrap" }}
       >
         {text}
       </ResponsiveText>
