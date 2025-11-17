@@ -4,7 +4,13 @@ import { SectionContext } from "../../../../../shared/contexts/SectionContext";
 import { capitalize } from "./helper";
 import Link from "next/link";
 
-export default function Name({ name, code }: { name: string; code?: string }) {
+export default function SelectorPmName({
+  name,
+  code,
+}: {
+  name: string;
+  code?: string;
+}) {
   const { currencyHidden } = useContext(SectionContext);
   const nameSameAsCurrency = code?.toUpperCase() === name.toUpperCase();
 

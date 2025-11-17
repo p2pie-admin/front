@@ -9,7 +9,7 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import Name from "./Name";
+import SelectorPmName from "./SelectorPmName";
 import PmButton from "./PmButton";
 import React, { useContext } from "react";
 import Arrow from "../../../../../shared/Arrow";
@@ -57,7 +57,7 @@ const Subitems = ({
         }}
         shaded={shaded}
       >
-        <Name
+        <SelectorPmName
           name={pmGroupName}
           code={pms[0].currency.code.toUpperCase()} // только для крипты нужен код
         />

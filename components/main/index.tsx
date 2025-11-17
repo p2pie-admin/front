@@ -16,7 +16,7 @@ import CircularTexts from "./CircularTexts";
 import Popular from "./popular";
 import { useTranslation } from "next-i18next";
 import { IDirText } from "../../types/exchange";
-import MassSelector from "../mass/massSelector";
+import MassSelector from "../mass/massSelectorSwiper";
 
 const MainPageContent = ({
   popularPms,

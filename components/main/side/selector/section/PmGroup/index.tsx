@@ -1,6 +1,6 @@
 import Subitems from "./Subitems";
 
-import Name from "./Name";
+import SelectorPmName from "./SelectorPmName";
 import { getPmsFromPmGroup, pmsToSlug } from "./helper";
 import { useAppDispatch, useAppSelector } from "../../../../../../redux/hooks";
 import { batch } from "react-redux";
@@ -91,7 +91,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
       handleToggle={choosePm}
       shaded={shaded}
     >
-      <Name
+      <SelectorPmName
         name={name}
         code={pms[0].currency?.code} // for crypto
       />

@@ -1,5 +1,12 @@
-import { Box, Grid, Text, Tooltip } from "@chakra-ui/react";
-import React, { useContext } from "react";
+import {
+  Box,
+  HStack,
+  IconButton,
+  Tooltip,
+  useBreakpointValue,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import React, { useCallback, useContext, useRef } from "react";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import Link from "next/link";
 import {
@@ -9,6 +16,10 @@ import {
 import MassSideContext from "../sideContext";
 import { IMassDirTextId } from "../../../types/mass";
 import { IPm } from "../../../types/selector";
+import PmName from "../../shared/PmName";
+import { capitalize } from "../../main/side/selector/section/PmGroup/helper";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import HorizontalShader from "../../shared/HorizontalShader";
 
 export default function CryptoList({
   slug,
@@ -25,78 +36,83 @@ export default function CryptoList({
     isSell
   );
 
-  const ccnVisible = cryptoPms.slice(0, 16);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollStep = 220;
+  const buttonBg = useColorModeValue("bg.200", "bg.800");
+  const buttonColor = useColorModeValue("bg.900", "bg.100");
+
+  const scrollBy = useCallback((direction: "left" | "right") => {
+    if (!scrollRef.current) return;
+    const delta = direction === "left" ? -scrollStep : scrollStep;
+    scrollRef.current.scrollBy({
+      left: delta,
+      behavior: "smooth",
+    });
+  }, []);
 
   return (
-    <Grid
-      mx="2"
-      templateRows="repeat(2, 1fr)" // 2 rows
-      templateColumns={`repeat(${Math.ceil(ccnVisible.length / 2)}, 1fr)`} // auto columns
-      columnGap={6}
-      rowGap="0"
+    <HStack
+      w={"100%"}
+      alignItems="stretch"
+      position="relative"
+      overflow="hidden"
     >
-      {ccnVisible.map((pm) => {
-        const newData = {
-          code: pm.code,
-          currency,
-          isSell,
-        } as IMassDirTextId;
+      <IconButton
+        aria-label="Scroll left"
+        icon={<IoIosArrowBack />}
+        onClick={() => scrollBy("left")}
+        variant="ghost"
+        color={buttonColor}
+        _hover={{ bg: "bg.800", color: "bg.200" }}
+        borderRadius="50%"
+        zIndex="15"
+      />
+      <HorizontalShader direction="right" />
+      <Box flex="1" overflow="hidden" ref={scrollRef} role="group">
+        <HStack spacing="6" w="max-content">
+          <Box w="3" />
+          {cryptoPms.map((pm) => {
+            const newData = {
+              code: pm.code,
+              currency,
+              isSell,
+            } as IMassDirTextId;
 
-        const newSlug = convertMassDirTextIntoSlug(newData);
+            const newSlug = convertMassDirTextIntoSlug(newData);
 
-        return (
-          <Tooltip
-            key={pm.code + currency + pm.en_name + isSell}
-            label={pm.en_name}
-            fontSize="sm"
-          >
-            <Link href={`${newSlug}`} key={pm.code}>
-              <ResponsiveText
-                as="div"
-                position="relative"
-                textAlign="start"
-                cursor="pointer"
-                fontWeight={pm.code == currentCode ? "bold" : "unset"}
-                variant={pm.code == currentCode ? "primary" : "no_contrast"}
+            return (
+              <Tooltip
+                key={pm.code + currency + pm.en_name + isSell}
+                label={`${capitalize(
+                  pm.en_name
+                )} ${pm.currency.code.toUpperCase()} ${pm.subgroup_name || ""}`}
+                fontSize="sm"
               >
-                {pm.currency.code}
-                {pm.code == currentCode && (
-                  <Box
-                    w="6px"
-                    h="6px"
-                    borderRadius="50%"
-                    bgColor="peach.300"
-                    position="absolute"
-                    left="-3"
-                    top="calc(50% - 3px)"
+                <Link href={`${newSlug}`} key={pm.code}>
+                  <PmName
+                    pm={pm}
+                    isFull={false}
+                    isCrypto={true}
+                    isHighlited={pm.code == currentCode}
                   />
-                )}
-
-                {pm.subgroup_name && (
-                  <Box
-                    borderRadius="sm"
-                    px="1px"
-                    py="0"
-                    bgColor="bg.700"
-                    position="absolute"
-                    right="-3"
-                    bottom="-1.5"
-                  >
-                    <ResponsiveText
-                      fontSize="10"
-                      variant={
-                        pm.code == currentCode ? "primary" : "no_contrast"
-                      }
-                    >
-                      {pm.subgroup_name}
-                    </ResponsiveText>
-                  </Box>
-                )}
-              </ResponsiveText>
-            </Link>
-          </Tooltip>
-        );
-      })}
-    </Grid>
+                </Link>
+              </Tooltip>
+            );
+          })}
+          <Box w="3" />
+        </HStack>
+      </Box>
+      <HorizontalShader direction="left" />
+      <IconButton
+        aria-label="Scroll right"
+        icon={<IoIosArrowForward />}
+        onClick={() => scrollBy("right")}
+        variant="ghost"
+        color={buttonColor}
+        _hover={{ bg: "bg.800", color: "bg.200" }}
+        borderRadius="50%"
+        zIndex="15"
+      />
+    </HStack>
   );
 }

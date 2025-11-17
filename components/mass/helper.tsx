@@ -1,5 +1,5 @@
 import { ISEO } from "../../types/general";
-import { IMassRate } from "../../types/mass";
+import { IMassDirText, IMassDirTextId, IMassRate } from "../../types/mass";
 import { IPm } from "../../types/selector";
 import { capitalize } from "../main/side/selector/section/PmGroup/helper";
 
@@ -67,4 +67,71 @@ export function pickKeys<T extends object, K extends keyof T>(
 export const getCryptoPms = (pms: IPm[]) => {
   const cryptoPms = pms.filter((pm) => pm.section === "crypto");
   return cryptoPms;
+};
+
+const pickPmName = (code: string, pms: IPm[], locale: "en" | "ru") => {
+  const pm = pms.find((item) => item.code.toUpperCase() === code.toUpperCase());
+  if (!pm) return code.toUpperCase();
+  return (
+    (locale === "ru" ? pm.ru_name : pm.en_name) ||
+    pm.en_name ||
+    pm.ru_name ||
+    code.toUpperCase()
+  );
+};
+
+export const createDefaultMassDirText = ({
+  massDirTextId,
+  pms,
+  isSell,
+  locale,
+}: {
+  massDirTextId: IMassDirTextId;
+  pms: IPm[];
+  isSell: boolean;
+  locale: "en" | "ru";
+}): IMassDirText => {
+  const assetName = pickPmName(massDirTextId.code, pms, locale);
+  const fiatName = pickPmName(massDirTextId.currency.code, pms, locale);
+  const actionWord =
+    locale === "ru"
+      ? isSell
+        ? "Продать"
+        : "Купить"
+      : isSell
+      ? "Sell"
+      : "Buy";
+  const actionVerb =
+    locale === "ru"
+      ? isSell
+        ? "продать"
+        : "купить"
+      : isSell
+      ? "sell"
+      : "buy";
+  const connector = locale === "ru" ? "за" : "for";
+  const header = `${actionWord} ${assetName} ${connector} ${fiatName}`;
+  const subheader =
+    locale === "ru"
+      ? `${actionWord} ${assetName} ${connector} ${fiatName} у надежных обменников и выбирайте лучшие условия.`
+      : `${actionWord} ${assetName} ${connector} ${fiatName} across verified exchangers and pick the best offer.`;
+  const seoTitleSuffix =
+    locale === "ru" ? "— лучшие курсы обменников" : "— best exchange rates";
+  const descriptionLead =
+    locale === "ru"
+      ? `Сравните выгодные предложения, чтобы ${actionVerb} ${assetName} ${connector} ${fiatName}.`
+      : `Compare trusted offers to ${actionVerb} ${assetName} ${connector} ${fiatName}.`;
+  const defaultText =
+    locale === "ru"
+      ? `${actionWord} ${assetName} ${connector} ${fiatName} онлайн: отсортируйте обменники, следите за резервами и выберите подходящий курс.`
+      : `${actionWord} ${assetName} ${connector} ${fiatName} online: sort exchangers, track reserves, and choose the rate that works for you.`;
+
+  return {
+    ...massDirTextId,
+    header,
+    subheader,
+    seo_title: `${header} ${seoTitleSuffix}`,
+    seo_description: descriptionLead,
+    text: defaultText,
+  };
 };

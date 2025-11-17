@@ -30,10 +30,10 @@ export default function MyDocument() {
 
         {/* Meta tags */}
         <meta name="google" content="notranslate" />
-        <meta
+        {/* <meta
           name="keywords"
           content="обмен, наличные, крипта, биткойн, криптовалюта, п2п, обменять, p2p, exchange, bitcoin, crypto, monitoring, rate"
-        />
+        /> */}
       </Head>
       <body>
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />

@@ -1,6 +1,12 @@
 import React from "react";
 import { Box3D } from "../../../styles/theme/custom";
-import { HStack, Button } from "@chakra-ui/react";
+import {
+  HStack,
+  Text,
+  Button,
+  useBreakpointValue,
+  Box,
+} from "@chakra-ui/react";
 import SideButtons from "./SideButtons";
 import CryptoList from "./CryptoList";
 // import FiatSelector from "./FiatSelector";
@@ -17,6 +23,10 @@ export default function MassTableSelector({
 
   cryptoPms: IPm[];
 }) {
+  const isSmall = useBreakpointValue({
+    base: true,
+    md: false,
+  });
   return (
     <Box3D
       variant="no_contrast"
@@ -25,11 +35,24 @@ export default function MassTableSelector({
       px={["2", "4"]}
       py={["2", "4"]}
     >
-      <HStack>
-        <SideButtons slug={slug} />
-        <CryptoList slug={slug} cryptoPms={cryptoPms} />
-        <FiatSelector slug={slug} />
-      </HStack>
+      {isSmall ? (
+        <Box mt="2">
+          <CryptoList slug={slug} cryptoPms={cryptoPms} />
+          <HStack mt="6" justifyContent="space-between">
+            <SideButtons slug={slug} />
+            <Text fontSize="xl" fontWeight="bold">
+              за
+            </Text>
+            <FiatSelector slug={slug} />
+          </HStack>
+        </Box>
+      ) : (
+        <HStack>
+          <SideButtons slug={slug} />
+          <CryptoList slug={slug} cryptoPms={cryptoPms} />
+          <FiatSelector slug={slug} />
+        </HStack>
+      )}
     </Box3D>
   );
 }

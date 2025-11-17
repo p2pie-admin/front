@@ -14,6 +14,7 @@ import UniversalSeo, { nullSeo } from "../../components/shared/UniversalSeo";
 import { ISEO } from "../../types/general";
 
 import {
+  createDefaultMassDirText,
   generateMassSeo,
   getCryptoPms,
   getPmsByCodes,
@@ -53,21 +54,29 @@ export const getStaticProps = async ({
   const { slug } = params;
   const massDirTextId = convertSlugIntoMassDirText(slug, isSell);
 
-  const massDirText = (await loadMassDirText({
-    massDirTextId,
-    isSell,
-  })) as IMassDirText;
-
-  const { seo_title, seo_description, currency, code, header } = massDirText;
-
-  const [pms, massRates] = await Promise.all([
+  const [massDirTextResponse, pms, massRates] = await Promise.all([
+    loadMassDirText({
+      massDirTextId,
+      isSell,
+    }) as Promise<IMassDirText | null>,
     loadPms(),
     loadMassRates({
-      currencyCode: currency.code,
-      code,
+      currencyCode: massDirTextId.currency.code,
+      code: massDirTextId.code,
       isSell,
     }),
   ]);
+
+  const massDirText =
+    massDirTextResponse ||
+    createDefaultMassDirText({
+      massDirTextId,
+      pms,
+      isSell,
+      locale,
+    });
+
+  const { seo_title, seo_description, header } = massDirText;
 
   const fiatPms = getPmsByCodes(massRates, pms);
   const cryptoPms = getCryptoPms(pms);
