@@ -171,7 +171,7 @@ const MassRate = ({
 
             <ResponsiveText
               variant="primary"
-              size={name.length > 14 ? "sm" : name.length > 10 ? "md" : "lg"}
+              size={name.length > 14 ? "lg" : "xl"}
               fontWeight="bold"
             >
               {capitalize(name)}

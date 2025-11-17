@@ -50,7 +50,9 @@ export default function CryptoList({
     }) ?? false;
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(false);
+  const selectedItemRef = useRef<HTMLDivElement | null>(null);
   const scrollStep = 220;
+  const addScrollPixels = -50;
   const buttonBg = useColorModeValue("bg.200", "bg.800");
   const buttonColor = useColorModeValue("bg.900", "bg.100");
 
@@ -82,6 +84,28 @@ export default function CryptoList({
       node.removeEventListener("scroll", handleScroll);
     };
   }, [updateBoundaries, cryptoPms.length]);
+
+  useEffect(() => {
+    const container = scrollRef.current;
+    const selectedItem = selectedItemRef.current;
+    if (!container || !selectedItem) return;
+
+    const target =
+      selectedItem.offsetLeft -
+      container.clientWidth / 2 +
+      selectedItem.clientWidth / 2 +
+      addScrollPixels;
+    const maxScrollLeft = Math.max(
+      container.scrollWidth - container.clientWidth,
+      0
+    );
+    const nextScrollLeft = Math.min(Math.max(target, 0), maxScrollLeft);
+
+    container.scrollTo({
+      left: nextScrollLeft,
+      behavior: "smooth",
+    });
+  }, [slug, cryptoPms.length, isSmall, addScrollPixels]);
 
   return (
     <HStack
@@ -137,14 +161,18 @@ export default function CryptoList({
                 )} ${pm.currency.code.toUpperCase()} ${pm.subgroup_name || ""}`}
                 fontSize="sm"
               >
-                <Link href={`${newSlug}`} key={pm.code}>
-                  <PmName
-                    pm={pm}
-                    isFull={false}
-                    isCrypto={true}
-                    isHighlited={pm.code == currentCode}
-                  />
-                </Link>
+                <Box
+                  ref={pm.code === currentCode ? selectedItemRef : undefined}
+                >
+                  <Link href={`${newSlug}`} key={pm.code}>
+                    <PmName
+                      pm={pm}
+                      isFull={false}
+                      isCrypto={true}
+                      isHighlited={pm.code == currentCode}
+                    />
+                  </Link>
+                </Box>
               </Tooltip>
             );
           })}
