@@ -21,12 +21,13 @@ export default function ExchangerContacts({
   } = exchangerCard;
 
   return (
-    <Wrap justify="flex-end" spacing="20px">
+    <Wrap justify={{ lg: "flex-end", base: "flex" }} spacing="20px" px="4">
       <WrapItem>
         <Button
           leftIcon={<FaTelegramPlane size="1rem" />}
           variant="outline"
           colorScheme="blue"
+          size={{ lg: "md", base: "xs" }}
         >
           Telegram
         </Button>
@@ -36,6 +37,7 @@ export default function ExchangerContacts({
           leftIcon={<FaWhatsapp size="1rem" />}
           variant="outline"
           colorScheme="green"
+          size={{ lg: "md", base: "xs" }}
         >
           WhatsApp
         </Button>
@@ -46,6 +48,7 @@ export default function ExchangerContacts({
             leftIcon={<FaPhone size="1rem" />}
             variant="outline"
             colorScheme="purple"
+            size={{ lg: "md", base: "xs" }}
           >
             {formatPhoneNumber(phone_number)}
           </Button>
@@ -57,6 +60,7 @@ export default function ExchangerContacts({
             leftIcon={<IoMailOpenSharp size="1rem" />}
             variant="outline"
             colorScheme="orange"
+            size={{ lg: "md", base: "xs" }}
           >
             {email}
           </Button>

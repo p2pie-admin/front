@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import {
   Box,
   Button,
+  Flex,
   HStack,
   Input,
   useColorModeValue,
@@ -125,79 +126,90 @@ const TopPanel = ({
   }, [exchanger.name.length, liked]);
 
   return (
-    <HStack gap="4">
-      <Button
-        p="0"
-        w="4"
-        variant="no_contrast"
-        onClick={handleBookmarkOpen}
-        color={bookmark ? "red.500" : "bg.200"}
-      >
-        <CustomModal
-          id={"exchangerBookmark"}
-          header={"Добавьте пометку для себя"}
+    <Flex
+      flexDir={{ base: "column", lg: "row" }}
+      justifyContent="space-between"
+      gap="4"
+    >
+      <HStack gap="4">
+        <Button
+          p="0"
+          w="4"
+          variant="no_contrast"
+          onClick={handleBookmarkOpen}
+          color={bookmark ? "red.500" : "bg.200"}
         >
-          <Box p="4">
-            <Input
-              size="lg"
-              minH="100"
-              color={useColorModeValue("violet.700", "peach.300")}
-              boxShadow="none !important"
-              placeholder={"Ваш комментарий к обменнику"}
-              value={bookmark}
-              onChange={(e: any) => setBookmark(e.target.value)}
-              onKeyDown={(event) => {
-                if (event.key === "Enter") {
-                  event.preventDefault();
-                  handleBookmarkSave();
-                }
-              }}
-              _placeholder={{ color: "bg.500" }}
-            />
-            <HStack mt="4" spacing="4" justifyContent="end">
-              <Button onClick={handleBookmarkClear}>Отмена</Button>
-              <Button variant="primary" onClick={handleBookmarkSave}>
-                Сохранить
-              </Button>
-            </HStack>
-          </Box>
-        </CustomModal>
-        {bookmark ? (
-          <HiBookmark size="1.2rem" />
-        ) : (
-          <HiOutlineBookmark size="1.2rem" />
-        )}
-      </Button>
+          <CustomModal
+            id={"exchangerBookmark"}
+            header={"Добавьте пометку для себя"}
+          >
+            <Box p="4">
+              <Input
+                size="lg"
+                minH="100"
+                color={useColorModeValue("violet.700", "peach.300")}
+                boxShadow="none !important"
+                placeholder={"Ваш комментарий к обменнику"}
+                value={bookmark}
+                onChange={(e: any) => setBookmark(e.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    event.preventDefault();
+                    handleBookmarkSave();
+                  }
+                }}
+                _placeholder={{ color: "bg.500" }}
+              />
+              <HStack mt="4" spacing="4" justifyContent="end">
+                <Button onClick={handleBookmarkClear}>Отмена</Button>
+                <Button variant="primary" onClick={handleBookmarkSave}>
+                  Сохранить
+                </Button>
+              </HStack>
+            </Box>
+          </CustomModal>
+          {bookmark ? (
+            <HiBookmark size="1.2rem" />
+          ) : (
+            <HiOutlineBookmark size="1.2rem" />
+          )}
+        </Button>
 
-      <Button
-        variant="no_contrast"
-        onClick={handleLike}
-        fontWeight="unset"
-        color={liked ? "red.500" : "bg.200"}
-        rightIcon={
-          liked ? <HiHeart size="1.3rem" /> : <HiOutlineHeart size="1.3rem" />
-        }
-      >
-        <ResponsiveText size="lg">{initialLikes}</ResponsiveText>
-      </Button>
+        <Button
+          variant="no_contrast"
+          onClick={handleLike}
+          fontWeight="unset"
+          color={liked ? "red.500" : "bg.200"}
+          rightIcon={
+            liked ? <HiHeart size="1.3rem" /> : <HiOutlineHeart size="1.3rem" />
+          }
+        >
+          <ResponsiveText size="lg">{initialLikes}</ResponsiveText>
+        </Button>
 
-      <Button
-        variant="no_contrast"
-        rightIcon={<IoChatbubbleEllipsesOutline size="1.2rem" />}
-        onClick={handleScrollToLeaveReview}
-      >
-        Оставить отзыв
-      </Button>
+        <Button
+          w="100%"
+          variant="no_contrast"
+          rightIcon={<IoChatbubbleEllipsesOutline size="1.2rem" />}
+          onClick={handleScrollToLeaveReview}
+        >
+          Оставить отзыв
+        </Button>
+      </HStack>
       <LinkWrapper
         url={exchanger.ref_link}
         exists={!!exchanger.ref_link}
         _blank
       >
-        <Button variant="primary" rightIcon={<TbExternalLink size="1.2rem" />}>
+        <Button
+          variant="primary"
+          rightIcon={<TbExternalLink size="1.2rem" />}
+          w="100%"
+        >
           Обмен
         </Button>
       </LinkWrapper>
-    </HStack>
+    </Flex>
   );
 };
 

@@ -32,6 +32,7 @@ export default function ReviewsFilters({
   return (
     <HStack borderWidth="2px" borderRadius="xl" borderColor="bg.500">
       <Box
+        display={{ base: "none", lg: "flex" }}
         color={activeFilter ? "peach.300" : "bg.300"}
         mx="4"
         cursor="pointer"

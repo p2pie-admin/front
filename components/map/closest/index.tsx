@@ -48,7 +48,7 @@ const ClosestCities = ({ city, closestCities }: ClosestCitiesProps) => {
               color="bg.300"
             >
               <HStack>
-                <ResponsiveText fontWeight="thin">{`Обмен наличных ${
+                <ResponsiveText fontWeight="thin">{`Обмен ${
                   cityName.startsWith("В") ? "во" : "в"
                 }`}</ResponsiveText>
                 <ResponsiveText variant="primary">{`${cityName}`}</ResponsiveText>

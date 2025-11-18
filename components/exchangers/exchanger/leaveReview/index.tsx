@@ -1,6 +1,7 @@
 import {
   Button,
   Divider,
+  Flex,
   HStack,
   Input,
   Link,
@@ -318,10 +319,15 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
           onToggleCategory={handleToggleCategory}
         />
       </CustomModal>
-      <HStack justifyContent="space-between" spacing="4" mt="4">
+      <Flex
+        flexDir={{ base: "column", lg: "row" }}
+        justifyContent="space-between"
+        gap="4"
+        mt="4"
+      >
         <HStack color="bg.400" ml="2">
           <LuTriangleAlert size="0.8rem" />
-          <ResponsiveText size="sm" color="inherit">
+          <ResponsiveText size="xs" color="inherit">
             Запрещены мат, оскорбления и публикация личных данных
           </ResponsiveText>
           <Input
@@ -333,6 +339,7 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
           />
         </HStack>
         <Button
+          ml="auto"
           disabled={isSubmitDisabled}
           variant={isSubmitDisabled ? "unset" : "primary"}
           onClick={handleSubmitClick}
@@ -350,7 +357,7 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
             ? "Отправляем..."
             : "Отправить"}
         </Button>
-      </HStack>
+      </Flex>
     </BoxWrapper>
   );
 }

@@ -29,13 +29,13 @@ export default function PmButton({
       onClick={
         shaded
           ? () =>
-            dispatch(
-              sendToast({
-                status: "info",
-                title: "Платежная система временно недоступна",
-                timeBeforeClosing: 4000,
-              })
-            )
+              dispatch(
+                sendToast({
+                  status: "info",
+                  title: "Направление обмена не доступно",
+                  timeBeforeClosing: 4000,
+                })
+              )
           : handleToggle
       } // works as choosePm or as open subitems
       leftIcon={<CircularIcon iconAlt={iconAlt} icon={icon} color={color} />}

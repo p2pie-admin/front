@@ -33,14 +33,8 @@ function matchSpacing(slug: string): string {
   return " ";
 }
 
-export const getStatus = (exchanger: IExchanger & IParserExchanger) => {
-  const { error, warnings, skip, total_rates } = exchanger;
-
-  if (
-    (total_rates && total_rates < 4) ||
-    (error && Object.keys(error).length > 0) ||
-    (skip && skip > 64)
-  ) {
+export const getStatus = (exchanger: IExchanger) => {
+  if (exchanger.status !== "active") {
     return "orange";
   }
 

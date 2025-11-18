@@ -15,7 +15,7 @@ const SectionsList = ({ sections }: { sections: ISection[] }) => {
   //const list = listFilter.filterJsonByString(inputFieldValue.value, pmsList);
   const isSmall = useBreakpointValue({
     base: true,
-    sm: false,
+    md: false,
   });
 
   return (

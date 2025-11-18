@@ -1,4 +1,4 @@
-import { Box, HStack, VStack } from "@chakra-ui/react";
+import { Box, Flex, HStack, VStack } from "@chakra-ui/react";
 import FilterButtons from "./FilterButtons";
 import ExchangerSearch from "./ExchangerSearch";
 import SortButtons from "./SortButtons";
@@ -49,17 +49,18 @@ export default function TopPanel({
           align="stretch"
         >
           <HStack w="100%" justify="space-between">
+            <ExchangerSearch onSearch={setSearchQuery} />
             <FilterButtons
               toggleFilter={toggleFilter}
               activeFilter={activeFilter}
             />
-            <SortButtons
-              sortCriteria={sortCriteria}
-              sortDirection={sortDirection}
-              toggleSort={toggleSort}
-            />
           </HStack>
-          <ExchangerSearch onSearch={setSearchQuery} />
+
+          <SortButtons
+            sortCriteria={sortCriteria}
+            sortDirection={sortDirection}
+            toggleSort={toggleSort}
+          />
         </VStack>
       </Box>
     </BoxWrapper>

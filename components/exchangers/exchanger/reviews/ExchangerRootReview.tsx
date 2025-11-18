@@ -11,6 +11,8 @@ import {
   Icon,
   Grid,
   Button,
+  Flex,
+  Wrap,
 } from "@chakra-ui/react";
 import ExchangerReply from "./ExchangerReply";
 import { IExchangerReview } from "../../../../types/exchanger";
@@ -81,16 +83,30 @@ export default function ExchangerRootReview({
   const tag = useMemo(() => {
     if (isDispute === false) {
       return (
-        <Tag size="sm" variant="outline" colorScheme="green" mt="1.5">
-          ДИСПУТ РЕШЕН ✓
+        <Tag
+          size="sm"
+          px="1"
+          py="0.5"
+          variant="outline"
+          colorScheme="green"
+          mt="1.5"
+        >
+          РЕШЕН ✓
         </Tag>
       );
     }
 
     if (isDispute === true) {
       return (
-        <Tag size="sm" variant="outline" colorScheme="red" mt="1.5">
-          ДИСПУТ ОТКРЫТ ✕
+        <Tag
+          size="sm"
+          variant="outline"
+          px="1"
+          py="0.5"
+          colorScheme="red"
+          mt="1.5"
+        >
+          ДИСПУТ ✕
         </Tag>
       );
     }
@@ -122,7 +138,11 @@ export default function ExchangerRootReview({
       overflow="hidden"
     >
       <ReviewBorder>
-        <HStack justifyContent="space-between" spacing="4">
+        <Flex
+          flexDir={{ base: "column", lg: "row" }}
+          justifyContent="space-between"
+          gap="4"
+        >
           <HStack gap="4" alignItems="flex-start">
             <Box position="relative" w="30px" h="30px">
               <Box borderRadius="full" overflow="hidden" w="30px" h="30px">
@@ -161,19 +181,44 @@ export default function ExchangerRootReview({
               </Box>
             </Box>
 
-            <ResponsiveText size="lg" fontWeight="bold" variant="contrast">
+            <ResponsiveText
+              size="lg"
+              fontWeight="bold"
+              variant="contrast"
+              mt={{ base: "1", lg: "0" }}
+            >
               {displayName}
             </ResponsiveText>
+
+            <Box
+              justifySelf="end"
+              ml="auto"
+              display={{ base: "flex", lg: "none" }}
+              alignSelf="center"
+            >
+              <UserAgent userAgent={userAgent} />
+            </Box>
+            <Wrap display={{ base: "none", lg: "flex" }}>
+              {tag}
+              {locationTag}
+            </Wrap>
+          </HStack>
+          <Wrap display={{ base: "flex", lg: "none" }}>
             {tag}
             {locationTag}
-          </HStack>
+          </Wrap>
           <HStack gap="4" color="bg.500">
             <ResponsiveText size="xs">{`IP: ${review.ipAddress}`}</ResponsiveText>
             <FormatedDate updatedAt={updatedAt} />
-
-            <UserAgent userAgent={userAgent} />
+            <Box
+              justifySelf="end"
+              ml="auto"
+              display={{ base: "none", lg: "flex" }}
+            >
+              <UserAgent userAgent={userAgent} />
+            </Box>
           </HStack>
-        </HStack>
+        </Flex>
         <Divider my="4" />
         <Text>{text}</Text>
       </ReviewBorder>

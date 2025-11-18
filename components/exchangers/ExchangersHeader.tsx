@@ -22,7 +22,12 @@ export default function ExchangersHeader({
     return counts;
   }, [exchangers]);
   return (
-    <HStack justifyContent={"space-between"} px="4" py="2">
+    <Flex
+      flexDir={{ base: "column", lg: "row" }}
+      justifyContent={"space-between"}
+      px="4"
+      py="2"
+    >
       <ResponsiveText
         fontWeight="bold"
         fontSize="2xl"
@@ -31,33 +36,28 @@ export default function ExchangersHeader({
       >
         {t("exchangersPage")}
       </ResponsiveText>
-      <Flex
-        gap={{ base: "1", lg: "8" }}
-        color="bg.200"
-        flexDir={{ base: "column", lg: "row" }}
-        mx="2"
-      >
+      <HStack gap={{ base: "4", lg: "8" }} color="bg.200" mx="2">
         <HStack>
           <Dot />
-          <ResponsiveText>{`${t("Total")}: ${
+          <ResponsiveText size="sm" variant="no_contrast">{`${t("Total")}: ${
             exchangers?.length || "-"
           }`}</ResponsiveText>
         </HStack>
 
         <HStack>
           <Dot color="green" />
-          <ResponsiveText>{`${t("Active")}: ${
+          <ResponsiveText size="sm" variant="no_contrast">{`${t("Active")}: ${
             statusCounts.green || "-"
           }`}</ResponsiveText>
         </HStack>
 
         <HStack>
           <Dot color="orange" />
-          <ResponsiveText>{`${t("Suspended")}: ${
-            statusCounts.orange || "-"
-          }`}</ResponsiveText>
+          <ResponsiveText size="sm" variant="no_contrast">{`${t(
+            "Suspended"
+          )}: ${statusCounts.orange || "-"}`}</ResponsiveText>
         </HStack>
-      </Flex>
-    </HStack>
+      </HStack>
+    </Flex>
   );
 }

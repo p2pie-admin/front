@@ -52,7 +52,7 @@ export const getClosestCitiesByCoordinates = ({
   cities,
   allowedSlugs,
   cityRatesTotals,
-  limit = 2,
+  limit = 3,
 }: {
   city: ICity;
   cities: ICity[];

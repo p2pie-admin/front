@@ -1,6 +1,6 @@
 import React from "react";
 import { IExchangerOffice } from "../../../../types/exchanger";
-import { Box, Button, Divider, HStack, VStack } from "@chakra-ui/react";
+import { Box, Button, Divider, Flex, HStack, VStack } from "@chakra-ui/react";
 import { ResponsiveText } from "../../../../styles/theme/custom";
 import CustomImage from "../../../shared/CustomImage";
 import { LinkWrapper } from "../../../exchange/pmLayout/LinkWrapper";
@@ -19,12 +19,23 @@ export default function OfficesDescription({
       {offices.map((office) => (
         <React.Fragment key={office.id + office.address}>
           <Divider my="4" />
-          <HStack w="100%" gap="4" alignItems="center">
-            <Box borderRadius="lg" overflow="hidden">
-              <CustomImage img={office.image} w="180" h="auto" />
+
+          <Flex
+            w="100%"
+            flexDir={{ base: "column", lg: "row" }}
+            justifyContent="space-between"
+            alignItems="center"
+            gap="4"
+          >
+            <Box borderRadius="lg" overflow="hidden" w="180">
+              <CustomImage img={office.image} w="auto" h="auto" />
             </Box>
-            <Divider orientation="vertical" h="60px" />
-            <VStack alignItems="start" gap="4" w="80%">
+            <Divider
+              orientation="vertical"
+              h="60px"
+              display={{ base: "none", lg: "flex" }}
+            />
+            <VStack alignItems="start" gap="4" w="100%" alignSelf="start">
               <HStack alignItems="center">
                 <ResponsiveText whiteSpace="unset" size="lg" fontWeight="bold">
                   {office.address}
@@ -34,29 +45,39 @@ export default function OfficesDescription({
               <ResponsiveText whiteSpace="unset">
                 {office.description}
               </ResponsiveText>
-              <HStack justifyContent="space-between" w="100%">
+
+              <Flex
+                flexDir={{ base: "column" }}
+                justifyContent="space-between"
+                w="100%"
+                gap="4"
+              >
                 {office.working_time && (
                   <ResponsiveText>
                     Время работы: {office.working_time}
                   </ResponsiveText>
                 )}
-                <LinkWrapper url={`/map/${office.city}`} exists={!!office.city}>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    leftIcon={
-                      <Box mb="0.5" color="red.500">
-                        <TbMapPinFilled size="1rem" />
-                      </Box>
-                    }
+                <HStack w="100%" justifyContent="end">
+                  <LinkWrapper
+                    url={`/map/${office.city}`}
+                    exists={!!office.city}
                   >
-                    Показать на карте
-                  </Button>
-                </LinkWrapper>
-              </HStack>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      leftIcon={
+                        <Box mb="0.5" color="red.500">
+                          <TbMapPinFilled size="1rem" />
+                        </Box>
+                      }
+                    >
+                      Показать на карте
+                    </Button>
+                  </LinkWrapper>
+                </HStack>
+              </Flex>
             </VStack>
-            {office.description}
-          </HStack>
+          </Flex>
         </React.Fragment>
       ))}
     </BoxWrapper>

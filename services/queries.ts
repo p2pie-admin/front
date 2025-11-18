@@ -368,7 +368,7 @@ export const exchangersQuery = gql`
           name
           display_name
           ref_link
-
+          status
           admin_rating
           updatedAt
           exchanger_card {

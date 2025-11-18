@@ -47,6 +47,8 @@ const SortButtons: React.FC<SortButtonsProps> = ({
       borderColor="bg.500"
       spacing={0}
       h="45px"
+      w="100%"
+      justifyContent="space-between"
     >
       {buttons.map(({ key, label, tooltip }) => (
         <Tooltip openDelay={500} key={key} label={tooltip} fontSize="sm">

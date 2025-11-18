@@ -7,6 +7,7 @@ import {
   HStack,
   Spinner,
   Text,
+  useBreakpointValue,
   useToken,
   VStack,
 } from "@chakra-ui/react";
@@ -65,7 +66,7 @@ const CityMapView = ({
   const containerStyle = useMemo(
     () => ({
       width: "100%",
-      height: "70vh",
+      height: "50vh",
       boxShadow: "5px 5px 15px 5px #222",
       borderRadius: "10px",
     }),
@@ -254,7 +255,7 @@ const CityMapView = ({
               ))}
             </GoogleMap>
           ) : (
-            <Center h="70vh">
+            <Center h="50vh">
               <Spinner
                 thickness="4px"
                 speed="0.7s"

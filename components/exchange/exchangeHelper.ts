@@ -109,6 +109,20 @@ export const dirTextHandler = async ({
 
   const fallbackDirText = await loadDirText(givePm.section, getPm.section);
   dirText = fallbackDirText;
+
+  const cityLabel =
+    locale === "ru"
+      ? city?.preposition || city?.ru_name || city?.en_name || ""
+      : city?.en_name || city?.ru_name || "";
+  const citySuffix = cityLabel
+    ? locale === "ru"
+      ? ` в ${cityLabel}`
+      : ` in ${cityLabel}`
+    : "";
+
+  dirText.seo_title = `${dirText.seo_title} ${citySuffix}`;
+  dirText.seo_description = `${dirText.seo_description} ${citySuffix}`;
+
   return applyFilledFields(dirText);
 };
 

@@ -4,8 +4,8 @@ import { ResponsiveText } from "../../../../styles/theme/custom";
 
 export default function ExchangerReviewsHeader() {
   return (
-    <VStack my="20">
-      <ResponsiveText whiteSpace="unset" size="3xl">
+    <VStack my="20" w="100%">
+      <ResponsiveText whiteSpace="unset" size="3xl" textAlign="center">
         Уже пользовались этим обменником?
       </ResponsiveText>
       <ResponsiveText

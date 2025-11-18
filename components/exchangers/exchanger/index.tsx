@@ -8,6 +8,7 @@ import {
   Box,
   Center,
   Divider,
+  Flex,
   Grid,
   HStack,
   Spinner,
@@ -68,7 +69,11 @@ export default function Exchanger({
       <UniversalSeo seo={seo} />
 
       <BoxWrapper variant="no_contrast">
-        <HStack w="100%" justifyContent="space-between">
+        <Flex
+          flexDir={{ base: "column", lg: "row" }}
+          justifyContent="space-between"
+          gap="4"
+        >
           <HStack gap="4" position="relative">
             <Dot color={color} />
             <ExchangerName
@@ -77,7 +82,7 @@ export default function Exchanger({
               admin_rating={exchanger.admin_rating}
               isH1={true}
             />
-            <Box>
+            <Box ml="auto">
               {exchanger_tags &&
                 exchanger_tags.map((tag) => (
                   <Tooltip openDelay={500} hasArrow label={tag.description}>
@@ -100,7 +105,7 @@ export default function Exchanger({
             </Box>
           </HStack>
           <TopPanel exchanger={exchanger} />
-        </HStack>
+        </Flex>
         <Divider my="4" />
         <ExchangerStats
           reviews={exchanger.reviews}

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { HStack, Icon } from "@chakra-ui/react";
+import { Flex, HStack, Icon } from "@chakra-ui/react";
 
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { PiMoneyWavy } from "react-icons/pi";
@@ -30,7 +30,12 @@ export default function ExchangerStats({
   const neutral = reviews.length - positive - negative;
 
   return (
-    <HStack color="bg.200" justifyContent="space-between">
+    <Flex
+      flexDir={{ base: "column", lg: "row" }}
+      color="bg.200"
+      justifyContent="space-between"
+      gap="4"
+    >
       <HStack>
         <IoChatbubbleEllipsesOutline size="1.2rem" />
         <ResponsiveText>Отзывы: </ResponsiveText>
@@ -67,20 +72,32 @@ export default function ExchangerStats({
           mb="1"
         />
       </HStack>
-      {ratesTotal && <ResponsiveText>•</ResponsiveText>}
+      {ratesTotal && (
+        <ResponsiveText display={{ base: "none", lg: "flex" }}>
+          •
+        </ResponsiveText>
+      )}
       {ratesTotal && (
         <HStack>
           <ResponsiveText>{`Всего курсов: ${ratesTotal}`}</ResponsiveText>
         </HStack>
       )}
-      {workingTime && <ResponsiveText>•</ResponsiveText>}
+      {workingTime && (
+        <ResponsiveText display={{ base: "none", lg: "flex" }}>
+          •
+        </ResponsiveText>
+      )}
       {workingTime && (
         <HStack>
           <IoTimeOutline size="1.2rem" />
           <ResponsiveText>{`Время работы: ${workingTime}`}</ResponsiveText>
         </HStack>
       )}
-      {reserveTotal && <ResponsiveText>•</ResponsiveText>}
+      {reserveTotal && (
+        <ResponsiveText display={{ base: "none", lg: "flex" }}>
+          •
+        </ResponsiveText>
+      )}
       {reserveTotal && (
         <HStack>
           <PiMoneyWavy size="1.2rem" />
@@ -89,6 +106,6 @@ export default function ExchangerStats({
           )}`}</ResponsiveText>
         </HStack>
       )}
-    </HStack>
+    </Flex>
   );
 }
