@@ -53,23 +53,18 @@ export async function getStaticProps({
     const isCash =
       (slug && slug.startsWith("cash-")) || slug.includes("-cash-");
 
-    const [
-      pms,
-      dirs,
-      cities,
-      pmLayouts,
-      articleCodes,
-      dirTextIds,
-    ] = await Promise.all([
-      loadPms(),
-      loadPossibleDirs(),
-      isCash ? loadCities() : null,
-      loadPmLayouts(),
-      loadArticleCodes(),
-      loadMassDirTextIds({ isSell: true }),
-    ]);
+    const [pms, dirs, cities, pmLayouts, articleCodes, dirTextIds] =
+      await Promise.all([
+        loadPms(),
+        loadPossibleDirs(),
+        isCash ? loadCities() : null,
+        loadPmLayouts(),
+        loadArticleCodes(),
+        loadMassDirTextIds({ isSell: true }),
+      ]);
 
     const slugToCodes = getSlugToCodes(dirs, pms);
+    console.log(slugToCodes);
 
     if (!pms || !Array.isArray(pms)) {
       console.error("[getStaticProps] 'pms' is missing or invalid.");
@@ -82,7 +77,9 @@ export async function getStaticProps({
     const getPm = pms?.find((pm) => pm.code === getCode) ?? null;
 
     if (!dir || !givePm || !getPm) {
-      console.error("[getStaticProps] !dir || !givePm || !getPm.");
+      console.log("dir", dir);
+      console.log("givePm", givePm);
+      console.log("getPm", getPm);
       return { notFound: true };
     }
 
@@ -101,7 +98,9 @@ export async function getStaticProps({
 
     const normalizeCityKey = (value: string) =>
       value.trim().toLowerCase().replace(/\s+/g, "-");
-    const citySlug = cityParam ? `${slug}-${normalizeCityKey(cityParam)}` : slug;
+    const citySlug = cityParam
+      ? `${slug}-${normalizeCityKey(cityParam)}`
+      : slug;
     const textBoxKeys = cityParam ? [citySlug, slug] : [slug];
     const [cityCustomDirText, defaultDirText] = await Promise.all(
       textBoxKeys.map((key) => loadCustomDirText(key))

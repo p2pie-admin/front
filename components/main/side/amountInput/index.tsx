@@ -29,7 +29,7 @@ const AmountInput = () => {
     ? [currentRate.min, currentRate.max]
     : [undefined, undefined];
   const stringValue = amountOutputs[side] || "";
-  const value = R(+stringValue.replaceAll(" ", ""));
+  const value = R(+stringValue.replaceAll(" ", ""), 3);
   const outRange =
     isEdited && min && max && (value > max[side] || value < min[side]);
 
