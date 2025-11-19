@@ -144,11 +144,6 @@ const stick = (num: number) => {
 export const R = (amount: number, strength = 1): number => {
   if (!amount || typeof amount !== "number" || strength > 5) return 0;
 
-  if (amount >= 1 && amount <= 1000) {
-    const hasDecimal = amount % 1 !== 0;
-    return hasDecimal ? +amount.toFixed(2) : amount;
-  }
-
   if (amount > 100 && strength > 1) {
     const res = +(
       +(amount / 10 ** amount.toFixed(0).length).toFixed(6 - strength) *

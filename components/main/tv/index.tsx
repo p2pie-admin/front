@@ -56,7 +56,14 @@ const TV = ({
     const delay = dirRatesStatus === "fulfilled" ? 60_000 : 5_000;
 
     const timeout = setTimeout(() => {
-      dispatch(fetchDirRates({ dir, cityName, trigger: "auto" }));
+      dispatch(
+        fetchDirRates({
+          dir,
+          cityName,
+          trigger: "auto",
+          preserveAmount: true,
+        })
+      );
     }, delay);
 
     return () => clearTimeout(timeout);

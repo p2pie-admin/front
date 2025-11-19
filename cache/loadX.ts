@@ -131,9 +131,6 @@ export const loadExchanger = (slug: string) =>
 export const loadExchangers = async () => {
   const [cmsExchangers] = (await Promise.all([
     cachedFetch("cms_exchangers", TTL.fast, () => cmsFetcher(exchangersQuery)),
-    // cachedFetch("parser_exchangers", TTL.fast, () =>
-    //   parserFetcher("exchangers")
-    // ),
   ])) as IExchangerPreview[][];
 
   //const merged = mergeExchangers(cmsExchangers, parserExchangers);

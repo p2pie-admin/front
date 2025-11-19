@@ -64,7 +64,6 @@ export async function getStaticProps({
       ]);
 
     const slugToCodes = getSlugToCodes(dirs, pms);
-    console.log(slugToCodes);
 
     if (!pms || !Array.isArray(pms)) {
       console.error("[getStaticProps] 'pms' is missing or invalid.");
@@ -77,9 +76,7 @@ export async function getStaticProps({
     const getPm = pms?.find((pm) => pm.code === getCode) ?? null;
 
     if (!dir || !givePm || !getPm) {
-      console.log("dir", dir);
-      console.log("givePm", givePm);
-      console.log("getPm", getPm);
+      console.log("dir ERROR", dir);
       return { notFound: true };
     }
 

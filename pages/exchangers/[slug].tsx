@@ -14,6 +14,7 @@ import {
   IExchanger,
   IExchangerPreview,
   IParserExchanger,
+  IExchangerReview,
 } from "../../types/exchanger";
 import { ISEO } from "../../types/general";
 import { IPm } from "../../types/selector";
@@ -39,16 +40,16 @@ export const maskIP = (ip?: string | null): string | null | undefined => {
   return chars.join("");
 };
 
-const maskExchangerReviewIPs = (
-  exchanger: (IExchanger & IParserExchanger) | null
-) => {
+const maskExchangerReviewIPs = <T extends { reviews?: IExchangerReview[] | null }>(
+  exchanger: T | null
+): T | null => {
   if (!exchanger || !Array.isArray(exchanger.reviews)) return exchanger;
   return {
     ...exchanger,
     reviews: exchanger.reviews.map((review) =>
       review ? { ...review, ipAddress: maskIP(review.ipAddress) } : review
     ),
-  };
+  } as T;
 };
 
 export default function ExchangerPage({

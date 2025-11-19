@@ -253,9 +253,14 @@ export const findSimilarPmPairs = (
 };
 
 export const exchangeToSlugCity = (exchange: string) => {
-  return exchange.includes("-in-")
-    ? [exchange.split("-in-")[0], exchange.split("-in-")[1]]
-    : [exchange, ""];
+  if (
+    !exchange?.includes("-in-") ||
+    (!exchange.startsWith("cash-") && !exchange.includes("-cash-"))
+  ) {
+    return [exchange, ""];
+  }
+  const lastIndex = exchange.lastIndexOf("-in-");
+  return [exchange.slice(0, lastIndex), exchange.slice(lastIndex + 4)];
 };
 
 export const slugCityToExchange = (slug: string, city?: string) => {

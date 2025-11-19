@@ -339,17 +339,25 @@ export const mainSlice = createSlice({
       }
       const reloadTrigger: DirRatesReloadTrigger =
         action.meta.arg?.trigger || "manual";
+      const preserveAmount = Boolean(action.meta.arg?.preserveAmount);
       const cityKey = normalizeCityKey(action.meta.arg?.cityName);
       const rates = cityKey
         ? action.payload.map((rate) => applyCityRateOverride(rate, cityKey))
         : action.payload;
       state.dirRates = rates;
-      state.amountInput = undefined;
+      if (!preserveAmount) {
+        state.amountInput = undefined;
+      }
       state.dirRatesStatus = "fulfilled";
       state.dirRatesReloadTrigger = reloadTrigger;
       const currentIndex = state.swiperIdVisible ?? 0;
       const targetIndex = reloadTrigger === "auto" ? currentIndex : 1;
-      state.amountOutputs = getAmountOutputs(state, targetIndex);
+      state.amountOutputs = getAmountOutputs(
+        state,
+        targetIndex,
+        undefined,
+        preserveAmount
+      );
       if (reloadTrigger !== "auto") {
         state.swiperIdVisible = 1;
       }

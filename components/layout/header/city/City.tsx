@@ -3,7 +3,7 @@ import { Text } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 
 import { pmsToSlug } from "../../../main/side/selector/section/PmGroup/helper";
-import { fetchCity, fetchDirRates } from "../../../../redux/thunks";
+import { fetchCity } from "../../../../redux/thunks";
 import { useRouter } from "next/router";
 import { ISelectorCity } from "../../../../types/city";
 import { weights } from "./helper";
@@ -30,8 +30,6 @@ export default function City({
     router.push(`/${slugCityToExchange(slug, en_name)}`);
     batch(() => {
       dispatch(fetchCity(en_name));
-      dir &&
-        dispatch(fetchDirRates({ dir, cityName: en_name, trigger: "manual" }));
       dir && dispatch(setDirRatesStatus("pending"));
       dispatch(triggerModal(undefined));
     });

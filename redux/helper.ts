@@ -17,7 +17,8 @@ const initialAmount = (side: "give" | "get", toUSD?: number) => ({
 export const getAmountOutputs = (
   state: MainState,
   swiperIdVisible: number,
-  customAmount?: AmountInput
+  customAmount?: AmountInput,
+  preserveInputSide?: boolean
 ): AmountOutputs => {
   const dir = `${state.givePm?.code.toUpperCase()}_${state.getPm?.code.toUpperCase()}`;
   // updateAmounts не успевает подхватить swiperIdVisible, поэтому передаем дополнительно
@@ -29,7 +30,11 @@ export const getAmountOutputs = (
     initialAmount(side, state.ccRates?.[`${side}ToUSD`]);
   if (rate) {
     const feesCalculator = new FeesCalculator(dir, rate, amount);
-    return feesCalculator.calculateAmountOutputs();
+    const outputs = feesCalculator.calculateAmountOutputs();
+    if (preserveInputSide && amount?.side) {
+      outputs[amount.side] = state.amountOutputs?.[amount.side] || outputs[amount.side];
+    }
+    return outputs;
   }
   return initialAmountOutputs;
 };

@@ -57,6 +57,7 @@ type FetchDirRatesArgs = {
   dir: string;
   cityName?: string;
   trigger?: DirRatesReloadTrigger;
+  preserveAmount?: boolean;
 };
 
 const _fetchRates = async ({ dir, cityName }: FetchDirRatesArgs) => {

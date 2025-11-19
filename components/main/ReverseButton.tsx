@@ -5,17 +5,22 @@ import {
   useToken,
   Box,
 } from "@chakra-ui/react";
-import { BiRefresh } from "react-icons/bi";
 import { CgArrowsExchange } from "react-icons/cg";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
-import { clearDirRates, reverseDir } from "../../redux/mainReducer";
+import { clearDirRates } from "../../redux/mainReducer";
 import { useRouter } from "next/router";
+import { useEffect, useMemo, useState } from "react";
 
 import NextLink from "next/link";
 import {
   exchangeToSlugCity,
   slugCityToExchange,
 } from "../exchange/exchangeHelper";
+import { serverLinkDEV, serverLinkPROD } from "../../services/utils";
+
+const courseFilterLink =
+  (process.env.NODE_ENV === "production" ? serverLinkPROD : serverLinkDEV) ||
+  "";
 
 const Patch = () => {
   const [bg10, bg900] = useToken("colors", ["bg.10", "bg.900"]);
@@ -51,30 +56,88 @@ const ReverseButton = () => {
   const bothPmsSelected = useAppSelector(
     (state) => state.main.givePm?.code && state.main.getPm?.code
   );
-  const oppositeDirExists = useAppSelector((state) => {
-    if (state.main?.getPm?.possible_pairs) {
-      return state.main?.getPm?.possible_pairs?.find(
-        (c) => c == state.main?.givePm?.code
-      );
-    }
-    return;
-  });
+  const [reverseExists, setReverseExists] = useState(false);
+  const giveCode = useAppSelector((state) => state.main.givePm?.code);
+  const getCode = useAppSelector((state) => state.main.getPm?.code);
   const router = useRouter();
-  const { exchange } = router.query as { exchange: string };
+  const exchangeParam = router.query?.exchange;
+  const exchange =
+    typeof exchangeParam === "string" ? exchangeParam : exchangeParam?.[0];
   let reversedExchange = "";
-  if (exchange && exchange.length) {
+  const [slug, cityFromSlug] = useMemo(() => {
+    if (exchange && exchange.length) {
+      try {
+        return exchangeToSlugCity(exchange);
+      } catch {
+        return [exchange, ""];
+      }
+    }
+    return ["", ""];
+  }, [exchange]);
+  if (slug && slug.length) {
     try {
-      const [slug, city] = exchangeToSlugCity(exchange);
       const [leftPart, rightPart] = slug.split("-to-");
       const reversed_slug = `${rightPart}-to-${leftPart}`;
-      reversedExchange = slugCityToExchange(reversed_slug, city);
-    } catch (e) {}
+      reversedExchange = slugCityToExchange(
+        reversed_slug,
+        cityFromSlug || undefined
+      );
+    } catch (e) {
+      reversedExchange = "";
+    }
   }
+
+  useEffect(() => {
+    let cancelled = false;
+    if (!giveCode || !getCode) {
+      setReverseExists(false);
+      return () => {
+        cancelled = true;
+      };
+    }
+    if (!courseFilterLink) {
+      setReverseExists(false);
+      return () => {
+        cancelled = true;
+      };
+    }
+    setReverseExists(false);
+    const checkReverseDir = async () => {
+      try {
+        const res = await fetch(
+          `${courseFilterLink}/possible_pairs/give/${getCode}`
+        );
+        if (!res.ok) {
+          throw new Error("Failed to fetch reverse dirs");
+        }
+        const possiblePairs = (await res.json()) as string[];
+        if (!cancelled) {
+          const exists =
+            Array.isArray(possiblePairs) &&
+            possiblePairs.some(
+              (code) => code?.toUpperCase() === giveCode.toUpperCase()
+            );
+          setReverseExists(exists);
+        }
+      } catch (error) {
+        if (!cancelled) {
+          setReverseExists(false);
+        }
+      }
+    };
+    checkReverseDir();
+    return () => {
+      cancelled = true;
+    };
+  }, [giveCode, getCode]);
+
+  const canReverse =
+    Boolean(bothPmsSelected && reverseExists && reversedExchange);
 
   return (
     <Center position="relative" w="100%" minH="4">
       <Box position="absolute">
-        {bothPmsSelected && oppositeDirExists ? (
+        {canReverse ? (
           <NextLink href={`/${reversedExchange}`}>
             <Button
               w="4"
