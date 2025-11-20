@@ -142,25 +142,25 @@ const stick = (num: number) => {
 };
 
 export const R = (amount: number, strength = 1): number => {
-  if (!amount || typeof amount !== "number" || strength > 5) return 0;
-
-  if (amount > 100 && strength > 1) {
+  // the higher strength the harder rounding
+  if (!amount || typeof amount !== "number" || strength >= 4) return 0;
+  const revStrength = 4 - strength;
+  if (amount > 100 && revStrength < 3) {
     const res = +(
-      +(amount / 10 ** amount.toFixed(0).length).toFixed(6 - strength) *
+      +(amount / 10 ** amount.toFixed(0).length).toFixed(6 - revStrength) *
       10 ** amount.toFixed(0).length
     ).toFixed(0);
     return stick(res);
   }
 
-  const orderOfMagnitude = -Math.floor(
-    Math.log10(amount / 10 ** (4 - (strength > 3 ? 3 : strength)))
-  );
+  const orderOfMagnitude = -Math.floor(Math.log10(amount / 10 ** revStrength));
 
   return +amount.toFixed(orderOfMagnitude < 0 ? 0 : orderOfMagnitude);
 };
 
-export const format = (v: number, strength?: number): string =>
-  addSpaces(R(v, strength));
+export const format = (v: number, strength?: number): string => {
+  return addSpaces(R(v, strength));
+};
 
 export const addSpaces = (x: string | number) => {
   const s = String(x);

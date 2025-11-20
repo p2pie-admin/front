@@ -125,6 +125,7 @@ const Chart = memo(
           borderRadius="lg"
           position="absolute"
           bottom={`${100 - trend * 5}px`}
+          display={!currentRate ? "none" : "unset"}
           right="4"
         >
           <Text fontSize="sm" color={color}>
