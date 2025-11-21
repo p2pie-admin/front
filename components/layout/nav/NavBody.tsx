@@ -48,15 +48,6 @@ const NavBody = () => {
         href={"/map"}
         CustomIcon={RiMapPinLine}
       />
-      <Button
-        mt="4"
-        size="sm"
-        variant="contrast"
-        w="100%"
-        onClick={handleClearStorage}
-      >
-        Очистить LocalStorage
-      </Button>
     </>
   );
 };

@@ -37,28 +37,31 @@ const TopLabel: React.FC<TopLabelProps> = ({ text, length }) => {
       pointerEvents="none"
       gap="1"
     >
-      <Text as="h1" textAlign="center" fontSize={isLong ? "md" : "lg"} mb="1">
+      {/* <Text as="h1" textAlign="center" fontSize={isLong ? "sm" : "lg"} mb="1">
         {text}
-      </Text>
+      </Text> */}
 
-      <ResponsiveText textAlign="center" size="sm" variant="no_contrast">
+      <ResponsiveText textAlign="center" size="md" variant="no_contrast">
         {`Найдено ${length} ${pluralize(
           length,
           "предложение",
           "предложения",
           "предложений"
-        )}:`}
+        )}`}
       </ResponsiveText>
 
-      <Box mt="4" color="whiteAlpha.200">
-        {/* Arrow 1 - smaller bounce */}
+      <Box
+        color="whiteAlpha.400"
+        position="absolute"
+        bottom="-8"
+        transform="scaleX(1.5)"
+      >
         <MotionBox
-          my="-6"
           animate={{
             y: [0, -2, 0],
           }}
           transition={{
-            duration: 2.2,
+            duration: 1.2,
             repeat: Infinity,
             repeatType: "mirror",
             ease: "easeInOut",
@@ -67,18 +70,19 @@ const TopLabel: React.FC<TopLabelProps> = ({ text, length }) => {
             damping: 8,
           }}
         >
-          <RiArrowDownWideLine size="2.2rem" />
+          <RiArrowDownWideLine size="1.2rem" />
         </MotionBox>
 
         {/* Arrow 2 - larger bounce, synced frequency */}
         <MotionBox
-          my="-6"
+          mt="-2"
           animate={{
-            y: [0, -4, 0],
+            y: [0, -3, 0],
           }}
           transition={{
-            duration: 2.2,
+            duration: 1.2,
             repeat: Infinity,
+
             repeatType: "mirror",
             ease: "easeInOut",
             type: "spring",
@@ -86,7 +90,7 @@ const TopLabel: React.FC<TopLabelProps> = ({ text, length }) => {
             damping: 8,
           }}
         >
-          <RiArrowDownWideLine size="2.2rem" />
+          <RiArrowDownWideLine size="1.2rem" />
         </MotionBox>
       </Box>
     </VStack>

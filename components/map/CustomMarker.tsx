@@ -6,18 +6,26 @@ import { MarkerTooltipContent } from "./MarkerTooltipContent";
 import CustomImage from "../shared/CustomImage";
 
 type CustomMarkerProps = {
+  id: string;
   exchanger: IExchanger;
   highlighted?: boolean;
+  activeMarkerId?: string | null;
+  setActiveMarkerId?: (id: string | null) => void;
 };
 
 const CustomMarker = ({
+  id,
   exchanger,
   highlighted = false,
+  activeMarkerId,
+  setActiveMarkerId,
 }: CustomMarkerProps) => {
-  const [active, setActive] = useState(false);
+  const [localActive, setLocalActive] = useState(false);
   const [hovered, setHovered] = useState(false);
 
-  const isOpen = active || hovered;
+  const isActive =
+    activeMarkerId !== undefined ? activeMarkerId === id : localActive;
+  const isOpen = isActive || hovered;
   const pinColor = highlighted ? "peach.300" : isOpen ? "red.300" : "red.400";
 
   return (
@@ -45,7 +53,16 @@ const CustomMarker = ({
         onMouseLeave={() => setHovered(false)}
         onClick={(event) => {
           event.stopPropagation();
-          setActive((prev) => !prev);
+          const next = !isActive;
+          if (setActiveMarkerId) {
+            setActiveMarkerId(next ? id : null);
+          } else {
+            setLocalActive(next);
+          }
+        }}
+        onBlur={() => {
+          if (setActiveMarkerId) setActiveMarkerId(null);
+          else setLocalActive(false);
         }}
       >
         <Box bottom="8" left="-4" color={pinColor} position="absolute">

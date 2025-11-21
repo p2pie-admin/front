@@ -178,6 +178,8 @@ const CityMapView = ({
       .filter(Boolean);
   }, [exchangerList]);
 
+  const [activeMarkerId, setActiveMarkerId] = useState<string | null>(null);
+
   const normalizedSearch = searchTerm.trim().toLowerCase();
   const highlightedIds = useMemo(() => {
     if (!normalizedSearch) return new Set<string>();
@@ -234,6 +236,7 @@ const CityMapView = ({
               zoom={12}
               center={center}
               mapContainerStyle={containerStyle}
+              onClick={() => setActiveMarkerId(null)}
             >
               {markers.map((marker) => (
                 <OverlayView
@@ -246,10 +249,13 @@ const CityMapView = ({
                   mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
                 >
                   <CustomMarker
+                    id={marker.id}
                     exchanger={marker.exchanger}
                     highlighted={
                       highlightedIds.size > 0 && highlightedIds.has(marker.id)
                     }
+                    activeMarkerId={activeMarkerId}
+                    setActiveMarkerId={setActiveMarkerId}
                   />
                 </OverlayView>
               ))}

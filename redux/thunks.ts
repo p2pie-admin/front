@@ -56,9 +56,9 @@ export type DirRatesReloadTrigger = "auto" | "manual";
 type FetchDirRatesArgs = {
   dir: string;
   cityName?: string;
-  trigger?: DirRatesReloadTrigger;
-  preserveAmount?: boolean;
 };
+
+type UpdateDirRatesArgs = FetchDirRatesArgs;
 
 const _fetchRates = async ({ dir, cityName }: FetchDirRatesArgs) => {
   //const isCash = (dir.split("_")[0].startsWith("CASH") || dir.split("_")[1].startsWith("CASH"));
@@ -74,6 +74,11 @@ export const fetchDirRates = createAsyncThunk<
   IRate[] | undefined,
   FetchDirRatesArgs
 >("rates/fetchDirRates", _fetchRates);
+
+export const updateDirRates = createAsyncThunk<
+  IRate[] | undefined,
+  UpdateDirRatesArgs
+>("rates/updateDirRates", _fetchRates);
 
 export const fetchTopParameters = createAsyncThunk(
   "rates/fetchTopParameters",

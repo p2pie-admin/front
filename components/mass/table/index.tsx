@@ -94,7 +94,6 @@ function MassTable({
         })}
       </Box>
 
-      {/* 👇 Pagination placed below */}
       {totalPages > 1 && (
         <Pagination
           currentPage={currentPage}

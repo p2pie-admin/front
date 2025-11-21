@@ -1,5 +1,6 @@
 import {
   Box,
+  Divider,
   HStack,
   IconButton,
   Tooltip,
@@ -55,6 +56,7 @@ export default function CryptoList({
   const addScrollPixels = -50;
   const buttonBg = useColorModeValue("bg.200", "bg.800");
   const buttonColor = useColorModeValue("bg.900", "bg.100");
+  const dividerColor = useColorModeValue("bg.400", "bg.700");
 
   const scrollBy = useCallback((direction: "left" | "right") => {
     if (!scrollRef.current) return;
@@ -114,6 +116,13 @@ export default function CryptoList({
       position="relative"
       overflow="hidden"
     >
+      <Divider
+        orientation="vertical"
+        alignSelf="stretch"
+        borderColor={dividerColor}
+        borderWidth="1px"
+        zIndex="12"
+      />
       <IconButton
         aria-label="Scroll left"
         icon={<IoIosArrowBack />}
@@ -121,6 +130,8 @@ export default function CryptoList({
         onClick={() => scrollBy("left")}
         variant="ghost"
         color={buttonColor}
+        bgColor="bg.800"
+        alignSelf="center"
         _hover={{ bg: "bg.800", color: "bg.200" }}
         borderRadius="50%"
         zIndex="15"
@@ -163,6 +174,13 @@ export default function CryptoList({
               >
                 <Box
                   ref={pm.code === currentCode ? selectedItemRef : undefined}
+                  border={pm.code == currentCode ? "1px solid" : "unset"}
+                  borderRadius="xl"
+                  borderColor="peach.300"
+                  px="2"
+                  py="1"
+                  bgColor={pm.code == currentCode ? "bg.800" : "unset"}
+                  _hover={{ bgColor: "bg.800" }}
                 >
                   <Link href={`${newSlug}`} key={pm.code}>
                     <PmName
@@ -180,6 +198,13 @@ export default function CryptoList({
         <Box w="3" />
       </Box>
       {!isAtStart && <HorizontalShader direction="left" />}
+      <Divider
+        orientation="vertical"
+        alignSelf="stretch"
+        borderColor={dividerColor}
+        borderWidth="1px"
+        zIndex="12"
+      />
       <IconButton
         aria-label="Scroll right"
         icon={<IoIosArrowForward />}
@@ -187,7 +212,9 @@ export default function CryptoList({
         onClick={() => scrollBy("right")}
         variant="ghost"
         color={buttonColor}
-        _hover={{ bg: "bg.800", color: "bg.200" }}
+        bgColor="bg.800"
+        alignSelf="center"
+        _hover={{ bg: "bg.900", color: "bg.200" }}
         borderRadius="50%"
         zIndex="15"
       />

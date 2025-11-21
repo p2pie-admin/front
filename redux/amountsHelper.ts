@@ -140,22 +140,36 @@ const stick = (num: number) => {
   if (lastDigit === 6 || lastDigit === 1) return (num - 1) * 10 ** mult;
   return num * 10 ** mult;
 };
-
 export const R = (amount: number, strength = 1): number => {
-  // the higher strength the harder rounding
   if (!amount || typeof amount !== "number" || strength >= 4) return 0;
-  const revStrength = 4 - strength;
-  if (amount > 100 && revStrength < 3) {
-    const res = +(
-      +(amount / 10 ** amount.toFixed(0).length).toFixed(6 - revStrength) *
-      10 ** amount.toFixed(0).length
-    ).toFixed(0);
+
+  const s = 4 - strength;
+
+  if (amount > 100 && s < 3) {
+    const digits = amount.toFixed(0).length - 1;
+
+    const tmp = (amount / 10 ** digits).toFixed(6 - s);
+    let res = +(+tmp * 10 ** digits).toFixed(0);
+
+    // ---- FIX FOR strength = 3 (strong rounding) ----
+    if (strength === 3) {
+      const magnitude = 10 ** digits;
+      res = Math.ceil(amount / magnitude) * magnitude; // e.g. 885 → 1000
+    }
+
+    // ---- FIX FOR strength = 2 (softer rounding) ----
+    if (strength === 2) {
+      const magnitude = 10 ** (digits - 1); // one magnitude lower
+      res = Math.round(amount / magnitude) * magnitude; // e.g. 885 → 900
+    }
+
     return stick(res);
   }
 
-  const orderOfMagnitude = -Math.floor(Math.log10(amount / 10 ** revStrength));
+  const orderOfMagnitude = -Math.floor(Math.log10(amount / 10 ** s));
+  const precision = orderOfMagnitude < 0 ? 0 : orderOfMagnitude;
 
-  return +amount.toFixed(orderOfMagnitude < 0 ? 0 : orderOfMagnitude);
+  return +amount.toFixed(precision);
 };
 
 export const format = (v: number, strength?: number): string => {

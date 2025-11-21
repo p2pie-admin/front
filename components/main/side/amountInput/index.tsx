@@ -7,11 +7,12 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useContext } from "react";
-import { R } from "../../../../redux/amountsHelper";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { R } from "../../../../redux/amountsHelper";
 import { setAmount, setSide } from "../../../../redux/mainReducer";
 import SideContext from "../../../shared/contexts/SideContext";
 import Fiat from "./Fiat";
+import { isOutOfRange } from "./helper";
 
 const AmountInput = () => {
   const dispatch = useAppDispatch();
@@ -29,9 +30,14 @@ const AmountInput = () => {
     ? [currentRate.min, currentRate.max]
     : [undefined, undefined];
   const stringValue = amountOutputs[side] || "";
-  const value = R(+stringValue.replaceAll(" ", ""), 3);
-  const outRange =
-    isEdited && min && max && (value > max[side] || value < min[side]);
+  const rawNumeric =
+    useAppSelector((state) =>
+      state.main.amountInput?.side === side
+        ? state.main.amountInput.num
+        : undefined
+    ) ?? +stringValue.replaceAll(" ", "");
+  const value = Number.isFinite(rawNumeric) ? rawNumeric : 0;
+  const outRange = isEdited && isOutOfRange(value, min, max, side);
 
   const onAmountChange = (str: string, num: number) => {
     // skip if same or too big

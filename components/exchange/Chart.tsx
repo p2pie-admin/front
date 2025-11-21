@@ -26,14 +26,14 @@ const Chart = memo(
       return env === "production" ? converterLinkPROD : converterLinkDEV;
     }, []);
 
-    const [isLongTimeFrame, setTimeframe] = useState(false);
+    const [timeframe, setTimeframe] = useState<"1h" | "24h">("1h");
 
     const ccRates = useAppSelector(
       (state) => state.main.ccRates || ({} as any)
     );
     const { currentRate, giveToUSD, getToUSD, dayTrend, hourTrend } = ccRates;
 
-    const trend = isLongTimeFrame ? dayTrend : hourTrend;
+    const trend = timeframe === "24h" ? dayTrend : hourTrend;
 
     // const giveUsdRate = useMemo(
     //   () =>
@@ -51,13 +51,9 @@ const Chart = memo(
     //   [getCur, getToUSD]
     //);
 
-    const alt = `${giveCur} to ${getCur} in last ${
-      isLongTimeFrame ? "24h" : "1h"
-    }`;
+    const alt = `${giveCur} to ${getCur} in last ${timeframe}`;
 
-    const imgSrc = `${SRC}/${getCur}_${giveCur}/${
-      isLongTimeFrame ? "24h" : "1h"
-    }`;
+    const imgSrc = `${SRC}/${getCur}_${giveCur}/${timeframe}`;
 
     return (
       <Box3D
@@ -100,8 +96,8 @@ const Chart = memo(
               variant="default"
               size="xs"
               m="0"
-              color={!isLongTimeFrame ? primaryColor : "whiteAlpha.400"}
-              onClick={() => setTimeframe(false)}
+              color={timeframe === "1h" ? primaryColor : "whiteAlpha.400"}
+              onClick={() => setTimeframe("1h")}
             >
               1h
             </Button>
@@ -109,8 +105,8 @@ const Chart = memo(
               variant="default"
               size="xs"
               m="0"
-              color={isLongTimeFrame ? primaryColor : "whiteAlpha.400"}
-              onClick={() => setTimeframe(true)}
+              color={timeframe === "24h" ? primaryColor : "whiteAlpha.400"}
+              onClick={() => setTimeframe("24h")}
             >
               24h
             </Button>

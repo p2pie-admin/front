@@ -8,7 +8,7 @@ import SideContext from "../../../shared/contexts/SideContext";
 
 const renderHint = (leftPart: string, amount?: number, currency?: string) => {
   if (!amount) return;
-  return `${leftPart || ""} ${addSpaces(String(R(amount, 3)))} ${
+  return `${leftPart || ""} ${addSpaces(String(R(amount, 2)))} ${
     currency || ""
   }`;
 };
@@ -29,17 +29,17 @@ const Fiat = ({
   );
   const isEdited = useAppSelector((state) => !!state.main.amountInput);
 
-  const Min = min?.[side] || 0;
-  const Max = max?.[side] || 0;
+  const Min = R(min?.[side] || 0, 2);
+  const Max = R(max?.[side] || 0, 2);
   const toUSD = toUsd && sideCurrencyCode !== "USD" ? (1 / toUsd) * value : 0;
 
   return (
     <HStack fontSize="sm" color="bg.500" justifySelf="end" mb="1">
-      {isEdited && Min > 0 && value < Min ? (
+      {isEdited && Min > 0 && value < Min - Min * 0.01 ? (
         <Text color="red.500">
           {renderHint("min: ", Min, sideCurrencyCode)}
         </Text>
-      ) : isEdited && Max > 0 && value > Max ? (
+      ) : isEdited && Max > 0 && value > Max + Max * 0.01 ? (
         <Text color="red.500">
           {renderHint("max: ", Max, sideCurrencyCode)}
         </Text>

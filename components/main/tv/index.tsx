@@ -1,19 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import useSWR from "swr";
-
-import ErrorWrapper from "../../shared/ErrorWrapper";
-
-import {
-  Box,
-  HStack,
-  Link,
-  useBreakpointValue,
-  useTimeout,
-} from "@chakra-ui/react";
+import { Box, useBreakpointValue } from "@chakra-ui/react";
 import Swiper from "./Swiper";
 import { useIsMobile } from "./hooks";
-import { fetchDirRates, fetchTopParameters } from "../../../redux/thunks";
+import { updateDirRates } from "../../../redux/thunks";
+import { setDirRatesStatus } from "../../../redux/mainReducer";
 import CustomModal from "../../shared/CustomModal";
 import RateDetails from "../../shared/RateDetails";
 import { useRouter } from "next/router";
@@ -47,27 +38,35 @@ const TV = ({
   useEffect(() => {
     if (!dir) return;
     const cityName = isCash ? city?.en_name || "moscow" : "";
-    dispatch(fetchDirRates({ dir, cityName, trigger: "manual" }));
+    dispatch(updateDirRates({ dir, cityName }));
   }, [dir, city?.en_name, isCash, dispatch]);
+
+  useEffect(() => {
+    if (dirRatesStatus === "pending" && dirRates.length) {
+      dispatch(setDirRatesStatus("fulfilled"));
+    }
+  }, [dirRatesStatus, dirRates.length, dispatch]);
 
   useEffect(() => {
     if (!dir) return;
     const cityName = isCash ? city?.en_name || "moscow" : "";
-    const delay = dirRatesStatus === "fulfilled" ? 60_000 : 5_000;
+    let cancelled = false;
+    let timeoutId: ReturnType<typeof setTimeout>;
 
-    const timeout = setTimeout(() => {
-      dispatch(
-        fetchDirRates({
-          dir,
-          cityName,
-          trigger: "auto",
-          preserveAmount: true,
-        })
-      );
-    }, delay);
+    const schedule = () => {
+      timeoutId = setTimeout(async () => {
+        await dispatch(updateDirRates({ dir, cityName }));
+        if (!cancelled) schedule();
+      }, 60_000);
+    };
 
-    return () => clearTimeout(timeout);
-  }, [dir, city?.en_name, isCash, dirRatesStatus, dispatch]);
+    schedule();
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timeoutId);
+    };
+  }, [dir, city?.en_name, isCash, dispatch]);
 
   const isMobile = useIsMobile();
   const itemHeight = isMobile ? 100 : 130; // Height of each text box

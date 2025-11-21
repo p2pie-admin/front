@@ -86,11 +86,17 @@ const LimitsRange = () => {
   const dirRates = useAppSelector((state) => state.main.dirRates || []);
   const allMins = dirRates?.map((r) => R(r.min?.[side], 2));
   const allMaxes = dirRates?.map((r) => R(r.max?.[side], 2));
-  let [highestMax, lowestMin] = [
-    Math.max(...allMaxes) / 10,
-    Math.min(...allMins),
-  ];
-  if (highestMax > lowestMin * 10000) highestMax = highestMax / 100;
+  // Avoid Infinity when dirRates is empty or contains non-numeric values
+  const validMaxes = allMaxes.filter((n) => Number.isFinite(n) && n > 0);
+  const validMins = allMins.filter((n) => Number.isFinite(n) && n > 0);
+  const highestMaxBase = Math.max(...validMaxes);
+
+  const lowestMinBase =
+    validMins.length > 0 ? Math.min(...validMins) : 1; /* safe default */
+  let [highestMax, lowestMin] = [highestMaxBase, lowestMinBase];
+  if (highestMax > lowestMin * 10000) {
+    highestMax = highestMax / 10;
+  }
 
   const amount =
     useAppSelector(
@@ -103,21 +109,49 @@ const LimitsRange = () => {
 
   const [MIN, MAX] =
     min?.[side] && max?.[side] ? [R(min[side], 2), R(max[side], 2)] : [0, 0];
-  // needMargin если min близок к highestMin && max далек от highestMax
-  // const needMarginMin = MIN / lowestMin > 5; //&& MAX / lowestMax < 10;
-  // const needMarginMax = highestMax / MAX > 5;
-  //const tooCloseMinMax = MIN / MAX < 5 || MAX / MIN < 5;
-
-  const log = (base: number, n: number) => Math.log(n) / Math.log(base);
-  const curvingStrength = 100 / (1 - log(highestMax, lowestMin));
+  console.log(MIN, MAX);
+  const minVal = R(
+    validMins.length > 0 ? Math.min(...validMins) : lowestMinBase,
+    3
+  );
+  const maxVal = R(
+    validMaxes.length > 0 ? Math.max(...validMaxes) : highestMaxBase,
+    3
+  );
+  const logStartPerc = 6;
+  const logEndPerc = 96;
+  const logStartAmount = Math.max(minVal * 10, 0.001); // ties into last low special point
+  const logEndAmount = Math.max(maxVal / 100, logStartAmount * 1.01); // ties into first high special point
   const percToAmount = (x: number) => {
-    if (x == 100) return Math.max(...allMaxes);
-    return R(highestMax ** (1 + (x - 100) / curvingStrength), 4);
+    // special snap zones
+    if (x > 98) return maxVal;
+    if (x > 97) return maxVal / 10;
+    if (x > 96) return maxVal / 100;
+    if (x < 2) return minVal * 1;
+    if (x < 3) return minVal * 2;
+    if (x < 4) return minVal * 3;
+    if (x < 5) return minVal * 5;
+    if (x < 6) return minVal * 10;
+
+    // logarithmic curve anchored to the special points at 6% and 96%
+    const t = (x - logStartPerc) / (logEndPerc - logStartPerc);
+    return R(logStartAmount * (logEndAmount / logStartAmount) ** t, 3);
   };
 
   const amountToPerc = (x?: number) => {
     if (!x) return 0;
-    return 100 + curvingStrength * (log(highestMax, x) - 1);
+    if (x >= maxVal) return 99; // close to top
+    if (x > maxVal / 10) return 98.5;
+    if (x > maxVal / 100) return 97.5;
+    if (x <= minVal) return 1;
+    if (x <= minVal * 2) return 2.5;
+    if (x <= minVal * 3) return 3.5;
+    if (x <= minVal * 5) return 4.5;
+    if (x <= minVal * 10) return 5.5;
+
+    const t =
+      Math.log(x / logStartAmount) / Math.log(logEndAmount / logStartAmount);
+    return logStartPerc + t * (logEndPerc - logStartPerc);
   };
   const [percMin, percMax] = [amountToPerc(MIN), amountToPerc(MAX)];
   //const smoothCenter = useSmooth(percMin + (percMax - percMin) / 2);

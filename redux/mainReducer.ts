@@ -5,6 +5,7 @@ import { AmountOutputs, AmountInput } from "../types/amount";
 
 import {
   fetchDirRates,
+  updateDirRates,
   fetchPms,
   fetchPossiblePairs,
   restorePmsFromSlug,
@@ -337,30 +338,39 @@ export const mainSlice = createSlice({
         state.dirRatesStatus = "rejected";
         return;
       }
-      const reloadTrigger: DirRatesReloadTrigger =
-        action.meta.arg?.trigger || "manual";
-      const preserveAmount = Boolean(action.meta.arg?.preserveAmount);
       const cityKey = normalizeCityKey(action.meta.arg?.cityName);
       const rates = cityKey
         ? action.payload.map((rate) => applyCityRateOverride(rate, cityKey))
         : action.payload;
       state.dirRates = rates;
-      if (!preserveAmount) {
-        state.amountInput = undefined;
-      }
+      state.amountInput = undefined;
       state.dirRatesStatus = "fulfilled";
-      state.dirRatesReloadTrigger = reloadTrigger;
+      state.dirRatesReloadTrigger = "auto";
       const currentIndex = state.swiperIdVisible ?? 0;
-      const targetIndex = reloadTrigger === "auto" ? currentIndex : 1;
+      state.amountOutputs = getAmountOutputs(
+        state,
+        currentIndex,
+        undefined,
+        false
+      );
+    });
+
+    builder.addCase(updateDirRates.fulfilled, (state, action) => {
+      if (!action.payload) return;
+      const cityKey = normalizeCityKey(action.meta.arg?.cityName);
+      const rates = cityKey
+        ? action.payload.map((rate) => applyCityRateOverride(rate, cityKey))
+        : action.payload;
+      state.dirRates = rates;
+      state.dirRatesReloadTrigger = "manual";
+      const targetIndex = 1;
       state.amountOutputs = getAmountOutputs(
         state,
         targetIndex,
         undefined,
-        preserveAmount
+        true
       );
-      if (reloadTrigger !== "auto") {
-        state.swiperIdVisible = 1;
-      }
+      state.swiperIdVisible = 1;
     });
 
     builder.addCase(fetchPossiblePairs.fulfilled, (state, action) => {
