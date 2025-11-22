@@ -25,13 +25,12 @@ import { locale } from "../../../services/utils";
 import ExchangerDescription from "./description";
 import ExchangerContacts from "./contacts/ExchangerContacts";
 import { resolveColorToken } from "../../shared/CircularIcon";
-
-import TopPanel from "./topPanel";
 import ExchangerReviews from "./reviews";
 import LeaveReview from "./leaveReview";
 import ExchangerReviewsHeader from "./reviews/ExchangerReviewsHeader";
-import ExchangerStats from "./ExchangerStats";
+import ExchangerStats from "./exchangerStats";
 import { BoxWrapper } from "../../shared/BoxWrapper";
+import ExchangerTopPanel from "./exchangerTopPanel";
 
 export default function Exchanger({
   exchanger,
@@ -55,57 +54,17 @@ export default function Exchanger({
     );
   }
 
-  const status = exchanger.status == "active" ? "Активен" : "Приостановлен";
-  const color =
-    exchanger.status == "active" ? "green" : ("orange" as IDotColors);
-
-  const { exchanger_card: exchangerCard, exchanger_tags } = exchanger;
+  const { exchanger_card: exchangerCard } = exchanger;
 
   const description =
-    exchangerCard?.[`${locale}_description`] || "нет описания";
+    exchangerCard?.[`${locale}_description`] || "Пока нет описания";
 
   return (
     <>
       <UniversalSeo seo={seo} />
 
       <BoxWrapper variant="no_contrast">
-        <Flex
-          flexDir={{ base: "column", lg: "row" }}
-          justifyContent="space-between"
-          gap="4"
-        >
-          <HStack gap="4" position="relative">
-            <Dot color={color} />
-            <ExchangerName
-              name={exchanger.name}
-              logo={exchanger.logo}
-              admin_rating={exchanger.admin_rating}
-              isH1={true}
-            />
-            <Box ml="auto">
-              {exchanger_tags &&
-                exchanger_tags.map((tag) => (
-                  <Tooltip openDelay={500} hasArrow label={tag.description}>
-                    <Box
-                      borderRadius="lg"
-                      py="1"
-                      px="2"
-                      my="2"
-                      borderColor={resolveColorToken(tag.color)}
-                      border="2px solid"
-                      color={resolveColorToken(tag.color)}
-                      fontWeight="bold"
-                      boxShadow="lg"
-                      fontSize="sm"
-                    >
-                      {tag.name.toUpperCase()}
-                    </Box>
-                  </Tooltip>
-                ))}
-            </Box>
-          </HStack>
-          <TopPanel exchanger={exchanger} />
-        </Flex>
+        <ExchangerTopPanel exchanger={exchanger} />
         <Divider my="4" />
         <ExchangerStats
           reviews={exchanger.reviews}

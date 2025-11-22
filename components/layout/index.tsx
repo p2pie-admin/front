@@ -24,7 +24,7 @@ import Fingerprint from "fingerprinter-js";
 const Layout = ({ children }: { children: any }) => {
   // const maxW = useBreakpointValue({ base: "100%", lg: "980" });
   //const isScrollLocked = useAppSelector((state) => state.main.isScrollLocked);
-  const myToast = useAppSelector((state) => state.main.toast);
+  const myToast = useAppSelector((state) => state.main?.toast);
   const toast = useToast();
   const { query } = useRouter();
   const cityInSlugExists = query?.exchange && query.exchange.includes("-in-");
@@ -104,7 +104,7 @@ const Layout = ({ children }: { children: any }) => {
         gap="4"
         minH="calc(100vh - 56px)"
       >
-        <Box mt={["1", "4"]} maxW={{ base: "100%", md: "888px" }} w="100%">
+        <Box mt={["1", "2"]} maxW={{ base: "100%", md: "888px" }} w="100%">
           {children}
         </Box>
 

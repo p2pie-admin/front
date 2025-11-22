@@ -35,6 +35,7 @@ const ExchangerName = ({
         as={isH1 ? "h1" : "p"}
         size={name.length > 15 ? "md" : name.length > 10 ? "lg" : "xl"}
         fontWeight="bold"
+        color="inherit"
       >
         {capitalize(name)}
       </ResponsiveText>

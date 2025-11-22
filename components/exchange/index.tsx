@@ -81,6 +81,7 @@ const Exchange = ({
   const [givePm, getPm] = [givePmData.pm, getPmData.pm];
   const dir = `${givePm.code}_${getPm.code}`;
   const curPair = `${givePm.currency.code}_${getPm.currency.code}`;
+  const isLong = dirText?.h1 ? dirText?.h1.length > 30 : true;
 
   useEffect(() => {
     batch(() => {
@@ -108,10 +109,12 @@ const Exchange = ({
       {/* <Box
         bgGradient={`radial-gradient(circle at 50% -10%, ${centerColor} 0%, ${peripheryColor} 60%)`}
         bgClip="text"
-        mx="6"
+        mx="2"
+        mt="-4"
+        alignSelf={{ lg: "start", base: "unset" }}
       >
         <Heading
-          fontSize={{ base: isLong ? "lg" : "xl", lg: isLong ? "3xl" : "4xl" }}
+          fontSize={{ base: isLong ? "md" : "lg", lg: isLong ? "lg" : "xl" }}
           as="h1"
           fontWeight="bold"
           color="inherit"

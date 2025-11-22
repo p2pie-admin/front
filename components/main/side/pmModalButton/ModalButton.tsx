@@ -22,11 +22,9 @@ const ModalButton = ({
       }}
       position="relative"
       variant="default"
-      px={["2", "0 !important"]}
       color={color}
       display="flex"
-      mt="2"
-      justifyContent="space-between"
+      justifyContent="start"
       alignItems="center"
       //border={`1px ${leftIcon ? "solid" : "dashed"}`}
       borderColor="whiteAlpha.100"

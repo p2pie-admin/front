@@ -6,7 +6,7 @@ import { useIsMobile } from "./hooks";
 import { updateDirRates } from "../../../redux/thunks";
 import { setDirRatesStatus } from "../../../redux/mainReducer";
 import CustomModal from "../../shared/CustomModal";
-import RateDetails from "../../shared/RateDetails";
+import RateDetails from "./rateDetails";
 import { useRouter } from "next/router";
 import { ICity, IDirText } from "../../../types/exchange";
 
@@ -21,7 +21,7 @@ const TV = ({
   dirText: IDirText | null;
 }) => {
   const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
-  const containerHeight = useBreakpointValue({ base: 300, md: 416 }) || 416;
+  const containerHeight = useBreakpointValue({ base: 320, md: 416 }) || 416;
   const router = useRouter();
   const { exchange } = router.query as { exchange: string };
 
@@ -84,10 +84,6 @@ const TV = ({
 
   return (
     <Box h={{ base: "fit-content", lg: "416px" }}>
-      <CustomModal id="rate-details" header="Exchanger details">
-        <RateDetails />
-      </CustomModal>
-
       <Swiper {...props} />
 
       {/* <HStack justifyContent="center">

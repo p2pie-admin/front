@@ -38,6 +38,7 @@ import { memo } from "react";
 import { selectorQuery } from "../../../../services/queries";
 
 import { useTranslation } from "next-i18next";
+import FoundError from "../../../article/FoundError";
 
 //const gqlFetcher = new GraphQLFetcher(); // may pass variables here
 const fetcher = initCMSFetcher();
@@ -90,15 +91,7 @@ const Selector = function Selector() {
         <SearchBar search_bar={data?.search_bar} />
         <SectionsList sections={sections} />
 
-        <Text fontSize="2xl" mt="5" color="bg.500">
-          {t("main:notFound")}
-        </Text>
-
-        <LinkButton
-          message={t("main:contactSupport")}
-          href={String(process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT)}
-          CustomIcon={BsTelegram}
-        />
+        <FoundError />
       </ErrorWrapper>
     </VStack>
   );

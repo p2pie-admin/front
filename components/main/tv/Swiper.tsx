@@ -22,6 +22,7 @@ import ErrorWrapper from "../../shared/ErrorWrapper";
 import BottomLabel from "./BottomLabel";
 import TopLabel from "./TopLabel";
 import { IDirText } from "../../../types/exchange";
+import FoundError from "../../article/FoundError";
 
 // You asked to keep TopLabel/BottomLabel separate files; if you haven't created them,
 // simple presentational components are provided below inline — replace with your imports if you prefer.
@@ -228,7 +229,7 @@ export const Swiper = (props: {
       gridGap={["2", "4"]}
       h={`${containerHeight}px`}
     >
-      <Box3D variant="extra_contrast" px="2">
+      <Box3D variant="extra_contrast" px="2" py="1">
         <ErrorWrapper
           isError={isError}
           isLoading={isLoading}
@@ -318,8 +319,9 @@ export const Swiper = (props: {
               alignItems="center"
               justifyContent="center"
               pointerEvents="none"
+              zIndex="655"
             >
-              <BottomLabel text="Конец списка" />
+              <FoundError />
             </MotionBox>
 
             <Shader direction="bottom" />

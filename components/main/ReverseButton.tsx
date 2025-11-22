@@ -131,8 +131,9 @@ const ReverseButton = () => {
     };
   }, [giveCode, getCode]);
 
-  const canReverse =
-    Boolean(bothPmsSelected && reverseExists && reversedExchange);
+  const canReverse = Boolean(
+    bothPmsSelected && reverseExists && reversedExchange
+  );
 
   return (
     <Center position="relative" w="100%" minH="4">
@@ -140,30 +141,31 @@ const ReverseButton = () => {
         {canReverse ? (
           <NextLink href={`/${reversedExchange}`}>
             <Button
-              w="4"
-              p="0"
-              variant="no_contrast"
+              p="0 !important"
+              size={{ base: "sm", lg: "md" }}
+              variant="extra_contrast"
               onClick={() => dispatch(clearDirRates())}
               color={color}
               zIndex="3"
               aria-label="Reverse direction"
               transform={"rotate(90deg)"}
             >
-              <CgArrowsExchange size="2rem" />
+              <CgArrowsExchange size="1.5rem" />
             </Button>
           </NextLink>
         ) : (
           <Button
             w="4"
-            p="0"
+            p="0 !important"
             variant="extra_contrast"
+            size={{ base: "sm", lg: "md" }}
             color={"bg.500"}
             disabled
             zIndex="3"
             transform={"rotate(90deg)"}
             aria-label="Reverse direction"
           >
-            <CgArrowsExchange size="2rem" />
+            <CgArrowsExchange size="1.5rem" />
           </Button>
         )}
       </Box>

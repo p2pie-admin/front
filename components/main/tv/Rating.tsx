@@ -17,8 +17,8 @@ export default function Rating({ rating }: { rating?: number | null }) {
       ? "#97bb48"
       : "green.400";
   return (
-    <HStack gap="1" mt="1">
-      <Box color={ratingColor} mb="1">
+    <HStack gap="1" mt="1" mx="1">
+      <Box color={ratingColor}>
         <FaStar size="0.8rem" />
       </Box>
       <ResponsiveText size="sm" color={ratingColor}>

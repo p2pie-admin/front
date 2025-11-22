@@ -18,7 +18,7 @@ const HorizontalShader = ({
   return (
     <Box
       h="100%"
-      boxShadow={`0 0 50px 50px ${shaderColor}`}
+      boxShadow={`0 0 30px 30px ${shaderColor}`}
       position="absolute"
       top="0"
       ml={direction === "left" ? "12" : "unset"}

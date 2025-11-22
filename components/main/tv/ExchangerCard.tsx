@@ -23,9 +23,11 @@ import { useIsMobile } from "./hooks";
 import Rating from "./Rating";
 import CustomImage from "../../shared/CustomImage";
 import { secondsAgo } from "../../shared/helper";
-import { enrichLink } from "../../../redux/helper";
+
 import Link from "next/link";
 import ExchangerName from "../../shared/ExchangerNameRating";
+import CustomModal from "../../shared/CustomModal";
+import RateDetails from "./rateDetails";
 
 const DesktopParameters = ({
   parameterCodes,
@@ -87,9 +89,6 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
   const giveCur = givePm?.currency.code.toUpperCase() || "";
   const getCur = getPm?.currency.code.toUpperCase() || "";
 
-  const giveCode = givePm?.code;
-  const getCode = getPm?.code;
-
   const side = course > 1 ? "give" : "get";
   const smallCur = side === "give" ? giveCur : getCur;
   const bigCur = side === "give" ? getCur : giveCur;
@@ -99,7 +98,7 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
 
   const handleInfoClick = (event: any) => {
     event?.stopPropagation();
-    dispatch(triggerModal("rate-details"));
+    dispatch(triggerModal(`details_${name}`));
   };
 
   return (
@@ -119,46 +118,31 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
       _hover={{
         filter: "brightness(1.05)",
       }}
+      cursor="pointer"
+      onClick={(e) => {
+        handleInfoClick(e);
+      }}
       // bgColor removed for test
     >
+      <CustomModal id={`details_${name}`} header="Условия обмена">
+        <RateDetails rate={rate} />
+      </CustomModal>
       <Box w="100%">
         <HStack justifyContent={isMobile ? "start" : "space-between"}>
-          <HStack
-            w="100%"
-            justifyContent="space-between"
-            cursor="pointer"
-            onClick={() => {
-              dispatch(redirect());
-              const fullLink = enrichLink(
-                ref_link,
-                giveCode,
-                getCode,
-                cityCode
-              );
-              window.open(fullLink, "_blank");
-            }}
-          >
+          <HStack w="100%" justifyContent="space-between">
             <ExchangerName
               name={name}
               logo={logo}
               admin_rating={rate.admin_rating}
             />
 
-            <HStack>
-              <ResponsiveText
-                size="xs"
-                variant="no_contrast"
-                display={{ base: "none", lg: "unset" }}
-              >
-                {secondsAgo(last_time_updated)}
-              </ResponsiveText>
-              <Box
-                onClick={(event) => handleInfoClick(event)}
-                display={{ base: "none", lg: "unset" }}
-              >
-                <GrCircleInformation size="1.2rem" />
-              </Box>
-            </HStack>
+            <ResponsiveText
+              size="xs"
+              variant="no_contrast"
+              display={{ base: "none", lg: "unset" }}
+            >
+              {secondsAgo(last_time_updated)}
+            </ResponsiveText>
           </HStack>
         </HStack>
         <Box mt="1">

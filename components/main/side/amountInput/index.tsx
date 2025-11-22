@@ -90,7 +90,7 @@ const AmountInput = () => {
 
         {/* <Text color="teal.400">{`step: ${step} / fiatStep: ${fiatStep}`}</Text> */}
       </NumberInput>
-      <Box />
+
       <Fiat value={value} min={min} max={max} />
     </>
   );

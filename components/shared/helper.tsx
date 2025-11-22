@@ -116,3 +116,9 @@ export const waitSec = (seconds: number) => {
     setTimeout(resolve, seconds * 1000);
   });
 };
+
+export const isCashPm = (pm?: IPm | null) =>
+  !!pm &&
+  ((pm.section && pm.section.toLowerCase() === "cash") ||
+    pm.code?.toUpperCase().includes("CASH") ||
+    pm.en_name?.toLowerCase().includes("cash"));

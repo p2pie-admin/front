@@ -1,8 +1,9 @@
 import React from "react";
-import { Box, Text, VStack } from "@chakra-ui/react";
+import { Box, HStack, Text, VStack } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { RiArrowDownWideLine } from "react-icons/ri";
+import { RiSearchLine } from "react-icons/ri";
 
 function pluralize(
   count: number,
@@ -33,29 +34,28 @@ const TopLabel: React.FC<TopLabelProps> = ({ text, length }) => {
       position="absolute"
       top="auto"
       w="90%"
-      py="2"
+      py="1"
       pointerEvents="none"
       gap="1"
+      color="bg.400"
     >
       {/* <Text as="h1" textAlign="center" fontSize={isLong ? "sm" : "lg"} mb="1">
         {text}
       </Text> */}
 
-      <ResponsiveText textAlign="center" size="md" variant="no_contrast">
-        {`Найдено ${length} ${pluralize(
-          length,
-          "предложение",
-          "предложения",
-          "предложений"
-        )}`}
-      </ResponsiveText>
+      <HStack>
+        {/* <RiSearchLine size="1rem" /> */}
+        <ResponsiveText textAlign="center" size="lg" color="inherit">
+          {`Найдено ${length} ${pluralize(
+            length,
+            "предложение",
+            "предложения",
+            "предложений"
+          )}`}
+        </ResponsiveText>
+      </HStack>
 
-      <Box
-        color="whiteAlpha.400"
-        position="absolute"
-        bottom="-8"
-        transform="scaleX(1.5)"
-      >
+      <Box position="absolute" bottom="-8" transform="scaleX(1.5)">
         <MotionBox
           animate={{
             y: [0, -2, 0],

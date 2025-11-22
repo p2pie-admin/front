@@ -19,6 +19,7 @@ import {
   ClosestCityMatch,
 } from "../../components/map/helper";
 import CityMapView from "../../components/map";
+import { isCashPm } from "../../components/shared/helper";
 
 const MAX_COUNT = 5; // начиная со скольки курсов на направление показываем
 
@@ -198,11 +199,6 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
     })
     .filter((item): item is ParsedDirection => Boolean(item))
     .sort((a, b) => b.count - a.count);
-  const isCashPm = (pm?: IPm | null) =>
-    !!pm &&
-    ((pm.section && pm.section.toLowerCase() === "cash") ||
-      pm.code?.toUpperCase().includes("CASH") ||
-      pm.en_name?.toLowerCase().includes("cash"));
 
   const cashMap = directions.reduce(
     (acc, direction) => {

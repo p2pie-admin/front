@@ -1,4 +1,6 @@
+import { isCashPm } from "../components/shared/helper";
 import { AmountInput, AmountOutputs } from "../types/amount";
+import { IPm } from "../types/selector";
 
 import { IFingerprint } from "../types/shared";
 import { FeesCalculator } from "./amountsHelper";
@@ -32,7 +34,8 @@ export const getAmountOutputs = (
     const feesCalculator = new FeesCalculator(dir, rate, amount);
     const outputs = feesCalculator.calculateAmountOutputs();
     if (preserveInputSide && amount?.side) {
-      outputs[amount.side] = state.amountOutputs?.[amount.side] || outputs[amount.side];
+      outputs[amount.side] =
+        state.amountOutputs?.[amount.side] || outputs[amount.side];
     }
     return outputs;
   }
@@ -59,20 +62,28 @@ export const destructureDirSlug = (slug: string) => {
   };
 };
 //
-export const enrichLink = (
-  ref_link: string,
-  giveCode?: string,
-  getCode?: string,
-  cityCode?: any
-) => {
-  if (!giveCode || !getCode) return ref_link;
-  if (ref_link.includes("?")) {
-    return `${ref_link}&cur_from=${giveCode}&cur_to=${getCode}${
-      cityCode ? `&city=${cityCode.toUpperCase()}` : ""
+export const enrichLink = ({
+  refLink,
+  givePm,
+  getPm,
+  cityCode,
+}: {
+  refLink: string | undefined | null;
+  givePm?: IPm;
+  getPm?: IPm;
+  cityCode?: any;
+}) => {
+  if (!refLink) return "";
+  if (!givePm || !getPm) return refLink;
+  const isCash = isCashPm(givePm) || isCashPm(getPm);
+
+  if (refLink.includes("?")) {
+    return `${refLink}&cur_from=${givePm.code}&cur_to=${getPm.code}${
+      isCash && cityCode ? `&city=${cityCode.toUpperCase()}` : ""
     }`;
   }
 
-  return `${ref_link}/?cur_from=${giveCode}&cur_to=${getCode}${
-    cityCode ? `&city=${cityCode.toUpperCase()}` : ""
+  return `${refLink}/?cur_from=${givePm.code}&cur_to=${getPm.code}${
+    isCash && cityCode ? `&city=${cityCode.toUpperCase()}` : ""
   }`;
 };

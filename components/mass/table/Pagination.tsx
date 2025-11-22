@@ -16,7 +16,7 @@ export default function Pagination({
   const pages = useMemo(() => {
     const pageItems: (number | "ellipsis")[] = [];
 
-    if (totalPages <= 5) {
+    if (totalPages <= 4) {
       return Array.from({ length: totalPages }, (_, i) => i + 1);
     }
 
@@ -53,10 +53,10 @@ export default function Pagination({
         isDisabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
       >
-        Назад
+        {"<-"}
       </Button>
 
-      {pages.map((page, index) => (
+      {pages.map((page, index) =>
         typeof page === "number" ? (
           <Button
             key={page}
@@ -77,14 +77,14 @@ export default function Pagination({
             ...
           </Button>
         )
-      ))}
+      )}
 
       <Button
         size="sm"
         isDisabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}
       >
-        Далее
+        {"->"}
       </Button>
     </HStack>
   );

@@ -116,13 +116,6 @@ export default function CryptoList({
       position="relative"
       overflow="hidden"
     >
-      <Divider
-        orientation="vertical"
-        alignSelf="stretch"
-        borderColor={dividerColor}
-        borderWidth="1px"
-        zIndex="12"
-      />
       <IconButton
         aria-label="Scroll left"
         icon={<IoIosArrowBack />}
@@ -154,7 +147,7 @@ export default function CryptoList({
         }
       >
         <Box w="3" />
-        <HStack spacing="6" w="max-content" mx="2">
+        <HStack spacing="2" w="max-content" mx="2">
           {cryptoPms.map((pm) => {
             const newData = {
               code: pm.code,
@@ -198,13 +191,7 @@ export default function CryptoList({
         <Box w="3" />
       </Box>
       {!isAtStart && <HorizontalShader direction="left" />}
-      <Divider
-        orientation="vertical"
-        alignSelf="stretch"
-        borderColor={dividerColor}
-        borderWidth="1px"
-        zIndex="12"
-      />
+
       <IconButton
         aria-label="Scroll right"
         icon={<IoIosArrowForward />}

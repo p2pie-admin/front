@@ -1,27 +1,41 @@
 import { BsTelegram } from "react-icons/bs";
 import LinkButton from "../shared/LinkButton";
-import { HStack, Text } from "@chakra-ui/react";
+import { Box, HStack, Text, VStack } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
+import { ResponsiveText } from "../../styles/theme/custom";
+import { exchangerNameToSlug } from "../exchangers/helper";
+import Link from "next/link";
 
 const FoundError = () => {
   const { t } = useTranslation();
   return (
-    <HStack
-      bgColor="blackAlpha.200"
-      mt="10"
-      p="4"
-      justifyContent="center"
-      borderRadius="lg"
-    >
-      <Text fontSize={{ base: "md", lg: "xl" }}>{`${t("main:notFound")} ${t(
-        "main:contactSupport"
-      )}:`}</Text>
-      <LinkButton
-        href={String(process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT)}
-        message={""}
-        CustomIcon={BsTelegram}
-      />
-    </HStack>
+    <Box w="100%">
+      <Link
+        passHref
+        href={String(process.env.NEXT_PUBLIC_TELEGRAM_CHAT)}
+        color="inherit"
+      >
+        <VStack
+          bgColor="blackAlpha.100"
+          _hover={{ bgColor: "blackAlpha.200" }}
+          mt="10"
+          p="4"
+          justifyContent="center"
+          borderRadius="lg"
+          gap="2"
+        >
+          <ResponsiveText variant="no_contrast" size="lg">{`${t(
+            "main:notFound"
+          )}`}</ResponsiveText>
+          <HStack>
+            <ResponsiveText variant="shaded" size="sm">
+              {`${t("main:contactSupport")} →`}
+            </ResponsiveText>
+            <BsTelegram size="1.2rem" />
+          </HStack>
+        </VStack>
+      </Link>
+    </Box>
   );
 };
 

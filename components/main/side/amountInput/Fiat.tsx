@@ -34,7 +34,14 @@ const Fiat = ({
   const toUSD = toUsd && sideCurrencyCode !== "USD" ? (1 / toUsd) * value : 0;
 
   return (
-    <HStack fontSize="sm" color="bg.500" justifySelf="end" mb="1">
+    <HStack
+      fontSize="sm"
+      color="bg.500"
+      justifySelf="end"
+      position="absolute"
+      bottom="1"
+      right="2"
+    >
       {isEdited && Min > 0 && value < Min - Min * 0.01 ? (
         <Text color="red.500">
           {renderHint("min: ", Min, sideCurrencyCode)}

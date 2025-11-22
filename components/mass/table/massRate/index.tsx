@@ -27,7 +27,6 @@ import MassFiat from "../MassFiat";
 import SmartGrid from "../SmartGrid";
 import { redirect } from "../../../../redux/thunks";
 import MassRateAmount from "./MassRateAmount";
-import { enrichLink } from "../../../../redux/helper";
 
 const MassRate = ({
   rate,

@@ -26,7 +26,7 @@ const Chart = memo(
       return env === "production" ? converterLinkPROD : converterLinkDEV;
     }, []);
 
-    const [timeframe, setTimeframe] = useState<"1h" | "24h">("1h");
+    const [timeframe, setTimeframe] = useState<"1h" | "24h">("24h");
 
     const ccRates = useAppSelector(
       (state) => state.main.ccRates || ({} as any)
