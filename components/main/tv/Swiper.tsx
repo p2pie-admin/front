@@ -318,7 +318,7 @@ export const Swiper = (props: {
               display="flex"
               alignItems="center"
               justifyContent="center"
-              pointerEvents="none"
+              pointerEvents="auto"
               zIndex="655"
             >
               <FoundError />

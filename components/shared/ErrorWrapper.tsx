@@ -49,7 +49,7 @@ const Error = ({ primaryMessage = "", secondaryMessage = "" }) => {
 };
 
 const ErrorWrapper = (props: {
-  children: JSX.Element | JSX.Element[];
+  children?: JSX.Element | JSX.Element[];
   isError?: boolean;
   isLoading?: boolean;
   primaryMessage?: string;

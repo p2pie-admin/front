@@ -38,6 +38,9 @@ import { locale } from "../../../../services/utils";
 import { capitalize } from "../../side/selector/section/PmGroup/helper";
 import FoundError from "../../../article/FoundError";
 
+import ErrorWrapper from "../../../shared/ErrorWrapper";
+import logo from "next-seo/lib/jsonld/logo";
+
 const cmsFetcher = initCMSFetcher();
 
 const RateDetails = ({ rate }: { rate: IRate }) => {
@@ -54,12 +57,15 @@ const RateDetails = ({ rate }: { rate: IRate }) => {
     return Array.isArray(response) ? (response[0] as IExchanger) : response;
   };
 
-  const { data: exchanger } = useSWR<IExchanger | null>(
+  const { data: exchanger, error } = useSWR<IExchanger | null>(
     exchangerName ? [exchangerQuery, exchangerName] : null,
     fetchExchanger
   );
 
-  if (!rate || !givePm || !getPm || !exchanger) return <></>;
+  if (!rate || !givePm || !getPm || !exchanger)
+    return (
+      <ErrorWrapper isLoading={!exchanger} isError={!!error}></ErrorWrapper>
+    );
   const rateProps = [
     {
       name: "Курс:",
@@ -112,18 +118,13 @@ const RateDetails = ({ rate }: { rate: IRate }) => {
   )} ${getCur} ${getSubgroup}`;
 
   return (
-    <CustomBox3D>
+    <Box>
       <Link
         passHref
         href={`/exchangers/${exchangerNameToSlug(name)}`}
         color="inherit"
       >
-        <Flex
-          flexDir={{ base: "column", md: "row" }}
-          justifyContent="space-between"
-          p="2"
-          gap="2"
-        >
+        <HStack p="2" gap="2">
           <Box color="peach.300" _hover={{ color: "peach.100" }}>
             <ExchangerName
               name={name}
@@ -133,30 +134,40 @@ const RateDetails = ({ rate }: { rate: IRate }) => {
           </Box>
 
           <TagBadges tags={exchanger_tags} />
-
-          <HStack>
-            <Button size="sm" variant="contrast" p="2">
+          <Button
+            size="sm"
+            variant="no_contrast"
+            p="2"
+            display={{ base: "unset", lg: "none" }}
+            ml="auto"
+          >
+            <IoInformationCircleOutline size="1.5rem" />
+          </Button>
+          <HStack ml="auto" gap="2" display={{ base: "none", lg: "unset" }}>
+            <Button mr="2" size="sm" variant="no_contrast" p="2">
               <IoInformationCircleOutline size="1.5rem" />
             </Button>
 
             <ExchangeButton refLink={ref_link} />
           </HStack>
-        </Flex>
+        </HStack>
       </Link>
-      <VStack
-        alignItems="start"
-        gap="2"
-        bgColor="bg.1000"
-        my="4"
-        p="2"
-        mx="2"
-        borderRadius="lg"
-      >
-        <ReviewStats reviews={reviews} />
-        <WorkingTimeStats workingTime={exchanger_card?.working_time} />
-      </VStack>
+      {!!(exchanger_card?.working_time || reviews?.length) && (
+        <VStack
+          alignItems="start"
+          gap="2"
+          bgColor="bg.1000"
+          my="4"
+          p="2"
+          mx="2"
+          borderRadius="lg"
+        >
+          <ReviewStats reviews={reviews} />
+          <WorkingTimeStats workingTime={exchanger_card?.working_time} />
+        </VStack>
+      )}
 
-      <TableContainer>
+      <TableContainer my="4" bgColor="bg.1000" borderRadius="md">
         <Table size="sm" colorScheme="bg">
           <Thead>
             <Tr>
@@ -181,6 +192,10 @@ const RateDetails = ({ rate }: { rate: IRate }) => {
         </Table>
       </TableContainer>
 
+      <Box display={{ base: "unset", lg: "none" }}>
+        <ExchangeButton refLink={ref_link} fullWidth />
+      </Box>
+
       <VStack mt="2" p="2" gap="2" alignItems="start">
         {rate.parameterCodes &&
           rate.parameterCodes.map((code, i) => {
@@ -198,7 +213,7 @@ const RateDetails = ({ rate }: { rate: IRate }) => {
           })}
       </VStack>
       <FoundError />
-    </CustomBox3D>
+    </Box>
   );
 };
 

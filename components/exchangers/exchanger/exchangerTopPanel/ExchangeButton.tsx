@@ -4,11 +4,13 @@ import { LinkWrapper } from "../../../exchange/pmLayout/LinkWrapper";
 import { enrichLink } from "../../../../redux/helper";
 import { useAppSelector } from "../../../../redux/hooks";
 
-const ExchangeButton = ({ refLink }: { refLink?: string | null }) => {
+type Props = {
+  refLink?: string | null;
+  fullWidth?: boolean;
+};
+
+const ExchangeButton = ({ refLink, fullWidth = false }: Props) => {
   const enrichedLink = useAppSelector((state) => {
-    // giveCode?: string,
-    // getCode?: string,
-    // cityCode?: any
     const { city, givePm, getPm } = state.main;
 
     return enrichLink({
@@ -23,7 +25,8 @@ const ExchangeButton = ({ refLink }: { refLink?: string | null }) => {
       <Button
         variant="primary"
         rightIcon={<TbExternalLink size="1.2rem" />}
-        w="100%"
+        w={fullWidth ? "100%" : "auto"}
+        minW={fullWidth ? undefined : "fit-content"}
       >
         Обмен
       </Button>
