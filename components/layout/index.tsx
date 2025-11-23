@@ -96,7 +96,12 @@ const Layout = ({ children }: { children: any }) => {
       />
 
       {loadingStatus === "pending" ? (
-        <Progress size="xs" isIndeterminate colorScheme="peach" />
+        <Progress
+          size="xs"
+          isIndeterminate
+          colorScheme="peach"
+          filter="opacity(0.2)"
+        />
       ) : (
         <Box h="1" />
       )}
