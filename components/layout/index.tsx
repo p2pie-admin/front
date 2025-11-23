@@ -95,16 +95,20 @@ const Layout = ({ children }: { children: any }) => {
         bgGradient={`radial-gradient(circle at 50% -10%, ${ambientColor} 0%, transparent 40%)`}
       />
 
-      {loadingStatus === "pending" ? (
+      {loadingStatus === "pending" && (
         <Progress
           size="xs"
           isIndeterminate
           colorScheme="peach"
           filter="opacity(0.2)"
+          position="fixed"
+          top="0"
+          left="0"
+          right="0"
+          zIndex="popover"
         />
-      ) : (
-        <Box h="1" />
       )}
+      <Box h="1" />
       <VStack
         alignItems="center"
         justifyContent="space-between"
