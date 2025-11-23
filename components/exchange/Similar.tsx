@@ -1,23 +1,11 @@
-import {
-  Box,
-  Grid,
-  HStack,
-  Text,
-  useBreakpointValue,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, VStack } from "@chakra-ui/react";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
 import { IPm } from "../../types/selector";
 import { pmsToSlug } from "../main/side/selector/section/PmGroup/helper";
-import { BsArrowRightShort } from "react-icons/bs";
 import useSWR from "swr";
 import { initParserFetcher } from "../../services/fetchers";
 import { format } from "../../redux/amountsHelper";
-import { useRouter } from "next/router";
-import Link from "next/link"; // Import Link from next/link
-import PmName from "../shared/PmName";
 import Dir from "./Dir";
-import ErrorWrapper from "../shared/ErrorWrapper";
 import { useTranslation } from "next-i18next";
 import SimilarMass from "./SimilarMass";
 import { IMassDirTextId } from "../../types/mass";
@@ -66,19 +54,13 @@ const Similar = ({
     ];
     const rate =
       course < 1
-        ? `1 ${giveCur} ~ ${format(1 / course, 2)} ${getCur}`
-        : `1 ${getCur} ~ ${format(course, 2)} ${giveCur}`;
+        ? `1 ${giveCur} = ${format(1 / course, 2)} ${getCur}`
+        : `1 ${getCur} = ${format(course, 2)} ${giveCur}`;
 
-    return (
-      <HStack w="100%" justifyContent="space-between" mt="2">
-        <ResponsiveText size="sm" variant="no_contrast">{`${t(
-          "main:exchangers"
-        )} ${amountOfCourses}`}</ResponsiveText>
-        <ResponsiveText size="sm" variant="no_contrast">
-          {rate}
-        </ResponsiveText>
-      </HStack>
-    );
+    return {
+      amountOfCourses,
+      rateText: rate,
+    };
   };
 
   return (
@@ -98,11 +80,29 @@ const Similar = ({
           getPm: pair[1],
         });
 
+        const rateData = data?.[index] && renderRate(pair, data[index]);
+
         return (
           <VStack spacing={4} align="stretch" my="4" key={slug + index}>
-            <Dir givePm={pair[0]} getPm={pair[1]} slug={slug}>
-              {data?.[index] && renderRate(pair, data[index])}
-            </Dir>
+            <Dir
+              givePm={pair[0]}
+              getPm={pair[1]}
+              slug={slug}
+              bottomLeft={
+                rateData ? (
+                  <ResponsiveText size="xs" variant="no_contrast">
+                    {`${t("main:exchangers")} ${rateData.amountOfCourses}`}
+                  </ResponsiveText>
+                ) : null
+              }
+              bottomRight={
+                rateData ? (
+                  <ResponsiveText size="xs" variant="no_contrast">
+                    {rateData.rateText}
+                  </ResponsiveText>
+                ) : null
+              }
+            />
           </VStack>
         );
       })}

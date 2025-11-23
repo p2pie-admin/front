@@ -53,7 +53,7 @@ export const FiatSelector = () => {
   const { code: currentCode, currency: selectedCurrency } =
     convertSlugIntoMassDirText(slug, isSell);
 
-  const buttonContentSymbol = (
+  const buttonContentSmall = (
     <ResponsiveText
       overflow="hidden"
       textOverflow="ellipsis"
@@ -96,12 +96,7 @@ export const FiatSelector = () => {
             width="100%"
           >
             <Box flex="1" minW="0">
-              <Box display={{ base: "block", lg: "none" }}>
-                {buttonContentSymbol}
-              </Box>
-              <Box display={{ base: "none", lg: "block" }}>
-                {buttonContentFull}
-              </Box>
+              {buttonContentFull}
             </Box>
           </Box>
         </MenuButton>

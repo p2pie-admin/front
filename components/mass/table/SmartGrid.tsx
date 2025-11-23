@@ -9,29 +9,34 @@ type Props = {
 const SmartGrid = ({
   children,
   wrapThreshold = 3,
-  direction = "start",
+  direction = "end",
 }: Props) => {
   const count = children.length;
   const shouldWrap = count >= wrapThreshold;
+  const gridDirection = direction === "end" ? "rtl" : "ltr";
 
   return shouldWrap ? (
     <Box
       display="grid"
       gridTemplateRows="repeat(2, auto)"
       gridAutoFlow="column"
-      gap="1"
+      columnGap="1"
+      rowGap="2"
       w="fit-content"
       justifySelf={direction}
       alignItems="center"
+      sx={{ direction: gridDirection }}
     >
       {children.map((child, i) => (
-        <Box key={i}>{child}</Box>
+        <Box key={i + "column"} sx={{ direction: "ltr" }}>
+          {child}
+        </Box>
       ))}
     </Box>
   ) : (
     <Box display="flex" alignItems="center" justifyContent={direction} gap="1">
       {children.map((child, i) => (
-        <Box key={i}>{child}</Box>
+        <Box key={i + "row"}>{child}</Box>
       ))}
     </Box>
   );

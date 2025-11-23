@@ -19,7 +19,9 @@ export default function Headers() {
     >
       <ResponsiveText size="xs">Обменник</ResponsiveText>
       <ResponsiveText size="xs">Рейтинг</ResponsiveText>
-      <ResponsiveText size="xs">Параметры</ResponsiveText>
+      <ResponsiveText size="xs" textAlign="end">
+        Параметры
+      </ResponsiveText>
       <Tooltip openDelay={500} hasArrow label={text} size="md">
         <HStack justifySelf="start" position="relative">
           <RiInformationLine size="1.2rem" />

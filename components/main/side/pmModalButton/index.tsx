@@ -65,7 +65,7 @@ const PmModalButton = () => {
         {!pms?.length ? unselectedPmText : currencyCode}
       </ResponsiveText>
 
-      {pms?.[0]?.subgroup_name && ( // tag
+      {/* {pms?.[0]?.subgroup_name && ( // tag
         <Box
           position="absolute"
           zIndex="5"
@@ -77,7 +77,7 @@ const PmModalButton = () => {
             <Text variant="contrast">{pms?.[0].subgroup_name}</Text>
           </Tag>
         </Box>
-      )}
+      )} */}
     </ModalButton>
   );
 };

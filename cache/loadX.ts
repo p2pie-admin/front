@@ -97,8 +97,8 @@ export const loadArticle = (code: string) =>
 
 export const loadPossibleDirs = () =>
   cachedFetch("dirs", TTL.fast, async () => {
-    const pdirs = await parserFetcher("dirs"); // {"BTC_USDTTRC20": 119, "BTC_ETH": 34, ...}
-    return Object.keys(pdirs);
+    const dirs = await parserFetcher("dirs"); // {"BTC_USDTTRC20": 119, "BTC_ETH": 34, ...}
+    return Object.keys(dirs);
   });
 
 export const loadPms = async () => {

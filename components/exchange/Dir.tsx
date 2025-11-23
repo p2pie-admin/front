@@ -1,4 +1,4 @@
-import { Grid } from "@chakra-ui/react";
+import { Box, Grid } from "@chakra-ui/react";
 
 import Link from "next/link";
 import { BsArrowRightShort } from "react-icons/bs";
@@ -11,12 +11,19 @@ const Dir = ({
   givePm,
   getPm,
   slug,
+  bottomLeft,
+  bottomRight,
 }: {
   slug: string;
   givePm?: IPm;
   getPm?: IPm;
   children?: any;
+  bottomLeft?: React.ReactNode;
+  bottomRight?: React.ReactNode;
 }) => {
+  const leftContent = bottomLeft ?? children ?? null;
+  const rightContent = bottomRight ?? null;
+
   return (
     <Link href={`/${slug}`} passHref>
       <Box3D
@@ -28,16 +35,33 @@ const Dir = ({
         variant="contrast"
       >
         <Grid
-          gridTemplateColumns={"1fr 40px  1fr"}
+          gridTemplateColumns={"1fr 40px 1fr"}
+          gridTemplateRows="auto"
           color="bg.500"
           alignItems="center"
+          columnGap="2"
         >
-          <PmName pm={givePm} isFull={false} />
+          <Box gridColumn="1" display="flex" flexDir="column" gap="1">
+            <PmName pm={givePm} isFull={false} />
+            {leftContent}
+          </Box>
 
-          <BsArrowRightShort size="1.5rem" />
-          <PmName pm={getPm} isFull={false} />
+          <Box gridColumn="2" justifySelf="center">
+            <BsArrowRightShort size="1.5rem" />
+          </Box>
+
+          <Box
+            gridColumn="3"
+            justifySelf="end"
+            display="flex"
+            flexDir="column"
+            gap="1"
+            alignItems="flex-end"
+          >
+            <PmName pm={getPm} isFull={false} />
+            {rightContent}
+          </Box>
         </Grid>
-        {children || ""}
       </Box3D>
     </Link>
   );

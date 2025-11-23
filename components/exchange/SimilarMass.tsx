@@ -38,7 +38,7 @@ const SimilarMass = ({
   if (!linkExists?.code || !pms || !side || !cryptoPm || !fiatPm) return <></>;
 
   const pmIconsRender = (
-    <SmartGrid wrapThreshold={3} direction={"start"}>
+    <SmartGrid wrapThreshold={3} direction={"end"}>
       {pms.map((pm) => (
         <HStack
           key={pm.code + pm.subgroup_name || pm.en_name}
@@ -55,7 +55,7 @@ const SimilarMass = ({
   const cryptoPmRender = (
     <VStack alignItems="start">
       <PmName pm={cryptoPm} isFull={false} />
-      <ResponsiveText size="sm" variant="no_contrast">
+      <ResponsiveText size="xs" variant="no_contrast">
         {`${
           side == "sell" ? "Продать" : "Купить"
         } ${cryptoPm.currency.code.toUpperCase()} за  ${fiatPm.currency.code.toUpperCase()}`}
@@ -83,9 +83,12 @@ const SimilarMass = ({
           alignItems="center"
           justifyContent="center"
           h="100%"
+          columnGap="2"
         >
           {side == "buy" ? pmIconsRender : cryptoPmRender}
-          <BsArrowRightShort size="1.5rem" />
+          <Box gridColumn="2" justifySelf="center">
+            <BsArrowRightShort size="1.5rem" />
+          </Box>
           {side == "buy" ? cryptoPmRender : pmIconsRender}
         </Grid>
       </Box3D>

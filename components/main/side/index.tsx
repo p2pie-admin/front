@@ -60,7 +60,7 @@ const Side = () => {
             color="bg.400"
             fontSize="sm"
             position="absolute"
-            bottom="1"
+            bottom="1.5"
             left="4"
           >
             {capitalize(pmName)}
