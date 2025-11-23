@@ -77,13 +77,17 @@ export const enrichLink = ({
   if (!givePm || !getPm) return refLink;
   const isCash = isCashPm(givePm) || isCashPm(getPm);
 
-  if (refLink.includes("?")) {
-    return `${refLink}&cur_from=${givePm.code}&cur_to=${getPm.code}${
-      isCash && cityCode ? `&city=${cityCode.toUpperCase()}` : ""
-    }`;
-  }
+  // Avoid double slashes and duplicate separators when appending params
+  const normalizedRefLink = refLink.replace(/\/+$/, "");
+  const hasQuery = normalizedRefLink.includes("?");
+  const joiner =
+    normalizedRefLink.endsWith("?") || normalizedRefLink.endsWith("&")
+      ? ""
+      : hasQuery
+      ? "&"
+      : "?";
 
-  return `${refLink}/?cur_from=${givePm.code}&cur_to=${getPm.code}${
-    isCash && cityCode ? `&city=${cityCode.toUpperCase()}` : ""
-  }`;
+  return `${normalizedRefLink}${joiner}cur_from=${givePm.code}&cur_to=${
+    getPm.code
+  }${isCash && cityCode ? `&city=${cityCode.toUpperCase()}` : ""}`;
 };

@@ -12,6 +12,8 @@ import { IPm } from "../../../types/selector";
 import RateLink from "./RateLink";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { useRouter } from "next/router";
+import { slugCityToExchange } from "../../exchange/exchangeHelper";
+import { useAppSelector } from "../../../redux/hooks";
 
 const CryptoRates = ({
   cryptoPm,
@@ -26,6 +28,9 @@ const CryptoRates = ({
   };
 }) => {
   const { locale } = useRouter() as { locale: "en" | "ru" };
+  const citySlug = useAppSelector((state) =>
+    state.main.city?.en_name.replaceAll(" ", "-").toLowerCase()
+  );
   return (
     <>
       <Box>
@@ -47,13 +52,14 @@ const CryptoRates = ({
         {buySell.buy.map((rate, index) => {
           const pm = popularPms?.find((pm) => pm?.code == rate?.fiat);
           const slug = pmsToSlug({ givePm: pm, getPm: cryptoPm });
+          const fullSlug = `/${slugCityToExchange(slug, citySlug)}`;
           const rateNumber = `${curToSymbol(
             pm?.currency.code.toUpperCase()
           )} ${format(rate?.course, 2)} `;
           return (
             <RateLink
               key={String(rate?.exchangerId) + index + "buy"}
-              slug={slug}
+              slug={fullSlug}
               rateNumber={rateNumber}
               side="buy"
             />
@@ -64,13 +70,15 @@ const CryptoRates = ({
         {buySell.sell.map((rate, index) => {
           const pm = popularPms?.find((pm) => pm?.code == rate?.fiat);
           const slug = pmsToSlug({ givePm: cryptoPm, getPm: pm });
+
+          const fullSlug = `/${slugCityToExchange(slug, citySlug)}`;
           const rateNumber = `${curToSymbol(
             pm?.currency.code.toUpperCase()
           )} ${format(rate?.course, 2)} `;
           return (
             <RateLink
               key={String(rate?.exchangerId) + index + "sell"}
-              slug={slug}
+              slug={fullSlug}
               rateNumber={rateNumber}
               side="sell"
             />
