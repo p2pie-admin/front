@@ -96,7 +96,12 @@ export const FiatSelector = () => {
             width="100%"
           >
             <Box flex="1" minW="0">
-              {buttonContentFull}
+              <Box display={{ base: "block", lg: "none" }}>
+                {buttonContentSmall}
+              </Box>
+              <Box display={{ base: "none", lg: "block" }}>
+                {buttonContentFull}
+              </Box>
             </Box>
           </Box>
         </MenuButton>
