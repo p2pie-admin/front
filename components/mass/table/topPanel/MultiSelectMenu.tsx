@@ -38,7 +38,7 @@ export const MultiSelectMenu: React.FC<Props> = ({
 }) => {
   const maxTagToShow = isSmall ? 4 : 8;
   const [selected, setSelected] = React.useState<string[]>(defaultValue);
-  const isSell = useContext(MassSideContext) as boolean;
+  const { isSell } = useContext(MassSideContext);
 
   const dispatch = useAppDispatch();
 

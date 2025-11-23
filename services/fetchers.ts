@@ -67,7 +67,7 @@ export const initParserFetcher = () => {
   };
 };
 
-export const initCurrencyConverterFetcher = (p2pDirIndex?: number) => {
+export const initCurrencyConverterFetcher = () => {
   const env = process.env.NODE_ENV;
   const url = env === "production" ? converterLinkPROD : converterLinkDEV;
 
@@ -76,10 +76,10 @@ export const initCurrencyConverterFetcher = (p2pDirIndex?: number) => {
       url + "/" + (currenciesPair ? currenciesPair.toUpperCase() : "");
     try {
       const { data } = await retry(() => axios.get(fullUrl));
-      return { data, p2pDirIndex };
+      return { data };
     } catch (e) {
       console.error("CONVERTER FETCHER ERROR after 3 retries: ", e);
-      return { data: null, p2pDirIndex };
+      return { data: null };
     }
   };
 };

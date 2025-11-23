@@ -9,23 +9,37 @@ import CustomModal from "../../../shared/CustomModal";
 import Countries from "./Countries";
 import React from "react";
 import { useRouter } from "next/router";
+import { locale } from "../../../../services/utils";
+import path from "path";
 
 const CitySelector = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const { locale } = router as { locale: "en" | "ru" };
-  const { exchange: slug } = router.query as { exchange: string };
-  const currentCity = useAppSelector(
+
+  const path = router.asPath;
+  const currentCityName = useAppSelector(
     (state) => state.main?.city[`${locale}_name`]
   );
 
   const dispatch = useAppDispatch();
-  if (!slug || !(slug.startsWith("cash-") || slug.includes("-cash-")))
-    return <></>;
+
+  const lastString = path.split("/")[path.split("/").length - 1];
+  let pageType;
+  const isCash =
+    lastString.startsWith("cash-") || lastString.includes("-cash-");
+  const isMapPage = path.includes("map/");
+  const isMassPage = path.includes("sell/") || path.includes("buy/");
+
+  if (isCash) pageType = "cash";
+  if (isMapPage) pageType = "map";
+  if (isMassPage) pageType = "mass";
+
+  if (!isCash && !isMapPage && !isMassPage) return <></>;
+
   return (
     <Box>
       <CustomModal id="location" header={t("main:chooseCity")}>
-        <Countries />
+        <Countries pageType={pageType} />
       </CustomModal>
 
       <ResponsiveButton
@@ -36,7 +50,7 @@ const CitySelector = () => {
         rightIcon={<Arrow isUp={false} />}
         onClick={() => dispatch(triggerModal("location"))}
       >
-        {currentCity || t("main:city")}
+        {currentCityName || t("main:city")}
       </ResponsiveButton>
     </Box>
   );

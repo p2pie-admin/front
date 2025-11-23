@@ -128,7 +128,10 @@ const Actions = ({ exchanger }: { exchanger: IExchanger }) => {
         onClick={handleBookmarkOpen}
         color={bookmark ? "red.500" : "bg.200"}
       >
-        <CustomModal id={"exchangerBookmark"} header={"Добавьте пометку для себя"}>
+        <CustomModal
+          id={"exchangerBookmark"}
+          header={"Добавьте пометку для себя"}
+        >
           <Box p="4">
             <Input
               size="lg"
@@ -167,6 +170,7 @@ const Actions = ({ exchanger }: { exchanger: IExchanger }) => {
         variant="no_contrast"
         onClick={handleLike}
         fontWeight="unset"
+        px="6"
         color={liked ? "red.500" : "bg.200"}
         rightIcon={
           liked ? <HiHeart size="1.3rem" /> : <HiOutlineHeart size="1.3rem" />

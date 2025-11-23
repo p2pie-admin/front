@@ -37,7 +37,7 @@ const initialOrder = {
 };
 
 const defaultCity = {
-  codes: ["MOS", "MOW"],
+  codes: ["MSK"],
   en_name: "Moscow",
   ru_name: "Москва",
   population: 6,

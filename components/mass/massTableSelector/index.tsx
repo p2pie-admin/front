@@ -1,9 +1,8 @@
 import React from "react";
-import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
+import { Box3D } from "../../../styles/theme/custom";
 import {
   HStack,
   Text,
-  Button,
   useBreakpointValue,
   Box,
   Divider,
@@ -16,12 +15,8 @@ import FiatSelector from "./FiatSelector";
 import { IPm } from "../../../types/selector";
 
 export default function MassTableSelector({
-  slug,
-
   cryptoPms,
 }: {
-  slug: string;
-
   cryptoPms: IPm[];
 }) {
   const isSmall = useBreakpointValue({
@@ -38,22 +33,22 @@ export default function MassTableSelector({
     >
       {isSmall ? (
         <Box mt="2" px="4" py="2">
-          <CryptoList slug={slug} cryptoPms={cryptoPms} />
+          <CryptoList cryptoPms={cryptoPms} />
           <HStack mt="6" justifyContent="space-between">
-            <SideButtons slug={slug} />
+            <SideButtons />
             <Divider />
             <Text fontSize="xl" fontWeight="bold">
               {"за"}
             </Text>
             <Divider />
-            <FiatSelector slug={slug} />
+            <FiatSelector />
           </HStack>
         </Box>
       ) : (
         <HStack>
-          <SideButtons slug={slug} />
-          <CryptoList slug={slug} cryptoPms={cryptoPms} />
-          <FiatSelector slug={slug} />
+          <SideButtons />
+          <CryptoList cryptoPms={cryptoPms} />
+          <FiatSelector />
         </HStack>
       )}
     </Box3D>

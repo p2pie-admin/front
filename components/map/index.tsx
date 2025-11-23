@@ -216,16 +216,9 @@ const CityMapView = ({
             as="h1"
             Icon={TbMapPinFilled}
           />
-          <HStack spacing="3" w={{ base: "100%", lg: "unset" }}>
+          {/* <HStack spacing="3" w={{ base: "100%", lg: "unset" }}>
             <OfficeSearchInput value={searchTerm} onChange={setSearchTerm} />
-            {normalizedSearch && (
-              <Text fontSize="sm" color="bg.300">
-                {highlightedIds.size
-                  ? `Найдено: ${highlightedIds.size}`
-                  : "Ничего не найдено"}
-              </Text>
-            )}
-          </HStack>
+          </HStack> */}
         </HStack>
 
         <Divider my="4" />

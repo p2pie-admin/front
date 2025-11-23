@@ -9,9 +9,11 @@ import City from "./City";
 export default function Country({
   country,
   dir,
+  pageType,
 }: {
   country: ISelectorCountry;
   dir?: string;
+  pageType?: string;
 }) {
   const { locale } = useRouter();
 
@@ -41,7 +43,14 @@ export default function Country({
             // const selected = highlightedCities.find((c) => c == city.en_name);
 
             //const bullet = !isMultiple ? "" : selected ? "•" : "◦";
-            return <City key={city.en_name} city={city} dir={dir} />;
+            return (
+              <City
+                key={city.en_name}
+                city={city}
+                dir={dir}
+                pageType={pageType}
+              />
+            );
           })}
       </Grid>
     </>

@@ -15,7 +15,7 @@ export default function MassRateAmount({
 }) {
   const { code, currency } = massDirTextId;
   const symbol = curToSymbol(currency.code);
-  const isSell = useContext(MassSideContext);
+  const { isSell } = useContext(MassSideContext);
 
   let left = "";
   let right = "";

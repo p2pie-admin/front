@@ -4,8 +4,8 @@ import MassSideContext from "../sideContext";
 
 import NextLink from "next/link";
 
-function SideButtons({ slug }: { slug: string }) {
-  const isSell = useContext(MassSideContext);
+function SideButtons() {
+  const { isSell, slug } = useContext(MassSideContext);
   return (
     <HStack
       gap="0"

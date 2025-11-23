@@ -26,18 +26,20 @@ const Layout = ({ children }: { children: any }) => {
   //const isScrollLocked = useAppSelector((state) => state.main.isScrollLocked);
   const myToast = useAppSelector((state) => state.main?.toast);
   const toast = useToast();
-  const { query } = useRouter();
-  const cityInSlugExists = query?.exchange && query.exchange.includes("-in-");
-
+  const { asPath } = useRouter();
+  const lastString = asPath.split("/")[asPath.split("/").length - 1];
+  const isCash =
+    lastString.startsWith("cash-") || lastString.includes("-cash-");
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const fetcher = initCurrencyConverterFetcher();
     fetcher().then((resp) => {
       if (resp.data) {
-        const { ip, ...city } = resp.data as ICity & { ip: string };
+        const { ip, ...cityData } = resp.data as any;
+
         batch(() => {
-          !cityInSlugExists && dispatch(setCity(city));
+          !isCash && cityData?.city && dispatch(setCity(cityData.city));
           dispatch(setIP(ip));
         });
       }

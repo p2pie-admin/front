@@ -47,8 +47,8 @@ const fiatCurrencies = {
 
 type FiatCode = keyof typeof fiatCurrencies;
 
-export const FiatSelector = ({ slug }: { slug: string }) => {
-  const isSell = useContext(MassSideContext);
+export const FiatSelector = () => {
+  const { isSell, slug } = useContext(MassSideContext);
   const { code: currentCode, currency: selectedCurrency } =
     convertSlugIntoMassDirText(slug, isSell);
 

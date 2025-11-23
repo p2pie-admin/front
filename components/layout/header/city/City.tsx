@@ -14,9 +14,11 @@ import { slugCityToExchange } from "../../../exchange/exchangeHelper";
 export default function City({
   city,
   dir,
+  pageType,
 }: {
   city?: ISelectorCity;
   dir?: string;
+  pageType?: string;
 }) {
   const { locale } = useRouter();
   const slug = useAppSelector((state) =>
@@ -27,14 +29,21 @@ export default function City({
   const router = useRouter();
 
   const handleChooseCity = (en_name: string) => {
-    router.push(`/${slugCityToExchange(slug, en_name)}`);
+    const citySlug = en_name.replaceAll(" ", "-").toLowerCase();
+    if (pageType == "cash" && slug) {
+      router.push(`/${slugCityToExchange(slug, citySlug)}`);
+    }
+    if (pageType == "map") {
+      router.push(`/map/${citySlug}`);
+    }
+
     batch(() => {
       dispatch(fetchCity(en_name));
       dir && dispatch(setDirRatesStatus("pending"));
       dispatch(triggerModal(undefined));
     });
   };
-  if (!dir || !city) return <></>;
+  if (!city) return <></>;
   const weight = weights[city.population || 0];
   return (
     // <Link

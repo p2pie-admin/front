@@ -1,6 +1,5 @@
 import {
   Box,
-  Divider,
   HStack,
   IconButton,
   Tooltip,
@@ -14,11 +13,9 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { ResponsiveText } from "../../../styles/theme/custom";
 import Link from "next/link";
 import {
   convertMassDirTextIntoSlug,
-  convertSlugIntoMassDirText,
 } from "../../../cache/helper";
 import MassSideContext from "../sideContext";
 import { IMassDirTextId } from "../../../types/mass";
@@ -28,20 +25,11 @@ import { capitalize } from "../../main/side/selector/section/PmGroup/helper";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import HorizontalShader from "../../shared/HorizontalShader";
 
-export default function CryptoList({
-  slug,
-
-  cryptoPms,
-}: {
-  slug: string;
-
-  cryptoPms: IPm[];
-}) {
-  const isSell = useContext(MassSideContext);
-  const { code: currentCode, currency } = convertSlugIntoMassDirText(
-    slug,
-    isSell
-  );
+export default function CryptoList({ cryptoPms }: { cryptoPms: IPm[] }) {
+  const { isSell, slug, currencyCode, currentCryptoPm } =
+    useContext(MassSideContext);
+  const currency = { code: currencyCode };
+  const currentCode = currentCryptoPm?.code ?? "";
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const isSmall =
@@ -54,9 +42,7 @@ export default function CryptoList({
   const selectedItemRef = useRef<HTMLDivElement | null>(null);
   const scrollStep = 220;
   const addScrollPixels = -50;
-  const buttonBg = useColorModeValue("bg.200", "bg.800");
   const buttonColor = useColorModeValue("bg.900", "bg.100");
-  const dividerColor = useColorModeValue("bg.400", "bg.700");
 
   const scrollBy = useCallback((direction: "left" | "right") => {
     if (!scrollRef.current) return;
@@ -159,7 +145,7 @@ export default function CryptoList({
 
             return (
               <Tooltip
-                key={pm.code + currency + pm.en_name + isSell}
+                key={pm.code + currencyCode + pm.en_name + isSell}
                 label={`${capitalize(
                   pm.en_name
                 )} ${pm.currency.code.toUpperCase()} ${pm.subgroup_name || ""}`}

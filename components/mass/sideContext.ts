@@ -1,3 +1,21 @@
 import React from "react";
-const MassSideContext = React.createContext<boolean>(true);
+import { ICity } from "../../types/exchange";
+import { IPm } from "../../types/selector";
+
+export type MassContextValue = {
+  isSell: boolean;
+  slug: string;
+  currencyCode: string;
+  currentCryptoPm?: IPm;
+  city?: ICity;
+};
+
+const MassSideContext = React.createContext<MassContextValue>({
+  isSell: true,
+  slug: "",
+  currencyCode: "",
+  currentCryptoPm: undefined,
+  city: undefined,
+});
+
 export default MassSideContext;

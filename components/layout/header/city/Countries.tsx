@@ -7,9 +7,10 @@ import ErrorWrapper from "../../../shared/ErrorWrapper";
 import Country from "./Country";
 import { useAppSelector } from "../../../../redux/hooks";
 
-export default function Countries() {
+export default function Countries({ pageType }: { pageType?: string }) {
   const fetcher = initParserFetcher();
   const dir = useAppSelector((state) => {
+    if (pageType !== "cash") return undefined;
     const [givePm, getPm] = [state.main.givePm, state.main.getPm];
     if (givePm && getPm) return `${givePm.code}_${getPm.code}`;
     return undefined;
@@ -21,7 +22,6 @@ export default function Countries() {
     data: ISelectorCountry[];
     error: boolean;
   };
-  console.log(data);
 
   return (
     <ErrorWrapper isError={error} isLoading={!data}>
@@ -29,6 +29,7 @@ export default function Countries() {
         {data &&
           data.map((country, index) => (
             <Country
+              pageType={pageType}
               key={country.en_country_name}
               country={country}
               dir={dir}

@@ -2,9 +2,9 @@ import { Heading, HStack, VStack, Text, Box } from "@chakra-ui/react";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
 import { IMassDirText, IMassDirTextId, IMassRate } from "../../types/mass";
 import { IPm } from "../../types/selector";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { fetchTopParameters } from "../../redux/thunks";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import MassTable from "./table";
 import MassSideContext from "./sideContext";
 import MassSelector from "./massSelectorSwiper";
@@ -28,6 +28,14 @@ const Mass = ({
   slug: string;
 }) => {
   const { header, subheader, text } = massDirText;
+  const selectedCryptoPm = useMemo(
+    () =>
+      cryptoPms.find(
+        (pm) => pm.code.toUpperCase() === massDirTextId.code.toUpperCase()
+      ),
+    [cryptoPms, massDirTextId.code]
+  );
+  const city = useAppSelector((state) => state.main.city);
 
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -35,7 +43,15 @@ const Mass = ({
   }, []);
 
   return (
-    <MassSideContext.Provider value={isSell}>
+    <MassSideContext.Provider
+      value={{
+        isSell,
+        slug,
+        currencyCode: massDirTextId.currency.code,
+        currentCryptoPm: selectedCryptoPm,
+        city,
+      }}
+    >
       <Box p="4">
         <Heading
           fontSize={{ base: "xl", lg: "4xl" }}
@@ -63,7 +79,7 @@ const Mass = ({
       </Box>
 
       <VStack gap="5" mt={["2", "8"]}>
-        <MassTableSelector slug={slug} cryptoPms={cryptoPms} />
+        <MassTableSelector cryptoPms={cryptoPms} />
 
         <MassTable
           massRates={massRates}
