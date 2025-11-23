@@ -17,8 +17,10 @@ const RateLink = ({
   const pink = useColorModeValue("pink.700", "pink.200");
   const bgColor = useColorModeValue("bg.10", "bg.800");
 
+  const href = slug?.startsWith("/") ? slug : `/${slug}`;
+
   return (
-    <Link href={`/${slug}`} passHref>
+    <Link href={href} passHref>
       <HStack
         px="1"
         borderRadius="md"

@@ -52,7 +52,7 @@ const CryptoRates = ({
         {buySell.buy.map((rate, index) => {
           const pm = popularPms?.find((pm) => pm?.code == rate?.fiat);
           const slug = pmsToSlug({ givePm: pm, getPm: cryptoPm });
-          const fullSlug = `/${slugCityToExchange(slug, citySlug)}`;
+          const fullSlug = slugCityToExchange(slug, citySlug);
           const rateNumber = `${curToSymbol(
             pm?.currency.code.toUpperCase()
           )} ${format(rate?.course, 2)} `;
@@ -71,7 +71,7 @@ const CryptoRates = ({
           const pm = popularPms?.find((pm) => pm?.code == rate?.fiat);
           const slug = pmsToSlug({ givePm: cryptoPm, getPm: pm });
 
-          const fullSlug = `/${slugCityToExchange(slug, citySlug)}`;
+          const fullSlug = slugCityToExchange(slug, citySlug);
           const rateNumber = `${curToSymbol(
             pm?.currency.code.toUpperCase()
           )} ${format(rate?.course, 2)} `;
