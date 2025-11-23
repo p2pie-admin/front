@@ -19,6 +19,7 @@ import {
 } from "../../../cache/helper";
 import MassSideContext from "../sideContext";
 import { IMassDirTextId } from "../../../types/mass";
+import { locale } from "../../../services/utils";
 
 export type Option = { value: string; label: string };
 
@@ -52,7 +53,7 @@ export const FiatSelector = () => {
   const { code: currentCode, currency: selectedCurrency } =
     convertSlugIntoMassDirText(slug, isSell);
 
-  const buttonContent = (
+  const buttonContentSymbol = (
     <ResponsiveText
       overflow="hidden"
       textOverflow="ellipsis"
@@ -63,13 +64,27 @@ export const FiatSelector = () => {
     </ResponsiveText>
   );
 
+  const buttonContentFull = (
+    <ResponsiveText
+      overflow="hidden"
+      textOverflow="ellipsis"
+      variant="primary"
+      fontSize="xl"
+    >
+      {`за ${
+        fiatCurrencies[selectedCurrency.code.toLowerCase() as FiatCode]?.[
+          `${locale}_name`
+        ]
+      }`}
+    </ResponsiveText>
+  );
+
   return (
-    <Box w="20">
+    <Box>
       <Menu>
         <MenuButton
           as={Button}
           rightIcon={<IoIosArrowDown />}
-          width="80px"
           textAlign="left"
           h="40px"
           ml="auto"
@@ -81,7 +96,12 @@ export const FiatSelector = () => {
             width="100%"
           >
             <Box flex="1" minW="0">
-              {buttonContent}
+              <Box display={{ base: "block", lg: "none" }}>
+                {buttonContentSymbol}
+              </Box>
+              <Box display={{ base: "none", lg: "block" }}>
+                {buttonContentFull}
+              </Box>
             </Box>
           </Box>
         </MenuButton>

@@ -10,30 +10,39 @@ export type Option = { value: string; label: string };
 
 const TopPanel = ({
   fiatPms,
-  isSmall,
   massDirTextId,
 }: {
   fiatPms: Record<string, IPm>;
-  isSmall: boolean;
   massDirTextId: IMassDirTextId;
 }) => {
-  if (isSmall) {
-    return (
-      <Box py="2" px="4">
-        <HStack gap="4" align="stretch" w="100%" mb="4">
-          <MultiSelectMenu fiatPms={fiatPms} isSmall={isSmall} />
+  return (
+    <>
+      <VStack
+        display={{ base: "flex", md: "none" }}
+        spacing="3"
+        align="stretch"
+        w="100%"
+        py="2"
+        px="4"
+      >
+        <HStack gap="4" align="stretch" w="100%">
+          <MultiSelectMenu fiatPms={fiatPms} />
           <AmountInput massDirTextId={massDirTextId} />
         </HStack>
         <MassSortButtons />
-      </Box>
-    );
-  }
-  return (
-    <HStack gap="4" align="stretch" w="100%">
-      <MultiSelectMenu fiatPms={fiatPms} isSmall={isSmall} />
-      <AmountInput massDirTextId={massDirTextId} />
-      <MassSortButtons />
-    </HStack>
+      </VStack>
+
+      <HStack
+        display={{ base: "none", md: "flex" }}
+        gap="4"
+        align="stretch"
+        w="100%"
+      >
+        <MultiSelectMenu fiatPms={fiatPms} />
+        <AmountInput massDirTextId={massDirTextId} />
+        <MassSortButtons />
+      </HStack>
+    </>
   );
 };
 

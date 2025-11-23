@@ -3,7 +3,6 @@ import {
   HStack,
   IconButton,
   Tooltip,
-  useBreakpointValue,
   useColorModeValue,
 } from "@chakra-ui/react";
 import React, {
@@ -14,9 +13,7 @@ import React, {
   useState,
 } from "react";
 import Link from "next/link";
-import {
-  convertMassDirTextIntoSlug,
-} from "../../../cache/helper";
+import { convertMassDirTextIntoSlug } from "../../../cache/helper";
 import MassSideContext from "../sideContext";
 import { IMassDirTextId } from "../../../types/mass";
 import { IPm } from "../../../types/selector";
@@ -32,11 +29,6 @@ export default function CryptoList({ cryptoPms }: { cryptoPms: IPm[] }) {
   const currentCode = currentCryptoPm?.code ?? "";
 
   const scrollRef = useRef<HTMLDivElement>(null);
-  const isSmall =
-    useBreakpointValue({
-      base: true,
-      md: false,
-    }) ?? false;
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(false);
   const selectedItemRef = useRef<HTMLDivElement | null>(null);
@@ -93,7 +85,7 @@ export default function CryptoList({ cryptoPms }: { cryptoPms: IPm[] }) {
       left: nextScrollLeft,
       behavior: "smooth",
     });
-  }, [slug, cryptoPms.length, isSmall, addScrollPixels]);
+  }, [slug, cryptoPms.length, addScrollPixels]);
 
   return (
     <HStack
@@ -118,19 +110,17 @@ export default function CryptoList({ cryptoPms }: { cryptoPms: IPm[] }) {
       {!isAtEnd && <HorizontalShader direction="right" />}
       <Box
         flex="1"
-        overflowX={isSmall ? "auto" : "hidden"}
+        overflowX={{ base: "auto", md: "hidden" }}
         overflowY="hidden"
         ref={scrollRef}
         role="group"
-        sx={
-          isSmall
-            ? {
-                "&::-webkit-scrollbar": { display: "none" },
-                scrollbarWidth: "none",
-                msOverflowStyle: "none",
-              }
-            : undefined
-        }
+        sx={{
+          "@media (max-width: 47.99em)": {
+            "&::-webkit-scrollbar": { display: "none" },
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+          },
+        }}
       >
         <Box w="3" />
         <HStack spacing="2" w="max-content" mx="2">

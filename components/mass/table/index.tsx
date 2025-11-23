@@ -1,4 +1,4 @@
-import { Box, Divider, useBreakpointValue } from "@chakra-ui/react";
+import { Box, Divider } from "@chakra-ui/react";
 import React, { useMemo, useState } from "react";
 import { useAppSelector } from "../../../redux/hooks";
 import { Box3D } from "../../../styles/theme/custom";
@@ -19,12 +19,6 @@ function MassTable({
   fiatPms: Record<string, IPm>;
   massDirTextId: IMassDirTextId;
 }) {
-  const isSmall =
-    useBreakpointValue({
-      base: true,
-      md: false,
-    }) ?? false;
-
   const massPmsFilter = useAppSelector((state) => state.main.massPmsFilter);
   const filterSet = new Set(massPmsFilter.map((f) => f.toLowerCase()));
   const massSort = useAppSelector((state) => state.main.massSort);
@@ -69,12 +63,10 @@ function MassTable({
 
   return (
     <Box3D px={["1", "4"]} py={["2", "4"]} variant="contrast">
-      <TopPanel
-        fiatPms={fiatPms}
-        massDirTextId={massDirTextId}
-        isSmall={isSmall}
-      />
-      {!isSmall && <TableHeaders />}
+      <TopPanel fiatPms={fiatPms} massDirTextId={massDirTextId} />
+      <Box display={{ base: "none", md: "block" }}>
+        <TableHeaders />
+      </Box>
 
       <Box py={["1", "2"]} mt="2">
         {paginatedRates.map((rate, idx) => {
@@ -87,7 +79,6 @@ function MassTable({
                 fiatPms={pms}
                 massDirTextId={massDirTextId}
                 massAmount={massAmount}
-                isSmall={isSmall}
               />
             </React.Fragment>
           );

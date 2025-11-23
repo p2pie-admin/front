@@ -11,6 +11,7 @@ import {
   Box,
   VStack,
   Text,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { IoMdClose } from "react-icons/io";
 import { IPm } from "../../../../types/selector";
@@ -26,17 +27,18 @@ export type Option = { value: string; label: string };
 
 type Props = {
   defaultValue?: string[]; // uncontrolled initial
-  isSmall: boolean;
-
   fiatPms: Record<string, IPm>;
 };
 
 export const MultiSelectMenu: React.FC<Props> = ({
   fiatPms,
-  isSmall,
   defaultValue = [],
 }) => {
-  const maxTagToShow = isSmall ? 4 : 8;
+  const maxTagToShow =
+    useBreakpointValue({
+      base: 4,
+      md: 8,
+    }) ?? 8;
   const [selected, setSelected] = React.useState<string[]>(defaultValue);
   const { isSell } = useContext(MassSideContext);
 
@@ -82,7 +84,11 @@ export const MultiSelectMenu: React.FC<Props> = ({
     <Menu closeOnSelect={false} autoSelect={false} onClose={saveSelection}>
       <MenuButton
         as={Button}
-        rightIcon={isSmall ? <></> : <IoIosArrowDown />}
+        rightIcon={
+          <Box display={{ base: "none", md: "inline-flex" }}>
+            <IoIosArrowDown />
+          </Box>
+        }
         minW="100"
         width={{ lg: "520px", base: "unset" }}
         textAlign="left"

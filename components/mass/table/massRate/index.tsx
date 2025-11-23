@@ -33,13 +33,11 @@ const MassRate = ({
   fiatPms,
   massDirTextId,
   massAmount,
-  isSmall,
 }: {
   rate: IMassRate;
   fiatPms: Record<string, IPm>;
   massDirTextId: IMassDirTextId;
   massAmount: { code?: string; value: string };
-  isSmall?: boolean;
 }) => {
   const { name, admin_rating, course, min, max, ref_link, codes, logo } = rate;
   const { code, currency } = massDirTextId;
@@ -148,10 +146,11 @@ const MassRate = ({
     </VStack>
   );
 
-  if (isSmall) {
-    return (
+  return (
+    <>
       <Grid
         {...gridCommonProps}
+        display={{ base: "grid", md: "none" }}
         gridTemplateColumns="1fr"
         rowGap={3}
         px={2}
@@ -188,45 +187,44 @@ const MassRate = ({
           {renderParametersSmall("mobile-small")}
         </HStack>
       </Grid>
-    );
-  }
 
-  return (
-    <Grid
-      {...gridCommonProps}
-      gridTemplateColumns="1fr 3rem 100px 1fr 1fr"
-      columnGap={["2", "4"]}
-      px={2}
-      py={1.5}
-    >
-      <HStack
-        alignItems="center"
-        justifyContent="space-between"
-        cursor="pointer"
-        onClick={handleExchangerClick}
+      <Grid
+        {...gridCommonProps}
+        display={{ base: "none", md: "grid" }}
+        gridTemplateColumns="1fr 3rem 100px 1fr 1fr"
+        columnGap={["2", "4"]}
+        px={2}
+        py={1.5}
       >
-        <HStack alignItems="center" spacing="3">
-          <Box borderRadius="xl" overflow="hidden">
-            <CustomImage img={logo} w="35px" h="35px" />
-          </Box>
+        <HStack
+          alignItems="center"
+          justifyContent="space-between"
+          cursor="pointer"
+          onClick={handleExchangerClick}
+        >
+          <HStack alignItems="center" spacing="3">
+            <Box borderRadius="xl" overflow="hidden">
+              <CustomImage img={logo} w="35px" h="35px" />
+            </Box>
 
-          <ResponsiveText
-            variant="primary"
-            size={name.length > 14 ? "sm" : name.length > 10 ? "md" : "lg"}
-            fontWeight="bold"
-          >
-            {capitalize(name)}
-          </ResponsiveText>
+            <ResponsiveText
+              variant="primary"
+              size={name.length > 14 ? "sm" : name.length > 10 ? "md" : "lg"}
+              fontWeight="bold"
+            >
+              {capitalize(name)}
+            </ResponsiveText>
+          </HStack>
         </HStack>
-      </HStack>
 
-      <Rating rating={rate.admin_rating || 4.4} />
+        <Rating rating={rate.admin_rating || 4.4} />
 
-      {renderParametersBig("mobile")}
-      {renderRatesBig()}
+        {renderParametersBig("mobile")}
+        {renderRatesBig()}
 
-      <MassFiat codes={rate.codes} fiatPms={fiatPms} ref_link={ref_link} />
-    </Grid>
+        <MassFiat codes={rate.codes} fiatPms={fiatPms} ref_link={ref_link} />
+      </Grid>
+    </>
   );
 };
 
