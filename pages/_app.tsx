@@ -12,6 +12,51 @@ import { defaultConfig } from "../next-seo.config";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Head from "next/head";
 import "../i18n"; //
+import { useEffect, useRef } from "react";
+import { useAppDispatch } from "../redux/hooks";
+import { setLoadingStatus } from "../redux/mainReducer";
+
+const RouteLoadingHandler = () => {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const handleStart = () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      dispatch(setLoadingStatus("pending"));
+
+      timeoutRef.current = setTimeout(() => {
+        dispatch(setLoadingStatus("fulfilled"));
+        timeoutRef.current = null;
+      }, 5000);
+    };
+
+    const handleFinish = () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+      dispatch(setLoadingStatus("fulfilled"));
+    };
+
+    router.events.on("routeChangeStart", handleStart);
+    router.events.on("routeChangeComplete", handleFinish);
+    router.events.on("routeChangeError", handleFinish);
+
+    return () => {
+      router.events.off("routeChangeStart", handleStart);
+      router.events.off("routeChangeComplete", handleFinish);
+      router.events.off("routeChangeError", handleFinish);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+    };
+  }, [router.events, dispatch]);
+
+  return null;
+};
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { locale } = useRouter() as { locale: "en" | "ru" };
@@ -28,6 +73,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ChakraProvider theme={theme}>
         <Provider store={store}>
           <Layout>
+            <RouteLoadingHandler />
             <SpeedInsights />
             <DefaultSeo {...seoConfig} />
             <Component {...pageProps} />

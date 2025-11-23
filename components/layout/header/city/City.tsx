@@ -7,7 +7,7 @@ import { fetchCity } from "../../../../redux/thunks";
 import { useRouter } from "next/router";
 import { ISelectorCity } from "../../../../types/city";
 import { weights } from "./helper";
-import { setDirRatesStatus, triggerModal } from "../../../../redux/mainReducer";
+import { setLoadingStatus, triggerModal } from "../../../../redux/mainReducer";
 import { batch } from "react-redux";
 import { slugCityToExchange } from "../../../exchange/exchangeHelper";
 
@@ -39,7 +39,7 @@ export default function City({
 
     batch(() => {
       dispatch(fetchCity(en_name));
-      dir && dispatch(setDirRatesStatus("pending"));
+      dir && dispatch(setLoadingStatus("pending"));
       dispatch(triggerModal(undefined));
     });
   };

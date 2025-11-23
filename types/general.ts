@@ -7,7 +7,7 @@ export type IToast = {
   timeBeforeClosing?: number;
 };
 
-export type IDirRatesStatus = "fulfilled" | "rejected" | "pending";
+export type ILoadingStatus = "fulfilled" | "rejected" | "pending";
 
 export type BreadcrumbItem = {
   position: number;

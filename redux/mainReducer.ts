@@ -23,7 +23,7 @@ import { ICurrencyConverterRate, IFingerprint } from "../types/shared";
 
 import { format, R } from "./amountsHelper";
 
-import { IDirRatesStatus, IToast } from "../types/general";
+import { ILoadingStatus, IToast } from "../types/general";
 
 import { ICity } from "../types/exchange";
 import { IMassSort } from "../types/mass";
@@ -65,7 +65,6 @@ export interface MainState {
   givePm?: IPm;
   getPm?: IPm;
   dirRates?: IRate[]; //  uniqueRates + bestRates
-  dirRatesStatus: IDirRatesStatus;
   dirRatesReloadTrigger?: DirRatesReloadTrigger;
   amountInput?: AmountInput;
   amountOutputs: AmountOutputs;
@@ -89,12 +88,13 @@ export interface MainState {
   massAmount: { value: string; code?: string };
   massSort: IMassSort;
   massSelectorSlug: string;
+  loading: ILoadingStatus;
 }
 
 const initialState: MainState = {
   searchBarInputValue: "",
   side: "get",
-  dirRatesStatus: "fulfilled",
+  loading: "fulfilled",
   dirRatesReloadTrigger: "manual",
   amountOutputs: initialAmountOutputs,
   swiperIdVisible: 0,
@@ -251,7 +251,7 @@ export const mainSlice = createSlice({
     },
     clearDirRates: (state: MainState) => {
       state.dirRates = [];
-      state.dirRatesStatus = "pending";
+      state.loading = "pending";
     },
 
     clean: (state: MainState) => {
@@ -272,7 +272,7 @@ export const mainSlice = createSlice({
         city: ICity | null;
       }>
     ) => {
-      state.dirRatesStatus = "pending";
+      state.loading = "pending";
       const { givePm, getPm, city } = action.payload;
       state.givePm = givePm;
       state.getPm = getPm;
@@ -281,11 +281,8 @@ export const mainSlice = createSlice({
     sendToast: (state: MainState, action: PayloadAction<IToast>) => {
       state.toast = action.payload;
     },
-    setDirRatesStatus: (
-      state: MainState,
-      action: PayloadAction<IDirRatesStatus>
-    ) => {
-      state.dirRatesStatus = action.payload;
+    setLoadingStatus: (state: MainState, action: PayloadAction<ILoadingStatus>) => {
+      state.loading = action.payload;
     },
     setMassPmsFilter: (state: MainState, action: PayloadAction<string[]>) => {
       state.massPmsFilter = action.payload;
@@ -325,17 +322,17 @@ export const mainSlice = createSlice({
     });
 
     builder.addCase(fetchDirRates.pending, (state) => {
-      state.dirRatesStatus = "pending";
+      state.loading = "pending";
     });
 
     builder.addCase(fetchDirRates.rejected, (state) => {
-      state.dirRatesStatus = "rejected";
+      state.loading = "rejected";
     });
 
     builder.addCase(fetchDirRates.fulfilled, (state, action) => {
       if (!action.payload) {
         // если не получены курсы, парсер не отвечает вовсе
-        state.dirRatesStatus = "rejected";
+        state.loading = "rejected";
         return;
       }
       const cityKey = normalizeCityKey(action.meta.arg?.cityName);
@@ -344,7 +341,7 @@ export const mainSlice = createSlice({
         : action.payload;
       state.dirRates = rates;
       state.amountInput = undefined;
-      state.dirRatesStatus = "fulfilled";
+      state.loading = "fulfilled";
       state.dirRatesReloadTrigger = "auto";
       const currentIndex = state.swiperIdVisible ?? 0;
       state.amountOutputs = getAmountOutputs(
@@ -425,7 +422,7 @@ export const {
   clearDirRates,
   clean,
   sendToast,
-  setDirRatesStatus,
+  setLoadingStatus,
   setMassPmsFilter,
   setMassAmount,
   setMassSort,

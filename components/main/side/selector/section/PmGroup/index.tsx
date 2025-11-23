@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../../../../../redux/hooks";
 import { batch } from "react-redux";
 import { IPmGroup, IPm } from "../../../../../../types/selector";
 import {
-  setDirRatesStatus,
+  setLoadingStatus,
   setPm,
   triggerModal,
 } from "../../../../../../redux/mainReducer";
@@ -58,7 +58,7 @@ const PmGroup = ({ pm_group }: { pm_group: IPmGroup }) => {
     if (oppositePm?.code) {
       const [givePm, getPm] =
         side === "give" ? [pm, oppositePm] : [oppositePm, pm];
-      dispatch(setDirRatesStatus("pending"));
+      dispatch(setLoadingStatus("pending"));
       const slug = pmsToSlug({ givePm, getPm })
         .replaceAll(" ", "")
         .toLowerCase();

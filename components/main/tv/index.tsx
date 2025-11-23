@@ -4,7 +4,7 @@ import { Box, useBreakpointValue } from "@chakra-ui/react";
 import Swiper from "./Swiper";
 import { useIsMobile } from "./hooks";
 import { updateDirRates } from "../../../redux/thunks";
-import { setDirRatesStatus } from "../../../redux/mainReducer";
+import { setLoadingStatus } from "../../../redux/mainReducer";
 import CustomModal from "../../shared/CustomModal";
 import RateDetails from "./rateDetails";
 import { useRouter } from "next/router";
@@ -20,7 +20,7 @@ const TV = ({
   donorCity: ICity | null;
   dirText: IDirText | null;
 }) => {
-  const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
+  const loadingStatus = useAppSelector((state) => state.main.loading);
   const containerHeight = useBreakpointValue({ base: 320, md: 416 }) || 416;
   const router = useRouter();
   const { exchange } = router.query as { exchange: string };
@@ -42,10 +42,10 @@ const TV = ({
   }, [dir, city?.en_name, isCash, dispatch]);
 
   useEffect(() => {
-    if (dirRatesStatus === "pending" && dirRates.length) {
-      dispatch(setDirRatesStatus("fulfilled"));
+    if (loadingStatus === "pending" && dirRates.length) {
+      dispatch(setLoadingStatus("fulfilled"));
     }
-  }, [dirRatesStatus, dirRates.length, dispatch]);
+  }, [loadingStatus, dirRates.length, dispatch]);
 
   useEffect(() => {
     if (!dir) return;

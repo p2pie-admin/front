@@ -66,7 +66,7 @@ const Layout = ({ children }: { children: any }) => {
     });
   }, [myToast, toast]);
 
-  const dirRatesStatus = useAppSelector((state) => state.main.dirRatesStatus);
+  const loadingStatus = useAppSelector((state) => state.main.loading);
   const ambientColor = useColorModeValue(
     "rgba(143,92,292,0.2)",
     "rgba(247, 197, 177, 0.1)"
@@ -95,7 +95,7 @@ const Layout = ({ children }: { children: any }) => {
         bgGradient={`radial-gradient(circle at 50% -10%, ${ambientColor} 0%, transparent 40%)`}
       />
 
-      {dirRatesStatus === "pending" ? (
+      {loadingStatus === "pending" ? (
         <Progress size="xs" isIndeterminate colorScheme="peach" />
       ) : (
         <Box h="1" />
