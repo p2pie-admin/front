@@ -140,14 +140,19 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   }
 
   const fetcher = initCMSFetcher();
-  const exchangersResponse = await fetcher(exchangersMapQuery);
+  const citySlug = toLower(currentCity.en_name);
+  const [exchangersResponse, cityTextRes] = await Promise.all([
+    fetcher(exchangersMapQuery),
+    fetcher(TextBoxQuery, {
+      locale: currentLocale,
+      key: citySlug,
+    }),
+  ]);
+
   const exchangerList: IExchanger[] = Array.isArray(exchangersResponse)
     ? exchangersResponse
     : exchangersResponse?.exchangers || [];
-  const cityTextRes = await fetcher(TextBoxQuery, {
-    locale: currentLocale,
-    key: currentCity.en_name?.toLowerCase(),
-  });
+
   const cityText = (cityTextRes?.[0] || null) as IDirText | null;
 
   const copy = buildCopy(currentCity, currentLocale, cityText);
@@ -155,7 +160,6 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   const pmMap = new Map((pms || []).map((pm) => [pm.code.toUpperCase(), pm]));
   const codesToSlug =
     dirs && pms && pms.length && dirs.length ? getCodesToSlug(dirs, pms) : {};
-  const citySlug = toLower(currentCity.en_name);
 
   const rawCityDirections: Record<string, number> =
     (citySlug && cityDirectionsData && cityDirectionsData[citySlug]) || {};
