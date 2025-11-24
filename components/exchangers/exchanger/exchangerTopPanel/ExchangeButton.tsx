@@ -27,6 +27,7 @@ const ExchangeButton = ({ refLink, fullWidth = false }: Props) => {
         rightIcon={<TbExternalLink size="1.2rem" />}
         w={fullWidth ? "100%" : "auto"}
         minW={fullWidth ? undefined : "fit-content"}
+        onClick={(e) => e.stopPropagation()}
       >
         Обмен
       </Button>

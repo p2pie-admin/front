@@ -186,7 +186,7 @@ export default function LeaveReview() {
         gossip: gossip || undefined,
         review_categories:
           selectedCategoryIds && selectedCategoryIds.length
-            ? selectedCategoryIds
+            ? { connect: selectedCategoryIds }
             : undefined,
       };
       await waitSec(1);

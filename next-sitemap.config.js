@@ -30,6 +30,7 @@ module.exports = {
       },
     ],
   },
+  exclude: ["/404"],
   // Collect extra paths from Redis
   additionalPaths: async () => {
     if (!redis) return [];

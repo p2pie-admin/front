@@ -22,6 +22,31 @@ type SubmitResponse = {
 };
 
 const FORWARD_PATH = "/createReview";
+const getClientIp = (req: NextApiRequest) => {
+  const forwarded = req.headers["x-forwarded-for"];
+  if (typeof forwarded === "string") {
+    return forwarded.split(",")[0]?.trim();
+  }
+  if (Array.isArray(forwarded) && forwarded.length) {
+    return forwarded[0];
+  }
+  return req.socket.remoteAddress || undefined;
+};
+
+const enrichReviewWithServerData = (req: NextApiRequest, review: IReview) => {
+  const clientIp = review.ipAddress ?? getClientIp(req);
+  const userAgentHeader = req.headers["user-agent"];
+  const userAgent =
+    review.userAgent || (typeof userAgentHeader === "string"
+      ? userAgentHeader
+      : undefined);
+
+  return {
+    ...review,
+    ipAddress: clientIp,
+    userAgent,
+  };
+};
 
 const getExternalUrl = () => {
   if (process.env.NODE_ENV === "production") {
@@ -93,11 +118,21 @@ export default async function handler(
     return res.status(400).json({ success: false, error: powResult.error });
   }
 
+  const reviewWithMeta = enrichReviewWithServerData(req, review);
+  const payloadForExternal = {
+    ...reviewWithMeta,
+    pow: {
+      challenge,
+      nonce,
+      difficulty: challenge.difficulty ?? POW_DIFFICULTY,
+    },
+  };
+
   try {
     const forwardResponse = await fetch(getExternalUrl(), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(review),
+      body: JSON.stringify(payloadForExternal),
     });
 
     if (!forwardResponse.ok) {

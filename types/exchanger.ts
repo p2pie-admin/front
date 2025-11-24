@@ -11,7 +11,7 @@ export interface IReview {
   fingerprint?: string;
   ipAddress?: string;
   location?: string;
-  review_categories?: string[];
+  review_categories?: string[] | { connect: string[] };
 }
 
 export interface ITopParameter {

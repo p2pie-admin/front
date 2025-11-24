@@ -82,7 +82,7 @@ export default function ReviewCategories({
         <Collapse in={isExchangeDone === true} animateOpacity>
           <Input
             mt="4"
-            placeholder="Приватные детали обмена, номер заявки"
+            placeholder="Направление, номер заявки, сумма"
             value={gossip}
             onChange={(e) => onChangeGossip(e.target.value)}
             borderWidth="2px"
