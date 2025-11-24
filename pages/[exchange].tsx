@@ -224,7 +224,7 @@ export async function getStaticPaths() {
     : 5000;
 
   const slicedPaths = paths.slice(0, prerenderLimit);
-  await addPathsToSitemap(slicedPaths);
+  await addPathsToSitemap(allPaths);
 
   return { paths: slicedPaths, fallback: "blocking" };
 }

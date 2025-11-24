@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Flex,
   HStack,
   Input,
   useColorModeValue,
@@ -120,7 +121,13 @@ const Actions = ({ exchanger }: { exchanger: IExchanger }) => {
   };
 
   return (
-    <HStack gap="4">
+    <Flex
+      gap="4"
+      alignItems="stretch"
+      flexWrap={{ base: "wrap", lg: "nowrap" }}
+      flexDir="row"
+      justifyContent="start"
+    >
       <Button
         p="0"
         w="4"
@@ -180,8 +187,8 @@ const Actions = ({ exchanger }: { exchanger: IExchanger }) => {
       </Button>
 
       <LeaveReviewButton onClick={handleScrollToLeaveReview} />
-      <ExchangeButton refLink={exchanger.ref_link} />
-    </HStack>
+      <ExchangeButton refLink={exchanger.ref_link} fullWidth />
+    </Flex>
   );
 };
 

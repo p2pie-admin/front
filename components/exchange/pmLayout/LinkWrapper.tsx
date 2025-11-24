@@ -6,11 +6,15 @@ export const LinkWrapper = ({
   exists,
   children,
   _blank = false,
+  className,
+  style,
 }: {
   children: ReactNode;
   exists: boolean;
   url: string;
   _blank?: boolean;
+  className?: string;
+  style?: React.CSSProperties;
 }) => {
   const normalizeHref = (href: string) => {
     if (!href) return href;
@@ -38,6 +42,8 @@ export const LinkWrapper = ({
         passHref
         target={_blank ? "_blank" : undefined}
         rel={_blank ? "noopener noreferrer" : undefined}
+        className={className}
+        style={style}
       >
         {children}
       </Link>

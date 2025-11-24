@@ -10,6 +10,7 @@ const ExchangerTopPanel = ({ exchanger }: { exchanger: IExchanger }) => {
       flexDir={{ base: "column", lg: "row" }}
       justifyContent="space-between"
       gap="4"
+      alignItems={{ base: "stretch", lg: "center" }}
     >
       <Header exchanger={exchanger} />
       <Actions exchanger={exchanger} />
