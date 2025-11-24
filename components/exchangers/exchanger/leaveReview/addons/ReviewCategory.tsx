@@ -27,12 +27,10 @@ export default function ReviewCategory({
     "saturate(150%)"
   )} hue-rotate(${rotationColor}deg)`;
   const activeStyles = isSelected
-    ? {
-        filter: filter + " brightness(1.2)",
-        borderColor: "peach.300",
-        boxShadow: "0 0 10px 2px rgba(255,196,143,0.5)",
-      }
-    : {};
+    ? {}
+    : {
+        filter: "brightness(0.8)",
+      };
 
   return (
     <MyTooltip key={id} label={description || ""} placement="bottom">
@@ -42,7 +40,7 @@ export default function ReviewCategory({
         w="fit-content"
         gap="1"
         position="relative"
-        px={["2", "3"]}
+        px={["1", "2"]}
         py={["0.5", "1"]}
         justifyContent="center"
         cursor="pointer"
@@ -50,7 +48,7 @@ export default function ReviewCategory({
         border="1px solid"
         borderColor={`white`}
         color={`white`}
-        _hover={{ filter: filter + " brightness(1.1)" }}
+        _hover={{ filter: " brightness(1.1)" }}
         _before={{
           content: "''",
           bgColor: `white`,
@@ -66,12 +64,12 @@ export default function ReviewCategory({
         {...activeStyles}
       >
         {image ? (
-          <CustomImage w="10" h="10" img={image[0]} />
+          <CustomImage w="6" h="6" img={image[0]} />
         ) : (
           <IoInformation size="1rem" />
         )}
         {isExtended && title && (
-          <ResponsiveText size="md" fontWeight="bold">
+          <ResponsiveText size="sm" fontWeight="bold">
             {title}
           </ResponsiveText>
         )}

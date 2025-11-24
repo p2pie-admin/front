@@ -7,26 +7,29 @@ import {
   Link,
   Textarea,
 } from "@chakra-ui/react";
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { ResponsiveText } from "../../../../styles/theme/custom";
 import { RiChatNewFill } from "react-icons/ri";
 import { BoxWrapper, CustomHeader } from "../../../shared/BoxWrapper";
-import {
-  MdOutlineDone,
-  MdOutlineSentimentNeutral,
-  MdSentimentSatisfiedAlt,
-  MdSentimentVeryDissatisfied,
-} from "react-icons/md";
+import { MdOutlineDone } from "react-icons/md";
 import { LuSend } from "react-icons/lu";
 import { LuTriangleAlert } from "react-icons/lu";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { sendToast, triggerModal } from "../../../../redux/mainReducer";
+import {
+  selectReviewForm,
+  setReviewCategories,
+  setReviewCooldownUntil,
+  setReviewHasSubmitted,
+  setReviewHoneypot,
+  setReviewIsSending,
+  setReviewIsExchangeDone,
+  setReviewGossip,
+  setReviewShouldSubmitAfterModal,
+  setReviewSentiment,
+  setReviewValue,
+  toggleReviewCategory,
+} from "../../../../redux/leaveFeedbackSlice";
 import CustomModal from "../../../shared/CustomModal";
 import ReviewAddons from "./addons";
 import { ReviewPowChallenge, solvePowChallenge } from "./helper";
@@ -34,50 +37,37 @@ import { IReview } from "../../../../types/exchanger";
 import { ICity } from "../../../../types/exchange";
 import { locale } from "../../../../services/utils";
 import { waitSec } from "../../../shared/helper";
+import { useExchangerId } from "../ExchangerContext";
+import SentimentButtons from "./SentimentButtons";
 export const LEAVE_REVIEW_SECTION_ID = "leave-review-section";
 const REVIEW_COOLDOWN_MS = 60 * 60 * 1000;
 const TELEGRAM_CHAT_URL =
   String(process.env.NEXT_PUBLIC_TELEGRAM_CHAT) || "https://t.me/p2pie_chat";
 
-const sentimentOptions = [
-  {
-    value: "positive",
-    label: "Positive",
-    icon: MdSentimentSatisfiedAlt,
-    iconColor: "green.300",
-  },
-  {
-    value: "neutral",
-    label: "Neutral",
-    icon: MdOutlineSentimentNeutral,
-    iconColor: "gray.300",
-  },
-  {
-    value: "negative",
-    label: "Negative",
-    icon: MdSentimentVeryDissatisfied,
-    iconColor: "red.300",
-  },
-] as const;
-
-type SentimentValue = (typeof sentimentOptions)[number]["value"];
-
-export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
+export default function LeaveReview() {
+  const exchangerId = useExchangerId();
   const dispatch = useAppDispatch();
   const { fingerprintInfo, city, modalId } = useAppSelector((state) => ({
     fingerprintInfo: state.main.fingerprint,
     city: state.main.city as ICity,
     modalId: state.main.modal,
   }));
+  const reviewState = useAppSelector((state) =>
+    selectReviewForm(state, exchangerId)
+  );
   const loadTimeRef = useRef(Date.now());
-  const [value, setValue] = useState("");
-  const [honeypot, setHoneypot] = useState("");
-  const [hasSubmitted, setHasSubmitted] = useState(false);
-  const [isSending, setIsSending] = useState(false);
-  const [sentiment, setSentiment] = useState<SentimentValue | null>(null);
-  const [cooldownUntil, setCooldownUntil] = useState<number | null>(null);
-  const [shouldSubmitAfterModal, setShouldSubmitAfterModal] = useState(false);
-  const [selectedCategoryIds, setSelectedCategoryIds] = useState<string[]>([]);
+  const {
+    value,
+    honeypot,
+    hasSubmitted,
+    isSending,
+    sentiment,
+    isExchangeDone,
+    gossip,
+    cooldownUntil,
+    shouldSubmitAfterModal,
+    selectedCategoryIds,
+  } = reviewState;
   const storageKey = useMemo(
     () => `exchanger:${exchangerId}:review_sent`,
     [exchangerId]
@@ -87,54 +77,61 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
 
   const lockReviewSubmission = useCallback(() => {
     const cooldownExpiresAt = Date.now() + REVIEW_COOLDOWN_MS;
-    setCooldownUntil(cooldownExpiresAt);
-    setHasSubmitted(true);
+    dispatch(
+      setReviewCooldownUntil({
+        exchangerId,
+        cooldownUntil: cooldownExpiresAt,
+      })
+    );
+    dispatch(setReviewHasSubmitted({ exchangerId, hasSubmitted: true }));
     if (typeof window !== "undefined") {
       localStorage.setItem(storageKey, `${cooldownExpiresAt}`);
     }
-  }, [storageKey]);
+  }, [dispatch, exchangerId, storageKey]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     const stored = localStorage.getItem(storageKey);
     if (!stored) {
-      setHasSubmitted(false);
-      setCooldownUntil(null);
+      dispatch(setReviewHasSubmitted({ exchangerId, hasSubmitted: false }));
+      dispatch(setReviewCooldownUntil({ exchangerId, cooldownUntil: null }));
       return;
     }
     const expiresAt = Number(stored);
     if (!Number.isFinite(expiresAt)) {
       localStorage.removeItem(storageKey);
-      setHasSubmitted(false);
-      setCooldownUntil(null);
+      dispatch(setReviewHasSubmitted({ exchangerId, hasSubmitted: false }));
+      dispatch(setReviewCooldownUntil({ exchangerId, cooldownUntil: null }));
       return;
     }
     if (Date.now() < expiresAt) {
-      setHasSubmitted(true);
-      setCooldownUntil(expiresAt);
+      dispatch(setReviewHasSubmitted({ exchangerId, hasSubmitted: true }));
+      dispatch(
+        setReviewCooldownUntil({ exchangerId, cooldownUntil: expiresAt })
+      );
     } else {
       localStorage.removeItem(storageKey);
-      setHasSubmitted(false);
-      setCooldownUntil(null);
+      dispatch(setReviewHasSubmitted({ exchangerId, hasSubmitted: false }));
+      dispatch(setReviewCooldownUntil({ exchangerId, cooldownUntil: null }));
     }
-  }, [storageKey]);
+  }, [dispatch, exchangerId, storageKey]);
 
   useEffect(() => {
     if (typeof window === "undefined" || !cooldownUntil) return;
     const remaining = cooldownUntil - Date.now();
     if (remaining <= 0) {
-      setHasSubmitted(false);
-      setCooldownUntil(null);
+      dispatch(setReviewHasSubmitted({ exchangerId, hasSubmitted: false }));
+      dispatch(setReviewCooldownUntil({ exchangerId, cooldownUntil: null }));
       localStorage.removeItem(storageKey);
       return;
     }
     const timeoutId = window.setTimeout(() => {
-      setHasSubmitted(false);
-      setCooldownUntil(null);
+      dispatch(setReviewHasSubmitted({ exchangerId, hasSubmitted: false }));
+      dispatch(setReviewCooldownUntil({ exchangerId, cooldownUntil: null }));
       localStorage.removeItem(storageKey);
     }, remaining);
     return () => window.clearTimeout(timeoutId);
-  }, [cooldownUntil, storageKey]);
+  }, [cooldownUntil, dispatch, exchangerId, storageKey]);
 
   const determinePowDifficulty = useCallback(() => {
     const elapsedMs = Date.now() - loadTimeRef.current;
@@ -171,7 +168,7 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
   const leaveReview = useCallback(async () => {
     if (!value.trim() || hasSubmitted || isSending) return;
     try {
-      setIsSending(true);
+      dispatch(setReviewIsSending({ exchangerId, isSending: true }));
       const powDifficulty = determinePowDifficulty();
       const proof = await runProofOfWork(powDifficulty);
       lockReviewSubmission();
@@ -185,6 +182,8 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
         fingerprint: fingerprintInfo?.fingerprint,
         ipAddress: fingerprintInfo?.ip,
         location: city?.[`${locale}_name`] || undefined,
+        isExchangeDone: isExchangeDone ?? undefined,
+        gossip: gossip || undefined,
         review_categories:
           selectedCategoryIds && selectedCategoryIds.length
             ? selectedCategoryIds
@@ -209,11 +208,16 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
         );
       }
       console.info("Review submitted via Next.js proxy");
-      setValue("");
+      dispatch(setReviewValue({ exchangerId, value: "" }));
+      dispatch(setReviewCategories({ exchangerId, categories: [] }));
+      dispatch(setReviewGossip({ exchangerId, gossip: "" }));
+      dispatch(
+        setReviewIsExchangeDone({ exchangerId, isExchangeDone: null })
+      );
     } catch (error) {
       console.error("Failed to send review", error);
     } finally {
-      setIsSending(false);
+      dispatch(setReviewIsSending({ exchangerId, isSending: false }));
       dispatch(
         sendToast({
           status: "success",
@@ -244,6 +248,9 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
     lockReviewSubmission,
     honeypot,
     sentiment,
+    isExchangeDone,
+    gossip,
+    selectedCategoryIds,
     fingerprintInfo,
     city,
     dispatch,
@@ -251,61 +258,61 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
 
   useEffect(() => {
     if (!isReviewModalOpen && shouldSubmitAfterModal) {
-      setShouldSubmitAfterModal(false);
+      dispatch(
+        setReviewShouldSubmitAfterModal({
+          exchangerId,
+          shouldSubmit: false,
+        })
+      );
       leaveReview();
     }
-  }, [isReviewModalOpen, shouldSubmitAfterModal, leaveReview]);
+  }, [
+    dispatch,
+    exchangerId,
+    isReviewModalOpen,
+    shouldSubmitAfterModal,
+    leaveReview,
+  ]);
 
   const isSubmitDisabled =
     value.trim().length < 10 || hasSubmitted || isSending;
 
   const handleSubmitClick = () => {
     if (isSubmitDisabled) return;
-    setShouldSubmitAfterModal(true);
+    dispatch(
+      setReviewShouldSubmitAfterModal({
+        exchangerId,
+        shouldSubmit: true,
+      })
+    );
     dispatch(triggerModal(reviewModalId));
   };
 
   const handleToggleCategory = (id?: string) => {
     if (!id) return;
-    setSelectedCategoryIds((prev) =>
-      prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]
-    );
+    dispatch(toggleReviewCategory({ exchangerId, categoryId: id }));
   };
 
   return (
     <BoxWrapper id={LEAVE_REVIEW_SECTION_ID}>
       <HStack justifyContent="space-between" flexWrap="wrap" gap="3">
         <CustomHeader text={"Оставить отзыв"} Icon={RiChatNewFill} />
-        <HStack spacing="2">
-          {sentimentOptions.map((option) => (
-            <Button
-              key={option.value}
-              size="sm"
-              variant="ghost"
-              borderWidth="2px"
-              borderRadius="xl"
-              borderColor={
-                sentiment === option.value ? "bg.500" : "transparent"
-              }
-              bgColor={sentiment === option.value ? "bg.800" : "transparent"}
-              color={option.iconColor}
-              onClick={() => setSentiment(option.value)}
-              isDisabled={hasSubmitted}
-              _hover={{
-                bgColor: sentiment === option.value ? "bg.700" : "bg.900",
-              }}
-            >
-              <option.icon size="1.5rem" color={option.iconColor} />
-            </Button>
-          ))}
-        </HStack>
+        <SentimentButtons
+          sentiment={sentiment}
+          isDisabled={hasSubmitted}
+          onSelect={(value) =>
+            dispatch(setReviewSentiment({ exchangerId, sentiment: value }))
+          }
+        />
       </HStack>
       <Divider my="4" />
       <Textarea
         placeholder="Ваш отзыв"
         value={value}
         minH="100px"
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e) =>
+          dispatch(setReviewValue({ exchangerId, value: e.target.value }))
+        }
         isDisabled={hasSubmitted}
         borderWidth="2px"
         borderRadius="xl"
@@ -317,6 +324,16 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
           sentiment={sentiment}
           selectedCategoryIds={selectedCategoryIds}
           onToggleCategory={handleToggleCategory}
+          isExchangeDone={isExchangeDone}
+          gossip={gossip}
+          onToggleExchangeDone={(value) =>
+            dispatch(
+              setReviewIsExchangeDone({ exchangerId, isExchangeDone: value })
+            )
+          }
+          onChangeGossip={(value) =>
+            dispatch(setReviewGossip({ exchangerId, gossip: value }))
+          }
         />
       </CustomModal>
       <Flex
@@ -334,8 +351,17 @@ export default function LeaveReview({ exchangerId }: { exchangerId: string }) {
             size="xs"
             w="1"
             variant="unstyled"
-            value={""}
-            onChange={(e: any) => setHoneypot(e.target.value)}
+            value={honeypot}
+            sx={{ caretColor: "transparent" }}
+            _focus={{ caretColor: "transparent" }}
+            onChange={(e: any) =>
+              dispatch(
+                setReviewHoneypot({
+                  exchangerId,
+                  honeypot: e.target.value,
+                })
+              )
+            }
           />
         </HStack>
         <Button

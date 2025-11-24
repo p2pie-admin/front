@@ -1,4 +1,4 @@
-import { Button, HStack, Input, Text, VStack, Wrap } from "@chakra-ui/react";
+import { Button, HStack, VStack } from "@chakra-ui/react";
 import React from "react";
 import { useAppDispatch } from "../../../../../redux/hooks";
 import { triggerModal } from "../../../../../redux/mainReducer";
@@ -16,19 +16,23 @@ type ReviewAddonsProps = {
   sentiment: "positive" | "neutral" | "negative" | null;
   selectedCategoryIds: string[];
   onToggleCategory: (id?: string) => void;
+  onSentimentSelect: (value: "positive" | "neutral" | "negative") => void;
+  isExchangeDone: boolean | null;
+  gossip: string;
+  onToggleExchangeDone: (value: boolean) => void;
+  onChangeGossip: (value: string) => void;
 };
-
-const hints = [
-  "Номер заявки",
-  "Сумма",
-  "Если есть переписки или чеки, приложите их фотографией",
-];
 
 export default function ReviewAddons({
   onClose,
   sentiment,
   selectedCategoryIds,
   onToggleCategory,
+  onSentimentSelect,
+  isExchangeDone,
+  gossip,
+  onToggleExchangeDone,
+  onChangeGossip,
 }: ReviewAddonsProps) {
   const fetcher = initCMSFetcher();
 
@@ -59,21 +63,14 @@ export default function ReviewAddons({
             sentiment={sentiment}
             selectedIds={selectedCategoryIds}
             onToggle={onToggleCategory}
+            onSentimentSelect={onSentimentSelect}
+            isExchangeDone={isExchangeDone}
+            gossip={gossip}
+            onToggleExchangeDone={onToggleExchangeDone}
+            onChangeGossip={onChangeGossip}
           />
         </ErrorWrapper>
       </VStack>
-
-      {hints.map((hint) => (
-        <Input
-          placeholder={hint}
-          borderWidth="2px"
-          borderRadius="xl"
-          borderColor="bg.500"
-          size="md"
-          h="45px"
-          focusBorderColor="peach.200"
-        />
-      ))}
 
       <HStack w="100%" justifyContent={"end"}>
         <Button
@@ -84,7 +81,7 @@ export default function ReviewAddons({
           Пропустить
         </Button>
         <Button alignSelf="flex-end" variant="primary" onClick={handleClose}>
-          Отправить
+          Готово
         </Button>
       </HStack>
     </VStack>

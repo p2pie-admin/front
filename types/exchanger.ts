@@ -4,6 +4,8 @@ export interface IReview {
   text: string;
   exchangerId: string;
   type?: "positive" | "neutral" | "negative" | "question";
+  isExchangeDone?: boolean;
+  gossip?: string;
   isDispute?: boolean | null;
   userAgent?: string;
   fingerprint?: string;
@@ -84,6 +86,8 @@ export interface IExchangerReview {
   isDispute?: boolean | null;
   isClosed?: boolean | null;
   isApproved?: boolean | null;
+  isExchangeDone?: boolean | null;
+  gossip?: string | null;
 
   review_categories?: IReviewCategory[] | null;
   userAgent?: string | null;

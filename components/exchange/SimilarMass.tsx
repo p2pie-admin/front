@@ -38,7 +38,10 @@ const SimilarMass = ({
   if (!linkExists?.code || !pms || !side || !cryptoPm || !fiatPm) return <></>;
 
   const pmIconsRender = (
-    <SmartGrid wrapThreshold={3} direction={"end"}>
+    <SmartGrid
+      wrapThreshold={3}
+      direction={givePm.section == "crypto" ? "end" : "start"}
+    >
       {pms.map((pm) => (
         <HStack
           key={pm.code + pm.subgroup_name || pm.en_name}
@@ -53,7 +56,7 @@ const SimilarMass = ({
   );
 
   const cryptoPmRender = (
-    <VStack alignItems="start">
+    <VStack alignItems={givePm.section == "crypto" ? "start" : "end"}>
       <PmName pm={cryptoPm} isFull={false} />
       <ResponsiveText size="xs" variant="no_contrast">
         {`${
@@ -70,7 +73,8 @@ const SimilarMass = ({
     >
       <Box3D
         my="4"
-        p="2"
+        px="4"
+        py="2"
         cursor="pointer"
         transition="filter 0.2s ease-in"
         _hover={{ filter: "brightness(1.1)" }}

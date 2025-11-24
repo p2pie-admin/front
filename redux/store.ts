@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import mainReducer from "./mainReducer";
+import leaveFeedbackReducer from "./leaveFeedbackSlice";
 
 const store = configureStore({
   reducer: {
     main: mainReducer,
+    leaveFeedback: leaveFeedbackReducer,
   },
 });
 

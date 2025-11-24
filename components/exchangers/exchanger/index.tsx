@@ -27,6 +27,7 @@ import ExchangerContacts from "./contacts/ExchangerContacts";
 import { resolveColorToken } from "../../shared/CircularIcon";
 import ExchangerReviews from "./reviews";
 import LeaveReview from "./leaveReview";
+import { ExchangerIdProvider } from "./ExchangerContext";
 import ExchangerReviewsHeader from "./reviews/ExchangerReviewsHeader";
 import ExchangerStats from "./exchangerStats";
 import { BoxWrapper } from "../../shared/BoxWrapper";
@@ -80,7 +81,9 @@ export default function Exchanger({
       <ExchangerContacts exchangerCard={exchangerCard} />
 
       <ExchangerReviewsHeader />
-      <LeaveReview exchangerId={exchanger.id} />
+      <ExchangerIdProvider exchangerId={exchanger.id}>
+        <LeaveReview />
+      </ExchangerIdProvider>
       <ExchangerReviews reviews={exchanger.reviews} />
     </>
   );

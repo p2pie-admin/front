@@ -28,7 +28,8 @@ const Dir = ({
     <Link href={`/${slug}`} passHref>
       <Box3D
         flex="1"
-        p="2"
+        px="4"
+        py="2"
         cursor="pointer"
         transition="filter 0.2s ease-in"
         _hover={{ filter: "brightness(1.1)" }}

@@ -1,6 +1,8 @@
 import {
   Box,
   Grid,
+  HStack,
+  InputLeftElement,
   NumberInput,
   NumberInputField,
   Text,
@@ -13,6 +15,7 @@ import { setAmount, setSide } from "../../../../redux/mainReducer";
 import SideContext from "../../../shared/contexts/SideContext";
 import Fiat from "./Fiat";
 import { isOutOfRange } from "./helper";
+import { BsFillPinAngleFill } from "react-icons/bs";
 
 const AmountInput = () => {
   const dispatch = useAppDispatch();
@@ -85,7 +88,6 @@ const AmountInput = () => {
             dispatch(setSide(side));
           }}
           _placeholder={{ color: "bg.500" }}
-          w="100%"
         />
 
         {/* <Text color="teal.400">{`step: ${step} / fiatStep: ${fiatStep}`}</Text> */}

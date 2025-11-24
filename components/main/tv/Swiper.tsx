@@ -58,9 +58,9 @@ export const Swiper = (props: {
   }, [dispatch]);
 
   const loadingStatus = useAppSelector((state) => state.main.loading);
-  const isError =
-    loadingStatus === "rejected" || (!initial && !dirRates.length);
-  const isLoading = loadingStatus === "pending";
+  const isError = loadingStatus === "rejected"; //
+  const isLoading =
+    loadingStatus === "pending" || (!initial && !dirRates.length);
 
   const length = dirRates.length;
   const reloadTrigger: DirRatesReloadTrigger =

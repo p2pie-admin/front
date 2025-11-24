@@ -7,11 +7,16 @@ import {
   Textarea,
   HStack,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React from "react";
 import { HiReply } from "react-icons/hi";
 import CustomModal from "../../../shared/CustomModal";
-import { useAppDispatch } from "../../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { triggerModal } from "../../../../redux/mainReducer";
+import {
+  resetReplyText,
+  selectReplyText,
+  setReplyText,
+} from "../../../../redux/leaveFeedbackSlice";
 
 export default function ReplyText({
   text,
@@ -21,12 +26,15 @@ export default function ReplyText({
   canReply?: boolean;
 }) {
   const dispatch = useAppDispatch();
+  const replyText = useAppSelector(selectReplyText);
 
   const handleClose = () => {
+    dispatch(resetReplyText());
     dispatch(triggerModal(undefined));
   };
 
   const handleSend = () => {
+    dispatch(resetReplyText());
     dispatch(triggerModal(undefined));
   };
 
@@ -56,6 +64,8 @@ export default function ReplyText({
                 borderRadius="xl"
                 borderColor="peach.500"
                 focusBorderColor="peach.200"
+                value={replyText}
+                onChange={(e) => dispatch(setReplyText(e.target.value))}
               />
               <HStack w="100%" justifyContent={"end"} mt="4">
                 <Button

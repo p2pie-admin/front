@@ -65,7 +65,7 @@ const Similar = ({
 
   return (
     <Box3D px="4" w="100%" h={{ base: "fit-content", lg: "416px" }}>
-      <ResponsiveText mt="4" mb="-2" variant="no_contrast">
+      <ResponsiveText mt="5" variant="no_contrast">
         {t("main:similarDirs")}
       </ResponsiveText>
       <SimilarMass

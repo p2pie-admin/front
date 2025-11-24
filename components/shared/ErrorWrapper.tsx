@@ -41,7 +41,7 @@ const Error = ({ primaryMessage = "", secondaryMessage = "" }) => {
         href={
           String(process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT) || "https://t.me"
         }
-        message={"Report problem"}
+        message={"Сообщить об ошибке"}
         CustomIcon={BsTelegram}
       />
     </Flex>
