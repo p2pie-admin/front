@@ -89,7 +89,7 @@ const DirText = ({
       <Divider my="5" />
 
       <Heading as="h2" fontSize="lg" mb="2">
-        {dirText.h1}
+        <TextToHTML text={dirText.h1} />
       </Heading>
 
       <Text>{dirText.text}</Text>

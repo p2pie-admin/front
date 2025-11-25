@@ -135,8 +135,7 @@ export async function getStaticProps({
       getPm,
       customDirText,
       city,
-      // pms,
-      // articleCodes,
+      articleCodes,
     })) as IDirText;
 
     const seo = generateExchangeSeo({

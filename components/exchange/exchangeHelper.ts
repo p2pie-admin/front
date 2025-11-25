@@ -11,18 +11,54 @@ const locale = (process.env.NEXT_PUBLIC_DEFAULT_LOCALE || "ru") as "en" | "ru";
 export const generateExchangeH1 = (
   givePm: IPm,
   getPm: IPm,
-  city: ICity | null
+  city: ICity | null,
+  options?: {
+    articleCodes?: string[];
+    cityPageExists?: boolean;
+  }
 ) => {
+  const { articleCodes = [], cityPageExists = !!city } = options || {};
+
+  const toSlug = (value?: string | null) =>
+    (value || "").trim().toLowerCase().replace(/\s+/g, "-");
+
+  const pmHasArticle = (pm: IPm) =>
+    !!articleCodes.find((code) => toSlug(code) === toSlug(pm.en_name));
+
+  const wrapWithArticleLink = (text: string, pm: IPm) =>
+    pmHasArticle(pm) ? `[${text}](/articles/${toSlug(pm.en_name)})` : text;
+
   // Proper locale-specific names
   const giveName =
-    locale === "ru" ? givePm.ru_name ?? "" : givePm.en_name ?? "";
-  const getName = locale === "ru" ? getPm.ru_name ?? "" : getPm.en_name ?? "";
+    locale === "ru"
+      ? givePm.ru_name || givePm.en_name || ""
+      : givePm.en_name || givePm.ru_name || "";
+  const getName =
+    locale === "ru"
+      ? getPm.ru_name || getPm.en_name || ""
+      : getPm.en_name || getPm.ru_name || "";
+
+  // Article links for PMs (only when article exists)
+  const linkedGiveName = wrapWithArticleLink(capitalize(giveName), givePm);
+  const linkedGetName = wrapWithArticleLink(capitalize(getName), getPm);
 
   // City addon
-  const cityAddon = city
+  const cityLabel = city
     ? locale === "ru"
-      ? ` в ${(city.preposition || city.ru_name) ?? ""}`
-      : ` in ${city.en_name ?? ""}`
+      ? (city.preposition || city.ru_name || city.en_name || "") ?? ""
+      : (city.en_name || city.ru_name || "") ?? ""
+    : "";
+
+  const citySlug = city ? toSlug(city.en_name) : "";
+  const linkedCity =
+    city && cityPageExists && citySlug
+      ? `[${cityLabel}](/map/${citySlug})`
+      : cityLabel;
+
+  const cityAddon = cityLabel
+    ? locale === "ru"
+      ? ` в ${linkedCity}`
+      : ` in ${linkedCity}`
     : "";
 
   // Subgroup
@@ -35,14 +71,14 @@ export const generateExchangeH1 = (
   const giveCurName = curNames[giveCur.toLowerCase() as keyof typeof curNames];
   const getCurName = curNames[getCur.toLowerCase() as keyof typeof curNames];
   return locale === "ru"
-    ? `Обмен ${capitalize(giveName)} ${
+    ? `Обмен ${linkedGiveName} ${
         giveCurName?.ru_name || giveCur
-      } ${giveSubgroup} на ${capitalize(getName)} ${
+      } ${giveSubgroup} на ${linkedGetName} ${
         getCurName?.ru_name || getCur
       } ${getSubgroup} ${cityAddon}`
-    : `Exchange ${capitalize(giveName)} ${
+    : `Exchange ${linkedGiveName} ${
         giveCurName?.en_name || giveCur
-      } ${giveSubgroup} for ${capitalize(getName)} ${
+      } ${giveSubgroup} for ${linkedGetName} ${
         getCurName?.en_name || getCur
       } ${getSubgroup} ${cityAddon}`;
 };
@@ -52,14 +88,19 @@ export const dirTextHandler = async ({
   getPm,
   customDirText,
   city,
+  articleCodes,
 }: {
   givePm: IPm;
   getPm: IPm;
   customDirText?: IDirText;
   city: ICity | null;
+  articleCodes?: string[];
 }): Promise<IDirText> => {
   // Default header
-  const h1 = generateExchangeH1(givePm, getPm, city);
+  const h1 = generateExchangeH1(givePm, getPm, city, {
+    articleCodes,
+    cityPageExists: !!city,
+  });
 
   const cityName =
     locale === "ru"
