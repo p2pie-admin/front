@@ -1,9 +1,6 @@
 import { env } from "process";
 import { getArray, getItem, setArray } from "./redis";
-import {
-  redisGet,
-  redisSet,
-} from "./redisClient";
+import { redisGet, redisSet } from "./redisClient";
 
 export async function cachedFetch<T>(
   key: string,
@@ -59,7 +56,7 @@ export async function addPathsToSitemap(paths: StaticPath | StaticPath[]) {
   // Convert objects to URL paths
   const stringPaths = normalized.map((p) => {
     const segments = Object.values(p.params).map(encodeURIComponent).join("/");
-    return p.locale ? `/${p.locale}/${segments}` : `/${segments}`;
+    return `/${segments}`;
   });
 
   try {
@@ -186,7 +183,10 @@ export async function cachedArrayFetch<T>(
       fetcher()
         .then(async (data) => {
           await setArray(key, data, toKey, ttlSeconds);
-          await redisSet(`${key}:__meta`, JSON.stringify({ updatedAt: Date.now() }));
+          await redisSet(
+            `${key}:__meta`,
+            JSON.stringify({ updatedAt: Date.now() })
+          );
         })
         .catch((err) =>
           console.error(`SWR refresh (array) failed for "${key}":`, err)

@@ -4,6 +4,7 @@ import {
   Flex,
   HStack,
   Input,
+  Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
@@ -14,13 +15,10 @@ import {
   HiOutlineHeart,
 } from "react-icons/hi";
 import CustomModal from "../../../shared/CustomModal";
-import { ResponsiveText } from "../../../../styles/theme/custom";
+
 import { IExchanger } from "../../../../types/exchanger";
 import { useAppDispatch } from "../../../../redux/hooks";
 import { triggerModal } from "../../../../redux/mainReducer";
-import { LEAVE_REVIEW_SECTION_ID } from "../leaveReview";
-import LeaveReviewButton from "./LeaveReviewButton";
-import ExchangeButton from "./ExchangeButton";
 
 const storageKeys = {
   bookmark: (id: string) => `exchanger:${id}:bookmark`,
@@ -75,26 +73,6 @@ const Actions = ({ exchanger }: { exchanger: IExchanger }) => {
     [exchanger.name.length, liked]
   );
 
-  const handleScrollToLeaveReview = () => {
-    if (typeof window === "undefined") return;
-    const target = document.getElementById(LEAVE_REVIEW_SECTION_ID);
-    if (target) {
-      const rect = target.getBoundingClientRect();
-      const absoluteTop = rect.top + window.pageYOffset;
-      window.scrollTo({
-        top: Math.max(absoluteTop - 100, 0),
-        behavior: "smooth",
-      });
-      return;
-    }
-    const scrollHeight =
-      document.documentElement?.scrollHeight ?? document.body.scrollHeight ?? 0;
-    window.scrollTo({
-      top: Math.max(scrollHeight - 100, 0),
-      behavior: "smooth",
-    });
-  };
-
   const handleLike = () => {
     setLiked((prev) => {
       const nextValue = !prev;
@@ -133,7 +111,7 @@ const Actions = ({ exchanger }: { exchanger: IExchanger }) => {
         w="4"
         variant="no_contrast"
         onClick={handleBookmarkOpen}
-        color={bookmark ? "red.500" : "bg.200"}
+        color={bookmark ? "red.400" : "bg.200"}
       >
         <CustomModal
           id={"exchangerBookmark"}
@@ -177,17 +155,16 @@ const Actions = ({ exchanger }: { exchanger: IExchanger }) => {
         variant="no_contrast"
         onClick={handleLike}
         fontWeight="unset"
-        px="6"
-        color={liked ? "red.500" : "bg.200"}
+        px="2"
+        color={liked ? "red.400" : "bg.200"}
         rightIcon={
-          liked ? <HiHeart size="1.3rem" /> : <HiOutlineHeart size="1.3rem" />
+          liked ? <HiHeart size="1rem" /> : <HiOutlineHeart size="1rem" />
         }
       >
-        <ResponsiveText size="lg">{initialLikes}</ResponsiveText>
+        <Text mt="0.5" fontWeight="semi-bold">
+          {initialLikes}
+        </Text>
       </Button>
-
-      <LeaveReviewButton onClick={handleScrollToLeaveReview} />
-      <ExchangeButton refLink={exchanger.ref_link} fullWidth />
     </Flex>
   );
 };

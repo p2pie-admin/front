@@ -9,13 +9,13 @@ const Header = ({ exchanger }: { exchanger: IExchanger }) => {
     exchanger.status === "active" ? "green" : "orange";
 
   return (
-    <HStack gap="4" position="relative">
-      <Dot color={statusColor} />
+    <HStack gap="2" position="relative">
       <ExchangerName
         name={exchanger.name}
         logo={exchanger.logo}
         admin_rating={exchanger.admin_rating}
         isH1={true}
+        statusColor={statusColor}
       />
       <Box ml="auto">
         <TagBadges tags={exchanger.exchanger_tags} />

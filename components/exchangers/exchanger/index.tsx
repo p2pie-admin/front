@@ -13,6 +13,7 @@ import {
   HStack,
   Spinner,
   Tooltip,
+  VStack,
 } from "@chakra-ui/react";
 
 import UniversalSeo from "../../shared/UniversalSeo";
@@ -32,6 +33,7 @@ import ExchangerReviewsHeader from "./reviews/ExchangerReviewsHeader";
 import ExchangerStats from "./exchangerStats";
 import { BoxWrapper } from "../../shared/BoxWrapper";
 import ExchangerTopPanel from "./exchangerTopPanel";
+import { TopButtons } from "./exchangerTopPanel/TopButtons";
 
 export default function Exchanger({
   exchanger,
@@ -65,19 +67,24 @@ export default function Exchanger({
       <UniversalSeo seo={seo} />
 
       <BoxWrapper variant="no_contrast">
-        <ExchangerTopPanel exchanger={exchanger} />
-        <Divider my="4" />
-        <ExchangerStats
-          reviews={exchanger.reviews}
-          ratesTotal={exchanger.total_rates}
-          reserveTotal={exchanger.exchanger_card?.total_reserve_usd}
-          workingTime={exchanger.exchanger_card?.working_time}
-        />
+        <VStack alignItems="start" gap="4" w="100%">
+          <ExchangerTopPanel exchanger={exchanger} />
+
+          <ExchangerStats
+            reviews={exchanger.reviews}
+            ratesTotal={exchanger.total_rates}
+            reserveTotal={exchanger.exchanger_card?.total_reserve_usd}
+            workingTime={exchanger.exchanger_card?.working_time}
+          />
+
+          <Box w="100%" display={{ lg: "none", base: "unset" }}>
+            <TopButtons exchanger={exchanger} />
+          </Box>
+        </VStack>
       </BoxWrapper>
 
-      <ExchangerDescription description={description} />
-
       <OfficesDescription offices={exchanger.offices} />
+      <ExchangerDescription description={description} />
       <ExchangerContacts exchangerCard={exchangerCard} />
 
       <ExchangerReviewsHeader />

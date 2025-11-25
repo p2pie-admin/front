@@ -14,7 +14,7 @@ interface IImage {
 }
 
 export const resolveColorToken = (value?: string | null) => {
-  if (!value) return "gray.300";
+  if (!value) return "gray.400";
   if (value.includes(".")) return value;
   const normalized = value.toLowerCase();
   if (normalized.startsWith("dark_")) {

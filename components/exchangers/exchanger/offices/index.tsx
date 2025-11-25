@@ -64,8 +64,8 @@ export default function OfficesDescription({
                   >
                     <Button
                       size="sm"
-                      variant="outline"
-                      leftIcon={
+                      variant="extra_contrast"
+                      rightIcon={
                         <Box mb="0.5" color="red.500">
                           <TbMapPinFilled size="1rem" />
                         </Box>

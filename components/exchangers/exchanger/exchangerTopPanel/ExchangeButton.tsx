@@ -25,15 +25,12 @@ const ExchangeButton = ({ refLink, fullWidth = false }: Props) => {
       url={enrichedLink}
       exists={!!refLink}
       _blank
-      style={{ display: "block", width: fullWidth ? "100%" : "auto" }}
+      //style={{ width: "100%" }}
     >
       <Button
         variant="primary"
         rightIcon={<TbExternalLink size="1.2rem" />}
-        w={fullWidth ? "100%" : "auto"}
-        minW={fullWidth ? "100%" : "fit-content"}
-        flexBasis={fullWidth ? "100%" : undefined}
-        flexGrow={fullWidth ? 1 : 0}
+        w="100%"
         onClick={(e) => e.stopPropagation()}
       >
         Обмен

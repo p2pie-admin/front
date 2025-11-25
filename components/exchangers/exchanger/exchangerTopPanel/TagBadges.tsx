@@ -14,9 +14,8 @@ const TagBadges = ({ tags }: { tags?: IExchangerTag[] | null }) => {
             py="0.5"
             px="1"
             my="1"
-            borderColor={resolveColorToken(tag.color)}
-            border="1px solid"
-            color={resolveColorToken(tag.color)}
+            bgColor={resolveColorToken(tag.color)}
+            color={"bg.800"}
             fontWeight="bold"
             boxShadow="lg"
             fontSize="xs"

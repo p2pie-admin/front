@@ -134,21 +134,14 @@ const RateDetails = ({ rate }: { rate: IRate }) => {
           </Box>
 
           <TagBadges tags={exchanger_tags} />
-          <Button
-            size="sm"
-            variant="no_contrast"
-            p="2"
-            display={{ base: "unset", lg: "none" }}
-            ml="auto"
-          >
-            <IoInformationCircleOutline size="1.5rem" />
-          </Button>
-          <HStack ml="auto" gap="2" display={{ base: "none", lg: "unset" }}>
-            <Button mr="2" size="sm" variant="no_contrast" p="2">
+
+          <HStack ml="auto" gap="2">
+            <Button size="sm" variant="no_contrast" p="2">
               <IoInformationCircleOutline size="1.5rem" />
             </Button>
-
-            <ExchangeButton refLink={ref_link} />
+            <Box display={{ lg: "unset", base: "none" }}>
+              <ExchangeButton refLink={ref_link} />
+            </Box>
           </HStack>
         </HStack>
       </Link>
