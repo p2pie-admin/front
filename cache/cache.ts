@@ -49,19 +49,46 @@ type StaticPath = {
   locale?: string;
 };
 
-export async function addPathsToSitemap(paths: StaticPath | StaticPath[]) {
+type AddPathsOptions = {
+  basePath?: string;
+  includeLocale?: boolean;
+};
+
+function buildPath(p: StaticPath, options?: AddPathsOptions) {
+  const basePath = options?.basePath
+    ? `/${options.basePath}`.replace(/\/+/g, "/").replace(/\/$/, "")
+    : "";
+  const locale =
+    options?.includeLocale && p.locale
+      ? `/${encodeURIComponent(p.locale)}`
+      : "";
+  const segments = Object.values(p.params)
+    .map((segment) => encodeURIComponent(segment))
+    .join("/");
+
+  const path = `${locale}${basePath}/${segments}`.replace(/\/+/g, "/");
+  return path.endsWith("/") && path !== "/" ? path.slice(0, -1) : path;
+}
+
+export async function addPathsToSitemap(
+  paths: StaticPath | StaticPath[],
+  options?: AddPathsOptions
+) {
   const key = "sitemap:paths";
   const normalized = Array.isArray(paths) ? paths : [paths];
 
   // Convert objects to URL paths
-  const stringPaths = normalized.map((p) => {
-    const segments = Object.values(p.params).map(encodeURIComponent).join("/");
-    return `/${segments}`;
-  });
+  const stringPaths = normalized.map((p) => buildPath(p, options));
+  // Remove legacy entries that were stored without a basePath
+  const legacyPaths =
+    options?.basePath && options.basePath.length
+      ? normalized.map((p) => buildPath(p))
+      : [];
 
   try {
     const cached = await redisGet<{ data: string[]; updatedAt: number }>(key);
-    const existing = cached?.data || [];
+    const existing =
+      (cached?.data || []).filter((p) => !legacyPaths.includes(p));
 
     // Merge and deduplicate
     const merged = Array.from(new Set([...existing, ...stringPaths]));

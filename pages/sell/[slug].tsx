@@ -137,7 +137,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     params: { slug: convertMassDirTextIntoSlug(mdtid) },
   }));
 
-  await addPathsToSitemap(paths);
+  await addPathsToSitemap(paths, { basePath: "sell" });
 
   return {
     paths,
