@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "module": "esnext",
+    "module": "Node16",
     "target": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "node16",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "lib": ["dom", "dom.iterable", "esnext"],

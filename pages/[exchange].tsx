@@ -76,7 +76,7 @@ export async function getStaticProps({
     const getPm = pms?.find((pm) => pm.code === getCode) ?? null;
 
     if (!dir || !givePm || !getPm) {
-      console.log("dir ERROR", dir);
+      console.log("dir ERROR", slug);
       return { notFound: true };
     }
 
