@@ -85,10 +85,8 @@ export async function getStaticProps({ params }: { params: { code: string } }) {
         const getPm = pms.find((pm) => pm.code === dir.split("_")[1]);
         const pmPair = { slug, givePm, getPm } as IPmPairs;
 
-        return givePm?.section == getPm?.section
-          ? res
-          : givePm?.en_name.toLowerCase() ===
-            articlePms[0]?.en_name.toLowerCase()
+        return givePm?.en_name.toLowerCase() ===
+          articlePms[0]?.en_name.toLowerCase()
           ? { sell: [...res.sell], buy: [...res.buy, pmPair] }
           : { buy: [...res.buy], sell: [...res.sell, pmPair] };
       },

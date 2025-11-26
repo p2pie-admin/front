@@ -1,4 +1,4 @@
-import { Heading, Box, HStack, Text } from "@chakra-ui/react";
+import { Heading, Box, HStack, Text, Divider } from "@chakra-ui/react";
 
 import React, { useMemo, useRef, useState } from "react";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
@@ -8,7 +8,7 @@ import { IArticle } from "../../types/pages";
 import { TextToHTML } from "../shared/helper";
 import UniversalSeo from "../shared/UniversalSeo";
 import FoundError from "./FoundError";
-import OtherDirs from "./OtherDirs";
+import OtherDirs from "./other";
 import TopImage from "./TopImage";
 import Stats from "./Stats";
 import { IPm } from "../../types/selector";
@@ -63,7 +63,6 @@ const Article = ({
   );
 
   const minToRead = Math.round(symbols / 1000);
-  const pmName = `${pm?.[`${locale}_name`] || ""} ${pm?.code || ""}`.trim();
 
   return (
     <>
@@ -133,7 +132,7 @@ const Article = ({
           ))}
         </Box>
 
-        {otherDirs && <OtherDirs pmName={pmName} otherDirs={otherDirs} />}
+        {otherDirs && <OtherDirs mainPm={pm} otherDirs={otherDirs} />}
 
         <FoundError />
       </Box3D>

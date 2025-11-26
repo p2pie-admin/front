@@ -36,25 +36,23 @@ const Similar = ({
       []
     );
 
-  const { data, error } = useSWR(
+  const { data } = useSWR(
     `similar/dirs=${JSON.stringify(dirs)
       .replace("[", "")
       .replace("]", "")
       .replaceAll('"', "")}`,
     fetcher
-  ) as {
-    data: [number, number][];
-    error: any;
-  };
+  ) as { data: ([number, number] | [])[] | undefined };
 
   const renderRate = (
     pair: IPm[],
-    [course, amountOfCourses]: [number, number]
+    [course, amountOfCourses]: [number, number] | []
   ) => {
     const [giveCur, getCur] = [
       pair[0].currency.code.toUpperCase(),
       pair[1].currency.code.toUpperCase(),
     ];
+    if (!course) return {};
     const rate =
       course < 1
         ? `1 ${giveCur} = ${format(1 / course, 2)} ${getCur}`
@@ -87,7 +85,7 @@ const Similar = ({
           });
 
           const rateData = data?.[index] && renderRate(pair, data[index]);
-
+          if (!rateData) return <></>;
           return (
             <VStack spacing={4} align="stretch" my="4" key={slug + index}>
               <Dir

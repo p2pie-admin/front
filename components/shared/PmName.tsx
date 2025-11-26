@@ -7,12 +7,12 @@ import CircularIcon from "./CircularIcon";
 const PmName = ({
   pm,
   isFull = true,
-  isCrypto = false,
+  isTwoLines = false,
   isHighlited = false,
 }: {
   pm?: IPm;
   isFull?: boolean;
-  isCrypto?: boolean;
+  isTwoLines?: boolean;
   isHighlited?: boolean;
 }) => {
   if (!pm) return <></>;
@@ -21,6 +21,12 @@ const PmName = ({
   const color = isHighlited
     ? useColorModeValue("violet.600", "peach.300")
     : useColorModeValue("bg.700", "bg.200");
+
+  const name = `${capitalize(pm.en_name.slice(0, 12))} ${
+    pm.section == "crypto"
+      ? pm.subgroup_name?.toUpperCase() || pm.currency.code.toUpperCase()
+      : ""
+  }`;
   return (
     <HStack gap="2" color={color}>
       <CircularIcon
@@ -29,7 +35,7 @@ const PmName = ({
         color={pm.color || "gray"}
       />
 
-      {isCrypto ? (
+      {isTwoLines ? (
         <VStack spacing={0} align="start">
           <ResponsiveText size="sm" color={color} fontWeight="semibold">
             {pm.currency.code?.toUpperCase()}
@@ -41,9 +47,7 @@ const PmName = ({
         </VStack>
       ) : (
         <Box position="relative" mt="0.5">
-          <ResponsiveText>{`${capitalize(pm.en_name.slice(0, 12))} ${
-            isFull ? pm.currency.code.toUpperCase() : ""
-          } ${pm.subgroup_name || ""}`}</ResponsiveText>
+          <ResponsiveText>{name}</ResponsiveText>
         </Box>
       )}
     </HStack>

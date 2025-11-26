@@ -155,7 +155,7 @@ export default function CryptoList({ cryptoPms }: { cryptoPms: IPm[] }) {
                     <PmName
                       pm={pm}
                       isFull={false}
-                      isCrypto={true}
+                      isTwoLines={true}
                       isHighlited={pm.code == currentCode}
                     />
                   </Link>
