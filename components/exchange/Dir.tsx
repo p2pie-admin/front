@@ -13,6 +13,7 @@ const Dir = ({
   slug,
   bottomLeft,
   bottomRight,
+  fullHeight,
 }: {
   slug: string;
   givePm?: IPm;
@@ -20,6 +21,7 @@ const Dir = ({
   children?: any;
   bottomLeft?: React.ReactNode;
   bottomRight?: React.ReactNode;
+  fullHeight?: boolean;
 }) => {
   const leftContent = bottomLeft ?? children ?? null;
   const rightContent = bottomRight ?? null;
@@ -34,6 +36,7 @@ const Dir = ({
         transition="filter 0.2s ease-in"
         _hover={{ filter: "brightness(1.1)" }}
         variant="contrast"
+        minH={fullHeight ? "70px" : "unset"}
       >
         <Grid
           gridTemplateColumns={"1fr 40px 1fr"}

@@ -52,16 +52,6 @@ const AmountInput = ({ massDirTextId }: { massDirTextId: IMassDirTextId }) => {
 
   return (
     <InputGroup>
-      <HStack
-        position="absolute"
-        left="2"
-        top="50%"
-        transform="translateY(-50%)"
-        zIndex="11"
-        pointerEvents="none"
-      >
-        <BsFillPinAngleFill color="#F7C5B1" size="1.1rem" />
-      </HStack>
       <NumberInput
         value={value.length > 9 ? "✖" : value}
         onChange={(v: any) => setValue(v)}

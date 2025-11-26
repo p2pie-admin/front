@@ -47,7 +47,11 @@ const ExchangerName = ({
         </Box>
       </Box>
 
-      <Text as={isH1 ? "h1" : "p"} fontSize="2xl" fontWeight="bold">
+      <Text
+        as={isH1 ? "h1" : "p"}
+        fontSize={isH1 ? "2xl" : "xl"}
+        fontWeight="bold"
+      >
         {capitalize(name)}
       </Text>
       <Rating rating={admin_rating} />

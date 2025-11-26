@@ -83,7 +83,7 @@ const DirText = ({
   return (
     <Box p="2">
       <Heading as="h1" fontSize="xl">
-        {dirText.subheader}
+        {dirText.header}
       </Heading>
 
       <Divider my="5" />

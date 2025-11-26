@@ -11,7 +11,7 @@ import SmartGrid from "../mass/table/SmartGrid";
 import { IMassDirTextId } from "../../types/mass";
 import PmName from "../shared/PmName";
 
-const SimilarMass = ({
+const renderSimilarMass = ({
   similarPmPairs,
   givePm,
   getPm,
@@ -35,7 +35,7 @@ const SimilarMass = ({
       dtid.currency.code.toLowerCase() == fiatPm?.currency.code.toLowerCase()
   );
 
-  if (!linkExists?.code || !pms || !side || !cryptoPm || !fiatPm) return <></>;
+  if (!linkExists?.code || !pms || !side || !cryptoPm || !fiatPm) return;
 
   const pmIconsRender = (
     <SmartGrid
@@ -100,4 +100,4 @@ const SimilarMass = ({
   );
 };
 
-export default SimilarMass;
+export default renderSimilarMass;

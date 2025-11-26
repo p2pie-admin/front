@@ -40,7 +40,9 @@ export const maskIP = (ip?: string | null): string | null | undefined => {
   return chars.join("");
 };
 
-const maskExchangerReviewIPs = <T extends { reviews?: IExchangerReview[] | null }>(
+const maskExchangerReviewIPs = <
+  T extends { reviews?: IExchangerReview[] | null }
+>(
   exchanger: T | null
 ): T | null => {
   if (!exchanger || !Array.isArray(exchanger.reviews)) return exchanger;
@@ -175,7 +177,7 @@ export async function getStaticPaths() {
       : 5000;
 
     const slicedPaths = paths.slice(0, prerenderLimit);
-    await addPathsToSitemap(slicedPaths, { basePath: "exchangers" });
+    await addPathsToSitemap(paths, { basePath: "exchangers" });
 
     return {
       paths: slicedPaths,

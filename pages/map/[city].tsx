@@ -325,9 +325,11 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   };
 };
 
-export const getStaticPaths: GetStaticPaths = async () => ({
-  paths: [{ params: { city: DEFAULT_CITY_SLUG } }],
-  fallback: "blocking",
-});
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [{ params: { city: DEFAULT_CITY_SLUG } }],
+    fallback: "blocking",
+  };
+};
 
 export default MapCityPage;

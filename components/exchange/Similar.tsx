@@ -9,6 +9,9 @@ import Dir from "./Dir";
 import { useTranslation } from "next-i18next";
 import SimilarMass from "./SimilarMass";
 import { IMassDirTextId } from "../../types/mass";
+import renderSimilarMass from "./SimilarMass";
+
+const MAX_TO_SHOW = 4;
 
 const Similar = ({
   similarPmPairs,
@@ -24,7 +27,7 @@ const Similar = ({
   const fetcher = initParserFetcher();
   const { t } = useTranslation();
   const dirs = similarPmPairs
-    .slice(0, 3)
+    .slice(0, MAX_TO_SHOW)
     .reduce(
       (res: string[], pair: IPm[]) => [
         ...res,
@@ -62,50 +65,54 @@ const Similar = ({
       rateText: rate,
     };
   };
+  const similarMass = renderSimilarMass({
+    givePm,
+    getPm,
+    dirTextIds,
+    similarPmPairs: similarPmPairs.slice(3, 11),
+  });
 
   return (
     <Box3D px="4" w="100%" h={{ base: "fit-content", lg: "416px" }}>
       <ResponsiveText mt="5" variant="no_contrast">
         {t("main:similarDirs")}
       </ResponsiveText>
-      <SimilarMass
-        similarPmPairs={similarPmPairs.slice(3, 11)}
-        givePm={givePm}
-        getPm={getPm}
-        dirTextIds={dirTextIds}
-      />
-      {similarPmPairs.slice(0, 3).map((pair, index) => {
-        const slug = pmsToSlug({
-          givePm: pair[0],
-          getPm: pair[1],
-        });
+      {similarMass}
+      {similarPmPairs
+        .slice(0, !similarMass ? MAX_TO_SHOW : 3)
+        .map((pair, index) => {
+          const slug = pmsToSlug({
+            givePm: pair[0],
+            getPm: pair[1],
+          });
 
-        const rateData = data?.[index] && renderRate(pair, data[index]);
+          const rateData = data?.[index] && renderRate(pair, data[index]);
 
-        return (
-          <VStack spacing={4} align="stretch" my="4" key={slug + index}>
-            <Dir
-              givePm={pair[0]}
-              getPm={pair[1]}
-              slug={slug}
-              bottomLeft={
-                rateData ? (
-                  <ResponsiveText size="xs" variant="no_contrast">
-                    {`${t("main:exchangers")} ${rateData.amountOfCourses}`}
-                  </ResponsiveText>
-                ) : null
-              }
-              bottomRight={
-                rateData ? (
-                  <ResponsiveText size="xs" variant="no_contrast">
-                    {rateData.rateText}
-                  </ResponsiveText>
-                ) : null
-              }
-            />
-          </VStack>
-        );
-      })}
+          return (
+            <VStack spacing={4} align="stretch" my="4" key={slug + index}>
+              <Dir
+                fullHeight
+                givePm={pair[0]}
+                getPm={pair[1]}
+                slug={slug}
+                bottomLeft={
+                  rateData ? (
+                    <ResponsiveText size="xs" variant="no_contrast">
+                      {`${t("main:exchangers")} ${rateData.amountOfCourses}`}
+                    </ResponsiveText>
+                  ) : null
+                }
+                bottomRight={
+                  rateData ? (
+                    <ResponsiveText size="xs" variant="no_contrast">
+                      {rateData.rateText}
+                    </ResponsiveText>
+                  ) : null
+                }
+              />
+            </VStack>
+          );
+        })}
     </Box3D>
   );
 };
