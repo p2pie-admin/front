@@ -107,7 +107,7 @@ const SectionColumns = ({
 
   return (
     <Grid
-      gridTemplateColumns="repeat(2, minmax(0, 1fr))"
+      gridTemplateColumns={{ base: "1fr", lg: "repeat(2, minmax(0, 1fr))" }}
       gap="4"
       alignItems="stretch"
     >

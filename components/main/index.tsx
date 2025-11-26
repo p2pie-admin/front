@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { VStack, Text, Box } from "@chakra-ui/react";
+import { VStack, Text, Box, Divider } from "@chakra-ui/react";
 import Greeting from "./Greeting";
 import Calculator from "./Calculator";
 import { useAppDispatch } from "../../redux/hooks";
@@ -56,9 +56,15 @@ const MainPageContent = ({
           <Calculator />
         </Column>
         <Column index={4}>
-          <ResponsiveText variant="no_contrast" whiteSpace="normal">
-            {rootText?.text || ""}
-          </ResponsiveText>
+          <Box p="2">
+            <ResponsiveText variant="contrast" whiteSpace="normal">
+              {rootText?.header || ""}
+            </ResponsiveText>
+            <Divider my="2" />
+            <ResponsiveText variant="no_contrast" whiteSpace="normal">
+              {rootText?.text || ""}
+            </ResponsiveText>
+          </Box>
         </Column>
         <Column index={2}>
           <Popular popularRates={popularRates} popularPms={popularPms} />
