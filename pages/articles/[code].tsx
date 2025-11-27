@@ -9,6 +9,7 @@ import { nullSeo } from "../../components/shared/UniversalSeo";
 
 import { getSlugToCodes } from "../../cache/helper";
 import {
+  limitedPossibleDirs,
   loadArticle,
   loadArticleCodes,
   loadPms,
@@ -43,12 +44,13 @@ export async function getStaticProps({ params }: { params: { code: string } }) {
     // force locale from env
 
     const code = params.code;
-    const [article, articleCodes, pms, dirs] = await Promise.all([
+    const [article, articleCodes, pms, allPossibleDirs] = await Promise.all([
       loadArticle(code),
       loadArticleCodes(),
       loadPms(),
       loadPossibleDirs(),
     ]);
+    const dirs = limitedPossibleDirs(allPossibleDirs, "middle");
 
     const slugToCodes = getSlugToCodes(dirs, pms);
     if (!article) {

@@ -105,9 +105,9 @@ const OtherDirs = ({
         const sectionKey = section || "unknown";
 
         return (
-          <>
-            <Divider my="4" />{" "}
-            <Box key={sectionKey} w="100%">
+          <React.Fragment key={sectionKey}>
+            <Divider my="4" />
+            <Box w="100%">
               <SectionColumns
                 headers={headers}
                 rows={rows}
@@ -123,7 +123,7 @@ const OtherDirs = ({
                 visibleCount={VISIBLE_ROWS}
               />
             </Box>
-          </>
+          </React.Fragment>
         );
       })}
     </VStack>

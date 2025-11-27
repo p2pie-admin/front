@@ -4,7 +4,12 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import UniversalSeo from "../../components/shared/UniversalSeo";
 
 import { MapHeadings, CityCashSection } from "../../components/map/types";
-import { loadCities, loadPms, loadPossibleDirs } from "../../cache/loadX";
+import {
+  limitedPossibleDirs,
+  loadCities,
+  loadPms,
+  loadPossibleDirs,
+} from "../../cache/loadX";
 import { initCMSFetcher, initParserFetcher } from "../../services/fetchers";
 import { exchangersMapQuery, TextBoxQuery } from "../../services/queries";
 import { getCodesToSlug } from "../../cache/helper";
@@ -121,7 +126,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
 
   const parserFetcher = initParserFetcher();
 
-  const [cities, cityDirectionsData, pms, dirs] = await Promise.all([
+  const [cities, cityDirectionsData, pms, allPossibleDirs] = await Promise.all([
     loadCities(),
     parserFetcher("non_empty_cities") as Promise<ParserCityDirections | null>,
     loadPms(),
@@ -158,6 +163,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   const copy = buildCopy(currentCity, currentLocale, cityText);
 
   const pmMap = new Map((pms || []).map((pm) => [pm.code.toUpperCase(), pm]));
+  const dirs = limitedPossibleDirs(allPossibleDirs, "middle");
   const codesToSlug =
     dirs && pms && pms.length && dirs.length ? getCodesToSlug(dirs, pms) : {};
 

@@ -14,6 +14,7 @@ import {
   loadPmLayouts,
   loadCustomDirText,
   loadMassDirTextIds,
+  limitedPossibleDirs,
 } from "../cache/loadX";
 import {
   dirTextHandler,
@@ -53,7 +54,7 @@ export async function getStaticProps({
     const isCash =
       (slug && slug.startsWith("cash-")) || slug.includes("-cash-");
 
-    const [pms, dirs, cities, pmLayouts, articleCodes, dirTextIds] =
+    const [pms, allPossibleDirs, cities, pmLayouts, articleCodes, dirTextIds] =
       await Promise.all([
         loadPms(),
         loadPossibleDirs(),
@@ -62,7 +63,7 @@ export async function getStaticProps({
         loadArticleCodes(),
         loadMassDirTextIds({ isSell: true }),
       ]);
-
+    const dirs = limitedPossibleDirs(allPossibleDirs, "low");
     const slugToCodes = getSlugToCodes(dirs, pms);
 
     if (!pms || !Array.isArray(pms)) {
@@ -184,13 +185,13 @@ export async function getStaticProps({
 }
 
 export async function getStaticPaths() {
-  const [pms, possiblePairs, cities] = await Promise.all([
+  const [pms, allPossibleDirs, cities] = await Promise.all([
     loadPms(),
     loadPossibleDirs(),
     loadCities(),
   ]);
-
-  const slugToCodes = getSlugToCodes(possiblePairs, pms);
+  const dirs = limitedPossibleDirs(allPossibleDirs, "low");
+  const slugToCodes = getSlugToCodes(dirs, pms);
 
   if (!slugToCodes || !cities) {
     console.error(
@@ -203,29 +204,33 @@ export async function getStaticPaths() {
     params: { exchange: slug },
   }));
 
+  const dirsToPrerender = limitedPossibleDirs(allPossibleDirs, "high");
+  const slugsToPrerender = getSlugToCodes(dirsToPrerender, pms);
+
+  const dirsForSitemap = limitedPossibleDirs(allPossibleDirs, "middle");
+  const slugsForSitemap = getSlugToCodes(dirsForSitemap, pms);
+  const sitemapPaths = Object.keys(slugsForSitemap).map((slug) => ({
+    params: { exchange: slug },
+  }));
+
   const needPrerender = (exchangePath: string) => {
-    if (!exchangePath.includes("-in-")) return true; // don't prerender cities
-    const city = cities?.find((city) =>
-      exchangePath.includes(city.en_name.toLowerCase())
-    );
-    const countryName = city?.en_country_name?.toLowerCase();
-    return (
-      city &&
-      countryName &&
-      city?.population > 3 &&
-      prerenderCountries.includes(countryName)
-    );
+    // if (!exchangePath.includes("-in-")) return true; // don't prerender cities
+    return Object.prototype.hasOwnProperty.call(slugsToPrerender, exchangePath);
   };
 
-  const paths = allPaths.filter((p) => needPrerender(p.params.exchange));
   const prerenderLimit = process.env.NEXT_PUBLIC_PRERENDER_LIMIT
     ? Number(process.env.NEXT_PUBLIC_PRERENDER_LIMIT)
     : 5000;
 
-  const slicedPaths = paths.slice(0, prerenderLimit);
-  await addPathsToSitemap(allPaths);
+  const pathsToPrerender = allPaths
+    .filter((p) => needPrerender(p.params.exchange))
+    .slice(0, prerenderLimit);
 
-  return { paths: slicedPaths, fallback: "blocking" };
+  await addPathsToSitemap(sitemapPaths);
+  console.log("exchange allPaths: ", allPaths.length);
+  console.log("exchange pathsToPrerender: ", pathsToPrerender.length);
+
+  return { paths: pathsToPrerender, fallback: "blocking" };
 }
 
 export default ExchangePage;

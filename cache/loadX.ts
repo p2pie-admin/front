@@ -28,6 +28,7 @@ import {
 import { IArticle } from "../types/pages";
 import { IExchanger, IExchangerPreview } from "../types/exchanger";
 import { IMassDirTextId, IMassDirText, IMassRate } from "../types/mass";
+import { dir } from "console";
 
 const locale = process.env.NEXT_PUBLIC_SITE_LANG || "ru";
 
@@ -97,9 +98,25 @@ export const loadArticle = (code: string) =>
 
 export const loadPossibleDirs = () =>
   cachedFetch("dirs", TTL.fast, async () => {
-    const dirs = await parserFetcher("dirs"); // {"BTC_USDTTRC20": 119, "BTC_ETH": 34, ...}
-    return Object.keys(dirs);
+    const dirs = (await parserFetcher("dirs")) as Record<string, number>; // {"BTC_USDTTRC20": 119, "BTC_ETH": 34, ...}
+
+    return dirs;
   });
+
+export const limitedPossibleDirs = (
+  dirs: Record<string, number>,
+  strength: "low" | "middle" | "high"
+): string[] => {
+  const limit =
+    strength == "low"
+      ? 2
+      : strength == "middle"
+      ? process.env.NEXT_PUBLIC_RATES_MIN || 5
+      : process.env.NEXT_PUBLIC_RATES_RENDER_MIN || 10;
+  return Object.entries(dirs)
+    .filter(([dir, rates]) => rates >= +limit)
+    .map((v) => v[0]);
+};
 
 export const loadPms = async () => {
   const pms = await cachedFetch("pms", TTL.slow, async () => {
