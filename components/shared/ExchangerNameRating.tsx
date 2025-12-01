@@ -51,6 +51,10 @@ const ExchangerName = ({
         as={isH1 ? "h1" : "p"}
         fontSize={isH1 ? "2xl" : "xl"}
         fontWeight="bold"
+        color="bg.200"
+        _hover={{
+          color: "peach.200",
+        }}
       >
         {capitalize(name)}
       </Text>

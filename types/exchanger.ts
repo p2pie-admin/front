@@ -46,6 +46,19 @@ export interface IExchangerOffice {
   image?: IImage | null;
 }
 
+export interface IExchangerMonitoringInfo {
+  id: string;
+  name?: string | null;
+  url?: string | null;
+  logo?: IImage | null;
+}
+
+export interface IExchangerMonitoring {
+  id: string;
+  link?: string | null;
+  monitoring?: IExchangerMonitoringInfo | null;
+}
+
 export interface IExchangerCard {
   id: string;
   en_description?: string | null;
@@ -117,6 +130,7 @@ export type IExchanger = {
   exchanger_card?: IExchangerCard | null;
   exchanger_templates?: IExchangerTemplate[];
   offices?: IExchangerOffice[];
+  monitorings?: IExchangerMonitoring[] | null;
   reviews?: IExchangerReview[] | null;
   exchanger_tags?: IExchangerTag[] | null;
 };

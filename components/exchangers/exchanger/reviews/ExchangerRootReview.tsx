@@ -226,6 +226,7 @@ export default function ExchangerRootReview({
       {review_replies &&
         review_replies.map((reply) => (
           <ExchangerReply
+            key={reply.id}
             canReply={review.ipAddress == userIP && reply.from !== "author"}
             reply={reply}
             displayName={displayName}

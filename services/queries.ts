@@ -260,6 +260,31 @@ export const exchangerQuery = gql`
               }
             }
           }
+          monitorings {
+            ... on ComponentExchangerMonitoring {
+              id
+              link
+              monitoring {
+                data {
+                  id
+                  attributes {
+                    name
+                    url
+                    logo {
+                      data {
+                        id
+                        attributes {
+                          name
+                          alternativeText
+                          url
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
           exchanger_templates {
             data {
               id

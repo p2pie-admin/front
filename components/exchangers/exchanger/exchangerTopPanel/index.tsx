@@ -8,19 +8,18 @@ import { TopButtons } from "./TopButtons";
 const ExchangerTopPanel = ({ exchanger }: { exchanger: IExchanger }) => {
   return (
     <>
-      <Box display={{ base: "unset", lg: "none" }} w="100%">
-        <HStack justifyContent="space-between" gap="4" w="100%">
+      <Box display={{ base: "block", lg: "none" }}>
+        <HStack justifyContent="space-between" gap="4">
           <Header exchanger={exchanger} />
-
           <Actions exchanger={exchanger} />
         </HStack>
       </Box>
-      <Box display={{ base: "none", lg: "unset" }} w="100%">
-        <HStack justifyContent="space-between" gap="4" w="100%">
+
+      <Box display={{ base: "none", lg: "block" }}>
+        <HStack justifyContent="space-between" gap="4">
           <Header exchanger={exchanger} />
           <HStack>
             <Actions exchanger={exchanger} />
-
             <TopButtons exchanger={exchanger} />
           </HStack>
         </HStack>

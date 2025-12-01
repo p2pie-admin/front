@@ -18,9 +18,7 @@ import {
 
 import UniversalSeo from "../../shared/UniversalSeo";
 import { ISEO } from "../../../types/general";
-import ExchangerCard from "./description";
-import ExchangerName from "../../shared/ExchangerNameRating";
-import Dot from "../Dot";
+
 import OfficesDescription from "./offices";
 import { locale } from "../../../services/utils";
 import ExchangerDescription from "./description";
@@ -34,12 +32,13 @@ import ExchangerStats from "./exchangerStats";
 import { BoxWrapper } from "../../shared/BoxWrapper";
 import ExchangerTopPanel from "./exchangerTopPanel";
 import { TopButtons } from "./exchangerTopPanel/TopButtons";
+import Monitorings from "./monitorings";
 
 export default function Exchanger({
   exchanger,
   seo,
 }: {
-  exchanger: IExchanger & IParserExchanger;
+  exchanger: IExchanger;
   seo: ISEO;
 }) {
   if (!exchanger || !exchanger.ref_link) {
@@ -72,7 +71,7 @@ export default function Exchanger({
 
           <ExchangerStats
             reviews={exchanger.reviews}
-            ratesTotal={exchanger.total_rates}
+            // ratesTotal={exchanger.total_rates}
             reserveTotal={exchanger.exchanger_card?.total_reserve_usd}
             workingTime={exchanger.exchanger_card?.working_time}
           />
@@ -85,6 +84,7 @@ export default function Exchanger({
 
       <OfficesDescription offices={exchanger.offices} />
       <ExchangerDescription description={description} />
+      <Monitorings monitorings={exchanger.monitorings} />
       <ExchangerContacts exchangerCard={exchangerCard} />
 
       <ExchangerReviewsHeader />
