@@ -55,8 +55,8 @@ const Similar = ({
     if (!course) return {};
     const rate =
       course < 1
-        ? `1 ${giveCur} = ${format(1 / course, 2)} ${getCur}`
-        : `1 ${getCur} = ${format(course, 2)} ${giveCur}`;
+        ? `1 ${giveCur} = ${format(1 / course, 1)} ${getCur}`
+        : `1 ${getCur} = ${format(course, 1)} ${giveCur}`;
 
     return {
       amountOfCourses,

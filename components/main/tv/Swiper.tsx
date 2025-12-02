@@ -71,6 +71,7 @@ export const Swiper = (props: {
   const mouseEnteredRef = useRef(false);
   const originalOverflowRef = useRef<string | null>(null);
   const originalPaddingRef = useRef<string | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const y = useMotionValue(0);
   const controls = useAnimation();
@@ -136,8 +137,45 @@ export const Swiper = (props: {
 
   const stepUp = () => changeIndexByDelta(1);
 
+  const restoreBodyStyles = useCallback(() => {
+    if (typeof document === "undefined") return;
+    document.body.style.overflow = originalOverflowRef.current ?? "";
+    document.body.style.paddingRight = originalPaddingRef.current ?? "";
+    originalOverflowRef.current = null;
+    originalPaddingRef.current = null;
+  }, []);
+
+  const handleMouseEnter = useCallback(() => {
+    if (isMobile || mouseEnteredRef.current) return;
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
+    originalOverflowRef.current = document.body.style.overflow;
+    originalPaddingRef.current = document.body.style.paddingRight;
+    document.body.style.overflow = "hidden";
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
+    mouseEnteredRef.current = true;
+  }, [isMobile]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (isMobile) return;
+    restoreBodyStyles();
+    mouseEnteredRef.current = false;
+  }, [isMobile, restoreBodyStyles]);
+
   const handleWheel = useCallback(
     (event: WheelEvent) => {
+      const containerEl = containerRef.current;
+      const targetNode = event.target as Node | null;
+      const path = (event as any).composedPath?.() as Node[] | undefined;
+      const targetInside =
+        !!containerEl &&
+        (containerEl === targetNode ||
+          (!!targetNode && containerEl.contains(targetNode)) ||
+          (Array.isArray(path) && path.includes(containerEl)));
+
+      if (targetInside && !mouseEnteredRef.current) {
+        handleMouseEnter();
+      }
       if (isMobile || !mouseEnteredRef.current) return;
       if (!event.deltaY) return;
       const normalized = Math.abs(event.deltaY);
@@ -146,7 +184,7 @@ export const Swiper = (props: {
       changeIndexByDelta(direction * intensity);
       event.preventDefault();
     },
-    [changeIndexByDelta, isMobile]
+    [changeIndexByDelta, handleMouseEnter, isMobile]
   );
 
   const handleKeyDown = (event: any) => {
@@ -188,31 +226,6 @@ export const Swiper = (props: {
     };
   }, [handleWheel, handleKeyDown, isMobile]);
 
-  const restoreBodyStyles = useCallback(() => {
-    if (typeof document === "undefined") return;
-    document.body.style.overflow = originalOverflowRef.current ?? "";
-    document.body.style.paddingRight = originalPaddingRef.current ?? "";
-    originalOverflowRef.current = null;
-    originalPaddingRef.current = null;
-  }, []);
-
-  const handleMouseEnter = () => {
-    if (isMobile || mouseEnteredRef.current) return;
-    const scrollbarWidth =
-      window.innerWidth - document.documentElement.clientWidth;
-    originalOverflowRef.current = document.body.style.overflow;
-    originalPaddingRef.current = document.body.style.paddingRight;
-    document.body.style.overflow = "hidden";
-    document.body.style.paddingRight = `${scrollbarWidth}px`;
-    mouseEnteredRef.current = true;
-  };
-
-  const handleMouseLeave = () => {
-    if (isMobile) return;
-    restoreBodyStyles();
-    mouseEnteredRef.current = false;
-  };
-
   useEffect(() => {
     return () => {
       mouseEnteredRef.current = false;
@@ -244,6 +257,7 @@ export const Swiper = (props: {
             px="1"
             py="4"
             borderRadius={`${4}% ${4}% ${4}% ${4}% / 50% 50% 50% 50%`}
+            ref={containerRef}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >

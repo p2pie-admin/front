@@ -55,6 +55,7 @@ const AmountInput = () => {
   return (
     <>
       <NumberInput
+        mr="2"
         isDisabled={!currentRate}
         step={R(value / 100)}
         //allowMouseWheel

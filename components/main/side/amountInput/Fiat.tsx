@@ -40,7 +40,7 @@ const Fiat = ({
       justifySelf="end"
       position="absolute"
       bottom="1"
-      right="2"
+      right="4"
     >
       {isEdited && Min > 0 && value < Min - Min * 0.01 ? (
         <Text color="red.500">

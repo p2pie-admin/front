@@ -37,6 +37,7 @@ export const MassSwiper = ({
   const [mouseEntered, setMouseEntered] = React.useState(false);
   const originalOverflowRef = React.useRef<string | null>(null);
   const originalPaddingRef = React.useRef<string | null>(null);
+  const containerRef = React.useRef<HTMLDivElement | null>(null);
 
   const y = useMotionValue(0);
   const controls = useAnimation();
@@ -123,17 +124,61 @@ export const MassSwiper = ({
     // }
   };
 
-  const handleWheel = (event: any) => {
-    if (isMobile || !mouseEntered) return;
-    if (event.deltaY < 0) stepDown();
-    else if (event.deltaY > 0) stepUp();
-  };
+  const restoreBodyStyles = React.useCallback(() => {
+    if (typeof document === "undefined") return;
+    document.body.style.overflow = originalOverflowRef.current ?? "";
+    document.body.style.paddingRight = originalPaddingRef.current ?? "";
+    originalOverflowRef.current = null;
+    originalPaddingRef.current = null;
+  }, []);
 
-  const handleKeyDown = (event: any) => {
+  const handleMouseEnter = React.useCallback(() => {
+    if (isMobile || mouseEntered) return;
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
+    originalOverflowRef.current = document.body.style.overflow;
+    originalPaddingRef.current = document.body.style.paddingRight;
+    document.body.style.overflow = "hidden";
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
+    setMouseEntered(true);
+  }, [isMobile, mouseEntered]);
+
+  const handleMouseLeave = React.useCallback(() => {
     if (isMobile) return;
-    if (event.key === "ArrowUp" || event.key === "ArrowRight") stepDown();
-    else if (event.key === "ArrowDown" || event.key === "ArrowLeft") stepUp();
-  };
+    restoreBodyStyles();
+    setMouseEntered(false);
+  }, [isMobile, restoreBodyStyles]);
+
+  const handleWheel = React.useCallback(
+    (event: WheelEvent) => {
+      const containerEl = containerRef.current;
+      const targetNode = event.target as Node | null;
+      const path = (event as any).composedPath?.() as Node[] | undefined;
+      const targetInside =
+        !!containerEl &&
+        (containerEl === targetNode ||
+          (!!targetNode && containerEl.contains(targetNode)) ||
+          (Array.isArray(path) && path.includes(containerEl)));
+
+      if (targetInside && !mouseEntered) {
+        handleMouseEnter();
+      }
+      if (isMobile || !mouseEntered) return;
+      if (event.deltaY < 0) stepDown();
+      else if (event.deltaY > 0) stepUp();
+    },
+    [handleMouseEnter, isMobile, mouseEntered, stepDown, stepUp]
+  );
+
+  const handleKeyDown = React.useCallback(
+    (event: any) => {
+      if (isMobile) return;
+      if (event.key === "ArrowUp" || event.key === "ArrowRight") stepDown();
+      else if (event.key === "ArrowDown" || event.key === "ArrowLeft")
+        stepUp();
+    },
+    [isMobile, stepDown, stepUp]
+  );
 
   React.useEffect(() => {
     if (isMobile) return;
@@ -188,31 +233,6 @@ export const MassSwiper = ({
     return unsubscribe;
   }, [y, items, set, centerOffset, step]);
 
-  const restoreBodyStyles = React.useCallback(() => {
-    if (typeof document === "undefined") return;
-    document.body.style.overflow = originalOverflowRef.current ?? "";
-    document.body.style.paddingRight = originalPaddingRef.current ?? "";
-    originalOverflowRef.current = null;
-    originalPaddingRef.current = null;
-  }, []);
-
-  const handleMouseEnter = () => {
-    if (isMobile || mouseEntered) return;
-    const scrollbarWidth =
-      window.innerWidth - document.documentElement.clientWidth;
-    originalOverflowRef.current = document.body.style.overflow;
-    originalPaddingRef.current = document.body.style.paddingRight;
-    document.body.style.overflow = "hidden";
-    document.body.style.paddingRight = `${scrollbarWidth}px`;
-    setMouseEntered(true);
-  };
-
-  const handleMouseLeave = () => {
-    if (isMobile) return;
-    restoreBodyStyles();
-    setMouseEntered(false);
-  };
-
   React.useEffect(() => {
     return () => {
       restoreBodyStyles();
@@ -230,6 +250,7 @@ export const MassSwiper = ({
         py="4"
         borderRadius={`${8}% ${8}% ${8}% ${8}% / 50% 50% 50% 50%`}
         onClick={handleClick}
+        ref={containerRef}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >

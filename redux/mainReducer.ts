@@ -360,14 +360,16 @@ export const mainSlice = createSlice({
         : action.payload;
       state.dirRates = rates;
       state.dirRatesReloadTrigger = "manual";
-      const targetIndex = 1;
+      const targetIndex = 0;
+      const keepAmount = !!action.meta.arg?.keepAmount;
+      state.amountInput = keepAmount ? state.amountInput : undefined;
       state.amountOutputs = getAmountOutputs(
         state,
         targetIndex,
-        undefined,
-        true
+        keepAmount ? state.amountInput : undefined,
+        keepAmount
       );
-      state.swiperIdVisible = 1;
+      state.swiperIdVisible = targetIndex;
     });
 
     builder.addCase(fetchPossiblePairs.fulfilled, (state, action) => {

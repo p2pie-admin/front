@@ -55,7 +55,7 @@ const TV = ({
 
     const schedule = () => {
       timeoutId = setTimeout(async () => {
-        await dispatch(updateDirRates({ dir, cityName }));
+        await dispatch(updateDirRates({ dir, cityName, keepAmount: true }));
         if (!cancelled) schedule();
       }, 60_000);
     };
@@ -85,54 +85,8 @@ const TV = ({
   return (
     <Box h={{ base: "fit-content", lg: "416px" }}>
       <Swiper {...props} />
-
-      {/* <HStack justifyContent="center">
-          <ResponsiveText fontSize="2xl" variant="primary">
-            {t("main:closest_cities")}{" "}
-            {city?.closest_cities.map((c, index) => (
-              <Link
-                as={NextLink}
-                href={`/${slugCityToExchange(slug, c.en_name)}`}
-                fontWeight="bold"
-              >
-                {`${index ? "," : ""} ${capitalize(c[`${locale}_name`])}`}
-              </Link>
-            ))}
-          </ResponsiveText>
-        </HStack> */}
     </Box>
   );
 };
 
 export default TV;
-// const { data: topParametersData, error: topParameterError } = useSWR(
-//   TopTopParametersQuery,
-//   fetcher
-// ) as {
-//   data: {
-//     topParameters: IParamData[];
-//   };
-//   error: boolean;
-// };
-
-// const { data: directionParametersData, error: directionParameterError } =
-//   useSWR(DirectionTopParametersQuery, fetcher) as {
-//     data: {
-//       directionParameters: IParamData[];
-//     };
-//     error: boolean;
-//   };
-
-// const { data: exchangerParametersData, error: exchangerParameterError } =
-//   useSWR(DirectionTopParametersQuery, fetcher) as {
-//     data: {
-//       exchangerParameters: IParamData[];
-//     };
-//     error: boolean;
-//   };
-
-// const allParameters = [
-//   ...(topParametersData?.topParameters || []),
-//   ...(directionParametersData?.directionParameters || []),
-//   ...(exchangerParametersData?.exchangerParameters || []),
-// ];

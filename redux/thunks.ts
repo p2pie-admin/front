@@ -58,7 +58,9 @@ type FetchDirRatesArgs = {
   cityName?: string;
 };
 
-type UpdateDirRatesArgs = FetchDirRatesArgs;
+type UpdateDirRatesArgs = FetchDirRatesArgs & {
+  keepAmount?: boolean;
+};
 
 const _fetchRates = async ({ dir, cityName }: FetchDirRatesArgs) => {
   //const isCash = (dir.split("_")[0].startsWith("CASH") || dir.split("_")[1].startsWith("CASH"));
