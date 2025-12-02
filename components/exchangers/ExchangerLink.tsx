@@ -11,14 +11,15 @@ import { BsArrowRightShort } from "react-icons/bs";
 export default function ExchangerPreview({
   exchanger,
 }: {
-  exchanger: IExchanger & IParserExchanger;
+  exchanger: IExchanger;
 }) {
-  const { name, total_rates } = exchanger;
+  const displayName = exchanger.display_name || exchanger.name;
+  const slug = exchangerNameToSlug(exchanger.name);
   return (
     <Box3D
       w="100%"
       as={Link}
-      href={`/exchangers/${exchangerNameToSlug(name)}`}
+      href={`/exchangers/${slug}`}
       prefetch={false}
       px="4"
       py="4"
@@ -27,19 +28,18 @@ export default function ExchangerPreview({
       justifyContent="start"
       alignItems="center"
       color="bg.500"
-      key={name}
+      key={displayName}
       _hover={{
         bgColor: "bg.1000",
         color: "peach.300",
       }}
     >
       <HStack w="100%">
-        <Dot color={getStatus(exchanger)} />
-
         <ExchangerName
-          name={name}
+          name={displayName}
           logo={exchanger.logo}
           admin_rating={exchanger.admin_rating}
+          statusColor={getStatus(exchanger)}
         />
         <Box ml="auto" color="inherit">
           <BsArrowRightShort size="1.5rem" />

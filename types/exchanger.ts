@@ -63,12 +63,13 @@ export interface IExchangerCard {
   id: string;
   en_description?: string | null;
   ru_description?: string | null;
+  text?: string | null;
   telegram?: string | null;
   email?: string | null;
   working_time?: string | null;
   phone_number?: string | null;
   whatsapp?: string | null;
-  date_listed?: string | null;
+  date_created?: string | null;
   total_reserve_usd?: number | string | null;
 }
 

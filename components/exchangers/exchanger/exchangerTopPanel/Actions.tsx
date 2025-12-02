@@ -28,6 +28,7 @@ const storageKeys = {
 const Actions = ({ exchanger }: { exchanger: IExchanger }) => {
   const dispatch = useAppDispatch();
   const inputColor = useColorModeValue("violet.700", "peach.300");
+  const displayName = exchanger.display_name || exchanger.name;
   const bookmarkStorageKey = useMemo(
     () => storageKeys.bookmark(exchanger.id),
     [exchanger.id]
@@ -67,10 +68,10 @@ const Actions = ({ exchanger }: { exchanger: IExchanger }) => {
 
   const initialLikes = useMemo(
     () =>
-      (!(exchanger.name.length % 3)
+      (!(displayName.length % 3)
         ? 0
-        : Math.round(exchanger.name.length / 2)) + Number(liked),
-    [exchanger.name.length, liked]
+        : Math.round(displayName.length / 2)) + Number(liked),
+    [displayName.length, liked]
   );
 
   const handleLike = () => {
@@ -100,11 +101,12 @@ const Actions = ({ exchanger }: { exchanger: IExchanger }) => {
 
   return (
     <Flex
-      gap="4"
+      gap="2"
       alignItems="stretch"
       flexWrap={{ base: "wrap", lg: "nowrap" }}
       flexDir="row"
       justifyContent="start"
+      ml="auto"
     >
       <Button
         p="0"

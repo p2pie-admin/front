@@ -33,17 +33,21 @@ const styles = {
       fontSize: ["4xl", "3xl"],
       fontWeight: "bold",
       my: "3",
+
       color: mode("violet.700", "peach.300")(props),
     },
     h2: {
       fontSize: ["2xl", "xl"],
       my: "2",
-      color: mode("bg.800", "bg.200")(props),
+
+      fontWeight: "bold",
+      color: mode("bg.800", "bg.100")(props),
     },
     h3: {
-      fontSize: ["lg", "md"],
+      fontSize: ["xl", "lg"],
       my: "1",
-      color: mode("bg.600", "bg.400")(props),
+
+      color: mode("bg.600", "peach.300")(props),
     },
     a: {
       color: mode("violet.700", "violet.300")(props),

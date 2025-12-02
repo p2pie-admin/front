@@ -1,4 +1,4 @@
-import { Divider } from "@chakra-ui/react";
+import { Box, Divider, Text } from "@chakra-ui/react";
 import React from "react";
 
 import { TextToHTML } from "../../../shared/helper";
@@ -16,7 +16,20 @@ export default function ExchangerDescription({
     <BoxWrapper>
       <CustomHeader text={`Описание`} Icon={IoMdInformationCircle} />
       <Divider my="4" />
-      {description && <TextToHTML text={description} />}
+      <Box px="2" color="bg.400">
+        {description && (
+          <TextToHTML
+            text={description}
+            components={{
+              p: ({ children }) => (
+                <Text color="bg.300" px="2" my="2">
+                  {children}
+                </Text>
+              ),
+            }}
+          />
+        )}
+      </Box>
     </BoxWrapper>
   );
 }

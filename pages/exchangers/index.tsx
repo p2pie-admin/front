@@ -13,7 +13,7 @@ const ExchangersPage = ({
   exchangers,
   seo,
 }: {
-  exchangers: (IExchanger & IParserExchanger)[] | null;
+  exchangers: IExchanger[] | null;
   seo: ISEO;
 }) => <ExchangersList exchangers={exchangers} seo={seo} />;
 

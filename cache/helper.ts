@@ -5,7 +5,7 @@ import {
 import { mylog } from "../services/utils";
 
 import { IPossiblePmPair } from "../types/exchange";
-import { IExchanger, IParserExchanger } from "../types/exchanger";
+import { IExchanger } from "../types/exchanger";
 import { IMassDirTextId } from "../types/mass";
 import { ISelector, IPm, IPmGroup, ISection } from "../types/selector";
 
@@ -51,23 +51,22 @@ export const getCodesToSlug = (dirs: string[], pms: IPm[]) => {
   );
 };
 
-export const mergeExchangers = (
-  allExchangers?: IExchanger[],
-  parserExchangers?: Record<string, IParserExchanger>
-) => {
-  if (!allExchangers || !parserExchangers) {
-    mylog("NO EXCHANGERS", "error");
-    return (allExchangers || parserExchangers || []) as (IExchanger &
-      IParserExchanger)[];
-  }
-  return allExchangers.map((ex) => {
-    const parserExchanger = parserExchangers?.[ex.id];
-    return {
-      ...parserExchanger,
-      ...ex,
-    } as IExchanger & IParserExchanger;
-  });
-};
+// export const mergeExchangers = (
+//   allExchangers?: IExchanger[],
+//   parserExchangers?: Record<string, IParserExchanger>
+// ) => {
+//   if (!allExchangers || !parserExchangers) {
+//     mylog("NO EXCHANGERS", "error");
+//     return (allExchangers || parserExchangers || []) as (IExchanger )[];
+//   }
+//   return allExchangers.map((ex) => {
+//     const parserExchanger = parserExchangers?.[ex.id];
+//     return {
+//       ...parserExchanger,
+//       ...ex,
+//     } as IExchanger ;
+//   });
+// };
 
 export const convertMassDirTextIntoSlug = (
   massDirTextId: IMassDirTextId

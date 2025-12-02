@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 export default function ExchangersHeader({
   exchangers,
 }: {
-  exchangers: (IExchanger & IParserExchanger)[];
+  exchangers: IExchanger[];
 }) {
   const { t } = useTranslation();
   const statusCounts = useMemo(() => {

@@ -27,13 +27,9 @@ export const TopButtons = ({ exchanger }: { exchanger: IExchanger }) => {
   };
 
   return (
-    <Box
-      display={{ base: "grid", lg: "grid" }}
-      gap="4"
-      gridTemplateColumns="1fr 1fr"
-    >
+    <>
       <LeaveReviewButton onClick={handleScrollToLeaveReview} />
       <ExchangeButton refLink={exchanger.ref_link} fullWidth />
-    </Box>
+    </>
   );
 };

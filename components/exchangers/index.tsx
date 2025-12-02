@@ -15,7 +15,7 @@ export default function ExchangersList({
   exchangers,
   seo,
 }: {
-  exchangers: (IExchanger & IParserExchanger)[] | null;
+  exchangers: IExchanger[] | null;
   seo: ISEO;
 }) {
   const [sortCriteria, setSortCriteria] = useState<
@@ -91,12 +91,13 @@ export default function ExchangersList({
 
   const filteredExchangers = useMemo(() => {
     return exchangers?.filter((exchanger) => {
+      const displayName = (exchanger.display_name || exchanger.name || "").toLowerCase();
       const matchesFilter =
         activeFilter === null || activeFilter === getStatus(exchanger);
 
       const matchesSearch =
         debouncedQuery === "" ||
-        exchanger.name.toLowerCase().includes(debouncedQuery) ||
+        displayName.includes(debouncedQuery) ||
         exchanger?.ref_link?.toLowerCase().includes(debouncedQuery);
 
       return matchesFilter && matchesSearch;
@@ -108,7 +109,9 @@ export default function ExchangersList({
       let result = 0;
 
       if (sortCriteria === "name") {
-        result = a.name.localeCompare(b.name, "ru", { sensitivity: "base" });
+        const nameA = a.display_name || a.name || "";
+        const nameB = b.display_name || b.name || "";
+        result = nameA.localeCompare(nameB, "ru", { sensitivity: "base" });
       } else if (sortCriteria === "total_rates") {
         result = (a.total_rates || 0) - (b.total_rates || 0);
       } else if (sortCriteria === "admin_rating") {

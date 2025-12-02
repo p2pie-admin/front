@@ -38,36 +38,38 @@ export const H3ForOthers = (mainPm: IPm, section: string) => {
 
   const normalizedMain = (mainSection || "").toLowerCase();
   const normalizedSection = (section || "").toLowerCase();
+  const buyVerb = t("main:toBuy", { defaultValue: "Купить" });
+  const sellVerb = t("main:toSell", { defaultValue: "Продать" });
 
   if (normalizedMain === "crypto") {
     if (normalizedSection === "bank") {
       return {
-        buy: `Пополнить ${fullName} через банк`,
-        sell: `Вывести ${fullName} через банк`,
+        buy: `${buyVerb} ${fullName} через банк`,
+        sell: `${sellVerb} ${fullName} через банк`,
       };
     }
     if (normalizedSection === "crypto") {
       return {
-        buy: `Обмен ${fullName} на криптовалюту`,
-        sell: `Обмен криптовалюты на ${fullName} `,
+        buy: `${buyVerb} ${fullName} за криптовалюту`,
+        sell: `${sellVerb} ${fullName} за криптовалюту`,
       };
     }
     if (normalizedSection === "cash") {
       return {
-        buy: `Получить ${fullName} за наличные`,
-        sell: `Отдать ${fullName} в наличные`,
+        buy: `${buyVerb} ${fullName} за наличные`,
+        sell: `${sellVerb} ${fullName} за наличные`,
       };
     }
     if (normalizedSection === "transfer") {
       return {
-        buy: `Пополнить ${fullName} переводом`,
-        sell: `Вывести ${fullName} переводом`,
+        buy: `${buyVerb} ${fullName} переводом`,
+        sell: `${sellVerb} ${fullName} переводом`,
       };
     }
     if (normalizedSection === "digital") {
       return {
-        buy: `Пополнить ${fullName} через e‑кошельки`,
-        sell: `Вывести ${fullName} на e‑кошельки`,
+        buy: `${buyVerb} ${fullName} через e‑кошельки`,
+        sell: `${sellVerb} ${fullName} через e‑кошельки`,
       };
     }
   }
@@ -75,32 +77,32 @@ export const H3ForOthers = (mainPm: IPm, section: string) => {
   if (normalizedMain === "bank") {
     if (normalizedSection === "bank") {
       return {
-        buy: `Перевести на карту ${fullName}`,
-        sell: `Перекинуть средства с ${fullName} на карту`,
+        buy: `${buyVerb} ${fullName} по карте`,
+        sell: `${sellVerb} ${fullName} по карте`,
       };
     }
     if (normalizedSection === "crypto") {
       return {
-        buy: `Пополнить крипту с ${fullName}`,
-        sell: `Завести крипту на ${fullName}`,
+        buy: `${buyVerb} ${fullName} за криптовалюту`,
+        sell: `${sellVerb} ${fullName} за криптовалюту`,
       };
     }
     if (normalizedSection === "cash") {
       return {
-        buy: `Снять наличные с ${fullName}`,
-        sell: `Внести наличные на ${fullName}`,
+        buy: `${buyVerb} ${fullName} за наличные`,
+        sell: `${sellVerb} ${fullName} за наличные`,
       };
     }
     if (normalizedSection === "transfer") {
       return {
-        buy: `Пополнить ${fullName} переводом`,
-        sell: `Переслать перевод с ${fullName}`,
+        buy: `${buyVerb} ${fullName} переводом`,
+        sell: `${sellVerb} ${fullName} переводом`,
       };
     }
     if (normalizedSection === "digital") {
       return {
-        buy: `Зачислить на ${fullName} из кошельков`,
-        sell: `Вывести с ${fullName} в кошельки`,
+        buy: `${buyVerb} ${fullName} через e‑кошельки`,
+        sell: `${sellVerb} ${fullName} через e‑кошельки`,
       };
     }
   }
@@ -108,32 +110,32 @@ export const H3ForOthers = (mainPm: IPm, section: string) => {
   if (normalizedMain === "cash") {
     if (normalizedSection === "bank") {
       return {
-        buy: `Обмен ${fullName} на карту`,
-        sell: `Пополнить карту наличными ${fullName}`,
+        buy: `${buyVerb} ${fullName} по карте`,
+        sell: `${sellVerb} ${fullName} по карте`,
       };
     }
     if (normalizedSection === "crypto") {
       return {
-        buy: `Купить криптовалюту за ${fullName}`,
-        sell: `Обмен крипты в ${fullName}`,
+        buy: `${buyVerb} ${fullName} за криптовалюту`,
+        sell: `${sellVerb} ${fullName} за криптовалюту`,
       };
     }
     if (normalizedSection === "cash") {
       return {
-        buy: `Обмен ${fullName} на другую валюту`,
-        sell: `Выдать ${fullName} на другую валюту`,
+        buy: `${buyVerb} ${fullName}`,
+        sell: `${sellVerb} ${fullName}`,
       };
     }
     if (normalizedSection === "transfer") {
       return {
-        buy: `Отправить перевод за ${fullName}`,
-        sell: `Получить перевод в ${fullName}`,
+        buy: `${buyVerb} ${fullName} переводом`,
+        sell: `${sellVerb} ${fullName} переводом`,
       };
     }
     if (normalizedSection === "digital") {
       return {
-        buy: `Внести ${fullName} в электронные кошельки`,
-        sell: `Обналичить электронные деньги в ${fullName}`,
+        buy: `${buyVerb} ${fullName} через e‑кошельки`,
+        sell: `${sellVerb} ${fullName} через e‑кошельки`,
       };
     }
   }
@@ -141,26 +143,26 @@ export const H3ForOthers = (mainPm: IPm, section: string) => {
   if (normalizedMain === "transfer") {
     if (normalizedSection === "bank") {
       return {
-        buy: `Пополнить карту ${fullName} переводом`,
-        sell: `Отправить перевод с карты ${fullName}`,
+        buy: `${buyVerb} ${fullName} по карте`,
+        sell: `${sellVerb} ${fullName} по карте`,
       };
     }
     if (normalizedSection === "crypto") {
       return {
-        buy: `Пополнить крипту переводом через ${fullName}`,
-        sell: `Вывести крипту переводом через ${fullName}`,
+        buy: `${buyVerb} ${fullName} за криптовалюту`,
+        sell: `${sellVerb} ${fullName} за криптовалюту`,
       };
     }
     if (normalizedSection === "cash") {
       return {
-        buy: `Получить наличные ${fullName} переводом`,
-        sell: `Отправить ${fullName} наличными переводом`,
+        buy: `${buyVerb} ${fullName} за наличные`,
+        sell: `${sellVerb} ${fullName} за наличные`,
       };
     }
     if (normalizedSection === "digital") {
       return {
-        buy: `Пополнить e‑кошельки переводом через ${fullName}`,
-        sell: `Вывести с e‑кошельков переводом через ${fullName}`,
+        buy: `${buyVerb} ${fullName} через e‑кошельки`,
+        sell: `${sellVerb} ${fullName} через e‑кошельки`,
       };
     }
   }
@@ -168,32 +170,32 @@ export const H3ForOthers = (mainPm: IPm, section: string) => {
   if (normalizedMain === "digital") {
     if (normalizedSection === "bank") {
       return {
-        buy: `Перевести на карту из кошелька ${fullName}`,
-        sell: `Пополнить кошелек ${fullName} с карты`,
+        buy: `${buyVerb} ${fullName} по карте`,
+        sell: `${sellVerb} ${fullName} по карте`,
       };
     }
     if (normalizedSection === "crypto") {
       return {
-        buy: `Пополнить кошелек ${fullName} криптовалютой`,
-        sell: `Вывести крипту через кошелек ${fullName}`,
+        buy: `${buyVerb} ${fullName} за криптовалюту`,
+        sell: `${sellVerb} ${fullName} за криптовалюту`,
       };
     }
     if (normalizedSection === "cash") {
       return {
-        buy: `Обналичить средства кошелька ${fullName}`,
-        sell: `Внести ${fullName} наличными в кошелек`,
+        buy: `${buyVerb} ${fullName} за наличные`,
+        sell: `${sellVerb} ${fullName} за наличные`,
       };
     }
     if (normalizedSection === "transfer") {
       return {
-        buy: `Пополнить кошелек ${fullName} переводом`,
-        sell: `Отправить перевод из кошелька ${fullName}`,
+        buy: `${buyVerb} ${fullName} переводом`,
+        sell: `${sellVerb} ${fullName} переводом`,
       };
     }
     if (normalizedSection === "digital") {
       return {
-        buy: `Перевести между кошельками ${fullName}`,
-        sell: `Обмен между кошельками ${fullName}`,
+        buy: `${buyVerb} ${fullName} в другом кошельке`,
+        sell: `${sellVerb} ${fullName} в другом кошельке`,
       };
     }
   }
@@ -232,13 +234,13 @@ export const H4ForOthers = (mainPm: IPm, section: string) => {
     if (normalizedSection === "bank") {
       return {
         buy: `${buyVerb} ${fullName} по карте`,
-        sell: `Вывод ${fullName} на карту`,
+        sell: `${sellVerb} ${fullName} по карте`,
       };
     }
     if (normalizedSection === "crypto") {
       return {
-        buy: `Конвертировать ${fullName}`,
-        sell: `Конвертировать ${fullName}`,
+        buy: `${buyVerb} ${fullName} за криптовалюту`,
+        sell: `${sellVerb} ${fullName} за криптовалюту`,
       };
     }
     if (normalizedSection === "cash") {
@@ -250,13 +252,13 @@ export const H4ForOthers = (mainPm: IPm, section: string) => {
     if (normalizedSection === "transfer") {
       return {
         buy: `${buyVerb} ${fullName} переводом`,
-        sell: `Вывести ${fullName} переводом`,
+        sell: `${sellVerb} ${fullName} переводом`,
       };
     }
     if (normalizedSection === "digital") {
       return {
         buy: `${buyVerb} ${fullName} через электронные кошельки`,
-        sell: `Вывести ${fullName} на электронные кошельки`,
+        sell: `${sellVerb} ${fullName} через электронные кошельки`,
       };
     }
   }
@@ -264,32 +266,32 @@ export const H4ForOthers = (mainPm: IPm, section: string) => {
   if (normalizedMain === "bank") {
     if (normalizedSection === "bank") {
       return {
-        buy: `Пополнить ${fullName} с карты`,
-        sell: `Перевести с ${fullName} на карту`,
+        buy: `${buyVerb} ${fullName} по карте`,
+        sell: `${sellVerb} ${fullName} по карте`,
       };
     }
     if (normalizedSection === "crypto") {
       return {
-        buy: `Вывод криптовалюты на ${fullName}`,
-        sell: `${buyVerb} криптовалюту с ${fullName}`,
+        buy: `${buyVerb} ${fullName} за криптовалюту`,
+        sell: `${sellVerb} ${fullName} за криптовалюту`,
       };
     }
     if (normalizedSection === "cash") {
       return {
-        buy: `Пополнить ${fullName} наличными`,
-        sell: `Снять наличные с ${fullName}`,
+        buy: `${buyVerb} ${fullName} за наличные`,
+        sell: `${sellVerb} ${fullName} за наличные`,
       };
     }
     if (normalizedSection === "transfer") {
       return {
-        buy: `Пополнить ${fullName} переводом`,
-        sell: `Отправить перевод с ${fullName}`,
+        buy: `${buyVerb} ${fullName} переводом`,
+        sell: `${sellVerb} ${fullName} переводом`,
       };
     }
     if (normalizedSection === "digital") {
       return {
-        buy: `Пополнить ${fullName} электронными деньгами`,
-        sell: `Вывести с ${fullName} на электронные кошельки`,
+        buy: `${buyVerb} ${fullName} через электронные кошельки`,
+        sell: `${sellVerb} ${fullName} через электронные кошельки`,
       };
     }
   }
@@ -297,14 +299,14 @@ export const H4ForOthers = (mainPm: IPm, section: string) => {
   if (normalizedMain === "cash") {
     if (normalizedSection === "bank") {
       return {
-        buy: `Снять ${fullName} с карты`,
-        sell: `Положить ${fullName} на карту`,
+        buy: `${buyVerb} ${fullName} по карте`,
+        sell: `${sellVerb} ${fullName} по карте`,
       };
     }
     if (normalizedSection === "crypto") {
       return {
-        buy: `Вывести криптовалюту в ${fullName}`,
-        sell: `${buyVerb} криптовалюту за ${fullName}`,
+        buy: `${buyVerb} ${fullName} за криптовалюту`,
+        sell: `${sellVerb} ${fullName} за криптовалюту`,
       };
     }
     if (normalizedSection === "cash") {
@@ -315,14 +317,14 @@ export const H4ForOthers = (mainPm: IPm, section: string) => {
     }
     if (normalizedSection === "transfer") {
       return {
-        buy: `Получить ${fullName} переводом`,
-        sell: `Отправить перевод за ${fullName}`,
+        buy: `${buyVerb} ${fullName} переводом`,
+        sell: `${sellVerb} ${fullName} переводом`,
       };
     }
     if (normalizedSection === "digital") {
       return {
-        buy: `Обналичить электронные деньги в ${fullName}`,
-        sell: `Пополнить электронные кошельки за ${fullName}`,
+        buy: `${buyVerb} ${fullName} через электронные кошельки`,
+        sell: `${sellVerb} ${fullName} через электронные кошельки`,
       };
     }
   }
@@ -330,26 +332,26 @@ export const H4ForOthers = (mainPm: IPm, section: string) => {
   if (normalizedMain === "transfer") {
     if (normalizedSection === "bank") {
       return {
-        buy: `Получить ${fullName} на карту`,
-        sell: `Оплатить ${fullName} с карты`,
+        buy: `${buyVerb} ${fullName} по карте`,
+        sell: `${sellVerb} ${fullName} по карте`,
       };
     }
     if (normalizedSection === "crypto") {
       return {
-        buy: `Вывод криптовалюты через ${fullName}`,
-        sell: `${buyVerb} криптовалюту через ${fullName}`,
+        buy: `${buyVerb} ${fullName} за криптовалюту`,
+        sell: `${sellVerb} ${fullName} за криптовалюту`,
       };
     }
     if (normalizedSection === "cash") {
       return {
-        buy: `Получить ${fullName} наличными`,
-        sell: `Отправить ${fullName} наличными`,
+        buy: `${buyVerb} ${fullName} за наличные`,
+        sell: `${sellVerb} ${fullName} за наличные`,
       };
     }
     if (normalizedSection === "digital") {
       return {
-        buy: `Получить ${fullName} на электронные кошельки`,
-        sell: `Оплатить ${fullName} с электронных кошельков`,
+        buy: `${buyVerb} ${fullName} через электронные кошельки`,
+        sell: `${sellVerb} ${fullName} через электронные кошельки`,
       };
     }
   }
@@ -357,32 +359,32 @@ export const H4ForOthers = (mainPm: IPm, section: string) => {
   if (normalizedMain === "digital") {
     if (normalizedSection === "bank") {
       return {
-        buy: `Пополнить ${fullName} с карты`,
-        sell: `Вывести ${fullName} на карту`,
+        buy: `${buyVerb} ${fullName} по карте`,
+        sell: `${sellVerb} ${fullName} по карте`,
       };
     }
     if (normalizedSection === "crypto") {
       return {
-        buy: `Вывод криптовалюты на ${fullName}`,
-        sell: `${buyVerb} криптовалюту за ${fullName}`,
+        buy: `${buyVerb} ${fullName} за криптовалюту`,
+        sell: `${sellVerb} ${fullName} за криптовалюту`,
       };
     }
     if (normalizedSection === "cash") {
       return {
-        buy: `Пополнить ${fullName} наличными`,
-        sell: `Обналичить ${fullName}`,
+        buy: `${buyVerb} ${fullName} за наличные`,
+        sell: `${sellVerb} ${fullName} за наличные`,
       };
     }
     if (normalizedSection === "transfer") {
       return {
-        buy: `Пополнить ${fullName} переводом`,
-        sell: `Отправить ${fullName} переводом`,
+        buy: `${buyVerb} ${fullName} переводом`,
+        sell: `${sellVerb} ${fullName} переводом`,
       };
     }
     if (normalizedSection === "digital") {
       return {
-        buy: `Перевести в ${fullName}`,
-        sell: `Перевести из ${fullName}`,
+        buy: `${buyVerb} ${fullName} в другом кошельке`,
+        sell: `${sellVerb} ${fullName} в другом кошельке`,
       };
     }
   }

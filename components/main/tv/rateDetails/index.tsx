@@ -91,6 +91,7 @@ const RateDetails = ({ rate }: { rate: IRate }) => {
 
   const {
     name,
+    display_name,
     admin_rating,
     logo,
     ref_link,
@@ -127,7 +128,7 @@ const RateDetails = ({ rate }: { rate: IRate }) => {
         <HStack p="2" gap="2">
           <Box color="peach.300" _hover={{ color: "peach.100" }}>
             <ExchangerName
-              name={name}
+              name={display_name || name}
               admin_rating={admin_rating}
               logo={logo}
             />

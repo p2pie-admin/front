@@ -134,10 +134,11 @@ export const exchangerQuery = gql`
             email
             phone_number
             whatsapp
-            date_listed
+            date_created
             working_time
             en_description
             ru_description
+            text
             total_reserve_usd
           }
           logo {

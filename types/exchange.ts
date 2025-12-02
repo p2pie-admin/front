@@ -58,7 +58,7 @@ export interface ICache {
   //donors?: IDonors;
   enData: ILocalData;
   ruData: ILocalData;
-  exchangers?: (IExchanger & IParserExchanger)[];
+  exchangers?: IExchanger[];
 }
 
 export interface IPossiblePmPair {

@@ -7,7 +7,8 @@ import CustomImage from "../shared/CustomImage";
 
 export const MarkerTooltipContent = memo(
   ({ exchanger }: { exchanger: IExchanger }) => {
-    const { name, exchanger_card, offices, admin_rating, logo } = exchanger;
+    const { exchanger_card, offices, admin_rating, logo } = exchanger;
+    const displayName = exchanger.display_name || exchanger.name;
 
     const office = offices?.[0];
 
@@ -17,7 +18,11 @@ export const MarkerTooltipContent = memo(
 
     return (
       <VStack align="start" spacing="1" p="2">
-        <ExchangerName name={name} admin_rating={admin_rating} logo={logo} />
+        <ExchangerName
+          name={displayName}
+          admin_rating={admin_rating}
+          logo={logo}
+        />
         <ResponsiveText fontSize="md" fontWeight="bold">
           {office?.address}
         </ResponsiveText>

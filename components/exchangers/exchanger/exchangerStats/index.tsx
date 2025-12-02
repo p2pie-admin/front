@@ -15,7 +15,7 @@ type Props = {
 };
 
 const ExchangerStats = ({ reviews, reserveTotal, workingTime }: Props) => {
-  if (!reviews) return <></>;
+  if (!reviews?.length && !reserveTotal && !workingTime) return <></>;
 
   return (
     <>

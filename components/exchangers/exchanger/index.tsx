@@ -58,8 +58,11 @@ export default function Exchanger({
 
   const { exchanger_card: exchangerCard } = exchanger;
 
+  const ruText = exchangerCard?.text?.trim();
   const description =
-    exchangerCard?.[`${locale}_description`] || "Пока нет описания";
+    (locale === "ru"
+      ? ruText || exchangerCard?.ru_description
+      : exchangerCard?.[`${locale}_description`]) || "Пока нет описания";
 
   return (
     <>
@@ -76,7 +79,12 @@ export default function Exchanger({
             workingTime={exchanger.exchanger_card?.working_time}
           />
 
-          <Box w="100%" display={{ lg: "none", base: "unset" }}>
+          <Box
+            display={{ base: "grid", lg: "none" }}
+            gap="2"
+            gridTemplateColumns="1fr 1fr"
+            w="100%"
+          >
             <TopButtons exchanger={exchanger} />
           </Box>
         </VStack>

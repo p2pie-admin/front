@@ -168,7 +168,7 @@ const CityMapView = ({
               exchanger,
               position,
               officeName: office.address || "",
-              searchIndex: `${exchanger.name || ""} ${
+              searchIndex: `${exchanger.display_name || exchanger.name || ""} ${
                 office.address || ""
               }`.toLowerCase(),
             };

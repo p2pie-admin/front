@@ -58,7 +58,7 @@ export default function ExchangerPage({
   exchanger,
   seo,
 }: {
-  exchanger: (IExchanger & IParserExchanger) | null;
+  exchanger: IExchanger | null;
   seo: ISEO;
 }) {
   if (!exchanger) {
@@ -105,11 +105,12 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
       locale
     );
 
+    const displayName = exchanger.display_name || exchanger.name;
     const title = `${locale === "en" ? "Exchanger" : "Обменник"} ${capitalize(
-      exchanger.name
+      displayName
     )}`;
 
-    const description = `${capitalize(exchanger.name)}: ${
+    const description = `${capitalize(displayName)}: ${
       locale === "en"
         ? "Exchanger card, rating and info"
         : "Карточка обменника, рейтинг и информация"
@@ -124,8 +125,8 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
 
     await addHeadersToSearchIndex({
       slug: `exchangers/${slug}`,
-      header: `Обменник ${capitalize(exchanger.name)}`,
-      wordsToSearchFrom: exchanger.name,
+      header: `Обменник ${capitalize(displayName)}`,
+      wordsToSearchFrom: displayName,
     });
 
     const exchangerWithMaskedIp = maskExchangerReviewIPs(

@@ -1,5 +1,5 @@
 import React from "react";
-import ReactMarkdown from "react-markdown";
+import ReactMarkdown, { Components } from "react-markdown";
 import Link from "next/link";
 import { IPm } from "../../types/selector";
 import { capitalize } from "../main/side/selector/section/PmGroup/helper";
@@ -8,36 +8,45 @@ import { capitalize } from "../main/side/selector/section/PmGroup/helper";
  * Markdown renderer with Next.js <Link> for internal navigation
  * and secure <a> for external links.
  */
-export const TextToHTML = ({ text }: { text?: string }) => {
+export const TextToHTML = ({
+  text,
+  components,
+}: {
+  text?: string;
+  components?: Components;
+}) => {
   if (!text?.trim()) return null;
 
+  // Demote Markdown H1 (#) to H2 (##) to avoid top-level headings.
+  const normalizedText = text.replace(/^#(?!#)\s+(.*)$/gm, "## $1");
+
+  const baseComponents: Components = {
+    a: ({ href, children, ...props }) => {
+      if (!href || href.trim().toLowerCase().startsWith("javascript:")) {
+        return <>{children}</>;
+      }
+
+      const isInternal = href.startsWith("/");
+
+      if (isInternal) {
+        return (
+          <Link href={href} {...props}>
+            <b>{children}</b>
+          </Link>
+        );
+      }
+
+      return (
+        <a href={href} target="_blank" rel="noopener noreferrer" {...props}>
+          <b>{children}</b>
+        </a>
+      );
+    },
+  };
+
   return (
-    <ReactMarkdown
-      components={{
-        a: ({ href, children, ...props }) => {
-          if (!href || href.trim().toLowerCase().startsWith("javascript:")) {
-            return <>{children}</>;
-          }
-
-          const isInternal = href.startsWith("/");
-
-          if (isInternal) {
-            return (
-              <Link href={href} {...props}>
-                <b>{children}</b>
-              </Link>
-            );
-          }
-
-          return (
-            <a href={href} target="_blank" rel="noopener noreferrer" {...props}>
-              <b>{children}</b>
-            </a>
-          );
-        },
-      }}
-    >
-      {text}
+    <ReactMarkdown components={{ ...baseComponents, ...components }}>
+      {normalizedText}
     </ReactMarkdown>
   );
 };
@@ -74,28 +83,32 @@ export const enrichText = ({
       lookup.push({ key: normalized, pm });
     };
 
-    addVariant(pm.currency.code);
-    addVariant(capitalize(pm.en_name));
-    addVariant(capitalize(pm.ru_name));
+    pm.section == "crypto" && addVariant(pm.currency.code);
+    addVariant(pm.en_name);
+    addVariant(pm.ru_name);
   });
 
-  return text.replace(/\b[\p{L}\p{N}_-]+\b/gu, (word) => {
-    const match = lookup.find(
-      ({ key }) =>
-        // Match exact word OR word starts with key (handles cases: банка, банку, банке)
-        word.replace(/-/g, " ") === key.replace(/-/g, " ")
-    );
+  // Custom "word" matcher that works with Unicode (Cyrillic, etc.)
+  return text.replace(
+    /(^|[^\p{L}\p{N}_-])([\p{L}\p{N}_-]+)/gu,
+    (full, prefix, word) => {
+      const match = lookup.find(
+        ({ key }) =>
+          word.replace(/-/g, " ").toLowerCase() ===
+          key.replace(/-/g, " ").toLowerCase()
+      );
 
-    if (!match) return word;
+      if (!match) return full;
 
-    const slug =
-      "/articles/" + match.pm.en_name.toLowerCase().replace(/\s+/g, "-");
+      const slug =
+        "/articles/" + match.pm.en_name.toLowerCase().replace(/\s+/g, "-");
 
-    if (seen.has(slug)) return word;
-    seen.add(slug);
+      if (seen.has(slug)) return full;
+      seen.add(slug);
 
-    return `[**${word}**](${slug})`;
-  });
+      return `${prefix}[**${word}**](${slug})`;
+    }
+  );
 };
 
 export function secondsAgo(timestamp?: number | string): string {
