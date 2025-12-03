@@ -197,7 +197,7 @@ export const Swiper = (props: {
   };
 
   useEffect(() => {
-    if (initial) return;
+    if (mouseEnteredRef.current) if (initial) return;
     if (!length) return;
     if (reloadTrigger === "auto") return;
 
@@ -275,7 +275,7 @@ export const Swiper = (props: {
               }}
               style={{ y, width: "100%" }}
               dragElastic={elastic}
-              onDragEnd={(_, info) => {
+              onDragEnd={(_: any, info: any) => {
                 const velocity = info.velocity.y;
                 const currentIndex = getIndex();
 

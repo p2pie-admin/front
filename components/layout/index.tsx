@@ -15,11 +15,13 @@ import {
   setIP,
   setFingerprintHash,
   setUserAgent,
+  setCurrencyConverterRate,
 } from "../../redux/mainReducer";
 import { initCurrencyConverterFetcher } from "../../services/fetchers";
 import { ICity } from "../../types/exchange";
 import { useRouter } from "next/router";
 import Fingerprint from "fingerprinter-js";
+import Image from "next/image";
 
 const Layout = ({ children }: { children: any }) => {
   // const maxW = useBreakpointValue({ base: "100%", lg: "980" });
@@ -36,11 +38,12 @@ const Layout = ({ children }: { children: any }) => {
     const fetcher = initCurrencyConverterFetcher();
     fetcher().then((resp) => {
       if (resp.data) {
-        const { ip, ...cityData } = resp.data as any;
+        const { ip, BTC_RUB, ...cityData } = resp.data as any;
 
         batch(() => {
           !isCash && cityData?.city && dispatch(setCity(cityData.city));
           dispatch(setIP(ip));
+          dispatch(setCurrencyConverterRate(BTC_RUB));
         });
       }
     });
@@ -85,7 +88,6 @@ const Layout = ({ children }: { children: any }) => {
         "&::WebkitOverflowScrolling": "touch",
       }}
     >
-      <Header />
       <Box
         position="absolute"
         w="100%"
@@ -94,6 +96,23 @@ const Layout = ({ children }: { children: any }) => {
         pointerEvents="none" // <-- lets all clicks/touches pass through
         bgGradient={`radial-gradient(circle at 50% -10%, ${ambientColor} 0%, transparent 40%)`}
       />
+      <Box
+        position="absolute"
+        top="5%"
+        //right="calc(50% - 950px)"
+        w="100%"
+        filter="opacity(0.3)"
+      >
+        <Image
+          src="/grid.png"
+          alt="Grid background pattern"
+          width={2000}
+          height={420}
+          priority
+          style={{ width: "100%", height: "auto" }}
+        />
+      </Box>
+      <Header />
 
       {loadingStatus === "pending" && (
         <Progress

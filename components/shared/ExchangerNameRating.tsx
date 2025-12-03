@@ -49,7 +49,7 @@ const ExchangerName = ({
 
       <Text
         as={isH1 ? "h1" : "p"}
-        fontSize={"xl"}
+        fontSize={isH1 ? "xl" : "lg"}
         fontWeight="bold"
         color="bg.200"
         _hover={{

@@ -85,7 +85,7 @@ const Similar = ({
           });
 
           const rateData = data?.[index] && renderRate(pair, data[index]);
-          if (!rateData) return <></>;
+          if (!rateData) return null;
           return (
             <VStack spacing={4} align="stretch" my="4" key={slug + index}>
               <Dir

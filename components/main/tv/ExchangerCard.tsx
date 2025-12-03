@@ -57,7 +57,7 @@ const MobileParameters = ({
   return (
     <Grid
       position="absolute"
-      top="1"
+      bottom="1"
       right="1"
       alignItems="end"
       templateRows="repeat(2, 1fr)"

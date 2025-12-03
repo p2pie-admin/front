@@ -26,7 +26,7 @@ export interface IFingerprint {
 }
 
 export interface ICurrencyConverterRate {
-  rate: number;
+  currentRate: number;
   giveToUSD: number;
   getToUSD: number;
   dayTrend: number;
