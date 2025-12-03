@@ -55,7 +55,7 @@ const CryptoRates = ({
           const fullSlug = slugCityToExchange(slug, citySlug);
           const rateNumber = `${curToSymbol(
             pm?.currency.code.toUpperCase()
-          )} ${format(rate?.course, 2)} `;
+          )} ${format(rate?.course, 1)} `;
           return (
             <RateLink
               key={String(rate?.exchangerId) + index + "buy"}
@@ -74,7 +74,7 @@ const CryptoRates = ({
           const fullSlug = slugCityToExchange(slug, citySlug);
           const rateNumber = `${curToSymbol(
             pm?.currency.code.toUpperCase()
-          )} ${format(rate?.course, 2)} `;
+          )} ${format(rate?.course, 1)} `;
           return (
             <RateLink
               key={String(rate?.exchangerId) + index + "sell"}

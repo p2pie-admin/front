@@ -37,6 +37,7 @@ const Popular = ({
                 gridGap="2"
                 alignItems="center"
                 color="bg.200"
+                pl="1"
               >
                 <CryptoPm cryptoPm={cryptoPm} />
 

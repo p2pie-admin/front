@@ -101,7 +101,7 @@ const Layout = ({ children }: { children: any }) => {
         top="5%"
         //right="calc(50% - 950px)"
         w="100%"
-        filter="opacity(0.3)"
+        filter="opacity(0.2)"
       >
         <Image
           src="/grid.png"

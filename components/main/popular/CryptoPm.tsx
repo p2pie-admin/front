@@ -15,19 +15,19 @@ const CryptoPm = ({ cryptoPm }: { cryptoPm: IPm }) => {
           color={cryptoPm.color}
           icon={cryptoPm.icon}
         />
-        <Box position="relative">
-          {/* <ResponsiveText size="sm" variant="primary" fontWeight="bold">
+
+        {/* <ResponsiveText size="sm" variant="primary" fontWeight="bold">
             {`${cryptoPm.currency.code.toUpperCase()}`}
           </ResponsiveText> */}
-          <ResponsiveText
-            fontSize="10px"
-            fontWeight="bold"
-            position="absolute"
-            top="2"
-            right="-5"
-            variant="no_contrast"
-          >{`${cryptoPm.subgroup_name?.toUpperCase() || ""}`}</ResponsiveText>
-        </Box>
+        <ResponsiveText
+          fontSize="12px"
+          fontWeight="bold"
+          left="0.5"
+          mt="2px"
+          variant="no_contrast"
+        >{`${
+          cryptoPm.subgroup_name?.toUpperCase() || cryptoPm.code.toUpperCase()
+        }`}</ResponsiveText>
       </HStack>
     </Link>
   );

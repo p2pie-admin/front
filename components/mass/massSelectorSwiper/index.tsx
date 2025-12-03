@@ -1,4 +1,12 @@
-import { Button, Center, HStack, IconButton, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  HStack,
+  IconButton,
+  useColorModeValue,
+  VStack,
+} from "@chakra-ui/react";
 import { firstItems, secondItems, thirdItems } from "./items";
 import MassSwiper from "./massSwiper";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
@@ -33,6 +41,11 @@ const MassSelector = ({ initialSlug }: { initialSlug?: string }) => {
   const [third, setThird] = useState(t);
 
   const slug = `/${first}/${second}-for-${third}`;
+
+  const ambientColor = useColorModeValue(
+    "rgba(143,92,292,0.2)",
+    "rgba(247, 197, 177, 0.1)"
+  );
 
   return (
     <VStack

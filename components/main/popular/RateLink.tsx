@@ -32,7 +32,9 @@ const RateLink = ({
         justifyContent={"space-between"}
         filter="opacity(0.8)"
       >
-        <Text color="bg.500">{side === "buy" ? "от" : "до"}</Text>
+        <Text color="bg.500" fontSize="sm">
+          {side === "buy" ? "от" : "до"}
+        </Text>
         <ResponsiveText color={side === "buy" ? pink : green} textAlign="end">
           {rateNumber}
         </ResponsiveText>
