@@ -19,7 +19,7 @@ import { CustomBox3D } from "../../../../styles/theme/custom";
 import { addSpaces, R } from "../../../../redux/amountsHelper";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { IoInformationCircleOutline, IoWarningOutline } from "react-icons/io5";
-import { sendToast } from "../../../../redux/mainReducer";
+import { sendToast, triggerModal } from "../../../../redux/mainReducer";
 import Parameter from "../TopParameter";
 import useSWR from "swr";
 import { initCMSFetcher } from "../../../../services/fetchers";
@@ -37,20 +37,18 @@ import WorkingTimeStats from "../../../exchangers/exchanger/exchangerStats/Worki
 import { locale } from "../../../../services/utils";
 import { capitalize } from "../../side/selector/section/PmGroup/helper";
 import FoundError from "../../../article/FoundError";
-
 import ErrorWrapper from "../../../shared/ErrorWrapper";
-import logo from "next-seo/lib/jsonld/logo";
 
 const cmsFetcher = initCMSFetcher();
 
 const RateDetails = ({ rate }: { rate: IRate }) => {
-  const dispatch = useAppDispatch();
   const givePm = useAppSelector((state) => state.main.givePm);
   const getPm = useAppSelector((state) => state.main.getPm);
   const course = rate?.course;
   const amounts = !course ? [0, 0] : course < 1 ? [1, 1 / course] : [course, 1];
   const mainColor = useColorModeValue("violet.700", "peach.300");
   const exchangerName = rate?.name?.trim();
+  const dispatch = useAppDispatch();
 
   const fetchExchanger = async (query: string, name: string) => {
     const response = await cmsFetcher(query, { name });
@@ -124,6 +122,10 @@ const RateDetails = ({ rate }: { rate: IRate }) => {
         passHref
         href={`/exchangers/${exchangerNameToSlug(name)}`}
         color="inherit"
+        onClick={(e) => {
+          e.stopPropagation();
+          dispatch(triggerModal(undefined));
+        }}
       >
         <HStack p="2" gap="2">
           <Box color="peach.300" _hover={{ color: "peach.100" }}>

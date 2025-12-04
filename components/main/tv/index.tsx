@@ -47,26 +47,26 @@ const TV = ({
     }
   }, [loadingStatus, dirRates.length, dispatch]);
 
-  useEffect(() => {
-    if (!dir) return;
-    const cityName = isCash ? city?.en_name || "moscow" : "";
-    let cancelled = false;
-    let timeoutId: ReturnType<typeof setTimeout>;
+  // useEffect(() => {
+  //   if (!dir) return;
+  //   const cityName = isCash ? city?.en_name || "moscow" : "";
+  //   let cancelled = false;
+  //   let timeoutId: ReturnType<typeof setTimeout>;
 
-    const schedule = () => {
-      timeoutId = setTimeout(async () => {
-        await dispatch(updateDirRates({ dir, cityName, keepAmount: true }));
-        if (!cancelled) schedule();
-      }, 60_000);
-    };
+  //   const schedule = () => {
+  //     timeoutId = setTimeout(async () => {
+  //       await dispatch(updateDirRates({ dir, cityName, keepAmount: true }));
+  //       if (!cancelled) schedule();
+  //     }, 60_000);
+  //   };
 
-    schedule();
+  //   schedule();
 
-    return () => {
-      cancelled = true;
-      clearTimeout(timeoutId);
-    };
-  }, [dir, city?.en_name, isCash, dispatch]);
+  //   return () => {
+  //     cancelled = true;
+  //     clearTimeout(timeoutId);
+  //   };
+  // }, [dir, city?.en_name, isCash, dispatch]);
 
   const isMobile = useIsMobile();
   const itemHeight = isMobile ? 100 : 136; // Height of each text box

@@ -42,18 +42,8 @@ const MassSelector = ({ initialSlug }: { initialSlug?: string }) => {
 
   const slug = `/${first}/${second}-for-${third}`;
 
-  const ambientColor = useColorModeValue(
-    "rgba(143,92,292,0.2)",
-    "rgba(247, 197, 177, 0.1)"
-  );
-
   return (
-    <VStack
-      my={initialSlug ? "10" : "20"}
-      gap={initialSlug ? "2" : "10"}
-      w="100%"
-      position="relative"
-    >
+    <VStack gap={initialSlug ? "2" : "10"} w="100%" position="relative">
       <HStack w="100%" justifyContent="center">
         <MassSwiper initialId={first} items={firstItems} set={setFirst} />
         <MassSwiper initialId={second} items={secondItems} set={setSecond} />

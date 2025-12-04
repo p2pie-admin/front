@@ -5,7 +5,7 @@ import React, {
   useMemo,
   useRef,
 } from "react";
-import { TbTriangleInvertedFilled } from "react-icons/tb";
+import { FaLocationArrow } from "react-icons/fa";
 import { motion, useMotionValue, useAnimation } from "framer-motion";
 import { Box, Grid, useColorModeValue } from "@chakra-ui/react";
 import Shader from "../../shared/Shader";
@@ -67,7 +67,7 @@ export const Swiper = (props: {
     dirRatesReloadTrigger || "manual";
 
   const bgColor = useColorModeValue("bg.50", "bg.800");
-  const triangleColor = useColorModeValue("violet.700", "peach.600");
+  const triangleColor = useColorModeValue("violet.700", "peach.300");
   const mouseEnteredRef = useRef(false);
   const originalOverflowRef = useRef<string | null>(null);
   const originalPaddingRef = useRef<string | null>(null);
@@ -75,6 +75,7 @@ export const Swiper = (props: {
 
   const y = useMotionValue(0);
   const controls = useAnimation();
+  const arrowControls = useAnimation();
 
   const getIndex = useCallback(() => {
     const index = Math.round(
@@ -233,6 +234,39 @@ export const Swiper = (props: {
     };
   }, [restoreBodyStyles]);
 
+  const animateArrow = useCallback(
+    (direction: "up" | "down") => {
+      const keyframes =
+        direction === "up"
+          ? [225, 205, 235, 220, 225]
+          : [225, 245, 215, 230, 225];
+
+      arrowControls.start({
+        rotate: keyframes,
+        transition: {
+          duration: 0.5,
+          times: [0, 0.18, 0.42, 0.68, 1],
+          ease: "easeOut",
+        },
+      });
+    },
+    [arrowControls]
+  );
+
+  useEffect(() => {
+    let lastIndex = getIndex();
+    const unsubscribe = y.onChange(() => {
+      const idx = getIndex();
+      if (idx !== lastIndex) {
+        animateArrow(idx < lastIndex ? "up" : "down");
+        lastIndex = idx;
+      }
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, [animateArrow, getIndex, y]);
+
   const topLabelBaseTop = -itemHeight;
   const bottomLabelBaseTop = length * itemHeight;
 
@@ -341,15 +375,17 @@ export const Swiper = (props: {
             <Shader direction="bottom" />
           </Box>
 
-          <Box
+          <MotionBox
             position="absolute"
-            right="0"
+            right="-2"
             top={`calc(${containerHeight / 2}px + 0.5rem)`}
             color={triangleColor}
-            transform="rotate(90deg)"
+            animate={arrowControls}
+            initial={{ rotate: 225 }}
+            // style={{ scaleX: 1.8 }}
           >
-            <TbTriangleInvertedFilled size="1.2rem" />
-          </Box>
+            <FaLocationArrow size="1.5rem" />
+          </MotionBox>
         </ErrorWrapper>
       </Box3D>
       <ControlPanel length={length} stepUp={stepUp} stepDown={stepDown} />

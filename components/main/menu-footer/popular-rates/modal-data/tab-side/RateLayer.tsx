@@ -31,7 +31,13 @@ import CircularIcon from "../../../../../shared/CircularIcon";
 import { useRouter } from "next/router";
 import { triggerModal } from "../../../../../../redux/mainReducer";
 
-const RateLayer = ({ code, rates }: { code: string; rates: IPopularRate[] }) => {
+const RateLayer = ({
+  code,
+  rates,
+}: {
+  code: string;
+  rates: IPopularRate[];
+}) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const pms = useAppSelector((state) => state.main.pms);

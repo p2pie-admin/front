@@ -27,10 +27,10 @@ const Article = ({
 }) => {
   // Early fallback before any hooks
   if (!article) {
-    return <div>No article</div>;
+    return <>No article</>;
   }
   if (!pm) {
-    return <div>Nothing was found!</div>;
+    return <>Nothing was found!</>;
   }
 
   const [highlited, setHighlited] =

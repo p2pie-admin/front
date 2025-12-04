@@ -13,6 +13,7 @@ function PmIcon({ pm }: { pm: IPm }) {
       _hover={{ transform: "scale(1.1)" }}
     >
       <CircularIcon
+        size="sm"
         iconAlt={pm?.en_name}
         icon={pm?.icon}
         color={pm?.color || "gray"}

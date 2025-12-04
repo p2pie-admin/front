@@ -82,15 +82,14 @@ const DirText = ({
 
   return (
     <Box p="2">
-      <Heading as="h1" fontSize="xl">
+      {/* <Heading as="h1" fontSize="xl">
         {dirText.header}
-      </Heading>
-
-      <Divider my="5" />
-
+      </Heading> */}
       <Heading as="h2" fontSize="lg" mb="2">
         <TextToHTML text={dirText.h1} />
       </Heading>
+
+      <Divider my="5" />
 
       <Text>{dirText.text}</Text>
     </Box>

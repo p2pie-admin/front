@@ -55,7 +55,13 @@ const SearchBar = ({ search_bar }: { search_bar: ISearchBar }) => {
       spacing="2"
       justifyContent="space-between"
     >
-      <Box3D w="100%" boxShadow="lg" borderRadius="2xl" variant="contrast">
+      <Box3D
+        w="100%"
+        boxShadow="lg"
+        borderRadius="2xl"
+        bgColor="bg.900"
+        variant="contrast"
+      >
         <InputGroup
           size="sm"
           transition="width .5s ease-in-out;"

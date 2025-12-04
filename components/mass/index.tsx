@@ -7,7 +7,7 @@ import { fetchTopParameters } from "../../redux/thunks";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import MassTable from "./table";
 import MassSideContext from "./sideContext";
-import MassSelector from "./massSelectorSwiper";
+
 import MassTableSelector from "./massTableSelector";
 
 const Mass = ({

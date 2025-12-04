@@ -54,7 +54,7 @@ const CircularIcon = ({
     "";
 
   // Map size keyword to relative rem size
-  const sizeMap = { sm: "1rem", md: "1.25rem", lg: "2rem" };
+  const sizeMap = { sm: "1.4rem", md: "1.5rem", lg: "2rem" };
 
   return (
     <Box

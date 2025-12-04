@@ -67,7 +67,8 @@ export async function getStaticProps({ params }: { params: { code: string } }) {
     }
 
     const articlePms = pms.filter(
-      (pm) => pm.en_name.toLowerCase() == code.toLowerCase()
+      (pm) =>
+        pm.en_name.toLowerCase().replaceAll(" ", "-") == code.toLowerCase()
     );
 
     const filteredDirs = Object.values(slugToCodes).filter((dir) => {

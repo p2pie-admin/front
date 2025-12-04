@@ -1,7 +1,5 @@
 import { Box, HStack, Wrap } from "@chakra-ui/react";
 import { IPm } from "../../../types/selector";
-import CircularIcon from "../../shared/CircularIcon";
-import PmName from "../../shared/PmName";
 import SmartGrid from "./SmartGrid";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { capitalize } from "../../main/side/selector/section/PmGroup/helper";

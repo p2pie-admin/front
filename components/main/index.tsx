@@ -26,6 +26,7 @@ import { useTranslation } from "next-i18next";
 import { IDirText } from "../../types/exchange";
 import MassSelector from "../mass/massSelectorSwiper";
 import Advantages from "./advantages";
+import CustomTitle from "../shared/CustomTitle";
 
 const MainPageContent = ({
   popularPms,
@@ -42,11 +43,6 @@ const MainPageContent = ({
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { slug } = router.query;
-
-  const [peripheryColor, centerColor] = useToken(
-    "colors",
-    useColorModeValue(["bg.500", "violet.700"], ["bg.200", "peach.300"])
-  );
 
   useEffect(() => {
     if (!slug) {
@@ -81,61 +77,25 @@ const MainPageContent = ({
         </Column>
       </ColumnGrid>
 
-      <Box
-        my="20"
-        bgGradient={`radial-gradient(circle at 50% -10%, ${centerColor} 10%, ${peripheryColor} 70%)`}
-        bgClip="text"
-      >
-        <Heading
-          as="h2"
-          fontWeight="bold"
-          color="inherit"
-          fontSize={{ base: "3xl", md: "5xl" }}
-          textAlign={"center"}
-        >
-          Преимущества
-        </Heading>
-        <Heading
-          as="p"
-          textAlign="center"
-          fontSize={{ base: "lg", md: "xl" }}
-          mt={2}
-          color="bg.400"
-          fontWeight="light"
-        >
-          Все просто: мы работаем на репутацию, а не на прибыль
-        </Heading>
-      </Box>
+      <CustomTitle
+        my="16"
+        as="h2"
+        title={"Преимущества"}
+        subtitle={"Работаем на репутацию, а не на прибыль"}
+      />
+
       <Advantages />
 
-      <Box
-        my="20"
-        bgGradient={`radial-gradient(circle at 50% -10%, ${centerColor} 10%, ${peripheryColor} 70%)`}
-        bgClip="text"
-      >
-        <Heading
-          as="h2"
-          fontWeight="bold"
-          color="inherit"
-          fontSize={{ base: "3xl", md: "5xl" }}
-          textAlign={"center"}
-        >
-          Поиск курсов
-        </Heading>
-        <Heading
-          as="p"
-          textAlign="center"
-          fontSize={{ base: "lg", md: "xl" }}
-          mt={2}
-          color="bg.400"
-          fontWeight="light"
-        >
-          Мы собираем данные с сотен обменников, чтобы выбрать лучший курс для
-          Вас
-        </Heading>
-      </Box>
+      <CustomTitle
+        my="16"
+        as="h2"
+        title={"Поиск курсов"}
+        subtitle={
+          "Мы собираем данные с сотен обменников, чтобы выбрать лучший курс для Вас"
+        }
+      />
 
-      <MassSelector />
+      <MassSelector initialSlug={"true"} />
     </VStack>
   );
 };

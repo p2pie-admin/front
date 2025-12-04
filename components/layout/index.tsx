@@ -102,6 +102,8 @@ const Layout = ({ children }: { children: any }) => {
         //right="calc(50% - 950px)"
         w="100%"
         filter="opacity(0.2)"
+        zIndex={0}
+        pointerEvents="none"
       >
         <Image
           src="/grid.png"

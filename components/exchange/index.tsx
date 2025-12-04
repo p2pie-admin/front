@@ -40,6 +40,7 @@ import { useTranslation } from "next-i18next";
 import UniversalSeo from "../shared/UniversalSeo";
 import { ISEO } from "../../types/general";
 import { IMassDirTextId } from "../../types/mass";
+import CustomTitle from "../shared/CustomTitle";
 
 const Exchange = ({
   locale,
@@ -122,6 +123,14 @@ const Exchange = ({
           {dirText?.h1}
         </Heading>
       </Box> */}
+
+      <CustomTitle
+        fontSize={{ base: "lg", lg: "2xl" }}
+        as="h1"
+        mt="-1"
+        title={dirText?.header || ""}
+        textAlign={{ base: "center", lg: "start" }}
+      />
 
       <ColumnGrid>
         <Column index={0}>
