@@ -1,4 +1,11 @@
-import { Box, Button, Divider, HStack, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Divider,
+  HStack,
+  ScaleFade,
+  VStack,
+} from "@chakra-ui/react";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import useSWR from "swr";
 import ExchangerRootReview from "../../exchangers/exchanger/reviews/ExchangerRootReview";
@@ -10,6 +17,8 @@ import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import CustomTitle from "../../shared/CustomTitle";
 import GeneralStats from "./GeneralStats";
 import TopButtons from "./TopButtons";
+import Shader from "../../shared/Shader";
+import HorizontalShader from "../../shared/HorizontalShader";
 
 const cmsFetcher = initCMSFetcher();
 
@@ -67,7 +76,7 @@ const AllReviews = () => {
   const scrollByAmount = (dir: "left" | "right") => {
     const node = scrollRef.current;
     if (!node) return;
-    const delta = dir === "left" ? -380 : 380;
+    const delta = dir === "left" ? -524 : 524;
     node.scrollBy({ left: delta, behavior: "smooth" });
   };
 
@@ -79,7 +88,7 @@ const AllReviews = () => {
     const node = scrollRef.current;
     // ensure DOM painted before setting scroll
     const timeoutId = setTimeout(() => {
-      node.scrollTo({ left: 300, behavior: "smooth" });
+      node.scrollTo({ left: 360, behavior: "smooth" });
     }, 50);
     return () => clearTimeout(timeoutId);
   }, [reviews]);
@@ -129,17 +138,17 @@ const AllReviews = () => {
         maxW="100vw"
         left="50%"
         right="50%"
-        py="8"
+        py="2"
+        minH="330px"
       >
         <ErrorWrapper isLoading={isLoading} isError={isError}>
           {reviews && reviews.length > 0 ? (
-            <VStack align="stretch" spacing="3" px={[2, 6]}>
+            <VStack align="stretch" spacing="3" pos="relative">
               <HStack
                 ref={scrollRef}
                 spacing="6"
                 overflowX="auto"
                 py="2"
-                px="1"
                 w="100%"
                 alignItems="stretch"
                 flexWrap="nowrap"
@@ -149,16 +158,27 @@ const AllReviews = () => {
                   scrollbarWidth: "none",
                 }}
               >
-                {reviews.map((review) => (
-                  <Box
+                <HorizontalShader direction="right" no_contrast={false} />
+                <Box w="10" />
+                {reviews.map((review, idx) => (
+                  <ScaleFade
                     key={review.id}
-                    flex="0 0 auto"
-                    minW={"500px"}
-                    maxW={"500px"}
+                    initialScale={0.5}
+                    in={true}
+                    delay={((idx + 15) * 60) / 1000}
                   >
-                    <ExchangerRootReview review={review} isPreview />
-                  </Box>
+                    <Box
+                      key={review.id}
+                      flex="0 0 auto"
+                      minW={"500px"}
+                      maxW={"500px"}
+                    >
+                      <ExchangerRootReview review={review} isPreview />
+                    </Box>
+                  </ScaleFade>
                 ))}
+                <Box w="10" />
+                <HorizontalShader direction="left" no_contrast={false} />
               </HStack>
             </VStack>
           ) : null}

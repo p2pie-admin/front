@@ -21,8 +21,8 @@ const HorizontalShader = ({
       boxShadow={`0 0 30px 30px ${shaderColor}`}
       position="absolute"
       top="0"
-      ml={direction === "left" ? "12" : "unset"}
-      mr={direction === "right" ? "12" : "unset"}
+      ml={no_contrast && direction === "left" ? "12" : "unset"}
+      mr={no_contrast && direction === "right" ? "12" : "unset"}
       left={direction === "left" ? "0" : "unset"}
       right={direction === "right" ? "0" : "unset"}
       pointerEvents="none"
