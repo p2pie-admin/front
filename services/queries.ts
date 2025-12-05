@@ -722,10 +722,33 @@ export const reviewFingerprintQuery = gql`
 
 export const allReviewsQuery = gql`
   query AllReviews {
-    reviews(filters: { isApproved: { eq: true } }) {
+    reviews(
+      filters: { isApproved: { eq: true } }
+      pagination: { limit: 8 }
+      sort: ["updatedAt:desc"]
+    ) {
       data {
         id
         attributes {
+          exchanger {
+            data {
+              id
+              attributes {
+                name
+                display_name
+                logo {
+                  data {
+                    id
+                    attributes {
+                      name
+                      alternativeText
+                      url
+                    }
+                  }
+                }
+              }
+            }
+          }
           fingerprint
           ipAddress
           name

@@ -13,6 +13,7 @@ import {
   Button,
   Flex,
   Wrap,
+  Center,
 } from "@chakra-ui/react";
 import ExchangerReply from "./ExchangerReply";
 import { IExchangerReview } from "../../../../types/exchanger";
@@ -31,15 +32,18 @@ import {
 } from "../../../shared/BoxWrapper";
 import { useAppSelector } from "../../../../redux/hooks";
 import { maskIP } from "../../../../pages/exchangers/[slug]";
+import { LinkWrapper } from "../../../exchange/pmLayout/LinkWrapper";
+import CustomImage from "../../../shared/CustomImage";
 
 export default function ExchangerRootReview({
   review,
-  isPreview = false,
+  slug,
 }: {
   review: IExchangerReview;
-  isPreview?: boolean;
+  slug?: string;
 }) {
   const userIP = useAppSelector((state) => maskIP(state.main.fingerprint?.ip));
+  const textIsLink = /^(https?:\/\/|www\.)[^\s]+$/i.test(review?.text || "");
 
   if (!review) return <></>;
   const {
@@ -130,136 +134,152 @@ export default function ExchangerRootReview({
     );
   }, [location]);
 
-  const isCompact = isPreview;
-
   return (
-    <BoxWrapper
-      w="100%"
-      p="4"
-      my="6"
-      variant={isPreview ? "contrast" : "extra_contrast"}
-      position="relative"
-      overflow="hidden"
-      minH={isPreview ? "250px" : "unset"}
+    <LinkWrapper
+      _blank={textIsLink}
+      exists={!!slug || textIsLink}
+      url={textIsLink ? review?.text || "#" : "/" + slug}
     >
-      <ReviewBorder>
-        <Flex
-          flexDir={{ base: "column", lg: isCompact ? "column" : "row" }}
-          justifyContent="space-between"
-          gap="4"
-        >
-          <HStack gap="4" alignItems="flex-start">
-            <Box position="relative" w="30px" h="30px">
-              <Box borderRadius="full" overflow="hidden" w="30px" h="30px">
-                <BoringAvatar size={30} name={avatarSeed} variant="marble" />
+      <BoxWrapper
+        w="100%"
+        p="4"
+        my="6"
+        variant={slug ? "contrast" : "extra_contrast"}
+        position="relative"
+        overflow="hidden"
+        minH={textIsLink || slug ? "200px" : "unset"}
+      >
+        <ReviewBorder>
+          <Flex
+            flexDir={{ base: "column", lg: slug ? "column" : "row" }}
+            justifyContent="space-between"
+            gap="4"
+          >
+            <HStack gap="4" alignItems="flex-start">
+              <Box position="relative" w="30px" h="30px">
+                <Box borderRadius="full" overflow="hidden" w="30px" h="30px">
+                  <BoringAvatar size={30} name={avatarSeed} variant="marble" />
+                </Box>
+                <Box
+                  position="absolute"
+                  bottom="-5px"
+                  right="-5px"
+                  bgColor="bg.800"
+                  borderRadius="full"
+                  w="20px"
+                  h="20px"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <Icon
+                    as={
+                      type === "positive"
+                        ? MdSentimentSatisfiedAlt
+                        : type === "negative"
+                        ? MdSentimentVeryDissatisfied
+                        : MdOutlineSentimentNeutral
+                    }
+                    w="4"
+                    h="4"
+                    color={
+                      type === "positive"
+                        ? "green.300"
+                        : type === "negative"
+                        ? "red.300"
+                        : "gray.300"
+                    }
+                  />
+                </Box>
               </Box>
-              <Box
-                position="absolute"
-                bottom="-5px"
-                right="-5px"
-                bgColor="bg.800"
-                borderRadius="full"
-                w="20px"
-                h="20px"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
+
+              <ResponsiveText
+                size="lg"
+                fontWeight="bold"
+                variant="contrast"
+                mt={{ base: "1", lg: "0" }}
               >
-                <Icon
-                  as={
-                    type === "positive"
-                      ? MdSentimentSatisfiedAlt
-                      : type === "negative"
-                      ? MdSentimentVeryDissatisfied
-                      : MdOutlineSentimentNeutral
-                  }
-                  w="4"
-                  h="4"
-                  color={
-                    type === "positive"
-                      ? "green.300"
-                      : type === "negative"
-                      ? "red.300"
-                      : "gray.300"
-                  }
-                />
+                {displayName}
+              </ResponsiveText>
+
+              <Box
+                justifySelf="end"
+                ml="auto"
+                display={{ base: "flex", lg: slug ? "flex" : "none" }}
+                alignSelf="center"
+              >
+                <UserAgent userAgent={userAgent} />
               </Box>
-            </Box>
-
-            <ResponsiveText
-              size="lg"
-              fontWeight="bold"
-              variant="contrast"
-              mt={{ base: "1", lg: "0" }}
-            >
-              {displayName}
-            </ResponsiveText>
-
-            <Box
-              justifySelf="end"
-              ml="auto"
-              display={{ base: "flex", lg: isCompact ? "flex" : "none" }}
-              alignSelf="center"
-            >
-              <UserAgent userAgent={userAgent} />
-            </Box>
-            <Wrap display={{ base: "none", lg: "flex" }}>
+              <Wrap display={{ base: "none", lg: "flex" }}>
+                {tag}
+                {locationTag}
+              </Wrap>
+            </HStack>
+            <Wrap display={{ base: "flex", lg: "none" }}>
               {tag}
               {locationTag}
             </Wrap>
-          </HStack>
-          <Wrap display={{ base: "flex", lg: "none" }}>
-            {tag}
-            {locationTag}
-          </Wrap>
-          <HStack gap="4" color="bg.500">
-            <ResponsiveText size="xs">{`IP: ${review.ipAddress}`}</ResponsiveText>
-            <FormatedDate updatedAt={updatedAt} />
-            <Box
-              justifySelf="end"
-              ml="auto"
-              display={{ base: "none", lg: isCompact ? "none" : "flex" }}
-            >
-              <UserAgent userAgent={userAgent} />
-            </Box>
-          </HStack>
-        </Flex>
-        <Divider my="4" />
-        <Text>{text}</Text>
-      </ReviewBorder>
+            <HStack gap="4" color="bg.500">
+              {review.ipAddress && (
+                <ResponsiveText size="xs">{`IP: ${review.ipAddress}`}</ResponsiveText>
+              )}
+              <FormatedDate updatedAt={updatedAt} />
+              <Box
+                justifySelf="end"
+                ml="auto"
+                display={{ base: "none", lg: slug ? "none" : "flex" }}
+              >
+                <UserAgent userAgent={userAgent} />
+              </Box>
+            </HStack>
+          </Flex>
+          <Divider my="4" />
+          {review.screenshots && textIsLink && (
+            <CustomImage h="60px" img={review.screenshots[0]} />
+          )}
+          {!textIsLink && !!text && (
+            <Text>
+              {slug
+                ? `${text.slice(0, 50)} ${text.length > 50 ? "..." : ""}`
+                : text}
+            </Text>
+          )}
+        </ReviewBorder>
 
-      {review_replies &&
-        review_replies.map((reply) => (
-          <ExchangerReply
-            key={reply.id}
-            canReply={review.ipAddress == userIP && reply.from !== "author"}
-            reply={reply}
-            displayName={displayName}
-            avatarSeed={avatarSeed}
-            exchangerName={review?.exchanger?.name}
-            exchangerLogo={review?.exchanger?.logo}
-          />
-        ))}
+        {!slug &&
+          review_replies &&
+          review_replies.map((reply) => (
+            <ExchangerReply
+              key={reply.id}
+              canReply={review.ipAddress == userIP && reply.from !== "author"}
+              reply={reply}
+              displayName={displayName}
+              avatarSeed={avatarSeed}
+              exchangerName={review?.exchanger?.name}
+              exchangerLogo={review?.exchanger?.logo}
+            />
+          ))}
 
-      <Box
-        position="absolute"
-        top="0"
-        w="100%"
-        h="100%"
-        zIndex={0}
-        pointerEvents="none" // <-- lets all clicks/touches pass through
-        bgGradient={`radial-gradient(circle at 85% -10%, ${ambientColor} 0%, transparent 40%)`}
-      />
-      <Box
-        position="absolute"
-        bottom="0"
-        left="0"
-        w="100%"
-        h="100%"
-        zIndex={0}
-        pointerEvents="none" // <-- lets all clicks/touches pass through
-        bgGradient={`radial-gradient(circle at 5% 70%, ${ambientColor} 0%, transparent 40%)`}
-      />
-    </BoxWrapper>
+        <Box
+          position="absolute"
+          top="0"
+          w="100%"
+          h="100%"
+          zIndex={0}
+          pointerEvents="none" // <-- lets all clicks/touches pass through
+          bgGradient={`radial-gradient(circle at 85% -10%, ${ambientColor} 0%, transparent 40%)`}
+        />
+        <Box
+          position="absolute"
+          bottom="0"
+          left="0"
+          w="100%"
+          h="100%"
+          zIndex={0}
+          pointerEvents="none" // <-- lets all clicks/touches pass through
+          bgGradient={`radial-gradient(circle at 5% 70%, ${ambientColor} 0%, transparent 40%)`}
+        />
+      </BoxWrapper>
+    </LinkWrapper>
   );
 }

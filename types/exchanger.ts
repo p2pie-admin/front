@@ -102,7 +102,6 @@ export interface IExchangerReview {
   isApproved?: boolean | null;
   isExchangeDone?: boolean | null;
   gossip?: string | null;
-
   review_categories?: IReviewCategory[] | null;
   userAgent?: string | null;
   location?: string | null;

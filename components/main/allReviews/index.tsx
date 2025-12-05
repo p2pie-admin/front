@@ -100,7 +100,7 @@ const AllReviews = () => {
           fontSize={{ base: "xl", lg: "4xl" }}
           as="h2"
           title={"Репутация и доверие"}
-          subtitle={"Последние отзывы на обменники"}
+          subtitle={"Ни одного скрытого или накрученного отзыва"}
           textAlign={{ base: "center", lg: "start" }}
         />
 
@@ -139,7 +139,7 @@ const AllReviews = () => {
         left="50%"
         right="50%"
         py="2"
-        minH="330px"
+        minH="280px"
       >
         <ErrorWrapper isLoading={isLoading} isError={isError}>
           {reviews && reviews.length > 0 ? (
@@ -172,8 +172,16 @@ const AllReviews = () => {
                       flex="0 0 auto"
                       minW={"500px"}
                       maxW={"500px"}
+                      _hover={{ filter: "brightness(1.1)" }}
                     >
-                      <ExchangerRootReview review={review} isPreview />
+                      <ExchangerRootReview
+                        review={review}
+                        slug={
+                          review?.exchanger?.name
+                            ? review?.exchanger?.name.toLowerCase()
+                            : undefined
+                        }
+                      />
                     </Box>
                   </ScaleFade>
                 ))}
