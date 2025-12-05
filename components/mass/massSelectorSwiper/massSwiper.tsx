@@ -1,32 +1,22 @@
-import {
-  useColorModeValue,
-  Grid,
-  Box,
-  VStack,
-  Button,
-  useTheme,
-} from "@chakra-ui/react";
+import { useColorModeValue, Box, useTheme } from "@chakra-ui/react";
 import { useMotionValue, useAnimation, motion } from "framer-motion";
-import React from "react";
-import { TbTriangleInvertedFilled } from "react-icons/tb";
-import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
+import React, { forwardRef, useImperativeHandle } from "react";
+import { ResponsiveText } from "../../../styles/theme/custom";
 import { useRouter } from "next/router";
-import Shader from "../../shared/Shader";
 import MassShader from "../MassShader";
 
 const elastic = 0.1;
 const stiffness = 50;
 const damping = 10;
 
-export const MassSwiper = ({
-  initialId,
-  items,
-  set,
-}: {
+type MassSwiperProps = {
   initialId?: string;
   set: Function;
   items: { id: string; ru_label: string; en_label: string }[];
-}) => {
+};
+
+const MassSwiper = forwardRef<MassSwiperHandle, MassSwiperProps>(
+  ({ initialId, items, set }, ref) => {
   const { locale } = useRouter() as { locale: "en" | "ru" };
   const isMobile = false;
   const itemHeight = 40;
@@ -77,10 +67,10 @@ export const MassSwiper = ({
   const step = itemHeight + gapPx;
   const centerOffset = containerHeight / 2 - itemHeight / 2 - paddingTopPx;
 
-  const getIndex = () => {
+  const getIndex = React.useCallback(() => {
     const index = Math.round((-y.get() + centerOffset) / step);
     return Math.min(length - 1, Math.max(0, index));
-  };
+  }, [centerOffset, length, step, y]);
 
   const snapToNearest = React.useCallback(
     (currentY: number) => {
@@ -92,27 +82,36 @@ export const MassSwiper = ({
     [centerOffset, step, length]
   );
 
-  const move = (yPos: number) => {
+  const move = React.useCallback((yPos: number) => {
     controls.start({
       y: yPos,
       transition: { type: "spring", stiffness, damping },
     });
-  };
+  }, [controls]);
 
-  const scrollToItem = (index: number) => {
+  const scrollToItem = React.useCallback((index: number) => {
     const targetY = -index * step + centerOffset;
     move(targetY);
-  };
+  }, [centerOffset, move, step]);
 
-  const stepDown = () => {
+  const stepDown = React.useCallback(() => {
     const currentIndex = getIndex();
     scrollToItem(Math.max(currentIndex - 1, 0));
-  };
+  }, [getIndex, scrollToItem]);
 
-  const stepUp = () => {
+  const stepUp = React.useCallback(() => {
     const currentIndex = getIndex();
     scrollToItem(Math.min(currentIndex + 1, length - 1));
-  };
+  }, [getIndex, scrollToItem]);
+
+    useImperativeHandle(
+      ref,
+      () => ({
+        stepUp,
+        stepDown,
+      }),
+      [stepDown, stepUp]
+    );
 
   // 1) CLICK HANDLER → go to next item (loop back to top)
   const handleClick = () => {
@@ -174,8 +173,7 @@ export const MassSwiper = ({
     (event: any) => {
       if (isMobile) return;
       if (event.key === "ArrowUp" || event.key === "ArrowRight") stepDown();
-      else if (event.key === "ArrowDown" || event.key === "ArrowLeft")
-        stepUp();
+      else if (event.key === "ArrowDown" || event.key === "ArrowLeft") stepUp();
     },
     [isMobile, stepDown, stepUp]
   );
@@ -202,8 +200,6 @@ export const MassSwiper = ({
       if (idx !== -1) {
         startIndex = idx;
       }
-    } else if (length > 1) {
-      startIndex = 1;
     }
 
     const targetY = -startIndex * step + centerOffset;
@@ -239,64 +235,70 @@ export const MassSwiper = ({
     };
   }, [restoreBodyStyles]);
 
-  return (
-    <Box h={`${containerHeight}px`} minW="33%">
-      <Box
-        cursor="grab"
-        position="relative"
-        overflow="hidden"
-        h={`${containerHeight}px`}
-        px="1"
-        py="4"
-        borderRadius={`${8}% ${8}% ${8}% ${8}% / 50% 50% 50% 50%`}
-        onClick={handleClick}
-        ref={containerRef}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        <MassShader direction="top" />
-        <motion.div
-          drag="y"
-          dragConstraints={{
-            top: -step * (length - 1) + centerOffset,
-            bottom: centerOffset,
-          }}
-          style={{ y, width: "100%" }}
-          dragElastic={elastic}
-          onDragEnd={(_, info) => {
-            const velocity = info.velocity.y;
-            const currentIndex = getIndex();
-            if (velocity > 50) {
-              scrollToItem(Math.max(currentIndex - 1, 0));
-            } else if (velocity < -50) {
-              scrollToItem(Math.min(currentIndex + 1, length - 1));
-            } else {
-              move(snapToNearest(y.get()));
-            }
-          }}
-          animate={controls}
+    return (
+      <Box h={`${containerHeight}px`} minW="33%">
+        <Box
+          cursor="grab"
+          position="relative"
+          overflow="hidden"
+          h={`${containerHeight}px`}
+          px="1"
+          py="4"
+          borderRadius={`${8}% ${8}% ${8}% ${8}% / 50% 50% 50% 50%`}
+          onClick={handleClick}
+          ref={containerRef}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
         >
-          {items.map((item) => (
-            <Box
-              bgColor={bgColor}
-              key={item[`${locale}_label`] + item.id}
-              h={`${itemHeight}px`}
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              borderRadius="lg"
-              mb="2"
-            >
-              <ResponsiveText variant="contrast" size="xl">
-                {item[`${locale}_label`]}
-              </ResponsiveText>
-            </Box>
-          ))}
-        </motion.div>
-        <MassShader direction="bottom" />
+          <MassShader direction="top" />
+          <motion.div
+            drag="y"
+            dragConstraints={{
+              top: -step * (length - 1) + centerOffset,
+              bottom: centerOffset,
+            }}
+            style={{ y, width: "100%" }}
+            dragElastic={elastic}
+            onDragEnd={(_, info) => {
+              const velocity = info.velocity.y;
+              const currentIndex = getIndex();
+              if (velocity > 50) {
+                scrollToItem(Math.max(currentIndex - 1, 0));
+              } else if (velocity < -50) {
+                scrollToItem(Math.min(currentIndex + 1, length - 1));
+              } else {
+                move(snapToNearest(y.get()));
+              }
+            }}
+            animate={controls}
+          >
+            {items.map((item) => (
+              <Box
+                bgColor={bgColor}
+                key={item[`${locale}_label`] + item.id}
+                h={`${itemHeight}px`}
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                borderRadius="lg"
+                mb="2"
+              >
+                <ResponsiveText variant="contrast" size="xl">
+                  {item[`${locale}_label`]}
+                </ResponsiveText>
+              </Box>
+            ))}
+          </motion.div>
+          <MassShader direction="bottom" />
+        </Box>
       </Box>
-    </Box>
-  );
+    );
+  }
+);
+
+export type MassSwiperHandle = {
+  stepUp: () => void;
+  stepDown: () => void;
 };
 
 export default MassSwiper;

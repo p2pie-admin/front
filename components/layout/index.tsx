@@ -7,6 +7,7 @@ import {
   VStack,
   useColorModeValue,
   Progress,
+  Divider,
 } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { batch } from "react-redux";
@@ -139,9 +140,31 @@ const Layout = ({ children }: { children: any }) => {
         <Box mt={["1", "2"]} maxW={{ base: "100%", md: "888px" }} w="100%">
           {children}
         </Box>
-
-        <Footer />
       </VStack>
+
+      <Box
+        mt="100px"
+        bgColor="bg.1000"
+        pt="50px"
+        dropShadow="lg"
+        pos="relative"
+        zIndex="1"
+      >
+        <Footer />
+        <Box
+          bgGradient="linear(to-t, rgba(0,0,0,0.3), transparent 60%)"
+          h="60px"
+        />
+      </Box>
+      <Box
+        position="absolute"
+        inset={0}
+        zIndex={0}
+        mt="auto"
+        h="300px"
+        pointerEvents="none" // <-- lets all clicks/touches pass through
+        bgGradient={`radial-gradient(ellipse at 50% 50%, ${ambientColor} 10%, transparent 65%)`}
+      />
     </Box>
   );
 };

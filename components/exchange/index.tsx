@@ -125,7 +125,7 @@ const Exchange = ({
       </Box> */}
 
       <CustomTitle
-        fontSize={{ base: "lg", lg: "2xl" }}
+        fontSize={{ base: "md", lg: "xl" }}
         as="h1"
         mt="-1"
         title={dirText?.header || ""}

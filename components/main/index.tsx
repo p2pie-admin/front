@@ -27,6 +27,7 @@ import { IDirText } from "../../types/exchange";
 import MassSelector from "../mass/massSelectorSwiper";
 import Advantages from "./advantages";
 import CustomTitle from "../shared/CustomTitle";
+import AllReviews from "./allReviews";
 
 const MainPageContent = ({
   popularPms,
@@ -78,7 +79,8 @@ const MainPageContent = ({
       </ColumnGrid>
 
       <CustomTitle
-        my="16"
+        mt="32"
+        mb="16"
         as="h2"
         title={"Преимущества"}
         subtitle={"Работаем на репутацию, а не на прибыль"}
@@ -87,7 +89,8 @@ const MainPageContent = ({
       <Advantages />
 
       <CustomTitle
-        my="16"
+        mt="32"
+        mb="16"
         as="h2"
         title={"Поиск курсов"}
         subtitle={
@@ -96,6 +99,8 @@ const MainPageContent = ({
       />
 
       <MassSelector initialSlug={"true"} />
+
+      <AllReviews />
     </VStack>
   );
 };

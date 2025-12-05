@@ -1,24 +1,54 @@
-import { Flex, Text, VStack } from "@chakra-ui/react";
+import { Box, Grid, HStack, VStack } from "@chakra-ui/react";
+import WebsiteData from "./WebsiteData";
+import FooterLinks from "./FooterLinks";
 
 const Footer = () => {
   return (
-    <Flex
-      w="100%"
-      justifyContent="center"
-      bgGradient="linear(to-t, rgba(0,0,0,0.3), transparent 30%)"
-    >
-      <VStack
-        justifyContent="center"
-        alignItems="center"
-        minH="40"
-        color="bg.500"
-        fontSize="lg"
-      >
-        <Text>{process.env.NEXT_PUBLIC_NAME}.com</Text>
-        <Text>2025</Text>
-      </VStack>
-    </Flex>
+    <Box w="100%" px={{ base: "2", lg: "12%" }}>
+      <HStack justifyContent="space-between" alignItems="start">
+        <WebsiteData />
+        <Grid
+          gridTemplateColumns="1fr 1fr 1fr 1fr 1fr"
+          w="70%"
+          justifyContent="center"
+        >
+          <FooterLinks links={aboutLinks} title={"О нас"} />
+          <FooterLinks links={productLinks} title={"Продукт"} />
+          <FooterLinks links={supportLinks} title={"Поддержка"} />
+          <FooterLinks links={otherLinks} title={"Другое"} />
+          <FooterLinks links={communityLinks} title={"Сообщество"} />
+        </Grid>
+      </HStack>
+    </Box>
   );
 };
 
 export default Footer;
+
+const aboutLinks = [
+  { label: "О проекте", href: "#" },
+  { label: "Партнерство", href: "#" },
+];
+
+const productLinks = [
+  { label: "Обмен", href: "#" },
+  { label: "Продажа", href: "#" },
+  { label: "Популярные", href: "#" },
+];
+
+const supportLinks = [
+  { label: "FAQ", href: "#" },
+  { label: "Контакты", href: "#" },
+  { label: "Поддержка", href: process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT || "#" },
+];
+
+const otherLinks = [
+  { label: "Карта обменников", href: "/map" },
+  { label: "Рейтинг обменников", href: "/exchangers" },
+  { label: "Блог", href: "#" },
+];
+
+const communityLinks = [
+  { label: "Telegram", href: process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT || "#" },
+  { label: "Facebook", href: "#" },
+];

@@ -34,8 +34,10 @@ import { maskIP } from "../../../../pages/exchangers/[slug]";
 
 export default function ExchangerRootReview({
   review,
+  isPreview = false,
 }: {
   review: IExchangerReview;
+  isPreview?: boolean;
 }) {
   const userIP = useAppSelector((state) => maskIP(state.main.fingerprint?.ip));
 
@@ -128,18 +130,21 @@ export default function ExchangerRootReview({
     );
   }, [location]);
 
+  const isCompact = isPreview;
+
   return (
     <BoxWrapper
       w="100%"
       p="4"
       my="6"
-      variant="extra_contrast"
+      variant={isPreview ? "contrast" : "extra_contrast"}
       position="relative"
       overflow="hidden"
+      minH={isPreview ? "250px" : "unset"}
     >
       <ReviewBorder>
         <Flex
-          flexDir={{ base: "column", lg: "row" }}
+          flexDir={{ base: "column", lg: isCompact ? "column" : "row" }}
           justifyContent="space-between"
           gap="4"
         >
@@ -193,7 +198,7 @@ export default function ExchangerRootReview({
             <Box
               justifySelf="end"
               ml="auto"
-              display={{ base: "flex", lg: "none" }}
+              display={{ base: "flex", lg: isCompact ? "flex" : "none" }}
               alignSelf="center"
             >
               <UserAgent userAgent={userAgent} />
@@ -213,7 +218,7 @@ export default function ExchangerRootReview({
             <Box
               justifySelf="end"
               ml="auto"
-              display={{ base: "none", lg: "flex" }}
+              display={{ base: "none", lg: isCompact ? "none" : "flex" }}
             >
               <UserAgent userAgent={userAgent} />
             </Box>

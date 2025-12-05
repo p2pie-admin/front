@@ -42,7 +42,6 @@ export default function ({ as, title, subtitle, ...props }: CustomTitleProps) {
       {subtitle && (
         <Text
           as="p"
-          textAlign="center"
           fontSize={{ base: "lg", lg: "xl" }}
           mt={2}
           color="bg.400"

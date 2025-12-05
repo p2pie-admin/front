@@ -720,6 +720,39 @@ export const reviewFingerprintQuery = gql`
   }
 `;
 
+export const allReviewsQuery = gql`
+  query AllReviews {
+    reviews(filters: { isApproved: { eq: true } }) {
+      data {
+        id
+        attributes {
+          fingerprint
+          ipAddress
+          name
+          text
+          type
+          isDispute
+          isClosed
+          isApproved
+          userAgent
+          location
+          updatedAt
+          screenshots {
+            data {
+              id
+              attributes {
+                name
+                alternativeText
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const exchangerReviewCategoriesQuery = gql`
   query ExchangerReviewCategories {
     reviewCategories(pagination: { limit: 2000 }) {

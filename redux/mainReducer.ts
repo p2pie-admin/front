@@ -329,6 +329,14 @@ export const mainSlice = createSlice({
       state.loading = "rejected";
     });
 
+    builder.addCase(updateDirRates.pending, (state) => {
+      state.loading = "pending";
+    });
+
+    builder.addCase(updateDirRates.rejected, (state) => {
+      state.loading = "rejected";
+    });
+
     builder.addCase(fetchDirRates.fulfilled, (state, action) => {
       if (!action.payload) {
         // если не получены курсы, парсер не отвечает вовсе
@@ -353,12 +361,16 @@ export const mainSlice = createSlice({
     });
 
     builder.addCase(updateDirRates.fulfilled, (state, action) => {
-      if (!action.payload) return;
+      if (!action.payload) {
+        state.loading = "rejected";
+        return;
+      }
       const cityKey = normalizeCityKey(action.meta.arg?.cityName);
       const rates = cityKey
         ? action.payload.map((rate) => applyCityRateOverride(rate, cityKey))
         : action.payload;
       state.dirRates = rates;
+      state.loading = "fulfilled";
       state.dirRatesReloadTrigger = "manual";
       const targetIndex = 0;
       const keepAmount = !!action.meta.arg?.keepAmount;

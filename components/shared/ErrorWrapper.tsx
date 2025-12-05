@@ -9,6 +9,7 @@ import {
   useColorModeValue,
   Box,
 } from "@chakra-ui/react";
+import { ReactNode } from "react";
 
 import LinkButton from "./LinkButton";
 import { BsTelegram } from "react-icons/bs";
@@ -49,7 +50,7 @@ const Error = ({ primaryMessage = "", secondaryMessage = "" }) => {
 };
 
 const ErrorWrapper = (props: {
-  children?: JSX.Element | JSX.Element[];
+  children?: ReactNode;
   isError?: boolean;
   isLoading?: boolean;
   primaryMessage?: string;
