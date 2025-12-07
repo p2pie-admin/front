@@ -91,7 +91,11 @@ export default function ExchangersList({
 
   const filteredExchangers = useMemo(() => {
     return exchangers?.filter((exchanger) => {
-      const displayName = (exchanger.display_name || exchanger.name || "").toLowerCase();
+      const displayName = (
+        exchanger.display_name ||
+        exchanger.name ||
+        ""
+      ).toLowerCase();
       const matchesFilter =
         activeFilter === null || activeFilter === getStatus(exchanger);
 
@@ -112,8 +116,8 @@ export default function ExchangersList({
         const nameA = a.display_name || a.name || "";
         const nameB = b.display_name || b.name || "";
         result = nameA.localeCompare(nameB, "ru", { sensitivity: "base" });
-      } else if (sortCriteria === "total_rates") {
-        result = (a.total_rates || 0) - (b.total_rates || 0);
+        // } else if (sortCriteria === "total_rates") {
+        //   result = (a?.total_rates || 0) - (b?.total_rates || 0);
       } else if (sortCriteria === "admin_rating") {
         result =
           (Number(a?.admin_rating) || 0) - (Number(b?.admin_rating) || 0);

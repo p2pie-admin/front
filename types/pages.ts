@@ -14,6 +14,10 @@ export interface IArticle {
     title: string;
     text: string;
   }[];
+
+  preview?: IImage;
+  wallpaper?: IImage;
+  text?: String;
 }
 
 export interface ILink {

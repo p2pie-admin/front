@@ -1,7 +1,7 @@
-import { IArticle } from "../../types/pages";
+import { IArticle } from "../../../types/pages";
 
-import { enrichText } from "../shared/helper";
-import { IPm } from "../../types/selector";
+import { enrichText } from "../../shared/helper";
+import { IPm } from "../../../types/selector";
 
 export const addArticleCrossLinking = async (
   article: IArticle,

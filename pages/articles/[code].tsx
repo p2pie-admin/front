@@ -1,8 +1,8 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IPmPairs } from "../../types/exchange";
 import { IArticle } from "../../types/pages";
-import Article from "../../components/article";
-import { addArticleCrossLinking } from "../../components/article/helper";
+import Article from "../../components/articles/pmArticle";
+import { addArticleCrossLinking } from "../../components/articles/pmArticle/helper";
 import { IPm } from "../../types/selector";
 import { ISEO } from "../../types/general";
 import { nullSeo } from "../../components/shared/UniversalSeo";

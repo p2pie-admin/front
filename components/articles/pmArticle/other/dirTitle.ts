@@ -1,7 +1,7 @@
-import { capitalize } from "../../main/side/selector/section/PmGroup/helper";
-import { IPm } from "../../../types/selector";
-import { IPmPairs } from "../../../types/exchange";
-import { curNames } from "../../../redux/amountsHelper";
+import { capitalize } from "../../../main/side/selector/section/PmGroup/helper";
+import { IPm } from "../../../../types/selector";
+import { IPmPairs } from "../../../../types/exchange";
+import { curNames } from "../../../../redux/amountsHelper";
 import { t } from "i18next";
 
 const pmDisplayName = (pm?: IPm | null) =>

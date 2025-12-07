@@ -1,9 +1,9 @@
 import { Box, Center } from "@chakra-ui/react";
 import React from "react";
 import { useTranslation } from "next-i18next";
-import Dir from "../../exchange/Dir";
-import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
-import { IPmPairs } from "../../../types/exchange";
+import Dir from "../../../exchange/Dir";
+import { Box3D, ResponsiveText } from "../../../../styles/theme/custom";
+import { IPmPairs } from "../../../../types/exchange";
 import { dirTitle } from "./dirTitle";
 import { GetRateDataFn } from "./useDirRates";
 

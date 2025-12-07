@@ -1,8 +1,8 @@
 import { Heading } from "@chakra-ui/react";
 import { t } from "i18next";
 import React from "react";
-import { capitalize } from "../../main/side/selector/section/PmGroup/helper";
-import { IPm } from "../../../types/selector";
+import { capitalize } from "../../../main/side/selector/section/PmGroup/helper";
+import { IPm } from "../../../../types/selector";
 
 export default function OtherHeaders({ text }: { text: string }) {
   return (

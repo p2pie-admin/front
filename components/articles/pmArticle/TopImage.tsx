@@ -1,7 +1,7 @@
 import { Center, Box } from "@chakra-ui/react";
 import React from "react";
-import CircularIcon from "../shared/CircularIcon";
-import { IPm } from "../../types/selector";
+import CircularIcon from "../../shared/CircularIcon";
+import { IPm } from "../../../types/selector";
 
 export default function TopImage({ pm }: { pm: IPm }) {
   return (

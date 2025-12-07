@@ -380,10 +380,7 @@ export const exchangersQuery = gql`
     exchangers(
       pagination: { start: 0, limit: 2000 }
       filters: {
-        exchanger_card: {
-          ru_description: { notNull: true }
-          en_description: { notNull: true }
-        }
+        status: { ne: "draft" }
         ref_link: { notNull: true }
         rates_link: { notNull: true }
       }
@@ -572,8 +569,12 @@ export const citiesQuery = gql`
 `;
 
 export const articlesQuery = gql`
-  query GetArticle($locale: I18NLocaleCode) {
-    articles(locale: $locale, pagination: { start: 0, limit: 1200 }) {
+  query GetArticlesPreview($locale: I18NLocaleCode) {
+    articles(
+      locale: $locale
+      pagination: { start: 0, limit: 1200 }
+      filters: { text: { notNull: true } }
+    ) {
       data {
         id
         attributes {
@@ -581,8 +582,16 @@ export const articlesQuery = gql`
           header
           subheader
           updatedAt
-          chapters
-          stats
+          preview {
+            data {
+              id
+              attributes {
+                name
+                alternativeText
+                url
+              }
+            }
+          }
         }
       }
     }

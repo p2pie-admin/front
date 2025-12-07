@@ -1,9 +1,9 @@
 import { BsTelegram } from "react-icons/bs";
-import LinkButton from "../shared/LinkButton";
+import LinkButton from "../../shared/LinkButton";
 import { Box, HStack, Text, VStack } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
-import { ResponsiveText } from "../../styles/theme/custom";
-import { exchangerNameToSlug } from "../exchangers/helper";
+import { ResponsiveText } from "../../../styles/theme/custom";
+import { exchangerNameToSlug } from "../../exchangers/helper";
 import Link from "next/link";
 
 const FoundError = () => {

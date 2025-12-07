@@ -1,12 +1,12 @@
 import { Box, Button, Collapse, Grid } from "@chakra-ui/react";
 import React from "react";
 import { useTranslation } from "next-i18next";
-import { Box3D } from "../../../styles/theme/custom";
-import { IPmPairs } from "../../../types/exchange";
+import { Box3D } from "../../../../styles/theme/custom";
+import { IPmPairs } from "../../../../types/exchange";
 import OtherHeader from "./OtherHeader";
 import DirCardWithTitle from "./DirCardWithTitle";
 import { GetRateDataFn } from "./useDirRates";
-import Arrow from "../../shared/Arrow";
+import Arrow from "../../../shared/Arrow";
 
 export type PairedRow = {
   key: string;

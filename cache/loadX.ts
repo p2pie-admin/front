@@ -5,7 +5,7 @@ import {
   pmLayoutsQuery,
   dirsTextQuery,
   articleCodesQuery,
-  articlesQuery,
+  // articlesQuery,
   articleQuery,
   selectorQuery,
   exchangerQuery,
@@ -13,12 +13,9 @@ import {
   citiesQuery,
   massDirTextIdsQuery,
   massDirTextQuery,
+  articlesQuery,
 } from "../services/queries";
-import {
-  convertSlugIntoMassDirText,
-  getPmsFromSelector,
-  mergeExchangers,
-} from "./helper";
+import { getPmsFromSelector } from "./helper";
 import { cachedArrayFetch, cachedFetch } from "./cache";
 import { ICity, IDirText, IPmLayout } from "../types/exchange";
 import {
@@ -38,7 +35,8 @@ const parserFetcher = initParserFetcher();
 export const TTL = {
   instant: 60 * 2,
   fast: 60 * 10,
-  slow: 60 * 30,
+  slow: 60 * 60,
+  slowest: 60 * 60 * 10,
   never: -1,
 };
 
@@ -149,22 +147,28 @@ export const loadExchangers = async () => {
   const [cmsExchangers] = (await Promise.all([
     cachedFetch("cms_exchangers", TTL.fast, () => cmsFetcher(exchangersQuery)),
   ])) as IExchangerPreview[][];
-
-  //const merged = mergeExchangers(cmsExchangers, parserExchangers);
-
-  // Promise.all(
-  //   // вызываем в getStaticPaths чтобы потом подхватить кэш из getStaticProps
-  //   cmsExchangers.map((ex) => {
-  //     const slug = exchangerNameToSlug(ex.name);
-  //     return redis.set(`exchanger_${slug}`, {
-  //       data: ex,
-  //       updatedAt: Date.now(),
-  //     });
-  //   })
-  // );
-
   return cmsExchangers;
 };
+
+export const loadArticles = async () => {
+  const articles = await cachedFetch("articles", TTL.fast, () =>
+    cmsFetcher(articlesQuery)
+  );
+  return articles;
+};
+
+//const merged = mergeExchangers(cmsExchangers, parserExchangers);
+
+// Promise.all(
+//   // вызываем в getStaticPaths чтобы потом подхватить кэш из getStaticProps
+//   cmsExchangers.map((ex) => {
+//     const slug = exchangerNameToSlug(ex.name);
+//     return redis.set(`exchanger_${slug}`, {
+//       data: ex,
+//       updatedAt: Date.now(),
+//     });
+//   })
+// );
 
 export const loadCities = () =>
   cachedFetch("cities", TTL.slow, async () => {

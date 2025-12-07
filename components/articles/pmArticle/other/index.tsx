@@ -1,7 +1,7 @@
 import { Box, Divider, VStack } from "@chakra-ui/react";
 import React, { useCallback, useMemo, useState } from "react";
-import { IPmPairs } from "../../../types/exchange";
-import { IPm } from "../../../types/selector";
+import { IPmPairs } from "../../../../types/exchange";
+import { IPm } from "../../../../types/selector";
 import { H3ForOthers } from "./OtherHeader";
 import SectionColumns, { PairedRow } from "./SectionColumns";
 import { useDirRates } from "./useDirRates";

@@ -1,18 +1,18 @@
 import { Heading, Box, HStack, Text, Divider } from "@chakra-ui/react";
 
 import React, { useMemo, useRef, useState } from "react";
-import { Box3D, ResponsiveText } from "../../styles/theme/custom";
-import { IPmPairs } from "../../types/exchange";
-import { ISEO } from "../../types/general";
-import { IArticle } from "../../types/pages";
-import { TextToHTML } from "../shared/helper";
-import UniversalSeo from "../shared/UniversalSeo";
+import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
+import { IPmPairs } from "../../../types/exchange";
+import { ISEO } from "../../../types/general";
+import { IArticle } from "../../../types/pages";
+import { TextToHTML } from "../../shared/helper";
+import UniversalSeo from "../../shared/UniversalSeo";
 import FoundError from "./FoundError";
 import OtherDirs from "./other";
 import TopImage from "./TopImage";
 import Stats from "./Stats";
-import { IPm } from "../../types/selector";
-import { locale } from "../../services/utils";
+import { IPm } from "../../../types/selector";
+import { locale } from "../../../services/utils";
 
 const Article = ({
   seo,

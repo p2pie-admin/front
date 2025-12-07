@@ -22,7 +22,7 @@ import ErrorWrapper from "../../shared/ErrorWrapper";
 import BottomLabel from "./BottomLabel";
 import TopLabel from "./TopLabel";
 import { IDirText } from "../../../types/exchange";
-import FoundError from "../../article/FoundError";
+import FoundError from "../../articles/pmArticle/FoundError";
 
 // You asked to keep TopLabel/BottomLabel separate files; if you haven't created them,
 // simple presentational components are provided below inline — replace with your imports if you prefer.

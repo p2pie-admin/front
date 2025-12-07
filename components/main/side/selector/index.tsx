@@ -38,7 +38,7 @@ import { memo } from "react";
 import { selectorQuery } from "../../../../services/queries";
 
 import { useTranslation } from "next-i18next";
-import FoundError from "../../../article/FoundError";
+import FoundError from "../../../articles/pmArticle/FoundError";
 
 //const gqlFetcher = new GraphQLFetcher(); // may pass variables here
 const fetcher = initCMSFetcher();

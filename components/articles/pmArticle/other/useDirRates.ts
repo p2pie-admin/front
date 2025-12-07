@@ -1,8 +1,8 @@
 import { useCallback, useMemo } from "react";
 import useSWR from "swr";
-import { IPmPairs } from "../../../types/exchange";
-import { initParserFetcher } from "../../../services/fetchers";
-import { format } from "../../../redux/amountsHelper";
+import { IPmPairs } from "../../../../types/exchange";
+import { initParserFetcher } from "../../../../services/fetchers";
+import { format } from "../../../../redux/amountsHelper";
 
 type RateData = { amountOfCourses: number; rateText: string };
 

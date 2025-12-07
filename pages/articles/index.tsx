@@ -1,29 +1,27 @@
-import { GetStaticProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-
-import { IExchanger, IParserExchanger } from "../../types/exchanger";
-import ExchangersList from "../../components/exchangers";
 
 import { ISEO } from "../../types/general";
 import { getT } from "../../components/shared/getT";
 import { nullSeo } from "../../components/shared/UniversalSeo";
-import { loadExchangers, TTL } from "../../cache/loadX";
+import { loadArticles, loadExchangers, TTL } from "../../cache/loadX";
+import { IArticle } from "../../types/pages";
+import ArticlesList from "../../components/articles";
 
-const ExchangersPage = ({
-  exchangers,
+const ArticlesPage = ({
+  articles,
   seo,
 }: {
-  exchangers: IExchanger[] | null;
+  articles: IArticle[] | null;
   seo: ISEO;
-}) => <ExchangersList exchangers={exchangers} seo={seo} />;
+}) => <ArticlesList articles={articles} seo={seo} />;
 
 export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
-  const exchangers = await loadExchangers();
+  const articles = (await loadArticles()) as IArticle[];
 
-  if (!exchangers?.length) {
+  if (!articles?.length) {
     return {
       props: {
-        exchangers: null,
+        articles: null,
         ...(await serverSideTranslations(locale, ["main"])),
       },
       revalidate: TTL.slow, // если нет данных
@@ -33,19 +31,20 @@ export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
   const t = await getT(locale);
 
   const seo: ISEO = {
-    title: t("exchangers-meta-title"),
-    description: t("exchangers-meta-description"),
-    canonicalSlug: "exchangers", // ✅ plain path, no leading slash, no locale
+    title: `Блог ${process.env.NEXT_PUBLIC_NAME || ""}`,
+    description:
+      "Список всех статей и разборов по криптовалютам, банкам и обмену",
+    canonicalSlug: "articles",
   };
 
   return {
     props: {
       seo: seo || nullSeo,
-      exchangers: exchangers || null,
+      articles: articles || null,
       ...(await serverSideTranslations(locale, ["main"])),
     },
     revalidate: TTL.fast,
   };
 };
 
-export default ExchangersPage;
+export default ArticlesPage;
