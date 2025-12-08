@@ -17,7 +17,7 @@ export interface IArticle {
 
   preview?: IImage;
   wallpaper?: IImage;
-  text?: String;
+  text?: string;
 }
 
 export interface ILink {

@@ -616,6 +616,17 @@ export const articleQuery = gql`
           updatedAt
           chapters
           stats
+          text
+          wallpaper {
+            data {
+              id
+              attributes {
+                name
+                alternativeText
+                url
+              }
+            }
+          }
         }
       }
     }
@@ -875,6 +886,78 @@ export const massDirTextQuery = gql`
           seo_title
           seo_description
           text
+        }
+      }
+    }
+  }
+`;
+
+export const FAQbyCategoryCodeQuery = gql`
+  query FAQbyCategoryCode($code: String, $locale: I18NLocaleCode) {
+    xFaqCategories(
+      locale: $locale
+      pagination: { start: 0, limit: 200000 }
+      filters: { code: { eqi: $code } }
+    ) {
+      data {
+        id
+        attributes {
+          code
+          description
+          color
+          x_faq {
+            data {
+              id
+              attributes {
+                question
+                response
+              }
+            }
+          }
+          image {
+            data {
+              id
+              attributes {
+                name
+                alternativeText
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const FAQsQuery = gql`
+  query FAQs($locale: I18NLocaleCode) {
+    xFaqCategories(locale: $locale, pagination: { start: 0, limit: 200000 }) {
+      data {
+        id
+        attributes {
+          code
+          description
+          color
+          x_faq {
+            data {
+              id
+              attributes {
+                question
+                response
+              }
+            }
+          }
+          image {
+            data {
+              id
+              attributes {
+                name
+                alternativeText
+                url
+              }
+            }
+          }
         }
       }
     }

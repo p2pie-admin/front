@@ -75,7 +75,7 @@ export const Swiper = (props: {
 
   const y = useMotionValue(0);
   const controls = useAnimation();
-  const arrowControls = useAnimation();
+  //const arrowControls = useAnimation();
 
   const getIndex = useCallback(() => {
     const index = Math.round(
@@ -227,45 +227,45 @@ export const Swiper = (props: {
     };
   }, [handleWheel, handleKeyDown, isMobile]);
 
-  useEffect(() => {
-    return () => {
-      mouseEnteredRef.current = false;
-      restoreBodyStyles();
-    };
-  }, [restoreBodyStyles]);
+  // useEffect(() => {
+  //   return () => {
+  //     mouseEnteredRef.current = false;
+  //     restoreBodyStyles();
+  //   };
+  // }, [restoreBodyStyles]);
 
-  const animateArrow = useCallback(
-    (direction: "up" | "down") => {
-      const keyframes =
-        direction === "up"
-          ? [225, 205, 235, 220, 225]
-          : [225, 245, 215, 230, 225];
+  // const animateArrow = useCallback(
+  //   (direction: "up" | "down") => {
+  //     const keyframes =
+  //       direction === "up"
+  //         ? [225, 205, 235, 220, 225]
+  //         : [225, 245, 215, 230, 225];
 
-      arrowControls.start({
-        rotate: keyframes,
-        transition: {
-          duration: 0.5,
-          times: [0, 0.18, 0.42, 0.68, 1],
-          ease: "easeOut",
-        },
-      });
-    },
-    [arrowControls]
-  );
+  //     arrowControls.start({
+  //       rotate: keyframes,
+  //       transition: {
+  //         duration: 0.5,
+  //         times: [0, 0.18, 0.42, 0.68, 1],
+  //         ease: "easeOut",
+  //       },
+  //     });
+  //   },
+  //   [arrowControls]
+  // );
 
-  useEffect(() => {
-    let lastIndex = getIndex();
-    const unsubscribe = y.onChange(() => {
-      const idx = getIndex();
-      if (idx !== lastIndex) {
-        animateArrow(idx < lastIndex ? "up" : "down");
-        lastIndex = idx;
-      }
-    });
-    return () => {
-      unsubscribe();
-    };
-  }, [animateArrow, getIndex, y]);
+  // useEffect(() => {
+  //   let lastIndex = getIndex();
+  //   const unsubscribe = y.onChange(() => {
+  //     const idx = getIndex();
+  //     if (idx !== lastIndex) {
+  //       animateArrow(idx < lastIndex ? "up" : "down");
+  //       lastIndex = idx;
+  //     }
+  //   });
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  // }, [animateArrow, getIndex, y]);
 
   const topLabelBaseTop = -itemHeight;
   const bottomLabelBaseTop = length * itemHeight;
@@ -380,7 +380,7 @@ export const Swiper = (props: {
             right="-2"
             top={`calc(${containerHeight / 2}px + 0.5rem)`}
             color={triangleColor}
-            animate={arrowControls}
+            //animate={arrowControls}
             initial={{ rotate: 225 }}
             // style={{ scaleX: 1.8 }}
           >

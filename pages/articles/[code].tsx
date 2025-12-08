@@ -17,6 +17,7 @@ import {
   TTL,
 } from "../../cache/loadX";
 import { addPathsToSitemap } from "../../cache/cache";
+import GeneralArticle from "../../components/articles/generalArticle";
 
 const locale = (process.env.NEXT_PUBLIC_DEFAULT_LOCALE || "ru") as "en" | "ru";
 
@@ -37,15 +38,46 @@ const ArticlePage = (props: {
   pm: IPm | null;
   article: IArticle | null;
   otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] } | null;
-}) => <Article {...props} />;
+}) => {
+  console.log(props.article);
+  if (props.article?.text)
+    return <GeneralArticle article={props.article} seo={props.seo} />;
+  return <Article {...props} />;
+};
 
 export async function getStaticProps({ params }: { params: { code: string } }) {
   try {
     // force locale from env
 
     const code = params.code;
-    const [article, articleCodes, pms, allPossibleDirs] = await Promise.all([
-      loadArticle(code),
+    const article = await loadArticle(code);
+    if (!article) {
+      console.warn(
+        `[getStaticProps] No article found for code: ${params.code}`
+      );
+      return emptyProps(locale);
+    }
+    const normalizedCode = article?.code.toLowerCase();
+
+    const seo = {
+      title: article.seo_title,
+      description: article.seo_description,
+      canonicalSlug: `articles/${normalizedCode}`,
+      updatedAt: article.updatedAt || new Date().toISOString(),
+    } as ISEO;
+    console.log("ARTICLE", article);
+    if (article?.text) {
+      return {
+        props: {
+          seo: seo || nullSeo,
+          article: article || null,
+          locale,
+          ...(await serverSideTranslations(locale, ["main"])),
+        },
+        revalidate: TTL.slow,
+      };
+    }
+    const [articleCodes, pms, allPossibleDirs] = await Promise.all([
       loadArticleCodes(),
       loadPms(),
       loadPossibleDirs(),
@@ -53,12 +85,7 @@ export async function getStaticProps({ params }: { params: { code: string } }) {
     const dirs = limitedPossibleDirs(allPossibleDirs, "middle");
 
     const slugToCodes = getSlugToCodes(dirs, pms);
-    if (!article) {
-      console.warn(
-        `[getStaticProps] No article found for code: ${params.code}`
-      );
-      return emptyProps(locale);
-    }
+
     if (!pms?.length || !slugToCodes) {
       console.warn(
         `[getStaticProps] No pms or slugToCodes found for code: ${params.code}`
@@ -101,15 +128,6 @@ export async function getStaticProps({ params }: { params: { code: string } }) {
       articleCodes,
       pms
     );
-
-    const normalizedCode = article?.code.toLowerCase();
-
-    const seo = {
-      title: article.seo_title,
-      description: article.seo_description,
-      canonicalSlug: `articles/${normalizedCode}`,
-      updatedAt: article.updatedAt || new Date().toISOString(),
-    } as ISEO;
 
     return {
       props: {

@@ -14,9 +14,11 @@ import {
   massDirTextIdsQuery,
   massDirTextQuery,
   articlesQuery,
+  FAQbyCategoryCodeQuery,
+  FAQsQuery,
 } from "../services/queries";
 import { getPmsFromSelector } from "./helper";
-import { cachedArrayFetch, cachedFetch } from "./cache";
+import { cachedFetch } from "./cache";
 import { ICity, IDirText, IPmLayout } from "../types/exchange";
 import {
   exchangerNameToSlug,
@@ -25,7 +27,7 @@ import {
 import { IArticle } from "../types/pages";
 import { IExchanger, IExchangerPreview } from "../types/exchanger";
 import { IMassDirTextId, IMassDirText, IMassRate } from "../types/mass";
-import { dir } from "console";
+import { IFaqCategory } from "../types/faq";
 
 const locale = process.env.NEXT_PUBLIC_SITE_LANG || "ru";
 
@@ -187,6 +189,27 @@ export const loadCustomDirText = (slug: string) =>
     const res = await cmsFetcher(TextBoxQuery, { locale, key: slug });
     return res?.[0] as IDirText;
   });
+
+export const loadFAQs = () =>
+  cachedFetch(`faqs_${locale}`, TTL.slow, async () => {
+    const res = (await cmsFetcher(FAQsQuery, { locale })) as
+      | IFaqCategory[]
+      | null;
+    return res || [];
+  });
+
+export const loadFAQbyCategoryCode = (code: string) =>
+  cachedFetch(
+    `faq_${code.toLowerCase()}_${locale}`,
+    TTL.slow,
+    async () => {
+      const res = (await cmsFetcher(FAQbyCategoryCodeQuery, {
+        code,
+        locale,
+      })) as IFaqCategory[] | null;
+      return res?.[0] || null;
+    }
+  );
 
 // export const loadDirsTexts = (locale: "en" | "ru") =>
 //   cachedFetch(

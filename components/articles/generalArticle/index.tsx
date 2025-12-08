@@ -1,32 +1,41 @@
+import { Box, Divider, Text } from "@chakra-ui/react";
 import React from "react";
 import { IArticle } from "../../../types/pages";
-import { Box3D } from "../../../styles/theme/custom";
-import CustomImage from "../../shared/CustomImage";
-import NextLink from "next/link";
-import { Box, HStack, Highlight, Link, Text } from "@chakra-ui/react";
+import { ISEO } from "../../../types/general";
+import { IoMdInformationCircle } from "react-icons/io";
+import description from "../../map/description";
+import { BoxWrapper, CustomHeader } from "../../shared/BoxWrapper";
+import { TextToHTML } from "../../shared/helper";
+import UniversalSeo from "../../shared/UniversalSeo";
 
-export default function ArticlePreview({ article }: { article: IArticle }) {
+export default function GeneralArticle({
+  article,
+  seo,
+}: {
+  article: IArticle | null;
+  seo: ISEO;
+}) {
   return (
-    <Box3D py="1" px="4" variant="no_contrast" w="100%">
-      <HStack justifyContent="space-between">
-        <Box w="calc(100% - 240px)">
-          <Text as="h2">{article.header}</Text>
-          <Text as="h3" color="bg.300">
-            {article.subheader}{" "}
-            <NextLink href={`/articles/${article.code.toLowerCase()}`} passHref>
-              <Highlight
-                as={Link}
-                query={["читать далее"]}
-                styles={{ color: "peach.300", textDecoration: "underline" }}
-              >
-                читать далее
-              </Highlight>
-            </NextLink>
-          </Text>
+    <>
+      <UniversalSeo seo={seo} />
+      <BoxWrapper>
+        <CustomHeader text={`Описание`} Icon={IoMdInformationCircle} />
+        <Divider my="4" />
+        <Box px="2" color="bg.400">
+          {article?.text && (
+            <TextToHTML
+              text={article.text}
+              components={{
+                p: ({ children }) => (
+                  <Text color="bg.300" px="2" my="2">
+                    {children}
+                  </Text>
+                ),
+              }}
+            />
+          )}
         </Box>
-
-        <CustomImage img={article.preview} w="200px" />
-      </HStack>
-    </Box3D>
+      </BoxWrapper>
+    </>
   );
 }
