@@ -15,6 +15,7 @@ import {
 import { IDirText } from "../types/exchange";
 import { IExchangerReview } from "../types/exchanger";
 import { locale } from "../services/utils";
+import { maskReviewList } from "../services/maskIP";
 
 export const getStaticProps = async () => {
   try {
@@ -46,6 +47,8 @@ export const getStaticProps = async () => {
       canonicalSlug: "",
     };
 
+    const maskedReviews = maskReviewList(reviews as IExchangerReview[]) || [];
+
     return {
       props: {
         seo: seo || nullSeo,
@@ -53,7 +56,7 @@ export const getStaticProps = async () => {
         popularRates: popularRates || null,
         mainTexts: (mainTexts || []) as IMainText[],
         rootText: (rootText || null) as IDirText | null,
-        reviews: (reviews || []) as IExchangerReview[],
+        reviews: maskedReviews as IExchangerReview[],
         locale,
         ...(await serverSideTranslations(locale, ["main"])),
       },

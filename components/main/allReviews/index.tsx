@@ -1,6 +1,6 @@
 import { Box, Button, Divider, HStack, VStack } from "@chakra-ui/react";
 import React, { useEffect, useMemo, useRef } from "react";
-import ExchangerRootReview from "../../exchangers/exchanger/reviews/ExchangerRootReview";
+import { ReviewCompactCard } from "../../shared/ReviewCompactCard";
 import { IExchangerReview } from "../../../types/exchanger";
 import ErrorWrapper from "../../shared/ErrorWrapper";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
@@ -105,25 +105,25 @@ const AllReviews = ({ reviews }: { reviews?: IExchangerReview[] | null }) => {
                 sx={{
                   "& > *": { flex: "0 0 auto" },
                   "&::-webkit-scrollbar": { display: "none" },
-                scrollbarWidth: "none",
-              }}
-            >
-              <HorizontalShader direction="right" no_contrast={false} />
-              <Box w="10" />
-              {normalizedReviews.map((review) => (
-                <Box
-                  key={review.id}
-                  flex="0 0 auto"
-                  minW={"420px"}
-                  maxW={"420px"}
-                  h="100%"
-                  _hover={{ filter: "brightness(1.1)" }}
-                >
-                  <ExchangerRootReview
-                    review={review}
-                    slug={
+                  scrollbarWidth: "none",
+                }}
+              >
+                <HorizontalShader direction="right" no_contrast={false} />
+                <Box w="10" />
+                {normalizedReviews.map((review) => (
+                  <Box
+                    key={review.id}
+                    flex="0 0 auto"
+                    minW={"420px"}
+                    maxW={"420px"}
+                    h="100%"
+                    _hover={{ filter: "brightness(1.1)" }}
+                  >
+                    <ReviewCompactCard
+                      review={review}
+                      href={
                         review?.exchanger?.name
-                          ? review?.exchanger?.name.toLowerCase()
+                          ? `/${review?.exchanger?.name.toLowerCase()}`
                           : undefined
                       }
                     />

@@ -5,16 +5,10 @@ import {
   Divider,
   HStack,
   Tag,
-  useColorModeValue,
-  VStack,
-  Text,
-  Icon,
-  Grid,
-  Button,
   Flex,
   Wrap,
-  Center,
   Highlight,
+  Icon,
 } from "@chakra-ui/react";
 import ExchangerReply from "./ExchangerReply";
 import { IExchangerReview } from "../../../../types/exchanger";
@@ -26,15 +20,14 @@ import {
   MdSentimentSatisfiedAlt,
   MdSentimentVeryDissatisfied,
 } from "react-icons/md";
-import {
-  BoxWrapper,
-  ReviewBorder,
-  FormatedDate,
-} from "../../../shared/BoxWrapper";
+import { ReviewBorder, FormatedDate } from "../../../shared/BoxWrapper";
 import { useAppSelector } from "../../../../redux/hooks";
-import { maskIP } from "../../../../pages/exchangers/[slug]";
-import { LinkWrapper } from "../../../exchange/pmLayout/LinkWrapper";
+import { maskIP } from "../../../../services/maskIP";
 import CustomImage from "../../../shared/CustomImage";
+import {
+  ReviewCardWrapper,
+  useReviewCardMeta,
+} from "../../../shared/ReviewCardWrapper";
 
 export default function ExchangerRootReview({
   review,
@@ -43,49 +36,13 @@ export default function ExchangerRootReview({
   review: IExchangerReview;
   slug?: string;
 }) {
+  const meta = useReviewCardMeta(review);
   const userIP = useAppSelector((state) => maskIP(state.main.fingerprint?.ip));
-  const textIsLink = /^(https?:\/\/|www\.)[^\s]+$/i.test(review?.text || "");
+  const shouldEqualizeHeight = Boolean(slug);
 
   if (!review) return <></>;
-  const {
-    name,
-    location,
-    text,
-    type,
-    userAgent,
-    review_replies,
-    updatedAt,
-    isDispute,
-  } = review;
-
-  const defaultAmbientColor = useColorModeValue(
-    "rgba(143,92,292,0.2)",
-    "rgba(128, 125, 121, 0.25)"
-  );
-  const positiveAmbientColor = useColorModeValue(
-    "rgba(29, 179, 37, 0.18)",
-    "rgba(15, 66, 39, 0.39)"
-  );
-  const negativeAmbientColor = useColorModeValue(
-    "rgba(255, 0, 25, 0.32)",
-    "rgba(114, 13, 13, 0.3)"
-  );
-  const ambientColor = useMemo(() => {
-    if (type === "positive") return positiveAmbientColor;
-    if (type === "negative") return negativeAmbientColor;
-    return defaultAmbientColor;
-  }, [type, defaultAmbientColor, positiveAmbientColor, negativeAmbientColor]);
-
-  const avatarSeed = useMemo(
-    () =>
-      review.fingerprint ||
-      name ||
-      review.id ||
-      Math.random().toString(36).slice(2),
-    [review.fingerprint, name, review.id]
-  );
-
-  const displayName = name?.trim() || "Аноним";
+  const { location, text, type, userAgent, review_replies, updatedAt, isDispute } =
+    review;
 
   const tag = useMemo(() => {
     if (isDispute === false) {
@@ -135,34 +92,32 @@ export default function ExchangerRootReview({
     );
   }, [location]);
 
+  const cardMinHeight = meta.textIsLink || slug ? "200px" : "unset";
+
   return (
-    <LinkWrapper
-      _blank={textIsLink}
-      exists={!!slug || textIsLink}
-      url={textIsLink ? review?.text || "#" : "/" + slug}
+    <ReviewCardWrapper
+      review={review}
+      meta={meta}
+      href={slug ? "/" + slug : undefined}
+      minHeight={cardMinHeight}
+      variant={slug ? "contrast" : "extra_contrast"}
+      equalizeHeight={shouldEqualizeHeight}
     >
-      <BoxWrapper
-        w="100%"
-        p="4"
-        my="6"
-        variant={slug ? "contrast" : "extra_contrast"}
-        position="relative"
-        overflow="hidden"
-        minH={textIsLink || slug ? "220px" : "unset"}
-        display="flex"
-        h="100%"
+      <ReviewBorder
+        h={shouldEqualizeHeight ? "100%" : undefined}
+        display={shouldEqualizeHeight ? "flex" : undefined}
+        flexDirection={shouldEqualizeHeight ? "column" : undefined}
+        flex={shouldEqualizeHeight ? "1" : undefined}
       >
-        <ReviewBorder display="flex" flexDirection="column" h="100%" gap="4">
           <Flex
             flexDir={{ base: "column", lg: slug ? "column" : "row" }}
             justifyContent="space-between"
             gap="4"
-            w="100%"
           >
             <HStack gap="4" alignItems="flex-start">
               <Box position="relative" w="30px" h="30px">
                 <Box borderRadius="full" overflow="hidden" w="30px" h="30px">
-                  <BoringAvatar size={30} name={avatarSeed} variant="marble" />
+                  <BoringAvatar size={30} name={meta.avatarSeed} variant="marble" />
                 </Box>
                 <Box
                   position="absolute"
@@ -203,7 +158,7 @@ export default function ExchangerRootReview({
                 variant="contrast"
                 mt={{ base: "1", lg: "0" }}
               >
-                {displayName}
+                {meta.displayName}
               </ResponsiveText>
 
               <Box
@@ -237,63 +192,42 @@ export default function ExchangerRootReview({
               </Box>
             </HStack>
           </Flex>
-          <Divider my="4" />
-          <Box h="100%" flex="1">
-            {review.screenshots && textIsLink && (
-              <CustomImage
-                h="90px"
-                w="auto"
-                img={review.screenshots[0]}
-                objectFit="contain"
-              />
-            )}
-            {!textIsLink && !!text && (
-              <Highlight
-                query={["читать далее"]}
-                styles={{ color: "peach.300", textDecoration: "underline" }}
-              >
-                {slug && text.length > 62
-                  ? `${text.slice(0, 62)}... читать далее`
-                  : text}
-              </Highlight>
-            )}
-          </Box>
-        </ReviewBorder>
-
-        {!slug &&
-          review_replies &&
-          review_replies.map((reply) => (
-            <ExchangerReply
-              key={reply.id}
-              canReply={review.ipAddress == userIP && reply.from !== "author"}
-              reply={reply}
-              displayName={displayName}
-              avatarSeed={avatarSeed}
-              exchangerName={review?.exchanger?.name}
-              exchangerLogo={review?.exchanger?.logo}
+        <Divider my="4" />
+        <Box h="100%" flex="1">
+          {review.screenshots && meta.textIsLink && (
+            <CustomImage
+              h="90px"
+              w="auto"
+              img={review.screenshots[0]}
+              objectFit="contain"
             />
-          ))}
+          )}
+          {!meta.textIsLink && !!text && (
+            <Highlight
+              query={["читать далее"]}
+              styles={{ color: "peach.300", textDecoration: "underline" }}
+            >
+              {slug && text.length > 62
+                ? `${text.slice(0, 62)}... читать далее`
+                : text}
+            </Highlight>
+          )}
+        </Box>
+      </ReviewBorder>
 
-        <Box
-          position="absolute"
-          top="0"
-          w="100%"
-          h="100%"
-          zIndex={0}
-          pointerEvents="none" // <-- lets all clicks/touches pass through
-          bgGradient={`radial-gradient(circle at 85% -10%, ${ambientColor} 0%, transparent 40%)`}
-        />
-        <Box
-          position="absolute"
-          bottom="0"
-          left="0"
-          w="100%"
-          h="100%"
-          zIndex={0}
-          pointerEvents="none" // <-- lets all clicks/touches pass through
-          bgGradient={`radial-gradient(circle at 5% 70%, ${ambientColor} 0%, transparent 40%)`}
-        />
-      </BoxWrapper>
-    </LinkWrapper>
+      {!slug &&
+        review_replies &&
+        review_replies.map((reply) => (
+          <ExchangerReply
+            key={reply.id}
+            canReply={review.ipAddress == userIP && reply.from !== "author"}
+            reply={reply}
+            displayName={meta.displayName}
+            avatarSeed={meta.avatarSeed}
+            exchangerName={review?.exchanger?.name}
+            exchangerLogo={review?.exchanger?.logo}
+          />
+        ))}
+    </ReviewCardWrapper>
   );
 }

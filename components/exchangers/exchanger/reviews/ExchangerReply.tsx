@@ -28,7 +28,7 @@ export default function ExchangerReply({
   const ReplyMonitoring = () => (
     <HStack gap="4" color="blue.500">
       <Box borderRadius="full" overflow="hidden" w="30px" h="30px">
-        <CustomImage img={null} />
+        <CustomImage img={null} w="auto" h="auto" />
       </Box>
       <ResponsiveText fontWeight="bold" variant="contrast">
         {`Команда ${process.env.NEXT_PUBLIC_NAME}`}
@@ -53,7 +53,7 @@ export default function ExchangerReply({
     <HStack gap="4" color="blue.500">
       <Box borderRadius="full" overflow="hidden" w="30px" h="30px">
         {exchangerLogo?.url ? (
-          <CustomImage img={exchangerLogo} />
+          <CustomImage img={exchangerLogo} w="auto" h="auto" />
         ) : (
           <BoringAvatar
             size={30}
