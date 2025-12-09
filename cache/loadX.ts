@@ -16,6 +16,7 @@ import {
   articlesQuery,
   FAQbyCategoryCodeQuery,
   FAQsQuery,
+  allReviewsQuery,
 } from "../services/queries";
 import { getPmsFromSelector } from "./helper";
 import { cachedFetch } from "./cache";
@@ -28,6 +29,7 @@ import { IArticle } from "../types/pages";
 import { IExchanger, IExchangerPreview } from "../types/exchanger";
 import { IMassDirTextId, IMassDirText, IMassRate } from "../types/mass";
 import { IFaqCategory } from "../types/faq";
+import { IExchangerReview } from "../types/exchanger";
 
 const locale = process.env.NEXT_PUBLIC_SITE_LANG || "ru";
 
@@ -210,6 +212,25 @@ export const loadFAQbyCategoryCode = (code: string) =>
       return res?.[0] || null;
     }
   );
+
+export const loadAllReviews = () =>
+  cachedFetch(`all_reviews_${locale}`, TTL.fast, async () => {
+    const res = (await cmsFetcher(allReviewsQuery, {
+      locale,
+    })) as unknown;
+
+    if (!res) return [];
+    if (Array.isArray(res)) return res as IExchangerReview[];
+    if (Array.isArray((res as any).reviews))
+      return (res as any).reviews as IExchangerReview[];
+    if (Array.isArray((res as any)?.reviews?.data)) {
+      return (res as any).reviews.data.map((item: any) => ({
+        id: item?.id?.toString?.() ?? "",
+        ...item?.attributes,
+      }));
+    }
+    return [];
+  });
 
 // export const loadDirsTexts = (locale: "en" | "ru") =>
 //   cachedFetch(

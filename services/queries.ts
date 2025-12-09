@@ -905,7 +905,7 @@ export const FAQbyCategoryCodeQuery = gql`
           code
           description
           color
-          x_faq {
+          x_faqs {
             data {
               id
               attributes {
@@ -939,7 +939,7 @@ export const FAQsQuery = gql`
           code
           description
           color
-          x_faq {
+          x_faqs {
             data {
               id
               attributes {

@@ -11,6 +11,6 @@ export interface IFaqCategory {
   code: string;
   description?: string;
   color?: string;
-  x_faq: IFaq[];
+  x_faqs: IFaq[];
   image?: IImage;
 }

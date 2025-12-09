@@ -14,6 +14,7 @@ import {
   Flex,
   Wrap,
   Center,
+  Highlight,
 } from "@chakra-ui/react";
 import ExchangerReply from "./ExchangerReply";
 import { IExchangerReview } from "../../../../types/exchanger";
@@ -147,13 +148,16 @@ export default function ExchangerRootReview({
         variant={slug ? "contrast" : "extra_contrast"}
         position="relative"
         overflow="hidden"
-        minH={textIsLink || slug ? "200px" : "unset"}
+        minH={textIsLink || slug ? "220px" : "unset"}
+        display="flex"
+        h="100%"
       >
-        <ReviewBorder>
+        <ReviewBorder display="flex" flexDirection="column" h="100%" gap="4">
           <Flex
             flexDir={{ base: "column", lg: slug ? "column" : "row" }}
             justifyContent="space-between"
             gap="4"
+            w="100%"
           >
             <HStack gap="4" alignItems="flex-start">
               <Box position="relative" w="30px" h="30px">
@@ -234,16 +238,26 @@ export default function ExchangerRootReview({
             </HStack>
           </Flex>
           <Divider my="4" />
-          {review.screenshots && textIsLink && (
-            <CustomImage h="60px" img={review.screenshots[0]} />
-          )}
-          {!textIsLink && !!text && (
-            <Text>
-              {slug
-                ? `${text.slice(0, 50)} ${text.length > 50 ? "..." : ""}`
-                : text}
-            </Text>
-          )}
+          <Box h="100%" flex="1">
+            {review.screenshots && textIsLink && (
+              <CustomImage
+                h="90px"
+                w="auto"
+                img={review.screenshots[0]}
+                objectFit="contain"
+              />
+            )}
+            {!textIsLink && !!text && (
+              <Highlight
+                query={["читать далее"]}
+                styles={{ color: "peach.300", textDecoration: "underline" }}
+              >
+                {slug && text.length > 62
+                  ? `${text.slice(0, 62)}... читать далее`
+                  : text}
+              </Highlight>
+            )}
+          </Box>
         </ReviewBorder>
 
         {!slug &&

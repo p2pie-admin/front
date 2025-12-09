@@ -28,17 +28,20 @@ import MassSelector from "../mass/massSelectorSwiper";
 import Advantages from "./advantages";
 import CustomTitle from "../shared/CustomTitle";
 import AllReviews from "./allReviews";
+import { IExchangerReview } from "../../types/exchanger";
 
 const MainPageContent = ({
   popularPms,
   popularRates,
   mainTexts,
   rootText,
+  reviews,
 }: {
   popularPms?: IPm[];
   popularRates?: IPopularDirRates;
   mainTexts?: IMainText[];
   rootText: IDirText;
+  reviews?: IExchangerReview[] | null;
 }) => {
   const { t } = useTranslation();
   const router = useRouter();
@@ -100,7 +103,7 @@ const MainPageContent = ({
 
       <MassSelector initialSlug={"true"} />
 
-      <AllReviews />
+      <AllReviews reviews={reviews} />
     </VStack>
   );
 };

@@ -10,18 +10,22 @@ import {
   loadRootText,
   loadPms,
   loadPopular,
+  loadAllReviews,
 } from "../cache/loadX";
 import { IDirText } from "../types/exchange";
+import { IExchangerReview } from "../types/exchanger";
 import { locale } from "../services/utils";
 
 export const getStaticProps = async () => {
   try {
-    const [mainTexts, rootText, popularRatesRaw, pmsRaw] = await Promise.all([
-      loadMainTexts(),
-      loadRootText(),
-      loadPopular(),
-      loadPms(),
-    ]);
+    const [mainTexts, rootText, popularRatesRaw, pmsRaw, reviews] =
+      await Promise.all([
+        loadMainTexts(),
+        loadRootText(),
+        loadPopular(),
+        loadPms(),
+        loadAllReviews(),
+      ]);
 
     const popularRates = popularRatesRaw as IPopularDirRates;
     const pms = pmsRaw || [];
@@ -49,6 +53,7 @@ export const getStaticProps = async () => {
         popularRates: popularRates || null,
         mainTexts: (mainTexts || []) as IMainText[],
         rootText: (rootText || null) as IDirText | null,
+        reviews: (reviews || []) as IExchangerReview[],
         locale,
         ...(await serverSideTranslations(locale, ["main"])),
       },
@@ -64,6 +69,7 @@ export const getStaticProps = async () => {
         popularRates: null,
         mainTexts: null,
         rootText: null,
+        reviews: null,
         locale,
         ...(await serverSideTranslations(locale, ["main"])),
       },

@@ -1,4 +1,4 @@
-import { Box, Divider, HStack, Icon } from "@chakra-ui/react";
+import { Box, Divider, HStack, Icon, BoxProps } from "@chakra-ui/react";
 import React from "react";
 import { IconType } from "react-icons";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
@@ -46,7 +46,10 @@ export function CustomHeader({
   );
 }
 
-export function ReviewBorder({ children }: { children: any }) {
+export function ReviewBorder({
+  children,
+  ...props
+}: { children: any } & BoxProps) {
   return (
     <Box
       position="relative"
@@ -56,6 +59,7 @@ export function ReviewBorder({ children }: { children: any }) {
       minW="50%"
       bgColor="bg.900"
       boxShadow="lg"
+      {...props}
     >
       {children}
     </Box>

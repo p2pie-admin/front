@@ -1,77 +1,28 @@
-import {
-  Box,
-  Button,
-  Divider,
-  HStack,
-  ScaleFade,
-  VStack,
-} from "@chakra-ui/react";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import useSWR from "swr";
+import { Box, Button, Divider, HStack, VStack } from "@chakra-ui/react";
+import React, { useEffect, useMemo, useRef } from "react";
 import ExchangerRootReview from "../../exchangers/exchanger/reviews/ExchangerRootReview";
 import { IExchangerReview } from "../../../types/exchanger";
 import ErrorWrapper from "../../shared/ErrorWrapper";
-import { initCMSFetcher } from "../../../services/fetchers";
-import { allReviewsQuery } from "../../../services/queries";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import CustomTitle from "../../shared/CustomTitle";
 import GeneralStats from "./GeneralStats";
 import TopButtons from "./TopButtons";
-import Shader from "../../shared/Shader";
+
 import HorizontalShader from "../../shared/HorizontalShader";
 
-const cmsFetcher = initCMSFetcher();
-
-const AllReviews = () => {
+const AllReviews = ({ reviews }: { reviews?: IExchangerReview[] | null }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
-  const [enabled, setEnabled] = useState(false);
   const hasInitialScroll = useRef(false);
 
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0]?.isIntersecting) {
-          setEnabled(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.25 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+  const normalizedReviews: IExchangerReview[] | null = useMemo(() => {
+    if (reviews === null) return [];
+    if (!reviews) return null;
+    return reviews;
+  }, [reviews]);
 
-  const { data, error } = useSWR<IExchangerReview[] | any>(
-    enabled ? allReviewsQuery : null,
-    cmsFetcher
-  );
-
-  const reviews: IExchangerReview[] | null = useMemo(() => {
-    if (data === null) return [];
-    if (!data) return null;
-    if (Array.isArray(data)) return data as IExchangerReview[];
-
-    // normalized shape: { reviews: [ {id, ...attrs} ] }
-    if (Array.isArray((data as any).reviews)) {
-      return (data as any).reviews as IExchangerReview[];
-    }
-
-    // raw GraphQL shape
-    if (data?.reviews?.data) {
-      return data.reviews.data.map((item: any) => ({
-        id: item?.id?.toString?.() ?? "",
-        ...item?.attributes,
-      }));
-    }
-
-    return [];
-  }, [data]);
-
-  const isLoading = enabled && data === undefined && !error;
-  const isError = !!error;
+  const isLoading = false;
+  const isError = false;
 
   const scrollByAmount = (dir: "left" | "right") => {
     const node = scrollRef.current;
@@ -82,7 +33,7 @@ const AllReviews = () => {
 
   useEffect(() => {
     if (!scrollRef.current) return;
-    if (!reviews || !reviews.length) return;
+    if (!normalizedReviews || !normalizedReviews.length) return;
     if (hasInitialScroll.current) return;
     hasInitialScroll.current = true;
     const node = scrollRef.current;
@@ -139,10 +90,9 @@ const AllReviews = () => {
         left="50%"
         right="50%"
         py="2"
-        minH="280px"
       >
         <ErrorWrapper isLoading={isLoading} isError={isError}>
-          {reviews && reviews.length > 0 ? (
+          {normalizedReviews && normalizedReviews.length > 0 ? (
             <VStack align="stretch" spacing="3" pos="relative">
               <HStack
                 ref={scrollRef}
@@ -155,35 +105,29 @@ const AllReviews = () => {
                 sx={{
                   "& > *": { flex: "0 0 auto" },
                   "&::-webkit-scrollbar": { display: "none" },
-                  scrollbarWidth: "none",
-                }}
-              >
-                <HorizontalShader direction="right" no_contrast={false} />
-                <Box w="10" />
-                {reviews.map((review, idx) => (
-                  <ScaleFade
-                    key={review.id}
-                    initialScale={0.5}
-                    in={true}
-                    delay={((idx + 15) * 60) / 1000}
-                  >
-                    <Box
-                      key={review.id}
-                      flex="0 0 auto"
-                      minW={"500px"}
-                      maxW={"500px"}
-                      _hover={{ filter: "brightness(1.1)" }}
-                    >
-                      <ExchangerRootReview
-                        review={review}
-                        slug={
-                          review?.exchanger?.name
-                            ? review?.exchanger?.name.toLowerCase()
-                            : undefined
-                        }
-                      />
-                    </Box>
-                  </ScaleFade>
+                scrollbarWidth: "none",
+              }}
+            >
+              <HorizontalShader direction="right" no_contrast={false} />
+              <Box w="10" />
+              {normalizedReviews.map((review) => (
+                <Box
+                  key={review.id}
+                  flex="0 0 auto"
+                  minW={"420px"}
+                  maxW={"420px"}
+                  h="100%"
+                  _hover={{ filter: "brightness(1.1)" }}
+                >
+                  <ExchangerRootReview
+                    review={review}
+                    slug={
+                        review?.exchanger?.name
+                          ? review?.exchanger?.name.toLowerCase()
+                          : undefined
+                      }
+                    />
+                  </Box>
                 ))}
                 <Box w="10" />
                 <HorizontalShader direction="left" no_contrast={false} />
