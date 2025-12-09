@@ -75,7 +75,8 @@ export const Swiper = (props: {
 
   const y = useMotionValue(0);
   const controls = useAnimation();
-  //const arrowControls = useAnimation();
+  const arrowControls = useAnimation();
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const getIndex = useCallback(() => {
     const index = Math.round(
@@ -179,10 +180,12 @@ export const Swiper = (props: {
       }
       if (isMobile || !mouseEnteredRef.current) return;
       if (!event.deltaY) return;
-      const normalized = Math.abs(event.deltaY);
-      const intensity = Math.min(5, Math.max(1, Math.round(normalized / 80)));
+      const magnitude = Math.min(
+        3,
+        Math.max(1, Math.round(Math.abs(event.deltaY) / 120))
+      );
       const direction = event.deltaY > 0 ? 1 : -1;
-      changeIndexByDelta(direction * intensity);
+      changeIndexByDelta(direction * magnitude);
       event.preventDefault();
     },
     [changeIndexByDelta, handleMouseEnter, isMobile]
@@ -218,57 +221,59 @@ export const Swiper = (props: {
 
   useEffect(() => {
     if (isMobile) return;
-    window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("keydown", handleKeyDown);
-
     return () => {
-      window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [handleWheel, handleKeyDown, isMobile]);
+  }, [handleKeyDown, isMobile]);
 
-  // useEffect(() => {
-  //   return () => {
-  //     mouseEnteredRef.current = false;
-  //     restoreBodyStyles();
-  //   };
-  // }, [restoreBodyStyles]);
+  useEffect(() => {
+    return () => {
+      mouseEnteredRef.current = false;
+      restoreBodyStyles();
+    };
+  }, [restoreBodyStyles]);
 
-  // const animateArrow = useCallback(
-  //   (direction: "up" | "down") => {
-  //     const keyframes =
-  //       direction === "up"
-  //         ? [225, 205, 235, 220, 225]
-  //         : [225, 245, 215, 230, 225];
+  const animateArrow = useCallback(
+    (direction: "up" | "down") => {
+      const keyframes =
+        direction === "up"
+          ? [225, 205, 235, 220, 225]
+          : [225, 245, 215, 230, 225];
 
-  //     arrowControls.start({
-  //       rotate: keyframes,
-  //       transition: {
-  //         duration: 0.5,
-  //         times: [0, 0.18, 0.42, 0.68, 1],
-  //         ease: "easeOut",
-  //       },
-  //     });
-  //   },
-  //   [arrowControls]
-  // );
+      arrowControls.start({
+        rotate: keyframes,
+        transition: {
+          duration: 0.5,
+          times: [0, 0.18, 0.42, 0.68, 1],
+          ease: "easeOut",
+        },
+      });
+    },
+    [arrowControls]
+  );
 
-  // useEffect(() => {
-  //   let lastIndex = getIndex();
-  //   const unsubscribe = y.onChange(() => {
-  //     const idx = getIndex();
-  //     if (idx !== lastIndex) {
-  //       animateArrow(idx < lastIndex ? "up" : "down");
-  //       lastIndex = idx;
-  //     }
-  //   });
-  //   return () => {
-  //     unsubscribe();
-  //   };
-  // }, [animateArrow, getIndex, y]);
+  useEffect(() => {
+    let lastIndex = getIndex();
+    const unsubscribe = y.onChange(() => {
+      const idx = getIndex();
+      if (idx !== lastIndex) {
+        animateArrow(idx < lastIndex ? "up" : "down");
+        lastIndex = idx;
+        requestAnimationFrame(() => setCurrentIndex(idx));
+      }
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, [animateArrow, getIndex, y]);
 
   const topLabelBaseTop = -itemHeight;
   const bottomLabelBaseTop = length * itemHeight;
+  const buffer = 2;
+  const virtualStart = Math.max(0, currentIndex - buffer);
+  const virtualEnd = Math.min(length, currentIndex + visibleItems + buffer);
+  const visibleRates = dirRates.slice(virtualStart, virtualEnd);
 
   return (
     <Grid
@@ -294,6 +299,7 @@ export const Swiper = (props: {
             ref={containerRef}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
+            onWheel={handleWheel as any}
           >
             <Shader direction="top" />
 
@@ -307,7 +313,6 @@ export const Swiper = (props: {
                   itemHeight * 3,
                 bottom: containerHeight / 2,
               }}
-              style={{ y, width: "100%" }}
               dragElastic={elastic}
               onDragEnd={(_: any, info: any) => {
                 const velocity = info.velocity.y;
@@ -330,17 +335,34 @@ export const Swiper = (props: {
                 }
               }}
               animate={controls}
+              style={{
+                y,
+                width: "100%",
+                height: `${length * itemHeight}px`,
+                position: "relative",
+              }}
             >
-              {dirRates.map((rate, index) => (
-                <Item
-                  key={"exchanger_" + rate.exchangerId}
-                  rate={rate}
-                  y={y}
-                  index={index}
-                  itemHeight={itemHeight}
-                  containerHeight={containerHeight}
-                />
-              ))}
+              {visibleRates.map((rate, index) => {
+                const realIndex = virtualStart + index;
+                const top = realIndex * itemHeight;
+                return (
+                  <Box
+                    key={"exchanger_" + rate.exchangerId}
+                    position="absolute"
+                    top={`${top}px`}
+                    left="0"
+                    right="0"
+                  >
+                    <Item
+                      rate={rate}
+                      y={y}
+                      index={realIndex}
+                      itemHeight={itemHeight}
+                      containerHeight={containerHeight}
+                    />
+                  </Box>
+                );
+              })}
             </motion.div>
 
             <MotionBox
@@ -380,7 +402,7 @@ export const Swiper = (props: {
             right="-2"
             top={`calc(${containerHeight / 2}px + 0.5rem)`}
             color={triangleColor}
-            //animate={arrowControls}
+            animate={arrowControls}
             initial={{ rotate: 225 }}
             // style={{ scaleX: 1.8 }}
           >
