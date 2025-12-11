@@ -1,12 +1,13 @@
 export const base = process.env.NEXT_PUBLIC_BASE;
+export const index = process.env.NEXT_PUBLIC_INDEX || "";
 
-export const converterLinkPROD = `https://converter2.${base}`;
-export const serverLinkPROD = `https://server2.${base}`;
-export const cmsLinkPROD = `https://cms2.${base}`;
+export const converterLinkPROD = `https://converter${index}.${base}`;
+export const serverLinkPROD = `https://server${index}.${base}`;
+export const cmsLinkPROD = `https://cms${index}.${base}`;
 
-export const converterLinkDEV = `https://converter2.${base}`;
-export const serverLinkDEV = `https://server2.${base}`;
-export const cmsLinkDEV = `https://cms2.${base}`;
+export const converterLinkDEV = `https://converter${index}.${base}`;
+export const serverLinkDEV = `https://server${index}.${base}`;
+export const cmsLinkDEV = `https://cms${index}.${base}`;
 
 const resolvedLocale =
   process.env.NEXT_PUBLIC_SITE_LANG?.toLowerCase() === "ru" ? "ru" : "en";
