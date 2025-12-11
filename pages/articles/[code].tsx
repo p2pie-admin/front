@@ -65,7 +65,7 @@ export async function getStaticProps({ params }: { params: { code: string } }) {
       canonicalSlug: `articles/${normalizedCode}`,
       updatedAt: article.updatedAt || new Date().toISOString(),
     } as ISEO;
-    console.log("ARTICLE", article);
+
     if (article?.text) {
       return {
         props: {

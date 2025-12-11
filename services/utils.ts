@@ -1,5 +1,6 @@
 export const base = process.env.NEXT_PUBLIC_BASE;
-export const index = process.env.NEXT_PUBLIC_INDEX || "";
+export const index =
+  process.env.NEXT_PUBLIC_INDEX == "0" ? "" : process.env.NEXT_PUBLIC_INDEX;
 
 export const converterLinkPROD = `https://converter${index}.${base}`;
 export const serverLinkPROD = `https://server${index}.${base}`;
