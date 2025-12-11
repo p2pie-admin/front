@@ -20,7 +20,7 @@ const buildSeo = (article: IArticle | null, locale: "en" | "ru"): ISEO => ({
       ? "Partnership terms, referral options and cooperation with the service."
       : "Партнерские условия, реферальная программа и варианты сотрудничества."),
   canonicalSlug: PAGE_CODE,
-  updatedAt: article?.updatedAt,
+  updatedAt: article?.updatedAt ?? null,
 });
 
 const emptyProps = async (locale: "en" | "ru") => ({

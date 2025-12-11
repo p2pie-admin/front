@@ -5,7 +5,7 @@ export const defaultConfig = {
     openGraph: {
       type: "website",
       locale: "en_US",
-      url: "https://p2pie.com/en",
+      url: "https://p2pie.com",
       site_name: "p2pie",
     },
     twitter: {
@@ -21,7 +21,7 @@ export const defaultConfig = {
     openGraph: {
       type: "website",
       locale: "ru_RU",
-      url: "https://p2pie.com/ru",
+      url: "https://p2pie.com",
       site_name: "p2pie",
     },
     twitter: {

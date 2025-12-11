@@ -24,7 +24,7 @@ const buildSeo = (article: IArticle | null, locale: "en" | "ru"): ISEO => ({
           process.env.NEXT_PUBLIC_NAME || ""
         }, нашей миссии, команде и принципах работы сервиса.`),
   canonicalSlug: PAGE_CODE,
-  updatedAt: article?.updatedAt,
+  updatedAt: article?.updatedAt ?? null,
 });
 
 const emptyProps = async (locale: "en" | "ru") => ({

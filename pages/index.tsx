@@ -28,12 +28,17 @@ export const getStaticProps = async () => {
         loadAllReviews(),
       ]);
 
-    const popularRates = popularRatesRaw as IPopularDirRates;
+    const popularRates =
+      (popularRatesRaw as IPopularDirRates | null) || null;
     const pms = pmsRaw || [];
-    const firstRate = Object.values(popularRates)[0];
+    const firstRate = popularRates
+      ? (Object.values(popularRates)[0] as IPopularDirRates[keyof IPopularDirRates])
+      : null;
     const popularPmCodes = [
-      ...Object.keys(popularRates ?? {}),
-      ...(firstRate?.buy?.map((i) => i.fiat) ?? []),
+      ...(popularRates ? Object.keys(popularRates) : []),
+      ...((firstRate?.buy ?? [])
+        .map((i) => i?.fiat)
+        .filter(Boolean) as string[]),
     ];
 
     const popularPms = pms?.filter((pm) =>

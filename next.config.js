@@ -6,6 +6,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 });
 
 const isDev = process.env.NODE_ENV === "development";
+const localePrefix = i18n?.defaultLocale;
 
 const cspHeader = `
   default-src 'self';
@@ -57,24 +58,30 @@ const nextConfig = {
     ],
   },
   async redirects() {
-    return [
+    const redirects = [
       {
         source: "/:path*/",
         destination: "/:path*",
         permanent: true,
       },
-      {
-        source: "/ru/:path*",
+    ];
+
+    if (localePrefix) {
+      redirects.push({
+        source: `/${localePrefix}/:path*`,
         destination: "/:path*",
         permanent: true,
-      },
-      {
-        source: "/:path*",
-        has: [{ type: "host", value: "www.p2pie.com" }],
-        destination: "https://p2pie.com/:path*",
-        permanent: true,
-      },
-    ];
+      });
+    }
+
+    redirects.push({
+      source: "/:path*",
+      has: [{ type: "host", value: "www.p2pie.com" }],
+      destination: "https://p2pie.com/:path*",
+      permanent: true,
+    });
+
+    return redirects;
   },
 };
 
