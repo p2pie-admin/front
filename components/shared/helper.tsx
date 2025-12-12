@@ -3,6 +3,7 @@ import ReactMarkdown, { Components } from "react-markdown";
 import Link from "next/link";
 import { IPm } from "../../types/selector";
 import { capitalize } from "../main/side/selector/section/PmGroup/helper";
+import { format } from "../../redux/amountsHelper";
 
 /**
  * Markdown renderer with Next.js <Link> for internal navigation
@@ -135,3 +136,17 @@ export const isCashPm = (pm?: IPm | null) =>
   ((pm.section && pm.section.toLowerCase() === "cash") ||
     pm.code?.toUpperCase().includes("CASH") ||
     pm.en_name?.toLowerCase().includes("cash"));
+
+export const buildRateString = ({
+  course,
+  giveCur,
+  getCur,
+}: {
+  course: number;
+  giveCur: string;
+  getCur: string;
+}) => {
+  return course < 1
+    ? `1 ${giveCur} = ${format(1 / course, 1)} ${getCur}`
+    : `1 ${getCur} = ${format(course, 1)} ${giveCur}`;
+};

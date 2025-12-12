@@ -8,7 +8,7 @@ import { IArticle } from "../../../types/pages";
 import { TextToHTML } from "../../shared/helper";
 import UniversalSeo from "../../shared/UniversalSeo";
 import FoundError from "./FoundError";
-import OtherDirs from "./other";
+import OtherDirs from "./otherDirs";
 import TopImage from "./TopImage";
 import Stats from "./Stats";
 import { IPm } from "../../../types/selector";

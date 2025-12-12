@@ -29,7 +29,8 @@ export default function ArticlesList({
       ) : (
         <VStack gap="4">
           {articles.map((article) => {
-            return <ArticlePreview article={article} />;
+            const key = article.id || article.code;
+            return <ArticlePreview key={key} article={article} />;
           })}
         </VStack>
       )}

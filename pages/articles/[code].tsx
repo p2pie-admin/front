@@ -39,7 +39,6 @@ const ArticlePage = (props: {
   article: IArticle | null;
   otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] } | null;
 }) => {
-  console.log(props.article);
   if (props.article?.text)
     return <GeneralArticle article={props.article} seo={props.seo} />;
   return <Article {...props} />;

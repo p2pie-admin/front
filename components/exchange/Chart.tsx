@@ -14,6 +14,7 @@ import { useAppSelector } from "../../redux/hooks";
 import { Box3D } from "../../styles/theme/custom";
 import { format, localFormat, R } from "../../redux/amountsHelper";
 import { converterLinkPROD, converterLinkDEV } from "../../services/utils";
+import { buildRateString } from "../shared/helper";
 
 const Chart = memo(
   ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
@@ -125,7 +126,7 @@ const Chart = memo(
           right="4"
         >
           <Text fontSize="sm" color={color}>
-            {`1 ${getCur} ≈ ${format(currentRate, 3)} ${giveCur}`}
+            {buildRateString({ course: currentRate, giveCur, getCur })}
           </Text>
         </Box>
       </Box3D>

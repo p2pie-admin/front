@@ -10,6 +10,7 @@ import { useTranslation } from "next-i18next";
 import SimilarMass from "./SimilarMass";
 import { IMassDirTextId } from "../../types/mass";
 import renderSimilarMass from "./SimilarMass";
+import { buildRateString } from "../shared/helper";
 
 const MAX_TO_SHOW = 4;
 
@@ -53,10 +54,7 @@ const Similar = ({
       pair[1].currency.code.toUpperCase(),
     ];
     if (!course) return {};
-    const rate =
-      course < 1
-        ? `1 ${giveCur} = ${format(1 / course, 1)} ${getCur}`
-        : `1 ${getCur} = ${format(course, 1)} ${giveCur}`;
+    const rate = buildRateString({ course, giveCur, getCur });
 
     return {
       amountOfCourses,

@@ -30,7 +30,11 @@ export function FaqCategoriesList({
   const questionColor = useColorModeValue("bg.700", "bg.100");
 
   return (
-    <Grid gridTemplateColumns="1fr 1fr" gridGap={{ base: 2, md: 4 }} mt="2">
+    <Grid
+      gridTemplateColumns={categories.length % 2 ? "1fr" : "1fr 1fr"}
+      gridGap={{ base: 2, md: 4 }}
+      mt="2"
+    >
       {categories.map((category) => {
         const accent = category.color || accentFallback;
 
@@ -67,15 +71,13 @@ export function FaqCategoriesList({
                     <AccordionButton
                       px={{ base: 2, md: 3 }}
                       py="3"
+                      color="bg.200"
                       _expanded={{
-                        color: accent,
-                        fontWeight: "semibold",
+                        color: "peach.200",
                       }}
                     >
                       <Box flex="1" textAlign="left">
-                        <Text fontWeight="semibold" color={questionColor}>
-                          {faq.question}
-                        </Text>
+                        <Text fontWeight="semibold">{faq.question}</Text>
                       </Box>
                       <AccordionIcon />
                     </AccordionButton>
@@ -84,26 +86,7 @@ export function FaqCategoriesList({
                       pb={4}
                       color="bg.300"
                     >
-                      <TextToHTML
-                        text={faq.response}
-                        components={{
-                          p: ({ children }) => (
-                            <Text my="2" color="bg.200">
-                              {children}
-                            </Text>
-                          ),
-                          ul: ({ children }) => (
-                            <Box as="ul" pl="4" my="2">
-                              {children}
-                            </Box>
-                          ),
-                          li: ({ children }) => (
-                            <Box as="li" my="1">
-                              {children}
-                            </Box>
-                          ),
-                        }}
-                      />
+                      <Text>{faq.response}</Text>
                     </AccordionPanel>
                   </AccordionItem>
                 ))}

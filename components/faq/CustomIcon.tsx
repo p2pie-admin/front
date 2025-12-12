@@ -33,7 +33,7 @@ export default function CustomIcon({
       color={`white`}
     >
       {image ? (
-        <CustomImage w="40px" h="40px" img={image} customAlt={description} />
+        <CustomImage w="30px" h="30px" img={image} customAlt={description} />
       ) : (
         <IoInformation size="3rem" />
       )}

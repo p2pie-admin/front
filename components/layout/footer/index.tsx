@@ -16,7 +16,6 @@ const Footer = () => {
           <FooterLinks links={productLinks} title={"Продукт"} />
           <FooterLinks links={supportLinks} title={"Поддержка"} />
           <FooterLinks links={otherLinks} title={"Другое"} />
-          <FooterLinks links={communityLinks} title={"Сообщество"} />
         </Grid>
       </HStack>
     </Box>
@@ -26,29 +25,24 @@ const Footer = () => {
 export default Footer;
 
 const aboutLinks = [
-  { label: "О проекте", href: "#" },
-  { label: "Партнерство", href: "#" },
+  { label: "О проекте", href: "/about" },
+  { label: "Партнерство", href: "/partnership" },
 ];
 
 const productLinks = [
-  { label: "Обмен", href: "#" },
-  { label: "Продажа", href: "#" },
+  { label: "Покупка", href: "/buy/bitcoin" },
+  { label: "Продажа", href: "/sell/bitcoin" },
   { label: "Популярные", href: "#" },
 ];
 
 const supportLinks = [
-  { label: "FAQ", href: "#" },
-  { label: "Контакты", href: "#" },
-  { label: "Поддержка", href: process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT || "#" },
+  { label: "FAQ", href: "/faq" },
+  { label: "Контакты", href: "/contacts" },
+  { label: "Telegram", href: process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT || "#" },
 ];
 
 const otherLinks = [
   { label: "Карта обменников", href: "/map" },
   { label: "Рейтинг обменников", href: "/exchangers" },
-  { label: "Блог", href: "#" },
-];
-
-const communityLinks = [
-  { label: "Telegram", href: process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT || "#" },
-  { label: "Facebook", href: "#" },
+  { label: "Блог", href: "/articles" },
 ];

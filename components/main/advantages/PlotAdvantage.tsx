@@ -6,6 +6,7 @@ import { format } from "../../../redux/amountsHelper";
 import Dot from "../../exchangers/Dot";
 import { RiExchange2Fill } from "react-icons/ri";
 import AdvantageBottom from "./AdvantageBottom";
+import { buildRateString } from "../../shared/helper";
 const pulse = keyframes`
   0% { transform: scale(1); }
   50% { transform: scale(1.25); }
@@ -16,10 +17,10 @@ export default function PlotAdvantage({ hovering }: { hovering: boolean }) {
   const ccRates = useAppSelector((state) => state.main.ccRates);
   const [giveCur, getCur] = ["BTC", "руб."];
   const course = ccRates?.currentRate || 0;
-  const rate =
-    course < 1
-      ? `1 ${giveCur} ≈ ${format(1 / course, 1)} ${getCur}`
-      : ` ${format(course, 1)} ${giveCur} ≈ 1 ${getCur}`;
+  // const rate =
+  //   course < 1
+  //     ? `1 ${giveCur} ≈ ${format(1 / course, 1)} ${getCur}`
+  //     : ` ${format(course, 1)} ${giveCur} ≈ 1 ${getCur}`;
 
   return (
     <>
@@ -29,7 +30,7 @@ export default function PlotAdvantage({ hovering }: { hovering: boolean }) {
         </Text>
         <HStack gap="2" alignItems="center">
           <Text color="peach.200" fontSize="sm" mt="0.5">
-            ${rate}
+            {buildRateString({ course, giveCur, getCur })}
           </Text>
 
           <Box animation={`${pulse} 1s ease-in-out infinite`}>
