@@ -30,8 +30,8 @@ const aboutLinks = [
 ];
 
 const productLinks = [
-  { label: "Покупка", href: "/buy/bitcoin" },
-  { label: "Продажа", href: "/sell/bitcoin" },
+  { label: "Покупка", href: "/buy/btc-for-rub" },
+  { label: "Продажа", href: "/sell/btc-for-rub" },
   { label: "Популярные", href: "#" },
 ];
 
