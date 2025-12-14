@@ -11,7 +11,7 @@ export default function Monitorings({
 }: {
   monitorings?: IExchangerMonitoring[] | null;
 }) {
-  if (!monitorings) return <></>;
+  if (!monitorings?.length) return <></>;
   return (
     <BoxWrapper>
       <CustomHeader text={`Мониторинги`} Icon={IoMdCheckmarkCircle} />

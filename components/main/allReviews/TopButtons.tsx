@@ -7,7 +7,7 @@ export default function TopButtons() {
   return (
     <HStack>
       <LinkWrapper
-        url={"enrichedLink"}
+        url={"/exchangers"}
         exists={true}
         _blank
         //style={{ width: "100%" }}
@@ -21,21 +21,15 @@ export default function TopButtons() {
           Оставить отзыв на обменник
         </Button>
       </LinkWrapper>
-      <LinkWrapper
-        url={"enrichedLink"}
-        exists={true}
-        _blank
-        //style={{ width: "100%" }}
-      >
-        <Button
+
+      {/* <Button
           variant="primary"
           rightIcon={<TbPencilPlus size="1.2rem" />}
           w="100%"
           onClick={(e) => e.stopPropagation()}
         >
           Оставить отзыв на нас
-        </Button>
-      </LinkWrapper>
+        </Button> */}
     </HStack>
   );
 }

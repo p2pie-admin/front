@@ -23,23 +23,27 @@ export const MarkerTooltipContent = memo(
           admin_rating={admin_rating}
           logo={logo}
         />
-        <ResponsiveText fontSize="md" fontWeight="bold">
+        <ResponsiveText fontSize="md" fontWeight="bold" whiteSpace="unset">
           {office?.address}
         </ResponsiveText>
         <Divider />
-        <HStack alignItems="center">
-          <Box w="8px" h="8px" bg="green.200" borderRadius="50%" />
-          <ResponsiveText fontSize="sm" whiteSpace="unset">
-            {`Время работы: ${office?.working_time}`}
-          </ResponsiveText>
-        </HStack>
+        {office?.working_time && (
+          <HStack alignItems="center">
+            <Box w="8px" h="8px" bg="green.200" borderRadius="50%" />
+            <ResponsiveText fontSize="sm" whiteSpace="unset">
+              {`Время работы: ${office?.working_time}`}
+            </ResponsiveText>
+          </HStack>
+        )}
 
         <ResponsiveText fontSize="xs" whiteSpace="unset">
           {office?.description}
         </ResponsiveText>
-        <Center w="100%">
-          <CustomImage img={office?.image} w="auto" h="auto" />
-        </Center>
+        {office?.image && (
+          <Center w="100%">
+            <CustomImage img={office?.image} w="auto" h="auto" />
+          </Center>
+        )}
 
         {/* {contact && (
           <>

@@ -66,7 +66,10 @@ const CustomMarker = ({
         }}
       >
         <Box bottom="8" left="-4" color={pinColor} position="absolute">
-          <FaLocationPin size="3rem" />
+          <FaLocationPin
+            size="3rem"
+            style={{ filter: "drop-shadow(0 4px 10px rgba(204, 55, 55, 0.2))" }}
+          />
         </Box>
 
         <Center
@@ -80,7 +83,7 @@ const CustomMarker = ({
               <CustomImage img={exchanger.logo} w="30px" h="30px" />
             </Box>
           ) : (
-            <Box w="8px" h="8px" bg="bg.800" borderRadius="50%" mt="2.5" />
+            <Box w="4" h="4" bg="bg.800" borderRadius="50%" mb="2" />
           )}
         </Center>
       </Box>
