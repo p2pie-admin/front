@@ -148,5 +148,5 @@ export const buildRateString = ({
 }) => {
   return course < 1
     ? `1 ${giveCur} = ${format(1 / course, 1)} ${getCur}`
-    : `1 ${getCur} = ${format(course, 1)} ${giveCur}`;
+    : `${format(course, 1)} ${giveCur} = 1 ${getCur}`;
 };

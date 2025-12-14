@@ -2,6 +2,7 @@ import { Box, Button, Divider, HStack, VStack } from "@chakra-ui/react";
 import React, { useEffect, useMemo, useRef } from "react";
 import { ReviewCompactCard } from "../../shared/ReviewCompactCard";
 import { IExchangerReview } from "../../../types/exchanger";
+import { exchangerNameToSlug } from "../../exchangers/helper";
 import ErrorWrapper from "../../shared/ErrorWrapper";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import CustomTitle from "../../shared/CustomTitle";
@@ -123,7 +124,9 @@ const AllReviews = ({ reviews }: { reviews?: IExchangerReview[] | null }) => {
                       review={review}
                       href={
                         review?.exchanger?.name
-                          ? `/${review?.exchanger?.name.toLowerCase()}`
+                          ? `/exchangers/${exchangerNameToSlug(
+                              review.exchanger.name
+                            )}`
                           : undefined
                       }
                     />

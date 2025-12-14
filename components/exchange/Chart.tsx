@@ -126,7 +126,11 @@ const Chart = memo(
           right="4"
         >
           <Text fontSize="sm" color={color}>
-            {buildRateString({ course: currentRate, giveCur, getCur })}
+            {buildRateString({
+              course: currentRate,
+              giveCur,
+              getCur,
+            })}
           </Text>
         </Box>
       </Box3D>

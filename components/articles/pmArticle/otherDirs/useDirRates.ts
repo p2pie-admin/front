@@ -3,6 +3,7 @@ import useSWR from "swr";
 import { IPmPairs } from "../../../../types/exchange";
 import { initParserFetcher } from "../../../../services/fetchers";
 import { format } from "../../../../redux/amountsHelper";
+import { buildRateString } from "../../../shared/helper";
 
 type RateData = { amountOfCourses: number; rateText: string };
 
@@ -60,14 +61,9 @@ export const useDirRates = (pairs: IPmPairs[]) => {
       ];
       if (!giveCur || !getCur) return null;
 
-      const rate =
-        course < 1
-          ? `1 ${giveCur} ≈ ${format(1 / course, 1)} ${getCur}`
-          : ` ${format(course, 1)} ${giveCur} ≈ 1 ${getCur}`;
-
       return {
         amountOfCourses,
-        rateText: rate,
+        rateText: buildRateString({ course, giveCur, getCur }),
       } as RateData;
     },
     []

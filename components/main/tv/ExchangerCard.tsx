@@ -22,7 +22,7 @@ import TopParameter from "./TopParameter";
 import { useIsMobile } from "./hooks";
 import Rating from "./Rating";
 import CustomImage from "../../shared/CustomImage";
-import { secondsAgo } from "../../shared/helper";
+import { buildRateString, secondsAgo } from "../../shared/helper";
 
 import Link from "next/link";
 import ExchangerName from "../../shared/ExchangerNameRating";
@@ -147,9 +147,7 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
         </HStack>
         <Box mt="1">
           <ResponsiveText size="sm">
-            {`Курс: 1 ${bigCur} ≈ ${
-              course < 1 ? addSpaces(R(1 / course, 1)) : addSpaces(R(course, 1))
-            } ${smallCur}`}
+            {`Курс: ${buildRateString({ course, giveCur, getCur })}`}
           </ResponsiveText>
           <ResponsiveText size="xs" variant="no_contrast">
             {`Лимиты: ${localFormat(MIN, smallCur)} — ${localFormat(

@@ -15,7 +15,6 @@ const Footer = () => {
           <FooterLinks links={aboutLinks} title={"О нас"} />
           <FooterLinks links={productLinks} title={"Продукт"} />
           <FooterLinks links={supportLinks} title={"Поддержка"} />
-          <FooterLinks links={otherLinks} title={"Другое"} />
         </Grid>
       </HStack>
     </Box>
@@ -27,22 +26,17 @@ export default Footer;
 const aboutLinks = [
   { label: "О проекте", href: "/about" },
   { label: "Партнерство", href: "/partnership" },
+  { label: "Блог", href: "/articles" },
 ];
 
 const productLinks = [
-  { label: "Покупка", href: "/buy/btc-for-rub" },
-  { label: "Продажа", href: "/sell/btc-for-rub" },
-  { label: "Популярные", href: "#" },
+  { label: "Таблица курсов", href: "/buy/btc-for-rub" },
+  { label: "Карта обменников", href: "/map" },
+  { label: "Список обменников", href: "/exchangers" },
 ];
 
 const supportLinks = [
   { label: "FAQ", href: "/faq" },
   { label: "Контакты", href: "/contacts" },
-  { label: "Telegram", href: process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT || "#" },
-];
-
-const otherLinks = [
-  { label: "Карта обменников", href: "/map" },
-  { label: "Рейтинг обменников", href: "/exchangers" },
-  { label: "Блог", href: "/articles" },
+  { label: "Телеграм", href: process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT || "#" },
 ];
