@@ -11,6 +11,8 @@ const EARTH_RADIUS_KM = 6371;
 
 const toRadians = (value: number) => (value * Math.PI) / 180;
 
+type LatLngLike = { lat: number; lng: number };
+
 const hasCoordinates = (
   coordinates?: number[]
 ): coordinates is [number, number] =>
@@ -46,6 +48,28 @@ const distanceBetween = (
 };
 
 const normalizeSlug = (value?: string | null) => (value || "").toLowerCase();
+
+export const isCloseByCoordinates = (
+  a?: LatLngLike | null,
+  b?: LatLngLike | null,
+  thresholdMeters = 100
+) => {
+  if (!a || !b) return false;
+  const { lat: lat1, lng: lng1 } = a;
+  const { lat: lat2, lng: lng2 } = b;
+
+  if (
+    !Number.isFinite(lat1) ||
+    !Number.isFinite(lng1) ||
+    !Number.isFinite(lat2) ||
+    !Number.isFinite(lng2)
+  ) {
+    return false;
+  }
+
+  const distanceKm = distanceBetween([lat1, lng1], [lat2, lng2]);
+  return distanceKm * 1000 <= thresholdMeters;
+};
 
 export const getClosestCitiesByCoordinates = ({
   city,

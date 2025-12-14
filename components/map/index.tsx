@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useMemo, useState } from "react";
 import { ICity } from "../../types/exchange";
-import { IExchanger } from "../../types/exchanger";
+import { IExchanger, IExchangerOffice } from "../../types/exchanger";
 import { createMapStyles } from "./styles";
 import CustomMarker from "./CustomMarker";
 import { useAppDispatch } from "../../redux/hooks";
@@ -27,7 +27,7 @@ import { IoMdInformationCircle } from "react-icons/io";
 import OfficeSearchInput from "./OfficeSearchInput";
 import { TbMapPinFilled } from "react-icons/tb";
 import ClosestCities from "./closest";
-import { ClosestCityMatch } from "./helper";
+import { ClosestCityMatch, isCloseByCoordinates } from "./helper";
 
 type CityMapViewProps = {
   city: ICity;
@@ -38,11 +38,17 @@ type CityMapViewProps = {
   closestCities: ClosestCityMatch[];
 };
 
-type MapMarker = {
+type MapMarkerEntry = {
   id: string;
   exchanger: IExchanger;
+  office: IExchangerOffice | null;
+  searchIndex: string;
+};
+
+type MapMarker = {
+  id: string;
   position: google.maps.LatLngLiteral;
-  officeName: string;
+  entries: MapMarkerEntry[];
   searchIndex: string;
 };
 
@@ -152,30 +158,56 @@ const CityMapView = ({
   };
 
   const markers = useMemo<MapMarker[]>(() => {
-    return exchangerList
-      .flatMap((exchanger) => {
-        const offices = Array.isArray(exchanger.offices)
-          ? exchanger.offices
-          : [];
+    const preparedEntries: Array<
+      MapMarkerEntry & { position: google.maps.LatLngLiteral }
+    > = [];
 
-        return offices
-          .map((office) => {
-            const position = parseCoordinates(office.coordinates);
-            if (!position) return null;
+    exchangerList.forEach((exchanger) => {
+      const offices = Array.isArray(exchanger.offices)
+        ? exchanger.offices
+        : [];
 
-            return {
-              id: `${exchanger.id}-${office.id}`,
-              exchanger,
-              position,
-              officeName: office.address || "",
-              searchIndex: `${exchanger.display_name || exchanger.name || ""} ${
-                office.address || ""
-              }`.toLowerCase(),
-            };
-          })
-          .filter((marker): marker is MapMarker => Boolean(marker));
-      })
-      .filter(Boolean);
+      offices.forEach((office) => {
+        const position = parseCoordinates(office.coordinates);
+        if (!position) return;
+
+        const searchIndex = `${exchanger.display_name || exchanger.name || ""} ${
+          office.address || ""
+        }`.toLowerCase();
+
+        preparedEntries.push({
+          id: `${exchanger.id}-${office.id}`,
+          exchanger,
+          office: office || null,
+          searchIndex,
+          position,
+        });
+      });
+    });
+
+    const result: MapMarker[] = [];
+
+    preparedEntries.forEach(({ position, ...entry }) => {
+      const existing = result.find((marker) =>
+        isCloseByCoordinates(marker.position, position)
+      );
+
+      if (existing) {
+        existing.entries.push(entry);
+        existing.searchIndex = `${existing.searchIndex} ${entry.searchIndex}`;
+      } else {
+        result.push({
+          id: `${position.lat.toFixed(6)}|${position.lng.toFixed(6)}|${
+            result.length
+          }`,
+          position,
+          entries: [entry],
+          searchIndex: entry.searchIndex,
+        });
+      }
+    });
+
+    return result;
   }, [exchangerList]);
 
   const [activeMarkerId, setActiveMarkerId] = useState<string | null>(null);
@@ -230,6 +262,7 @@ const CityMapView = ({
               center={center}
               mapContainerStyle={containerStyle}
               onClick={() => setActiveMarkerId(null)}
+              onDragStart={() => setActiveMarkerId(null)}
             >
               {markers.map((marker) => (
                 <OverlayView
@@ -243,7 +276,7 @@ const CityMapView = ({
                 >
                   <CustomMarker
                     id={marker.id}
-                    exchanger={marker.exchanger}
+                    entries={marker.entries}
                     highlighted={
                       highlightedIds.size > 0 && highlightedIds.has(marker.id)
                     }

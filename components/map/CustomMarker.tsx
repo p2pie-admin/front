@@ -1,13 +1,24 @@
-import { Tooltip, Box, Center } from "@chakra-ui/react";
-import React, { useState, memo } from "react";
+import {
+  Tooltip,
+  Box,
+  Center,
+  HStack,
+  IconButton,
+  Text,
+} from "@chakra-ui/react";
+import React, { useState, memo, useEffect, useRef } from "react";
 import { FaLocationPin } from "react-icons/fa6";
-import { IExchanger } from "../../types/exchanger";
+import { IExchanger, IExchangerOffice } from "../../types/exchanger";
 import { MarkerTooltipContent } from "./MarkerTooltipContent";
 import CustomImage from "../shared/CustomImage";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 type CustomMarkerProps = {
   id: string;
-  exchanger: IExchanger;
+  entries: {
+    exchanger: IExchanger;
+    office: IExchangerOffice | null;
+  }[];
   highlighted?: boolean;
   activeMarkerId?: string | null;
   setActiveMarkerId?: (id: string | null) => void;
@@ -15,77 +26,192 @@ type CustomMarkerProps = {
 
 const CustomMarker = ({
   id,
-  exchanger,
+  entries,
   highlighted = false,
   activeMarkerId,
   setActiveMarkerId,
 }: CustomMarkerProps) => {
+  const [currentEntryIndex, setCurrentEntryIndex] = useState(0);
   const [localActive, setLocalActive] = useState(false);
-  const [hovered, setHovered] = useState(false);
+  const [hoveredMarker, setHoveredMarker] = useState(false);
+  const [hoveredTooltip, setHoveredTooltip] = useState(false);
+  const closeTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    setCurrentEntryIndex(0);
+  }, [id, entries.length]);
+
+  if (!entries.length) return null;
+
+  const totalEntries = entries.length;
+  const currentEntry =
+    entries[Math.min(currentEntryIndex, totalEntries - 1)] || entries[0];
+  const primaryExchanger = entries[0].exchanger;
+
+  const clearCloseTimer = () => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+  };
+
+  const scheduleClose = () => {
+    clearCloseTimer();
+    closeTimerRef.current = setTimeout(() => {
+      if (setActiveMarkerId) setActiveMarkerId(null);
+      else setLocalActive(false);
+      setHoveredMarker(false);
+      setHoveredTooltip(false);
+    }, 300);
+  };
+
+  const openMarker = () => {
+    clearCloseTimer();
+    if (setActiveMarkerId) setActiveMarkerId(id);
+    else setLocalActive(true);
+    setHoveredMarker(true);
+  };
 
   const isActive =
     activeMarkerId !== undefined ? activeMarkerId === id : localActive;
-  const isOpen = isActive || hovered;
+  const isOpen = isActive || hoveredMarker || hoveredTooltip;
   const pinColor = highlighted ? "peach.300" : isOpen ? "red.300" : "red.400";
+  const hasMultipleEntries = totalEntries > 1;
+
+  const handleNavigate = (direction: "next" | "prev") => {
+    setCurrentEntryIndex((prev) => {
+      const delta = direction === "next" ? 1 : -1;
+      const nextIndex = prev + delta;
+
+      if (nextIndex < 0) return totalEntries - 1;
+      if (nextIndex >= totalEntries) return 0;
+
+      return nextIndex;
+    });
+  };
 
   return (
     <Tooltip
-      openDelay={500}
+      openDelay={100}
       placement="bottom-start"
       isOpen={isOpen}
       bgColor="bg.900"
       borderRadius="lg"
       dropShadow="lg"
-      label={<MarkerTooltipContent exchanger={exchanger} />}
+      pointerEvents="auto"
+      maxW="400px"
+      minW="400px"
+      label={
+        <Box
+          w="full"
+          pointerEvents="auto"
+          onMouseEnter={() => {
+            setHoveredTooltip(true);
+            clearCloseTimer();
+            if (setActiveMarkerId) setActiveMarkerId(id);
+            else setLocalActive(true);
+          }}
+          onMouseLeave={() => {
+            setHoveredTooltip(false);
+            if (!hoveredMarker) {
+              scheduleClose();
+            }
+          }}
+        >
+          {hasMultipleEntries && (
+            <HStack justifyContent="space-between" alignItems="center">
+              <Text fontSize="xs" color="bg.200">
+                {`Обменник ${currentEntryIndex + 1} из ${totalEntries}`}
+              </Text>
+              <HStack>
+                <IconButton
+                  aria-label="Previous exchanger"
+                  icon={<FiChevronLeft />}
+                  size="xs"
+                  variant="ghost"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    handleNavigate("prev");
+                  }}
+                />
+                <IconButton
+                  aria-label="Next exchanger"
+                  icon={<FiChevronRight />}
+                  size="xs"
+                  variant="ghost"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    handleNavigate("next");
+                  }}
+                />
+              </HStack>
+            </HStack>
+          )}
+          <MarkerTooltipContent
+            exchanger={currentEntry.exchanger}
+            office={currentEntry.office}
+          />
+        </Box>
+      }
     >
       <Box
         position="relative"
-        w="10"
-        h="10"
+        w="4"
+        h="4"
+        borderRadius="50%"
         p="1"
         cursor="pointer"
-        transition="transform .12s ease-in, filter .12s ease-in"
-        transform={highlighted ? "scale(1.1)" : "scale(1)"}
-        filter={
-          highlighted ? "drop-shadow(0 0 8px rgba(200, 144, 109, 0.8))" : "none"
-        }
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        onClick={(event) => {
-          event.stopPropagation();
-          const next = !isActive;
-          if (setActiveMarkerId) {
-            setActiveMarkerId(next ? id : null);
-          } else {
-            setLocalActive(next);
+        onMouseEnter={() => {
+          openMarker();
+        }}
+        onMouseLeave={() => {
+          setHoveredMarker(false);
+          if (!hoveredTooltip) {
+            scheduleClose();
           }
         }}
+        onClick={(event) => {
+          event.stopPropagation();
+          openMarker();
+        }}
         onBlur={() => {
-          if (setActiveMarkerId) setActiveMarkerId(null);
-          else setLocalActive(false);
+          if (!hoveredTooltip && !hoveredMarker) {
+            scheduleClose();
+          }
         }}
       >
-        <Box bottom="8" left="-4" color={pinColor} position="absolute">
+        <Box bottom="2" left="-4" color={pinColor} position="absolute">
           <FaLocationPin
             size="3rem"
-            style={{ filter: "drop-shadow(0 4px 10px rgba(204, 55, 55, 0.2))" }}
+            style={{ filter: "drop-shadow(0 4px 10px rgba(204, 55, 55, 0.4))" }}
           />
         </Box>
-
-        <Center
+        <Box
+          position="absolute"
+          w="4"
+          h="4"
+          bg="bg.800"
+          borderRadius="50%"
+          mb="2"
+          bottom="5"
+          right="0"
+        />
+        {/* <Center
           transform="translateX(-50%)"
           bottom="46px"
           left="20%"
           position="absolute"
         >
-          {exchanger.logo ? (
+          {primaryExchanger.logo ? (
             <Box borderRadius="50%" overflow="hidden">
-              <CustomImage img={exchanger.logo} w="30px" h="30px" />
+              <CustomImage img={primaryExchanger.logo} w="30px" h="30px" />
             </Box>
           ) : (
-            <Box w="4" h="4" bg="bg.800" borderRadius="50%" mb="2" />
+     
           )}
-        </Center>
+        </Center> */}
       </Box>
     </Tooltip>
   );
