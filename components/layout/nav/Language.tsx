@@ -1,20 +1,5 @@
-import { useRouter } from "next/router";
-import NavButton from "./NavButton";
-
-const Language = () => {
-  const router = useRouter();
-  const { pathname, asPath, query, locale } = router;
-  const changeLanguageHandler = () => {
-    router.push({ pathname, query }, asPath, {
-      locale: locale === "en" ? "ru" : "en",
-    });
-  };
-  return (
-    <NavButton
-      handleClick={changeLanguageHandler}
-      icon={locale === "en" ? "Ru" : "En"}
-    />
-  );
-};
+// Language switching is controlled globally via NEXT_PUBLIC_SITE_LANG.
+// Keep this component a no-op to avoid generating locale-prefixed links.
+const Language = () => null;
 
 export default Language;

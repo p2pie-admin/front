@@ -6,6 +6,7 @@ import { addArticleCrossLinking } from "../../components/articles/pmArticle/help
 import { IPm } from "../../types/selector";
 import { ISEO } from "../../types/general";
 import { nullSeo } from "../../components/shared/UniversalSeo";
+import { locale as siteLocale } from "../../services/utils";
 
 import { getSlugToCodes } from "../../cache/helper";
 import {
@@ -18,8 +19,6 @@ import {
 } from "../../cache/loadX";
 import { addPathsToSitemap } from "../../cache/cache";
 import GeneralArticle from "../../components/articles/generalArticle";
-
-const locale = (process.env.NEXT_PUBLIC_DEFAULT_LOCALE || "ru") as "en" | "ru";
 
 const emptyProps = async (locale: "en" | "ru") => ({
   props: {
@@ -54,7 +53,7 @@ export async function getStaticProps({ params }: { params: { code: string } }) {
       console.warn(
         `[getStaticProps] No article found for code: ${params.code}`
       );
-      return emptyProps(locale);
+      return emptyProps(siteLocale);
     }
     const normalizedCode = article?.code.toLowerCase();
 
@@ -70,8 +69,8 @@ export async function getStaticProps({ params }: { params: { code: string } }) {
         props: {
           seo: seo || nullSeo,
           article: article || null,
-          locale,
-          ...(await serverSideTranslations(locale, ["main"])),
+          locale: siteLocale,
+          ...(await serverSideTranslations(siteLocale, ["main"])),
         },
         revalidate: TTL.slow,
       };
@@ -89,7 +88,7 @@ export async function getStaticProps({ params }: { params: { code: string } }) {
       console.warn(
         `[getStaticProps] No pms or slugToCodes found for code: ${params.code}`
       );
-      return emptyProps(locale);
+      return emptyProps(siteLocale);
     }
 
     const articlePms = pms.filter(
@@ -134,14 +133,14 @@ export async function getStaticProps({ params }: { params: { code: string } }) {
         pm: articlePms[0] || null,
         article: linkedArticle || null,
         otherDirs: otherDirs || null,
-        locale,
-        ...(await serverSideTranslations(locale, ["main"])),
+        locale: siteLocale,
+        ...(await serverSideTranslations(siteLocale, ["main"])),
       },
       revalidate: TTL.slow,
     };
   } catch (e) {
     console.error("[getStaticProps] Error:", e);
-    return await emptyProps(locale);
+    return await emptyProps(siteLocale);
   }
 }
 
@@ -149,13 +148,12 @@ export async function getStaticProps({ params }: { params: { code: string } }) {
 
 export async function getStaticPaths() {
   try {
-    const paths: { params: { code: string }; locale: "en" | "ru" }[] = [];
+    const paths: { params: { code: string } }[] = [];
     const articleCodes = (await loadArticleCodes()) as string[];
 
     articleCodes.forEach((code) => {
       paths.push({
         params: { code: code.toLowerCase() },
-        locale,
       });
     });
 

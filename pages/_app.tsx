@@ -15,6 +15,7 @@ import "../i18n"; //
 import { useEffect, useRef } from "react";
 import { useAppDispatch } from "../redux/hooks";
 import { setLoadingStatus } from "../redux/mainReducer";
+import { locale as siteLocale } from "../services/utils";
 
 const RouteLoadingHandler = () => {
   const router = useRouter();
@@ -59,8 +60,7 @@ const RouteLoadingHandler = () => {
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const { locale } = useRouter() as { locale: "en" | "ru" };
-  const seoConfig = defaultConfig[locale || "ru"];
+  const seoConfig = defaultConfig[siteLocale || "ru"];
 
   return (
     <>

@@ -1,12 +1,13 @@
 import { useRouter } from "next/router";
 import { capitalize } from "../main/side/selector/section/PmGroup/helper";
-import { mylog } from "../../services/utils";
+import { locale as siteLocale, mylog } from "../../services/utils";
 import { ICity, IDirText, ISeoData } from "../../types/exchange";
 import { IPm } from "../../types/selector";
 import { loadDirText } from "../../cache/loadX";
 import { curNames } from "../../redux/amountsHelper";
 import { ISEO } from "../../types/general";
-const locale = (process.env.NEXT_PUBLIC_DEFAULT_LOCALE || "ru") as "en" | "ru";
+
+const locale = siteLocale;
 
 export const generateExchangeH1 = (
   givePm: IPm,
