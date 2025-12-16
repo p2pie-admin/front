@@ -17,7 +17,15 @@ const UniversalSeo = ({ seo }: { seo: ISEO }) => {
     updatedAt = new Date().toISOString(),
     breadcrumbs,
   } = seo;
-  const fullCanonicalUrl = `https://${process.env.NEXT_PUBLIC_NAME}.com/${canonicalSlug}`;
+
+  const normalizedCanonical = canonicalSlug
+    ?.replace(/^\/+/, "") // drop any leading slash
+    ?.replace(/^(en|ru)\//i, ""); // ensure locale is never part of the path
+
+  const fullCanonicalUrl =
+    normalizedCanonical && normalizedCanonical.length > 0
+      ? `https://${process.env.NEXT_PUBLIC_NAME}.com/${normalizedCanonical}`
+      : `https://${process.env.NEXT_PUBLIC_NAME}.com/`;
   const ogType = updatedAt ? "article" : "website";
 
   const openGraph = {

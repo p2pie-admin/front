@@ -8,24 +8,24 @@ import { IArticle } from "../../types/pages";
 
 const PAGE_CODE = "about";
 
-const buildSeo = (article: IArticle | null, locale: "en" | "ru"): ISEO => ({
-  title:
-    article?.seo_title ||
-    (locale === "en"
-      ? `About ${process.env.NEXT_PUBLIC_NAME || ""}`
-      : `О проекте ${process.env.NEXT_PUBLIC_NAME || ""}`),
-  description:
-    article?.seo_description ||
-    (locale === "en"
-      ? `Learn about ${
-          process.env.NEXT_PUBLIC_NAME || ""
-        }, mission, team and how the service works.`
-      : `Подробнее о ${
-          process.env.NEXT_PUBLIC_NAME || ""
-        }, нашей миссии, команде и принципах работы сервиса.`),
-  canonicalSlug: PAGE_CODE,
-  updatedAt: article?.updatedAt ?? null,
-});
+const buildSeo = (article: IArticle | null, locale: "en" | "ru"): ISEO => {
+  const brand = process.env.NEXT_PUBLIC_NAME || "p2pie";
+
+  return {
+    title:
+      article?.seo_title ||
+      (locale === "en"
+        ? `About ${brand} — mission, values, team`
+        : `О проекте ${brand} — миссия, ценности, команда`),
+    description:
+      article?.seo_description ||
+      (locale === "en"
+        ? `${brand} helps compare crypto, cash and banking exchange offers worldwide. Learn who we are, why we built the service, and how we keep rates transparent.`
+        : `${brand} помогает сравнивать обменные предложения криптовалют, наличных и банков по всему миру. Узнайте, кто мы, зачем создали сервис и как обеспечиваем прозрачность курсов.`),
+    canonicalSlug: PAGE_CODE,
+    updatedAt: article?.updatedAt ?? null,
+  };
+};
 
 const emptyProps = async (locale: "en" | "ru") => ({
   props: {

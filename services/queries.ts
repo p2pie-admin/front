@@ -1,3 +1,4 @@
+import { Image } from "@chakra-ui/react";
 import { gql } from "graphql-request";
 
 //reusable not to make a mistake
@@ -573,7 +574,7 @@ export const articlesQuery = gql`
     articles(
       locale: $locale
       pagination: { start: 0, limit: 1200 }
-      filters: { text: { notNull: true } }
+      filters: { text: { notNull: true }, preview: { id: { notNull: true } } }
     ) {
       data {
         id

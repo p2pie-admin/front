@@ -5,14 +5,21 @@ import { loadFAQs, TTL } from "../../cache/loadX";
 import { ISEO } from "../../types/general";
 import { IFaqCategory } from "../../types/faq";
 
-const buildSeo = (locale: "en" | "ru"): ISEO => ({
-  title: locale === "en" ? "FAQ" : "FAQ / Вопросы и ответы",
-  description:
-    locale === "en"
-      ? "Answers to the most frequent questions about exchanges and P2P deals."
-      : "Ответы на популярные вопросы о сервисе, обменах и P2P-сделках.",
-  canonicalSlug: "faq",
-});
+const buildSeo = (locale: "en" | "ru"): ISEO => {
+  const brand = process.env.NEXT_PUBLIC_NAME || "p2pie";
+
+  return {
+    title:
+      locale === "en"
+        ? `FAQ — how ${brand} works`
+        : `FAQ — ответы на вопросы о ${brand}`,
+    description:
+      locale === "en"
+        ? `Quick answers on using ${brand}: finding best exchange rates, understanding safety, fees, payments, and resolving common issues.`
+        : `Краткие ответы о ${brand}: как находить лучшие курсы обмена, безопасность сделок, комиссии, способы оплаты и решение типовых вопросов.`,
+    canonicalSlug: "faq",
+  };
+};
 
 const emptyProps = async (locale: "en" | "ru") => ({
   props: {

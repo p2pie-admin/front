@@ -38,10 +38,51 @@ export default function MyDocument() {
           name="keywords"
           content="обмен, наличные, крипта, биткойн, криптовалюта, п2п, обменять, p2p, exchange, bitcoin, crypto, monitoring, rate"
         /> */}
+
+        {/* Yandex Metrika */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(m,e,t,r,i,k,a){
+                  m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+                  m[i].l=1*new Date();
+                  for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+                  k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+              })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=105843144', 'ym');
+
+              ym(105843144, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
+            `,
+          }}
+        />
+
+        {/* Google Analytics */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-YNSWLLG2L1"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-YNSWLLG2L1');
+            `,
+          }}
+        />
       </Head>
       <body>
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <Main />
+        <noscript>
+          <div>
+            <img
+              src="https://mc.yandex.ru/watch/105843144"
+              style={{ position: "absolute", left: "-9999px" }}
+              alt=""
+            />
+          </div>
+        </noscript>
         <NextScript />
         {/* <script src="//code.jivosite.com/widget/SuEyiBBWCg" async></script> */}
       </body>

@@ -1,4 +1,4 @@
-import { Box, Divider, Text } from "@chakra-ui/react";
+import { Box, Divider, Heading, Text } from "@chakra-ui/react";
 import React from "react";
 import { IArticle } from "../../../types/pages";
 import { ISEO } from "../../../types/general";
@@ -19,8 +19,15 @@ export default function GeneralArticle({
     <>
       <UniversalSeo seo={seo} />
       <BoxWrapper>
-        <CustomHeader text={`Описание`} Icon={IoMdInformationCircle} />
+        <Heading as="h1" fontSize={["xl", "2xl", "3xl"]}>
+          {article?.header}
+        </Heading>
+        <Text as="h2" fontSize="lg" fontWeight="light">
+          {article?.subheader}
+        </Text>
+
         <Divider my="4" />
+
         <Box px="2" color="bg.400">
           {article?.text && (
             <TextToHTML

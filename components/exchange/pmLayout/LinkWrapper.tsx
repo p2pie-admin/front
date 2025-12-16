@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ReactNode } from "react";
+import { MouseEvent, ReactNode } from "react";
 
 export const LinkWrapper = ({
   url,
@@ -34,14 +34,25 @@ export const LinkWrapper = ({
   };
 
   const href = normalizeHref(url);
+  const isExternal =
+    !!href && /^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(href) && !href.startsWith("/");
+  const relayHref = _blank && isExternal ? "/v" : href;
+
+  const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    if (_blank && isExternal && href) {
+      e.preventDefault();
+      window.open(href, "_blank", "noopener,noreferrer");
+    }
+  };
 
   if (exists)
     return (
       <Link
-        href={href}
+        href={relayHref}
+        onClick={handleClick}
         passHref
         target={_blank ? "_blank" : undefined}
-        rel={_blank ? "noopener noreferrer" : undefined}
+        rel={_blank ? "nofollow noopener noreferrer" : undefined}
         className={className}
         style={style}
       >

@@ -8,22 +8,24 @@ import { IArticle } from "../../types/pages";
 
 const PAGE_CODE = "contacts";
 
-const buildSeo = (article: IArticle | null, locale: "en" | "ru"): ISEO => ({
-  title:
-    article?.seo_title ||
-    (locale === "en" ? "Contacts" : "Контакты и поддержка"),
-  description:
-    article?.seo_description ||
-    (locale === "en"
-      ? `How to reach the ${
-          process.env.NEXT_PUBLIC_NAME || ""
-        } team and get support.`
-      : `Как связаться с командой ${
-          process.env.NEXT_PUBLIC_NAME || ""
-        } и получить поддержку.`),
-  canonicalSlug: PAGE_CODE,
-  updatedAt: article?.updatedAt ?? null,
-});
+const buildSeo = (article: IArticle | null, locale: "en" | "ru"): ISEO => {
+  const brand = process.env.NEXT_PUBLIC_NAME || "p2pie";
+
+  return {
+    title:
+      article?.seo_title ||
+      (locale === "en"
+        ? `Contact ${brand} — support and feedback`
+        : `Связаться с ${brand} — поддержка и обратная связь`),
+    description:
+      article?.seo_description ||
+      (locale === "en"
+        ? `Get help from the ${brand} team: questions about rates, listing exchanges, partnerships, or reporting an issue.`
+        : `Поддержка команды ${brand}: вопросы о курсах, размещении обменников, партнёрстве или сообщение о проблеме.`),
+    canonicalSlug: PAGE_CODE,
+    updatedAt: article?.updatedAt ?? null,
+  };
+};
 
 const emptyProps = async (locale: "en" | "ru") => ({
   props: {

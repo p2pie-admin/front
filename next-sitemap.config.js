@@ -25,10 +25,27 @@ module.exports = {
   robotsTxtOptions: {
     policies: [
       {
+        userAgent: "Yandex",
+        allow: "/",
+        disallow: ["/cdn-cgi/"],
+      },
+      {
         userAgent: "*",
-        disallow: ["/"], // block everything
+        allow: "/",
       },
     ],
+    additionalSitemaps: ["https://p2pie.com/sitemap.xml"],
+    transformRobotsTxt: async () =>
+      [
+        "User-agent: Yandex",
+        "Clean-param: utm_medium&utm_source&utm_campaign&ybaip&ctime",
+        "Sitemap: https://p2pie.com/sitemap.xml",
+        "Disallow: /cdn-cgi/",
+        "",
+        "User-agent: *",
+        "Sitemap: https://p2pie.com/sitemap.xml",
+        "",
+      ].join("\n"),
   },
   exclude: ["/404"],
   // Collect extra paths from Redis

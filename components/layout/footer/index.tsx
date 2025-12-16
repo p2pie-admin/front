@@ -13,7 +13,7 @@ const Footer = () => {
           justifyContent="center"
         >
           <FooterLinks links={aboutLinks} title={"О нас"} />
-          <FooterLinks links={productLinks} title={"Продукт"} />
+          <FooterLinks links={productLinks} title={"Сервисы"} />
           <FooterLinks links={supportLinks} title={"Поддержка"} />
         </Grid>
       </HStack>
@@ -24,7 +24,7 @@ const Footer = () => {
 export default Footer;
 
 const aboutLinks = [
-  { label: "О проекте", href: "/about" },
+  { label: "О проекте", href: "/articles/about" },
   { label: "Партнерство", href: "/partnership" },
   { label: "Блог", href: "/articles" },
 ];
@@ -38,5 +38,8 @@ const productLinks = [
 const supportLinks = [
   { label: "FAQ", href: "/faq" },
   { label: "Контакты", href: "/contacts" },
-  { label: "Телеграм", href: process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT || "#" },
+  {
+    label: "Телеграм группа ",
+    href: process.env.NEXT_PUBLIC_TELEGRAM_CHAT || "#",
+  },
 ];
