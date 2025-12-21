@@ -23,6 +23,7 @@ import { ICity } from "../../types/exchange";
 import { useRouter } from "next/router";
 import Fingerprint from "fingerprinter-js";
 import Image from "next/image";
+import gridPattern from "../../public/grid.png";
 
 const Layout = ({ children }: { children: any }) => {
   // const maxW = useBreakpointValue({ base: "100%", lg: "980" });
@@ -107,10 +108,11 @@ const Layout = ({ children }: { children: any }) => {
         pointerEvents="none"
       >
         <Image
-          src="/grid.png"
+          src={gridPattern}
           alt="Grid background pattern"
           width={2000}
           height={420}
+          placeholder="blur"
           priority
           style={{ width: "100%", height: "auto" }}
         />

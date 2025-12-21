@@ -26,6 +26,8 @@ const Greeting = () => {
         alt={`${process.env.NEXT_PUBLIC_NAME} greetings`}
         src={greetings}
         width={300}
+        placeholder="blur"
+        priority
       />
       <CustomTitle
         as="h1"

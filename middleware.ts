@@ -9,8 +9,11 @@ export function middleware(req: NextRequest) {
   const isLocal =
     host.startsWith("localhost") || host.startsWith("127.0.0.1");
   const isInternalHost = host === "front" || host.startsWith("front:");
+  const isExpectedHost =
+    !!expectedHost &&
+    (host === expectedHost || host.startsWith(`${expectedHost}:`));
 
-  if (expectedHost && !isLocal && isInternalHost) {
+  if (expectedHost && !isLocal && (isInternalHost || isExpectedHost)) {
     const headers = new Headers(req.headers);
     headers.set("x-forwarded-host", expectedHost);
     headers.set("x-forwarded-proto", "https");

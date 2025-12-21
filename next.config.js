@@ -41,6 +41,7 @@ const nextConfig = {
     return [];
   },
   images: {
+    unoptimized: true,
     domains: [
       "localhost",
       "cms2.p2pie.help",
