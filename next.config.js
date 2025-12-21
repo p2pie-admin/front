@@ -25,6 +25,9 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  experimental: {
+    trustHostHeader: true,
+  },
   async headers() {
     // Only enable CSP in production
     if (!isDev) {
