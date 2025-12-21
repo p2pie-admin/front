@@ -574,7 +574,7 @@ export const articlesQuery = gql`
     articles(
       locale: $locale
       pagination: { start: 0, limit: 1200 }
-      filters: { text: { notNull: true } }
+      filters: { text: { notNull: true }, isBlog: { eq: true } }
     ) {
       data {
         id

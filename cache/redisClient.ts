@@ -2,13 +2,19 @@ import { Redis } from "@upstash/redis";
 
 const redisUrl = process.env.UPSTASH_REDIS_REST_URL;
 const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+const useRedis = String(process.env.USE_REDIS).toLowerCase() === "true";
 
 let redis: Redis | null = null;
 let redisDisabled = false;
 
 const logPrefix = "[upstash]";
 
-if (!redisUrl || !redisToken) {
+if (!useRedis) {
+  redisDisabled = true;
+  if (process.env.NODE_ENV !== "test") {
+    console.warn(`${logPrefix} Redis disabled via USE_REDIS.`);
+  }
+} else if (!redisUrl || !redisToken) {
   redisDisabled = true;
   if (process.env.NODE_ENV !== "test") {
     console.warn(

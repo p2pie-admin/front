@@ -3,6 +3,12 @@
 const { Redis } = require("@upstash/redis");
 require("dotenv").config(); // load env vars
 
+const useRedis = String(process.env.USE_REDIS).toLowerCase() === "true";
+if (!useRedis) {
+  console.log("ℹ️ USE_REDIS is false. Skipping Redis cleanup.");
+  process.exit(0);
+}
+
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
   token: process.env.UPSTASH_REDIS_REST_TOKEN,
