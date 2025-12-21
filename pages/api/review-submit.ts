@@ -7,7 +7,7 @@ import {
   createPowPayload,
   hashMeetsDifficulty,
 } from "../../components/exchangers/exchanger/leaveReview/helper";
-import { serverLinkPROD } from "../../services/utils";
+import { internalServerLink, serverLinkPROD } from "../../services/utils";
 import { IReview } from "../../types/exchanger";
 
 type SubmitRequestBody = {
@@ -50,7 +50,8 @@ const enrichReviewWithServerData = (req: NextApiRequest, review: IReview) => {
 
 const getExternalUrl = () => {
   if (process.env.NODE_ENV === "production") {
-    return `${serverLinkPROD}${FORWARD_PATH}`;
+    const baseUrl = internalServerLink || serverLinkPROD;
+    return `${baseUrl}${FORWARD_PATH}`;
   }
   return `http://localhost:5000${FORWARD_PATH}`;
 };

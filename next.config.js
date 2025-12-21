@@ -41,8 +41,11 @@ const nextConfig = {
     domains: [
       "localhost",
       "cms2.p2pie.help",
+      "cms.p2pie.help",
       "converter2.p2pie.help",
+      "converter.p2pie.help",
       "server2.p2pie.help",
+      "server.p2pie.help",
       "cms2.1nginx.space",
       "converter2.1nginx.space",
       "server2.1nginx.space",

@@ -6,7 +6,11 @@ import {
   cmsLinkPROD,
   converterLinkDEV,
   converterLinkPROD,
+  internalCmsLink,
+  internalConverterLink,
+  internalServerLink,
   mylog,
+  resolveInternalUrl,
   serverLinkDEV,
   serverLinkPROD,
 } from "./utils";
@@ -36,8 +40,9 @@ const unwrap = (data: any) => {
 
 export const initCMSFetcher = () => {
   const env = process.env.NODE_ENV;
-  const url =
-    env === "production" ? cmsLinkPROD + "/graphql" : cmsLinkDEV + "/graphql";
+  const publicBase = env === "production" ? cmsLinkPROD : cmsLinkDEV;
+  const baseUrl = resolveInternalUrl(publicBase, internalCmsLink);
+  const url = baseUrl + "/graphql";
 
   const graphQLClient = new GraphQLClient(url || "", { timeout: 15000 });
 
@@ -54,7 +59,8 @@ export const initCMSFetcher = () => {
 
 export const initParserFetcher = () => {
   const env = process.env.NODE_ENV;
-  const url = env === "production" ? serverLinkPROD : serverLinkDEV;
+  const publicBase = env === "production" ? serverLinkPROD : serverLinkDEV;
+  const url = resolveInternalUrl(publicBase, internalServerLink);
 
   return async (slug: string) => {
     try {
@@ -69,7 +75,9 @@ export const initParserFetcher = () => {
 
 export const initCurrencyConverterFetcher = () => {
   const env = process.env.NODE_ENV;
-  const url = env === "production" ? converterLinkPROD : converterLinkDEV;
+  const publicBase =
+    env === "production" ? converterLinkPROD : converterLinkDEV;
+  const url = resolveInternalUrl(publicBase, internalConverterLink);
 
   return async (currenciesPair?: string) => {
     const fullUrl =

@@ -1,3 +1,7 @@
+const isServerSide = typeof window === "undefined";
+const useInternal =
+  String(process.env.USE_INTERNAL).toLowerCase() === "true";
+
 export const base = process.env.NEXT_PUBLIC_BASE;
 export const index =
   process.env.NEXT_PUBLIC_INDEX == "0" ? "" : process.env.NEXT_PUBLIC_INDEX;
@@ -9,6 +13,13 @@ export const cmsLinkPROD = `https://cms${index}.${base}`;
 export const converterLinkDEV = `https://converter${index}.${base}`;
 export const serverLinkDEV = `https://server${index}.${base}`;
 export const cmsLinkDEV = `https://cms${index}.${base}`;
+
+export const internalConverterLink = process.env.INTERNAL_CONVERTER_URL;
+export const internalServerLink = process.env.INTERNAL_SERVER_URL;
+export const internalCmsLink = process.env.INTERNAL_CMS_URL;
+
+export const resolveInternalUrl = (external: string, internal?: string) =>
+  isServerSide && useInternal && internal ? internal : external;
 
 const resolvedLocale =
   process.env.NEXT_PUBLIC_SITE_LANG?.toLowerCase() === "ru" ? "ru" : "en";

@@ -1,4 +1,11 @@
-.cache
-.tmp
-.vscode
 node_modules
+.next
+.git
+.gitignore
+.env
+.env.local
+.env.*
+Dockerfile
+README.md
+cache
+*.log
