@@ -6,6 +6,7 @@ import { mylog } from "../services/utils";
 
 import { IPossiblePmPair } from "../types/exchange";
 import { IExchanger } from "../types/exchanger";
+import { ParserCityDirections } from "../types/map";
 import { IMassDirTextId } from "../types/mass";
 import { ISelector, IPm, IPmGroup, ISection } from "../types/selector";
 
@@ -49,6 +50,57 @@ export const getCodesToSlug = (dirs: string[], pms: IPm[]) => {
     }),
     {} as Record<string, string>
   );
+};
+
+const MIN_RATE = Number(process.env.NEXT_PUBLIC_RATES_RENDER_MIN ?? 10);
+
+export const _convertCityDirectionData = (
+  cityDirectionsData: ParserCityDirections | null
+): Record<string, string[]> => {
+  if (!cityDirectionsData) return {};
+
+  const result: Record<string, string[]> = {};
+
+  for (const [cityName, rates] of Object.entries(cityDirectionsData)) {
+    for (const [direction, rateAmount] of Object.entries(rates)) {
+      if (rateAmount <= MIN_RATE) continue;
+
+      if (!result[direction]) {
+        result[direction] = [];
+      }
+
+      result[direction].push(cityName);
+    }
+  }
+
+  return result;
+};
+
+export const getCitySlugs = (
+  slugToCodes: Record<string, string>,
+  cityDirectionsData: ParserCityDirections | null
+): string[] => {
+  const dirToCities = _convertCityDirectionData(cityDirectionsData);
+  const normalizeCitySlug = (value: string) =>
+    value.trim().toLowerCase().replace(/\s+/g, "-");
+  const collectedSlugs: string[] = [];
+  const seen = new Set<string>();
+  Object.entries(slugToCodes).forEach(([slug, dir]) => {
+    const isCash =
+      (slug && slug.startsWith("cash-")) || slug.includes("-cash-");
+    if (!isCash || !dirToCities[dir]) return;
+
+    const newSlugs = dirToCities[dir]
+      .map((city) => normalizeCitySlug(city))
+      .filter(Boolean)
+      .map((city) => `${slug}-in-${city}`);
+    for (const newSlug of newSlugs) {
+      if (seen.has(newSlug)) continue;
+      seen.add(newSlug);
+      collectedSlugs.push(newSlug);
+    }
+  });
+  return collectedSlugs;
 };
 
 // export const mergeExchangers = (

@@ -5,7 +5,7 @@ import Exchange from "../components/exchange";
 import { ICity, IDirText, IPmData } from "../types/exchange";
 import { ISEO } from "../types/general";
 import { nullSeo } from "../components/shared/UniversalSeo";
-import { getSlugToCodes } from "../cache/helper";
+import { getCitySlugs, getSlugToCodes } from "../cache/helper";
 import {
   loadPms,
   loadPossibleDirs,
@@ -24,6 +24,8 @@ import {
 } from "../components/exchange/exchangeHelper";
 import { addHeadersToSearchIndex, addPathsToSitemap } from "../cache/cache";
 import { IMassDirTextId } from "../types/mass";
+import { initParserFetcher } from "../services/fetchers";
+import { ParserCityDirections } from "../types/map";
 
 const locale = (process.env.NEXT_PUBLIC_SITE_LANG || "ru") as "ru" | "en";
 const prerenderCountries = ["ukraine", "russia", "belarus"];
@@ -183,15 +185,19 @@ export async function getStaticProps({
     };
   }
 }
+//////////////////////////////////////////////////////////////////////////////
 
 export async function getStaticPaths() {
-  const [pms, allPossibleDirs, cities] = await Promise.all([
+  const parserFetcher = initParserFetcher();
+  const [cities, cityDirectionsData, pms, allPossibleDirs] = await Promise.all([
+    loadCities(),
+    parserFetcher("non_empty_cities") as Promise<ParserCityDirections | null>,
     loadPms(),
     loadPossibleDirs(),
-    loadCities(),
   ]);
-  const dirs = limitedPossibleDirs(allPossibleDirs, "low");
-  const slugToCodes = getSlugToCodes(dirs, pms);
+
+  const dirsForSitemap = limitedPossibleDirs(allPossibleDirs, "middle");
+  const slugToCodes = getSlugToCodes(dirsForSitemap, pms);
 
   if (!slugToCodes || !cities) {
     console.error(
@@ -200,34 +206,30 @@ export async function getStaticPaths() {
     return { paths: [], fallback: "blocking" };
   }
 
-  const allPaths = Object.keys(slugToCodes).map((slug) => ({
-    params: { exchange: slug },
-  }));
+  const citySlugs = getCitySlugs(slugToCodes, cityDirectionsData);
 
   const dirsToPrerender = limitedPossibleDirs(allPossibleDirs, "high");
+
   const slugsToPrerender = getSlugToCodes(dirsToPrerender, pms);
 
-  const dirsForSitemap = limitedPossibleDirs(allPossibleDirs, "middle");
   const slugsForSitemap = getSlugToCodes(dirsForSitemap, pms);
   const sitemapPaths = Object.keys(slugsForSitemap).map((slug) => ({
     params: { exchange: slug },
   }));
 
-  const needPrerender = (exchangePath: string) => {
-    // if (!exchangePath.includes("-in-")) return true; // don't prerender cities
-    return Object.prototype.hasOwnProperty.call(slugsToPrerender, exchangePath);
-  };
-
   const prerenderLimit = process.env.NEXT_PUBLIC_PRERENDER_LIMIT
     ? Number(process.env.NEXT_PUBLIC_PRERENDER_LIMIT)
     : 5000;
 
-  const pathsToPrerender = allPaths
-    .filter((p) => needPrerender(p.params.exchange))
-    .slice(0, prerenderLimit);
+  const pathsToPrerender = [
+    ...Object.keys(slugsToPrerender).map((slug) => ({
+      params: { exchange: slug },
+    })),
+    ...citySlugs.map((slug) => ({ params: { exchange: slug } })),
+  ].slice(0, prerenderLimit);
 
   await addPathsToSitemap(sitemapPaths);
-  console.log("exchange allPaths: ", allPaths.length);
+  console.log("exchange allPaths: ", Object.keys(slugToCodes).length);
   console.log("exchange pathsToPrerender: ", pathsToPrerender.length);
 
   return { paths: pathsToPrerender, fallback: "blocking" };

@@ -67,7 +67,7 @@ export const initParserFetcher = () => {
       const { data } = await retry(() => axios.get(url + "/" + slug));
       return data;
     } catch (e) {
-      console.error("PARSER FETCHER ERROR after 3 retries: ", e);
+      console.error("PARSER FETCHER ERROR after 3 retries: ", url + "/" + slug);
       return null;
     }
   };

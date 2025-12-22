@@ -25,26 +25,13 @@ import {
 } from "../../components/map/helper";
 import CityMapView from "../../components/map";
 import { isCashPm } from "../../components/shared/helper";
+import {
+  MapCityPageProps,
+  ParserCityDirections,
+  ParsedDirection,
+} from "../../types/map";
 
 const MAX_COUNT = 5; // начиная со скольки курсов на направление показываем
-
-type ParserCityDirections = Record<string, Record<string, number>>;
-type ParsedDirection = {
-  slug: string;
-  givePm: IPm;
-  getPm: IPm;
-  count: number;
-};
-
-type MapCityPageProps = {
-  city: ICity;
-  exchangerList: IExchanger[];
-  seo: ISEO;
-  headings: MapHeadings;
-  cashSections: CityCashSection[];
-  cityText: IDirText | null;
-  closestCities: ClosestCityMatch[];
-};
 
 const MapCityPage: NextPage<MapCityPageProps> = ({
   city,
