@@ -43,7 +43,7 @@ export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
       articles: articles || null,
       ...(await serverSideTranslations(locale, ["main"])),
     },
-    revalidate: TTL.fast,
+    revalidate: TTL.slowest,
   };
 };
 

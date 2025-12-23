@@ -150,3 +150,21 @@ export const buildRateString = ({
     ? `1 ${giveCur} = ${format(1 / course, 1)} ${getCur}`
     : `${format(course, 1)} ${giveCur} = 1 ${getCur}`;
 };
+
+export const getPmNameFromPm = (pm: IPm, isShort: boolean = false) => {
+  const nameSameAsCurrency =
+    pm.code?.toUpperCase() === pm?.en_name?.toUpperCase();
+
+  if (isShort) {
+    return pm.subgroup_name || (!nameSameAsCurrency && capitalize(pm.en_name));
+  }
+
+  const name = `${capitalize(pm.en_name.slice(0, 12))} ${
+    pm.section == "crypto"
+      ? pm.subgroup_name?.toUpperCase() ||
+        (!nameSameAsCurrency && pm.currency.code.toUpperCase()) ||
+        ""
+      : ""
+  }`;
+  return name;
+};

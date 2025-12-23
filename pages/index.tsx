@@ -11,6 +11,7 @@ import {
   loadPms,
   loadPopular,
   loadAllReviews,
+  TTL,
 } from "../cache/loadX";
 import { IDirText } from "../types/exchange";
 import { IExchangerReview } from "../types/exchanger";
@@ -65,7 +66,7 @@ export const getStaticProps = async () => {
         locale,
         ...(await serverSideTranslations(locale, ["main"])),
       },
-      revalidate: 3000,
+      revalidate: TTL.slow,
     };
   } catch (e) {
     console.error("Error during getStaticProps:", e);
@@ -81,7 +82,7 @@ export const getStaticProps = async () => {
         locale,
         ...(await serverSideTranslations(locale, ["main"])),
       },
-      revalidate: 3000,
+      revalidate: TTL.slow,
     };
   }
 };

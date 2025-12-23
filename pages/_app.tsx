@@ -9,7 +9,6 @@ import { appWithTranslation } from "next-i18next";
 import { DefaultSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { defaultConfig } from "../next-seo.config";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import Head from "next/head";
 import "../i18n"; //
 import { useEffect, useRef } from "react";
@@ -74,7 +73,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Provider store={store}>
           <Layout>
             <RouteLoadingHandler />
-            <SpeedInsights />
             <DefaultSeo {...seoConfig} />
             <Component {...pageProps} />
           </Layout>

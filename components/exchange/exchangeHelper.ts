@@ -6,6 +6,7 @@ import { IPm } from "../../types/selector";
 import { loadDirText } from "../../cache/loadX";
 import { curNames } from "../../redux/amountsHelper";
 import { ISEO } from "../../types/general";
+import { getPmNameFromPm } from "../shared/helper";
 
 const locale = siteLocale;
 
@@ -26,8 +27,12 @@ export const generateExchangeH1 = (
   const pmHasArticle = (pm: IPm) =>
     !!articleCodes.find((code) => toSlug(code) === toSlug(pm.en_name));
 
-  const wrapWithArticleLink = (text: string, pm: IPm) =>
-    pmHasArticle(pm) ? `[${text}](/articles/${toSlug(pm.en_name)})` : text;
+  const wrapWithArticleLink = (pm: IPm) => {
+    const pmName = getPmNameFromPm(pm);
+    return pmHasArticle(pm)
+      ? `[${pmName}](/articles/${toSlug(pm.en_name)})`
+      : pmName;
+  };
 
   // Proper locale-specific names
   const giveName =
@@ -40,8 +45,8 @@ export const generateExchangeH1 = (
       : getPm.en_name || getPm.ru_name || "";
 
   // Article links for PMs (only when article exists)
-  const linkedGiveName = wrapWithArticleLink(capitalize(giveName), givePm);
-  const linkedGetName = wrapWithArticleLink(capitalize(getName), getPm);
+  const linkedGiveName = wrapWithArticleLink(givePm);
+  const linkedGetName = wrapWithArticleLink(getPm);
 
   // City addon
   const cityLabel = city

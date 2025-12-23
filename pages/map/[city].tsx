@@ -9,6 +9,7 @@ import {
   loadCities,
   loadPms,
   loadPossibleDirs,
+  TTL,
 } from "../../cache/loadX";
 import { initCMSFetcher, initParserFetcher } from "../../services/fetchers";
 import { exchangersMapQuery, TextBoxQuery } from "../../services/queries";
@@ -314,7 +315,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
       closestCities,
       ...(await serverSideTranslations(currentLocale, ["main"])),
     },
-    revalidate: 40000,
+    revalidate: TTL.slow,
   };
 };
 

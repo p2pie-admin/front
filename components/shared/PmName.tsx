@@ -3,6 +3,7 @@ import { ResponsiveText } from "../../styles/theme/custom";
 import { IPm } from "../../types/selector";
 import { capitalize } from "../main/side/selector/section/PmGroup/helper";
 import CircularIcon from "./CircularIcon";
+import { getPmNameFromPm } from "./helper";
 
 const PmName = ({
   pm,
@@ -16,17 +17,13 @@ const PmName = ({
   isHighlited?: boolean;
 }) => {
   if (!pm) return <></>;
-  const nameSameAsCurrency =
-    pm.code?.toUpperCase() === pm?.en_name?.toUpperCase();
+
   const color = isHighlited
     ? useColorModeValue("violet.600", "peach.300")
     : useColorModeValue("bg.700", "bg.200");
 
-  const name = `${capitalize(pm.en_name.slice(0, 12))} ${
-    pm.section == "crypto"
-      ? pm.subgroup_name?.toUpperCase() || pm.currency.code.toUpperCase()
-      : ""
-  }`;
+  const name = getPmNameFromPm(pm);
+  const shortName = getPmNameFromPm(pm, true);
   return (
     <HStack gap="2" color={color}>
       <CircularIcon
@@ -41,8 +38,7 @@ const PmName = ({
             {pm.currency.code?.toUpperCase()}
           </ResponsiveText>
           <ResponsiveText size="xs" color={color}>
-            {pm.subgroup_name ||
-              (!nameSameAsCurrency && capitalize(pm.en_name))}
+            {shortName}
           </ResponsiveText>
         </VStack>
       ) : (

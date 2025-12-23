@@ -9,6 +9,7 @@ import {
   loadMassDirTextIds,
   loadMassRates,
   loadPms,
+  TTL,
 } from "../../cache/loadX";
 import UniversalSeo, { nullSeo } from "../../components/shared/UniversalSeo";
 import { ISEO } from "../../types/general";
@@ -107,7 +108,7 @@ export const getStaticProps = async ({
         slug,
         ...(await serverSideTranslations(locale, ["main"])),
       },
-      revalidate: 30000,
+      revalidate: TTL.slow,
     };
   } catch (e) {
     console.error("Error during getStaticProps:", e);
@@ -124,7 +125,7 @@ export const getStaticProps = async ({
         slug,
         ...(await serverSideTranslations(locale, ["main"])),
       },
-      revalidate: 30000,
+      revalidate: TTL.slow,
     };
   }
 };

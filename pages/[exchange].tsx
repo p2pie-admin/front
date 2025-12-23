@@ -15,6 +15,7 @@ import {
   loadCustomDirText,
   loadMassDirTextIds,
   limitedPossibleDirs,
+  TTL,
 } from "../cache/loadX";
 import {
   dirTextHandler,
@@ -65,7 +66,7 @@ export async function getStaticProps({
         loadArticleCodes(),
         loadMassDirTextIds({ isSell: true }),
       ]);
-    const dirs = limitedPossibleDirs(allPossibleDirs, "low");
+    const dirs = limitedPossibleDirs(allPossibleDirs, "middle");
     const slugToCodes = getSlugToCodes(dirs, pms);
 
     if (!pms || !Array.isArray(pms)) {
@@ -165,7 +166,7 @@ export async function getStaticProps({
         dirTextIds: dirTextIds || null,
         ...(await serverSideTranslations(locale, ["main"])),
       },
-      revalidate: 54000,
+      revalidate: TTL.slow,
     };
   } catch (e) {
     console.error(e);
@@ -181,7 +182,7 @@ export async function getStaticProps({
         donorCity: null,
         ...(await serverSideTranslations(locale, ["main"])),
       },
-      revalidate: 24000,
+      revalidate: TTL.slow,
     };
   }
 }

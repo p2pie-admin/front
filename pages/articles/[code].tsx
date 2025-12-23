@@ -29,7 +29,7 @@ const emptyProps = async (locale: "en" | "ru") => ({
     locale,
     ...(await serverSideTranslations(locale, ["main"])),
   },
-  revalidate: 60000,
+  revalidate: TTL.slow,
 });
 
 const ArticlePage = (props: {
@@ -72,7 +72,7 @@ export async function getStaticProps({ params }: { params: { code: string } }) {
           locale: siteLocale,
           ...(await serverSideTranslations(siteLocale, ["main"])),
         },
-        revalidate: TTL.slow,
+        revalidate: TTL.slowest,
       };
     }
     const [articleCodes, pms, allPossibleDirs] = await Promise.all([

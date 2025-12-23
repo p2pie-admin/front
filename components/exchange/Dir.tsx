@@ -54,14 +54,7 @@ const Dir = ({
             <BsArrowRightShort size="1.5rem" />
           </Box>
 
-          <Box
-            gridColumn="3"
-            justifySelf="end"
-            display="flex"
-            flexDir="column"
-            gap="1"
-            alignItems="flex-end"
-          >
+          <Box gridColumn="3" display="flex" flexDir="column" gap="1">
             <PmName pm={getPm} isFull={false} />
             {rightContent}
           </Box>
