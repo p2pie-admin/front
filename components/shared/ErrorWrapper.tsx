@@ -3,13 +3,19 @@ import {
   Icon,
   Text,
   Button,
-  Spinner,
   Center,
   color,
   useColorModeValue,
   Box,
 } from "@chakra-ui/react";
 import { ReactNode } from "react";
+import dynamic from "next/dynamic";
+
+const DotLottieReact = dynamic(
+  () =>
+    import("@lottiefiles/dotlottie-react").then((mod) => mod.DotLottieReact),
+  { ssr: false }
+);
 
 import LinkButton from "./LinkButton";
 import { BsTelegram } from "react-icons/bs";
@@ -68,7 +74,14 @@ const ErrorWrapper = (props: {
         minW="100"
         minH="100"
       >
-        <Spinner size="xl" color="bg.500" />
+        <Box w="70px" h="70px" filter="opacity(0.5)">
+          <DotLottieReact
+            src="/animation4.lottie"
+            autoplay
+            loop
+            style={{ width: "70px", height: "70px" }}
+          />
+        </Box>
       </Center>
     );
   if (isError) return <Error {...props} />;
