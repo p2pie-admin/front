@@ -1,4 +1,4 @@
-import { Box, HStack, useColorModeValue } from "@chakra-ui/react";
+import { Box, Flex, HStack, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import Advantage from "./Advantage";
@@ -15,7 +15,12 @@ export default function Advantages() {
     "rgba(247, 197, 177, 0.1)"
   );
   return (
-    <HStack gap="4" alignItems="stretch" position="relative">
+    <Flex
+      flexDir={{ base: "column", lg: "row" }}
+      gap="4"
+      alignItems="stretch"
+      position="relative"
+    >
       <Box
         position="absolute"
         inset={0}
@@ -33,6 +38,6 @@ export default function Advantages() {
       <Advantage alt="advantage-hash" imageSrc={hash}>
         {(hovering) => <HashAdvantage hovering={hovering} />}
       </Advantage>
-    </HStack>
+    </Flex>
   );
 }

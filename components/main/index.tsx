@@ -29,6 +29,7 @@ import Advantages from "./advantages";
 import CustomTitle from "../shared/CustomTitle";
 import AllReviews from "./allReviews";
 import { IExchangerReview } from "../../types/exchanger";
+import GeneralStats from "./GeneralStats";
 
 const MainPageContent = ({
   popularPms,
@@ -80,6 +81,8 @@ const MainPageContent = ({
           <Popular popularRates={popularRates} popularPms={popularPms} />
         </Column>
       </ColumnGrid>
+      <Divider mt="4" />
+      <GeneralStats />
 
       <CustomTitle
         mt="32"

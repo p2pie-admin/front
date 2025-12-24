@@ -25,11 +25,21 @@ const Logo = () => {
         alt={`${process.env.NEXT_PUBLIC_NAME} logo`}
         src={useColorModeValue(darkPie, lightPie)}
         width={36}
+        height={36}
       />
-
-      <ResponsiveText variant="primary" fontSize="2xl" fontWeight="bold" mx="2">
+      <Text
+        fontSize="xl"
+        color="peach.200"
+        mx="2"
+        mt="0.5"
+        fontWeight="semibold"
+        fontFamily="Montserrat, sans-serif"
+      >
         {process.env.NEXT_PUBLIC_NAME}
-      </ResponsiveText>
+      </Text>
+      {/* <ResponsiveText variant="primary" fontSize="2xl" fontWeight="bold" mx="2">
+        {process.env.NEXT_PUBLIC_NAME}
+      </ResponsiveText> */}
     </Flex>
   );
 };

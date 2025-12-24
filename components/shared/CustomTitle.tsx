@@ -25,7 +25,7 @@ export default function ({ as, title, subtitle, ...props }: CustomTitleProps) {
       zIndex="1"
       bgGradient={`radial-gradient(circle at 50% -10%, ${centerColor} 10%, ${peripheryColor} 70%)`}
       bgClip="text"
-      fontSize={{ base: "3xl", lg: "5xl" }}
+      fontSize={{ base: "xl", lg: "5xl" }}
       w="100%"
       textAlign={"center"}
       {...props}
@@ -42,7 +42,7 @@ export default function ({ as, title, subtitle, ...props }: CustomTitleProps) {
       {subtitle && (
         <Text
           as="p"
-          fontSize={{ base: "lg", lg: "xl" }}
+          fontSize={{ base: "md", lg: "xl" }}
           mt={2}
           color="bg.400"
           fontWeight="light"

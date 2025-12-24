@@ -4,7 +4,7 @@ import { HStack, VStack, Text, Image, Box } from "@chakra-ui/react";
 
 export default function WebsiteData() {
   return (
-    <HStack>
+    <HStack mt="8">
       <Image
         w="40px"
         h="40px"
@@ -12,16 +12,11 @@ export default function WebsiteData() {
         alt={`${process.env.NEXT_PUBLIC_NAME}.com`}
       />
       <HStack gap="2" alignItems="center">
-        <Text fontSize="xl" color="bg.300">
+        <Text fontSize="xl" color="bg.400">
           {process.env.NEXT_PUBLIC_NAME}.com
         </Text>
-        <Text
-          fontSize="sm"
-          color="bg.500"
-          mt="1"
-          display={{ base: "none", lg: "unset" }}
-        >
-          2025
+        <Text fontSize="sm" color="bg.500" mt="1">
+          • 2026
         </Text>
       </HStack>
     </HStack>

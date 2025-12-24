@@ -93,17 +93,17 @@ const Layout = ({ children }: { children: any }) => {
       <Box
         position="absolute"
         w="100%"
-        h="99vh"
+        h={{ base: "70vh", lg: "98vh" }}
         zIndex={0}
         pointerEvents="none" // <-- lets all clicks/touches pass through
-        bgGradient={`radial-gradient(circle at 50% -10%, ${ambientColor} 0%, transparent 40%)`}
+        bgGradient={`radial-gradient(ellipse at 50% -10%, ${ambientColor} 10%, transparent 50%)`}
       />
       <Box
         position="absolute"
-        top="5%"
+        top={{ base: "3%", lg: "5%" }}
         //right="calc(50% - 950px)"
         w="100%"
-        filter="opacity(0.2)"
+        filter={{ base: "opacity(0.5)", lg: "opacity(0.3)" }}
         zIndex={0}
         pointerEvents="none"
       >
@@ -112,7 +112,6 @@ const Layout = ({ children }: { children: any }) => {
           alt="Grid background pattern"
           width={2000}
           height={420}
-          placeholder="blur"
           priority
           style={{ width: "100%", height: "auto" }}
         />
@@ -163,9 +162,13 @@ const Layout = ({ children }: { children: any }) => {
         inset={0}
         zIndex={0}
         mt="auto"
-        h="300px"
+        h="500px"
+        mb={{ base: "50%", lg: "2%" }}
         pointerEvents="none" // <-- lets all clicks/touches pass through
-        bgGradient={`radial-gradient(ellipse at 50% 50%, ${ambientColor} 10%, transparent 65%)`}
+        bgGradient={{
+          base: `linear(to-t, ${ambientColor} 10%, transparent 65%)`,
+          lg: `radial-gradient(ellipse at 50% 50%, ${ambientColor} 10%, transparent 65%)`,
+        }}
       />
     </Box>
   );

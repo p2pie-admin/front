@@ -7,6 +7,7 @@ import {
   HStack,
   SlideFade,
   Text,
+  useBreakpointValue,
   useColorModeValue,
   useToken,
   VStack,
@@ -19,13 +20,21 @@ import CustomTitle from "../shared/CustomTitle";
 
 const Greeting = () => {
   const { t } = useTranslation();
+  const width = useBreakpointValue({
+    base: 200,
+    lg: 300,
+  });
 
   return (
-    <VStack gap="-20" my="10">
+    <VStack
+      gap={{ base: "6", lg: "-20" }}
+      my={{ base: "4", lg: "10" }}
+      zIndex="1"
+    >
       <Image
         alt={`${process.env.NEXT_PUBLIC_NAME} greetings`}
         src={greetings}
-        width={300}
+        width={width}
         placeholder="blur"
         priority
       />

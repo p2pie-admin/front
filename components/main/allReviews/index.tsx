@@ -6,7 +6,7 @@ import { exchangerNameToSlug } from "../../exchangers/helper";
 import ErrorWrapper from "../../shared/ErrorWrapper";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import CustomTitle from "../../shared/CustomTitle";
-import GeneralStats from "./GeneralStats";
+import GeneralStats from "../GeneralStats";
 import TopButtons from "./TopButtons";
 
 import HorizontalShader from "../../shared/HorizontalShader";
@@ -118,6 +118,8 @@ const AllReviews = ({ reviews }: { reviews?: IExchangerReview[] | null }) => {
                     minW={"420px"}
                     maxW={"420px"}
                     h="100%"
+                    transform={{ base: "scale(0.833333)", lg: "scale(1)" }}
+                    transformOrigin={{ base: "top left", lg: "center" }}
                     _hover={{ filter: "brightness(1.1)" }}
                   >
                     <ReviewCompactCard
@@ -139,8 +141,6 @@ const AllReviews = ({ reviews }: { reviews?: IExchangerReview[] | null }) => {
           ) : null}
         </ErrorWrapper>
       </Box>
-      <Divider />
-      <GeneralStats />
     </>
   );
 };

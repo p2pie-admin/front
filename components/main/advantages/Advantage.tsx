@@ -20,9 +20,9 @@ export default function Advantage({
 
   return (
     <Box3D
-      h="250px"
+      h={{ base: "auto", lg: "250px" }}
       flex="1"
-      w="360px"
+      w={{ base: "100%", lg: "360px" }}
       variant="contrast"
       position="relative"
       overflow="hidden"

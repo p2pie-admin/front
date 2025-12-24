@@ -1,22 +1,24 @@
-import { Box, Grid, HStack, VStack } from "@chakra-ui/react";
+import { Box, Divider, Flex, Grid, HStack, VStack } from "@chakra-ui/react";
 import WebsiteData from "./WebsiteData";
 import FooterLinks from "./FooterLinks";
 
 const Footer = () => {
   return (
     <Box w="100%" px={{ base: "2", lg: "12%" }}>
-      <HStack justifyContent="space-between" alignItems="start">
-        <WebsiteData />
+      <Flex flexDir="column" justifyContent="space-between" alignItems="center">
         <Grid
-          gridTemplateColumns="1fr 1fr 1fr 1fr 1fr"
-          w="70%"
+          gridTemplateColumns="1fr 1fr 1fr"
+          w={{ base: "90%", lg: "70%" }}
           justifyContent="center"
+          gridGap="4"
         >
           <FooterLinks links={aboutLinks} title={"О нас"} />
           <FooterLinks links={productLinks} title={"Сервисы"} />
           <FooterLinks links={supportLinks} title={"Поддержка"} />
         </Grid>
-      </HStack>
+        <Divider mt="8" />
+        <WebsiteData />
+      </Flex>
     </Box>
   );
 };
