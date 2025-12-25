@@ -30,7 +30,7 @@ import FoundError from "../../articles/pmArticle/FoundError";
 const MotionBox = motion(Box);
 
 const [dragElastic, inertiaPower, inertiaTimeConstant, debounceTime] = [
-  0.1, 0.4, 240, 500,
+  0.1, 0.4, 240, 200,
 ];
 
 export const Swiper = (props: {
@@ -125,6 +125,11 @@ export const Swiper = (props: {
     },
     [containerHeight, itemHeight, move]
   );
+
+  const selectVisibleIndex = useCallback(() => {
+    if (!length) return;
+    debouncedSetSwiperIdVisible(getIndex());
+  }, [debouncedSetSwiperIdVisible, getIndex, length]);
 
   const changeIndexByDelta = useCallback(
     (delta: number) => {
@@ -322,15 +327,7 @@ export const Swiper = (props: {
                 timeConstant: inertiaTimeConstant,
                 modifyTarget: (target) => snapToNearest(target),
               }}
-              onDragEnd={() => {
-                const offset = containerHeight / 2 - itemHeight / 2;
-                const snappedY = snapToNearest(y.get());
-                const snappedIndex = Math.min(
-                  length - 1,
-                  Math.max(0, Math.round((-snappedY + offset) / itemHeight))
-                );
-                debouncedSetSwiperIdVisible(snappedIndex);
-              }}
+              onDragTransitionEnd={selectVisibleIndex}
               animate={controls}
               style={{
                 y,
