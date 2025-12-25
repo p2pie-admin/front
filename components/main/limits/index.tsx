@@ -109,7 +109,7 @@ const LimitsRange = () => {
 
   const [MIN, MAX] =
     min?.[side] && max?.[side] ? [R(min[side], 2), R(max[side], 2)] : [0, 0];
-  console.log(MIN, MAX);
+
   const minVal = R(
     validMins.length > 0 ? Math.min(...validMins) : lowestMinBase,
     3

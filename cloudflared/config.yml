@@ -1,6 +1,0 @@
-ingress:
-  - hostname: front.p2pie.help
-    service: http://front:3000
-    originRequest:
-      httpHostHeader: front.p2pie.help
-  - service: http_status:404
