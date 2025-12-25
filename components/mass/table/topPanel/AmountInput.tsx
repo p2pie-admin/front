@@ -6,7 +6,7 @@ import {
 } from "@chakra-ui/react";
 import { BsFillPinAngleFill } from "react-icons/bs";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 import { ResponsiveText } from "../../../../styles/theme/custom";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { setMassAmount } from "../../../../redux/mainReducer";

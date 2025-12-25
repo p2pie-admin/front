@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/react";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import Arrow from "../../../shared/Arrow";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";

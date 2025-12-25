@@ -6,7 +6,7 @@ import SideContext from "../../../shared/contexts/SideContext";
 import CustomModal from "../../../shared/CustomModal";
 
 import Selector from ".";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 
 const SelectorModal = ({ id }: { id: string }) => {
   const { t } = useTranslation("main");

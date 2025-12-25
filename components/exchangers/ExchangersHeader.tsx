@@ -4,7 +4,7 @@ import { ResponsiveText } from "../../styles/theme/custom";
 import { IExchanger, IParserExchanger } from "../../types/exchanger";
 import { getStatus } from "./helper";
 import Dot from "./Dot";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 
 export default function ExchangersHeader({
   exchangers,

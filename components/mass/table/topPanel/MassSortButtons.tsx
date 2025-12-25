@@ -1,6 +1,6 @@
 import { Button, HStack, Tooltip, useColorModeValue } from "@chakra-ui/react";
 import { FaArrowUpWideShort, FaArrowDownShortWide } from "react-icons/fa6";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { IMassSort } from "../../../../types/mass";
 import { setMassSort } from "../../../../redux/mainReducer";

@@ -12,7 +12,7 @@ import Arrow from "../../../../shared/Arrow";
 import SectionGridWrapper from "./SectionGrid";
 import PmGroup from "./PmGroup";
 import { IPmGroup } from "../../../../../types/selector";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 
 const SectionHidden = ({ children }: { children: IPmGroup[] }) => {
   const { t } = useTranslation("main");
