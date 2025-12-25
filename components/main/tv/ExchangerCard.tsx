@@ -113,11 +113,11 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
       w="100%"
       borderRadius="inherit"
       bgColor={bgColor}
-      filter="none"
-      transition="filter 200ms linear"
-      _hover={{
-        filter: "brightness(1.05)",
-      }}
+      //filter="none"
+      // transition="filter 200ms linear"
+      // _hover={{
+      //   filter: "brightness(1.05)",
+      // }}
       cursor="pointer"
       onClick={(e) => {
         handleInfoClick(e);
@@ -135,14 +135,6 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
               logo={logo}
               admin_rating={rate.admin_rating}
             />
-
-            <ResponsiveText
-              size="xs"
-              variant="no_contrast"
-              display={{ base: "none", lg: "unset" }}
-            >
-              {secondsAgo(last_time_updated)}
-            </ResponsiveText>
           </HStack>
         </HStack>
         <Box mt="1">

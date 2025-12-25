@@ -35,7 +35,6 @@ const Greeting = () => {
         alt={`${process.env.NEXT_PUBLIC_NAME} greetings`}
         src={greetings}
         width={width}
-        placeholder="blur"
         priority
       />
       <CustomTitle

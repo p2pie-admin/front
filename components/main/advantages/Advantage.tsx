@@ -41,13 +41,7 @@ export default function Advantage({
         h="300px"
       />
       <Box position="relative" zIndex={1}>
-        <Image
-          alt={alt}
-          src={imageSrc}
-          width={400}
-          height={200}
-          placeholder="blur"
-        />
+        <Image alt={alt} src={imageSrc} width={400} height={200} />
 
         {children(hovering)}
       </Box>

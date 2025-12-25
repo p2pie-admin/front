@@ -29,7 +29,9 @@ import FoundError from "../../articles/pmArticle/FoundError";
 
 const MotionBox = motion(Box);
 
-const [elastic, stiffness, damping, debounceTime] = [0.05, 50, 10, 500];
+const [dragElastic, inertiaPower, inertiaTimeConstant, debounceTime] = [
+  0.1, 0.4, 240, 500,
+];
 
 export const Swiper = (props: {
   isMobile: boolean;
@@ -101,7 +103,7 @@ export const Swiper = (props: {
     (yVal: number) => {
       controls.start({
         y: yVal,
-        transition: { type: "spring", stiffness, damping },
+        transition: { type: "tween", ease: "easeOut", duration: 0.2 },
       });
     },
     [controls]
@@ -313,26 +315,21 @@ export const Swiper = (props: {
                   itemHeight * 3,
                 bottom: containerHeight / 2,
               }}
-              dragElastic={elastic}
-              onDragEnd={(_: any, info: any) => {
-                const velocity = info.velocity.y;
-                const currentIndex = getIndex();
-
-                if (velocity > 50) {
-                  // swipe down
-                  const newIndex = Math.max(currentIndex - 1, 0);
-                  debouncedSetSwiperIdVisible(newIndex);
-                  scrollToItem(newIndex);
-                } else if (velocity < -50) {
-                  // swipe up
-                  const newIndex = Math.min(currentIndex + 1, length - 1);
-                  debouncedSetSwiperIdVisible(newIndex);
-                  scrollToItem(newIndex);
-                } else {
-                  // low velocity: just snap back
-                  debouncedSetSwiperIdVisible(currentIndex);
-                  move(snapToNearest(y.get()));
-                }
+              dragElastic={dragElastic}
+              dragMomentum
+              dragTransition={{
+                power: inertiaPower,
+                timeConstant: inertiaTimeConstant,
+                modifyTarget: (target) => snapToNearest(target),
+              }}
+              onDragEnd={() => {
+                const offset = containerHeight / 2 - itemHeight / 2;
+                const snappedY = snapToNearest(y.get());
+                const snappedIndex = Math.min(
+                  length - 1,
+                  Math.max(0, Math.round((-snappedY + offset) / itemHeight))
+                );
+                debouncedSetSwiperIdVisible(snappedIndex);
               }}
               animate={controls}
               style={{
