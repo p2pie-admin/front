@@ -1,9 +1,9 @@
 import React, {
   useEffect,
   useCallback,
-  useState,
   useMemo,
   useRef,
+  useState,
 } from "react";
 import { FaLocationArrow } from "react-icons/fa";
 import { motion, useMotionValue, useAnimation } from "framer-motion";
@@ -78,7 +78,6 @@ export const Swiper = (props: {
   const y = useMotionValue(0);
   const controls = useAnimation();
   const arrowControls = useAnimation();
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   const getIndex = useCallback(() => {
     const index = Math.round(
@@ -267,7 +266,6 @@ export const Swiper = (props: {
       if (idx !== lastIndex) {
         animateArrow(idx < lastIndex ? "up" : "down");
         lastIndex = idx;
-        requestAnimationFrame(() => setCurrentIndex(idx));
       }
     });
     return () => {
@@ -277,10 +275,6 @@ export const Swiper = (props: {
 
   const topLabelBaseTop = -itemHeight;
   const bottomLabelBaseTop = length * itemHeight;
-  const buffer = 2;
-  const virtualStart = Math.max(0, currentIndex - buffer);
-  const virtualEnd = Math.min(length, currentIndex + visibleItems + buffer);
-  const visibleRates = dirRates.slice(virtualStart, virtualEnd);
 
   return (
     <Grid
@@ -336,9 +330,8 @@ export const Swiper = (props: {
                 position: "relative",
               }}
             >
-              {visibleRates.map((rate, index) => {
-                const realIndex = virtualStart + index;
-                const top = realIndex * itemHeight;
+              {dirRates.map((rate, index) => {
+                const top = index * itemHeight;
                 return (
                   <Box
                     key={"exchanger_" + rate.exchangerId}
@@ -350,7 +343,7 @@ export const Swiper = (props: {
                     <Item
                       rate={rate}
                       y={y}
-                      index={realIndex}
+                      index={index}
                       itemHeight={itemHeight}
                       containerHeight={containerHeight}
                     />
