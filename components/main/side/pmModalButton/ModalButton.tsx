@@ -28,11 +28,6 @@ const ModalButton = ({
       alignItems="center"
       //border={`1px ${leftIcon ? "solid" : "dashed"}`}
       borderColor="whiteAlpha.100"
-      rightIcon={
-        <Hide below="xs">
-          <Arrow isUp={false} />
-        </Hide>
-      }
       leftIcon={leftIcon}
     >
       {children}

@@ -124,13 +124,13 @@ const Exchange = ({
         </Heading>
       </Box> */}
 
-      <CustomTitle
+      {/* <CustomTitle
         fontSize={{ base: "md", lg: "xl" }}
         as="h1"
         mt="-1"
         title={dirText?.header || ""}
         textAlign={{ base: "center", lg: "start" }}
-      />
+      /> */}
 
       <ColumnGrid>
         <Column index={0}>
@@ -150,7 +150,10 @@ const Exchange = ({
         <Column index={1}>
           {/* <ColumnHeader text={title2} as="h2" query={[]} /> */}
           <HStack mb="4" h="200px" gap="4">
-            <Calculator />
+            <Calculator
+              givePmHasArticle={givePmData.exists}
+              getPmHasArticle={getPmData.exists}
+            />
 
             <LimitsRange />
           </HStack>

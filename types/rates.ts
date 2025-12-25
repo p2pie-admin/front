@@ -6,6 +6,7 @@ export type ILimit = { [key in ISides]: number };
 interface IBaseRate {
   exchangerId: string;
   name: string;
+  display_name: string;
   admin_rating: number;
   course: number;
   p2pRatio?: number;

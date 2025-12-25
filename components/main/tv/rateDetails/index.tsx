@@ -47,7 +47,7 @@ const RateDetails = ({ rate }: { rate: IRate }) => {
   const course = rate?.course;
   const amounts = !course ? [0, 0] : course < 1 ? [1, 1 / course] : [course, 1];
   const mainColor = useColorModeValue("violet.700", "peach.300");
-  const exchangerName = rate?.name?.trim();
+  const exchangerName = (rate?.display_name || rate?.name)?.trim();
   const dispatch = useAppDispatch();
 
   const fetchExchanger = async (query: string, name: string) => {

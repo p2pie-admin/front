@@ -81,7 +81,9 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
   const isMobile = useIsMobile();
   if (!rate) return <></>;
 
-  const { name, course, min, max, ref_link, logo, last_time_updated } = rate;
+  const { display_name, name, course, min, max, ref_link, logo, last_time_updated } =
+    rate;
+  const displayName = display_name || name;
   const givePm = useAppSelector((state) => state.main.givePm);
   const getPm = useAppSelector((state) => state.main.getPm);
   const cityCode = useAppSelector((state) => state.main.city.codes[0]);
@@ -98,7 +100,7 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
 
   const handleInfoClick = (event: any) => {
     event?.stopPropagation();
-    dispatch(triggerModal(`details_${name}`));
+    dispatch(triggerModal(`details_${displayName}`));
   };
 
   return (
@@ -124,14 +126,14 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
       }}
       // bgColor removed for test
     >
-      <CustomModal id={`details_${name}`} header="Условия обмена">
+      <CustomModal id={`details_${displayName}`} header="Условия обмена">
         <RateDetails rate={rate} />
       </CustomModal>
       <Box w="100%">
         <HStack justifyContent={isMobile ? "start" : "space-between"}>
           <HStack w="100%" justifyContent="space-between">
             <ExchangerName
-              name={name}
+              name={displayName}
               logo={logo}
               admin_rating={rate.admin_rating}
             />

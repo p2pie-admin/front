@@ -328,6 +328,7 @@ export const Swiper = (props: {
                 width: "100%",
                 height: `${length * itemHeight}px`,
                 position: "relative",
+                willChange: "transform",
               }}
             >
               {dirRates.map((rate, index) => {

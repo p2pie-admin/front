@@ -1,15 +1,5 @@
-import {
-  useColorModeValue,
-  Grid,
-  Box,
-  Divider,
-  Text,
-  Flex,
-  HStack,
-  VStack,
-} from "@chakra-ui/react";
-import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
-import { IPm } from "../../../types/selector";
+import { useColorModeValue, Box, Text, HStack, VStack } from "@chakra-ui/react";
+import { Box3D } from "../../../styles/theme/custom";
 import AmountInput from "./amountInput";
 import PmModalButton from "./pmModalButton";
 import { useContext } from "react";
@@ -17,8 +7,10 @@ import SideContext from "../../shared/contexts/SideContext";
 import { capitalize } from "./selector/section/PmGroup/helper";
 import { useAppSelector } from "../../../redux/hooks";
 import { useTranslation } from "next-i18next";
+import Link from "next/link";
+import { IoInformationCircleOutline } from "react-icons/io5";
 
-const Side = () => {
+const Side = ({ pmHasArticle }: { pmHasArticle: boolean }) => {
   const side = useContext(SideContext) as "give" | "get";
   const { t } = useTranslation();
   const pmName = useAppSelector((state) => {
@@ -28,6 +20,11 @@ const Side = () => {
       pm?.subgroup_name || pm?.currency.code
     }`;
   });
+  const pm = useAppSelector((state) => state.main?.[`${side}Pm`]);
+  const infoColor = useColorModeValue("violet.700", "peach.300");
+  const articleHref = pm
+    ? `/articles/${pm.en_name.toLowerCase().replace(/\s+/g, "-")}`
+    : "";
   return (
     <Box3D>
       {/* <Grid
@@ -48,9 +45,17 @@ const Side = () => {
           justifyContent="space-between"
           h="30px"
           px="2"
+          gap="8"
           alignItems="center"
         >
           <PmModalButton />
+          {pmHasArticle && pm ? (
+            <Link href={articleHref} aria-label="Open article">
+              <Box color="bg.600" display="flex" alignItems="center">
+                <IoInformationCircleOutline size="1.2rem" />
+              </Box>
+            </Link>
+          ) : null}
 
           <AmountInput />
         </HStack>

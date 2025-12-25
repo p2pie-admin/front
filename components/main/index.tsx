@@ -64,7 +64,7 @@ const MainPageContent = ({
           <CircularTexts mainTexts={mainTexts} />
         </Column>
         <Column index={1}>
-          <Calculator />
+          <Calculator givePmHasArticle={false} getPmHasArticle={false} />
         </Column>
         <Column index={4}>
           <Box p="2">

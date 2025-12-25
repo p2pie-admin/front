@@ -67,6 +67,7 @@ function Item({
         borderRadius,
         padding: "4px",
         scaleX,
+        willChange: "transform",
       }}
     >
       <ExchangerCard index={index} rate={rate} />
