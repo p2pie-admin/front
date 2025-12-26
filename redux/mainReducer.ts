@@ -175,6 +175,11 @@ export const mainSlice = createSlice({
           state.ccRates?.giveToUSD,
         ];
       }
+      if (state.ccRates?.currentRate) {
+        state.ccRates.currentRate = 1 / state.ccRates.currentRate;
+        state.ccRates.dayTrend = -state.ccRates.dayTrend;
+        state.ccRates.hourTrend = -state.ccRates.hourTrend;
+      }
       state.amountOutputs = getAmountOutputs(state, 1);
     },
     updateScrollLock: (state: MainState, action: PayloadAction<boolean>) => {

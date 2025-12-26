@@ -1,15 +1,13 @@
-import { Box, Grid, HStack, VStack } from "@chakra-ui/react";
-import Link from "next/link";
+import { Box, Grid, HStack, VStack, Text } from "@chakra-ui/react";
 import { BsArrowRightShort } from "react-icons/bs";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
-import { useRouter } from "next/router";
-
 import { IPm } from "../../types/selector";
 import { getOtherMass } from "./exchangeHelper";
 import PmIcon from "../shared/PmIcon";
 import SmartGrid from "../mass/table/SmartGrid";
 import { IMassDirTextId } from "../../types/mass";
 import PmName from "../shared/PmName";
+import { LinkWrapper } from "./pmLayout/LinkWrapper";
 
 const renderSimilarMass = ({
   similarPmPairs,
@@ -56,23 +54,29 @@ const renderSimilarMass = ({
   );
 
   const cryptoPmRender = (
-    <VStack alignItems={givePm.section == "crypto" ? "start" : "end"}>
+    <VStack alignItems="start" gap="1">
       <PmName pm={cryptoPm} isFull={false} />
-      <ResponsiveText size="xs" variant="no_contrast">
+      <Text
+        fontSize="sm"
+        whiteSpace={"nowrap"}
+        variant="no_contrast"
+        mt="1"
+        alignSelf="end"
+      >
         {`${
           side == "sell" ? "Продать" : "Купить"
         } ${cryptoPm.currency.code.toUpperCase()} за  ${fiatPm.currency.code.toUpperCase()}`}
-      </ResponsiveText>
+      </Text>
     </VStack>
   );
 
   return (
-    <Link
-      href={`/${side}/${cryptoPm.code.toLowerCase()}-for-${fiatPm.currency.code.toLowerCase()}`}
-      passHref
+    <LinkWrapper
+      url={`/${side}/${cryptoPm.code.toLowerCase()}-for-${fiatPm.currency.code.toLowerCase()}`}
+      exists
+      block
     >
       <Box3D
-        my="4"
         px="4"
         py="2"
         cursor="pointer"
@@ -80,6 +84,7 @@ const renderSimilarMass = ({
         _hover={{ filter: "brightness(1.1)" }}
         variant="contrast"
         h="77px"
+        w="100%"
       >
         <Grid
           gridTemplateColumns={"1fr 40px  1fr"}
@@ -96,7 +101,7 @@ const renderSimilarMass = ({
           {side == "buy" ? cryptoPmRender : pmIconsRender}
         </Grid>
       </Box3D>
-    </Link>
+    </LinkWrapper>
   );
 };
 

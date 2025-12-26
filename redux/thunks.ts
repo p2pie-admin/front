@@ -18,7 +18,7 @@ import { destructureDirSlug } from "./helper";
 import { IToast } from "../types/general";
 
 import { pmFromPmGroups } from "../components/main/side/selector/section/PmGroup/helper";
-import { CreateRedirectMutation } from "../components/main/tv/queries";
+import { CreateRedirectMutation } from "../components/exchange/tv/queries";
 import { ICity } from "../types/exchange";
 import { serverLinkPROD, serverLinkDEV } from "../services/utils";
 //import { redirect } from "next/navigation";

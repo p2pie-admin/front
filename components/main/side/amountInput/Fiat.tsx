@@ -39,8 +39,9 @@ const Fiat = ({
       color="bg.500"
       justifySelf="end"
       position="absolute"
-      bottom="1"
+      bottom={{ base: "1", lg: "2" }}
       right="4"
+      fontFamily="'Mozilla Text', monospace"
     >
       {isEdited && Min > 0 && value < Min - Min * 0.01 ? (
         <Text color="red.500">

@@ -5,7 +5,6 @@ import {
   Divider,
   Heading,
   HStack,
-  Spinner,
   Text,
   useBreakpointValue,
   useToken,
@@ -28,6 +27,7 @@ import OfficeSearchInput from "./OfficeSearchInput";
 import { TbMapPinFilled } from "react-icons/tb";
 import ClosestCities from "./closest";
 import { ClosestCityMatch, isCloseByCoordinates } from "./helper";
+import Loader from "../shared/Loader";
 
 type CityMapViewProps = {
   city: ICity;
@@ -288,12 +288,7 @@ const CityMapView = ({
             </GoogleMap>
           ) : (
             <Center h="50vh">
-              <Spinner
-                thickness="4px"
-                speed="0.7s"
-                color="peach.300"
-                size="xl"
-              />
+              <Loader size="xl" />
             </Center>
           )}
         </Box>

@@ -11,12 +11,12 @@ import {
   Flex,
   Grid,
   HStack,
-  Spinner,
   Tooltip,
   VStack,
 } from "@chakra-ui/react";
 
 import UniversalSeo from "../../shared/UniversalSeo";
+import Loader from "../../shared/Loader";
 import { ISEO } from "../../../types/general";
 
 import OfficesDescription from "./offices";
@@ -51,7 +51,7 @@ export default function Exchanger({
         minW="100"
         minH="100"
       >
-        <Spinner size="xl" color="bg.500" />
+        <Loader size="xl" />
       </Center>
     );
   }

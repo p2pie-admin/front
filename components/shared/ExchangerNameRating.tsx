@@ -11,7 +11,7 @@ import {
 import StarRatings from "react-star-ratings";
 import { capitalize } from "../main/side/selector/section/PmGroup/helper";
 import { ResponsiveText } from "../../styles/theme/custom";
-import Rating from "../main/tv/Rating";
+import Rating from "../exchange/tv/Rating";
 import CustomImage from "./CustomImage";
 import { IImage } from "../../types/selector";
 import Dot from "../exchangers/Dot";

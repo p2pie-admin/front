@@ -18,7 +18,7 @@ import { ICity } from "../../types/exchange";
 import { IExchanger } from "../../types/exchanger";
 import { ISEO } from "../../types/general";
 import { IPm } from "../../types/selector";
-import { curNames } from "../../redux/amountsHelper";
+import { codeToEnName, codeToRuName } from "../../redux/amountsHelper";
 import { IDirText } from "../../types/exchange";
 import {
   getClosestCitiesByCoordinates,
@@ -235,15 +235,12 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
     >
   );
 
-  const localeKey = currentLocale === "ru" ? "ru_name" : "en_name";
-
   const cashSections: CityCashSection[] = Object.entries(cashMap)
     .map(([code, data]) => {
       const buy = [...data.buy].sort((a, b) => b.count - a.count);
       const sell = [...data.sell].sort((a, b) => b.count - a.count);
       const cashName =
-        curNames[code.toLowerCase() as keyof typeof curNames]?.[localeKey] ||
-        code;
+        currentLocale === "ru" ? codeToRuName(code) : codeToEnName(code) || code;
       const totalCount =
         buy.reduce((sum, item) => sum + item.count, 0) +
         sell.reduce((sum, item) => sum + item.count, 0);

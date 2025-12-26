@@ -6,7 +6,6 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalHeader,
-  Spinner,
   Flex,
   VStack,
   useColorModeValue,
@@ -19,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 
 import Error from "../../../shared/ErrorWrapper";
+import Loader from "../../../shared/Loader";
 import SelectorBody from "./SectionsList";
 import SearchBar from "./SearchBar";
 import { filterSections } from "./section/helper";
@@ -64,7 +64,7 @@ const Selector = function Selector() {
         minW="100"
         minH="100"
       >
-        <Spinner size="xl" color="bg.500" />
+        <Loader size="xl" />
       </Center>
     );
   const sections = filterSections(searchBarInputValue, data?.sections);

@@ -8,11 +8,7 @@ import {
 import { keyframes } from "@emotion/react";
 import { BsArrowDownShort, BsArrowUpShort } from "react-icons/bs";
 import { RxDragHandleDots2 } from "react-icons/rx";
-import {
-  curNames,
-  kFormatter,
-  localFormat,
-} from "../../../redux/amountsHelper";
+import { kFormatter, localFormat } from "../../../redux/amountsHelper";
 import { useState } from "react";
 import { useAppSelector } from "../../../redux/hooks";
 

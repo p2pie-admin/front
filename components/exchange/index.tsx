@@ -8,13 +8,12 @@ import {
   Center,
   useColorModeValue,
   useToken,
-  Spinner,
 } from "@chakra-ui/react";
 import { Box3D } from "../../styles/theme/custom";
 
 import { IPm } from "../../types/selector";
 import LimitsRange from "../main/limits";
-import TV from "../main/tv";
+import TV from "./tv";
 import Calculator from "../main/Calculator";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setLoadingStatus, setInitialData } from "../../redux/mainReducer";
@@ -28,19 +27,19 @@ import {
 import { useEffect } from "react";
 
 import { batch } from "react-redux";
-import Similar from "./Similar";
+import SimilarList from "./SimilarList";
 import { Column } from "../layout/Column";
 
 import { ICity, IDirText, IPmData, IPmLayout } from "../../types/exchange";
 import ColumnGrid from "../layout/ColumnGrid";
 
-import { NextSeo, BreadcrumbJsonLd } from "next-seo";
-import { useTranslation } from "next-i18next";
-
 import UniversalSeo from "../shared/UniversalSeo";
 import { ISEO } from "../../types/general";
 import { IMassDirTextId } from "../../types/mass";
 import CustomTitle from "../shared/CustomTitle";
+import { TextToHTML } from "../shared/helper";
+import { codeToRuName2, codeToRuName3 } from "../../redux/amountsHelper";
+import Loader from "../shared/Loader";
 
 const Exchange = ({
   locale,
@@ -75,7 +74,7 @@ const Exchange = ({
   if (!givePmData?.pm || !getPmData?.pm) {
     return (
       <Center h="100vh">
-        <Spinner />
+        <Loader size="md" />
       </Center>
     );
   }
@@ -124,20 +123,29 @@ const Exchange = ({
         </Heading>
       </Box> */}
 
-      {/* <CustomTitle
-        fontSize={{ base: "md", lg: "xl" }}
-        as="h1"
-        mt="-1"
-        title={dirText?.header || ""}
-        textAlign={{ base: "center", lg: "start" }}
-      /> */}
-
       <ColumnGrid>
         <Column index={0}>
+          {dirText?.header && (
+            <Heading
+              as="h2"
+              fontSize={{
+                base: dirText.header.length > 32 ? "sm" : "md",
+                lg: dirText.header.length > 32 ? "md" : "lg",
+              }}
+              color="bg.300"
+              fontWeight="normal"
+              mt="0"
+              mb="4"
+            >
+              {`Курс ${codeToRuName2(giveCur)} к ${codeToRuName3(
+                getCur
+              )} на сегодня`}
+            </Heading>
+          )}
           <Chart giveCur={giveCur} getCur={getCur} />
-          <VStack mt="4" w="100%" gap="4">
+          <VStack mt="4" w="100%">
             {similarPmPairs && (
-              <Similar
+              <SimilarList
                 similarPmPairs={similarPmPairs}
                 givePm={givePm}
                 getPm={getPm}
@@ -148,8 +156,27 @@ const Exchange = ({
         </Column>
 
         <Column index={1}>
-          {/* <ColumnHeader text={title2} as="h2" query={[]} /> */}
-          <HStack mb="4" h="200px" gap="4">
+          {dirText?.header && (
+            <Heading
+              as="h2"
+              fontSize={{
+                base: dirText.header.length > 32 ? "sm" : "md",
+                lg: dirText.header.length > 32 ? "md" : "lg",
+              }}
+              color="bg.300"
+              fontWeight="normal"
+              mt="0"
+              mb="4"
+            >
+              <TextToHTML text={dirText.h1} />
+            </Heading>
+          )}
+          <HStack
+            mb="4"
+            h={{ base: "unset", lg: "200px" }}
+            gap="4"
+            alignItems="stretch"
+          >
             <Calculator
               givePmHasArticle={givePmData.exists}
               getPmHasArticle={getPmData.exists}

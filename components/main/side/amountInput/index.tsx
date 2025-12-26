@@ -8,7 +8,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useContext } from "react";
+import { useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { R } from "../../../../redux/amountsHelper";
 import { setAmount, setSide } from "../../../../redux/mainReducer";
@@ -16,11 +16,14 @@ import SideContext from "../../../shared/contexts/SideContext";
 import Fiat from "./Fiat";
 import { isOutOfRange } from "./helper";
 import { BsFillPinAngleFill } from "react-icons/bs";
+import { RxDrawingPinFilled } from "react-icons/rx";
 
 const AmountInput = () => {
   const dispatch = useAppDispatch();
   const side = useContext(SideContext) as "give" | "get";
   const isActive = useAppSelector((state) => state.main.side == side);
+  const textMeasureRef = useRef<HTMLSpanElement | null>(null);
+  const [textWidth, setTextWidth] = useState(0);
 
   const amountOutputs = useAppSelector((state) => state.main.amountOutputs);
   const isEdited = useAppSelector((state) => !!state.main.amountInput);
@@ -41,6 +44,15 @@ const AmountInput = () => {
     ) ?? +stringValue.replaceAll(" ", "");
   const value = Number.isFinite(rawNumeric) ? rawNumeric : 0;
   const outRange = isEdited && isOutOfRange(value, min, max, side);
+  const displayValue = stringValue.length > 11 ? "✖" : stringValue || "0";
+
+  const useIsomorphicLayoutEffect =
+    typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
+  useIsomorphicLayoutEffect(() => {
+    if (!textMeasureRef.current) return;
+    setTextWidth(textMeasureRef.current.offsetWidth);
+  }, [displayValue]);
 
   const onAmountChange = (str: string, num: number) => {
     // skip if same or too big
@@ -62,6 +74,7 @@ const AmountInput = () => {
         isValidCharacter={(v) => !!v.match(/^[Ee0-9+\.,]$/)}
         variant="unstyled"
         onChange={onAmountChange}
+        onClick={() => dispatch(setSide(side))}
         minW="10"
         zIndex="3"
         value={stringValue.length > 11 ? "✖" : stringValue}
@@ -69,7 +82,21 @@ const AmountInput = () => {
         clampValueOnBlur={true}
         max={100000000}
         min={0} // no negative
+        position="relative"
       >
+        <Box
+          position="absolute"
+          top="50%"
+          transform="translateY(-50%) scaleX(-1)"
+          right={`${8 + textWidth}px`}
+          zIndex="3"
+          display={isActive ? "block" : "none"}
+          borderRadius="50%"
+          bgColor="bg.500"
+          w="1"
+          h="1"
+        />
+
         <NumberInputField
           p="0"
           float="right"
@@ -86,10 +113,21 @@ const AmountInput = () => {
           }
           onClick={(e: any) => {
             e.target.select();
-            dispatch(setSide(side));
           }}
           _placeholder={{ color: "bg.500" }}
         />
+
+        <Box
+          as="span"
+          ref={textMeasureRef}
+          position="absolute"
+          visibility="hidden"
+          whiteSpace="pre"
+          fontFamily="'Mozilla Text', monospace"
+          fontSize={["2xl", "3xl"]}
+        >
+          {displayValue}
+        </Box>
 
         {/* <Text color="teal.400">{`step: ${step} / fiatStep: ${fiatStep}`}</Text> */}
       </NumberInput>

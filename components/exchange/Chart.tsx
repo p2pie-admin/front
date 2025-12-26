@@ -1,12 +1,10 @@
-import { memo, useMemo, useState } from "react";
+import { memo, useMemo, useState, useEffect } from "react";
 import {
   Box,
   HStack,
   Text,
   Button,
-  Center,
   useColorModeValue,
-  Spinner,
 } from "@chakra-ui/react";
 import Image from "next/image";
 
@@ -15,6 +13,7 @@ import { Box3D } from "../../styles/theme/custom";
 import { format, localFormat, R } from "../../redux/amountsHelper";
 import { converterLinkPROD, converterLinkDEV } from "../../services/utils";
 import { buildRateString } from "../shared/helper";
+import Loader from "../shared/Loader";
 
 const Chart = memo(
   ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
@@ -55,6 +54,13 @@ const Chart = memo(
     const alt = `${giveCur} to ${getCur} in last ${timeframe}`;
 
     const imgSrc = `${SRC}/${getCur}_${giveCur}/${timeframe}`;
+    const [imageLoaded, setImageLoaded] = useState(false);
+
+    useEffect(() => {
+      setImageLoaded(false);
+      const timeout = setTimeout(() => setImageLoaded(true), 10000);
+      return () => clearTimeout(timeout);
+    }, [imgSrc]);
 
     return (
       <Box3D
@@ -70,9 +76,24 @@ const Chart = memo(
           width={420}
           height={200}
           style={{ objectFit: "cover" }}
+          onLoadingComplete={() => setImageLoaded(true)}
+          onError={() => setImageLoaded(true)}
           // placeholder="blur"
           // blurDataURL="/placeholder.png"
         />
+        {!imageLoaded && (
+          <Box
+            position="absolute"
+            inset="0"
+            bg="blackAlpha.500"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            zIndex="30"
+          >
+            <Loader size="lg" />
+          </Box>
+        )}
         <HStack position="absolute" top="1" left="1" zIndex="35" px="2">
           <Text fontSize="md" fontWeight="bold" color={primaryColor}>
             {`${giveCur} / ${getCur}`}

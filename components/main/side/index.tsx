@@ -9,19 +9,20 @@ import { useAppSelector } from "../../../redux/hooks";
 import { useTranslation } from "next-i18next";
 import Link from "next/link";
 import { IoInformationCircleOutline } from "react-icons/io5";
+import { codeToRuName, codeToRuName2 } from "../../../redux/amountsHelper";
 
 const Side = ({ pmHasArticle }: { pmHasArticle: boolean }) => {
   const side = useContext(SideContext) as "give" | "get";
   const { t } = useTranslation();
-  const pmName = useAppSelector((state) => {
-    const pm = state.main?.[`${side}Pm`];
-    if (!pm) return;
-    return `${pm?.ru_name || pm?.en_name} ${
-      pm?.subgroup_name || pm?.currency.code
-    }`;
-  });
+
   const pm = useAppSelector((state) => state.main?.[`${side}Pm`]);
-  const infoColor = useColorModeValue("violet.700", "peach.300");
+
+  const pmName = `${pm?.ru_name || pm?.en_name} ${
+    pm?.subgroup_name || pm?.currency.code
+  }`;
+
+  const pmCur = pm?.currency.code;
+  //const infoColor = useColorModeValue("violet.700", "peach.300");
   const articleHref = pm
     ? `/articles/${pm.en_name.toLowerCase().replace(/\s+/g, "-")}`
     : "";
@@ -37,10 +38,10 @@ const Side = ({ pmHasArticle }: { pmHasArticle: boolean }) => {
       > */}
 
       <VStack position="relative" alignItems="start">
-        <Box h="20px" />
-        <Text color="bg.600" fontSize="sm" position="absolute" top="1" left="4">
-          {t(`main:${side}Title`)}
-        </Text>
+        <Box h={{ base: "10px", lg: "20px" }} />
+        {/* <Text color="bg.500" fontSize="sm" position="absolute" top="1" left="3">
+  
+        </Text> */}
         <HStack
           justifyContent="space-between"
           h="30px"
@@ -59,16 +60,16 @@ const Side = ({ pmHasArticle }: { pmHasArticle: boolean }) => {
 
           <AmountInput />
         </HStack>
-        <Box h="20px" />
-        {pmName && (
+        <Box h={{ base: "20px", lg: "26px" }} />
+        {pmCur && (
           <Text
-            color="bg.400"
+            color="bg.500"
             fontSize="sm"
             position="absolute"
-            bottom="1.5"
-            left="4"
+            bottom={{ base: "1", lg: "2" }}
+            left="3"
           >
-            {capitalize(pmName)}
+            {`${t(`main:${side}Title`)}  ${codeToRuName(pmCur)}`}
           </Text>
         )}
       </VStack>

@@ -1,10 +1,10 @@
 import { Box, Grid } from "@chakra-ui/react";
 
-import Link from "next/link";
 import { BsArrowRightShort } from "react-icons/bs";
 import PmName from "../shared/PmName";
 import { IPm } from "../../types/selector";
 import { Box3D } from "../../styles/theme/custom";
+import { LinkWrapper } from "./pmLayout/LinkWrapper";
 
 const Dir = ({
   children,
@@ -27,8 +27,9 @@ const Dir = ({
   const rightContent = bottomRight ?? null;
 
   return (
-    <Link href={`/${slug}`} passHref>
+    <LinkWrapper url={`/${slug}`} exists block>
       <Box3D
+        w="100%"
         flex="1"
         px="4"
         py="2"
@@ -60,7 +61,7 @@ const Dir = ({
           </Box>
         </Grid>
       </Box3D>
-    </Link>
+    </LinkWrapper>
   );
 };
 

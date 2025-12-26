@@ -52,7 +52,7 @@ const Patch = () => {
 const ReverseButton = () => {
   const dispatch = useAppDispatch();
 
-  const color = useColorModeValue("bg.700", "bg.200");
+  const color = useColorModeValue("bg.700", "bg.300");
   const bothPmsSelected = useAppSelector(
     (state) => state.main.givePm?.code && state.main.getPm?.code
   );
@@ -143,7 +143,7 @@ const ReverseButton = () => {
             <Button
               p="0 !important"
               size={{ base: "sm", lg: "md" }}
-              variant="extra_contrast"
+              variant="ghost"
               onClick={() => dispatch(clearDirRates())}
               color={color}
               zIndex="3"

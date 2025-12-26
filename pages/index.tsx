@@ -5,6 +5,9 @@ import { IMainText } from "../types/pages";
 import UniversalSeo, { nullSeo } from "../components/shared/UniversalSeo";
 import { ISEO } from "../types/general";
 import { getT } from "../components/shared/getT";
+import { Box } from "@chakra-ui/react";
+import Image from "next/image";
+import gridPattern from "../public/grid.png";
 import {
   loadMainTexts,
   loadRootText,
@@ -29,11 +32,12 @@ export const getStaticProps = async () => {
         loadAllReviews(),
       ]);
 
-    const popularRates =
-      (popularRatesRaw as IPopularDirRates | null) || null;
+    const popularRates = (popularRatesRaw as IPopularDirRates | null) || null;
     const pms = pmsRaw || [];
     const firstRate = popularRates
-      ? (Object.values(popularRates)[0] as IPopularDirRates[keyof IPopularDirRates])
+      ? (Object.values(
+          popularRates
+        )[0] as IPopularDirRates[keyof IPopularDirRates])
       : null;
     const popularPmCodes = [
       ...(popularRates ? Object.keys(popularRates) : []),
@@ -91,7 +95,28 @@ const Home = (props: any) => {
   return (
     <>
       <UniversalSeo seo={props.seo} />
-      <MainPageContent {...props} />
+      <Box position="relative" w="100%">
+        <Box
+          position="absolute"
+          top="1%"
+          left="50%"
+          transform="translateX(-50%)"
+          w="100vw"
+          filter={{ base: "opacity(0.5)", lg: "opacity(0.3)" }}
+          zIndex={0}
+          pointerEvents="none"
+        >
+          <Image
+            src={gridPattern}
+            alt="Grid background pattern"
+            width={2000}
+            height={420}
+            priority
+            style={{ width: "100vw", height: "auto" }}
+          />
+        </Box>
+        <MainPageContent {...props} />
+      </Box>
     </>
   );
 };

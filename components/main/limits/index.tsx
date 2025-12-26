@@ -183,7 +183,7 @@ const LimitsRange = () => {
       display="flex"
       flexDir="column"
       alignItems="center"
-      h="200px"
+      alignSelf="stretch"
     >
       {/* give/get toggle on top */}
       {/* <VStack spacing={1} mb="3" onClick={changeSide}>

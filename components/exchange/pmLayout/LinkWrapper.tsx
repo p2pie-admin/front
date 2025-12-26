@@ -8,6 +8,7 @@ export const LinkWrapper = ({
   _blank = false,
   className,
   style,
+  block = false,
 }: {
   children: ReactNode;
   exists: boolean;
@@ -15,6 +16,7 @@ export const LinkWrapper = ({
   _blank?: boolean;
   className?: string;
   style?: React.CSSProperties;
+  block?: boolean;
 }) => {
   const normalizeHref = (href: string) => {
     if (!href) return href;
@@ -45,7 +47,27 @@ export const LinkWrapper = ({
     }
   };
 
-  if (exists)
+  if (exists) {
+    if (block) {
+      return (
+        <Link
+          href={relayHref}
+          passHref
+          legacyBehavior
+        >
+          <a
+            onClick={handleClick}
+            target={_blank ? "_blank" : undefined}
+            rel={_blank ? "nofollow noopener noreferrer" : undefined}
+            className={className}
+            style={{ display: "block", width: "100%", ...style }}
+          >
+            {children}
+          </a>
+        </Link>
+      );
+    }
+
     return (
       <Link
         href={relayHref}
@@ -59,5 +81,6 @@ export const LinkWrapper = ({
         {children}
       </Link>
     );
+  }
   return <>{children}</>;
 };

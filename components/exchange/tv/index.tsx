@@ -69,7 +69,7 @@ const TV = ({
   // }, [dir, city?.en_name, isCash, dispatch]);
 
   const isMobile = useIsMobile();
-  const itemHeight = isMobile ? 100 : 136; // Height of each text box
+  const itemHeight = 100; // Height of each text box
   const visibleItems = 3; // Number of items visible in the container
 
   const props = {

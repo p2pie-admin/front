@@ -22,8 +22,24 @@ const RouteLoadingHandler = () => {
   const dispatch = useAppDispatch();
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const isExchangePath = (path: string) => {
+    const cleanPath = path.split("?")[0].split("#")[0];
+    const parts = cleanPath.split("/").filter(Boolean);
+    if (parts.length !== 1) return false;
+    const reserved = new Set([
+      "about",
+      "articles",
+      "contacts",
+      "exchangers",
+      "faq",
+      "map",
+    ]);
+    return !reserved.has(parts[0]);
+  };
+
   useEffect(() => {
-    const handleStart = () => {
+    const handleStart = (url: string) => {
+      if (isExchangePath(router.asPath) && isExchangePath(url)) return;
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       dispatch(setLoadingStatus("pending"));
 
@@ -72,6 +88,21 @@ const RouteLoadingOverlay = () => {
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const unmountRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const isExchangePath = (path: string) => {
+    const cleanPath = path.split("?")[0].split("#")[0];
+    const parts = cleanPath.split("/").filter(Boolean);
+    if (parts.length !== 1) return false;
+    const reserved = new Set([
+      "about",
+      "articles",
+      "contacts",
+      "exchangers",
+      "faq",
+      "map",
+    ]);
+    return !reserved.has(parts[0]);
+  };
+
   useEffect(() => {
     const show = () => {
       setMounted(true);
@@ -87,7 +118,8 @@ const RouteLoadingOverlay = () => {
       }, 200);
     };
 
-    const handleStart = () => {
+    const handleStart = (url: string) => {
+      if (isExchangePath(router.asPath) && isExchangePath(url)) return;
       show();
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => {

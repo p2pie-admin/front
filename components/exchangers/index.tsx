@@ -1,4 +1,4 @@
-import { Box, Center, Grid, Spinner } from "@chakra-ui/react";
+import { Box, Center, Grid } from "@chakra-ui/react";
 import { useState, useMemo, useEffect, useCallback, useRef } from "react";
 import { IExchanger, IParserExchanger } from "../../types/exchanger";
 import { getStatus } from "./helper";
@@ -6,6 +6,7 @@ import TopPanel from "./TopPanel";
 import ExchangersHeader from "./ExchangersHeader";
 import ExchangerLink from "./ExchangerLink";
 import { BoxWrapper } from "../shared/BoxWrapper";
+import Loader from "../shared/Loader";
 
 import UniversalSeo from "../shared/UniversalSeo";
 
@@ -156,12 +157,7 @@ export default function ExchangersList({
           <Box maxW="container.xl" mx="auto">
             {loadingSearchSort ? (
               <Center py="20">
-                <Spinner
-                  size="xl"
-                  thickness="4px"
-                  speed="0.7s"
-                  color="blue.400"
-                />
+                <Loader size="xl" />
               </Center>
             ) : (
               <Grid

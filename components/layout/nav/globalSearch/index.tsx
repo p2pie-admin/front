@@ -9,7 +9,6 @@ import {
   IconButton,
   useColorModeValue,
   useOutsideClick,
-  Spinner,
   Tooltip,
 } from "@chakra-ui/react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -20,6 +19,7 @@ import { Box3D } from "../../../../styles/theme/custom";
 import { useRouter } from "next/router";
 import { filterSearchResults } from "./helper";
 import Transliterator from "../../../../services/transliterator";
+import Loader from "../../../shared/Loader";
 const transliterator = new Transliterator();
 
 const MotionBox = motion(Box);
@@ -194,7 +194,7 @@ const GlobalSearch = () => {
           >
             {isLoading ? (
               <Box textAlign="center" py="4">
-                <Spinner size="sm" />
+                <Loader size="sm" />
               </Box>
             ) : results.length > 0 ? (
               results.map((r: any) => (

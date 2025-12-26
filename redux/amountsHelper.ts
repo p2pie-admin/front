@@ -2,8 +2,48 @@ import { locale } from "../services/utils";
 import { AmountInput, AmountOutputs } from "../types/amount";
 import { IRate } from "../types/rates";
 
-export const codeToSymbol = (code: string) =>
-  curNames[code.toLowerCase() as keyof typeof curNames]?.symbol || "";
+type CurNameEntry = {
+  symbol?: string;
+  ru_name: string;
+  ru_name2?: string;
+  ru_name3?: string;
+  en_name: string;
+};
+
+const normalizeCode = (code?: string | null) =>
+  typeof code === "string" ? code.trim() : "";
+
+const getCurEntry = (code?: string | null) => {
+  const raw = normalizeCode(code);
+  if (!raw) return { raw: "", entry: undefined };
+  const key = raw.toLowerCase() as keyof typeof curNames;
+  return { raw, entry: curNames[key] };
+};
+
+export const codeToSymbol = (code?: string | null) => {
+  const { entry } = getCurEntry(code);
+  return entry?.symbol || "";
+};
+
+export const codeToRuName = (code?: string | null) => {
+  const { raw, entry } = getCurEntry(code);
+  return entry?.ru_name || raw;
+};
+
+export const codeToRuName2 = (code?: string | null) => {
+  const { raw, entry } = getCurEntry(code);
+  return entry?.ru_name2 || raw;
+};
+
+export const codeToRuName3 = (code?: string | null) => {
+  const { raw, entry } = getCurEntry(code);
+  return entry?.ru_name3 || raw;
+};
+
+export const codeToEnName = (code?: string | null) => {
+  const { raw, entry } = getCurEntry(code);
+  return entry?.en_name || raw;
+};
 
 export class FeesCalculator {
   rate: IRate;
@@ -192,15 +232,12 @@ export const beautifyAmount = (number: number, currency: string) =>
   addSpaces(R(number) + " " + currency);
 
 export const localFormat = (n: number, cur: string) => {
-  return `${kFormatter(R(n, 1))} ${
-    curNames?.[cur.toLocaleLowerCase() as keyof typeof curNames]?.symbol || cur
-  }`;
+  const symbol = codeToSymbol(cur) || cur;
+  return `${kFormatter(R(n, 1))} ${symbol}`;
 };
 
 export const curToSymbol = (cur?: string) => {
-  return cur
-    ? curNames?.[cur.toLocaleLowerCase() as keyof typeof curNames]?.symbol
-    : "";
+  return codeToSymbol(cur);
 };
 
 export function powerOfTenOrder(num?: number): number {
@@ -212,60 +249,160 @@ export function powerOfTenOrder(num?: number): number {
   return Math.pow(10, exponent);
 }
 
-export const curNames = {
+export const curNames: Record<string, CurNameEntry> = {
   usd: {
     symbol: "$",
     ru_name: "доллары",
+    ru_name2: "доллара",
+    ru_name3: "доллару",
     en_name: "dollars",
   },
   rub: {
     symbol: "₽",
     ru_name: "рубли",
+    ru_name2: "рубля",
+    ru_name3: "рублю",
     en_name: "rubles",
   },
   uah: {
     symbol: "₴",
     ru_name: "гривны",
+    ru_name2: "гривны",
+    ru_name3: "гривне",
     en_name: "hryvnias",
   },
   eur: {
     symbol: "€",
     ru_name: "евро",
+    ru_name2: "евро",
+    ru_name3: "евро",
     en_name: "euros",
   },
   gbp: {
     symbol: "£",
     ru_name: "фунты",
+    ru_name2: "фунта",
+    ru_name3: "фунту",
     en_name: "pounds",
   },
   gel: {
     symbol: "₾",
     ru_name: "лари",
+    ru_name2: "лари",
+    ru_name3: "лари",
     en_name: "lari",
   },
   try: {
     symbol: "₺",
     ru_name: "лиры",
+    ru_name2: "лиры",
+    ru_name3: "лире",
     en_name: "lira",
   },
   thb: {
     symbol: "฿",
     ru_name: "баты",
+    ru_name2: "бата",
+    ru_name3: "бату",
     en_name: "baht",
   },
   inr: {
     symbol: "₹",
     ru_name: "рупии",
+    ru_name2: "рупии",
+    ru_name3: "рупии",
     en_name: "rupees",
   },
   jpy: {
     symbol: "¥",
     ru_name: "иены",
+    ru_name2: "иены",
+    ru_name3: "иене",
     en_name: "yen",
   },
   cny: {
     symbol: "¥",
     ru_name: "юани",
+    ru_name2: "юаня",
+    ru_name3: "юаню",
     en_name: "yuan",
+  },
+  btc: {
+    ru_name: "биткоины",
+    ru_name2: "биткоина",
+    ru_name3: "биткоину",
+    en_name: "bitcoins",
+  },
+  eth: {
+    ru_name: "эфиры",
+    ru_name2: "эфира",
+    ru_name3: "эфиру",
+    en_name: "ether",
+  },
+  usdt: {
+    ru_name: "тезеры",
+    ru_name2: "тезера",
+    ru_name3: "тезеру",
+    en_name: "tethers",
+  },
+  usdc: {
+    ru_name: "юсдс",
+    ru_name2: "юсдс",
+    ru_name3: "юсдс",
+    en_name: "usd coin",
+  },
+  bnb: {
+    ru_name: "биэнби",
+    ru_name2: "биэнби",
+    ru_name3: "биэнби",
+    en_name: "bnb",
+  },
+  xrp: {
+    ru_name: "рипплы",
+    ru_name2: "риппла",
+    ru_name3: "рипплу",
+    en_name: "ripple",
+  },
+  ada: {
+    ru_name: "кардано",
+    ru_name2: "кардано",
+    ru_name3: "кардано",
+    en_name: "cardano",
+  },
+  sol: {
+    ru_name: "соланы",
+    ru_name2: "соланы",
+    ru_name3: "солане",
+    en_name: "solana",
+  },
+  dot: {
+    ru_name: "полкадоты",
+    ru_name2: "полкадота",
+    ru_name3: "полкадоту",
+    en_name: "polkadot",
+  },
+  doge: {
+    ru_name: "доджкоины",
+    ru_name2: "доджкоина",
+    ru_name3: "доджкоину",
+    en_name: "dogecoin",
+  },
+  ltc: {
+    ru_name: "лайткоины",
+    ru_name2: "лайткоина",
+    ru_name3: "лайткоину",
+    en_name: "litecoin",
+  },
+  trx: {
+    ru_name: "троны",
+    ru_name2: "трона",
+    ru_name3: "трону",
+    en_name: "tron",
+  },
+  ton: {
+    ru_name: "тоны",
+    ru_name2: "тона",
+    ru_name3: "тону",
+    en_name: "ton",
   },
 };

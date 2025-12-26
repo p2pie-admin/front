@@ -4,7 +4,7 @@ import { locale as siteLocale, mylog } from "../../services/utils";
 import { ICity, IDirText, ISeoData } from "../../types/exchange";
 import { IPm } from "../../types/selector";
 import { loadDirText } from "../../cache/loadX";
-import { curNames } from "../../redux/amountsHelper";
+import { codeToEnName, codeToRuName } from "../../redux/amountsHelper";
 import { ISEO } from "../../types/general";
 import { getPmNameFromPm } from "../shared/helper";
 
@@ -74,19 +74,9 @@ export const generateExchangeH1 = (
   const giveCur = givePm.currency.code.toUpperCase();
   const getCur = getPm.currency.code.toUpperCase();
 
-  const giveCurName = curNames[giveCur.toLowerCase() as keyof typeof curNames];
-  const getCurName = curNames[getCur.toLowerCase() as keyof typeof curNames];
   return locale === "ru"
-    ? `Обмен ${linkedGiveName} ${
-        giveCurName?.ru_name || giveCur
-      } ${giveSubgroup} на ${linkedGetName} ${
-        getCurName?.ru_name || getCur
-      } ${getSubgroup} ${cityAddon}`
-    : `Exchange ${linkedGiveName} ${
-        giveCurName?.en_name || giveCur
-      } ${giveSubgroup} for ${linkedGetName} ${
-        getCurName?.en_name || getCur
-      } ${getSubgroup} ${cityAddon}`;
+    ? `Обмен ${linkedGiveName}  на ${linkedGetName}   ${cityAddon}`
+    : `Exchange ${linkedGiveName}  на ${linkedGetName}   ${cityAddon}`;
 };
 
 export const dirTextHandler = async ({

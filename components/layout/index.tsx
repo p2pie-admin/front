@@ -22,8 +22,6 @@ import { initCurrencyConverterFetcher } from "../../services/fetchers";
 import { ICity } from "../../types/exchange";
 import { useRouter } from "next/router";
 import Fingerprint from "fingerprinter-js";
-import Image from "next/image";
-import gridPattern from "../../public/grid.png";
 
 const Layout = ({ children }: { children: any }) => {
   // const maxW = useBreakpointValue({ base: "100%", lg: "980" });
@@ -98,24 +96,6 @@ const Layout = ({ children }: { children: any }) => {
         pointerEvents="none" // <-- lets all clicks/touches pass through
         bgGradient={`radial-gradient(ellipse at 50% -10%, ${ambientColor} 10%, transparent 50%)`}
       />
-      <Box
-        position="absolute"
-        top={{ base: "3%", lg: "5%" }}
-        //right="calc(50% - 950px)"
-        w="100%"
-        filter={{ base: "opacity(0.5)", lg: "opacity(0.3)" }}
-        zIndex={0}
-        pointerEvents="none"
-      >
-        <Image
-          src={gridPattern}
-          alt="Grid background pattern"
-          width={2000}
-          height={420}
-          priority
-          style={{ width: "100%", height: "auto" }}
-        />
-      </Box>
       <Header />
 
       {loadingStatus === "pending" && (

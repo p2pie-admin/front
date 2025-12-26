@@ -1,4 +1,4 @@
-import { Box, VStack } from "@chakra-ui/react";
+import { Box, VStack, Text } from "@chakra-ui/react";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
 import { IPm } from "../../types/selector";
 import { pmsToSlug } from "../main/side/selector/section/PmGroup/helper";
@@ -7,14 +7,15 @@ import { initParserFetcher } from "../../services/fetchers";
 import { format } from "../../redux/amountsHelper";
 import Dir from "./Dir";
 import { useTranslation } from "next-i18next";
-import SimilarMass from "./SimilarMass";
+
 import { IMassDirTextId } from "../../types/mass";
 import renderSimilarMass from "./SimilarMass";
 import { buildRateString } from "../shared/helper";
+import { t } from "i18next";
 
 const MAX_TO_SHOW = 4;
 
-const Similar = ({
+const SimilarList = ({
   similarPmPairs,
   givePm,
   getPm,
@@ -69,48 +70,61 @@ const Similar = ({
   });
 
   return (
-    <Box3D px="4" w="100%" h={{ base: "fit-content", lg: "416px" }}>
-      <ResponsiveText mt="5" variant="no_contrast">
+    <Box h={{ base: "fit-content" }}>
+      <ResponsiveText mt="6" variant="contrast" mb="4">
         {t("main:similarDirs")}
       </ResponsiveText>
-      {similarMass}
-      {similarPmPairs
-        .slice(0, !similarMass ? MAX_TO_SHOW : 3)
-        .map((pair, index) => {
-          const slug = pmsToSlug({
-            givePm: pair[0],
-            getPm: pair[1],
-          });
+      <VStack gap="4" w="100%">
+        {similarMass}
 
-          const rateData = data?.[index] && renderRate(pair, data[index]);
+        {similarPmPairs
+          .slice(0, !similarMass ? MAX_TO_SHOW : 3)
+          .map((pair, index) => {
+            const slug = pmsToSlug({
+              givePm: pair[0],
+              getPm: pair[1],
+            });
 
-          return (
-            <VStack spacing={4} align="stretch" my="4" key={slug + index}>
+            const rateData = data?.[index] && renderRate(pair, data[index]);
+
+            return (
               <Dir
+                key={slug + index}
                 fullHeight
                 givePm={pair[0]}
                 getPm={pair[1]}
                 slug={slug}
                 bottomLeft={
                   rateData ? (
-                    <ResponsiveText size="xs" variant="no_contrast">
+                    <Text
+                      fontSize="sm"
+                      whiteSpace={"nowrap"}
+                      variant="no_contrast"
+                      mt="1"
+                    >
                       {`${t("main:exchangers")} ${rateData.amountOfCourses}`}
-                    </ResponsiveText>
+                    </Text>
                   ) : null
                 }
                 bottomRight={
                   rateData ? (
-                    <ResponsiveText size="xs" variant="no_contrast">
+                    <Text
+                      whiteSpace={"nowrap"}
+                      fontSize="sm"
+                      variant="no_contrast"
+                      textAlign="end"
+                      mt="1"
+                    >
                       {rateData.rateText}
-                    </ResponsiveText>
+                    </Text>
                   ) : null
                 }
               />
-            </VStack>
-          );
-        })}
-    </Box3D>
+            );
+          })}
+      </VStack>
+    </Box>
   );
 };
 
-export default Similar;
+export default SimilarList;

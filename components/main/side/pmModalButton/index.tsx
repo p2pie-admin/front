@@ -61,9 +61,14 @@ const PmModalButton = () => {
       }
     >
       <SelectorModal id={side || ""} />
-      <ResponsiveText size="md" variant="primary">
+      <Text
+        fontSize="lg"
+        color="peach.200"
+        fontWeight="semibold"
+        fontFamily="Montserrat, sans-serif"
+      >
         {!pms?.length ? unselectedPmText : currencyCode}
-      </ResponsiveText>
+      </Text>
 
       {/* {pms?.[0]?.subgroup_name && ( // tag
         <Box

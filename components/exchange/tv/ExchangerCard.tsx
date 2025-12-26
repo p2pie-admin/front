@@ -12,7 +12,7 @@ import {
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { FaStar } from "react-icons/fa";
-import { capitalize } from "../side/selector/section/PmGroup/helper";
+import { capitalize } from "../../main/side/selector/section/PmGroup/helper";
 import { addSpaces, localFormat, R } from "../../../redux/amountsHelper";
 import { redirect } from "../../../redux/thunks";
 import { IRate } from "../../../types/rates";
@@ -81,9 +81,19 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
   const isMobile = useIsMobile();
   if (!rate) return <></>;
 
-  const { display_name, name, course, min, max, ref_link, logo, last_time_updated } =
-    rate;
-  const displayName = display_name || name;
+  const {
+    display_name,
+    name,
+    course,
+    min,
+    max,
+    ref_link,
+    logo,
+    last_time_updated,
+  } = rate;
+  const displayName = display_name || name || "";
+  const displayNameShort =
+    displayName.length > 15 ? `${displayName.slice(0, 15)}...` : displayName;
   const givePm = useAppSelector((state) => state.main.givePm);
   const getPm = useAppSelector((state) => state.main.getPm);
   const cityCode = useAppSelector((state) => state.main.city.codes[0]);
@@ -133,7 +143,7 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
         <HStack justifyContent={isMobile ? "start" : "space-between"}>
           <HStack w="100%" justifyContent="space-between">
             <ExchangerName
-              name={displayName}
+              name={displayNameShort}
               logo={logo}
               admin_rating={rate.admin_rating}
             />
@@ -151,12 +161,12 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
           </ResponsiveText>
         </Box>
       </Box>
-
-      {isMobile ? (
+      <MobileParameters parameterCodes={rate.parameterCodes} />
+      {/* {isMobile ? (
         <MobileParameters parameterCodes={rate.parameterCodes} />
       ) : (
         <DesktopParameters parameterCodes={rate.parameterCodes} />
-      )}
+      )} */}
     </VStack>
   );
 };

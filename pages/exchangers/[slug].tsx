@@ -1,7 +1,8 @@
-import { Center, Spinner } from "@chakra-ui/react";
+import { Center } from "@chakra-ui/react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import Exchanger from "../../components/exchangers/exchanger";
+import Loader from "../../components/shared/Loader";
 import {
   exchangerSlugToName,
   addExchangerCrossLinking,
@@ -57,7 +58,7 @@ export default function ExchangerPage({
         minW="100"
         minH="100"
       >
-        <Spinner size="xl" color="bg.500" />
+        <Loader size="xl" />
       </Center>
     );
   }

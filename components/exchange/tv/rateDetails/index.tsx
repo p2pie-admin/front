@@ -35,7 +35,7 @@ import TagBadges from "../../../exchangers/exchanger/exchangerTopPanel/TagBadges
 import ReviewStats from "../../../exchangers/exchanger/exchangerStats/ReviewsStats";
 import WorkingTimeStats from "../../../exchangers/exchanger/exchangerStats/WorkingTimeStats";
 import { locale } from "../../../../services/utils";
-import { capitalize } from "../../side/selector/section/PmGroup/helper";
+import { capitalize } from "../../../main/side/selector/section/PmGroup/helper";
 import FoundError from "../../../articles/pmArticle/FoundError";
 import ErrorWrapper from "../../../shared/ErrorWrapper";
 

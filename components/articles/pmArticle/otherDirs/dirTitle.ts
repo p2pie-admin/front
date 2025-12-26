@@ -1,7 +1,7 @@
 import { capitalize } from "../../../main/side/selector/section/PmGroup/helper";
 import { IPm } from "../../../../types/selector";
 import { IPmPairs } from "../../../../types/exchange";
-import { curNames } from "../../../../redux/amountsHelper";
+import { codeToRuName } from "../../../../redux/amountsHelper";
 import { t } from "i18next";
 
 const pmDisplayName = (pm?: IPm | null) =>
@@ -11,10 +11,7 @@ const pmDisplayName = (pm?: IPm | null) =>
           pm.section == "cash" ? "" : pm?.ru_name || pm?.en_name,
           pm?.subgroup_name,
           pm.section == "cash"
-            ? curNames?.[
-                (pm?.currency?.code.toLowerCase() as keyof typeof curNames) ||
-                  ""
-              ].ru_name
+            ? codeToRuName(pm?.currency?.code)
             : "",
         ]
           .filter(Boolean)
