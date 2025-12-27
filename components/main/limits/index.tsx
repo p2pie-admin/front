@@ -32,7 +32,6 @@ import { setAmount } from "../../../redux/mainReducer";
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { BsArrowLeftShort, BsArrowRightShort } from "react-icons/bs";
 import Thumb from "./Thumb";
-import side from "../side";
 
 import { useRouter } from "next/router";
 const CustomRangeSlider = ({

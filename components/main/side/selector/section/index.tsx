@@ -46,7 +46,7 @@ const Section = ({
   visiblePmGroups.length = itemsToShow - 2;
   if (!pmGroups.length) return <></>;
   return (
-    <Box3D mb="4" position="relative">
+    <Box3D mb="4" position="relative" px="1">
       <RegularBox
         position="sticky"
         top="-0.5"

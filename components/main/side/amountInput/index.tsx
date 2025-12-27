@@ -8,7 +8,13 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { R } from "../../../../redux/amountsHelper";
 import { setAmount, setSide } from "../../../../redux/mainReducer";
@@ -64,6 +70,13 @@ const AmountInput = () => {
     dispatch(setAmount({ side, str: str.replace(",", "."), num }));
   };
 
+  const handleSideSelect = () => {
+    dispatch(setSide(side));
+    if (stringValue.length > 11) return;
+    if (!stringValue.trim() && !value) return;
+    dispatch(setAmount({ side, num: value, str: String(value) }));
+  };
+
   return (
     <>
       <NumberInput
@@ -74,7 +87,7 @@ const AmountInput = () => {
         isValidCharacter={(v) => !!v.match(/^[Ee0-9+\.,]$/)}
         variant="unstyled"
         onChange={onAmountChange}
-        onClick={() => dispatch(setSide(side))}
+        onClick={handleSideSelect}
         minW="10"
         zIndex="3"
         value={stringValue.length > 11 ? "✖" : stringValue}
@@ -84,18 +97,19 @@ const AmountInput = () => {
         min={0} // no negative
         position="relative"
       >
-        <Box
-          position="absolute"
-          top="50%"
-          transform="translateY(-50%) scaleX(-1)"
-          right={`${8 + textWidth}px`}
-          zIndex="3"
-          display={isActive ? "block" : "none"}
-          borderRadius="50%"
-          bgColor="bg.500"
-          w="1"
-          h="1"
-        />
+        {isEdited && !!value && (
+          <Box
+            position="absolute"
+            top="50%"
+            transform="translateY(-50%) scaleX(-1)"
+            right={`${8 + textWidth}px`}
+            zIndex="3"
+            display={isActive ? "block" : "none"}
+            color="bg.500"
+          >
+            <RxDrawingPinFilled size="0.8rem" />
+          </Box>
+        )}
 
         <NumberInputField
           p="0"

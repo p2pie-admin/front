@@ -15,7 +15,7 @@ export const SubButton = ({
   <Button
     w="100%"
     size="sm"
-    filter={shaded ? "opacity(0.5) grayscale(0.8)" : "none"}
+    disabled={shaded}
     gridColumn={`span ${
       pm.subgroup_name && pm.subgroup_name.length > 4 ? 2 : 1
     }`}

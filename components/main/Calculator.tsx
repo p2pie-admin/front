@@ -3,23 +3,17 @@ import SideContext from "../shared/contexts/SideContext";
 import ReverseButton from "./ReverseButton";
 import Side from "./side";
 
-const Calculator = ({
-  givePmHasArticle,
-  getPmHasArticle,
-}: {
-  givePmHasArticle: boolean;
-  getPmHasArticle: boolean;
-}) => {
+const Calculator = () => {
   return (
     <Box>
       <SideContext.Provider value={"give"}>
-        <Side pmHasArticle={givePmHasArticle} />
+        <Side />
       </SideContext.Provider>
 
       <ReverseButton />
 
       <SideContext.Provider value={"get"}>
-        <Side pmHasArticle={getPmHasArticle} />
+        <Side />
       </SideContext.Provider>
     </Box>
   );

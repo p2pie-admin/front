@@ -8,7 +8,7 @@ import SideContext from "../../../shared/contexts/SideContext";
 
 const renderHint = (leftPart: string, amount?: number, currency?: string) => {
   if (!amount) return;
-  return `${leftPart || ""} ${addSpaces(String(R(amount, 2)))} ${
+  return `${leftPart || ""} ${addSpaces(String(R(amount, 1)))} ${
     currency || ""
   }`;
 };
@@ -24,14 +24,28 @@ const Fiat = ({
 }) => {
   const side = useContext(SideContext) as "give" | "get";
   const toUsd = useAppSelector((state) => state.main.ccRates?.[`${side}ToUSD`]);
+  const ccPair = useAppSelector((state) => state.main.ccRatesPair);
+  const giveCur = useAppSelector((state) =>
+    state.main.givePm?.currency?.code?.toUpperCase()
+  );
+  const getCur = useAppSelector((state) =>
+    state.main.getPm?.currency?.code?.toUpperCase()
+  );
   const sideCurrencyCode = useAppSelector((state) =>
     state.main[`${side}Pm`]?.currency.code.toUpperCase()
   );
   const isEdited = useAppSelector((state) => !!state.main.amountInput);
 
-  const Min = R(min?.[side] || 0, 2);
-  const Max = R(max?.[side] || 0, 2);
-  const toUSD = toUsd && sideCurrencyCode !== "USD" ? (1 / toUsd) * value : 0;
+  const Min = min?.[side] || 0;
+  const Max = max?.[side] || 0;
+  const expectedPair = giveCur && getCur ? `${giveCur}_${getCur}` : undefined;
+  const hasFreshRates = !!expectedPair && expectedPair === ccPair;
+  const toUSD =
+    sideCurrencyCode === "USD"
+      ? value
+      : hasFreshRates && toUsd
+      ? (1 / toUsd) * value
+      : undefined;
 
   return (
     <HStack

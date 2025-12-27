@@ -8,6 +8,7 @@ import {
   Center,
   useColorModeValue,
   useToken,
+  Divider,
 } from "@chakra-ui/react";
 import { Box3D } from "../../styles/theme/custom";
 
@@ -82,6 +83,7 @@ const Exchange = ({
   const dir = `${givePm.code}_${getPm.code}`;
   const curPair = `${givePm.currency.code}_${getPm.currency.code}`;
   const isLong = dirText?.h1 ? dirText?.h1.length > 30 : true;
+  const h1 = dirText?.h1;
 
   useEffect(() => {
     batch(() => {
@@ -126,50 +128,63 @@ const Exchange = ({
       <ColumnGrid>
         <Column index={0}>
           {dirText?.header && (
-            <Heading
+            <Box
               as="h2"
               fontSize={{
-                base: dirText.header.length > 32 ? "sm" : "md",
-                lg: dirText.header.length > 32 ? "md" : "lg",
+                base: (h1?.length || 30) > 32 ? "sm" : "md",
+                lg: (h1?.length || 30) > 32 ? "md" : "lg",
               }}
               color="bg.300"
               fontWeight="normal"
               mt="0"
-              mb="4"
+              mb="2"
             >
               {`Курс ${codeToRuName2(giveCur)} к ${codeToRuName3(
                 getCur
               )} на сегодня`}
-            </Heading>
+            </Box>
           )}
           <Chart giveCur={giveCur} getCur={getCur} />
-          <VStack mt="4" w="100%">
-            {similarPmPairs && (
-              <SimilarList
-                similarPmPairs={similarPmPairs}
-                givePm={givePm}
-                getPm={getPm}
-                dirTextIds={dirTextIds}
-              />
-            )}
-          </VStack>
+          <Divider mt="4" mb="4" />
+          <Box
+            as="h2"
+            fontSize={{
+              base: (h1?.length || 30) > 32 ? "sm" : "md",
+              lg: (h1?.length || 30) > 32 ? "md" : "lg",
+            }}
+            color="bg.300"
+            fontWeight="normal"
+            mt="0"
+            mb="2"
+          >
+            Похожие направления:
+          </Box>
+
+          {similarPmPairs && (
+            <SimilarList
+              similarPmPairs={similarPmPairs}
+              givePm={givePm}
+              getPm={getPm}
+              dirTextIds={dirTextIds}
+            />
+          )}
         </Column>
 
         <Column index={1}>
-          {dirText?.header && (
-            <Heading
+          {h1 && (
+            <Box
               as="h2"
               fontSize={{
-                base: dirText.header.length > 32 ? "sm" : "md",
-                lg: dirText.header.length > 32 ? "md" : "lg",
+                base: h1.length > 32 ? "sm" : "md",
+                lg: h1.length > 32 ? "md" : "lg",
               }}
               color="bg.300"
               fontWeight="normal"
               mt="0"
-              mb="4"
+              mb="2"
             >
-              <TextToHTML text={dirText.h1} />
-            </Heading>
+              <TextToHTML text={h1} />
+            </Box>
           )}
           <HStack
             mb="4"
@@ -177,10 +192,7 @@ const Exchange = ({
             gap="4"
             alignItems="stretch"
           >
-            <Calculator
-              givePmHasArticle={givePmData.exists}
-              getPmHasArticle={getPmData.exists}
-            />
+            <Calculator />
 
             <LimitsRange />
           </HStack>

@@ -51,6 +51,20 @@ const defaultCity = {
 const normalizeCityKey = (value?: string | null) =>
   value ? value.trim().toLowerCase() : "";
 
+const getCurrencyPair = (state: MainState) => {
+  const give = state.givePm?.currency?.code;
+  const get = state.getPm?.currency?.code;
+  if (!give || !get) return;
+  return `${give}_${get}`.toUpperCase();
+};
+
+const reverseCurrencyPair = (pair?: string) => {
+  if (!pair) return;
+  const [left, right] = pair.split("_");
+  if (!left || !right) return;
+  return `${right}_${left}`.toUpperCase();
+};
+
 const applyCityRateOverride = (rate: IRate, cityKey?: string) => {
   if (!cityKey) return rate;
   const override = rate.cityRates?.[cityKey]?.rate;
@@ -82,6 +96,7 @@ export interface MainState {
   toast: IToast;
   city: ICity;
   ccRates?: ICurrencyConverterRate;
+  ccRatesPair?: string;
   fingerprint?: IFingerprint;
   topParameters: IParameter[];
   massPmsFilter: string[];
@@ -135,6 +150,7 @@ export const mainSlice = createSlice({
       action: PayloadAction<{ pm?: IPm; side: ISide; shaded?: boolean }>
     ) => {
       const { pm, side, shaded } = action.payload;
+      const prevPair = getCurrencyPair(state);
       if (shaded) {
         const oppositeSide = side === "get" ? "give" : "get";
         state[`${oppositeSide}Pm`] = undefined;
@@ -143,6 +159,11 @@ export const mainSlice = createSlice({
       }
       state.dirRates = undefined;
       state[`${side}Pm`] = pm;
+      const nextPair = getCurrencyPair(state);
+      if (prevPair !== nextPair) {
+        state.ccRates = undefined;
+        state.ccRatesPair = undefined;
+      }
     },
 
     // свайпаем
@@ -180,6 +201,7 @@ export const mainSlice = createSlice({
         state.ccRates.dayTrend = -state.ccRates.dayTrend;
         state.ccRates.hourTrend = -state.ccRates.hourTrend;
       }
+      state.ccRatesPair = reverseCurrencyPair(state.ccRatesPair);
       state.amountOutputs = getAmountOutputs(state, 1);
     },
     updateScrollLock: (state: MainState, action: PayloadAction<boolean>) => {
@@ -228,6 +250,7 @@ export const mainSlice = createSlice({
       action: PayloadAction<ICurrencyConverterRate>
     ) => {
       state.ccRates = action.payload;
+      state.ccRatesPair = undefined;
     },
 
     setIP: (state: MainState, action: PayloadAction<string | undefined>) => {
@@ -352,7 +375,8 @@ export const mainSlice = createSlice({
       const rates = cityKey
         ? action.payload.map((rate) => applyCityRateOverride(rate, cityKey))
         : action.payload;
-      state.dirRates = rates;
+      const sortedRates = rates.slice().sort((a, b) => a.course - b.course);
+      state.dirRates = sortedRates;
       state.amountInput = undefined;
       state.loading = "fulfilled";
       state.dirRatesReloadTrigger = "auto";
@@ -374,7 +398,8 @@ export const mainSlice = createSlice({
       const rates = cityKey
         ? action.payload.map((rate) => applyCityRateOverride(rate, cityKey))
         : action.payload;
-      state.dirRates = rates;
+      const sortedRates = rates.slice().sort((a, b) => a.course - b.course);
+      state.dirRates = sortedRates;
       state.loading = "fulfilled";
       state.dirRatesReloadTrigger = "manual";
       const targetIndex = 0;
@@ -400,8 +425,12 @@ export const mainSlice = createSlice({
       const { data } = action.payload as {
         data: ICurrencyConverterRate;
       };
+      const pair = action.meta.arg?.curPair;
+      const fetchedPair = pair ? pair.toUpperCase() : undefined;
+      const expectedPair = getCurrencyPair(state);
+      if (!fetchedPair || !expectedPair || fetchedPair !== expectedPair) return;
       state.ccRates = data;
-      return;
+      state.ccRatesPair = fetchedPair;
     });
     builder.addCase(fetchTopParameters.fulfilled, (state, action) => {
       state.topParameters = action.payload || [];

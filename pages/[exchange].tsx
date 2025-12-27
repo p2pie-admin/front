@@ -66,7 +66,7 @@ export async function getStaticProps({
         loadArticleCodes(),
         loadMassDirTextIds({ isSell: true }),
       ]);
-    const dirs = limitedPossibleDirs(allPossibleDirs, "middle");
+    const dirs = limitedPossibleDirs(allPossibleDirs, "low");
     const slugToCodes = getSlugToCodes(dirs, pms);
 
     if (!pms || !Array.isArray(pms)) {

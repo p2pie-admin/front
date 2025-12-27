@@ -106,7 +106,7 @@ const RouteLoadingOverlay = () => {
   useEffect(() => {
     const show = () => {
       setMounted(true);
-      requestAnimationFrame(() => setActive(true));
+      setActive(true);
     };
 
     const hide = () => {

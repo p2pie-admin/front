@@ -3,29 +3,28 @@ import {
   Box,
   Button,
   Divider,
-  Flex,
   HStack,
   Table,
   TableContainer,
   Tbody,
+  Text,
   Td,
   Th,
   Thead,
   Tr,
   useColorModeValue,
   VStack,
+  Fade,
 } from "@chakra-ui/react";
-import { CustomBox3D } from "../../../../styles/theme/custom";
 import { addSpaces, R } from "../../../../redux/amountsHelper";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { IoInformationCircleOutline, IoWarningOutline } from "react-icons/io5";
-import { sendToast, triggerModal } from "../../../../redux/mainReducer";
+import { IoInformationCircleOutline } from "react-icons/io5";
+import { triggerModal } from "../../../../redux/mainReducer";
 import Parameter from "../TopParameter";
 import useSWR from "swr";
 import { initCMSFetcher } from "../../../../services/fetchers";
 import { exchangerQuery } from "../../../../services/queries";
 import { IExchanger } from "../../../../types/exchanger";
-import ExchangerTopPanel from "../../../exchangers/exchanger/exchangerTopPanel";
 import { exchangerNameToSlug } from "../../../exchangers/helper";
 import Link from "next/link";
 import ExchangerName from "../../../shared/ExchangerNameRating";
@@ -38,6 +37,7 @@ import { locale } from "../../../../services/utils";
 import { capitalize } from "../../../main/side/selector/section/PmGroup/helper";
 import FoundError from "../../../articles/pmArticle/FoundError";
 import ErrorWrapper from "../../../shared/ErrorWrapper";
+import exchanger from "../../../exchangers/exchanger";
 
 const cmsFetcher = initCMSFetcher();
 
@@ -49,21 +49,46 @@ const RateDetails = ({ rate }: { rate: IRate }) => {
   const mainColor = useColorModeValue("violet.700", "peach.300");
   const exchangerName = (rate?.display_name || rate?.name)?.trim();
   const dispatch = useAppDispatch();
+  const {
+    name: rateName,
+    display_name: rateDisplayName,
+    admin_rating: rateAdminRating,
+    logo: rateLogo,
+    ref_link: rateRefLink,
+  } = rate;
 
   const fetchExchanger = async (query: string, name: string) => {
-    const response = await cmsFetcher(query, { name });
-    return Array.isArray(response) ? (response[0] as IExchanger) : response;
+    const timeoutMs = 10000;
+    const response = await Promise.race([
+      cmsFetcher(query, { name }),
+      new Promise<null>((resolve) =>
+        setTimeout(() => resolve(null), timeoutMs)
+      ),
+    ]);
+    if (!response) return null;
+    if (Array.isArray(response)) {
+      return response.length ? (response[0] as IExchanger) : null;
+    }
+    return response as IExchanger;
   };
 
   const { data: exchanger, error } = useSWR<IExchanger | null>(
-    exchangerName ? [exchangerQuery, exchangerName] : null,
+    [exchangerQuery, rate?.name],
     fetchExchanger
   );
 
-  if (!rate || !givePm || !getPm || !exchanger)
+  const isLoading = !error && exchanger === undefined;
+  const isError = !!error || exchanger === null;
+
+  if (!rate || !givePm || !getPm) {
     return (
-      <ErrorWrapper isLoading={!exchanger} isError={!!error}></ErrorWrapper>
+      <ErrorWrapper
+        isError
+        primaryMessage="Missing rate data"
+        secondaryMessage="Please refresh and try again"
+      />
     );
+  }
   const rateProps = [
     {
       name: "Курс:",
@@ -87,16 +112,13 @@ const RateDetails = ({ rate }: { rate: IRate }) => {
     },
   ];
 
-  const {
-    name,
-    display_name,
-    admin_rating,
-    logo,
-    ref_link,
-    exchanger_tags,
-    reviews,
-    exchanger_card,
-  } = exchanger;
+  const baseName = rateDisplayName || rateName || exchangerName || "";
+  const baseLogo = rateLogo;
+  const baseAdminRating = rateAdminRating;
+
+  const exchangerSlug = exchanger?.name
+    ? exchangerNameToSlug(exchanger.name)
+    : "";
 
   const giveCur = givePm.currency.code.toUpperCase();
   const getCur = getPm.currency.code.toUpperCase();
@@ -118,50 +140,89 @@ const RateDetails = ({ rate }: { rate: IRate }) => {
 
   return (
     <Box>
-      <Link
-        passHref
-        href={`/exchangers/${exchangerNameToSlug(name)}`}
-        color="inherit"
-        onClick={(e) => {
-          e.stopPropagation();
-          dispatch(triggerModal(undefined));
-        }}
-      >
+      {exchangerSlug ? (
+        <Link
+          passHref
+          href={`/exchangers/${exchangerSlug}`}
+          color="inherit"
+          onClick={(e) => {
+            e.stopPropagation();
+            dispatch(triggerModal(undefined));
+          }}
+        >
+          <HStack p="2" gap="2">
+            <Box color="peach.300" _hover={{ color: "peach.100" }}>
+              <ExchangerName
+                name={baseName}
+                admin_rating={baseAdminRating}
+                logo={baseLogo}
+              />
+            </Box>
+
+            {!!exchanger?.exchanger_tags?.length && (
+              <TagBadges tags={exchanger.exchanger_tags} />
+            )}
+
+            <HStack ml="auto" gap="2">
+              <Button size="sm" variant="no_contrast" p="2">
+                <IoInformationCircleOutline size="1.5rem" />
+              </Button>
+              <Box display={{ lg: "unset", base: "none" }}>
+                <ExchangeButton refLink={rateRefLink} />
+              </Box>
+            </HStack>
+          </HStack>
+        </Link>
+      ) : (
         <HStack p="2" gap="2">
-          <Box color="peach.300" _hover={{ color: "peach.100" }}>
+          <Box color="peach.300">
             <ExchangerName
-              name={display_name || name}
-              admin_rating={admin_rating}
-              logo={logo}
+              name={baseName}
+              admin_rating={baseAdminRating}
+              logo={baseLogo}
             />
           </Box>
-
-          <TagBadges tags={exchanger_tags} />
 
           <HStack ml="auto" gap="2">
             <Button size="sm" variant="no_contrast" p="2">
               <IoInformationCircleOutline size="1.5rem" />
             </Button>
             <Box display={{ lg: "unset", base: "none" }}>
-              <ExchangeButton refLink={ref_link} />
+              <ExchangeButton refLink={rateRefLink} />
             </Box>
           </HStack>
         </HStack>
-      </Link>
-      {!!(exchanger_card?.working_time || reviews?.length) && (
-        <VStack
-          alignItems="start"
-          gap="2"
-          bgColor="bg.1000"
-          my="4"
-          p="2"
-          mx="2"
-          borderRadius="lg"
-        >
-          <ReviewStats reviews={reviews} />
-          <WorkingTimeStats workingTime={exchanger_card?.working_time} />
-        </VStack>
       )}
+
+      {isError && (
+        <Box px="2" py="1">
+          <Text fontSize="sm" color="bg.400">
+            Нет деталей об обменнике
+          </Text>
+        </Box>
+      )}
+
+      <VStack
+        alignItems="start"
+        gap="2"
+        bgColor="bg.1000"
+        my="4"
+        p="2"
+        mx="2"
+        borderRadius="lg"
+        minH="12"
+      >
+        {isLoading ? (
+          <></>
+        ) : (
+          <Fade in={true}>
+            <ReviewStats reviews={exchanger?.reviews} />
+            <WorkingTimeStats
+              workingTime={exchanger?.exchanger_card?.working_time}
+            />
+          </Fade>
+        )}
+      </VStack>
 
       <TableContainer my="4" bgColor="bg.1000" borderRadius="md">
         <Table size="sm" colorScheme="bg">
@@ -189,7 +250,7 @@ const RateDetails = ({ rate }: { rate: IRate }) => {
       </TableContainer>
 
       <Box display={{ base: "unset", lg: "none" }}>
-        <ExchangeButton refLink={ref_link} fullWidth />
+        <ExchangeButton refLink={rateRefLink} fullWidth />
       </Box>
 
       <VStack mt="2" p="2" gap="2" alignItems="start">

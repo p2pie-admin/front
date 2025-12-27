@@ -220,7 +220,6 @@ const GlobalSearch = () => {
                     label={r.header}
                     color="bg.100"
                   >
-                    {" "}
                     {r.header.length > 32
                       ? r.header.slice(0, 32) + "..."
                       : r.header}

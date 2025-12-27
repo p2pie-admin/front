@@ -7,11 +7,9 @@ import SideContext from "../../shared/contexts/SideContext";
 import { capitalize } from "./selector/section/PmGroup/helper";
 import { useAppSelector } from "../../../redux/hooks";
 import { useTranslation } from "next-i18next";
-import Link from "next/link";
-import { IoInformationCircleOutline } from "react-icons/io5";
 import { codeToRuName, codeToRuName2 } from "../../../redux/amountsHelper";
 
-const Side = ({ pmHasArticle }: { pmHasArticle: boolean }) => {
+const Side = () => {
   const side = useContext(SideContext) as "give" | "get";
   const { t } = useTranslation();
 
@@ -50,13 +48,13 @@ const Side = ({ pmHasArticle }: { pmHasArticle: boolean }) => {
           alignItems="center"
         >
           <PmModalButton />
-          {pmHasArticle && pm ? (
+          {/* {pmHasArticle && pm ? (
             <Link href={articleHref} aria-label="Open article">
               <Box color="bg.600" display="flex" alignItems="center">
                 <IoInformationCircleOutline size="1.2rem" />
               </Box>
             </Link>
-          ) : null}
+          ) : null} */}
 
           <AmountInput />
         </HStack>

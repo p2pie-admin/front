@@ -71,10 +71,7 @@ const SimilarList = ({
 
   return (
     <Box h={{ base: "fit-content" }}>
-      <ResponsiveText mt="6" variant="contrast" mb="4">
-        {t("main:similarDirs")}
-      </ResponsiveText>
-      <VStack gap="4" w="100%">
+      <VStack gap="6" w="100%">
         {similarMass}
 
         {similarPmPairs

@@ -80,7 +80,7 @@ export async function getStaticProps({ params }: { params: { code: string } }) {
       loadPms(),
       loadPossibleDirs(),
     ]);
-    const dirs = limitedPossibleDirs(allPossibleDirs, "middle");
+    const dirs = limitedPossibleDirs(allPossibleDirs, "low");
 
     const slugToCodes = getSlugToCodes(dirs, pms);
 

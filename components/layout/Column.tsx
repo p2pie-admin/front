@@ -15,7 +15,8 @@ export const Column = ({
       variant="no_contrast"
       overflowY="none"
       p="4"
-      maxW="436px"
+      w="100%"
+      maxW={{ base: "100%", lg: "436px" }}
       gridRow={{ base: index, lg: "unset" }}
       gridColumn={{ base: "unset", lg: isFullWidth ? "1/3" : "unset" }}
     >

@@ -151,7 +151,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   const copy = buildCopy(currentCity, currentLocale, cityText);
 
   const pmMap = new Map((pms || []).map((pm) => [pm.code.toUpperCase(), pm]));
-  const dirs = limitedPossibleDirs(allPossibleDirs, "middle");
+  const dirs = limitedPossibleDirs(allPossibleDirs, "low");
   const codesToSlug =
     dirs && pms && pms.length && dirs.length ? getCodesToSlug(dirs, pms) : {};
 
@@ -240,7 +240,9 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
       const buy = [...data.buy].sort((a, b) => b.count - a.count);
       const sell = [...data.sell].sort((a, b) => b.count - a.count);
       const cashName =
-        currentLocale === "ru" ? codeToRuName(code) : codeToEnName(code) || code;
+        currentLocale === "ru"
+          ? codeToRuName(code)
+          : codeToEnName(code) || code;
       const totalCount =
         buy.reduce((sum, item) => sum + item.count, 0) +
         sell.reduce((sum, item) => sum + item.count, 0);
