@@ -2,12 +2,12 @@ import { Box, Grid, HStack, VStack, Text } from "@chakra-ui/react";
 import { BsArrowRightShort } from "react-icons/bs";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
 import { IPm } from "../../types/selector";
-import { getOtherMass } from "./exchangeHelper";
+import { getOtherMass } from "./helper";
 import PmIcon from "../shared/PmIcon";
 import SmartGrid from "../mass/table/SmartGrid";
 import { IMassDirTextId } from "../../types/mass";
 import PmName from "../shared/PmName";
-import { LinkWrapper } from "./pmLayout/LinkWrapper";
+import { LinkWrapper } from "../shared/LinkWrapper";
 
 const renderSimilarMass = ({
   similarPmPairs,
@@ -74,13 +74,14 @@ const renderSimilarMass = ({
     <LinkWrapper
       url={`/${side}/${cryptoPm.code.toLowerCase()}-for-${fiatPm.currency.code.toLowerCase()}`}
       exists
-      block
     >
       <Box3D
         px="4"
         py="2"
         cursor="pointer"
         transition="filter 0.2s ease-in"
+        display="block"
+        alignSelf="stretch"
         _hover={{ filter: "brightness(1.1)" }}
         variant="contrast"
         h="77px"

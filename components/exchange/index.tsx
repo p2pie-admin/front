@@ -37,10 +37,11 @@ import ColumnGrid from "../layout/ColumnGrid";
 import UniversalSeo from "../shared/UniversalSeo";
 import { ISEO } from "../../types/general";
 import { IMassDirTextId } from "../../types/mass";
-import CustomTitle from "../shared/CustomTitle";
+
 import { TextToHTML } from "../shared/helper";
 import { codeToRuName2, codeToRuName3 } from "../../redux/amountsHelper";
 import Loader from "../shared/Loader";
+import { TitleH2 } from "../shared/TitleH2";
 
 const Exchange = ({
   locale,
@@ -83,7 +84,6 @@ const Exchange = ({
   const dir = `${givePm.code}_${getPm.code}`;
   const curPair = `${givePm.currency.code}_${getPm.currency.code}`;
   const isLong = dirText?.h1 ? dirText?.h1.length > 30 : true;
-  const h1 = dirText?.h1;
 
   useEffect(() => {
     batch(() => {
@@ -127,38 +127,16 @@ const Exchange = ({
 
       <ColumnGrid>
         <Column index={0}>
-          {dirText?.header && (
-            <Box
-              as="h2"
-              fontSize={{
-                base: (h1?.length || 30) > 32 ? "sm" : "md",
-                lg: (h1?.length || 30) > 32 ? "md" : "lg",
-              }}
-              color="bg.300"
-              fontWeight="normal"
-              mt="0"
-              mb="2"
-            >
-              {`Курс ${codeToRuName2(giveCur)} к ${codeToRuName3(
-                getCur
-              )} на сегодня`}
-            </Box>
-          )}
+          <TitleH2 isLong={isLong}>
+            <>{`Курс ${codeToRuName2(giveCur)} к ${codeToRuName3(
+              getCur
+            )} на сегодня`}</>
+          </TitleH2>
+
           <Chart giveCur={giveCur} getCur={getCur} />
-          <Divider mt="4" mb="4" />
-          <Box
-            as="h2"
-            fontSize={{
-              base: (h1?.length || 30) > 32 ? "sm" : "md",
-              lg: (h1?.length || 30) > 32 ? "md" : "lg",
-            }}
-            color="bg.300"
-            fontWeight="normal"
-            mt="0"
-            mb="2"
-          >
-            Похожие направления:
-          </Box>
+          <TitleH2 isLong={isLong}>
+            <>Похожие направления:</>
+          </TitleH2>
 
           {similarPmPairs && (
             <SimilarList
@@ -171,21 +149,10 @@ const Exchange = ({
         </Column>
 
         <Column index={1}>
-          {h1 && (
-            <Box
-              as="h2"
-              fontSize={{
-                base: h1.length > 32 ? "sm" : "md",
-                lg: h1.length > 32 ? "md" : "lg",
-              }}
-              color="bg.300"
-              fontWeight="normal"
-              mt="0"
-              mb="2"
-            >
-              <TextToHTML text={h1} />
-            </Box>
-          )}
+          <TitleH2 isLong={isLong}>
+            <TextToHTML text={dirText?.h1} />
+          </TitleH2>
+
           <HStack
             mb="4"
             h={{ base: "unset", lg: "200px" }}
@@ -196,7 +163,9 @@ const Exchange = ({
 
             <LimitsRange />
           </HStack>
-
+          <TitleH2 isLong={isLong}>
+            <>Предложения обмена:</>
+          </TitleH2>
           <TV dir={dir} city={city} donorCity={donorCity} dirText={dirText} />
         </Column>
         <Box3D

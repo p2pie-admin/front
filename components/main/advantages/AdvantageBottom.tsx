@@ -13,7 +13,13 @@ export default function AdvantageBottom({
   icon: any;
 }) {
   return (
-    <HStack gap="4" color={hovering ? "peach.200" : "bg.200"} px="4">
+    <HStack
+      gap="4"
+      color={hovering ? "peach.200" : "bg.200"}
+      px="4"
+      mt="-8"
+      mb="4"
+    >
       {icon}
       <Box>
         <Text fontSize="lg">{title}</Text>

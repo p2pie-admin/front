@@ -22,14 +22,13 @@ import {
   exchangeToSlugCity,
   findSimilarPmPairs,
   generateExchangeSeo,
-} from "../components/exchange/exchangeHelper";
+} from "../components/exchange/helper";
 import { addHeadersToSearchIndex, addPathsToSitemap } from "../cache/cache";
 import { IMassDirTextId } from "../types/mass";
 import { initParserFetcher } from "../services/fetchers";
 import { ParserCityDirections } from "../types/map";
 
 const locale = (process.env.NEXT_PUBLIC_SITE_LANG || "ru") as "ru" | "en";
-const prerenderCountries = ["ukraine", "russia", "belarus"];
 
 const ExchangePage = (props: {
   seo: ISEO;

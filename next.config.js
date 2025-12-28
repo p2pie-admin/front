@@ -12,7 +12,7 @@ const cspHeader = `
   default-src 'self';
   script-src 'self' https://maps.googleapis.com https://maps.gstatic.com;
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-  img-src 'self' data: https://maps.googleapis.com https://maps.gstatic.com https://cms.p2pie.help https://cms2.p2pie.help https://cms.p2pie.com https://cms2.p2pie.com https://cms.1nginx.space https://cms2.1nginx.space https://cms.2nginx.space https://cms2.2nginx.space;
+  img-src 'self' data: https://maps.googleapis.com https://maps.gstatic.com https://cms.p2pie.help https://cms2.p2pie.help https://cms.p2pie.com https://cms2.p2pie.com https://cms.1nginx.space https://cms2.1nginx.space https://cms.2nginx.space https://cms2.2nginx.space https://converter.p2pie.help https://converter2.p2pie.help https://converter.p2pie.com https://converter2.p2pie.com https://converter.1nginx.space https://converter2.1nginx.space https://converter.2nginx.space https://converter2.2nginx.space;
   font-src 'self' https://fonts.gstatic.com;
   connect-src 'self' https://maps.googleapis.com https://cms.p2pie.help https://cms2.p2pie.help https://server.p2pie.help https://server2.p2pie.help https://converter.p2pie.help https://converter2.p2pie.help https://cms.p2pie.com https://cms2.p2pie.com https://server.p2pie.com https://server2.p2pie.com https://converter.p2pie.com https://converter2.p2pie.com https://cms.1nginx.space https://cms2.1nginx.space https://server.1nginx.space https://server2.1nginx.space https://converter.1nginx.space https://converter2.1nginx.space https://cms.2nginx.space https://cms2.2nginx.space https://server.2nginx.space https://server2.2nginx.space https://converter.2nginx.space https://converter2.2nginx.space;
   frame-src 'self' https://www.google.com;

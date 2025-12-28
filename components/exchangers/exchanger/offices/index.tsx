@@ -3,7 +3,7 @@ import { IExchangerOffice } from "../../../../types/exchanger";
 import { Box, Button, Divider, Flex, HStack, VStack } from "@chakra-ui/react";
 import { ResponsiveText } from "../../../../styles/theme/custom";
 import CustomImage from "../../../shared/CustomImage";
-import { LinkWrapper } from "../../../exchange/pmLayout/LinkWrapper";
+import { LinkWrapper } from "../../../shared/LinkWrapper";
 import { TbMapPinFilled } from "react-icons/tb";
 import { BoxWrapper, CustomHeader } from "../../../shared/BoxWrapper";
 

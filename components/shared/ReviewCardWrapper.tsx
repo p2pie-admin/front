@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react";
 import { ReactNode, useMemo } from "react";
 import { IExchangerReview } from "../../types/exchanger";
 import { BoxWrapper } from "./BoxWrapper";
-import { LinkWrapper } from "../exchange/pmLayout/LinkWrapper";
+import { LinkWrapper } from "./LinkWrapper";
 import { useColorModeValue } from "@chakra-ui/react";
 
 export const useReviewCardMeta = (review: IExchangerReview) => {

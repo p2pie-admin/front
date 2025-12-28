@@ -8,6 +8,7 @@ import {
   Icon,
   Tag,
   Wrap,
+  Text,
 } from "@chakra-ui/react";
 import BoringAvatar from "boring-avatars";
 import {
@@ -25,9 +26,14 @@ import { ReviewCardWrapper, useReviewCardMeta } from "./ReviewCardWrapper";
 type ReviewCompactCardProps = {
   review: IExchangerReview;
   href?: string;
+  needTag?: boolean;
 };
 
-export const ReviewCompactCard = ({ review, href }: ReviewCompactCardProps) => {
+export const ReviewCompactCard = ({
+  review,
+  href,
+  needTag = true,
+}: ReviewCompactCardProps) => {
   const meta = useReviewCardMeta(review);
 
   const { location, text, type, userAgent, updatedAt, isDispute } = review;
@@ -67,7 +73,7 @@ export const ReviewCompactCard = ({ review, href }: ReviewCompactCardProps) => {
   }, [isDispute]);
 
   const locationTag = useMemo(() => {
-    if (!location) return null;
+    if (!location || !needTag) return null;
 
     const label = typeof location === "string" ? location.trim() : "";
 
@@ -88,7 +94,7 @@ export const ReviewCompactCard = ({ review, href }: ReviewCompactCardProps) => {
       review={review}
       meta={meta}
       href={href}
-      minHeight="220px"
+      minHeight="240px"
       variant="contrast"
     >
       <ReviewBorder display="flex" flexDirection="column" flex="1">
@@ -169,7 +175,7 @@ export const ReviewCompactCard = ({ review, href }: ReviewCompactCardProps) => {
             {review.ipAddress && (
               <ResponsiveText size="xs">{`IP: ${review.ipAddress}`}</ResponsiveText>
             )}
-            <FormatedDate updatedAt={updatedAt} />
+            {href && <FormatedDate updatedAt={updatedAt} />}
           </HStack>
         </Flex>
         <Divider my="4" />
@@ -183,12 +189,14 @@ export const ReviewCompactCard = ({ review, href }: ReviewCompactCardProps) => {
             />
           )}
           {!meta.textIsLink && !!text && (
-            <Highlight
-              query={["читать далее"]}
-              styles={{ color: "peach.300", textDecoration: "underline" }}
-            >
-              {truncatedText || ""}
-            </Highlight>
+            <Text fontSize={{ base: "sm", lg: "md" }}>
+              <Highlight
+                query={["читать далее"]}
+                styles={{ color: "peach.300", textDecoration: "underline" }}
+              >
+                {truncatedText || ""}
+              </Highlight>
+            </Text>
           )}
         </Box>
       </ReviewBorder>

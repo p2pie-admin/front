@@ -12,10 +12,7 @@ import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 
 import NextLink from "next/link";
-import {
-  exchangeToSlugCity,
-  slugCityToExchange,
-} from "../exchange/exchangeHelper";
+import { exchangeToSlugCity, slugCityToExchange } from "../exchange/helper";
 import { serverLinkDEV, serverLinkPROD } from "../../services/utils";
 
 const courseFilterLink =

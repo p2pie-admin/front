@@ -4,7 +4,7 @@ import { IPmData, IPmLayout } from "../../../types/exchange";
 import { RiInformationLine } from "react-icons/ri";
 import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
 import PmName from "../../shared/PmName";
-import { LinkWrapper } from "./LinkWrapper";
+import { LinkWrapper } from "../../shared/LinkWrapper";
 
 export default function pmLayout({ pmData }: { pmData: IPmData }) {
   return (

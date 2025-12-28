@@ -12,7 +12,7 @@ import { IPm } from "../../../types/selector";
 import RateLink from "./RateLink";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { useRouter } from "next/router";
-import { slugCityToExchange } from "../../exchange/exchangeHelper";
+import { slugCityToExchange } from "../../exchange/helper";
 import { useAppSelector } from "../../../redux/hooks";
 
 const CryptoRates = ({

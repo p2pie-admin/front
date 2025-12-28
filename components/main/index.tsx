@@ -24,7 +24,7 @@ import CircularTexts from "./CircularTexts";
 import Popular from "./popular";
 import { useTranslation } from "next-i18next";
 import { IDirText } from "../../types/exchange";
-import MassSelector from "../mass/massSelectorSwiper";
+import MassSelector from "./massSelectorSwiper";
 import Advantages from "./advantages";
 import CustomTitle from "../shared/CustomTitle";
 import AllReviews from "./allReviews";
@@ -64,11 +64,11 @@ const MainPageContent = ({
           <CircularTexts mainTexts={mainTexts} />
         </Column>
         <Column index={1}>
-          <Calculator givePmHasArticle={false} getPmHasArticle={false} />
+          <Calculator />
         </Column>
         <Column index={4}>
           <Box p="2">
-            <ResponsiveText variant="contrast" whiteSpace="normal">
+            <ResponsiveText variant="contrast" whiteSpace="normal" size="lg">
               {rootText?.header || ""}
             </ResponsiveText>
             <Divider my="2" />
@@ -85,8 +85,15 @@ const MainPageContent = ({
       <GeneralStats />
 
       <CustomTitle
-        mt="32"
-        mb="16"
+        as="h2"
+        title={"Поиск курсов"}
+        subtitle={
+          "Мы собираем данные с сотен обменников, чтобы выбрать лучший курс для Вас"
+        }
+      />
+
+      <MassSelector />
+      <CustomTitle
         as="h2"
         title={"Преимущества"}
         subtitle={"Работаем на репутацию, а не на прибыль"}
@@ -95,16 +102,13 @@ const MainPageContent = ({
       <Advantages />
 
       <CustomTitle
-        mt="32"
-        mb="16"
+        fontSize={{ base: "xl", lg: "4xl" }}
         as="h2"
-        title={"Поиск курсов"}
-        subtitle={
-          "Мы собираем данные с сотен обменников, чтобы выбрать лучший курс для Вас"
-        }
+        mb="0"
+        ml="8"
+        title={"Репутация и доверие"}
+        subtitle={"Реальные отзывы клиентов"}
       />
-
-      <MassSelector initialSlug={"true"} />
 
       <AllReviews reviews={reviews} />
     </VStack>

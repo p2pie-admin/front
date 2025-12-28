@@ -13,7 +13,7 @@ import renderSimilarMass from "./SimilarMass";
 import { buildRateString } from "../shared/helper";
 import { t } from "i18next";
 
-const MAX_TO_SHOW = 4;
+const MAX_TO_SHOW = 5;
 
 const SimilarList = ({
   similarPmPairs,
@@ -71,11 +71,11 @@ const SimilarList = ({
 
   return (
     <Box h={{ base: "fit-content" }}>
-      <VStack gap="6" w="100%">
+      <VStack gap="3" w="100%">
         {similarMass}
 
         {similarPmPairs
-          .slice(0, !similarMass ? MAX_TO_SHOW : 3)
+          .slice(0, !similarMass ? MAX_TO_SHOW : MAX_TO_SHOW - 1)
           .map((pair, index) => {
             const slug = pmsToSlug({
               givePm: pair[0],

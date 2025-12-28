@@ -22,6 +22,8 @@ export default function ({ as, title, subtitle, ...props }: CustomTitleProps) {
 
   return (
     <Box
+      mt={{ base: "16", lg: "32" }}
+      mb={{ base: "8", lg: "16" }}
       zIndex="1"
       bgGradient={`radial-gradient(circle at 50% -10%, ${centerColor} 10%, ${peripheryColor} 70%)`}
       bgClip="text"

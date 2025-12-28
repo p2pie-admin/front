@@ -12,7 +12,7 @@ export default function PlotAdvantage({ hovering }: { hovering: boolean }) {
     <>
       <Center
         position="absolute"
-        top="30px"
+        top="20px"
         zIndex="3"
         w="100%"
         filter={`opacity(${hovering ? 0.35 : 0.2})`}
@@ -22,7 +22,7 @@ export default function PlotAdvantage({ hovering }: { hovering: boolean }) {
       </Center>
       <Center
         position="absolute"
-        top="50px"
+        top="40px"
         zIndex="3"
         w="100%"
         filter={`opacity(${hovering ? 0.55 : 0.4})`}
@@ -32,7 +32,7 @@ export default function PlotAdvantage({ hovering }: { hovering: boolean }) {
       </Center>
       <Center
         position="absolute"
-        top="70px"
+        top="60px"
         zIndex="4"
         w="100%"
         transition="transform 0.2s ease, filter 0.2s ease"

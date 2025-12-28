@@ -1,6 +1,6 @@
 import React from "react";
 import { useAppSelector } from "../../../redux/hooks";
-import { Box, HStack, Text } from "@chakra-ui/react";
+import { Box, HStack, ScaleFade, Text } from "@chakra-ui/react";
 import { keyframes } from "@emotion/react";
 import { format } from "../../../redux/amountsHelper";
 import Dot from "../../exchangers/Dot";
@@ -33,8 +33,10 @@ export default function PlotAdvantage({ hovering }: { hovering: boolean }) {
             {buildRateString({ course, giveCur, getCur })}
           </Text>
 
-          <Box animation={`${pulse} 1s ease-in-out infinite`}>
-            <Dot color="green" />
+          <Box animation={`${pulse} 1s ease-in-out infinite`} w="4">
+            <ScaleFade in={hovering} initialScale={0}>
+              <Dot color="green" />
+            </ScaleFade>
           </Box>
         </HStack>
       </Box>

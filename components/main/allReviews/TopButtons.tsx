@@ -1,11 +1,11 @@
 import { HStack, Button } from "@chakra-ui/react";
 import React from "react";
 import { TbPencilPlus } from "react-icons/tb";
-import { LinkWrapper } from "../../exchange/pmLayout/LinkWrapper";
+import { LinkWrapper } from "../../shared/LinkWrapper";
 
 export default function TopButtons() {
   return (
-    <HStack>
+    <HStack px="4">
       <LinkWrapper
         url={"/exchangers"}
         exists={true}
@@ -18,7 +18,7 @@ export default function TopButtons() {
           w="100%"
           onClick={(e) => e.stopPropagation()}
         >
-          Оставить отзыв на обменник
+          Оставить отзыв
         </Button>
       </LinkWrapper>
 

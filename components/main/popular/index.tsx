@@ -2,7 +2,8 @@ import { IPopularDirRates } from "../../../types/rates";
 import { IPm } from "../../../types/selector";
 
 import CryptoRates from "./CryptoRates";
-import { Box, Grid } from "@chakra-ui/react";
+import { Box, Grid, useBreakpointValue } from "@chakra-ui/react";
+import React, { useEffect, useRef, useState } from "react";
 import CryptoPm from "./CryptoPm";
 import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
 import { useTranslation } from "next-i18next";
@@ -16,12 +17,47 @@ const Popular = ({
   popularPms?: IPm[];
 }) => {
   const { t } = useTranslation();
+  const isBase = useBreakpointValue({ base: true, md: false });
+  const [isMidVisible, setIsMidVisible] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   if (!popularRates || !popularPms) return <></>;
 
+  useEffect(() => {
+    const node = containerRef.current;
+    if (!node || typeof window === "undefined" || !isBase) return;
+
+    let rafId: number | null = null;
+    const checkVisible = () => {
+      rafId = null;
+      const rect = node.getBoundingClientRect();
+      const viewportMid = window.innerHeight * 0.5;
+      const visible = rect.top <= viewportMid && rect.bottom >= viewportMid;
+      setIsMidVisible(visible);
+    };
+
+    const onScroll = () => {
+      if (rafId !== null) return;
+      rafId = window.requestAnimationFrame(checkVisible);
+    };
+
+    checkVisible();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (rafId !== null) window.cancelAnimationFrame(rafId);
+    };
+  }, [isBase]);
+
   return (
-    <Box position="relative" overflow="hidden">
-      <Box maxH="400" overflowY="auto">
+    <Box ref={containerRef} position="relative" overflowX="hidden">
+      <Box
+        maxH="400"
+        overflowY={isBase ? (isMidVisible ? "auto" : "hidden") : "auto"}
+        overscrollBehaviorY="auto"
+      >
         {Object.entries(popularRates).map(([cryptoCode, buySell], index) => {
           const cryptoPm = popularPms?.find((pm) => pm?.code == cryptoCode);
           if (!cryptoPm) return null; // ✅ Changed from <></> to null

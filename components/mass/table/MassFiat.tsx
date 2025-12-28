@@ -5,7 +5,7 @@ import { ResponsiveText } from "../../../styles/theme/custom";
 import { capitalize } from "../../main/side/selector/section/PmGroup/helper";
 import PmIcon from "../../shared/PmIcon";
 import { enrichLink } from "../../../redux/helper";
-import { LinkWrapper } from "../../exchange/pmLayout/LinkWrapper";
+import { LinkWrapper } from "../../shared/LinkWrapper";
 import { useContext } from "react";
 import MassSideContext from "../sideContext";
 

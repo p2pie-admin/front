@@ -1,11 +1,5 @@
 import { memo, useMemo, useState, useEffect } from "react";
-import {
-  Box,
-  HStack,
-  Text,
-  Button,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, HStack, Text, Button, useColorModeValue } from "@chakra-ui/react";
 import Image from "next/image";
 
 import { useAppSelector } from "../../redux/hooks";
@@ -69,6 +63,7 @@ const Chart = memo(
         position="relative"
         w="100%"
         h="200px"
+        mb="4"
       >
         <Image
           src={imgSrc}

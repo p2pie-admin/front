@@ -1,4 +1,4 @@
-import { Button, HStack, VStack } from "@chakra-ui/react";
+import { Box, Button, HStack, VStack } from "@chakra-ui/react";
 import { firstItems, secondItems, thirdItems } from "./items";
 import MassSwiper from "./massSwiper";
 import { FaSearch } from "react-icons/fa";
@@ -13,25 +13,22 @@ import {
   MdOutlineKeyboardArrowUp,
 } from "react-icons/md";
 import type { MassSwiperHandle } from "./massSwiper";
+import { LinkWrapper } from "../../shared/LinkWrapper";
 
-const MassSelector = ({ initialSlug }: { initialSlug?: string }) => {
-  const massSelectorSlug = initialSlug
-    ? ""
-    : useAppSelector((state) => state.main.massSelectorSlug);
+const MassSelector = () => {
+  // const massSelectorSlug = initialSlug
+  //   ? ""
+  //   : useAppSelector((state) => state.main.massSelectorSlug);
   const dispatch = useAppDispatch();
 
   let f = "";
   let s = "";
   let t = "";
 
-  if (massSelectorSlug) {
-    [f, s, t] = readSlug(massSelectorSlug);
-  } else {
-    // ✅ fallback to first items, not index 0 hardcoded
-    f = firstItems[0]?.id ?? "";
-    s = secondItems[0]?.id ?? "";
-    t = thirdItems[0]?.id ?? "";
-  }
+  // ✅ fallback to first items, not index 0 hardcoded
+  f = firstItems[0]?.id ?? "";
+  s = secondItems[0]?.id ?? "";
+  t = thirdItems[0]?.id ?? "";
 
   const [first, setFirst] = useState(f);
   const [second, setSecond] = useState(s);
@@ -108,12 +105,7 @@ const MassSelector = ({ initialSlug }: { initialSlug?: string }) => {
   }, [clearSequence]);
 
   return (
-    <VStack
-      gap={initialSlug ? "2" : "10"}
-      w="100%"
-      position="relative"
-      ref={containerRef}
-    >
+    <VStack gap={"2"} w="100%" position="relative" ref={containerRef}>
       <VStack
         left="-60px"
         position="absolute"
@@ -163,8 +155,9 @@ const MassSelector = ({ initialSlug }: { initialSlug?: string }) => {
           set={setThird}
         />
       </HStack>
-      {initialSlug ? (
-        <NextLink href={slug}>
+      {/* MOBILE */}
+      <Box display={{ base: "none", lg: "block" }}>
+        <LinkWrapper url={slug}>
           <Button
             color="white"
             variant="primary"
@@ -176,14 +169,16 @@ const MassSelector = ({ initialSlug }: { initialSlug?: string }) => {
           >
             <FaSearch size="1.5rem" />
           </Button>
-        </NextLink>
-      ) : (
+        </LinkWrapper>
+      </Box>
+
+      {/* DESKTOP */}
+      <Box display={{ base: "block", lg: "none" }}>
         <NextLink href={slug}>
           <Button
-            mt={"20"}
-            h={"70px"}
+            mt={"6"}
             variant="primary"
-            size="lg"
+            size="sm"
             onClick={() => dispatch(setMassSelectorSlug(slug))}
           >
             <HStack color="white">
@@ -194,7 +189,7 @@ const MassSelector = ({ initialSlug }: { initialSlug?: string }) => {
             </HStack>
           </Button>
         </NextLink>
-      )}
+      </Box>
     </VStack>
   );
 };

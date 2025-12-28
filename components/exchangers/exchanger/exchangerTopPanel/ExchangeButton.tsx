@@ -1,6 +1,6 @@
 import { Button } from "@chakra-ui/react";
 import { TbExternalLink } from "react-icons/tb";
-import { LinkWrapper } from "../../../exchange/pmLayout/LinkWrapper";
+import { LinkWrapper } from "../../../shared/LinkWrapper";
 import { enrichLink } from "../../../../redux/helper";
 import { useAppSelector } from "../../../../redux/hooks";
 
@@ -12,7 +12,6 @@ type Props = {
 const ExchangeButton = ({ refLink, fullWidth = false }: Props) => {
   const enrichedLink = useAppSelector((state) => {
     const { city, givePm, getPm } = state.main;
-
     return enrichLink({
       refLink,
       givePm,

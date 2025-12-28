@@ -4,7 +4,7 @@ import { BsArrowRightShort } from "react-icons/bs";
 import PmName from "../shared/PmName";
 import { IPm } from "../../types/selector";
 import { Box3D } from "../../styles/theme/custom";
-import { LinkWrapper } from "./pmLayout/LinkWrapper";
+import { LinkWrapper } from "../shared/LinkWrapper";
 
 const Dir = ({
   children,
@@ -27,13 +27,15 @@ const Dir = ({
   const rightContent = bottomRight ?? null;
 
   return (
-    <LinkWrapper url={`/${slug}`} exists block>
+    <LinkWrapper url={`/${slug}`} exists>
       <Box3D
         w="100%"
         flex="1"
         px="4"
         py="2"
         cursor="pointer"
+        display="block"
+        alignSelf="stretch"
         transition="filter 0.2s ease-in"
         _hover={{ filter: "brightness(1.1)" }}
         variant="contrast"
