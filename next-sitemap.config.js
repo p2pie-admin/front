@@ -23,35 +23,47 @@ function createRedis() {
 }
 
 const redis = createRedis();
+const allowCrawlers = String(process.env.ALLOW_CRAWLERS).toLowerCase() === "true";
 
 module.exports = {
   siteUrl: process.env.SITE_URL || "https://p2pie.com",
   generateRobotsTxt: true,
-  robotsTxtOptions: {
-    policies: [
-      {
-        userAgent: "Yandex",
-        allow: "/",
-        disallow: ["/cdn-cgi/"],
+  robotsTxtOptions: allowCrawlers
+    ? {
+        policies: [
+          {
+            userAgent: "Yandex",
+            allow: "/",
+            disallow: ["/cdn-cgi/"],
+          },
+          {
+            userAgent: "*",
+            allow: "/",
+          },
+        ],
+        additionalSitemaps: ["https://p2pie.com/sitemap.xml"],
+        transformRobotsTxt: async () =>
+          [
+            "User-agent: Yandex",
+            "Clean-param: utm_medium&utm_source&utm_campaign&ybaip&ctime",
+            "Sitemap: https://p2pie.com/sitemap.xml",
+            "Disallow: /cdn-cgi/",
+            "",
+            "User-agent: *",
+            "Sitemap: https://p2pie.com/sitemap.xml",
+            "",
+          ].join("\n"),
+      }
+    : {
+        policies: [
+          {
+            userAgent: "*",
+            disallow: "/",
+          },
+        ],
+        transformRobotsTxt: async () =>
+          ["User-agent: *", "Disallow: /", ""].join("\n"),
       },
-      {
-        userAgent: "*",
-        allow: "/",
-      },
-    ],
-    additionalSitemaps: ["https://p2pie.com/sitemap.xml"],
-    transformRobotsTxt: async () =>
-      [
-        "User-agent: Yandex",
-        "Clean-param: utm_medium&utm_source&utm_campaign&ybaip&ctime",
-        "Sitemap: https://p2pie.com/sitemap.xml",
-        "Disallow: /cdn-cgi/",
-        "",
-        "User-agent: *",
-        "Sitemap: https://p2pie.com/sitemap.xml",
-        "",
-      ].join("\n"),
-  },
   exclude: ["/404"],
   // Collect extra paths from Redis
   additionalPaths: async () => {
