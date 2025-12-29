@@ -281,8 +281,10 @@ export const Swiper = (props: {
       gridTemplateColumns="1fr auto"
       gridGap={["2", "4"]}
       h={`${containerHeight}px`}
+      w="100%"
+      minW={0}
     >
-      <Box3D variant="extra_contrast" px="2" py="1">
+      <Box3D variant="extra_contrast" px="2" py="1" minW={0}>
         <ErrorWrapper
           isError={isError}
           isLoading={isLoading}
@@ -319,7 +321,7 @@ export const Swiper = (props: {
               dragTransition={{
                 power: inertiaPower,
                 timeConstant: inertiaTimeConstant,
-                modifyTarget: (target) => snapToNearest(target),
+                modifyTarget: (target: any) => snapToNearest(target),
               }}
               onDragTransitionEnd={selectVisibleIndex}
               animate={controls}
@@ -387,7 +389,7 @@ export const Swiper = (props: {
 
           <MotionBox
             position="absolute"
-            right="-2"
+            right={{ base: "0", md: "-2" }}
             top={`calc(${containerHeight / 2}px + 0.5rem)`}
             color={triangleColor}
             animate={arrowControls}

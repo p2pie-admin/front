@@ -171,7 +171,8 @@ const LimitsRange = () => {
     stickyAmount >= MIN && stickyAmount <= MAX ? mainColor : colorTrackInactive;
 
   const props = { mainCur, stickyAmount, MIN, MAX };
-  if (!MIN || !MAX) return <Box3D minW="40px" h="200px" />;
+  if (!MIN || !MAX)
+    return <Box3D minW="40px" minH="167px" h="100%" alignSelf="stretch" />;
 
   // --- LimitsRange (vertical layout) ---
   return (

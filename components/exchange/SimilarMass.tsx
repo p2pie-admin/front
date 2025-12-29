@@ -61,7 +61,7 @@ const renderSimilarMass = ({
         whiteSpace={"nowrap"}
         variant="no_contrast"
         mt="1"
-        alignSelf="end"
+        textAlign="start"
       >
         {`${
           side == "sell" ? "Продать" : "Купить"
@@ -74,6 +74,7 @@ const renderSimilarMass = ({
     <LinkWrapper
       url={`/${side}/${cryptoPm.code.toLowerCase()}-for-${fiatPm.currency.code.toLowerCase()}`}
       exists
+      fullWidth
     >
       <Box3D
         px="4"

@@ -11,6 +11,13 @@ function escapeRegex(str: string): string {
   return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
+const getEntryType = (entry: any) => {
+  const slug = String(entry?.slug || "");
+  if (slug.startsWith("exchangers/")) return "exchanger";
+  if (slug.startsWith("map/")) return "city";
+  return "exchange";
+};
+
 export function filterSearchResults(entries: any[] = [], query: string): any[] {
   if (!Array.isArray(entries) || !query.trim()) return [];
 
@@ -20,7 +27,7 @@ export function filterSearchResults(entries: any[] = [], query: string): any[] {
 
   const pattern = new RegExp(words.map(escapeRegex).join(".*"), "i");
 
-  return entries
+  const sorted = entries
     .filter((e) => {
       const header = normalize(e?.header || "");
 
@@ -60,4 +67,18 @@ export function filterSearchResults(entries: any[] = [], query: string): any[] {
       if (idxA !== idxB) return idxA - idxB;
       return ha.length - hb.length;
     });
+
+  const grouped: Record<string, any[]> = {
+    exchanger: [],
+    city: [],
+    exchange: [],
+  };
+
+  for (const entry of sorted) {
+    const type = getEntryType(entry);
+    if (!grouped[type]) continue;
+    if (grouped[type].length < 3) grouped[type].push(entry);
+  }
+
+  return [...grouped.exchanger, ...grouped.city, ...grouped.exchange];
 }

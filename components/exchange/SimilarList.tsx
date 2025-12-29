@@ -109,7 +109,7 @@ const SimilarList = ({
                       whiteSpace={"nowrap"}
                       fontSize="sm"
                       variant="no_contrast"
-                      textAlign="end"
+                      textAlign="start"
                       mt="1"
                     >
                       {rateData.rateText}

@@ -3,7 +3,6 @@ import {
   Drawer,
   DrawerOverlay,
   DrawerContent,
-  DrawerHeader,
   DrawerBody,
   DrawerCloseButton,
   useColorModeValue,
@@ -13,7 +12,6 @@ import React from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import NavBody from "../../nav/NavBody";
 import NavButton from "../../nav/NavButton";
-import NavHeading from "../../nav/NavHeading";
 
 const SwipeableDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -58,9 +56,6 @@ const SwipeableDrawer = () => {
           bgColor={bgColor}
         >
           <DrawerCloseButton color="bg.500" />
-          <DrawerHeader minH="14" py="2" px="8">
-            <NavHeading />
-          </DrawerHeader>
           <DrawerBody onClick={onClose}>
             <NavBody />
           </DrawerBody>

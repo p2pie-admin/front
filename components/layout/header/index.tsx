@@ -12,6 +12,7 @@ import Logo from "./Logo";
 import SwipeableDrawer from "./drawer";
 import Nav from "../nav";
 import NavHeading from "../nav/NavHeading";
+import GlobalSearch from "../nav/globalSearch";
 import CitySelector from "./city";
 import { transparentize } from "@chakra-ui/theme-tools";
 
@@ -39,6 +40,9 @@ const Header = () => {
 
         <HStack>
           <CitySelector />
+          <Box display={{ base: "block", xl: "none" }}>
+            <GlobalSearch />
+          </Box>
           <SwipeableDrawer />
 
           <Box display={{ base: "none", xl: "block" }}>

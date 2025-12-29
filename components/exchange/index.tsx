@@ -163,9 +163,12 @@ const Exchange = ({
 
             <LimitsRange />
           </HStack>
-          <TitleH2 isLong={isLong}>
-            <>Предложения обмена:</>
-          </TitleH2>
+          <Box display={{ base: "none", lg: "block" }}>
+            <TitleH2 isLong={isLong}>
+              <>Предложения обмена:</>
+            </TitleH2>
+          </Box>
+
           <TV dir={dir} city={city} donorCity={donorCity} dirText={dirText} />
         </Column>
         <Box3D

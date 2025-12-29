@@ -6,11 +6,13 @@ export const LinkWrapper = ({
   children,
   _blank = false,
   exists = true,
+  fullWidth = false,
 }: {
   children: ReactNode;
   exists?: boolean;
   url: string;
   _blank?: boolean;
+  fullWidth?: boolean;
 }) => {
   const normalizeHref = (href: string) => {
     if (!href) return href;
@@ -40,6 +42,8 @@ export const LinkWrapper = ({
   const isExternal =
     !!href && /^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(href) && !href.startsWith("/");
 
+  const blockStyle = fullWidth ? { display: "block", width: "100%" } : undefined;
+
   if (exists) {
     if (_blank || isExternal) {
       return (
@@ -47,13 +51,18 @@ export const LinkWrapper = ({
           href={href}
           target={_blank ? "_blank" : undefined}
           rel={_blank ? "nofollow noopener noreferrer" : undefined}
+          style={blockStyle}
         >
           {children}
         </a>
       );
     }
 
-    return <Link href={href}>{children}</Link>;
+    return (
+      <Link href={href} style={blockStyle}>
+        {children}
+      </Link>
+    );
   }
   return <>{children}</>;
 };

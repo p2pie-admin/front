@@ -62,7 +62,6 @@ const SectionEntries = ({
             justifyContent="start"
             fontWeight="medium"
             gap="2"
-            variant="ghost"
             color="bg.300"
             w="full"
           >
@@ -71,16 +70,11 @@ const SectionEntries = ({
               display={{ base: "grid", lg: "flex" }}
               gap="2"
               gridTemplateColumns={
-                direction == "sell" ? "3fr 1fr 1fr 1fr" : "1fr 1fr 3fr 1fr"
+                direction == "sell" ? "4fr 1fr 1fr 1fr" : "1fr 1fr 4fr 1fr"
               }
             >
               {renderEntryContent(entry)}
-              <ResponsiveText
-                color="peach.300"
-                size="xs"
-                fontWeight="semibold"
-                justifySelf="end"
-              >
+              <ResponsiveText color="bg.300" alignSelf="center" ml="auto">
                 {` (${entry.count})`}
               </ResponsiveText>
             </Box>
@@ -103,7 +97,6 @@ const SectionEntries = ({
                   justifyContent="start"
                   fontWeight="medium"
                   gap="2"
-                  variant="ghost"
                   color="bg.300"
                   w="full"
                 >
@@ -113,17 +106,12 @@ const SectionEntries = ({
                     gap="2"
                     gridTemplateColumns={
                       direction == "sell"
-                        ? "3fr 1fr 1fr 1fr"
-                        : "1fr 1fr 3fr 1fr"
+                        ? "4fr 1fr 1fr 1fr"
+                        : "1fr 1fr 4fr 1fr"
                     }
                   >
                     {renderEntryContent(entry)}
-                    <ResponsiveText
-                      color="peach.300"
-                      size="xs"
-                      fontWeight="semibold"
-                      justifySelf="end"
-                    >
+                    <ResponsiveText color="bg.300" alignSelf="center" ml="auto">
                       {` (${entry.count})`}
                     </ResponsiveText>
                   </Box>

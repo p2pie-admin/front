@@ -27,7 +27,7 @@ const Dir = ({
   const rightContent = bottomRight ?? null;
 
   return (
-    <LinkWrapper url={`/${slug}`} exists>
+    <LinkWrapper url={`/${slug}`} exists fullWidth>
       <Box3D
         w="100%"
         flex="1"

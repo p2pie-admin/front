@@ -54,23 +54,13 @@ export const FiatSelector = () => {
     convertSlugIntoMassDirText(slug, isSell);
 
   const buttonContentSmall = (
-    <ResponsiveText
-      overflow="hidden"
-      textOverflow="ellipsis"
-      variant="primary"
-      fontSize="xl"
-    >
+    <ResponsiveText overflow="hidden" textOverflow="ellipsis" fontSize="lg">
       {fiatCurrencies[selectedCurrency.code.toLowerCase() as FiatCode].symbol}
     </ResponsiveText>
   );
 
   const buttonContentFull = (
-    <ResponsiveText
-      overflow="hidden"
-      textOverflow="ellipsis"
-      variant="primary"
-      fontSize="xl"
-    >
+    <ResponsiveText overflow="hidden" textOverflow="ellipsis" fontSize="lg">
       {`за ${
         fiatCurrencies[selectedCurrency.code.toLowerCase() as FiatCode]?.[
           `${locale}_name`
@@ -86,6 +76,7 @@ export const FiatSelector = () => {
           as={Button}
           rightIcon={<IoIosArrowDown />}
           textAlign="left"
+          variant="outline"
           h="40px"
           ml="auto"
         >

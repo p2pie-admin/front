@@ -381,7 +381,7 @@ export const exchangersQuery = gql`
     exchangers(
       pagination: { start: 0, limit: 2000 }
       filters: {
-        status: { ne: "draft" }
+        status: { in: ["active", "suspended"] }
         ref_link: { notNull: true }
         rates_link: { notNull: true }
       }
