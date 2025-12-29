@@ -23,7 +23,7 @@ function createRedis() {
 }
 
 const redis = createRedis();
-const allowCrawlers = String(process.env.ALLOW_CRAWLERS).toLowerCase() === "true";
+const allowCrawlers = true;
 
 module.exports = {
   siteUrl: process.env.SITE_URL || "https://p2pie.com",
