@@ -191,8 +191,8 @@ const MassRate = ({
       <Grid
         {...gridCommonProps}
         display={{ base: "none", md: "grid" }}
-        gridTemplateColumns="1fr 3rem 100px 1fr 1fr"
-        columnGap={["2", "4"]}
+        gridTemplateColumns="3fr 3rem 100px 10px 4fr 3fr"
+        columnGap={["2", "6"]}
         px={2}
         py={1.5}
       >
@@ -220,6 +220,7 @@ const MassRate = ({
         <Rating rating={rate.admin_rating || 4.4} />
 
         {renderParametersBig("mobile")}
+        <Box />
         {renderRatesBig()}
 
         <MassFiat codes={rate.codes} fiatPms={fiatPms} ref_link={ref_link} />

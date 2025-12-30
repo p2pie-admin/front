@@ -120,7 +120,14 @@ export const pmLayoutsQuery = gql`
 `;
 export const exchangerQuery = gql`
   query ExchangerQuery($name: String!) {
-    exchangers(filters: { name: { eqi: $name } }) {
+    exchangers(
+      filters: {
+        name: { eqi: $name }
+        status: { in: ["active", "suspended"] }
+        ref_link: { notNull: true }
+        rates_link: { notNull: true }
+      }
+    ) {
       data {
         id
         attributes {

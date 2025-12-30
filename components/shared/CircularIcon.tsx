@@ -53,20 +53,29 @@ const CircularIcon = ({
     icon?.url ||
     "";
 
-  // Map size keyword to relative rem size
-  const sizeMap = { sm: "1.4rem", md: "1.5rem", lg: "2rem" };
+  // Map size keyword to relative rem size; bump base for mobile legibility
+  const sizeMap = {
+    sm: { base: "1.8rem", md: "1.4rem" },
+    md: { base: "2.1rem", md: "1.5rem" },
+    lg: { base: "2.6rem", md: "2rem" },
+  };
 
   return (
     <Box
       as="span"
       position="relative"
-      display="inline-block"
+      display="inline-flex"
+      alignItems="center"
+      justifyContent="center"
       w={sizeMap[size]}
       h={sizeMap[size]}
+      minW={sizeMap[size]}
+      minH={sizeMap[size]}
       borderRadius="50%"
       overflow="hidden"
       flexShrink={0}
       bg={colorHEX}
+      verticalAlign="middle"
       boxShadow={`0 0 5px 0px ${colorHEX}`} // glow directly here
     >
       {icon && (
@@ -76,7 +85,8 @@ const CircularIcon = ({
           alt={icon?.alternativeText || iconAlt || ""}
           width="100%"
           height="100%"
-          style={{ objectFit: "cover", filter }}
+          style={{ objectFit: "cover", objectPosition: "center", filter }}
+          display="block"
         />
       )}
     </Box>
