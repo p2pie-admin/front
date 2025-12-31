@@ -1,12 +1,14 @@
 import { Box, Center, Grid } from "@chakra-ui/react";
-import { useState, useMemo, useEffect, useCallback, useRef } from "react";
-import { IExchanger, IParserExchanger } from "../../types/exchanger";
+import { useState, useMemo, useEffect, useCallback } from "react";
+import { useRouter } from "next/router";
+import { IExchanger } from "../../types/exchanger";
 import { getStatus } from "./helper";
 import TopPanel from "./TopPanel";
 import ExchangersHeader from "./ExchangersHeader";
 import ExchangerLink from "./ExchangerLink";
 import { BoxWrapper } from "../shared/BoxWrapper";
 import Loader from "../shared/Loader";
+import Pagination from "../mass/table/Pagination";
 
 import UniversalSeo from "../shared/UniversalSeo";
 
@@ -15,10 +17,13 @@ import { ISEO } from "../../types/general";
 export default function ExchangersList({
   exchangers,
   seo,
+  initialPage,
 }: {
   exchangers: IExchanger[] | null;
   seo: ISEO;
+  initialPage: number;
 }) {
+  const router = useRouter();
   const [sortCriteria, setSortCriteria] = useState<
     "name" | "total_rates" | "admin_rating"
   >("name");
@@ -26,37 +31,6 @@ export default function ExchangersList({
   const [searchQuery, setSearchQuery] = useState("");
   const [loadingSearchSort, setLoadingSearchSort] = useState(false);
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
-  const [visibleCount, setVisibleCount] = useState(30);
-  const observerRef = useRef<IntersectionObserver | null>(null);
-
-  const loadMore = useCallback((node: HTMLDivElement | null) => {
-    if (observerRef.current) {
-      observerRef.current.disconnect();
-      observerRef.current = null;
-    }
-
-    if (!node || !(node instanceof Element)) {
-      return;
-    }
-
-    if (typeof IntersectionObserver === "undefined") {
-      return;
-    }
-
-    observerRef.current = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        setVisibleCount((prev) => prev + 30);
-      }
-    });
-
-    try {
-      observerRef.current.observe(node);
-    } catch (error) {
-      console.error("Failed to observe sentinel element", error);
-      observerRef.current.disconnect();
-      observerRef.current = null;
-    }
-  }, []);
 
   const toggleFilter = (status: string) => {
     setLoadingSearchSort(true);
@@ -130,16 +104,71 @@ export default function ExchangersList({
     return sorted;
   }, [filteredExchangers, sortCriteria, sortDirection]);
 
-  const visibleExchangers = useMemo(
-    () => sortedExchangers?.slice(0, visibleCount),
-    [sortedExchangers, visibleCount]
+  const itemsPerPage = 20;
+  const totalPages = Math.ceil((sortedExchangers?.length || 0) / itemsPerPage);
+  const rawPage = useMemo(() => {
+    if (!router.isReady) return initialPage;
+    const pageValue = Array.isArray(router.query.page)
+      ? router.query.page[0]
+      : router.query.page;
+    const parsed = Number.parseInt(pageValue || "1", 10);
+    return Number.isFinite(parsed) && parsed > 0 ? parsed : 1;
+  }, [router.isReady, router.query.page, initialPage]);
+
+  const currentPage = useMemo(
+    () => Math.min(Math.max(rawPage, 1), Math.max(totalPages, 1)),
+    [rawPage, totalPages]
   );
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedExchangers = sortedExchangers?.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
+
+  const setPage = useCallback(
+    (page: number) => {
+      if (!router.isReady) return;
+      const nextPage = Math.min(
+        Math.max(page, 1),
+        Math.max(totalPages, 1)
+      );
+      if (nextPage === rawPage) return;
+      const nextQuery = { ...router.query };
+      if (nextPage === 1) {
+        delete nextQuery.page;
+      } else {
+        nextQuery.page = String(nextPage);
+      }
+      router.push({ pathname: router.pathname, query: nextQuery });
+    },
+    [router.isReady, router.pathname, router.query, rawPage, totalPages]
+  );
+
+  const getPageHref = useCallback(
+    (page: number) =>
+      page > 1 ? `${router.pathname}?page=${page}` : router.pathname,
+    [router.pathname]
+  );
+
+  const effectiveSeo = useMemo(() => {
+    const canonicalSlug =
+      currentPage > 1 ? `exchangers?page=${currentPage}` : "exchangers";
+    return { ...seo, canonicalSlug };
+  }, [seo, currentPage]);
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    if (totalPages > 0 && rawPage > totalPages) {
+      setPage(totalPages);
+    }
+  }, [router.isReady, totalPages, rawPage, setPage]);
 
   if (!exchangers?.length) return <>no exchangers</>;
 
   return (
     <>
-      <UniversalSeo seo={seo} />
+      <UniversalSeo seo={effectiveSeo} />
 
       <BoxWrapper p="4" variant="no_contrast" mt="10" minH="100vh">
         <ExchangersHeader exchangers={exchangers} />
@@ -169,12 +198,19 @@ export default function ExchangersList({
                   md: "repeat(2, 1fr)",
                 }}
               >
-                {visibleExchangers?.map((exchanger) => (
+                {paginatedExchangers?.map((exchanger) => (
                   <ExchangerLink key={exchanger.id} exchanger={exchanger} />
                 ))}
               </Grid>
             )}
-            <div ref={loadMore} style={{ height: "1px" }} />
+            {totalPages > 1 && (
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setPage}
+                getPageHref={getPageHref}
+              />
+            )}
           </Box>
         </Box>
       </BoxWrapper>

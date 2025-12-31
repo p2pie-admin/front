@@ -26,7 +26,7 @@ import { IoMdInformationCircle } from "react-icons/io";
 import OfficeSearchInput from "./OfficeSearchInput";
 import { TbMapPinFilled } from "react-icons/tb";
 import ClosestCities from "./closest";
-import { ClosestCityMatch, isCloseByCoordinates } from "./helper";
+import { ClosestCityMatch, isCloseByCoordinates, getCitySlug } from "./helper";
 import Loader from "../shared/Loader";
 
 type CityMapViewProps = {
@@ -62,6 +62,7 @@ const CityMapView = ({
 }: CityMapViewProps) => {
   const dispatch = useAppDispatch();
   const [searchTerm, setSearchTerm] = useState("");
+  const citySlug = useMemo(() => getCitySlug(city), [city]);
 
   useEffect(() => {
     dispatch(setCity(city));
@@ -163,17 +164,17 @@ const CityMapView = ({
     > = [];
 
     exchangerList.forEach((exchanger) => {
-      const offices = Array.isArray(exchanger.offices)
-        ? exchanger.offices
-        : [];
+      const offices = Array.isArray(exchanger.offices) ? exchanger.offices : [];
 
       offices.forEach((office) => {
+        const officeCity = (office.city || "").toLowerCase();
+        if (!officeCity || officeCity !== citySlug) return;
         const position = parseCoordinates(office.coordinates);
         if (!position) return;
 
-        const searchIndex = `${exchanger.display_name || exchanger.name || ""} ${
-          office.address || ""
-        }`.toLowerCase();
+        const searchIndex = `${
+          exchanger.display_name || exchanger.name || ""
+        } ${office.address || ""}`.toLowerCase();
 
         preparedEntries.push({
           id: `${exchanger.id}-${office.id}`,
@@ -208,7 +209,7 @@ const CityMapView = ({
     });
 
     return result;
-  }, [exchangerList]);
+  }, [exchangerList, citySlug]);
 
   const [activeMarkerId, setActiveMarkerId] = useState<string | null>(null);
 
@@ -233,6 +234,8 @@ const CityMapView = ({
     );
   }, [city.coordinates, markers]);
 
+  const officesTotal = markers.length ? `(${markers.length})` : "";
+
   return (
     <Box>
       <BoxWrapper>
@@ -244,7 +247,7 @@ const CityMapView = ({
           w="100%"
         >
           <CustomHeader
-            text={`${cityText?.header || headings.h1} (${markers.length})`}
+            text={`${cityText?.header || headings.h1} ${officesTotal}`}
             as="h1"
             Icon={TbMapPinFilled}
           />
