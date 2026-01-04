@@ -22,13 +22,13 @@ export default function MyDocument() {
           crossOrigin="anonymous"
         />
 
-        {/* Optimized fonts with normal and bold weights */}
+        {/* Optimized fonts with normal, semibold, and bold weights */}
         <link
           href="https://fonts.googleapis.com/css2?family=Mozilla+Text:wght@400;700&text=-0123456789.,&display=swap"
           rel="stylesheet"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;700&family=Montserrat:wght@300;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;600;700&family=Montserrat:wght@300;600;700&display=swap"
           rel="stylesheet"
         />
 

@@ -57,12 +57,11 @@
 //     const isCash =
 //       (slug && slug.startsWith("cash-")) || slug.includes("-cash-");
 
-//     const [pms, possiblePairs, cities, pmLayouts, articleCodes, customDirText] =
+//     const [pms, possiblePairs, cities, articleCodes, customDirText] =
 //       await Promise.all([
 //         loadPms(),
 //         loadPossibleDirs(),
 //         isCash ? loadCities() : null,
-//         loadPmLayouts(locale),
 //         loadArticleCodes(),
 //         loadCustomDirText(locale, slug),
 //       ]);
@@ -112,10 +111,6 @@
 //     // первое : достаем коробки описания секций пм, это также ссылки на артиклы пм
 //     // и втрое : достаем шаблоны для направления с местами для вставки
 
-//     const givePmLayout =
-//       pmLayouts?.find((l) => l.section == givePm?.section) || null;
-//     const getPmLayout =
-//       pmLayouts?.find((l) => l.section == getPm?.section) || null;
 //     // const dirText =
 //     //   dirTexts?.find(
 //     //     (text) =>
@@ -142,13 +137,11 @@
 //     }
 //     const givePmData = {
 //       pm: givePm,
-//       pmLayout: givePmLayout,
 //       exists: giveExists,
 //       // possiblePairs: possiblePairs[givePm.code],
 //     } as IPmData;
 //     const getPmData = {
 //       pm: getPm,
-//       pmLayout: getPmLayout,
 //       exists: getExists,
 //       // possiblePairs: possiblePairs[getPm.code],
 //     } as IPmData;
@@ -259,18 +252,14 @@
 //     pms,
 //     possiblePairs,
 //     cities,
-//     pmLayoutsRu,
 //     dirTextsRu,
-//     pmLayoutsEn,
 //     dirTextsEn,
 //     articleCodes,
 //   ] = await Promise.all([
 //     loadPms(),
 //     loadPossibleDirs(),
 //     loadCities(),
-//     loadPmLayouts("ru"),
 //     loadDirsTexts("ru"),
-//     loadPmLayouts("en"),
 //     loadDirsTexts("en"),
 //     loadArticleCodes(),
 //   ]);

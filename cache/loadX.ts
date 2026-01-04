@@ -2,7 +2,6 @@ import { initCMSFetcher, initParserFetcher } from "../services/fetchers";
 import {
   TextBoxQuery,
   MainTextsQuery,
-  pmLayoutsQuery,
   dirsTextQuery,
   articleCodesQuery,
   // articlesQuery,
@@ -20,7 +19,7 @@ import {
 } from "../services/queries";
 import { getPmsFromSelector } from "./helper";
 import { cachedFetch } from "./cache";
-import { ICity, IDirText, IPmLayout } from "../types/exchange";
+import { ICity, IDirText } from "../types/exchange";
 import {
   exchangerNameToSlug,
   exchangerSlugToName,
@@ -40,7 +39,7 @@ export const TTL = {
   instant: 60 * 2,
   fast: 60 * 10,
   slow: 60 * 60,
-  slowest: 60 * 60 * 10,
+  slowest: 60, // временно делаем быстрым
   never: -1,
 };
 
@@ -60,13 +59,6 @@ export const loadMainTexts = () =>
 
 export const loadParserExchangers = () =>
   cachedFetch("exchangers", TTL.fast, () => parserFetcher("exchangers"));
-
-export const loadPmLayouts = () =>
-  cachedFetch(
-    `pmLayouts_${locale}`,
-    TTL.slow,
-    () => cmsFetcher(pmLayoutsQuery, { locale }) as Promise<IPmLayout[]>
-  );
 
 export const loadArticleCodes = () =>
   cachedFetch("articleCodes", TTL.slow, async () => {
@@ -201,17 +193,13 @@ export const loadFAQs = () =>
   });
 
 export const loadFAQbyCategoryCode = (code: string) =>
-  cachedFetch(
-    `faq_${code.toLowerCase()}_${locale}`,
-    TTL.slow,
-    async () => {
-      const res = (await cmsFetcher(FAQbyCategoryCodeQuery, {
-        code,
-        locale,
-      })) as IFaqCategory[] | null;
-      return res?.[0] || null;
-    }
-  );
+  cachedFetch(`faq_${code.toLowerCase()}_${locale}`, TTL.slow, async () => {
+    const res = (await cmsFetcher(FAQbyCategoryCodeQuery, {
+      code,
+      locale,
+    })) as IFaqCategory[] | null;
+    return res?.[0] || null;
+  });
 
 export const loadAllReviews = () =>
   cachedFetch(`all_reviews_${locale}`, TTL.fast, async () => {

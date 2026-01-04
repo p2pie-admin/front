@@ -45,15 +45,31 @@ const styles = {
     },
     h3: {
       fontSize: ["xl", "lg"],
-      my: "1",
-
+      my: "2",
+      fontWeight: "semibold",
       color: mode("bg.600", "peach.300")(props),
+    },
+    h4: {
+      fontSize: ["lg", "md"],
+      my: "2",
+      color: mode("bg.600", "bg.100")(props),
+      fontWeight: "semibold",
     },
     a: {
       color: mode("violet.700", "violet.300")(props),
       _hover: {
         textDecoration: "underline",
       },
+    },
+    ul: {
+      listStyleType: "disc",
+      listStylePosition: "outside",
+      pl: "6",
+      my: "2",
+    },
+    li: {
+      mb: "1",
+      lineHeight: "tall",
     },
   }),
 };

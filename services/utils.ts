@@ -1,6 +1,5 @@
 const isServerSide = typeof window === "undefined";
-const useInternal =
-  String(process.env.USE_INTERNAL).toLowerCase() === "true";
+const useInternal = String(process.env.USE_INTERNAL).toLowerCase() === "true";
 
 export const base = process.env.NEXT_PUBLIC_BASE;
 export const index =
@@ -12,7 +11,7 @@ export const cmsLinkPROD = `https://cms${index}.${base}`;
 
 export const converterLinkDEV = `https://converter${index}.${base}`;
 export const serverLinkDEV = `https://server${index}.${base}`;
-export const cmsLinkDEV = `https://cms${index}.${base}`;
+export const cmsLinkDEV = `https://cms${index}.${base}`; //`http://localhost:1337`;
 
 export const internalConverterLink = process.env.INTERNAL_CONVERTER_URL;
 export const internalServerLink = process.env.INTERNAL_SERVER_URL;

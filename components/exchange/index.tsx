@@ -31,7 +31,7 @@ import { batch } from "react-redux";
 import SimilarList from "./SimilarList";
 import { Column } from "../layout/Column";
 
-import { ICity, IDirText, IPmData, IPmLayout } from "../../types/exchange";
+import { ICity, IDirText, IPmData } from "../../types/exchange";
 import ColumnGrid from "../layout/ColumnGrid";
 
 import UniversalSeo from "../shared/UniversalSeo";

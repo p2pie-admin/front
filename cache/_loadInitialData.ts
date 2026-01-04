@@ -3,7 +3,6 @@
 //   IPossiblePmPair,
 //   IDirText,
 //   ICache,
-//   IPmLayout,
 //   ILocalData,
 // } from "../types/exchange";
 // import { IExchanger, IParserExchanger } from "../types/exchanger";
@@ -12,7 +11,6 @@
 // import {
 //   selectorQuery,
 //   citiesQuery,
-//   pmLayoutsQuery,
 //   dirsTextQuery,
 //   exchangersQuery,
 //   articleCodesQuery,
@@ -92,10 +90,6 @@
 // export const loadParserExchangers = () =>
 //   safeFetch("exchangers", () => parserFetcher("exchangers"));
 
-// export const loadPmLayouts = () =>
-//   safeFetch("pmLayouts", () => cmsFetcher(pmLayoutsQuery)) as Promise<
-//     IPmLayout[]
-//   >;
 // export const loadDirsTexts = () =>
 //   safeFetch("dirsTexts", () => cmsFetcher(dirsTextQuery)) as Promise<
 //     IDirText[]
@@ -157,14 +151,6 @@
 //     };
 //     return parserSettings?.cities;
 //   }) as Promise<ICity[]>;
-
-// export const fetchPmLayouts = async (
-//   locale: "en" | "ru"
-// ): Promise<IPmLayout[]> => {
-//   const fetcher = initCMSFetcher();
-//   const pmLayoutsRes = await fetcher(pmLayoutsQuery, { locale });
-//   return pmLayoutsRes as IPmLayout[];
-// };
 
 // export const fetchDirsTexts = async (
 //   locale: "en" | "ru"

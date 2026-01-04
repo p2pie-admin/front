@@ -7,19 +7,6 @@ export type ISectionName = "crypto" | "bank" | "cash" | "digital" | "transfer";
 //export type IDonors = { [key: string]: { [key: string]: string } };
 // {BTC_CASHRUB: {samara: "moscow"}}
 
-export interface IPmLayout {
-  id: string;
-  section: ISectionName;
-  description: string;
-}
-
-export interface IPmLayoutsData {
-  givePmLayout: IPmLayout;
-  getPmLayout: IPmLayout;
-  giveExists: boolean;
-  getExists: boolean;
-}
-
 export interface IDirText {
   text: string;
   seo_title: string;
@@ -39,13 +26,11 @@ export interface IPath {
 }
 
 export type ILocalData = {
-  pmLayouts: IPmLayout[];
   dirsTexts: IDirText[];
 };
 
 export type IPmData = {
   pm: IPm;
-  pmLayout?: IPmLayout;
   exists: boolean;
 };
 

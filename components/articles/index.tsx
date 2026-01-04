@@ -27,12 +27,12 @@ export default function ArticlesList({
       {!articles ? (
         <> Нет статей </>
       ) : (
-        <VStack gap="4">
+        <Grid gap="4" gridTemplateColumns="1fr 1fr 1fr">
           {articles.map((article) => {
             const key = article.id || article.code;
             return <ArticlePreview key={key} article={article} />;
           })}
-        </VStack>
+        </Grid>
       )}
     </>
   );

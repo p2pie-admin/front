@@ -11,7 +11,6 @@ import {
   loadPossibleDirs,
   loadCities,
   loadArticleCodes,
-  loadPmLayouts,
   loadCustomDirText,
   loadMassDirTextIds,
   limitedPossibleDirs,
@@ -56,12 +55,11 @@ export async function getStaticProps({
     const isCash =
       (slug && slug.startsWith("cash-")) || slug.includes("-cash-");
 
-    const [pms, allPossibleDirs, cities, pmLayouts, articleCodes, dirTextIds] =
+    const [pms, allPossibleDirs, cities, articleCodes, dirTextIds] =
       await Promise.all([
         loadPms(),
         loadPossibleDirs(),
         isCash ? loadCities() : null,
-        loadPmLayouts(),
         loadArticleCodes(),
         loadMassDirTextIds({ isSell: true }),
       ]);
@@ -107,11 +105,6 @@ export async function getStaticProps({
     );
     const customDirText = cityCustomDirText || defaultDirText || null;
 
-    const givePmLayout =
-      pmLayouts?.find((l) => l.section == givePm?.section) || null;
-    const getPmLayout =
-      pmLayouts?.find((l) => l.section == getPm?.section) || null;
-
     let [giveExists, getExists] = [false, false];
     if (articleCodes.length) {
       giveExists = !!articleCodes?.find(
@@ -124,12 +117,10 @@ export async function getStaticProps({
 
     const givePmData = {
       pm: givePm,
-      pmLayout: givePmLayout,
       exists: giveExists,
     } as IPmData;
     const getPmData = {
       pm: getPm,
-      pmLayout: getPmLayout,
       exists: getExists,
     } as IPmData;
 

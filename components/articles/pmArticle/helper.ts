@@ -12,7 +12,9 @@ export const addArticleCrossLinking = async (
   const chapters = await Promise.all(
     article.chapters.map(async (chapter) => ({
       ...chapter,
-      text: enrichText({ seen, text: chapter.text, articleCodes, pms }),
+      text: chapter.text
+        ? enrichText({ seen, text: chapter.text, articleCodes, pms })
+        : "",
     }))
   );
 

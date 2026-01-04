@@ -105,19 +105,6 @@ export const dirsTextQuery = gql`
   }
 `;
 
-export const pmLayoutsQuery = gql`
-  query pmLayout($locale: I18NLocaleCode) {
-    pmLayouts(locale: $locale) {
-      data {
-        id
-        attributes {
-          section
-          description
-        }
-      }
-    }
-  }
-`;
 export const exchangerQuery = gql`
   query ExchangerQuery($name: String!) {
     exchangers(
@@ -515,20 +502,6 @@ export const exchangersMapQuery = gql`
     }
   }
 `;
-
-// export const pmLayoutsQuery = gql`
-//   query pmLayout($locale: I18NLocaleCode, $sections: [String]) {
-//     pmLayouts(locale: $locale, filters: { section: { in: $sections } }) {
-//       data {
-//         id
-//         attributes {
-//           section
-//           description
-//         }
-//       }
-//     }
-//   }
-// `;
 
 export const selectorQuery = gql`
    query Selector {
