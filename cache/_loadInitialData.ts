@@ -14,7 +14,7 @@
 //   dirsTextQuery,
 //   exchangersQuery,
 //   articleCodesQuery,
-//   articlesQuery,
+//   blogQuery,
 //   articleQuery,
 //   MainTextsQuery,
 //   TextBoxQuery,
@@ -102,8 +102,8 @@
 //   return (await articleCodes).map((res) => res.code);
 // };
 
-// export const loadArticles = () =>
-//   safeFetch("articles", () => cmsFetcher(articlesQuery)) as Promise<IArticle[]>;
+// export const loadBlog = () =>
+//   safeFetch("articles", () => cmsFetcher(blogQuery)) as Promise<IArticle[]>;
 
 // export const loadArticle = (code: string, locale: "en" | "ru") =>
 //   safeFetch(`article_${code}_${locale}`, () =>

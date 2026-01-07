@@ -4,7 +4,7 @@ import {
   MainTextsQuery,
   dirsTextQuery,
   articleCodesQuery,
-  // articlesQuery,
+  // blogQuery,
   articleQuery,
   selectorQuery,
   exchangerQuery,
@@ -12,7 +12,7 @@ import {
   citiesQuery,
   massDirTextIdsQuery,
   massDirTextQuery,
-  articlesQuery,
+  blogQuery,
   FAQbyCategoryCodeQuery,
   FAQsQuery,
   allReviewsQuery,
@@ -66,9 +66,9 @@ export const loadArticleCodes = () =>
     return res.map((a: any) => a.code) as string[];
   });
 
-// export const loadArticles = async (locale: "en" | "ru") =>
+// export const loadBlog = async (locale: "en" | "ru") =>
 //   cachedFetch(`articles_${locale}`, TTL.slow, async () => {
-//     const articles = (await cmsFetcher(articlesQuery, { locale }))
+//     const articles = (await cmsFetcher(blogQuery, { locale }))
 //       ?.articles as IArticle[];
 
 //     await Promise.all(
@@ -146,9 +146,9 @@ export const loadExchangers = async () => {
   return cmsExchangers;
 };
 
-export const loadArticles = async () => {
+export const loadBlog = async () => {
   const articles = await cachedFetch("articles", TTL.fast, () =>
-    cmsFetcher(articlesQuery)
+    cmsFetcher(blogQuery)
   );
   return articles;
 };
@@ -186,9 +186,7 @@ export const loadCustomDirText = (slug: string) =>
 
 export const loadFAQs = () =>
   cachedFetch(`faqs_${locale}`, TTL.slow, async () => {
-    const res = (await cmsFetcher(FAQsQuery, { locale })) as
-      | IFaqCategory[]
-      | null;
+    const res = (await cmsFetcher(FAQsQuery)) as IFaqCategory[] | null;
     return res || [];
   });
 
@@ -196,7 +194,6 @@ export const loadFAQbyCategoryCode = (code: string) =>
   cachedFetch(`faq_${code.toLowerCase()}_${locale}`, TTL.slow, async () => {
     const res = (await cmsFetcher(FAQbyCategoryCodeQuery, {
       code,
-      locale,
     })) as IFaqCategory[] | null;
     return res?.[0] || null;
   });

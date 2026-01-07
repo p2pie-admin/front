@@ -549,12 +549,12 @@ export const citiesQuery = gql`
   }
 `;
 
-export const articlesQuery = gql`
+export const blogQuery = gql`
   query GetArticlesPreview($locale: I18NLocaleCode) {
     articles(
       locale: $locale
       pagination: { start: 0, limit: 1200 }
-      filters: { text: { notNull: true }, isBlog: { eq: true } }
+      filters: { text: { notNull: true }, type: { eq: "blog" } }
     ) {
       data {
         id
@@ -583,7 +583,11 @@ export const articleQuery = gql`
   query GetArticle($locale: I18NLocaleCode, $code: String!) {
     articles(
       locale: $locale
-      filters: { code: { eqi: $code } }
+
+      filters: {
+        code: { eqi: $code }
+        or: [{ type: { ne: "page" } }, { type: { null: true } }]
+      }
       pagination: { start: 0, limit: 1200 }
     ) {
       data {
@@ -616,7 +620,11 @@ export const articleQuery = gql`
 
 export const articleCodesQuery = gql`
   query Articles($locale: I18NLocaleCode) {
-    articles(locale: $locale, pagination: { start: 0, limit: 1000 }) {
+    articles(
+      locale: $locale
+      pagination: { start: 0, limit: 1000 }
+      filters: { or: [{ type: { ne: "page" } }, { type: { null: true } }] }
+    ) {
       data {
         attributes {
           code
@@ -874,9 +882,8 @@ export const massDirTextQuery = gql`
 `;
 
 export const FAQbyCategoryCodeQuery = gql`
-  query FAQbyCategoryCode($code: String, $locale: I18NLocaleCode) {
+  query FAQbyCategoryCode($code: String) {
     xFaqCategories(
-      locale: $locale
       pagination: { start: 0, limit: 200000 }
       filters: { code: { eqi: $code } }
     ) {
@@ -912,8 +919,8 @@ export const FAQbyCategoryCodeQuery = gql`
 `;
 
 export const FAQsQuery = gql`
-  query FAQs($locale: I18NLocaleCode) {
-    xFaqCategories(locale: $locale, pagination: { start: 0, limit: 200000 }) {
+  query FAQs {
+    xFaqCategories(pagination: { start: 0, limit: 200000 }) {
       data {
         id
         attributes {

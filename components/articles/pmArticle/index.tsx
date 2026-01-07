@@ -13,6 +13,7 @@ import TopImage from "./TopImage";
 import Stats from "./Stats";
 import { IPm } from "../../../types/selector";
 import { locale } from "../../../services/utils";
+import ContentPreview from "../helper";
 
 const Article = ({
   seo,
@@ -33,9 +34,6 @@ const Article = ({
     return <>Nothing was found!</>;
   }
 
-  const [highlited, setHighlited] =
-    useState<React.RefObject<HTMLElement> | null>(null);
-
   // Stable refs for chapters
   const chapterRefs = useMemo(
     () => article.chapters.map(() => React.createRef<HTMLDivElement>()),
@@ -50,11 +48,6 @@ const Article = ({
   const timestampToDate = (ts?: string) => {
     const [y, m, d] = ts ? ts.split("T")[0].split("-") : ["-", "-", "-"];
     return `${d}.${m}.${y}`;
-  };
-
-  const executeScroll = (ref: React.RefObject<HTMLElement>) => {
-    ref.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-    setHighlited(ref);
   };
 
   const symbols = article.chapters.reduce(
@@ -73,6 +66,7 @@ const Article = ({
         mt={["2", "8"]}
         px={["2", "8"]}
         py={["4", "8"]}
+        position="relative"
       >
         <TopImage pm={pm} />
 
@@ -91,35 +85,14 @@ const Article = ({
         <Stats stats={article.stats} />
 
         {/* Table of contents */}
-        <Box>
-          {refChapters.map((chapter, idx) => (
-            <ResponsiveText
-              key={"chapterHeader:" + idx}
-              cursor="pointer"
-              fontWeight="bold"
-              size={"lg"}
-              color="peach.300"
-              _hover={{
-                color: "peach.50",
-              }}
-              whiteSpace="normal"
-              onClick={() => executeScroll(chapter.ref)}
-            >
-              {`• ${chapter.title}`}
-            </ResponsiveText>
-          ))}
-        </Box>
-
+        <ContentPreview refChapters={refChapters} />
         {/* Chapters */}
         <Box>
           {refChapters.map((chapter, idx) => (
             <Box key={"chapter:" + idx}>
               <HStack fontSize={["md", "lg"]} fontWeight="bold" mt="4">
                 <Text color="peach.300">#</Text>
-                <Text
-                  ref={chapter.ref}
-                  color={chapter.ref === highlited ? "peach.300" : "unset"}
-                >
+                <Text ref={chapter.ref} color={"peach.300"}>
                   {chapter.title || ""}
                 </Text>
               </HStack>

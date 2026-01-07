@@ -3,7 +3,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { ISEO } from "../../types/general";
 import { getT } from "../../components/shared/getT";
 import { nullSeo } from "../../components/shared/UniversalSeo";
-import { loadArticles, loadExchangers, TTL } from "../../cache/loadX";
+import { loadBlog, loadExchangers, TTL } from "../../cache/loadX";
 import { IArticle } from "../../types/pages";
 import ArticlesList from "../../components/articles";
 
@@ -16,11 +16,12 @@ const ArticlesPage = ({
 }) => <ArticlesList articles={articles} seo={seo} />;
 
 export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
-  const articles = (await loadArticles()) as IArticle[];
+  const articles = (await loadBlog()) as IArticle[];
 
   if (!articles?.length) {
     return {
       props: {
+        seo: nullSeo,
         articles: null,
         ...(await serverSideTranslations(locale, ["main"])),
       },
