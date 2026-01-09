@@ -20,10 +20,7 @@ export const internalCmsLink = process.env.INTERNAL_CMS_URL;
 export const resolveInternalUrl = (external: string, internal?: string) =>
   isServerSide && useInternal && internal ? internal : external;
 
-const resolvedLocale =
-  process.env.NEXT_PUBLIC_SITE_LANG?.toLowerCase() === "ru" ? "ru" : "en";
-
-export const locale = resolvedLocale as "en" | "ru";
+export const locale = "ru" as const;
 
 //"http://127.0.0.1:5000"
 

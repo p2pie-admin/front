@@ -20,7 +20,6 @@ import Loader from "../../shared/Loader";
 import { ISEO } from "../../../types/general";
 
 import OfficesDescription from "./offices";
-import { locale } from "../../../services/utils";
 import ExchangerDescription from "./description";
 import ExchangerContacts from "./contacts/ExchangerContacts";
 import { resolveColorToken } from "../../shared/CircularIcon";
@@ -60,9 +59,10 @@ export default function Exchanger({
 
   const ruText = exchangerCard?.text?.trim();
   const description =
-    (locale === "ru"
-      ? ruText || exchangerCard?.ru_description
-      : exchangerCard?.[`${locale}_description`]) || "Пока нет описания";
+    ruText ||
+    exchangerCard?.ru_description ||
+    exchangerCard?.en_description ||
+    "Пока нет описания";
 
   return (
     <>

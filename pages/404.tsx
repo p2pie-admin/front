@@ -4,10 +4,6 @@ import { Box, Button, Center, Flex } from "@chakra-ui/react";
 import Link from "next/link";
 import { Box3D } from "../styles/theme/custom";
 import ErrorWrapper from "../components/shared/ErrorWrapper";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-
-const fallbackLocale = (process.env.NEXT_PUBLIC_SITE_LANG || "ru") as "en" | "ru";
-
 function NotFound() {
   return (
     <Flex width="100%" justifyContent="center" alignItems="center" mt="5">
@@ -32,13 +28,3 @@ function NotFound() {
 }
 
 export default NotFound;
-
-export const getStaticProps = async ({ locale }: { locale?: string }) => {
-  const currentLocale = (locale as "en" | "ru") || fallbackLocale;
-
-  return {
-    props: {
-      ...(await serverSideTranslations(currentLocale, ["main"])),
-    },
-  };
-};

@@ -6,12 +6,10 @@ import useSWR from "swr";
 import { initParserFetcher } from "../../services/fetchers";
 import { format } from "../../redux/amountsHelper";
 import Dir from "./Dir";
-import { useTranslation } from "next-i18next";
 
 import { IMassDirTextId } from "../../types/mass";
 import renderSimilarMass from "./SimilarMass";
 import { buildRateString } from "../shared/helper";
-import { t } from "i18next";
 
 const MAX_TO_SHOW = 5;
 
@@ -27,7 +25,6 @@ const SimilarList = ({
   dirTextIds: IMassDirTextId[];
 }) => {
   const fetcher = initParserFetcher();
-  const { t } = useTranslation();
   const dirs = similarPmPairs
     .slice(0, MAX_TO_SHOW)
     .reduce(
@@ -99,7 +96,7 @@ const SimilarList = ({
                       variant="no_contrast"
                       mt="1"
                     >
-                      {`${t("main:exchangers")} ${rateData.amountOfCourses}`}
+                      {`Предложений: ${rateData.amountOfCourses}`}
                     </Text>
                   ) : null
                 }

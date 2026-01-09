@@ -1,13 +1,11 @@
 import { BsTelegram } from "react-icons/bs";
 import LinkButton from "../../shared/LinkButton";
 import { Box, HStack, Text, VStack } from "@chakra-ui/react";
-import { useTranslation } from "next-i18next";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { exchangerNameToSlug } from "../../exchangers/helper";
 import Link from "next/link";
 
 const FoundError = () => {
-  const { t } = useTranslation();
   return (
     <Box w="100%">
       <Link
@@ -24,12 +22,12 @@ const FoundError = () => {
           borderRadius="lg"
           gap="2"
         >
-          <ResponsiveText variant="no_contrast" size="lg">{`${t(
-            "main:notFound"
-          )}`}</ResponsiveText>
+          <ResponsiveText variant="no_contrast" size="lg">
+            Есть замечания?
+          </ResponsiveText>
           <HStack>
             <ResponsiveText variant="shaded" size="sm">
-              {`${t("main:contactSupport")} →`}
+              Обсудить в чате →
             </ResponsiveText>
             <BsTelegram size="1.2rem" />
           </HStack>

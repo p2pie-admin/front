@@ -34,7 +34,7 @@ const SectionsList = ({ sections }: { sections: ISection[] }) => {
           >
             <Section
               key={section.id}
-              title={section[`en_title`]}
+              title={section.ru_title || section.en_title}
               itemsToShow={
                 isSmall
                   ? section.columns * 2 - 2

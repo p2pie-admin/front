@@ -6,21 +6,19 @@ import SideContext from "../../../shared/contexts/SideContext";
 import CustomModal from "../../../shared/CustomModal";
 
 import Selector from ".";
-import { useTranslation } from "next-i18next";
 
 const SelectorModal = ({ id }: { id: string }) => {
-  const { t } = useTranslation("main");
   const side = useContext(SideContext) as "give" | "get";
   const primary = useColorModeValue("violet.700", "peach.300");
 
   const header =
     side === "give" ? (
-      <Highlight query="sell" styles={{ color: primary }}>
-        {t("What do you sell?")}
+      <Highlight query="продаете" styles={{ color: primary }}>
+        Что вы продаете?
       </Highlight>
     ) : (
-      <Highlight query="buy" styles={{ color: primary }}>
-        {t("What do you buy?")}
+      <Highlight query="покупаете" styles={{ color: primary }}>
+        Что вы покупаете?
       </Highlight>
     );
   // const header = activeSide

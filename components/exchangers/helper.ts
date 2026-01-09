@@ -44,8 +44,7 @@ export const getStatus = (exchanger: IExchanger) => {
 export const addExchangerCrossLinking = async (
   exchanger: IExchanger | null,
   articleCodes: string[] | undefined,
-  pms: IPm[] | undefined,
-  locale: "en" | "ru"
+  pms: IPm[] | undefined
 ) => {
   const card = exchanger?.exchanger_card || null;
   const ruText = card?.text?.trim() || card?.ru_description;
@@ -61,16 +60,12 @@ export const addExchangerCrossLinking = async (
   const seen = new Set<string>();
   const text = enrichText({
     seen,
-    text: locale === "ru" ? ruText : card.en_description || "",
+    text: ruText,
     articleCodes,
     pms,
   });
 
-  if (locale === "ru" && card.text?.trim()) {
-    card.text = text;
-  } else {
-    card[`${locale}_description`] = text;
-  }
+  card.text = text;
 
   return exchanger;
 };

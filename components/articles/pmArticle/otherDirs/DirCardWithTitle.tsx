@@ -1,6 +1,5 @@
 import { Box, Center } from "@chakra-ui/react";
 import React from "react";
-import { useTranslation } from "next-i18next";
 import Dir from "../../../exchange/Dir";
 import { Box3D, ResponsiveText } from "../../../../styles/theme/custom";
 import { IPmPairs } from "../../../../types/exchange";
@@ -20,7 +19,6 @@ const DirCardWithTitle = ({
   getRateData,
   placeholderHeight,
 }: DirCardWithTitleProps) => {
-  const { t } = useTranslation();
   const rateData = pair ? getRateData(pair) : null;
 
   return (
@@ -38,7 +36,7 @@ const DirCardWithTitle = ({
             bottomLeft={
               rateData ? (
                 <ResponsiveText size="xs" variant="no_contrast">
-                  {`${t("main:exchangers")} ${rateData.amountOfCourses}`}
+                  {`Предложений: ${rateData.amountOfCourses}`}
                 </ResponsiveText>
               ) : null
             }

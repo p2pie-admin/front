@@ -1,11 +1,9 @@
 import { GetServerSideProps } from "next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { IExchanger } from "../../types/exchanger";
 import ExchangersList from "../../components/exchangers";
 
 import { ISEO } from "../../types/general";
-import { getT } from "../../components/shared/getT";
 import { nullSeo } from "../../components/shared/UniversalSeo";
 import { loadExchangers } from "../../cache/loadX";
 
@@ -25,11 +23,7 @@ const ExchangersPage = ({
   />
 );
 
-export const getServerSideProps: GetServerSideProps = async ({
-  locale,
-  query,
-}) => {
-  const safeLocale = (locale || "en") as "en" | "ru";
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const rawPage = Array.isArray(query.page) ? query.page[0] : query.page;
   const parsedPage = Number.parseInt(rawPage || "1", 10);
   const requestedPage = Number.isFinite(parsedPage) ? parsedPage : 1;
@@ -41,7 +35,6 @@ export const getServerSideProps: GetServerSideProps = async ({
       props: {
         exchangers: null,
         initialPage: 1,
-        ...(await serverSideTranslations(safeLocale, ["main"])),
       },
     };
   }
@@ -62,11 +55,9 @@ export const getServerSideProps: GetServerSideProps = async ({
     };
   }
 
-  const t = await getT(safeLocale);
-
   const seo: ISEO = {
-    title: t("exchangers-meta-title"),
-    description: t("exchangers-meta-description"),
+    title: "Обменники - список всех активных обменников",
+    description: "Проверьте статусы обменников, рейтинг и описание",
     canonicalSlug:
       currentPage > 1 ? `exchangers?page=${currentPage}` : "exchangers",
   };
@@ -76,7 +67,6 @@ export const getServerSideProps: GetServerSideProps = async ({
       seo: seo || nullSeo,
       exchangers: exchangers || null,
       initialPage: currentPage,
-      ...(await serverSideTranslations(safeLocale, ["main"])),
     },
   };
 };

@@ -4,7 +4,7 @@ import theme from "../styles/theme";
 
 export default function MyDocument() {
   return (
-    <Html lang="en">
+    <Html lang="ru">
       <Head>
         {/* Favicon */}
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />

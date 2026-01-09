@@ -3,19 +3,17 @@ import { LiaTelegramPlane } from "react-icons/lia";
 import { RiTokenSwapLine, RiMapPinLine, RiRobot2Line } from "react-icons/ri";
 import LinkButton from "../../shared/LinkButton";
 import { Button } from "@chakra-ui/react";
-import { useTranslation } from "next-i18next";
 
 import { LiaExchangeAltSolid } from "react-icons/lia";
 
 const NavBody = () => {
-  const { t } = useTranslation();
   const handleClearStorage = () => {
     if (typeof window === "undefined") return;
     localStorage.clear();
   };
   return (
     <>
-      <LinkButton message={t("main:homePage")} href={"/"} CustomIcon={FiHome} />
+      <LinkButton message="Домой" href={"/"} CustomIcon={FiHome} />
 
       {/* <LinkButton
         message="Suggest Exchange"
@@ -28,13 +26,13 @@ const NavBody = () => {
         CustomIcon={RiTokenSwapLine}
       /> */}
       <LinkButton
-        message={t("main:exchangersPage")}
+        message="Обменники"
         href={"/exchangers"}
         CustomIcon={LiaExchangeAltSolid}
       />
 
       <LinkButton
-        message={t("main:contactsPage")}
+        message="Телеграм"
         href={`https://t.me/${process.env.NEXT_PUBLIC_NAME}`}
         CustomIcon={LiaTelegramPlane}
       />
@@ -44,7 +42,7 @@ const NavBody = () => {
         CustomIcon={RiRobot2Line}
       /> */}
       <LinkButton
-        message={t("main:mapPage")}
+        message="Офисы"
         href={"/map"}
         CustomIcon={RiMapPinLine}
       />

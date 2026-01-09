@@ -22,7 +22,6 @@ import { IPopularDirRates } from "../../types/rates";
 import { IPm } from "../../types/selector";
 import CircularTexts from "./CircularTexts";
 import Popular from "./popular";
-import { useTranslation } from "next-i18next";
 import { IDirText } from "../../types/exchange";
 import MassSelector from "./massSelectorSwiper";
 import Advantages from "./advantages";
@@ -44,7 +43,6 @@ const MainPageContent = ({
   rootText: IDirText;
   reviews?: IExchangerReview[] | null;
 }) => {
-  const { t } = useTranslation();
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { slug } = router.query;

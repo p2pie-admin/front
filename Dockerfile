@@ -6,7 +6,6 @@ RUN yarn install --frozen-lockfile
 FROM node:20-alpine AS builder
 WORKDIR /app
 ARG NEXT_PUBLIC_NAME
-ARG NEXT_PUBLIC_SITE_LANG
 ARG NEXT_PUBLIC_PRERENDER_LIMIT
 ARG NEXT_PUBLIC_BASE
 ARG NEXT_PUBLIC_INDEX
@@ -17,7 +16,6 @@ ARG NEXT_PUBLIC_TELEGRAM_BOT
 ARG NEXT_PUBLIC_TELEGRAM_CHAT
 ARG NEXT_PUBLIC_GOOGLE_MAPS_KEY
 ENV NEXT_PUBLIC_NAME=$NEXT_PUBLIC_NAME \
-    NEXT_PUBLIC_SITE_LANG=$NEXT_PUBLIC_SITE_LANG \
     NEXT_PUBLIC_PRERENDER_LIMIT=$NEXT_PUBLIC_PRERENDER_LIMIT \
     NEXT_PUBLIC_BASE=$NEXT_PUBLIC_BASE \
     NEXT_PUBLIC_INDEX=$NEXT_PUBLIC_INDEX \
@@ -37,7 +35,6 @@ WORKDIR /app
 ENV NODE_ENV=production
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/next.config.js ./next.config.js
-COPY --from=builder /app/next-i18next.config.js ./next-i18next.config.js
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules

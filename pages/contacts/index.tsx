@@ -1,5 +1,3 @@
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-
 import ArticleFaqPage from "../../components/faq/ArticleFaqPage";
 import { loadArticle, loadFAQbyCategoryCode, TTL } from "../../cache/loadX";
 import { ISEO } from "../../types/general";
@@ -8,31 +6,26 @@ import { IArticle } from "../../types/pages";
 
 const PAGE_CODE = "contacts";
 
-const buildSeo = (article: IArticle | null, locale: "en" | "ru"): ISEO => {
+const buildSeo = (article: IArticle | null): ISEO => {
   const brand = process.env.NEXT_PUBLIC_NAME || "p2pie";
 
   return {
     title:
       article?.seo_title ||
-      (locale === "en"
-        ? `Contact ${brand} — support and feedback`
-        : `Связаться с ${brand} — поддержка и обратная связь`),
+      `Связаться с ${brand} — поддержка и обратная связь`,
     description:
       article?.seo_description ||
-      (locale === "en"
-        ? `Get help from the ${brand} team: questions about rates, listing exchanges, partnerships, or reporting an issue.`
-        : `Поддержка команды ${brand}: вопросы о курсах, размещении обменников, партнёрстве или сообщение о проблеме.`),
+      `Поддержка команды ${brand}: вопросы о курсах, размещении обменников, партнёрстве или сообщение о проблеме.`,
     canonicalSlug: PAGE_CODE,
     updatedAt: article?.updatedAt ?? null,
   };
 };
 
-const emptyProps = async (locale: "en" | "ru") => ({
+const emptyProps = async () => ({
   props: {
     article: null,
     faqCategory: null,
-    seo: buildSeo(null, locale),
-    ...(await serverSideTranslations(locale, ["main"])),
+    seo: buildSeo(null),
   },
   revalidate: TTL.slowest,
 });
@@ -43,7 +36,7 @@ const ContactsPage = (props: {
   seo: ISEO;
 }) => <ArticleFaqPage {...props} />;
 
-export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
+export const getStaticProps = async () => {
   try {
     const [article, faqCategory] = await Promise.all([
       loadArticle(PAGE_CODE),
@@ -54,14 +47,13 @@ export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
       props: {
         article: article || null,
         faqCategory: faqCategory || null,
-        seo: buildSeo(article, locale),
-        ...(await serverSideTranslations(locale, ["main"])),
+        seo: buildSeo(article),
       },
       revalidate: TTL.slowest,
     };
   } catch (e) {
     console.error("[contacts] getStaticProps error:", e);
-    return emptyProps(locale);
+    return emptyProps();
   }
 };
 

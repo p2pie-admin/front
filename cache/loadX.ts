@@ -30,7 +30,7 @@ import { IMassDirTextId, IMassDirText, IMassRate } from "../types/mass";
 import { IFaqCategory } from "../types/faq";
 import { IExchangerReview } from "../types/exchanger";
 
-const locale = process.env.NEXT_PUBLIC_SITE_LANG || "ru";
+const locale = "ru";
 
 const cmsFetcher = initCMSFetcher();
 const parserFetcher = initParserFetcher();

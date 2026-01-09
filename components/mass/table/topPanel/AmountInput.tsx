@@ -6,7 +6,6 @@ import {
 } from "@chakra-ui/react";
 import { BsFillPinAngleFill } from "react-icons/bs";
 import { useEffect, useState } from "react";
-import { useTranslation } from "next-i18next";
 import { ResponsiveText } from "../../../../styles/theme/custom";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { setMassAmount } from "../../../../redux/mainReducer";
@@ -19,7 +18,6 @@ const AmountInput = ({ massDirTextId }: { massDirTextId: IMassDirTextId }) => {
   const fiatCode = massDirTextId.currency.code;
   const cryptoCode = massDirTextId.code;
 
-  const { t } = useTranslation();
   const [value, setValue] = useState("");
   const [debouncedValue, setDebouncedValue] = useState("");
 

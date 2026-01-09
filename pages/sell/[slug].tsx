@@ -1,5 +1,4 @@
 import { GetStaticPaths } from "next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import {
   convertMassDirTextIntoSlug,
   convertSlugIntoMassDirText,
@@ -26,7 +25,6 @@ import { IMassDirText, IMassDirTextId, IMassRate, IPm } from "../../types/mass";
 import { addHeadersToSearchIndex, addPathsToSitemap } from "../../cache/cache";
 
 const isSell = true;
-const locale = (process.env.NEXT_PUBLIC_SITE_LANG || "ru") as "en" | "ru";
 
 type Props = {
   seo: ISEO;
@@ -74,7 +72,6 @@ export const getStaticProps = async ({
       massDirTextId,
       pms,
       isSell,
-      locale,
     });
 
   const { seo_title, seo_description, header } = massDirText;
@@ -106,7 +103,6 @@ export const getStaticProps = async ({
         massDirTextId,
         isSell,
         slug,
-        ...(await serverSideTranslations(locale, ["main"])),
       },
       revalidate: TTL.slow,
     };
@@ -121,9 +117,7 @@ export const getStaticProps = async ({
         massRates: null,
         massDirTextId: null,
         isSell,
-        locale,
         slug,
-        ...(await serverSideTranslations(locale, ["main"])),
       },
       revalidate: TTL.slow,
     };

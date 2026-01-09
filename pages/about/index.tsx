@@ -1,5 +1,3 @@
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-
 import ArticleFaqPage from "../../components/faq/ArticleFaqPage";
 import { loadArticle, loadFAQbyCategoryCode, TTL } from "../../cache/loadX";
 import { ISEO } from "../../types/general";
@@ -8,31 +6,26 @@ import { IArticle } from "../../types/pages";
 
 const PAGE_CODE = "about";
 
-const buildSeo = (article: IArticle | null, locale: "en" | "ru"): ISEO => {
+const buildSeo = (article: IArticle | null): ISEO => {
   const brand = process.env.NEXT_PUBLIC_NAME || "p2pie";
 
   return {
     title:
       article?.seo_title ||
-      (locale === "en"
-        ? `About ${brand} — mission, values, team`
-        : `О проекте ${brand} — миссия, ценности, команда`),
+      `О проекте ${brand} — миссия, ценности, команда`,
     description:
       article?.seo_description ||
-      (locale === "en"
-        ? `${brand} helps compare crypto, cash and banking exchange offers worldwide. Learn who we are, why we built the service, and how we keep rates transparent.`
-        : `${brand} помогает сравнивать обменные предложения криптовалют, наличных и банков по всему миру. Узнайте, кто мы, зачем создали сервис и как обеспечиваем прозрачность курсов.`),
+      `${brand} помогает сравнивать обменные предложения криптовалют, наличных и банков по всему миру. Узнайте, кто мы, зачем создали сервис и как обеспечиваем прозрачность курсов.`,
     canonicalSlug: PAGE_CODE,
     updatedAt: article?.updatedAt ?? null,
   };
 };
 
-const emptyProps = async (locale: "en" | "ru") => ({
+const emptyProps = async () => ({
   props: {
     article: null,
     faqCategory: null,
-    seo: buildSeo(null, locale),
-    ...(await serverSideTranslations(locale, ["main"])),
+    seo: buildSeo(null),
   },
   revalidate: TTL.slowest,
 });
@@ -43,7 +36,7 @@ const AboutPage = (props: {
   seo: ISEO;
 }) => <ArticleFaqPage {...props} />;
 
-export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
+export const getStaticProps = async () => {
   try {
     const [article, faqCategory] = await Promise.all([
       loadArticle(PAGE_CODE),
@@ -54,14 +47,13 @@ export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
       props: {
         article: article || null,
         faqCategory: faqCategory || null,
-        seo: buildSeo(article, locale),
-        ...(await serverSideTranslations(locale, ["main"])),
+        seo: buildSeo(article),
       },
       revalidate: TTL.slowest,
     };
   } catch (e) {
     console.error("[about] getStaticProps error:", e);
-    return emptyProps(locale);
+    return emptyProps();
   }
 };
 

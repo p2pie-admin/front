@@ -1,6 +1,5 @@
 import { Box, Button, Collapse, Grid } from "@chakra-ui/react";
 import React from "react";
-import { useTranslation } from "next-i18next";
 import { Box3D } from "../../../../styles/theme/custom";
 import { IPmPairs } from "../../../../types/exchange";
 import OtherHeader from "./OtherHeader";
@@ -36,8 +35,6 @@ const Column = ({
   placeholderHeight,
   hiddenRows,
 }: ColumnProps) => {
-  const { t } = useTranslation();
-
   return (
     <Box3D borderRadius="lg" variant="extra_contrast" w="100%">
       <OtherHeader text={`${header}`} />
@@ -72,9 +69,7 @@ const Column = ({
               onClick={onToggle}
               rightIcon={<Arrow isUp={expanded} />}
             >
-              {expanded
-                ? t("main:see less", { defaultValue: "Скрыть" })
-                : t("main:see all", { defaultValue: "Показать все" })}
+              {expanded ? "скрыть" : "показать все"}
             </Button>
           </>
         )}

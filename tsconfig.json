@@ -22,7 +22,6 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "next-i18next.config.js",
     "next-seo.config.ts",
     "next-sitemap.config.js",
     "cache/index.js"

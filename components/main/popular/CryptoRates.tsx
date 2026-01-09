@@ -11,7 +11,6 @@ import { IPopularRate } from "../../../types/rates";
 import { IPm } from "../../../types/selector";
 import RateLink from "./RateLink";
 import { ResponsiveText } from "../../../styles/theme/custom";
-import { useRouter } from "next/router";
 import { slugCityToExchange } from "../../exchange/helper";
 import { useAppSelector } from "../../../redux/hooks";
 
@@ -27,7 +26,6 @@ const CryptoRates = ({
     sell: IPopularRate[];
   };
 }) => {
-  const { locale } = useRouter() as { locale: "en" | "ru" };
   const citySlug = useAppSelector((state) =>
     state.main.city?.en_name.replaceAll(" ", "-").toLowerCase()
   );
@@ -43,7 +41,7 @@ const CryptoRates = ({
               _hover={{ color: "bg.200" }}
               my="1"
             >
-              {`${capitalize(pm?.[`${locale}_name`])}`}
+              {`${capitalize(pm?.ru_name || pm?.en_name)}`}
             </ResponsiveText>
           );
         })}

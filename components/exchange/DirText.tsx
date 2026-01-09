@@ -8,13 +8,11 @@ import { capitalize } from "../main/side/selector/section/PmGroup/helper";
 import { TextToHTML } from "../shared/helper";
 
 export const fillWords = ({
-  locale,
   givePmData,
   getPmData,
   cityName,
   text,
 }: {
-  locale: "en" | "ru";
   givePmData: IPmData;
   getPmData: IPmData;
   cityName?: string;
@@ -36,19 +34,19 @@ export const fillWords = ({
       case "give_name":
         return givePmData.exists ? (
           <Link key={index} href={makeSlug(givePm)}>
-            {capitalize(givePm?.[`${locale}_name`] || givePm.en_name)}
+            {capitalize(givePm?.ru_name || givePm.en_name)}
           </Link>
         ) : (
-          <>{capitalize(givePm?.[`${locale}_name`] || givePm.en_name)}</>
+          <>{capitalize(givePm?.ru_name || givePm.en_name)}</>
         );
 
       case "get_name":
         return getPmData.exists ? (
           <Link key={index} href={makeSlug(getPm)}>
-            {capitalize(getPm[`${locale}_name`] || getPm.en_name)}
+            {capitalize(getPm.ru_name || getPm.en_name)}
           </Link>
         ) : (
-          <>{capitalize(getPm[`${locale}_name`] || getPm.en_name)}</>
+          <>{capitalize(getPm.ru_name || getPm.en_name)}</>
         );
 
       case "give_currency":
@@ -65,12 +63,10 @@ export const fillWords = ({
 
 const DirText = ({
   dirText,
-  locale,
   givePmData,
   getPmData,
   city,
 }: {
-  locale: "en" | "ru";
   givePmData: IPmData;
   getPmData: IPmData;
   city: ICity | null;

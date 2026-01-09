@@ -1,4 +1,3 @@
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IPmPairs } from "../../types/exchange";
 import { IArticle } from "../../types/pages";
 import Article from "../../components/articles/pmArticle";
@@ -6,7 +5,6 @@ import { addArticleCrossLinking } from "../../components/articles/pmArticle/help
 import { IPm } from "../../types/selector";
 import { ISEO } from "../../types/general";
 import { nullSeo } from "../../components/shared/UniversalSeo";
-import { locale as siteLocale } from "../../services/utils";
 
 import { getSlugToCodes } from "../../cache/helper";
 import {
@@ -20,14 +18,12 @@ import {
 import { addPathsToSitemap } from "../../cache/cache";
 import GeneralArticle from "../../components/articles/generalArticle";
 
-const emptyProps = async (locale: "en" | "ru") => ({
+const emptyProps = async () => ({
   props: {
     seo: nullSeo,
     pm: null,
     article: null,
     otherDirs: null,
-    locale,
-    ...(await serverSideTranslations(locale, ["main"])),
   },
   revalidate: TTL.slow,
 });
@@ -45,15 +41,13 @@ const ArticlePage = (props: {
 
 export async function getStaticProps({ params }: { params: { code: string } }) {
   try {
-    // force locale from env
-
     const code = params.code;
     const article = await loadArticle(code);
     if (!article) {
       console.warn(
         `[getStaticProps] No article found for code: ${params.code}`
       );
-      return emptyProps(siteLocale);
+      return emptyProps();
     }
     const normalizedCode = article?.code.toLowerCase();
 
@@ -69,8 +63,6 @@ export async function getStaticProps({ params }: { params: { code: string } }) {
         props: {
           seo: seo || nullSeo,
           article: article || null,
-          locale: siteLocale,
-          ...(await serverSideTranslations(siteLocale, ["main"])),
         },
         revalidate: TTL.slowest,
       };
@@ -88,7 +80,7 @@ export async function getStaticProps({ params }: { params: { code: string } }) {
       console.warn(
         `[getStaticProps] No pms or slugToCodes found for code: ${params.code}`
       );
-      return emptyProps(siteLocale);
+      return emptyProps();
     }
 
     const articlePms = pms.filter(
@@ -133,14 +125,12 @@ export async function getStaticProps({ params }: { params: { code: string } }) {
         pm: articlePms[0] || null,
         article: linkedArticle || null,
         otherDirs: otherDirs || null,
-        locale: siteLocale,
-        ...(await serverSideTranslations(siteLocale, ["main"])),
       },
       revalidate: TTL.slow,
     };
   } catch (e) {
     console.error("[getStaticProps] Error:", e);
-    return await emptyProps(siteLocale);
+    return await emptyProps();
   }
 }
 

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { ISelectorCountry } from "../../../../types/city";
 import { Box, Text, Collapse, Grid } from "@chakra-ui/react";
 
-import { useRouter } from "next/router";
 
 import City from "./City";
 
@@ -15,8 +14,6 @@ export default function Country({
   dir?: string;
   pageType?: string;
 }) {
-  const { locale } = useRouter();
-
   return (
     <>
       <Text
@@ -27,14 +24,12 @@ export default function Country({
         variant={"extra_contrast"}
         cursor="pointer"
       >
-        {country[`${locale as "en" | "ru"}_country_name`] + ":"}
+        {(country.ru_country_name || country.en_country_name) + ":"}
       </Text>
       <Grid gridTemplateColumns="1fr  1fr" mt="2" p="2">
         {[...country.cities]
           .sort((a, b) =>
-            a[`${locale}_name` as "en_name" | "ru_name"].localeCompare(
-              b[`${locale}_name` as "en_name" | "ru_name"]
-            )
+            (a.ru_name || a.en_name).localeCompare(b.ru_name || b.en_name)
           )
           .map((city) => {
             // const popularCityName =

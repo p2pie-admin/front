@@ -2,7 +2,6 @@ import { capitalize } from "../../../main/side/selector/section/PmGroup/helper";
 import { IPm } from "../../../../types/selector";
 import { IPmPairs } from "../../../../types/exchange";
 import { codeToRuName } from "../../../../redux/amountsHelper";
-import { t } from "i18next";
 
 const pmDisplayName = (pm?: IPm | null) =>
   pm
@@ -27,8 +26,8 @@ export const dirTitle = (pair: IPmPairs, side: "sell" | "buy") => {
   const giveName = pmDisplayName(givePm);
   const getName = pmDisplayName(getPm);
 
-  const buyVerb = t("main:toBuy", { defaultValue: "Купить" });
-  const sellVerb = t("main:toSell", { defaultValue: "Продать" });
+  const buyVerb = "Купить";
+  const sellVerb = "Продать";
 
   const buyTitle = `${buyVerb} ${getName}`.trim();
   const sellTitle = `${sellVerb} ${giveName}`.trim();

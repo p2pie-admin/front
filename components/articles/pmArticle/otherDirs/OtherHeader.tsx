@@ -1,5 +1,4 @@
 import { Heading } from "@chakra-ui/react";
-import { t } from "i18next";
 import React from "react";
 import { capitalize } from "../../../main/side/selector/section/PmGroup/helper";
 import { IPm } from "../../../../types/selector";
@@ -38,8 +37,8 @@ export const H3ForOthers = (mainPm: IPm, section: string) => {
 
   const normalizedMain = (mainSection || "").toLowerCase();
   const normalizedSection = (section || "").toLowerCase();
-  const buyVerb = t("main:toBuy", { defaultValue: "Купить" });
-  const sellVerb = t("main:toSell", { defaultValue: "Продать" });
+  const buyVerb = "Купить";
+  const sellVerb = "Продать";
 
   if (normalizedMain === "crypto") {
     if (normalizedSection === "bank") {
@@ -219,8 +218,8 @@ export const H4ForOthers = (mainPm: IPm, section: string) => {
     [ru_name || en_name, subgroup_name].filter(Boolean).join(" ")
   );
 
-  const buyVerb = t("main:toBuy", { defaultValue: "Купить" });
-  const sellVerb = t("main:toSell", { defaultValue: "Продать" });
+  const buyVerb = "Купить";
+  const sellVerb = "Продать";
 
   const fallback = {
     buy: `${buyVerb} ${fullName}`.trim(),

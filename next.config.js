@@ -1,12 +1,10 @@
 /** @type {import('next').NextConfig} */
-const { i18n } = require("./next-i18next.config");
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
 
 const isDev = process.env.NODE_ENV === "development";
-const localePrefix = i18n?.defaultLocale;
 
 const cspHeader = `
   default-src 'self';
@@ -21,7 +19,6 @@ const cspHeader = `
   .trim();
 
 const nextConfig = {
-  i18n,
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -70,19 +67,11 @@ const nextConfig = {
   async redirects() {
     const redirects = [
       {
-        source: "/:path*/",
+        source: "/:path+/",
         destination: "/:path*",
         permanent: true,
       },
     ];
-
-    if (localePrefix) {
-      redirects.push({
-        source: `/${localePrefix}/:path*`,
-        destination: "/:path*",
-        permanent: true,
-      });
-    }
 
     redirects.push({
       source: "/:path*",

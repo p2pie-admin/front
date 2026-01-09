@@ -4,14 +4,12 @@ import { ResponsiveText } from "../../styles/theme/custom";
 import { IExchanger, IParserExchanger } from "../../types/exchanger";
 import { getStatus } from "./helper";
 import Dot from "./Dot";
-import { useTranslation } from "next-i18next";
 
 export default function ExchangersHeader({
   exchangers,
 }: {
   exchangers: IExchanger[];
 }) {
-  const { t } = useTranslation();
   const statusCounts = useMemo(() => {
     const counts = { green: 0, orange: 0, red: 0 };
     exchangers?.forEach((exchanger) => {
@@ -34,28 +32,28 @@ export default function ExchangersHeader({
         variant="primary"
         as="h1"
       >
-        {t("exchangersPage")}
+        Обменники
       </ResponsiveText>
       <HStack gap={{ base: "4", lg: "8" }} color="bg.200" mx="2">
         <HStack>
           <Dot />
-          <ResponsiveText size="sm" variant="no_contrast">{`${t("Total")}: ${
+          <ResponsiveText size="sm" variant="no_contrast">{`Всего: ${
             exchangers?.length || "-"
           }`}</ResponsiveText>
         </HStack>
 
         <HStack>
           <Dot color="green" />
-          <ResponsiveText size="sm" variant="no_contrast">{`${t("Active")}: ${
+          <ResponsiveText size="sm" variant="no_contrast">{`Активные: ${
             statusCounts.green || "-"
           }`}</ResponsiveText>
         </HStack>
 
         <HStack>
           <Dot color="orange" />
-          <ResponsiveText size="sm" variant="no_contrast">{`${t(
-            "Suspended"
-          )}: ${statusCounts.orange || "-"}`}</ResponsiveText>
+          <ResponsiveText size="sm" variant="no_contrast">{`Неактивные: ${
+            statusCounts.orange || "-"
+          }`}</ResponsiveText>
         </HStack>
       </HStack>
     </Flex>

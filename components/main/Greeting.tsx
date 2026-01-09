@@ -13,14 +13,10 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import Image from "next/image";
-import { useTranslation } from "next-i18next";
-
 import greetings from "../../public/greetings.png";
 import CustomTitle from "../shared/CustomTitle";
 
 const Greeting = () => {
-  const { t } = useTranslation();
-
   return (
     <VStack
       gap={{ base: "4", lg: "-20" }}

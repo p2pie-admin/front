@@ -107,7 +107,7 @@ export async function addHeadersToSearchIndex(
     | { slug: string; header?: string; wordsToSearchFrom?: string }[]
 ) {
   const key = "search:index";
-  const locale = (process.env.NEXT_PUBLIC_SITE_LANG || "ru") as "ru" | "en";
+  const locale = "ru";
   const normalizedEntries = Array.isArray(entries) ? entries : [entries];
 
   try {

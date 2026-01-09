@@ -1,4 +1,3 @@
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IPm } from "../types/selector";
 import React from "react";
 import Exchange from "../components/exchange";
@@ -27,13 +26,10 @@ import { IMassDirTextId } from "../types/mass";
 import { initParserFetcher } from "../services/fetchers";
 import { ParserCityDirections } from "../types/map";
 
-const locale = (process.env.NEXT_PUBLIC_SITE_LANG || "ru") as "ru" | "en";
-
 const ExchangePage = (props: {
   seo: ISEO;
   givePmData: IPmData | null;
   getPmData: IPmData | null;
-  locale: "ru";
   dirText: IDirText | null;
   city: ICity | null;
   similarPmPairs: IPm[][] | null;
@@ -154,7 +150,6 @@ export async function getStaticProps({
         city: city || null,
         similarPmPairs: similarPmPairs || null,
         dirTextIds: dirTextIds || null,
-        ...(await serverSideTranslations(locale, ["main"])),
       },
       revalidate: TTL.slow,
     };
@@ -170,7 +165,6 @@ export async function getStaticProps({
         city: null,
         similarPmPairs: null,
         donorCity: null,
-        ...(await serverSideTranslations(locale, ["main"])),
       },
       revalidate: TTL.slow,
     };

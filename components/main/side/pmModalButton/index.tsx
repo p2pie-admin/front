@@ -17,12 +17,9 @@ import PmIcons from "./PmIcons";
 import ModalButton from "./ModalButton";
 import { fetchPossiblePairs } from "../../../../redux/thunks";
 import { IoAddOutline } from "react-icons/io5";
-import { useTranslation } from "next-i18next";
 
 const PmModalButton = () => {
   const dispatch = useAppDispatch();
-  const { t } = useTranslation();
-
   const side = useContext(SideContext) as "give" | "get";
 
   const pms = useAppSelector((state) => {
@@ -38,7 +35,7 @@ const PmModalButton = () => {
       dispatch(setSearchBarInputValue(""));
     });
   };
-  const unselectedPmText = t(`main:${side}`);
+  const unselectedPmText = side === "give" ? "Отдаю" : "Получаю";
 
   const currencyCode = pms?.[0]?.currency.code.toUpperCase();
   return (

@@ -1,12 +1,10 @@
 import { Button, HStack, Tooltip, useColorModeValue } from "@chakra-ui/react";
 import { FaArrowUpWideShort, FaArrowDownShortWide } from "react-icons/fa6";
-import { useTranslation } from "next-i18next";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { IMassSort } from "../../../../types/mass";
 import { setMassSort } from "../../../../redux/mainReducer";
 
 const MassSortButtons = () => {
-  const { t } = useTranslation();
   const activeBg = useColorModeValue("bg.100", "bg.600");
 
   const massSort = useAppSelector((state) => state.main.massSort);
@@ -28,18 +26,18 @@ const MassSortButtons = () => {
   const buttons = [
     {
       key: "course",
-      label: t("Курс"),
-      tooltip: t("Сортировать по курсу"),
+      label: "Курс",
+      tooltip: "Сортировать по курсу",
     },
     {
       key: "limit",
-      label: t("Лимиты"),
-      tooltip: t("Сортировать по лимитам"),
+      label: "Лимиты",
+      tooltip: "Сортировать по лимитам",
     },
     {
       key: "admin_rating",
-      label: t("Рейтинг"),
-      tooltip: t("Сортировать по рейтингу"),
+      label: "Рейтинг",
+      tooltip: "Сортировать по рейтингу",
     },
   ] as const;
 

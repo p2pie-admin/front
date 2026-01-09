@@ -1,10 +1,8 @@
 import MainPageContent from "../components/main";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IPopularDirRates } from "../types/rates";
 import { IMainText } from "../types/pages";
 import UniversalSeo, { nullSeo } from "../components/shared/UniversalSeo";
 import { ISEO } from "../types/general";
-import { getT } from "../components/shared/getT";
 import { Box } from "@chakra-ui/react";
 import Image from "next/image";
 import gridPattern from "../public/grid.png";
@@ -18,7 +16,6 @@ import {
 } from "../cache/loadX";
 import { IDirText } from "../types/exchange";
 import { IExchangerReview } from "../types/exchanger";
-import { locale } from "../services/utils";
 import { maskReviewList } from "../services/maskIP";
 
 export const getStaticProps = async () => {
@@ -50,10 +47,13 @@ export const getStaticProps = async () => {
       popularPmCodes.find((code) => code === pm.code)
     );
 
-    const t = await getT(locale);
     const seo: ISEO = {
-      title: rootText.seo_title || t("main:meta-title"),
-      description: rootText.seo_description || t("main:meta-description"),
+      title:
+        rootText.seo_title ||
+        "Поиск выгодных курсов обмена криптовалют, банков и наличных",
+      description:
+        rootText.seo_description ||
+        "Агрегатор обменных пунктов. Инструмент поиска лучших предложений обмена электронных, наличных и криптовалют",
       canonicalSlug: "",
     };
 
@@ -67,8 +67,6 @@ export const getStaticProps = async () => {
         mainTexts: (mainTexts || []) as IMainText[],
         rootText: (rootText || null) as IDirText | null,
         reviews: maskedReviews as IExchangerReview[],
-        locale,
-        ...(await serverSideTranslations(locale, ["main"])),
       },
       revalidate: TTL.slow,
     };
@@ -83,8 +81,6 @@ export const getStaticProps = async () => {
         mainTexts: null,
         rootText: null,
         reviews: null,
-        locale,
-        ...(await serverSideTranslations(locale, ["main"])),
       },
       revalidate: TTL.slow,
     };

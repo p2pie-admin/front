@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 
 import { pmsToSlug } from "../../../main/side/selector/section/PmGroup/helper";
 import { fetchCity } from "../../../../redux/thunks";
-import { useRouter } from "next/router";
 import { ISelectorCity } from "../../../../types/city";
 import { weights } from "./helper";
 import { setLoadingStatus, triggerModal } from "../../../../redux/mainReducer";
@@ -20,7 +19,6 @@ export default function City({
   dir?: string;
   pageType?: string;
 }) {
-  const { locale } = useRouter();
   const slug = useAppSelector((state) =>
     pmsToSlug({ givePm: state.main.givePm, getPm: state.main.getPm })
   );
@@ -61,7 +59,7 @@ export default function City({
       fontSize={city.en_name.length < 10 ? weight?.fontSize : "lg"}
       variant={weight?.variant || "extra_contrast"}
     >
-      {city[`${locale as "en" | "ru"}_name`]}
+      {city.ru_name || city.en_name}
     </Text>
     // </Link>
   );

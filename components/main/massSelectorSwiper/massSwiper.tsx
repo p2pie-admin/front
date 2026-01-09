@@ -2,7 +2,6 @@ import { useColorModeValue, Box, useTheme, Text } from "@chakra-ui/react";
 import { useMotionValue, useAnimation, motion } from "framer-motion";
 import React, { forwardRef, useImperativeHandle } from "react";
 import { ResponsiveText } from "../../../styles/theme/custom";
-import { useRouter } from "next/router";
 import MassShader from "../../mass/MassShader";
 
 const [dragElastic, inertiaPower, inertiaTimeConstant] = [0.1, 0.4, 240];
@@ -15,7 +14,6 @@ type MassSwiperProps = {
 
 const MassSwiper = forwardRef<MassSwiperHandle, MassSwiperProps>(
   ({ initialId, items, set }, ref) => {
-    const { locale } = useRouter() as { locale: "en" | "ru" };
     const isMobile = false;
     const itemHeight = 40;
     const containerHeight = 120;
@@ -276,7 +274,7 @@ const MassSwiper = forwardRef<MassSwiperHandle, MassSwiperProps>(
             {items.map((item) => (
               <Box
                 bgColor={bgColor}
-                key={item[`${locale}_label`] + item.id}
+                key={item.ru_label + item.id}
                 h={`${itemHeight}px`}
                 display="flex"
                 alignItems="center"
@@ -286,7 +284,7 @@ const MassSwiper = forwardRef<MassSwiperHandle, MassSwiperProps>(
                 fontSize={{ base: "md", lg: "2xl" }}
               >
                 <Text color="bg.300" fontSize="inherit">
-                  {item[`${locale}_label`]}
+                  {item.ru_label}
                 </Text>
               </Box>
             ))}

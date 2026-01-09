@@ -37,7 +37,6 @@ import { initCMSFetcher } from "../../../../services/fetchers";
 import { memo } from "react";
 import { selectorQuery } from "../../../../services/queries";
 
-import { useTranslation } from "next-i18next";
 import FoundError from "../../../articles/pmArticle/FoundError";
 
 //const gqlFetcher = new GraphQLFetcher(); // may pass variables here
@@ -48,8 +47,6 @@ const Selector = function Selector() {
     data: ISelector | null;
     error: any;
   };
-
-  const { t } = useTranslation();
 
   const searchBarInputValue = useAppSelector(
     (state) => state.main.searchBarInputValue

@@ -1,15 +1,10 @@
-import { useRouter } from "next/router";
 import { capitalize } from "../main/side/selector/section/PmGroup/helper";
-import { locale as siteLocale, mylog } from "../../services/utils";
 import { ICity, IDirText, ISeoData } from "../../types/exchange";
 import { IPm } from "../../types/selector";
 import { loadDirText } from "../../cache/loadX";
-import { codeToEnName, codeToRuName } from "../../redux/amountsHelper";
 import { ISEO } from "../../types/general";
 import { getPmNameFromPm } from "../shared/helper";
-import { Box } from "@chakra-ui/react";
 
-const locale = siteLocale;
 
 export const generateExchangeH1 = (
   givePm: IPm,
@@ -35,25 +30,13 @@ export const generateExchangeH1 = (
       : pmName;
   };
 
-  // Proper locale-specific names
-  const giveName =
-    locale === "ru"
-      ? givePm.ru_name || givePm.en_name || ""
-      : givePm.en_name || givePm.ru_name || "";
-  const getName =
-    locale === "ru"
-      ? getPm.ru_name || getPm.en_name || ""
-      : getPm.en_name || getPm.ru_name || "";
-
   // Article links for PMs (only when article exists)
   const linkedGiveName = wrapWithArticleLink(givePm);
   const linkedGetName = wrapWithArticleLink(getPm);
 
   // City addon
   const cityLabel = city
-    ? locale === "ru"
-      ? (city.preposition || city.ru_name || city.en_name || "") ?? ""
-      : (city.en_name || city.ru_name || "") ?? ""
+    ? (city.preposition || city.ru_name || city.en_name || "") ?? ""
     : "";
 
   const citySlug = city ? toSlug(city.en_name) : "";
@@ -62,11 +45,7 @@ export const generateExchangeH1 = (
       ? `[${cityLabel}](/map/${citySlug})`
       : cityLabel;
 
-  const cityAddon = cityLabel
-    ? locale === "ru"
-      ? ` в ${linkedCity}`
-      : ` in ${linkedCity}`
-    : "";
+  const cityAddon = cityLabel ? ` в ${linkedCity}` : "";
 
   // Subgroup
   const giveSubgroup = givePm.subgroup_name ? ` ${givePm.subgroup_name}` : "";
@@ -75,9 +54,7 @@ export const generateExchangeH1 = (
   const giveCur = givePm.currency.code.toUpperCase();
   const getCur = getPm.currency.code.toUpperCase();
 
-  return locale === "ru"
-    ? `Обмен ${linkedGiveName}  на ${linkedGetName}   ${cityAddon}`
-    : `Exchange ${linkedGiveName}  на ${linkedGetName}   ${cityAddon}`;
+  return `Обмен ${linkedGiveName}  на ${linkedGetName}   ${cityAddon}`;
 };
 
 export const dirTextHandler = async ({
@@ -99,10 +76,7 @@ export const dirTextHandler = async ({
     cityPageExists: !!city,
   });
 
-  const cityName =
-    locale === "ru"
-      ? city?.preposition || city?.ru_name || city?.en_name || ""
-      : city?.en_name || city?.ru_name || "";
+  const cityName = city?.preposition || city?.ru_name || city?.en_name || "";
 
   // Placeholder replacer
   const replacer = (text?: string) =>
@@ -129,7 +103,9 @@ export const dirTextHandler = async ({
         f,
         replacer(
           source[f] ??
-            `${givePm[`${locale}_name`]} → ${getPm[`${locale}_name`]}`
+            `${givePm.ru_name || givePm.en_name} → ${
+              getPm.ru_name || getPm.en_name
+            }`
         ),
       ])
     );
@@ -148,15 +124,8 @@ export const dirTextHandler = async ({
   const fallbackDirText = await loadDirText(givePm.section, getPm.section);
   dirText = fallbackDirText;
 
-  const cityLabel =
-    locale === "ru"
-      ? city?.preposition || city?.ru_name || city?.en_name || ""
-      : city?.en_name || city?.ru_name || "";
-  const citySuffix = cityLabel
-    ? locale === "ru"
-      ? ` в ${cityLabel}`
-      : ` in ${cityLabel}`
-    : "";
+  const cityLabel = city?.preposition || city?.ru_name || city?.en_name || "";
+  const citySuffix = cityLabel ? ` в ${cityLabel}` : "";
 
   dirText.seo_title = `${dirText.seo_title} ${citySuffix}`;
   dirText.seo_description = `${dirText.seo_description} ${citySuffix}`;
@@ -178,11 +147,11 @@ export const fillWords = ({
   (text || "")
     .replaceAll(
       "give_name",
-      capitalize(givePm[`${locale}_name`] || givePm.en_name)
+      capitalize(givePm.ru_name || givePm.en_name)
     )
     .replaceAll(
       "get_name",
-      capitalize(getPm[`${locale}_name`] || getPm.en_name)
+      capitalize(getPm.ru_name || getPm.en_name)
     )
     .replaceAll(
       "give_currency",
@@ -327,7 +296,7 @@ export const generateExchangeSeo = ({
     breadcrumbs: [
       {
         position: 1,
-        name: locale === "en" ? "Home" : "Главная",
+        name: "Главная",
         item: `https://${process.env.NEXT_PUBLIC_NAME}.com`,
       },
       {

@@ -33,7 +33,6 @@ import ExchangeButton from "../../../exchangers/exchanger/exchangerTopPanel/Exch
 import TagBadges from "../../../exchangers/exchanger/exchangerTopPanel/TagBadges";
 import ReviewStats from "../../../exchangers/exchanger/exchangerStats/ReviewsStats";
 import WorkingTimeStats from "../../../exchangers/exchanger/exchangerStats/WorkingTimeStats";
-import { locale } from "../../../../services/utils";
 import { capitalize } from "../../../main/side/selector/section/PmGroup/helper";
 import FoundError from "../../../articles/pmArticle/FoundError";
 import ErrorWrapper from "../../../shared/ErrorWrapper";
@@ -122,9 +121,8 @@ const RateDetails = ({ rate }: { rate: IRate }) => {
 
   const giveCur = givePm.currency.code.toUpperCase();
   const getCur = getPm.currency.code.toUpperCase();
-  const giveName =
-    locale === "ru" ? givePm.ru_name ?? "" : givePm.en_name ?? "";
-  const getName = locale === "ru" ? getPm.ru_name ?? "" : getPm.en_name ?? "";
+  const giveName = givePm.ru_name ?? givePm.en_name ?? "";
+  const getName = getPm.ru_name ?? getPm.en_name ?? "";
 
   // City addon
 

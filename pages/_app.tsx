@@ -5,17 +5,14 @@ import theme from "../styles/theme";
 import Layout from "../components/layout";
 import store from "../redux/store";
 import { Provider } from "react-redux";
-import { appWithTranslation } from "next-i18next";
 import { DefaultSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { defaultConfig } from "../next-seo.config";
 import Head from "next/head";
-import "../i18n"; //
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { useAppDispatch } from "../redux/hooks";
 import { setLoadingStatus } from "../redux/mainReducer";
-import { locale as siteLocale } from "../services/utils";
 
 const RouteLoadingHandler = () => {
   const router = useRouter();
@@ -182,7 +179,7 @@ const RouteLoadingOverlay = () => {
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const seoConfig = defaultConfig[siteLocale || "ru"];
+  const seoConfig = defaultConfig;
 
   return (
     <>
@@ -206,4 +203,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default appWithTranslation(MyApp);
+export default MyApp;

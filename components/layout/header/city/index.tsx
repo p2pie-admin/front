@@ -1,5 +1,4 @@
 import { Box } from "@chakra-ui/react";
-import { useTranslation } from "next-i18next";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import Arrow from "../../../shared/Arrow";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
@@ -10,10 +9,8 @@ import Countries from "./Countries";
 import React from "react";
 import { useRouter } from "next/router";
 import { locale } from "../../../../services/utils";
-import path from "path";
 
 const CitySelector = () => {
-  const { t } = useTranslation();
   const router = useRouter();
 
   const path = router.asPath;
@@ -38,7 +35,7 @@ const CitySelector = () => {
 
   return (
     <Box>
-      <CustomModal id="location" header={t("main:chooseCity")}>
+      <CustomModal id="location" header="Выберите город:">
         <Countries pageType={pageType} />
       </CustomModal>
 
@@ -50,7 +47,7 @@ const CitySelector = () => {
         rightIcon={<Arrow isUp={false} />}
         onClick={() => dispatch(triggerModal("location"))}
       >
-        {currentCityName || t("main:city")}
+        {currentCityName || "Город"}
       </ResponsiveButton>
     </Box>
   );

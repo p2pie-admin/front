@@ -1,5 +1,4 @@
-// Language switching is controlled globally via NEXT_PUBLIC_SITE_LANG.
-// Keep this component a no-op to avoid generating locale-prefixed links.
+// Language switching is disabled. Keep this component a no-op.
 const Language = () => null;
 
 export default Language;

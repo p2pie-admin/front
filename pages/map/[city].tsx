@@ -1,5 +1,4 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import UniversalSeo from "../../components/shared/UniversalSeo";
 
@@ -18,7 +17,7 @@ import { ICity } from "../../types/exchange";
 import { IExchanger } from "../../types/exchanger";
 import { ISEO } from "../../types/general";
 import { IPm } from "../../types/selector";
-import { codeToEnName, codeToRuName } from "../../redux/amountsHelper";
+import { codeToRuName } from "../../redux/amountsHelper";
 import { IDirText } from "../../types/exchange";
 import {
   getClosestCitiesByCoordinates,
@@ -66,12 +65,7 @@ const normalizeCitySlug = (value?: string | string[] | null) => {
 const toLower = (value?: string | null) =>
   value ? value.toLowerCase() : value;
 
-const buildCopy = (
-  city: ICity,
-  locale: "ru" | "en",
-  cityText?: IDirText | null
-) => {
-  const cityEn = city.en_name;
+const buildCopy = (city: ICity, cityText?: IDirText | null) => {
   const cityRu = city.ru_name;
   const preposition = city.preposition || cityRu;
   const header = cityText?.header?.trim();
@@ -80,37 +74,21 @@ const buildCopy = (
   const seoTitle = cityText?.seo_title?.trim();
   const seoDescription = cityText?.seo_description?.trim();
 
-  if (locale === "ru") {
-    const description = `Адреса, контакты и режим работы обменных пунктов в ${preposition}. Интерактивная карта с офисами обмена валюты города ${cityRu}.`;
-    return {
-      h1: header || `Найти офисы обмена наличных в ${preposition}`,
-      h2: subheader || `Показать офисы обменников на карте города ${cityRu}`,
-      description: bodyText || description,
-      title: seoTitle || `Офисы обмена валюты в ${cityRu} | P2P.Exchange`,
-      seoDescription: seoDescription || description,
-      empty: `Сейчас нет доступных офисов в ${preposition}. Мы обновляем данные карты.`,
-      directionsTitle: `Популярные обмены в ${preposition}`,
-    };
-  }
-
-  const description = `Addresses, contacts and working hours of currency exchange offices in ${cityEn}. Explore the interactive map to plan your visit.`;
+  const description = `Адреса, контакты и режим работы обменных пунктов в ${preposition}. Интерактивная карта с офисами обмена валюты города ${cityRu}.`;
   return {
-    h1: header || `Find cash exchange offices in ${cityEn}`,
-    h2: subheader || `Show exchange bureaus on the map of ${cityEn}`,
+    h1: header || `Найти офисы обмена наличных в ${preposition}`,
+    h2: subheader || `Показать офисы обменников на карте города ${cityRu}`,
     description: bodyText || description,
-    title: seoTitle || `Currency exchange offices in ${cityEn} | P2P.Exchange`,
+    title: seoTitle || `Офисы обмена валюты в ${cityRu} | P2P.Exchange`,
     seoDescription: seoDescription || description,
-    empty: `No exchange offices found in ${cityEn} yet. We update the map regularly.`,
-    directionsTitle: `Active directions in ${cityEn}`,
+    empty: `Сейчас нет доступных офисов в ${preposition}. Мы обновляем данные карты.`,
+    directionsTitle: `Популярные обмены в ${preposition}`,
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const requestedSlug = normalizeCitySlug(params?.city);
-  const currentLocale =
-    (locale as "ru" | "en") ||
-    (process.env.NEXT_PUBLIC_SITE_LANG as "ru" | "en") ||
-    "ru";
+  const currentLocale = "ru";
 
   const parserFetcher = initParserFetcher();
 
@@ -148,7 +126,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
 
   const cityText = (cityTextRes?.[0] || null) as IDirText | null;
 
-  const copy = buildCopy(currentCity, currentLocale, cityText);
+  const copy = buildCopy(currentCity, cityText);
 
   const pmMap = new Map((pms || []).map((pm) => [pm.code.toUpperCase(), pm]));
   const dirs = limitedPossibleDirs(allPossibleDirs, "low");
@@ -239,21 +217,12 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
     .map(([code, data]) => {
       const buy = [...data.buy].sort((a, b) => b.count - a.count);
       const sell = [...data.sell].sort((a, b) => b.count - a.count);
-      const cashName =
-        currentLocale === "ru"
-          ? codeToRuName(code)
-          : codeToEnName(code) || code;
+      const cashName = codeToRuName(code);
       const totalCount =
         buy.reduce((sum, item) => sum + item.count, 0) +
         sell.reduce((sum, item) => sum + item.count, 0);
-      const buyTitle =
-        currentLocale === "ru"
-          ? `Купить криптовалюту за наличные ${cashName} в ${currentCity.preposition}`
-          : `Buy crypto for cash ${cashName} in ${currentCity.en_name}`;
-      const sellTitle =
-        currentLocale === "ru"
-          ? `Продать криптовалюту за наличные ${cashName} в ${currentCity.preposition}`
-          : `Sell crypto for cash ${cashName} in ${currentCity.en_name}`;
+      const buyTitle = `Купить криптовалюту за наличные ${cashName} в ${currentCity.preposition}`;
+      const sellTitle = `Продать криптовалюту за наличные ${cashName} в ${currentCity.preposition}`;
       return {
         currencyCode: code,
         currencyName: cashName,
@@ -284,7 +253,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
     breadcrumbs: [
       {
         position: 1,
-        name: currentLocale === "ru" ? "Главная" : "Home",
+        name: "Главная",
         item: `https://${process.env.NEXT_PUBLIC_NAME}.com`,
       },
       {
@@ -312,7 +281,6 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
       cashSections,
       cityText,
       closestCities,
-      ...(await serverSideTranslations(currentLocale, ["main"])),
     },
     revalidate: TTL.slow,
   };

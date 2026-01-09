@@ -1,5 +1,4 @@
 import { Center } from "@chakra-ui/react";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import Exchanger from "../../components/exchangers/exchanger";
 import Loader from "../../components/shared/Loader";
@@ -66,8 +65,6 @@ export default function ExchangerPage({
   return <Exchanger exchanger={exchanger} seo={seo} />;
 }
 
-const locale = (process.env.NEXT_PUBLIC_SITE_LANG || "ru") as "en" | "ru";
-
 // Single-locale getStaticProps
 export async function getStaticProps({ params }: { params: { slug: string } }) {
   try {
@@ -88,19 +85,14 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     const enrichedExchanger = await addExchangerCrossLinking(
       exchanger,
       articleCodes as string[],
-      pms as IPm[],
-      locale
+      pms as IPm[]
     );
 
     const displayName = exchanger.display_name || exchanger.name;
-    const title = `${locale === "en" ? "Exchanger" : "Обменник"} ${capitalize(
-      displayName
-    )}`;
+    const title = `Обменник ${capitalize(displayName)}`;
 
     const description = `${capitalize(displayName)}: ${
-      locale === "en"
-        ? "Exchanger card, rating and info"
-        : "Карточка обменника, рейтинг и информация"
+      "Карточка обменника, рейтинг и информация"
     }`;
 
     const seo: ISEO = {
@@ -124,8 +116,6 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
       props: {
         exchanger: exchangerWithMaskedIp,
         seo,
-        locale,
-        ...(await serverSideTranslations(locale, ["main"])),
       },
       revalidate: TTL.slow,
     };
@@ -136,8 +126,6 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
       props: {
         exchanger: null,
         seo: nullSeo,
-        locale,
-        ...(await serverSideTranslations(locale, ["main"])),
       },
       revalidate: TTL.slow,
     };

@@ -1,5 +1,3 @@
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-
 import ArticleFaqPage from "../../components/faq/ArticleFaqPage";
 import { loadArticle, loadFAQbyCategoryCode, TTL } from "../../cache/loadX";
 import { ISEO } from "../../types/general";
@@ -8,27 +6,22 @@ import { IArticle } from "../../types/pages";
 
 const PAGE_CODE = "partnership";
 
-const buildSeo = (article: IArticle | null, locale: "en" | "ru"): ISEO => ({
+const buildSeo = (article: IArticle | null): ISEO => ({
   title:
     article?.seo_title ||
-    (locale === "en"
-      ? "Partnership"
-      : `Партнерство с ${process.env.NEXT_PUBLIC_NAME || ""}`),
+    `Партнерство с ${process.env.NEXT_PUBLIC_NAME || ""}`,
   description:
     article?.seo_description ||
-    (locale === "en"
-      ? "Partnership terms, referral options and cooperation with the service."
-      : "Партнерские условия, реферальная программа и варианты сотрудничества."),
+    "Партнерские условия, реферальная программа и варианты сотрудничества.",
   canonicalSlug: PAGE_CODE,
   updatedAt: article?.updatedAt ?? null,
 });
 
-const emptyProps = async (locale: "en" | "ru") => ({
+const emptyProps = async () => ({
   props: {
     article: null,
     faqCategory: null,
-    seo: buildSeo(null, locale),
-    ...(await serverSideTranslations(locale, ["main"])),
+    seo: buildSeo(null),
   },
   revalidate: TTL.slowest,
 });
@@ -39,7 +32,7 @@ const PartnershipPage = (props: {
   seo: ISEO;
 }) => <ArticleFaqPage {...props} />;
 
-export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
+export const getStaticProps = async () => {
   try {
     const [article, faqCategory] = await Promise.all([
       loadArticle(PAGE_CODE),
@@ -50,14 +43,13 @@ export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
       props: {
         article: article || null,
         faqCategory: faqCategory || null,
-        seo: buildSeo(article, locale),
-        ...(await serverSideTranslations(locale, ["main"])),
+        seo: buildSeo(article),
       },
       revalidate: TTL.slowest,
     };
   } catch (e) {
     console.error("[partnership] getStaticProps error:", e);
-    return emptyProps(locale);
+    return emptyProps();
   }
 };
 

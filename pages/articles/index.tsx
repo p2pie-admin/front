@@ -1,9 +1,6 @@
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-
 import { ISEO } from "../../types/general";
-import { getT } from "../../components/shared/getT";
 import { nullSeo } from "../../components/shared/UniversalSeo";
-import { loadBlog, loadExchangers, TTL } from "../../cache/loadX";
+import { loadBlog, TTL } from "../../cache/loadX";
 import { IArticle } from "../../types/pages";
 import ArticlesList from "../../components/articles";
 
@@ -15,7 +12,7 @@ const ArticlesPage = ({
   seo: ISEO;
 }) => <ArticlesList articles={articles} seo={seo} />;
 
-export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
+export const getStaticProps = async () => {
   const articles = (await loadBlog()) as IArticle[];
 
   if (!articles?.length) {
@@ -23,13 +20,10 @@ export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
       props: {
         seo: nullSeo,
         articles: null,
-        ...(await serverSideTranslations(locale, ["main"])),
       },
       revalidate: TTL.slow, // если нет данных
     };
   }
-
-  const t = await getT(locale);
 
   const seo: ISEO = {
     title: `Блог ${process.env.NEXT_PUBLIC_NAME || ""}`,
@@ -42,7 +36,6 @@ export const getStaticProps = async ({ locale }: { locale: "en" | "ru" }) => {
     props: {
       seo: seo || nullSeo,
       articles: articles || null,
-      ...(await serverSideTranslations(locale, ["main"])),
     },
     revalidate: TTL.slowest,
   };

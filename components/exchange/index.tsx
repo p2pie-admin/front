@@ -44,7 +44,6 @@ import Loader from "../shared/Loader";
 import { TitleH2 } from "../shared/TitleH2";
 
 const Exchange = ({
-  locale,
   seo,
   dirText,
   givePmData,
@@ -55,7 +54,6 @@ const Exchange = ({
   dirTextIds,
 }: {
   //article?: IArticle | null;
-  locale: "en" | "ru";
   seo: ISEO;
 
   givePmData: IPmData | null;
@@ -181,7 +179,6 @@ const Exchange = ({
             dirText={dirText}
             givePmData={givePmData}
             getPmData={getPmData}
-            locale={locale}
             city={city}
           />
         </Box3D>

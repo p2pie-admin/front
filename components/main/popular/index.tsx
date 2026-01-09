@@ -6,7 +6,6 @@ import { Box, Grid, useBreakpointValue } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import CryptoPm from "./CryptoPm";
 import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
-import { useTranslation } from "next-i18next";
 import Shader from "../../shared/Shader";
 
 const Popular = ({
@@ -16,7 +15,6 @@ const Popular = ({
   popularRates?: IPopularDirRates;
   popularPms?: IPm[];
 }) => {
-  const { t } = useTranslation();
   const isBase = useBreakpointValue({ base: true, md: false });
   const [isMidVisible, setIsMidVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -78,12 +76,10 @@ const Popular = ({
                 <CryptoPm cryptoPm={cryptoPm} />
 
                 <ResponsiveText size="sm" fontWeight="bold">
-                  {`${t("main:toBuy")} ${cryptoPm.currency.code.toUpperCase()}`}
+                  {`Купить ${cryptoPm.currency.code.toUpperCase()}`}
                 </ResponsiveText>
                 <ResponsiveText size="sm" fontWeight="bold">
-                  {`${t(
-                    "main:toSell"
-                  )} ${cryptoPm.currency.code.toUpperCase()}`}
+                  {`Продать ${cryptoPm.currency.code.toUpperCase()}`}
                 </ResponsiveText>
                 <CryptoRates
                   key={cryptoCode}

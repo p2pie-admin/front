@@ -1,6 +1,5 @@
 import { Button, Divider, VStack, Text, HStack } from "@chakra-ui/react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { ICity } from "../../../types/exchange";
 import { BoxWrapper, CustomHeader } from "../../shared/BoxWrapper";
 import { ClosestCityMatch } from "../helper";
@@ -13,23 +12,18 @@ type ClosestCitiesProps = {
   closestCities: ClosestCityMatch[];
 };
 
-const formatDistance = (distanceKm: number, isRu: boolean) =>
-  `${Math.round(distanceKm)} ${isRu ? "км" : "km"}`;
+const formatDistance = (distanceKm: number) =>
+  `${Math.round(distanceKm)} км`;
 
 const ClosestCities = ({ city, closestCities }: ClosestCitiesProps) => {
-  const { locale } = useRouter();
-  const isRu = locale === "ru";
-
   if (!closestCities.length) {
     return null;
   }
 
-  const heading = isRu ? `Города рядом` : `Cities near ${city.en_name}`;
+  const heading = "Города рядом";
 
   const getCityName = (target: ICity) =>
-    isRu
-      ? target.preposition || target.en_name
-      : target.en_name || target.ru_name;
+    target.preposition || target.ru_name || target.en_name;
 
   return (
     <BoxWrapper mt="8">
@@ -68,7 +62,7 @@ const ClosestCities = ({ city, closestCities }: ClosestCitiesProps) => {
               <HStack>
                 <RiPinDistanceFill size="1.2rem" />
                 <ResponsiveText>
-                  {formatDistance(distanceKm, isRu)}
+                  {formatDistance(distanceKm)}
                 </ResponsiveText>
               </HStack>
             </Button>
