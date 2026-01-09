@@ -1,4 +1,7 @@
 const { Redis } = require("@upstash/redis");
+const fs = require("fs");
+const path = require("path");
+const dotenv = require("dotenv");
 
 function createRedis() {
   const useRedis = String(process.env.USE_REDIS).toLowerCase() === "true";
@@ -23,7 +26,17 @@ function createRedis() {
 }
 
 const redis = createRedis();
-const allowCrawlers = true;
+function resolveAllowCrawlers() {
+  const envPath = path.join(process.cwd(), ".env.local");
+  if (!fs.existsSync(envPath)) return true;
+  const parsed = dotenv.parse(fs.readFileSync(envPath));
+  if (!Object.prototype.hasOwnProperty.call(parsed, "NEXT_PUBLIC_ALLOW_CRAWLERS")) {
+    return true;
+  }
+  return String(parsed.NEXT_PUBLIC_ALLOW_CRAWLERS).toLowerCase() !== "false";
+}
+
+const allowCrawlers = resolveAllowCrawlers();
 
 module.exports = {
   siteUrl: process.env.SITE_URL || "https://p2pie.com",
