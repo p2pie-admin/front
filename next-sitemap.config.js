@@ -27,6 +27,16 @@ function createRedis() {
 
 const redis = createRedis();
 function resolveAllowCrawlers() {
+  if (
+    Object.prototype.hasOwnProperty.call(
+      process.env,
+      "NEXT_PUBLIC_ALLOW_CRAWLERS"
+    )
+  ) {
+    return (
+      String(process.env.NEXT_PUBLIC_ALLOW_CRAWLERS).toLowerCase() !== "false"
+    );
+  }
   const envPath = path.join(process.cwd(), ".env.local");
   if (!fs.existsSync(envPath)) return true;
   const parsed = dotenv.parse(fs.readFileSync(envPath));
