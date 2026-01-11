@@ -29,6 +29,7 @@ import { IExchanger, IExchangerPreview } from "../types/exchanger";
 import { IMassDirTextId, IMassDirText, IMassRate } from "../types/mass";
 import { IFaqCategory } from "../types/faq";
 import { IExchangerReview } from "../types/exchanger";
+import { p2pMakerQuery } from "../pages/p2p/queries";
 
 const locale = "ru";
 
@@ -280,3 +281,13 @@ export const loadMassRates = ({
       isSell ? "give" : "get"
     }`
   ) as Promise<IMassRate[]>;
+
+export const loadP2PMaker = (telegramUsername: string) =>
+  cachedFetch(`p2p_maker_${telegramUsername}`, TTL.fast, async () => {
+    if (!telegramUsername) return null;
+    const res = await cmsFetcher(p2pMakerQuery, {
+      telegram_username: telegramUsername,
+    });
+    if (Array.isArray(res)) return res[0] || null;
+    return res || null;
+  });

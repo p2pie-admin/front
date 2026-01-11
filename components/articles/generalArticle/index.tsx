@@ -77,7 +77,7 @@ export default function GeneralArticle({
         alignItems="center"
         flexDir="column"
       >
-        <ArticleStats />
+        <ArticleStats article={article} />
         <Divider my="4" />
 
         <Box px="2" color="bg.400">
