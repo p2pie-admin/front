@@ -30,7 +30,7 @@ import ExchangerReviewsHeader from "./reviews/ExchangerReviewsHeader";
 import ExchangerStats from "./exchangerStats";
 import { BoxWrapper } from "../../shared/BoxWrapper";
 import ExchangerTopPanel from "./exchangerTopPanel";
-import { TopButtons } from "./exchangerTopPanel/TopButtons";
+import { ExchangerTopButtons } from "./exchangerTopPanel/ExchangerTopButtons";
 import Monitorings from "./monitorings";
 
 export default function Exchanger({
@@ -85,7 +85,7 @@ export default function Exchanger({
             gridTemplateColumns="1fr 1fr"
             w="100%"
           >
-            <TopButtons exchanger={exchanger} />
+            <ExchangerTopButtons ref_link={exchanger.ref_link} />
           </Box>
         </VStack>
       </BoxWrapper>
@@ -95,7 +95,7 @@ export default function Exchanger({
       <Monitorings monitorings={exchanger.monitorings} />
       <ExchangerContacts exchangerCard={exchangerCard} />
 
-      <ExchangerReviewsHeader />
+      <ExchangerReviewsHeader title={"Уже пользовались этим обменником?"} />
       <ExchangerIdProvider exchangerId={exchanger.id}>
         <LeaveReview />
       </ExchangerIdProvider>

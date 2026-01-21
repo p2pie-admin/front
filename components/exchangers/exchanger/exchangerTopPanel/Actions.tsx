@@ -3,9 +3,9 @@ import {
   Button,
   Flex,
   HStack,
-  Input,
   Text,
   useColorModeValue,
+  Textarea,
 } from "@chakra-ui/react";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import {
@@ -19,24 +19,19 @@ import CustomModal from "../../../shared/CustomModal";
 import { IExchanger } from "../../../../types/exchanger";
 import { useAppDispatch } from "../../../../redux/hooks";
 import { triggerModal } from "../../../../redux/mainReducer";
+import exchanger from "..";
 
 const storageKeys = {
   bookmark: (id: string) => `exchanger:${id}:bookmark`,
   liked: (id: string) => `exchanger:${id}:liked`,
 };
 
-const Actions = ({ exchanger }: { exchanger: IExchanger }) => {
+const Actions = ({ id, displayName }: { displayName: string; id: string }) => {
   const dispatch = useAppDispatch();
   const inputColor = useColorModeValue("violet.700", "peach.300");
-  const displayName = exchanger.display_name || exchanger.name;
-  const bookmarkStorageKey = useMemo(
-    () => storageKeys.bookmark(exchanger.id),
-    [exchanger.id]
-  );
-  const likedStorageKey = useMemo(
-    () => storageKeys.liked(exchanger.id),
-    [exchanger.id]
-  );
+
+  const bookmarkStorageKey = useMemo(() => storageKeys.bookmark(id), [id]);
+  const likedStorageKey = useMemo(() => storageKeys.liked(id), [id]);
 
   const [liked, setLiked] = useState(false);
   const [bookmark, setBookmark] = useState("");
@@ -67,11 +62,8 @@ const Actions = ({ exchanger }: { exchanger: IExchanger }) => {
   }, [bookmark, bookmarkLoaded, bookmarkStorageKey]);
 
   const initialLikes = useMemo(
-    () =>
-      (!(displayName.length % 3)
-        ? 0
-        : Math.round(displayName.length / 2)) + Number(liked),
-    [displayName.length, liked]
+    () => (!(displayName.length % 3) ? 0 : 1) + Number(liked),
+    [displayName.length, liked],
   );
 
   const handleLike = () => {
@@ -120,14 +112,14 @@ const Actions = ({ exchanger }: { exchanger: IExchanger }) => {
           header={"Добавьте пометку для себя"}
         >
           <Box p="4">
-            <Input
+            <Textarea
               size="lg"
-              minH="100"
+              rows={3}
               color={inputColor}
               boxShadow="none !important"
-              placeholder={"Ваш комментарий к обменнику"}
+              placeholder={"Ваш комментарий"}
               value={bookmark}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
                 setBookmark(e.target.value)
               }
               onKeyDown={(event) => {

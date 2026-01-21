@@ -37,7 +37,7 @@ export function CustomHeader({
         size="lg"
         fontWeight="bold"
         variant="primary"
-        as={as || "unset"}
+        as={as || "span"}
         whiteSpace={{ base: "unset", lg: "wrap" }}
       >
         {text}
@@ -69,15 +69,13 @@ export function ReviewBorder({
 export const FormatedDate = ({ updatedAt }: { updatedAt?: string | null }) => {
   const formattedDate = updatedAt
     ? new Intl.DateTimeFormat("ru-RU", {
-        hour: "2-digit",
-        minute: "2-digit",
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
       }).format(new Date(updatedAt))
     : "";
   return (
-    <ResponsiveText color="inherit" size="xs">
+    <ResponsiveText variant="shaded" as="span">
       {formattedDate}
     </ResponsiveText>
   );

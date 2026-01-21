@@ -10,7 +10,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import { locale } from "../../../../services/utils";
 
-const CitySelector = () => {
+const CitySelector = ({ forceVisible }: { forceVisible?: boolean }) => {
   const router = useRouter();
 
   const path = router.asPath;
@@ -30,8 +30,7 @@ const CitySelector = () => {
   if (isCash) pageType = "cash";
   if (isMapPage) pageType = "map";
   if (isMassPage) pageType = "mass";
-
-  if (!isCash && !isMapPage && !isMassPage) return <></>;
+  if (!forceVisible && !isCash && !isMapPage && !isMassPage) return <></>;
 
   return (
     <Box>

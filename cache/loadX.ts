@@ -29,6 +29,12 @@ import { IExchanger, IExchangerPreview } from "../types/exchanger";
 import { IMassDirTextId, IMassDirText, IMassRate } from "../types/mass";
 import { IFaqCategory } from "../types/faq";
 import { IExchangerReview } from "../types/exchanger";
+import {
+  p2pMakerQuery,
+  p2pMakersQuery,
+  testReviewQuery,
+} from "../pages/p2p/queries";
+import { IMaker, IMakerPreview } from "../types/p2p";
 //import { p2pMakerQuery } from "../pages/p2p/queries";
 
 const locale = "ru";
@@ -55,7 +61,7 @@ export const loadRootText = () =>
 
 export const loadMainTexts = () =>
   cachedFetch(`main_texts_${locale}`, TTL.slow, () =>
-    cmsFetcher(MainTextsQuery, { locale })
+    cmsFetcher(MainTextsQuery, { locale }),
   );
 
 export const loadParserExchangers = () =>
@@ -100,14 +106,14 @@ export const loadPossibleDirs = () =>
 
 export const limitedPossibleDirs = (
   dirs: Record<string, number>,
-  strength: "low" | "middle" | "high"
+  strength: "low" | "middle" | "high",
 ): string[] => {
   const limit =
     strength == "low"
       ? 2
       : strength == "middle"
-      ? process.env.NEXT_PUBLIC_RATES_MIN || 5
-      : process.env.NEXT_PUBLIC_RATES_RENDER_MIN || 10;
+        ? process.env.NEXT_PUBLIC_RATES_MIN || 5
+        : process.env.NEXT_PUBLIC_RATES_RENDER_MIN || 10;
   return Object.entries(dirs)
     .filter(([dir, rates]) => rates >= +limit)
     .map((v) => v[0]);
@@ -119,7 +125,7 @@ export const loadPms = async () => {
       const selector = await cmsFetcher(selectorQuery);
       if (!selector) {
         console.error(
-          "Selector is undefined - check selectorQuery and CMS response"
+          "Selector is undefined - check selectorQuery and CMS response",
         );
         return []; // safe fallback
       }
@@ -149,7 +155,7 @@ export const loadExchangers = async () => {
 
 export const loadBlog = async () => {
   const articles = await cachedFetch("articles", TTL.fast, () =>
-    cmsFetcher(blogQuery)
+    cmsFetcher(blogQuery),
   );
   return articles;
 };
@@ -228,7 +234,7 @@ export const preloadDirTexts = () => {};
 
 export const loadDirText = (sectionGive: string, sectionGet: string) =>
   cachedFetch(`dirText_${locale}_${sectionGive}_${sectionGet}`, TTL.slow, () =>
-    cmsFetcher(dirsTextQuery, { locale })
+    cmsFetcher(dirsTextQuery, { locale }),
   ).then((r) => r[0]) as Promise<IDirText>;
 
 export const loadMassDirTextIds = ({ isSell }: { isSell: boolean }) =>
@@ -240,7 +246,7 @@ export const loadMassDirTextIds = ({ isSell }: { isSell: boolean }) =>
         isSell,
       })) as IMassDirTextId[];
       return massDirTextIds;
-    }
+    },
   );
 
 export const loadMassDirText = ({
@@ -264,7 +270,7 @@ export const loadMassDirText = ({
         })
       )[0] as IMassDirText;
       return massDirText;
-    }
+    },
   );
 
 export const loadMassRates = ({
@@ -279,15 +285,37 @@ export const loadMassRates = ({
   parserFetcher(
     `crypto=${code.toLowerCase()}/${currencyCode.toLowerCase()}/${
       isSell ? "give" : "get"
-    }`
+    }`,
   ) as Promise<IMassRate[]>;
 
-// export const loadP2PMaker = (telegramUsername: string) =>
-//   cachedFetch(`p2p_maker_${telegramUsername}`, TTL.fast, async () => {
-//     if (!telegramUsername) return null;
-//     const res = await cmsFetcher(p2pMakerQuery, {
-//       telegram_username: telegramUsername,
-//     });
-//     if (Array.isArray(res)) return res[0] || null;
-//     return res || null;
-//   });
+export const loadP2PMaker = (slug: string) =>
+  cachedFetch(`p2p_maker_${slug}`, TTL.fast, async () => {
+    if (!slug) return null;
+    const res = await cmsFetcher(p2pMakerQuery, { slug });
+    if (Array.isArray(res)) return (res[0] as IMaker) || null;
+    return (res as IMaker) || null;
+  });
+
+export const loadAllP2PMakers = () =>
+  cachedFetch(`p2p_makers`, TTL.fast, async () => {
+    const res = await cmsFetcher(p2pMakersQuery);
+    if (!res) return null;
+    if (Array.isArray(res)) return res as IMakerPreview[];
+    return [res as IMakerPreview];
+  });
+
+export const loadTestReview = () =>
+  cachedFetch(`test_review`, TTL.fast, async () => {
+    const res = await cmsFetcher(testReviewQuery);
+    if (!res) return [];
+    if (Array.isArray(res)) return res as IExchangerReview[];
+    if (Array.isArray((res as any).reviews))
+      return (res as any).reviews as IExchangerReview[];
+    if (Array.isArray((res as any)?.reviews?.data)) {
+      return (res as any).reviews.data.map((item: any) => ({
+        id: item?.id?.toString?.() ?? "",
+        ...item?.attributes,
+      }));
+    }
+    return [];
+  });

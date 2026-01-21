@@ -86,7 +86,7 @@ export function FaqCategoriesList({
                       pb={4}
                       color="bg.300"
                     >
-                      <Text>{faq.response}</Text>
+                      <Text whiteSpace="pre-line">{faq.response}</Text>
                     </AccordionPanel>
                   </AccordionItem>
                 ))}

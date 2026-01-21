@@ -41,8 +41,15 @@ export default function ExchangerRootReview({
   const shouldEqualizeHeight = Boolean(slug);
 
   if (!review) return <></>;
-  const { location, text, type, userAgent, review_replies, updatedAt, isDispute } =
-    review;
+  const {
+    location,
+    text,
+    type,
+    userAgent,
+    review_replies,
+    updatedAt,
+    isDispute,
+  } = review;
 
   const tag = useMemo(() => {
     if (isDispute === false) {
@@ -101,7 +108,6 @@ export default function ExchangerRootReview({
       href={slug ? "/" + slug : undefined}
       minHeight={cardMinHeight}
       variant={slug ? "contrast" : "extra_contrast"}
-      equalizeHeight={shouldEqualizeHeight}
     >
       <ReviewBorder
         h={shouldEqualizeHeight ? "100%" : undefined}
@@ -109,89 +115,96 @@ export default function ExchangerRootReview({
         flexDirection={shouldEqualizeHeight ? "column" : undefined}
         flex={shouldEqualizeHeight ? "1" : undefined}
       >
-          <Flex
-            flexDir={{ base: "column", lg: slug ? "column" : "row" }}
-            justifyContent="space-between"
-            gap="4"
-          >
-            <HStack gap="4" alignItems="flex-start">
-              <Box position="relative" w="30px" h="30px">
-                <Box borderRadius="full" overflow="hidden" w="30px" h="30px">
-                  <BoringAvatar size={30} name={meta.avatarSeed} variant="marble" />
-                </Box>
-                <Box
-                  position="absolute"
-                  bottom="-5px"
-                  right="-5px"
-                  bgColor="bg.800"
-                  borderRadius="full"
-                  w="20px"
-                  h="20px"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                >
-                  <Icon
-                    as={
-                      type === "positive"
-                        ? MdSentimentSatisfiedAlt
-                        : type === "negative"
+        <Flex
+          flexDir={{ base: "column", lg: slug ? "column" : "row" }}
+          justifyContent="space-between"
+          gap="4"
+        >
+          <HStack gap="4" alignItems="flex-start">
+            <Box position="relative" w="30px" h="30px">
+              <Box borderRadius="full" overflow="hidden" w="30px" h="30px">
+                <BoringAvatar
+                  size={30}
+                  name={meta.avatarSeed}
+                  variant="marble"
+                />
+              </Box>
+              <Box
+                position="absolute"
+                bottom="-5px"
+                right="-5px"
+                bgColor="bg.800"
+                borderRadius="full"
+                w="20px"
+                h="20px"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Icon
+                  as={
+                    type === "positive"
+                      ? MdSentimentSatisfiedAlt
+                      : type === "negative"
                         ? MdSentimentVeryDissatisfied
                         : MdOutlineSentimentNeutral
-                    }
-                    w="4"
-                    h="4"
-                    color={
-                      type === "positive"
-                        ? "green.300"
-                        : type === "negative"
+                  }
+                  w="4"
+                  h="4"
+                  color={
+                    type === "positive"
+                      ? "green.300"
+                      : type === "negative"
                         ? "red.300"
                         : "gray.300"
-                    }
-                  />
-                </Box>
+                  }
+                />
               </Box>
+            </Box>
 
+            <ResponsiveText
+              size="lg"
+              fontWeight="bold"
+              variant="contrast"
+              mt={{ base: "1", lg: "0" }}
+            >
+              {meta.displayName}
+            </ResponsiveText>
+
+            <Box
+              justifySelf="end"
+              ml="auto"
+              display={{ base: "flex", lg: slug ? "flex" : "none" }}
+              alignSelf="center"
+            >
+              <UserAgent userAgent={userAgent} />
+            </Box>
+            {review.ipAddress && (
               <ResponsiveText
-                size="lg"
-                fontWeight="bold"
-                variant="contrast"
-                mt={{ base: "1", lg: "0" }}
-              >
-                {meta.displayName}
-              </ResponsiveText>
-
-              <Box
-                justifySelf="end"
-                ml="auto"
-                display={{ base: "flex", lg: slug ? "flex" : "none" }}
-                alignSelf="center"
-              >
-                <UserAgent userAgent={userAgent} />
-              </Box>
-              <Wrap display={{ base: "none", lg: "flex" }}>
-                {tag}
-                {locationTag}
-              </Wrap>
-            </HStack>
-            <Wrap display={{ base: "flex", lg: "none" }}>
+                size="xs"
+                mt="1.5"
+              >{`IP: ${maskIP(review.ipAddress)}`}</ResponsiveText>
+            )}
+            <HStack display={{ base: "none", lg: "flex" }}>
               {tag}
               {locationTag}
-            </Wrap>
-            <HStack gap="4" color="bg.500">
-              {review.ipAddress && (
-                <ResponsiveText size="xs">{`IP: ${review.ipAddress}`}</ResponsiveText>
-              )}
-              <FormatedDate updatedAt={updatedAt} />
-              <Box
-                justifySelf="end"
-                ml="auto"
-                display={{ base: "none", lg: slug ? "none" : "flex" }}
-              >
-                <UserAgent userAgent={userAgent} />
-              </Box>
             </HStack>
-          </Flex>
+          </HStack>
+          <Wrap display={{ base: "flex", lg: "none" }}>
+            {tag}
+            {locationTag}
+          </Wrap>
+          <HStack gap="4" color="bg.500">
+            <FormatedDate updatedAt={updatedAt} />
+            <Box
+              justifySelf="end"
+              ml="auto"
+              display={{ base: "none", lg: slug ? "none" : "flex" }}
+            >
+              <UserAgent userAgent={userAgent} />
+            </Box>
+          </HStack>
+        </Flex>
         <Divider my="4" />
         <Box h="100%" flex="1">
           {review.screenshots && meta.textIsLink && (

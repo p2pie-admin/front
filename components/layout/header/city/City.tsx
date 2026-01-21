@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { Text } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 
@@ -33,6 +34,9 @@ export default function City({
     }
     if (pageType == "map") {
       router.push(`/map/${citySlug}`);
+    }
+    if (pageType == "p2p") {
+      // stay on the current page, just update the city
     }
 
     batch(() => {

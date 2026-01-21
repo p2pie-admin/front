@@ -78,6 +78,7 @@ export interface MainState {
   searchBarInputValue: string;
   givePm?: IPm;
   getPm?: IPm;
+  p2pDirections: { givePm?: IPm; getPm?: IPm }[];
   dirRates?: IRate[]; //  uniqueRates + bestRates
   dirRatesReloadTrigger?: DirRatesReloadTrigger;
   amountInput?: AmountInput;
@@ -104,10 +105,12 @@ export interface MainState {
   massSort: IMassSort;
   massSelectorSlug: string;
   loading: ILoadingStatus;
+  p2pCoordinates?: [number, number];
 }
 
 const initialState: MainState = {
   searchBarInputValue: "",
+  p2pDirections: [],
   side: "get",
   loading: "fulfilled",
   dirRatesReloadTrigger: "manual",
@@ -133,21 +136,27 @@ export const mainSlice = createSlice({
   reducers: {
     setSearchBarInputValue: (
       state: MainState,
-      action: PayloadAction<string>
+      action: PayloadAction<string>,
     ) => {
       state.searchBarInputValue = action.payload;
     },
 
     setPopularCompleted: (
       state: MainState,
-      action: PayloadAction<ISide | undefined>
+      action: PayloadAction<ISide | undefined>,
     ) => {
       state.popularCompleted = action.payload;
+    },
+    setP2PCoordinates: (
+      state: MainState,
+      action: PayloadAction<[number, number] | undefined>,
+    ) => {
+      state.p2pCoordinates = action.payload;
     },
 
     setPm: (
       state: MainState,
-      action: PayloadAction<{ pm?: IPm; side: ISide; shaded?: boolean }>
+      action: PayloadAction<{ pm?: IPm; side: ISide; shaded?: boolean }>,
     ) => {
       const { pm, side, shaded } = action.payload;
       const prevPair = getCurrencyPair(state);
@@ -165,6 +174,25 @@ export const mainSlice = createSlice({
         state.ccRatesPair = undefined;
       }
     },
+    addP2PDirection: (state: MainState) => {
+      state.p2pDirections.push({ givePm: undefined, getPm: undefined });
+    },
+    setP2PDirections: (
+      state: MainState,
+      action: PayloadAction<{ givePm?: IPm; getPm?: IPm }[]>,
+    ) => {
+      state.p2pDirections = action.payload;
+    },
+    setP2PDirectionPm: (
+      state: MainState,
+      action: PayloadAction<{ index: number; side: ISide; pm?: IPm }>,
+    ) => {
+      const { index, side, pm } = action.payload;
+      if (!state.p2pDirections[index]) {
+        state.p2pDirections[index] = { givePm: undefined, getPm: undefined };
+      }
+      state.p2pDirections[index][`${side}Pm`] = pm;
+    },
 
     // свайпаем
     setSwiperIdVisible: (state: MainState, action: PayloadAction<number>) => {
@@ -175,13 +203,13 @@ export const mainSlice = createSlice({
     // вводим свои числа
     setAmount: (
       state: MainState,
-      action: PayloadAction<AmountInput | undefined>
+      action: PayloadAction<AmountInput | undefined>,
     ) => {
       state.amountInput = action.payload;
       state.amountOutputs = getAmountOutputs(
         state,
         state.swiperIdVisible,
-        action.payload
+        action.payload,
       );
     },
 
@@ -210,13 +238,13 @@ export const mainSlice = createSlice({
 
     triggerModal: (
       state: MainState,
-      action: PayloadAction<string | undefined>
+      action: PayloadAction<string | undefined>,
     ) => {
       state.modal = action.payload;
     },
     setActivePetal: (
       state: MainState,
-      action: PayloadAction<IActivePetal | undefined>
+      action: PayloadAction<IActivePetal | undefined>,
     ) => {
       state.activePetal = action.payload;
     },
@@ -247,7 +275,7 @@ export const mainSlice = createSlice({
 
     setCurrencyConverterRate: (
       state: MainState,
-      action: PayloadAction<ICurrencyConverterRate>
+      action: PayloadAction<ICurrencyConverterRate>,
     ) => {
       state.ccRates = action.payload;
       state.ccRatesPair = undefined;
@@ -259,7 +287,7 @@ export const mainSlice = createSlice({
     },
     setFingerprintHash: (
       state: MainState,
-      action: PayloadAction<string | undefined>
+      action: PayloadAction<string | undefined>,
     ) => {
       if (action.payload)
         state.fingerprint = {
@@ -269,7 +297,7 @@ export const mainSlice = createSlice({
     },
     setUserAgent: (
       state: MainState,
-      action: PayloadAction<string | undefined>
+      action: PayloadAction<string | undefined>,
     ) => {
       if (action.payload)
         state.fingerprint = {
@@ -298,7 +326,7 @@ export const mainSlice = createSlice({
         givePm: IPm;
         getPm: IPm;
         city: ICity | null;
-      }>
+      }>,
     ) => {
       state.loading = "pending";
       const { givePm, getPm, city } = action.payload;
@@ -309,7 +337,10 @@ export const mainSlice = createSlice({
     sendToast: (state: MainState, action: PayloadAction<IToast>) => {
       state.toast = action.payload;
     },
-    setLoadingStatus: (state: MainState, action: PayloadAction<ILoadingStatus>) => {
+    setLoadingStatus: (
+      state: MainState,
+      action: PayloadAction<ILoadingStatus>,
+    ) => {
       state.loading = action.payload;
     },
     setMassPmsFilter: (state: MainState, action: PayloadAction<string[]>) => {
@@ -317,7 +348,7 @@ export const mainSlice = createSlice({
     },
     setMassAmount: (
       state: MainState,
-      action: PayloadAction<{ value: string; code?: string }>
+      action: PayloadAction<{ value: string; code?: string }>,
     ) => {
       state.massAmount = action.payload;
     },
@@ -327,7 +358,7 @@ export const mainSlice = createSlice({
 
     setMassSort: (
       state: MainState,
-      action: PayloadAction<IMassSort["key"]>
+      action: PayloadAction<IMassSort["key"]>,
     ) => {
       state.massSort.key = action.payload;
       const oldDirection = state.massSort.direction as IMassSort["direction"];
@@ -385,7 +416,7 @@ export const mainSlice = createSlice({
         state,
         currentIndex,
         undefined,
-        false
+        false,
       );
     });
 
@@ -409,7 +440,7 @@ export const mainSlice = createSlice({
         state,
         targetIndex,
         keepAmount ? state.amountInput : undefined,
-        keepAmount
+        keepAmount,
       );
       state.swiperIdVisible = targetIndex;
     });
@@ -452,12 +483,16 @@ export const {
   setAmount,
   setSide,
   setPm,
+  addP2PDirection,
+  setP2PDirections,
+  setP2PDirectionPm,
   setSearchBarInputValue,
   setSwiperIdVisible,
   reverseDir,
   updateScrollLock,
   setActivePetal,
   setPopularCompleted,
+  setP2PCoordinates,
   triggerModal,
   incrementSwiper,
   decrementSwiper,

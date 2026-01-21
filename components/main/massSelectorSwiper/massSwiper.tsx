@@ -28,6 +28,7 @@ const MassSwiper = forwardRef<MassSwiperHandle, MassSwiperProps>(
     const y = useMotionValue(0);
     const controls = useAnimation();
     const theme = useTheme();
+    const lastSelectedIdRef = React.useRef<string | null>(null);
 
     const parseSpaceToPx = React.useCallback((val: any) => {
       if (!val && val !== 0) return 0;
@@ -86,6 +87,15 @@ const MassSwiper = forwardRef<MassSwiperHandle, MassSwiperProps>(
         });
       },
       [controls]
+    );
+
+    const notifySelection = React.useCallback(
+      (nextId: string) => {
+        if (lastSelectedIdRef.current === nextId) return;
+        lastSelectedIdRef.current = nextId;
+        set(nextId);
+      },
+      [set]
     );
 
     const scrollToItem = React.useCallback(
@@ -214,23 +224,23 @@ const MassSwiper = forwardRef<MassSwiperHandle, MassSwiperProps>(
       move(targetY);
 
       // still notify parent which item is selected
-      set(items[startIndex].id);
-    }, [initialId, length, step, centerOffset, items, set, move]);
+      notifySelection(items[startIndex].id);
+    }, [initialId, length, step, centerOffset, items, move, notifySelection]);
 
     // 3) LOG selected item whenever it changes (keeps parent in sync on interactions)
     React.useEffect(() => {
       let lastIndex = getIndex();
-      set(items[lastIndex].id);
+      notifySelection(items[lastIndex].id);
 
       const unsubscribe = y.onChange(() => {
         const idx = getIndex();
         if (idx !== lastIndex) {
           lastIndex = idx;
-          set(items[idx].id);
+          notifySelection(items[idx].id);
         }
       });
       return unsubscribe;
-    }, [y, items, set, centerOffset, step]);
+    }, [y, items, centerOffset, step, getIndex, notifySelection]);
 
     React.useEffect(() => {
       return () => {

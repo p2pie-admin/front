@@ -12,10 +12,6 @@ const Side = () => {
   const side = useContext(SideContext) as "give" | "get";
   const pm = useAppSelector((state) => state.main?.[`${side}Pm`]);
 
-  const pmName = `${pm?.ru_name || pm?.en_name} ${
-    pm?.subgroup_name || pm?.currency.code
-  }`;
-
   const pmCur = pm?.currency.code;
   //const infoColor = useColorModeValue("violet.700", "peach.300");
   const articleHref = pm
@@ -65,7 +61,7 @@ const Side = () => {
             left="3"
           >
             {`${side === "give" ? "Отдаете" : "Получаете"}  ${codeToRuName(
-              pmCur
+              pmCur,
             )}`}
           </Text>
         )}

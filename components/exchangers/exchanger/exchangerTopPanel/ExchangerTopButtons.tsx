@@ -5,7 +5,7 @@ import ExchangeButton from "./ExchangeButton";
 import LeaveReviewButton from "./LeaveReviewButton";
 import { IExchanger } from "../../../../types/exchanger";
 
-export const TopButtons = ({ exchanger }: { exchanger: IExchanger }) => {
+export const ExchangerTopButtons = ({ ref_link }: { ref_link: string }) => {
   const handleScrollToLeaveReview = () => {
     if (typeof window === "undefined") return;
     const target = document.getElementById(LEAVE_REVIEW_SECTION_ID);
@@ -29,7 +29,7 @@ export const TopButtons = ({ exchanger }: { exchanger: IExchanger }) => {
   return (
     <>
       <LeaveReviewButton onClick={handleScrollToLeaveReview} />
-      <ExchangeButton refLink={exchanger.ref_link} fullWidth />
+      <ExchangeButton refLink={ref_link} fullWidth />
     </>
   );
 };

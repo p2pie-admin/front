@@ -2,11 +2,11 @@ import { Box, VStack } from "@chakra-ui/react";
 import React from "react";
 import { ResponsiveText } from "../../../../styles/theme/custom";
 
-export default function ExchangerReviewsHeader() {
+export default function ExchangerReviewsHeader({ title }: { title: string }) {
   return (
     <VStack my="20" w="100%">
       <ResponsiveText whiteSpace="unset" size="3xl" textAlign="center">
-        Уже пользовались этим обменником?
+        {title}
       </ResponsiveText>
       <ResponsiveText
         whiteSpace="unset"

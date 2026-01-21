@@ -23,7 +23,7 @@ const PmName = ({
     : useColorModeValue("bg.700", "bg.200");
 
   const name = getPmNameFromPm(pm);
-  const shortName = getPmNameFromPm(pm, true);
+
   return (
     <HStack gap="2" color={color}>
       <CircularIcon
