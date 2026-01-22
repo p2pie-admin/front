@@ -1,5 +1,5 @@
 import React from "react";
-import { Center, Divider } from "@chakra-ui/react";
+import { Box, Button, Center, Divider, VStack } from "@chakra-ui/react";
 import UniversalSeo from "../../shared/UniversalSeo";
 import Loader from "../../shared/Loader";
 import { ISEO } from "../../../types/general";
@@ -21,6 +21,13 @@ import { BoxWrapper } from "../../shared/BoxWrapper";
 import { FaqCategoriesList } from "../../faq";
 import EditOffers from "./editOffers";
 import MakerDescriptionEdit from "./MakerDescriptionEdit";
+import MakerGreeting from "../MakerGreeting";
+import { ResponsiveText } from "../../../styles/theme/custom";
+import { IoMdSave } from "react-icons/io";
+import { RiDeleteBin2Fill } from "react-icons/ri";
+import FinalButtons from "./FinalButtons";
+import Advantages from "../../main/advantages";
+import CustomTitle from "../../shared/CustomTitle";
 
 export default function MakerEditPage({
   maker,
@@ -54,21 +61,36 @@ export default function MakerEditPage({
   const reviews = Array.isArray(maker.reviews) ? maker.reviews : null;
 
   return (
-    <>
+    <VStack>
       <UniversalSeo seo={seo} />
+      <Box>
+        <MakerGreeting />
+        <BoxWrapper variant="no_contrast" data-editing="true">
+          <MakerTopPanel maker={maker} />
+          <Divider my="4" />
+          <MakerStats maker={maker} />
+        </BoxWrapper>
+        <EditOffers offers={offers} pms={pms} />
+        <MakerDescriptionEdit description={maker.description} />
 
-      <BoxWrapper variant="no_contrast" data-editing="true">
-        <MakerTopPanel maker={maker} />
-        <Divider my="4" />
-        <MakerStats maker={maker} />
-      </BoxWrapper>
-      <EditOffers offers={offers} pms={pms} />
-      <MakerDescriptionEdit description={maker.description} />
-
-      <MakerMap coordinates={maker.coordinates} />
-
-      {faqCategory ? <FaqCategoriesList categories={[faqCategory]} /> : <></>}
-      <ExchangerReviews reviews={reviews as IExchangerReview[] | null} />
-    </>
+        <MakerMap coordinates={maker.coordinates} />
+        <FinalButtons />
+        <ExchangerReviews reviews={reviews as IExchangerReview[] | null} />
+        {faqCategory ? (
+          <FaqCategoriesList
+            categories={[faqCategory]}
+            customTitle={"Популярные вопросы"}
+          />
+        ) : (
+          <></>
+        )}
+      </Box>
+      <CustomTitle
+        as="h3"
+        title={"Преимущества"}
+        subtitle={"Работаем на репутацию, а не на прибыль"}
+      />
+      <Advantages />
+    </VStack>
   );
 }

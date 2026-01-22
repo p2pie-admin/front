@@ -4,17 +4,17 @@ import { ResponsiveText } from "../../../../styles/theme/custom";
 export default function StatItem({
   label,
   value,
+  Icon,
 }: {
   label: string;
   value?: React.ReactNode;
+  Icon?: any;
 }) {
   return (
-    <HStack spacing="2">
-      <ResponsiveText size="sm" color="bg.400" variant="primary" mb="0.5">
-        {label}:
-      </ResponsiveText>
-      <ResponsiveText size="md" variant="shaded">
-        {value ?? ""}
+    <HStack spacing="2" color="bg.400">
+      {Icon && <Icon size="1rem" />}
+      <ResponsiveText size="sm" color="inherit">
+        {`${label}:         ${value ?? ""}`}
       </ResponsiveText>
     </HStack>
   );

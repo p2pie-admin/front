@@ -5,6 +5,8 @@ import ExchangerName from "../../shared/ExchangerNameRating";
 import MakerTags from "../maker/topPanel/MakerTags";
 import { IoMdSave } from "react-icons/io";
 import { RiDeleteBin2Fill } from "react-icons/ri";
+import MakerTopPanelMenu from "./MakerTopPanelMenu";
+import DeleteProject from "./DeleteProject";
 
 export default function MakerTopPanel({ maker }: { maker: IMaker }) {
   const statusColor: IDotColors =
@@ -21,20 +23,11 @@ export default function MakerTopPanel({ maker }: { maker: IMaker }) {
       <MakerTags tags={maker.exchanger_tags} />
 
       <HStack>
-        <Button
-          variant="error"
-          rightIcon={<RiDeleteBin2Fill size="1.2rem" />}
-          onClick={(e) => e.stopPropagation()}
-        >
-          Удалить
+        <Button variant="no_contrast" onClick={(e) => e.stopPropagation()}>
+          <IoMdSave size="1.2rem" />
         </Button>
-        <Button
-          variant="primary"
-          rightIcon={<IoMdSave size="1.2rem" />}
-          onClick={(e) => e.stopPropagation()}
-        >
-          Сохранить
-        </Button>
+        <MakerTopPanelMenu maker={maker} />
+        <DeleteProject maker={maker} />
       </HStack>
     </HStack>
   );

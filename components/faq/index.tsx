@@ -5,6 +5,7 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
+  Divider,
   Flex,
   Grid,
   Text,
@@ -20,11 +21,15 @@ import { TextToHTML } from "../shared/helper";
 import UniversalSeo from "../shared/UniversalSeo";
 import CustomIcon from "./CustomIcon";
 import { Box3D } from "../../styles/theme/custom";
+import { IoMdInformationCircle } from "react-icons/io";
+import { CustomHeader } from "../shared/BoxWrapper";
 
 export function FaqCategoriesList({
   categories,
+  customTitle,
 }: {
   categories: IFaqCategory[];
+  customTitle?: string;
 }) {
   const accentFallback = useColorModeValue("violet.700", "peach.200");
   const questionColor = useColorModeValue("bg.700", "bg.100");
@@ -45,18 +50,25 @@ export function FaqCategoriesList({
             variant="contrast"
             h="fit-content"
           >
-            <Flex
-              align={{ base: "flex-start", md: "center" }}
-              gap="3"
-              wrap="wrap"
-              mb="4"
-            >
-              <CustomIcon
-                image={category.image}
-                id={category.id}
-                description={category.description}
-              />
-            </Flex>
+            {!customTitle ? (
+              <Flex
+                align={{ base: "flex-start", md: "center" }}
+                gap="3"
+                wrap="wrap"
+                mb="4"
+              >
+                <CustomIcon
+                  image={category.image}
+                  id={category.id}
+                  description={category.description}
+                />
+              </Flex>
+            ) : (
+              <>
+                <CustomHeader text={customTitle} Icon={IoMdInformationCircle} />
+                <Divider my="4" />
+              </>
+            )}
 
             {category.x_faqs?.length ? (
               <Accordion allowMultiple>

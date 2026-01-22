@@ -72,6 +72,8 @@ export const FormatedDate = ({ updatedAt }: { updatedAt?: string | null }) => {
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
       }).format(new Date(updatedAt))
     : "";
   return (
