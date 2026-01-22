@@ -20,7 +20,7 @@ export const internalCmsLink = process.env.INTERNAL_CMS_URL;
 export const resolveInternalUrl = (external: string, internal?: string) =>
   isServerSide && useInternal && internal ? internal : external;
 
-export const locale = "ru" as const;
+export const locale = "ru" as "ru" | "en";
 
 //"http://127.0.0.1:5000"
 
@@ -32,7 +32,7 @@ export const mylog = (
     | "warning"
     | "important"
     | "info"
-    | "hidden" = "info"
+    | "hidden" = "info",
 ) => {
   const colors = {
     error: "📕 \u001b[1;31m",

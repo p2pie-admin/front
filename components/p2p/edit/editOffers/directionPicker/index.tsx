@@ -1,25 +1,15 @@
 import React, { useMemo, useState, useEffect } from "react";
-import { Box, Button, Collapse, Grid, HStack, VStack } from "@chakra-ui/react";
+import { Box, Button, VStack } from "@chakra-ui/react";
 import { IoAddOutline } from "react-icons/io5";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
 import {
   addP2PDirection,
   setP2PDirections,
+  setP2PFullOffers,
 } from "../../../../../redux/mainReducer";
-import { Box3D, ResponsiveText } from "../../../../../styles/theme/custom";
-import DirectionPmButton from "./directionPmButton";
-import { BsArrowRightShort } from "react-icons/bs";
-import { TbExternalLink } from "react-icons/tb";
-import NavButton from "../../../../layout/nav/NavButton";
-import { RxCross2 } from "react-icons/rx";
-import { FiEdit2 } from "react-icons/fi";
 import { IFullOffer } from "../../../../../types/p2p";
 import { IPm } from "../../../../../types/selector";
-import DirectionDetails from "./details";
-import {
-  MdOutlineKeyboardArrowDown,
-  MdOutlineKeyboardArrowUp,
-} from "react-icons/md";
+import DirectionItem from "./DirectionItem";
 
 const DirectionsPicker = ({
   offers,
@@ -29,7 +19,12 @@ const DirectionsPicker = ({
   pms?: IPm[] | null;
 }) => {
   const dispatch = useAppDispatch();
-  const directions = useAppSelector((state) => state.main.p2pDirections);
+  const directionsCount = useAppSelector(
+    (state) => state.main.p2pDirections.length,
+  );
+  const fullOffersCount = useAppSelector(
+    (state) => state.main.p2pFullOffers.length,
+  );
   const [opened, setOpened] = useState(0);
 
   const handleExpand = (event: any, index: number) => {
@@ -50,70 +45,35 @@ const DirectionsPicker = ({
   );
 
   useEffect(() => {
-    if (!initialDirections.length || directions.length) return;
+    if (!initialDirections.length || directionsCount) return;
     dispatch(setP2PDirections(initialDirections));
-  }, [dispatch, directions.length, initialDirections]);
+  }, [dispatch, directionsCount, initialDirections]);
+  useEffect(() => {
+    if (!fullOffers.length || fullOffersCount) return;
+    dispatch(setP2PFullOffers(fullOffers));
+  }, [dispatch, fullOffers, fullOffersCount]);
+
+  const directionIndexes = useMemo(
+    () => Array.from({ length: directionsCount }, (_, index) => index),
+    [directionsCount],
+  );
 
   return (
     <VStack align="stretch" spacing="3" px="2">
-      {!directions.length ? (
+      {!directionsCount ? (
         <Box color="bg.400">
           Добавьте направление, чтобы выбрать методы оплаты.
         </Box>
       ) : (
         <VStack spacing="3" align="stretch">
-          {directions.map((direction, index) => (
-            <Box3D
-              key={`${direction.givePm?.code ?? "give"}-${direction.getPm?.code ?? "get"}-${index}`}
-              w="100%"
-              flex="1"
-              px="4"
-              py="2"
-              cursor="pointer"
-              display="block"
-              alignSelf="stretch"
-              transition="filter 0.2s ease-in"
-              _hover={{ filter: "brightness(1.1)" }}
-              variant="extra_contrast"
-              onClick={() => setOpened(index == opened ? 1000 : index)}
-              //minH={fullHeight ? "70px" : "unset"}
-            >
-              <Grid
-                gridTemplateColumns={"2fr 40px 2fr 1fr"}
-                gridTemplateRows="auto"
-                color="bg.500"
-                alignItems="center"
-                columnGap="2"
-              >
-                <DirectionPmButton
-                  side="give"
-                  directionIndex={index}
-                  pm={direction.givePm}
-                  handleExpand={handleExpand}
-                />
-
-                <BsArrowRightShort size="1.5rem" />
-
-                <DirectionPmButton
-                  side="get"
-                  directionIndex={index}
-                  pm={direction.getPm}
-                  handleExpand={handleExpand}
-                />
-                <HStack justifySelf="end">
-                  <Button variant="ghost">
-                    {index == opened ? (
-                      <MdOutlineKeyboardArrowUp size="1.5rem" />
-                    ) : (
-                      <MdOutlineKeyboardArrowDown size="1.5rem" />
-                    )}
-                  </Button>
-                </HStack>
-              </Grid>
-              <Collapse in={index == opened}>
-                <DirectionDetails fullOffer={fullOffers[index]} />
-              </Collapse>
-            </Box3D>
+          {directionIndexes.map((index) => (
+            <DirectionItem
+              key={`direction-${index}`}
+              index={index}
+              opened={opened}
+              setOpened={setOpened}
+              handleExpand={handleExpand}
+            />
           ))}
           <Button
             minH="12"

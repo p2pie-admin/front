@@ -70,8 +70,8 @@ export class FeesCalculator {
     const input = Number.isNaN(+str)
       ? ""
       : str.endsWith(".") || str.endsWith("0") || str === ""
-      ? str
-      : String(R(+str));
+        ? str
+        : String(R(+str));
 
     outputs[side] = addSpaces(input) || "";
 
@@ -156,14 +156,14 @@ export const kFormatter = (num: number) => {
   return abs > 999999999
     ? "✖"
     : abs > 9999999
-    ? (num / 1000000).toFixed(0) + (locale == "en" ? " m" : " млн")
-    : abs > 999999
-    ? (num / 1000000).toFixed(1) + (locale == "en" ? " m" : " млн")
-    : abs > 9999
-    ? (num / 1000).toFixed(0) + (locale == "en" ? " k" : " тыс")
-    : abs > 999
-    ? (num / 1000).toFixed(1) + (locale == "en" ? " k" : " тыс")
-    : num.toString();
+      ? (num / 1000000).toFixed(0) + (locale == "en" ? " m" : " млн")
+      : abs > 999999
+        ? (num / 1000000).toFixed(1) + (locale == "en" ? " m" : " млн")
+        : abs > 9999
+          ? (num / 1000).toFixed(0) + (locale == "en" ? " k" : " тыс")
+          : abs > 999
+            ? (num / 1000).toFixed(1) + (locale == "en" ? " k" : " тыс")
+            : num.toString();
 };
 
 const stick = (num: number) => {
@@ -228,8 +228,8 @@ export const addSpaces = (x: string | number) => {
 export const isClose = (a: number, b: number): boolean =>
   Math.abs(a - b) / a < 0.2;
 
-export const beautifyAmount = (number: number, currency: string) =>
-  addSpaces(R(number) + " " + currency);
+export const beautifyAmount = (number: number, strength?: number) =>
+  addSpaces(R(number, strength) + " ");
 
 export const localFormat = (n: number, cur: string) => {
   const symbol = codeToSymbol(cur) || cur;

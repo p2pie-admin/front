@@ -20,6 +20,7 @@ import { initialAmountOutputs, getAmountOutputs } from "./helper";
 
 import { getPmByCode } from "../components/main/side/selector/section/PmGroup/helper";
 import { ICurrencyConverterRate, IFingerprint } from "../types/shared";
+import { IFullOffer, IMakerOffer } from "../types/p2p";
 
 import { format, R } from "./amountsHelper";
 
@@ -79,6 +80,7 @@ export interface MainState {
   givePm?: IPm;
   getPm?: IPm;
   p2pDirections: { givePm?: IPm; getPm?: IPm }[];
+  p2pFullOffers: Partial<IFullOffer>[];
   dirRates?: IRate[]; //  uniqueRates + bestRates
   dirRatesReloadTrigger?: DirRatesReloadTrigger;
   amountInput?: AmountInput;
@@ -111,6 +113,7 @@ export interface MainState {
 const initialState: MainState = {
   searchBarInputValue: "",
   p2pDirections: [],
+  p2pFullOffers: [],
   side: "get",
   loading: "fulfilled",
   dirRatesReloadTrigger: "manual",
@@ -176,12 +179,36 @@ export const mainSlice = createSlice({
     },
     addP2PDirection: (state: MainState) => {
       state.p2pDirections.push({ givePm: undefined, getPm: undefined });
+      state.p2pFullOffers.push({});
     },
     setP2PDirections: (
       state: MainState,
       action: PayloadAction<{ givePm?: IPm; getPm?: IPm }[]>,
     ) => {
       state.p2pDirections = action.payload;
+    },
+    setP2PFullOffers: (
+      state: MainState,
+      action: PayloadAction<Partial<IFullOffer>[]>,
+    ) => {
+      state.p2pFullOffers = action.payload;
+    },
+    setP2PFullOfferField: (
+      state: MainState,
+      action: PayloadAction<{
+        index: number;
+        field: keyof Omit<IMakerOffer, "id" | "dir">;
+        value: IMakerOffer[keyof IMakerOffer] | null | undefined;
+      }>,
+    ) => {
+      const { index, field, value } = action.payload;
+      if (!state.p2pFullOffers[index]) {
+        state.p2pFullOffers[index] = {};
+      }
+      state.p2pFullOffers[index] = {
+        ...state.p2pFullOffers[index],
+        [field]: value,
+      };
     },
     setP2PDirectionPm: (
       state: MainState,
@@ -192,6 +219,10 @@ export const mainSlice = createSlice({
         state.p2pDirections[index] = { givePm: undefined, getPm: undefined };
       }
       state.p2pDirections[index][`${side}Pm`] = pm;
+      if (!state.p2pFullOffers[index]) {
+        state.p2pFullOffers[index] = {};
+      }
+      state.p2pFullOffers[index][`${side}Pm`] = pm;
     },
 
     // свайпаем
@@ -485,6 +516,8 @@ export const {
   setPm,
   addP2PDirection,
   setP2PDirections,
+  setP2PFullOffers,
+  setP2PFullOfferField,
   setP2PDirectionPm,
   setSearchBarInputValue,
   setSwiperIdVisible,

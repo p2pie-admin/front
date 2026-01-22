@@ -10,7 +10,15 @@ import { buildRateString } from "../shared/helper";
 import Loader from "../shared/Loader";
 
 const Chart = memo(
-  ({ giveCur, getCur }: { giveCur: string; getCur: string }) => {
+  ({
+    giveCur,
+    getCur,
+    currentRateOverride,
+  }: {
+    giveCur: string;
+    getCur: string;
+    currentRateOverride?: number | null;
+  }) => {
     const bgColor = useColorModeValue("violet.700", "bg.900");
     const primaryColor = useColorModeValue("bg.100", "peach.300");
     const color = useColorModeValue("bg.200", "bg.500");
@@ -28,6 +36,8 @@ const Chart = memo(
     const { currentRate, giveToUSD, getToUSD, dayTrend, hourTrend } = ccRates;
 
     const trend = timeframe === "24h" ? dayTrend : hourTrend;
+    const displayRate =
+      currentRateOverride ?? (currentRate as number | undefined);
 
     // const giveUsdRate = useMemo(
     //   () =>
@@ -138,12 +148,12 @@ const Chart = memo(
           borderRadius="lg"
           position="absolute"
           bottom={`${100 - trend * 5}px`}
-          display={!currentRate ? "none" : "unset"}
+          display={!displayRate ? "none" : "unset"}
           right="4"
         >
           <Text fontSize="sm" color={color}>
             {buildRateString({
-              course: currentRate,
+              course: displayRate,
               giveCur,
               getCur,
             })}

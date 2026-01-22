@@ -1,18 +1,18 @@
 import React from "react";
-import { IFullOffer, IMakerOffer } from "../../../../../../types/p2p";
 import { VStack } from "@chakra-ui/react";
+import { shallowEqual } from "react-redux";
 import CourseSelector from "./CourseSelector";
+import { useAppSelector } from "../../../../../../redux/hooks";
 
-export default function DirectionDetails({
-  fullOffer,
-}: {
-  fullOffer?: IFullOffer;
-}) {
-  const currencyPair = `${fullOffer?.givePm?.currency.code.toUpperCase()}_${fullOffer?.getPm?.currency.code.toUpperCase()}`;
+export default function DirectionDetails({ index }: { index: number }) {
+  const fullOffer = useAppSelector(
+    (state) => state.main.p2pFullOffers[index],
+    shallowEqual,
+  );
 
   return (
     <VStack>
-      <CourseSelector course={fullOffer?.course} currencyPair={currencyPair} />
+      {fullOffer ? <CourseSelector fullOffer={fullOffer} /> : null}
     </VStack>
   );
 }

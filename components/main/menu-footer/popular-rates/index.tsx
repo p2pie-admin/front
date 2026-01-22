@@ -15,7 +15,7 @@ import { useState } from "react";
 // import { LinePath } from "@visx/shape";
 import { RiArrowDropUpFill, RiArrowDropDownFill } from "react-icons/ri";
 import { batch } from "react-redux";
-import { beautifyAmount, addSpaces } from "../../../../redux/amountsHelper";
+import { addSpaces } from "../../../../redux/amountsHelper";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { triggerModal } from "../../../../redux/mainReducer";
 import CustomModal from "../../../shared/CustomModal";
@@ -58,7 +58,7 @@ export default function BestRates() {
   //     [10, 0],
   //   ];
   const bestRatesPreview = useAppSelector(
-    (state) => state.main.bestRatesPreview
+    (state) => state.main.bestRatesPreview,
   );
 
   const ratePairs =
