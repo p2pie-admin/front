@@ -13,11 +13,11 @@ const Chart = memo(
   ({
     giveCur,
     getCur,
-    currentRateOverride,
+    noRate = false,
   }: {
-    giveCur: string;
-    getCur: string;
-    currentRateOverride?: number | null;
+    giveCur?: string;
+    getCur?: string;
+    noRate?: boolean;
   }) => {
     const bgColor = useColorModeValue("violet.700", "bg.900");
     const primaryColor = useColorModeValue("bg.100", "peach.300");
@@ -31,13 +31,11 @@ const Chart = memo(
     const [timeframe, setTimeframe] = useState<"1h" | "24h">("24h");
 
     const ccRates = useAppSelector(
-      (state) => state.main.ccRates || ({} as any)
+      (state) => state.main.ccRates || ({} as any),
     );
     const { currentRate, giveToUSD, getToUSD, dayTrend, hourTrend } = ccRates;
 
     const trend = timeframe === "24h" ? dayTrend : hourTrend;
-    const displayRate =
-      currentRateOverride ?? (currentRate as number | undefined);
 
     // const giveUsdRate = useMemo(
     //   () =>
@@ -65,21 +63,21 @@ const Chart = memo(
       const timeout = setTimeout(() => setImageLoaded(true), 10000);
       return () => clearTimeout(timeout);
     }, [imgSrc]);
-
+    if (!giveCur || !getCur) return <></>;
     return (
       <Box3D
         bgColor={bgColor}
         overflow="hidden"
         position="relative"
-        w="100%"
-        h="200px"
+        w="fit-content"
+        h={`${noRate ? 150 : 200}px`}
         mb="4"
       >
         <Image
           src={imgSrc}
           alt={alt}
-          width={420}
-          height={200}
+          width={noRate ? 315 : 420}
+          height={noRate ? 150 : 200}
           style={{ objectFit: "cover" }}
           onLoadingComplete={() => setImageLoaded(true)}
           onError={() => setImageLoaded(true)}
@@ -109,59 +107,62 @@ const Chart = memo(
             }`}
           </Text>
         </HStack>
-
-        <Box
-          position="absolute"
-          top="0"
-          right="0"
-          zIndex="35"
-          borderRadius="lg"
-          px="2"
-        >
-          <HStack>
-            <Button
-              variant="default"
-              size="xs"
-              m="0"
-              color={timeframe === "1h" ? primaryColor : "whiteAlpha.400"}
-              onClick={() => setTimeframe("1h")}
+        {!noRate && (
+          <>
+            <Box
+              position="absolute"
+              top="0"
+              right="0"
+              zIndex="35"
+              borderRadius="lg"
+              px="2"
             >
-              1h
-            </Button>
-            <Button
-              variant="default"
-              size="xs"
-              m="0"
-              color={timeframe === "24h" ? primaryColor : "whiteAlpha.400"}
-              onClick={() => setTimeframe("24h")}
-            >
-              24h
-            </Button>
-          </HStack>
-        </Box>
+              <HStack>
+                <Button
+                  variant="default"
+                  size="xs"
+                  m="0"
+                  color={timeframe === "1h" ? primaryColor : "whiteAlpha.400"}
+                  onClick={() => setTimeframe("1h")}
+                >
+                  1h
+                </Button>
+                <Button
+                  variant="default"
+                  size="xs"
+                  m="0"
+                  color={timeframe === "24h" ? primaryColor : "whiteAlpha.400"}
+                  onClick={() => setTimeframe("24h")}
+                >
+                  24h
+                </Button>
+              </HStack>
+            </Box>
 
-        <Box
-          py="0.5"
-          px="1"
-          bgColor="bg.1000"
-          filter="opacity(0.9)"
-          borderRadius="lg"
-          position="absolute"
-          bottom={`${100 - trend * 5}px`}
-          display={!displayRate ? "none" : "unset"}
-          right="4"
-        >
-          <Text fontSize="sm" color={color}>
-            {buildRateString({
-              course: displayRate,
-              giveCur,
-              getCur,
-            })}
-          </Text>
-        </Box>
+            <Box
+              py="0.5"
+              px="1"
+              bgColor="bg.1000"
+              filter="opacity(0.9)"
+              borderRadius="lg"
+              position="absolute"
+              bottom={`${100 - trend * 5}px`}
+              display={!currentRate ? "none" : "unset"}
+              right="4"
+            >
+              <Text fontSize="sm" color={color}>
+                {buildRateString({
+                  course: currentRate,
+                  giveCur,
+                  getCur,
+                })}
+              </Text>
+            </Box>
+          </>
+        )}
       </Box3D>
     );
-  }
+  },
 );
 
 export default Chart;

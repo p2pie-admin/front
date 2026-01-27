@@ -12,12 +12,19 @@ type CustomTitleProps = {
   as: "h1" | "h2" | "h3";
   title: string;
   subtitle?: string;
+  subtitle2?: string;
 } & BoxProps;
 
-export default function ({ as, title, subtitle, ...props }: CustomTitleProps) {
+export default function ({
+  as,
+  title,
+  subtitle,
+  subtitle2,
+  ...props
+}: CustomTitleProps) {
   const [peripheryColor, centerColor] = useToken(
     "colors",
-    useColorModeValue(["bg.500", "violet.700"], ["bg.200", "peach.300"])
+    useColorModeValue(["bg.500", "violet.700"], ["bg.200", "peach.300"]),
   );
 
   return (
@@ -51,6 +58,19 @@ export default function ({ as, title, subtitle, ...props }: CustomTitleProps) {
           fontFamily="Montserrat, sans-serif"
         >
           {subtitle}
+        </Text>
+      )}
+
+      {subtitle2 && (
+        <Text
+          as="p"
+          fontSize={{ base: "md", lg: "xl" }}
+          mt={2}
+          color="bg.400"
+          fontWeight="light"
+          fontFamily="Montserrat, sans-serif"
+        >
+          {subtitle2}
         </Text>
       )}
     </Box>

@@ -73,7 +73,7 @@ export const enrichText = ({
   articleCodes.forEach((code) => {
     const pm = pms.find(
       (pm) =>
-        pm.en_name.toLowerCase().replace(/\s+/g, "-") === code.toLowerCase()
+        pm.en_name.toLowerCase().replace(/\s+/g, "-") === code.toLowerCase(),
     );
     if (!pm) return;
 
@@ -96,7 +96,7 @@ export const enrichText = ({
       const match = lookup.find(
         ({ key }) =>
           word.replace(/-/g, " ").toLowerCase() ===
-          key.replace(/-/g, " ").toLowerCase()
+          key.replace(/-/g, " ").toLowerCase(),
       );
 
       if (!match) return full;
@@ -108,7 +108,7 @@ export const enrichText = ({
       seen.add(slug);
 
       return `${prefix}[**${word}**](${slug})`;
-    }
+    },
   );
 };
 
@@ -142,29 +142,35 @@ export const buildRateString = ({
   giveCur,
   getCur,
 }: {
-  course: number;
-  giveCur: string;
-  getCur: string;
+  course?: number;
+  giveCur?: string;
+  getCur?: string;
 }) => {
+  if (!course || !giveCur || !getCur) return "";
   return course < 1
     ? `1 ${giveCur} = ${format(1 / course, 1)} ${getCur}`
     : `${format(course, 1)} ${giveCur} = 1 ${getCur}`;
 };
 
-export const getPmNameFromPm = (pm: IPm, isShort: boolean = false) => {
+export const getPmNameFromPm = (pm?: IPm | null, isShort: boolean = false) => {
+  if (!pm) return "";
   const nameSameAsCurrency =
-    pm.code?.toUpperCase() === pm?.en_name?.toUpperCase();
+    pm.code?.toUpperCase() === pm.en_name?.toUpperCase();
 
   if (isShort) {
-    return pm.subgroup_name || (!nameSameAsCurrency && capitalize(pm.en_name));
+    return (
+      pm.subgroup_name ||
+      (!nameSameAsCurrency ? capitalize(pm.en_name) : "") ||
+      ""
+    );
   }
 
-  const name = `${capitalize(pm.en_name.slice(0, 12))} ${
-    pm.section == "crypto"
+  const baseName = capitalize((pm.en_name ?? "").slice(0, 12));
+  const cryptoSuffix =
+    pm.section === "crypto"
       ? pm.subgroup_name?.toUpperCase() ||
-        (!nameSameAsCurrency && pm.currency.code.toUpperCase()) ||
+        (!nameSameAsCurrency ? pm.currency?.code?.toUpperCase() : "") ||
         ""
-      : ""
-  }`;
-  return name;
+      : "";
+  return cryptoSuffix ? `${baseName} ${cryptoSuffix}` : baseName;
 };

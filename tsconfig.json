@@ -24,7 +24,9 @@
     "**/*.tsx",
     "next-seo.config.ts",
     "next-sitemap.config.js",
-    "cache/index.js"
+    "cache/index.js",
+    "components/p2p/edit/editOffers/offer/course/helper.ts",
+    "components/p2p/edit/editOffers/offer/course/CourseWrapper.tsx"
   ],
   "exclude": ["node_modules"]
 }

@@ -14,7 +14,7 @@ import { IMaker } from "../../../types/p2p";
 import { TiDeleteOutline } from "react-icons/ti";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 
-export default function MakerTopPanelMenu({ maker }: { maker: IMaker }) {
+export default function DeleteProject({ maker }: { maker: IMaker }) {
   const telegramUsername = maker.telegram_username?.replace(/^@/, "");
 
   return (

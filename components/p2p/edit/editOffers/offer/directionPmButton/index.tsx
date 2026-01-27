@@ -44,9 +44,8 @@ const DirectionPmButton = ({
     });
   };
 
-  const pmName = `${capitalize(pm?.ru_name || pm?.en_name)} ${(
-    pm?.subgroup_name || pm?.currency.code
-  )?.toUpperCase()}`;
+  const pmName = getPmNameFromPm(pms[0]);
+
   //const shortName = getPmNameFromPm(pms[0], true);
 
   return (

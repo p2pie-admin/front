@@ -12,6 +12,7 @@ import {
   fetchCurrencyConverterRates,
   fetchTopParameters,
   fetchCity,
+  fetchP2POfferCourseRates,
 } from "./thunks";
 import type { DirRatesReloadTrigger } from "./thunks";
 import { IPm, IPmGroup } from "../types/selector";
@@ -79,7 +80,6 @@ export interface MainState {
   searchBarInputValue: string;
   givePm?: IPm;
   getPm?: IPm;
-  p2pDirections: { givePm?: IPm; getPm?: IPm }[];
   p2pFullOffers: Partial<IFullOffer>[];
   dirRates?: IRate[]; //  uniqueRates + bestRates
   dirRatesReloadTrigger?: DirRatesReloadTrigger;
@@ -112,7 +112,6 @@ export interface MainState {
 
 const initialState: MainState = {
   searchBarInputValue: "",
-  p2pDirections: [],
   p2pFullOffers: [],
   side: "get",
   loading: "fulfilled",
@@ -178,14 +177,12 @@ export const mainSlice = createSlice({
       }
     },
     addP2PDirection: (state: MainState) => {
-      state.p2pDirections.push({ givePm: undefined, getPm: undefined });
       state.p2pFullOffers.push({});
     },
-    setP2PDirections: (
-      state: MainState,
-      action: PayloadAction<{ givePm?: IPm; getPm?: IPm }[]>,
-    ) => {
-      state.p2pDirections = action.payload;
+    removeP2PDirection: (state: MainState, action: PayloadAction<number>) => {
+      const index = action.payload;
+      if (index < 0 || index >= state.p2pFullOffers.length) return;
+      state.p2pFullOffers.splice(index, 1);
     },
     setP2PFullOffers: (
       state: MainState,
@@ -215,10 +212,6 @@ export const mainSlice = createSlice({
       action: PayloadAction<{ index: number; side: ISide; pm?: IPm }>,
     ) => {
       const { index, side, pm } = action.payload;
-      if (!state.p2pDirections[index]) {
-        state.p2pDirections[index] = { givePm: undefined, getPm: undefined };
-      }
-      state.p2pDirections[index][`${side}Pm`] = pm;
       if (!state.p2pFullOffers[index]) {
         state.p2pFullOffers[index] = {};
       }
@@ -494,6 +487,46 @@ export const mainSlice = createSlice({
       state.ccRates = data;
       state.ccRatesPair = fetchedPair;
     });
+
+    builder.addCase(fetchP2POfferCourseRates.fulfilled, (state, action) => {
+      const {
+        index,
+        dir,
+        currencyPair,
+        googleRate,
+        giveToUSD,
+        getToUSD,
+        bestRate,
+        bestRateRev,
+        suggestedCourse,
+      } = action.payload;
+      const offer = state.p2pFullOffers[index];
+      if (!offer) return;
+
+      const currentDir =
+        offer.dir ||
+        (offer.givePm?.code && offer.getPm?.code
+          ? `${offer.givePm.code}_${offer.getPm.code}`
+          : undefined);
+      const currentPair =
+        offer.givePm?.currency?.code && offer.getPm?.currency?.code
+          ? `${offer.givePm.currency.code}_${offer.getPm.currency.code}`.toUpperCase()
+          : undefined;
+
+      if ((dir && currentDir !== dir) || (currencyPair && currentPair !== currencyPair)) {
+        return;
+      }
+
+      state.p2pFullOffers[index] = {
+        ...offer,
+        googleRate,
+        giveToUSD,
+        getToUSD,
+        bestRate,
+        bestRateRev,
+        suggestedCourse,
+      };
+    });
     builder.addCase(fetchTopParameters.fulfilled, (state, action) => {
       state.topParameters = action.payload || [];
     });
@@ -515,7 +548,7 @@ export const {
   setSide,
   setPm,
   addP2PDirection,
-  setP2PDirections,
+  removeP2PDirection,
   setP2PFullOffers,
   setP2PFullOfferField,
   setP2PDirectionPm,

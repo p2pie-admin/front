@@ -1,33 +1,44 @@
-import { Divider, Grid, Box, VStack, HStack } from "@chakra-ui/react";
+import { Divider, Box, VStack, Button } from "@chakra-ui/react";
 import { IoMdListBox } from "react-icons/io";
-import { addSpaces } from "../../../../redux/amountsHelper";
-import { ResponsiveText } from "../../../../styles/theme/custom";
-import { IFullOffer } from "../../../../types/p2p";
-import { IPm } from "../../../../types/selector";
 import { BoxWrapper, CustomHeader } from "../../../shared/BoxWrapper";
 
-import DirectionsPicker from "./directionPicker";
+import DirectionsPicker from "./Offers";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { IoAddOutline } from "react-icons/io5";
+import { addP2PDirection } from "../../../../redux/mainReducer";
 
-export default function EditOffers({
-  offers,
-  pms,
-}: {
-  offers: IFullOffer[] | null | undefined;
-  pms: IPm[] | null;
-}) {
-  const pmsByCode = new Map<string, IPm>();
-  (pms || []).forEach((pm) => {
-    if (pm?.code) {
-      pmsByCode.set(pm.code.toUpperCase(), pm);
-    }
-  });
+export default function EditOffers() {
+  const offersCount = useAppSelector(
+    (state) => state.main.p2pFullOffers.length,
+  );
+  const dispatch = useAppDispatch();
+  // все оферы
   return (
     <BoxWrapper>
       <CustomHeader text="Предложения" Icon={IoMdListBox} />
       <Divider my="4" />
-      <DirectionsPicker offers={offers} pms={pms} />
 
-      <Divider my="4" />
+      <VStack align="stretch" spacing="3">
+        {!offersCount ? (
+          <Box color="bg.400">
+            Добавьте направление, чтобы выбрать методы оплаты.
+          </Box>
+        ) : (
+          <DirectionsPicker />
+        )}
+        {offersCount < 10 && (
+          <Button
+            minH="12"
+            variant="no_contrast"
+            color="peach.500"
+            border="2px dashed"
+            borderColor="peach.500"
+            leftIcon={<IoAddOutline size="1.5rem" />}
+            onClick={() => dispatch(addP2PDirection())}
+            zIndex="1"
+          />
+        )}
+      </VStack>
     </BoxWrapper>
   );
 }

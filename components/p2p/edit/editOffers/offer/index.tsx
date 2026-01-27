@@ -1,8 +1,10 @@
 import React from "react";
 import { Box3D } from "../../../../../styles/theme/custom";
 import {
+  Box,
   Button,
   Collapse,
+  Divider,
   FormControl,
   FormLabel,
   Grid,
@@ -21,10 +23,12 @@ import {
 } from "react-icons/md";
 import { shallowEqual } from "react-redux";
 import DirectionPmButton from "./directionPmButton";
-import DirectionDetails from "./details";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
-import { setP2PFullOfferField } from "../../../../../redux/mainReducer";
-import { IMakerOffer } from "../../../../../types/p2p";
+import DeleteOffer from "./DeleteOffer";
+import OfferCourse from "./course";
+import OfferLimit from "./limit";
+import { fetchP2POfferCourseRates } from "../../../../../redux/thunks";
+import { powerOfTenOrder } from "../../../../../redux/amountsHelper";
 
 type Props = {
   index: number;
@@ -33,27 +37,35 @@ type Props = {
   handleExpand: (event: React.MouseEvent, index: number) => void;
 };
 
-const DirectionItem = ({ index, opened, setOpened, handleExpand }: Props) => {
+const Offer = ({ index, opened, setOpened, handleExpand }: Props) => {
   const dispatch = useAppDispatch();
-  const direction = useAppSelector(
-    (state) => state.main.p2pDirections[index],
-    shallowEqual,
-  );
   const fullOffer = useAppSelector(
     (state) => state.main.p2pFullOffers[index],
     shallowEqual,
   );
 
-  const setField = (
-    field: keyof Omit<IMakerOffer, "id" | "dir">,
-    value: IMakerOffer[keyof IMakerOffer] | null | undefined,
-  ) => {
-    dispatch(setP2PFullOfferField({ index, field, value }));
-  };
+  const givePm = fullOffer?.givePm;
+  const getPm = fullOffer?.getPm;
+  const currencyPair =
+    givePm?.currency?.code && getPm?.currency?.code
+      ? `${givePm.currency.code}_${getPm.currency.code}`.toUpperCase()
+      : undefined;
+  const dir =
+    fullOffer.dir ||
+    (givePm?.code && getPm?.code ? `${givePm.code}_${getPm.code}` : undefined);
 
+  React.useEffect(() => {
+    if (!dir && !currencyPair) return;
+    dispatch(fetchP2POfferCourseRates({ index }));
+  }, [dispatch, index, dir, currencyPair]);
+
+  const dirExists = fullOffer.givePm && fullOffer.getPm;
+  const side = fullOffer?.side === "get" ? "get" : "give";
+  const toUSD = side === "give" ? fullOffer?.giveToUSD : fullOffer?.getToUSD;
 
   return (
     <Box3D
+      id={`direction-item-${index}`}
       w="100%"
       flex="1"
       px="4"
@@ -68,7 +80,7 @@ const DirectionItem = ({ index, opened, setOpened, handleExpand }: Props) => {
       //minH={fullHeight ? "70px" : "unset"}
     >
       <Grid
-        gridTemplateColumns={"2fr 40px 2fr 1fr"}
+        gridTemplateColumns={"3fr 40px 3fr 2fr"}
         gridTemplateRows="auto"
         color="bg.500"
         alignItems="center"
@@ -77,7 +89,7 @@ const DirectionItem = ({ index, opened, setOpened, handleExpand }: Props) => {
         <DirectionPmButton
           side="give"
           directionIndex={index}
-          pm={direction?.givePm}
+          pm={fullOffer?.givePm}
           handleExpand={handleExpand}
         />
 
@@ -86,31 +98,59 @@ const DirectionItem = ({ index, opened, setOpened, handleExpand }: Props) => {
         <DirectionPmButton
           side="get"
           directionIndex={index}
-          pm={direction?.getPm}
+          pm={fullOffer?.getPm}
           handleExpand={handleExpand}
         />
         <HStack justifySelf="end">
-          <Button variant="ghost">
-            {index == opened ? (
-              <MdOutlineKeyboardArrowUp size="1.5rem" />
-            ) : (
-              <MdOutlineKeyboardArrowDown size="1.5rem" />
-            )}
-          </Button>
+          {!!dirExists ? (
+            <Button variant="ghost">
+              {index == opened ? (
+                <MdOutlineKeyboardArrowUp size="1.5rem" />
+              ) : (
+                <MdOutlineKeyboardArrowDown size="1.5rem" />
+              )}
+            </Button>
+          ) : (
+            <DeleteOffer index={index} />
+          )}
         </HStack>
       </Grid>
-      <Collapse in={index == opened}>
+      <Collapse in={index == opened && !!dirExists}>
+        {/* <HStack> */}
         <VStack
           align="stretch"
           spacing="3"
           mt="3"
           onClick={(event) => event.stopPropagation()}
         >
-          <Text color="bg.300" fontSize="sm">
-            Selected: {direction?.givePm?.code || "-"}
-            {direction?.getPm?.code || "-"}
-          </Text>
-          <SimpleGrid columns={{ base: 1, md: 2 }} spacing="3">
+          <Divider my="2" />
+          <OfferCourse index={index} />
+
+          <HStack w="fit-content" spacing="3" mt="2">
+            <OfferLimit
+              index={index}
+              field="min"
+              suggested={powerOfTenOrder((toUSD || 0) * 100)}
+              fullOffer={fullOffer}
+            />
+            <Divider orientation="vertical" h="5" />
+            <OfferLimit
+              index={index}
+              field="max"
+              suggested={powerOfTenOrder((toUSD || 0) * 10000)}
+              fullOffer={fullOffer}
+            />
+          </HStack>
+          <HStack w="100%" justifyContent="space-between" mb="2">
+            <Box />
+            <DeleteOffer index={index} isFull />
+          </HStack>
+        </VStack>
+        {/* <Box>
+            <Chart giveCur={giveCur} getCur={getCur} noRate />
+          </Box>
+        </HStack> */}
+        {/* <SimpleGrid columns={{ base: 1, md: 2 }} spacing="3">
             <FormControl>
               <FormLabel>Active</FormLabel>
               <Switch
@@ -217,15 +257,10 @@ const DirectionItem = ({ index, opened, setOpened, handleExpand }: Props) => {
                 onChange={(e) => setField("city_to", e.target.value)}
               />
             </FormControl>
-          </SimpleGrid>
-          <Text color="bg.400" fontSize="xs">
-            id: {fullOffer?.id || "-"} | dir: {fullOffer?.dir || "-"}
-          </Text>
-          <DirectionDetails index={index} />
-        </VStack>
+          </SimpleGrid> */}
       </Collapse>
     </Box3D>
   );
 };
 
-export default React.memo(DirectionItem);
+export default Offer;

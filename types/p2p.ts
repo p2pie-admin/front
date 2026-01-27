@@ -22,8 +22,14 @@ export interface IMakerOffer {
 }
 
 export interface IFullOffer extends IMakerOffer {
-  givePm?: IPm;
-  getPm?: IPm;
+  givePm: IPm;
+  getPm: IPm;
+  bestRate?: number;
+  bestRateRev?: number;
+  googleRate?: number;
+  suggestedCourse?: number;
+  giveToUSD?: number;
+  getToUSD?: number;
 }
 
 export interface IMakerReviewReply {

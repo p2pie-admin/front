@@ -7,10 +7,19 @@ import { IoMdSave } from "react-icons/io";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import MakerTopPanelMenu from "./MakerTopPanelMenu";
 import DeleteProject from "./DeleteProject";
+import { useAppDispatch } from "../../../redux/hooks";
+import { saveProjectP2P } from "../../../redux/thunks";
 
 export default function MakerTopPanel({ maker }: { maker: IMaker }) {
+  const dispatch = useAppDispatch();
+
   const statusColor: IDotColors =
     maker.status === "active" ? "green" : "orange";
+
+  const handleSaveProject = (e: any) => {
+    e.stopPropagation();
+    dispatch(saveProjectP2P);
+  };
 
   return (
     <HStack justifyContent="space-between" gap="2" position="relative">
@@ -23,7 +32,7 @@ export default function MakerTopPanel({ maker }: { maker: IMaker }) {
       <MakerTags tags={maker.exchanger_tags} />
 
       <HStack>
-        <Button variant="no_contrast" onClick={(e) => e.stopPropagation()}>
+        <Button variant="no_contrast" onClick={(e) => handleSaveProject(e)}>
           <IoMdSave size="1.2rem" />
         </Button>
         <MakerTopPanelMenu maker={maker} />

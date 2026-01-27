@@ -13,6 +13,7 @@ import {
 } from "../services/fetchers";
 import { MainState } from "./mainReducer";
 import { IPm, IPmGroup, IPmPointer } from "../types/selector";
+import { ICurrencyConverterRate } from "../types/shared";
 
 import { destructureDirSlug } from "./helper";
 import { IToast } from "../types/general";
@@ -21,6 +22,7 @@ import { pmFromPmGroups } from "../components/main/side/selector/section/PmGroup
 import { CreateRedirectMutation } from "../components/exchange/tv/queries";
 import { ICity } from "../types/exchange";
 import { serverLinkPROD, serverLinkDEV } from "../services/utils";
+import { getSuggestedCourse } from "../components/p2p/edit/editOffers/offer/course/helper";
 //import { redirect } from "next/navigation";
 
 // export async function navigate() {
@@ -87,24 +89,91 @@ export const fetchTopParameters = createAsyncThunk(
   async () => {
     const fetcher = initCMSFetcher();
     return await fetcher(TopParametersQuery);
-  }
+  },
 );
 
 export const fetchCCRates = async ({
   curPair, // not dir but BTC_RUB
-  p2pDirIndex,
 }: {
   curPair: string;
-  p2pDirIndex?: number;
 }) => {
-  const fetcher = initCurrencyConverterFetcher(p2pDirIndex);
+  const fetcher = initCurrencyConverterFetcher();
   return await fetcher(curPair);
 };
 
 export const fetchCurrencyConverterRates = createAsyncThunk(
   "order/fetchCurrencyConverterRates",
-  fetchCCRates
+  fetchCCRates,
 );
+
+export const fetchP2POfferCourseRates = createAsyncThunk<
+  {
+    index: number;
+    dir?: string;
+    currencyPair?: string;
+    googleRate?: number;
+    giveToUSD?: number;
+    getToUSD?: number;
+    bestRate?: number;
+    bestRateRev?: number;
+    suggestedCourse?: number;
+  },
+  { index: number }
+>("p2p/fetchOfferCourseRates", async ({ index }, thunkAPI) => {
+  const { main } = thunkAPI.getState() as { main: MainState };
+  const offer = main?.p2pFullOffers?.[index];
+  if (!offer) return { index };
+
+  const givePm = offer.givePm;
+  const getPm = offer.getPm;
+  const giveCur = givePm?.currency?.code?.toUpperCase();
+  const getCur = getPm?.currency?.code?.toUpperCase();
+  const currencyPair =
+    giveCur && getCur ? `${giveCur}_${getCur}` : undefined;
+  const dir =
+    offer.dir ||
+    (givePm?.code && getPm?.code ? `${givePm.code}_${getPm.code}` : undefined);
+
+  if (!dir && !currencyPair) return { index };
+
+  const currencyFetcher = initCurrencyConverterFetcher();
+  const parserFetcher = initParserFetcher();
+
+  const [googleResponse, parserData] = await Promise.all([
+    currencyPair ? currencyFetcher(currencyPair) : Promise.resolve({ data: null }),
+    dir
+      ? parserFetcher(
+          `similar/dirs=${dir},${dir?.split("_")[1] + "_" + dir?.split("_")[0]}`,
+        )
+      : Promise.resolve(null),
+  ]);
+
+  const googlePayload = googleResponse?.data as ICurrencyConverterRate | null;
+  const googleRate = googlePayload?.currentRate;
+  const giveToUSD = googlePayload?.giveToUSD;
+  const getToUSD = googlePayload?.getToUSD;
+  const bestRate = parserData?.[0]?.[0];
+  const bestRateRevRaw = parserData?.[1]?.[0];
+  const bestRateRev = bestRateRevRaw ? 1 / bestRateRevRaw : undefined;
+
+  const suggestedCourse = getSuggestedCourse({
+    bestRate,
+    bestRateReversed: bestRateRev,
+    googleRate,
+  });
+
+  return {
+    index,
+    dir,
+    currencyPair,
+    googleRate,
+    giveToUSD,
+    getToUSD,
+    bestRate,
+    bestRateRev,
+    suggestedCourse,
+  };
+});
 // export const fetchDirRates = createAsyncThunk(
 //   "rates/fetchDirRates",
 //   async (
@@ -132,7 +201,7 @@ export const fetchCurrencyConverterRates = createAsyncThunk(
 // );
 
 export const restoreFromSlug = async (
-  slug: string
+  slug: string,
 ): Promise<{ givePm?: IPm; getPm?: IPm }> => {
   // ex: bitcoin-to-cash-rub
   // ex: tinkoff-rub-to-tether-usdt-trc20
@@ -155,7 +224,7 @@ export const restoreFromSlug = async (
     giveName,
     giveCurCode,
     giveSubgroupName,
-    pmGroups
+    pmGroups,
   );
   const getPm = pmFromPmGroups(getName, getCurCode, getSubgroupName, pmGroups);
 
@@ -167,7 +236,7 @@ export const restoreFromSlug = async (
 
 export const restorePmsFromSlug = createAsyncThunk(
   "rates/restorePmsFromSlug",
-  (slug: string) => restoreFromSlug(slug)
+  (slug: string) => restoreFromSlug(slug),
 ) as any;
 
 export const fetchPossiblePairs = createAsyncThunk(
@@ -181,7 +250,7 @@ export const fetchPossiblePairs = createAsyncThunk(
       possiblePairs,
       side,
     };
-  }
+  },
 );
 
 export const fetchPms = createAsyncThunk("initial/fetchPms", async () => {
@@ -195,7 +264,7 @@ export const fetchCity = createAsyncThunk(
     const fetcher = initParserFetcher();
     const response = await fetcher(`city=${en_name}`);
     return response as ICity;
-  }
+  },
 );
 
 export const redirect = createAsyncThunk(
@@ -212,7 +281,28 @@ export const redirect = createAsyncThunk(
       id_related_to: currentRate?.exchangerId,
       ip: main.fingerprint?.ip,
     });
-  }
+  },
+);
+export const saveProjectP2P = createAsyncThunk(
+  "exchanger/saveProjectP2P",
+  async (_, thunkAPI) => {
+    const { main } = thunkAPI.getState() as { main: MainState };
+    const offers = main?.p2pFullOffers;
+
+    const hasEmpty = offers.some(({ givePm, getPm }) => {
+      if (!givePm || !getPm) return true;
+      return false;
+    });
+
+    const seen = new Set();
+
+    const hasRepeated = offers.some(({ givePm, getPm }) => {
+      const key = `${givePm?.code}|${getPm?.code}`;
+      if (seen.has(key)) return true;
+      seen.add(key);
+      return false;
+    });
+  },
 );
 
 // export const fetchPms = createAsyncThunk("initial/fetchPms", async () => {

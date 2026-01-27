@@ -22,7 +22,7 @@ const getCurEntry = (code?: string | null) => {
 
 export const codeToSymbol = (code?: string | null) => {
   const { entry } = getCurEntry(code);
-  return entry?.symbol || "";
+  return entry?.symbol || code;
 };
 
 export const codeToRuName = (code?: string | null) => {
