@@ -76,7 +76,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
         }
       });
 
-      const fullOffers: IFullOffer[] = makerWithFullOffers.offers.map(
+      const fullOffers: Partial<IFullOffer>[] = makerWithFullOffers.offers.map(
         (offer) => {
           const [giveCode, getCode] = offer.dir.split("_");
           const givePm = pmsByCode.get((giveCode || "").toUpperCase());

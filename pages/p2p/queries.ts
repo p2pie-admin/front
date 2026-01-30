@@ -76,6 +76,11 @@ export const p2pMakerQuery = gql`
           slug
           telegram_name
           telegram_username
+          deals_finished
+          deals_canceled
+          rating
+          need_ai_helper
+          deposit_usd
           status
           createdAt
           offers {

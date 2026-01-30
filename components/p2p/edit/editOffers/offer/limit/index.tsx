@@ -61,13 +61,13 @@ export default function OfferLimit({
     setValue(normalizedValue === "" ? "" : String(normalizedValue));
   }, [normalizedValue]);
 
-  const calcWidth = () => {
-    const l = String(displayValue).length;
-    if (l > 10) return 180;
-    if (l > 8) return 150;
-    if (l > 6) return 120;
-    return 100;
-  };
+  // const calcWidth = () => {
+  //   const l = String(displayValue).length;
+  //   if (l > 10) return 180;
+  //   if (l > 8) return 150;
+  //   if (l > 6) return 120;
+  //   return 100;
+  // };
   const stepValue = powerOfTenOrder(Number(displayValue)) / 100;
 
   const ruName = field == "min" ? "Мин: " : "Макс: ";
@@ -85,7 +85,7 @@ export default function OfferLimit({
         focusBorderColor="peach.200"
         position="relative"
         max={100000000}
-        w={`${calcWidth()}px`}
+        w={110}
         min={0} // no negative
       >
         <NumberInputField

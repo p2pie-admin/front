@@ -6,29 +6,38 @@ import DirectionsPicker from "./Offers";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { IoAddOutline } from "react-icons/io5";
 import { addP2PDirection } from "../../../../redux/mainReducer";
+import { IFullOffer } from "../../../../types/p2p";
+import { IPm } from "../../../../types/selector";
 
-export default function EditOffers() {
+type Props = {
+  offers?: Partial<IFullOffer>[] | null;
+  pms?: IPm[] | null;
+};
+
+export default function EditOffers({ offers, pms }: Props) {
   const offersCount = useAppSelector(
     (state) => state.main.p2pFullOffers.length,
   );
   const dispatch = useAppDispatch();
+  const hasInitialOffers = (offers?.length || 0) > 0;
   // все оферы
   return (
-    <BoxWrapper>
+    <BoxWrapper w="100%">
       <CustomHeader text="Предложения" Icon={IoMdListBox} />
       <Divider my="4" />
 
       <VStack align="stretch" spacing="3">
-        {!offersCount ? (
+        {!offersCount && !hasInitialOffers ? (
           <Box color="bg.400">
             Добавьте направление, чтобы выбрать методы оплаты.
           </Box>
         ) : (
-          <DirectionsPicker />
+          <DirectionsPicker offers={offers} />
         )}
         {offersCount < 10 && (
           <Button
             minH="12"
+            m="2"
             variant="no_contrast"
             color="peach.500"
             border="2px dashed"

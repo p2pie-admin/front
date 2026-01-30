@@ -1,4 +1,4 @@
-import { HStack } from "@chakra-ui/react";
+import { Box, Grid } from "@chakra-ui/react";
 import { ResponsiveText } from "../../../../styles/theme/custom";
 
 export default function StatItem({
@@ -11,11 +11,20 @@ export default function StatItem({
   Icon?: any;
 }) {
   return (
-    <HStack spacing="2" color="bg.400">
+    <Grid
+      gap="4"
+      color="bg.400"
+      gridTemplateColumns="10px auto 1fr auto"
+      alignItems="center"
+    >
       {Icon && <Icon size="1rem" />}
       <ResponsiveText size="sm" color="inherit">
-        {`${label}:         ${value ?? ""}`}
+        {`${label}:`}
       </ResponsiveText>
-    </HStack>
+      <Box borderBottom="1px solid" borderColor="bg.600" />
+      <ResponsiveText size="sm" color="inherit">
+        {`${value ?? ""}`}
+      </ResponsiveText>
+    </Grid>
   );
 }

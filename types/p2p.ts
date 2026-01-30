@@ -78,6 +78,12 @@ export interface IMakerPreview {
   exchanger_tags?: IMakerTag[] | null;
   avatar?: IImage | null;
   reviews?: IMakerReview[] | null;
+
+  deals_finished?: number;
+  deals_canceled?: number;
+  rating?: number;
+  need_ai_helper?: boolean;
+  deposit_usd?: number;
 }
 
 export interface IMaker extends IMakerPreview {

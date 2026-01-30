@@ -5,10 +5,13 @@ import {
   SliderFilledTrack,
   SliderThumb,
   SliderTrack,
+  useColorModeValue,
+  useToken,
 } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../../../../../redux/hooks";
 import { setP2PFullOfferField } from "../../../../../../redux/mainReducer";
 import { powerOfTenOrder } from "../../../../../../redux/amountsHelper";
+import { RxDragHandleDots2 } from "react-icons/rx";
 
 type Props = {
   index: number;
@@ -203,34 +206,44 @@ const OfferCourseSlider = ({
       ? Math.max(bestRateMark, bestRateReversedMark)
       : undefined;
 
+  const [primary300, secondary600] = useToken("colors", [
+    "peach.400",
+    "violet.700",
+  ]);
+
+  const colorKey = useColorModeValue(secondary600, primary300);
+  const colorHint = useColorModeValue("bg.10", "bg.800");
+  const mainColor = useColorModeValue("violet.600", "peach.300");
+
   return (
     <Slider
       min={1}
       max={100}
       step={1}
-      w="260px"
-      minW="220px"
+      w="100%"
       value={sliderValue}
       onChange={onSliderChange}
     >
       <SliderTrack>
-        {rangeStart !== undefined && rangeEnd !== undefined && (
-          <Box
-            position="absolute"
-            left={`${((rangeStart - 1) / 99) * 100}%`}
-            width={`${((rangeEnd - rangeStart) / 99) * 100}%`}
-            top="50%"
-            transform="translateY(-50%)"
-            height="6px"
-            borderRadius="full"
-            bg="peach.300"
-            opacity={0.6}
-            pointerEvents="none"
-          />
-        )}
-        <SliderFilledTrack bg="transparent" />
+        <SliderFilledTrack bg="peach.300" />
       </SliderTrack>
-      <SliderThumb />
+      <SliderThumb
+        boxSize={9}
+        bgColor="transparent"
+        position="relative"
+        boxShadow="none"
+      >
+        <Box
+          w="5"
+          h="3"
+          position="relative"
+          borderRadius="md"
+          bgColor={mainColor}
+          boxShadow={`0 0 10px -2px ${colorKey}`}
+          color={colorHint}
+          as={RxDragHandleDots2}
+        />
+      </SliderThumb>
     </Slider>
   );
 };

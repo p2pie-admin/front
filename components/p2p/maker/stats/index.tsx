@@ -1,12 +1,13 @@
-import { Divider, Flex } from "@chakra-ui/react";
+import { Box, Divider, Flex, HStack } from "@chakra-ui/react";
 import { IMaker } from "../../../../types/p2p";
 import { FormatedDate } from "../../../shared/BoxWrapper";
-import { ResponsiveText } from "../../../../styles/theme/custom";
+import { Box3D, ResponsiveText } from "../../../../styles/theme/custom";
 import StatItem from "./StatItem";
 import { FaListUl, FaRegHandshake } from "react-icons/fa6";
 import { TbPencil } from "react-icons/tb";
 import { MdOutlineDateRange } from "react-icons/md";
 import { RiExchange2Line } from "react-icons/ri";
+import MakerRating from "./MakerRating";
 
 export default function MakerStats({ maker }: { maker: IMaker }) {
   const offers = Array.isArray(maker.offers) ? maker.offers : null;
@@ -26,36 +27,26 @@ export default function MakerStats({ maker }: { maker: IMaker }) {
     : "";
 
   return (
-    <Flex
-      flexDir={{ base: "column", lg: "row" }}
-      color="bg.200"
-      justifyContent="space-between"
-      w="100%"
-      gap="4"
-      px="2"
-    >
-      <StatItem
-        label="Предложений"
-        value={offersCount}
-        Icon={RiExchange2Line}
-      />
-      <ResponsiveText display={{ base: "none", lg: "flex" }} variant="shaded">
-        •
-      </ResponsiveText>
-      <StatItem label="Сделок" value={0} Icon={FaRegHandshake} />
-      <ResponsiveText display={{ base: "none", lg: "flex" }} variant="shaded">
-        •
-      </ResponsiveText>
-      <StatItem label="Отзывов" value={reviewsCount} Icon={TbPencil} />
-      <ResponsiveText display={{ base: "none", lg: "flex" }} variant="shaded">
-        •
-      </ResponsiveText>
+    <HStack>
+      <MakerRating value={maker.rating} />
+      <Divider orientation="vertical" h="80px" mx="2" />
+      <Box w="fit-content">
+        <StatItem
+          label="Предложений"
+          value={offersCount}
+          Icon={RiExchange2Line}
+        />
 
-      <StatItem
-        label="Создан"
-        value={formattedDate}
-        Icon={MdOutlineDateRange}
-      />
-    </Flex>
+        <StatItem label="Сделок" value={0} Icon={FaRegHandshake} />
+
+        <StatItem label="Отзывов" value={reviewsCount} Icon={TbPencil} />
+
+        <StatItem
+          label="Создан"
+          value={formattedDate}
+          Icon={MdOutlineDateRange}
+        />
+      </Box>
+    </HStack>
   );
 }

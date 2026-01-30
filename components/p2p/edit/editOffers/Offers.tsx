@@ -1,24 +1,14 @@
-import React, { useMemo, useState, useEffect, useRef } from "react";
-import { Box, Button, VStack } from "@chakra-ui/react";
-import { IoAddOutline } from "react-icons/io5";
-import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import {
-  addP2PDirection,
-  setP2PFullOffers,
-} from "../../../../redux/mainReducer";
-import { IFullOffer } from "../../../../types/p2p";
-import { IPm } from "../../../../types/selector";
-import DirectionItem from "./offer";
+import React, { useState, useEffect, useRef, useMemo } from "react";
+import { VStack } from "@chakra-ui/react";
+import { useAppSelector } from "../../../../redux/hooks";
 import Offer from "./offer";
+import { IFullOffer } from "../../../../types/p2p";
 
 const DirectionsPicker = ({
   offers,
-  pms,
 }: {
-  offers?: IFullOffer[] | null;
-  pms?: IPm[] | null;
+  offers?: Partial<IFullOffer>[] | null;
 }) => {
-  const dispatch = useAppDispatch();
   const fullOffersCount = useAppSelector(
     (state) => state.main.p2pFullOffers.length,
   );
@@ -30,12 +20,6 @@ const DirectionsPicker = ({
     event.stopPropagation();
     setOpened(index);
   };
-
-  const fullOffers = useMemo(() => offers || [], [offers]);
-  useEffect(() => {
-    if (!fullOffers.length || fullOffersCount) return;
-    dispatch(setP2PFullOffers(fullOffers));
-  }, [dispatch, fullOffers, fullOffersCount]);
 
   const prevOpenedRef = useRef(opened);
   useEffect(() => {
@@ -51,13 +35,15 @@ const DirectionsPicker = ({
     return () => window.clearTimeout(timer);
   }, [opened]);
 
+  const fallbackOffers = useMemo(() => offers || [], [offers]);
+  const renderCount = Math.max(fullOffersCount, fallbackOffers.length);
   const directionIndexes = useMemo(
-    () => Array.from({ length: fullOffersCount }, (_, index) => index),
-    [fullOffersCount],
+    () => Array.from({ length: renderCount }, (_, index) => index),
+    [renderCount],
   );
 
   return (
-    <VStack align="stretch" spacing="3" px="2">
+    <VStack align="stretch" spacing="6" px="2">
       {directionIndexes.map((index) => (
         <Offer
           key={`direction-${index}`}
@@ -65,6 +51,7 @@ const DirectionsPicker = ({
           opened={opened}
           setOpened={setOpened}
           handleExpand={handleExpand}
+          initialOffer={fallbackOffers[index]}
         />
       ))}
     </VStack>

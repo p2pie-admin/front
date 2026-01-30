@@ -22,7 +22,7 @@ import { sendToast } from "../../../redux/mainReducer";
 import { LuSquareArrowOutUpRight } from "react-icons/lu";
 import { base } from "../../../services/utils";
 
-export default function MakerTopPanelMenu({ maker }: { maker: IMaker }) {
+export default function MakersLinks({ maker }: { maker: IMaker }) {
   const dispatch = useAppDispatch();
   const makerSlug = getMakerSlug(maker);
   const telegramUsername = maker.telegram_username?.replace(/^@/, "");

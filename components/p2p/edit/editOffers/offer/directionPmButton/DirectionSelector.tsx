@@ -3,7 +3,7 @@ import { Center, VStack } from "@chakra-ui/react";
 import useSWR from "swr";
 import { batch } from "react-redux";
 import { initCMSFetcher } from "../../../../../../services/fetchers";
-import { selectorQuery } from "../../../../../../services/queries";
+import { selectorQueryAll } from "../../../../../../services/queries";
 import { ISelector, IPm } from "../../../../../../types/selector";
 import { useAppDispatch, useAppSelector } from "../../../../../../redux/hooks";
 import {
@@ -16,7 +16,7 @@ import SearchBar from "../../../../../main/side/selector/SearchBar";
 import ErrorWrapper from "../../../../../shared/ErrorWrapper";
 import Loader from "../../../../../shared/Loader";
 import DirectionSectionsList from "./DirectionSectionsList";
-import { DirectionSide } from "./types";
+import { DirectionSide } from "../types";
 
 const selectorFetcher = initCMSFetcher();
 
@@ -31,7 +31,7 @@ const DirectionSelector = ({
   const searchBarInputValue = useAppSelector(
     (state) => state.main.searchBarInputValue,
   );
-  const { data, error } = useSWR(selectorQuery, selectorFetcher) as {
+  const { data, error } = useSWR(selectorQueryAll, selectorFetcher) as {
     data: ISelector | null;
     error: any;
   };

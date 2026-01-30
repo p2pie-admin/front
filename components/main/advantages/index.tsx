@@ -12,7 +12,7 @@ import PlotAdvantage from "./PlotAdvantage";
 export default function Advantages() {
   const ambientColor = useColorModeValue(
     "rgba(143,92,292,0.2)",
-    "rgba(247, 197, 177, 0.1)"
+    "rgba(247, 197, 177, 0.1)",
   );
   return (
     <Flex

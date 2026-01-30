@@ -70,14 +70,14 @@ const Chart = memo(
         overflow="hidden"
         position="relative"
         w="fit-content"
-        h={`${noRate ? 150 : 200}px`}
+        h={`${noRate ? 133 : 200}px`}
         mb="4"
       >
         <Image
           src={imgSrc}
           alt={alt}
-          width={noRate ? 315 : 420}
-          height={noRate ? 150 : 200}
+          width={noRate ? 280 : 420}
+          height={noRate ? 133 : 200}
           style={{ objectFit: "cover" }}
           onLoadingComplete={() => setImageLoaded(true)}
           onError={() => setImageLoaded(true)}
@@ -97,16 +97,24 @@ const Chart = memo(
             <Loader size="lg" />
           </Box>
         )}
+
         <HStack position="absolute" top="1" left="1" zIndex="35" px="2">
-          <Text fontSize="md" fontWeight="bold" color={primaryColor}>
+          <Text
+            fontSize="sm"
+            color={primaryColor}
+            fontFamily="'Mozilla Text', monospace"
+          >
             {`${giveCur} / ${getCur}`}
           </Text>
-          <Text fontSize="md" color={trend > 0 ? "red.500" : "green.500"}>
-            {`${trend > 0 ? "-" : "+"} ${format(Math.abs(trend), 3)}% ${
-              trend > 0 ? "▼" : "▲"
-            }`}
-          </Text>
+          {!noRate && (
+            <Text fontSize="md" color={trend > 0 ? "red.500" : "green.500"}>
+              {`${trend > 0 ? "-" : "+"} ${format(Math.abs(trend), 3)}% ${
+                trend > 0 ? "▼" : "▲"
+              }`}
+            </Text>
+          )}
         </HStack>
+
         {!noRate && (
           <>
             <Box

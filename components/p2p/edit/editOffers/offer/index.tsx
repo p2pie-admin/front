@@ -8,6 +8,7 @@ import {
   FormControl,
   FormLabel,
   Grid,
+  GridItem,
   HStack,
   Input,
   Select,
@@ -21,28 +22,84 @@ import {
   MdOutlineKeyboardArrowDown,
   MdOutlineKeyboardArrowUp,
 } from "react-icons/md";
-import { shallowEqual } from "react-redux";
+import { batch, shallowEqual } from "react-redux";
 import DirectionPmButton from "./directionPmButton";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
 import DeleteOffer from "./DeleteOffer";
 import OfferCourse from "./course";
 import OfferLimit from "./limit";
 import { fetchP2POfferCourseRates } from "../../../../../redux/thunks";
+import {
+  setP2PDirectionPm,
+  setP2PFullOfferField,
+} from "../../../../../redux/mainReducer";
 import { powerOfTenOrder } from "../../../../../redux/amountsHelper";
+import { IFullOffer, IMakerOffer } from "../../../../../types/p2p";
+import OfferLimitSlider from "./OfferLimitSlider";
+import Chart from "../../../../exchange/Chart";
 
 type Props = {
   index: number;
   opened: number;
   setOpened: React.Dispatch<React.SetStateAction<number>>;
   handleExpand: (event: React.MouseEvent, index: number) => void;
+  initialOffer?: Partial<IFullOffer>;
 };
 
-const Offer = ({ index, opened, setOpened, handleExpand }: Props) => {
+const Offer = ({
+  index,
+  opened,
+  setOpened,
+  handleExpand,
+  initialOffer,
+}: Props) => {
   const dispatch = useAppDispatch();
-  const fullOffer = useAppSelector(
+  const storeOffer = useAppSelector(
     (state) => state.main.p2pFullOffers[index],
     shallowEqual,
   );
+  const fullOffer = React.useMemo(
+    () => ({
+      ...(initialOffer || {}),
+      ...(storeOffer || {}),
+    }),
+    [initialOffer, storeOffer],
+  );
+
+  React.useEffect(() => {
+    if (!initialOffer) return;
+    if (storeOffer && Object.keys(storeOffer).length) return;
+    batch(() => {
+      const seedFields: Array<{
+        field: keyof Omit<IMakerOffer, "id" | "dir">;
+        value: IMakerOffer[keyof IMakerOffer] | null | undefined;
+      }> = [
+        { field: "side", value: initialOffer.side },
+        { field: "isActive", value: initialOffer.isActive },
+        { field: "course", value: initialOffer.course },
+        { field: "min", value: initialOffer.min },
+        { field: "max", value: initialOffer.max },
+        { field: "fee_type", value: initialOffer.fee_type },
+        { field: "fee_amount", value: initialOffer.fee_amount },
+        { field: "city_from", value: initialOffer.city_from },
+        { field: "city_to", value: initialOffer.city_to },
+      ];
+      seedFields.forEach(({ field, value }) => {
+        if (value === undefined) return;
+        dispatch(setP2PFullOfferField({ index, field, value }));
+      });
+      if (initialOffer.givePm) {
+        dispatch(
+          setP2PDirectionPm({ index, side: "give", pm: initialOffer.givePm }),
+        );
+      }
+      if (initialOffer.getPm) {
+        dispatch(
+          setP2PDirectionPm({ index, side: "get", pm: initialOffer.getPm }),
+        );
+      }
+    });
+  }, [dispatch, index, initialOffer, storeOffer]);
 
   const givePm = fullOffer?.givePm;
   const getPm = fullOffer?.getPm;
@@ -54,6 +111,49 @@ const Offer = ({ index, opened, setOpened, handleExpand }: Props) => {
     fullOffer.dir ||
     (givePm?.code && getPm?.code ? `${givePm.code}_${getPm.code}` : undefined);
 
+  const prevSideRef = React.useRef<typeof fullOffer.side>(fullOffer?.side);
+  React.useEffect(() => {
+    const prevSide = prevSideRef.current;
+    const currentSide = fullOffer?.side;
+    if (!currentSide || !prevSide || currentSide === prevSide) {
+      prevSideRef.current = currentSide;
+      return;
+    }
+    const course = fullOffer?.course;
+    if (!course || !Number.isFinite(course) || course <= 0) {
+      prevSideRef.current = currentSide;
+      return;
+    }
+    const convertValue = (value?: number | null) => {
+      if (value === null || value === undefined) return value;
+      if (!Number.isFinite(value)) return value;
+      return currentSide === "get" ? value / course : value * course;
+    };
+    const normalizeLimit = (value?: number | null, kind?: "min" | "max") => {
+      if (value === null || value === undefined) return value;
+      if (!Number.isFinite(value)) return value;
+      const order = powerOfTenOrder(value);
+      if (!order) return value;
+      return kind === "max" ? order * 10 : order;
+    };
+    const nextMin = normalizeLimit(convertValue(fullOffer?.min), "min");
+    const nextMax = normalizeLimit(convertValue(fullOffer?.max), "max");
+    if (nextMin !== undefined) {
+      dispatch(setP2PFullOfferField({ index, field: "min", value: nextMin }));
+    }
+    if (nextMax !== undefined) {
+      dispatch(setP2PFullOfferField({ index, field: "max", value: nextMax }));
+    }
+    prevSideRef.current = currentSide;
+  }, [
+    dispatch,
+    fullOffer?.course,
+    fullOffer?.max,
+    fullOffer?.min,
+    fullOffer?.side,
+    index,
+  ]);
+
   React.useEffect(() => {
     if (!dir && !currencyPair) return;
     dispatch(fetchP2POfferCourseRates({ index }));
@@ -62,6 +162,27 @@ const Offer = ({ index, opened, setOpened, handleExpand }: Props) => {
   const dirExists = fullOffer.givePm && fullOffer.getPm;
   const side = fullOffer?.side === "get" ? "get" : "give";
   const toUSD = side === "give" ? fullOffer?.giveToUSD : fullOffer?.getToUSD;
+  const suggestedMin = powerOfTenOrder((toUSD || 0) * 500);
+  const suggestedMax = powerOfTenOrder((toUSD || 0) * 2000);
+  const suggestedMinPossible = powerOfTenOrder((toUSD || 0) * 100);
+  const sliderMin =
+    Number.isFinite(fullOffer?.min) && fullOffer?.min !== null
+      ? fullOffer.min
+      : suggestedMin;
+  const sliderMax =
+    Number.isFinite(fullOffer?.max) && fullOffer?.max !== null
+      ? fullOffer.max
+      : suggestedMax;
+  const sliderMinSeed =
+    sliderMin && Number.isFinite(sliderMin) && sliderMin > 0
+      ? sliderMin
+      : sliderMax && Number.isFinite(sliderMax) && sliderMax > 0
+        ? sliderMax
+        : 0;
+  const sliderMinPossible =
+    suggestedMinPossible > 0
+      ? suggestedMinPossible
+      : powerOfTenOrder(sliderMinSeed);
 
   return (
     <Box3D
@@ -117,35 +238,59 @@ const Offer = ({ index, opened, setOpened, handleExpand }: Props) => {
       </Grid>
       <Collapse in={index == opened && !!dirExists}>
         {/* <HStack> */}
-        <VStack
-          align="stretch"
-          spacing="3"
-          mt="3"
+        <Divider my="2" />
+        <Grid
+          columnGap="8"
+          mt="4"
           onClick={(event) => event.stopPropagation()}
+          templateColumns=" 1fr auto"
+          templateRows="auto auto"
         >
-          <Divider my="2" />
-          <OfferCourse index={index} />
+          {/* Left top */}
 
-          <HStack w="fit-content" spacing="3" mt="2">
-            <OfferLimit
+          <OfferCourse index={index} />
+          {/* Right (double height) */}
+
+          <GridItem rowSpan={2}>
+            <HStack gap="4" alignItems="center">
+              <Divider orientation="vertical" h="140px" mb="4" />
+              <Chart
+                giveCur={givePm?.currency.code.toUpperCase()}
+                getCur={getPm?.currency.code.toUpperCase()}
+                noRate
+                //currentRateOverride={googleRate}
+              />
+            </HStack>
+          </GridItem>
+          <Box w="100%" mx="2">
+            <HStack w="fit-content" spacing="3" my="2">
+              <OfferLimit
+                index={index}
+                field="min"
+                suggested={suggestedMin}
+                fullOffer={fullOffer}
+              />
+              <Divider orientation="vertical" h="5" />
+              <OfferLimit
+                index={index}
+                field="max"
+                suggested={suggestedMax}
+                fullOffer={fullOffer}
+              />
+            </HStack>
+            <OfferLimitSlider
               index={index}
-              field="min"
-              suggested={powerOfTenOrder((toUSD || 0) * 100)}
-              fullOffer={fullOffer}
+              min={sliderMin}
+              max={sliderMax}
+              minPossible={sliderMinPossible}
             />
-            <Divider orientation="vertical" h="5" />
-            <OfferLimit
-              index={index}
-              field="max"
-              suggested={powerOfTenOrder((toUSD || 0) * 10000)}
-              fullOffer={fullOffer}
-            />
-          </HStack>
-          <HStack w="100%" justifyContent="space-between" mb="2">
-            <Box />
-            <DeleteOffer index={index} isFull />
-          </HStack>
-        </VStack>
+          </Box>
+          {/* Left bottom */}
+        </Grid>
+        {/* <HStack w="100%" justifyContent="space-between" mb="2">
+          <Box />
+          <DeleteOffer index={index} isFull />
+        </HStack> */}
         {/* <Box>
             <Chart giveCur={giveCur} getCur={getCur} noRate />
           </Box>

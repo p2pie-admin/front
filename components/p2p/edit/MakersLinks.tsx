@@ -5,7 +5,7 @@ import ExchangerName from "../../shared/ExchangerNameRating";
 import MakerTags from "../maker/topPanel/MakerTags";
 import { IoMdSave } from "react-icons/io";
 import { RiDeleteBin2Fill } from "react-icons/ri";
-import MakerTopPanelMenu from "./MakerTopPanelMenu";
+import MakersLinks from "./MakerTopPanelMenu";
 import DeleteProject from "./DeleteProject";
 import { useAppDispatch } from "../../../redux/hooks";
 import { saveProjectP2P } from "../../../redux/thunks";
@@ -35,7 +35,7 @@ export default function MakerTopPanel({ maker }: { maker: IMaker }) {
         <Button variant="no_contrast" onClick={(e) => handleSaveProject(e)}>
           <IoMdSave size="1.2rem" />
         </Button>
-        <MakerTopPanelMenu maker={maker} />
+        <MakersLinks maker={maker} />
         <DeleteProject maker={maker} />
       </HStack>
     </HStack>

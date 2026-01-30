@@ -1,5 +1,5 @@
 import React from "react";
-import { HStack, VStack } from "@chakra-ui/react";
+import { Box, HStack, VStack } from "@chakra-ui/react";
 import { ResponsiveText } from "../../../../../../styles/theme/custom";
 import CourseAmountInput from "./CourseAmountInput";
 import {
@@ -26,8 +26,8 @@ export const CourseEditor = ({
   if (!giveCur || !getCur) return <></>;
 
   return (
-    <VStack align="start" spacing="2" w="fit-content">
-      <HStack w="fit-content">
+    <Box>
+      <HStack w="fit-content" my="2">
         <ResponsiveText mr="2">{"Курс: "}</ResponsiveText>
 
         <CourseAmountInput index={index} side="give" />
@@ -42,6 +42,6 @@ export const CourseEditor = ({
         bestRate={bestRate}
         bestRateReversed={bestRateReversed}
       />
-    </VStack>
+    </Box>
   );
 };

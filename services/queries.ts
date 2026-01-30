@@ -503,8 +503,8 @@ export const exchangersMapQuery = gql`
   }
 `;
 
-export const selectorQuery = gql`
-   query Selector {
+export const selectorQueryAll = gql`
+   query Selector  {
     selector {
       data {
         id
@@ -528,6 +528,43 @@ export const selectorQuery = gql`
             ru_title
             en_title
             pm_groups(pagination: { start: 0, limit: 2000 } ) {
+              ${pmGroup}
+          }
+        }
+      }
+    }
+  }
+   }
+`;
+
+export const selectorQuery = gql`
+   query Selector  {
+    selector {
+      data {
+        id
+        attributes {
+          en_give_header
+          ru_give_header
+          en_get_header
+          ru_get_header
+          search_bar {
+            ru_placeholder
+            en_placeholder
+            ru_give_adornment
+            en_give_adornment
+            ru_get_adornment
+            en_get_adornment
+          }
+          sections {
+            id
+            rows
+            columns
+            ru_title
+            en_title
+            pm_groups(
+              pagination: { start: 0, limit: 2000 }
+              filters: { countries: { null: true } }
+            ) {
               ${pmGroup}
           }
         }

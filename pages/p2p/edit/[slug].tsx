@@ -29,6 +29,7 @@ type PageProps = {
   seo: ISEO;
   pms: IPm[] | null;
   faqCategory: IFaqCategory | null;
+  fullOffers: Partial<IFullOffer>[] | null;
 };
 
 export default function P2PMakerEditPage({
@@ -36,6 +37,7 @@ export default function P2PMakerEditPage({
   seo,
   pms,
   faqCategory,
+  fullOffers,
 }: PageProps) {
   if (!maker) {
     return (
@@ -53,7 +55,13 @@ export default function P2PMakerEditPage({
   }
 
   return (
-    <MakerPage maker={maker} seo={seo} pms={pms} faqCategory={faqCategory} />
+    <MakerPage
+      maker={maker}
+      seo={seo}
+      pms={pms}
+      faqCategory={faqCategory}
+      fullOffers={fullOffers}
+    />
   );
 }
 
@@ -79,6 +87,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
       }
     }
 
+    let fullOffers: Partial<IFullOffer>[] | null = null;
     if (Array.isArray(makerWithReviews.offers) && Array.isArray(pms)) {
       const pmsByCode = new Map<string, IPm>();
       pms.forEach((pm) => {
@@ -87,13 +96,12 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
         }
       });
 
-      const fullOffers: IFullOffer[] = makerWithReviews.offers.map((offer) => {
+      fullOffers = makerWithReviews.offers.map((offer) => {
         const [giveCode, getCode] = offer.dir.split("_");
         const givePm = pmsByCode.get((giveCode || "").toUpperCase());
         const getPm = pmsByCode.get((getCode || "").toUpperCase());
         return { ...offer, givePm, getPm };
       });
-      makerWithReviews = { ...makerWithReviews, offers: fullOffers };
     }
 
     const displayName = getMakerDisplayName(maker);
@@ -119,6 +127,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
         seo,
         pms: pms || null,
         faqCategory: faqCategory || null,
+        fullOffers: fullOffers || null,
       },
       revalidate: TTL.slow,
     };
@@ -131,6 +140,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
         seo: nullSeo,
         pms: null,
         faqCategory: null,
+        fullOffers: null,
       },
       revalidate: TTL.slow,
     };

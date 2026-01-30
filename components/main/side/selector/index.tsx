@@ -49,7 +49,7 @@ const Selector = function Selector() {
   };
 
   const searchBarInputValue = useAppSelector(
-    (state) => state.main.searchBarInputValue
+    (state) => state.main.searchBarInputValue,
   );
   if (!data)
     return (

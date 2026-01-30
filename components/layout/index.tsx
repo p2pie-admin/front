@@ -72,7 +72,7 @@ const Layout = ({ children }: { children: any }) => {
   const loadingStatus = useAppSelector((state) => state.main.loading);
   const ambientColor = useColorModeValue(
     "rgba(143,92,292,0.2)",
-    "rgba(247, 197, 177, 0.1)"
+    "rgba(247, 197, 177, 0.1)",
   );
 
   return (

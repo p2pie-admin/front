@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { Box, Button, Center, Divider, VStack } from "@chakra-ui/react";
 import UniversalSeo from "../../shared/UniversalSeo";
 import Loader from "../../shared/Loader";
@@ -14,7 +14,7 @@ import { ExchangerIdProvider } from "../../exchangers/exchanger/ExchangerContext
 import LeaveReview from "../../exchangers/exchanger/leaveReview";
 import ExchangerReviews from "../../exchangers/exchanger/reviews";
 import { IExchangerReview } from "../../../types/exchanger";
-import MakerTopPanel from "./MakerTopPanel";
+import MakerTopPanel from "./MakersLinks";
 import MakerStats from "../maker/stats";
 import { BoxWrapper } from "../../shared/BoxWrapper";
 
@@ -28,18 +28,27 @@ import { RiDeleteBin2Fill } from "react-icons/ri";
 import FinalButtons from "./FinalButtons";
 import Advantages from "../../main/advantages";
 import CustomTitle from "../../shared/CustomTitle";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { setP2PFullOffers } from "../../../redux/mainReducer";
 
 export default function MakerEditPage({
   maker,
   seo,
   pms,
   faqCategory,
+  fullOffers,
 }: {
   maker: IMaker | null;
   seo: ISEO;
   pms: IPm[] | null;
   faqCategory?: IFaqCategory | null;
+  fullOffers?: Partial<IFullOffer>[] | null;
 }) {
+  const dispatch = useAppDispatch();
+  const offersCount = useAppSelector(
+    (state) => state.main.p2pFullOffers.length,
+  );
+
   if (!maker) {
     return (
       <Center
@@ -55,13 +64,15 @@ export default function MakerEditPage({
     );
   }
 
-  const offers = Array.isArray(maker.offers)
-    ? (maker.offers as IFullOffer[])
-    : null;
+  const offers = useMemo(() => fullOffers || null, [fullOffers]);
+  useEffect(() => {
+    if (!offers?.length || offersCount) return;
+    dispatch(setP2PFullOffers(offers));
+  }, [dispatch, offers, offersCount]);
   const reviews = Array.isArray(maker.reviews) ? maker.reviews : null;
 
   return (
-    <VStack>
+    <>
       <UniversalSeo seo={seo} />
       <Box>
         <MakerGreeting />
@@ -79,7 +90,7 @@ export default function MakerEditPage({
         {faqCategory ? (
           <FaqCategoriesList
             categories={[faqCategory]}
-            customTitle={"Популярные вопросы"}
+            customTitle={"Зачем нужен p2pie"}
           />
         ) : (
           <></>
@@ -90,7 +101,9 @@ export default function MakerEditPage({
         title={"Преимущества"}
         subtitle={"Работаем на репутацию, а не на прибыль"}
       />
-      <Advantages />
-    </VStack>
+      <VStack>
+        <Advantages />
+      </VStack>
+    </>
   );
 }

@@ -125,7 +125,7 @@ export const loadPms = async () => {
       const selector = await cmsFetcher(selectorQuery);
       if (!selector) {
         console.error(
-          "Selector is undefined - check selectorQuery and CMS response",
+          "Selector is undefined - check selectorQueryAll and CMS response",
         );
         return []; // safe fallback
       }
