@@ -14,7 +14,7 @@ import { ExchangerIdProvider } from "../../exchangers/exchanger/ExchangerContext
 import LeaveReview from "../../exchangers/exchanger/leaveReview";
 import ExchangerReviews from "../../exchangers/exchanger/reviews";
 import { IExchangerReview } from "../../../types/exchanger";
-import MakerTopPanel from "./MakersLinks";
+import MakerTopPanel from "./topPanel";
 import MakerStats from "../maker/stats";
 import { BoxWrapper } from "../../shared/BoxWrapper";
 
@@ -25,11 +25,12 @@ import MakerGreeting from "../MakerGreeting";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { IoMdSave } from "react-icons/io";
 import { RiDeleteBin2Fill } from "react-icons/ri";
-import FinalButtons from "./FinalButtons";
+
 import Advantages from "../../main/advantages";
 import CustomTitle from "../../shared/CustomTitle";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { setP2PFullOffers } from "../../../redux/mainReducer";
+import { setMakerFields, setP2PFullOffers } from "../../../redux/mainReducer";
+import SaveMaker from "./topPanel/SaveMaker";
 
 export default function MakerEditPage({
   maker,
@@ -48,6 +49,7 @@ export default function MakerEditPage({
   const offersCount = useAppSelector(
     (state) => state.main.p2pFullOffers.length,
   );
+  const makerDraft = useAppSelector((state) => state.main.maker);
 
   if (!maker) {
     return (
@@ -69,6 +71,26 @@ export default function MakerEditPage({
     if (!offers?.length || offersCount) return;
     dispatch(setP2PFullOffers(offers));
   }, [dispatch, offers, offersCount]);
+
+  useEffect(() => {
+    if (!maker) return;
+    const hasDraft =
+      makerDraft &&
+      (makerDraft.status !== undefined ||
+        makerDraft.telegram_name !== undefined ||
+        makerDraft.telegram_username !== undefined ||
+        makerDraft.description !== undefined ||
+        makerDraft.coordinates !== undefined);
+    if (hasDraft) return;
+    dispatch(
+      setMakerFields({
+        status: maker.status ?? undefined,
+        telegram_name: maker.telegram_name ?? null,
+        telegram_username: maker.telegram_username ?? null,
+        description: maker.description ?? null,
+      }),
+    );
+  }, [dispatch, maker, makerDraft]);
   const reviews = Array.isArray(maker.reviews) ? maker.reviews : null;
 
   return (
@@ -85,7 +107,13 @@ export default function MakerEditPage({
         <MakerDescriptionEdit description={maker.description} />
 
         <MakerMap coordinates={maker.coordinates} />
-        <FinalButtons />
+
+        <Center mb="20" gap="4" flexDir="column">
+          <CustomTitle as="h1" mb="0" title={"Все готово? Публикуй!"} />
+
+          <SaveMaker maker={maker} isBig />
+        </Center>
+
         <ExchangerReviews reviews={reviews as IExchangerReview[] | null} />
         {faqCategory ? (
           <FaqCategoriesList

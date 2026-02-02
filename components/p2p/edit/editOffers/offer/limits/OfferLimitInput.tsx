@@ -79,10 +79,11 @@ export default function OfferLimit({
         value={displayValue || suggested}
         isValidCharacter={(v) => !!v.match(/^[Ee0-9+\.,]$/)}
         step={stepValue}
-        borderWidth="1px"
-        borderRadius="lg"
+        borderWidth="2px"
+        borderRadius="md"
+        borderColor={"bg.600"}
+        focusBorderColor="peach.300"
         size="xs"
-        focusBorderColor="peach.200"
         position="relative"
         max={100000000}
         w={110}
@@ -92,11 +93,14 @@ export default function OfferLimit({
           pr="1"
           py="0"
           float="right"
+          border="none"
           textAlign="end"
           placeholder={"0.00"}
           fontFamily="'Mozilla Text', monospace"
           fontSize="lg"
           value={displayValue} // use raw value for instant update
+          _placeholder={{ color: "bg.500" }}
+          w="100%"
           onChange={(e) => {
             isEditingRef.current = true;
             setIsEditing(true);
@@ -114,8 +118,6 @@ export default function OfferLimit({
             if (!Number.isFinite(parsed)) return;
             setField(parsed);
           }}
-          _placeholder={{ color: "bg.500" }}
-          w="100%"
         />
       </NumberInput>
       <ResponsiveText ml="2">{codeToSymbol(cur)}</ResponsiveText>

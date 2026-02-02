@@ -18,7 +18,7 @@ import { TextToHTML } from "../../shared/helper";
 import UniversalSeo from "../../shared/UniversalSeo";
 import { IoWarningOutline } from "react-icons/io5";
 import CustomTitle from "../../shared/CustomTitle";
-import Image from "next/image";
+
 import CustomImage from "../../shared/CustomImage";
 import ArticleStats from "./ArticleStats";
 export default function GeneralArticle({
@@ -33,7 +33,7 @@ export default function GeneralArticle({
   const quoteText = useColorModeValue("peach.700", "peach.200");
   const ambientColor = useColorModeValue(
     "rgba(143,92,292,0.2)",
-    "rgba(247, 197, 177, 0.15)"
+    "rgba(247, 197, 177, 0.15)",
   );
   return (
     <>

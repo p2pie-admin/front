@@ -21,7 +21,7 @@ import { initialAmountOutputs, getAmountOutputs } from "./helper";
 
 import { getPmByCode } from "../components/main/side/selector/section/PmGroup/helper";
 import { ICurrencyConverterRate, IFingerprint } from "../types/shared";
-import { IFullOffer, IMakerOffer } from "../types/p2p";
+import { IFullOffer, IMakerOffer, IMaker } from "../types/p2p";
 
 import { format, R } from "./amountsHelper";
 
@@ -107,7 +107,13 @@ export interface MainState {
   massSort: IMassSort;
   massSelectorSlug: string;
   loading: ILoadingStatus;
-  p2pCoordinates?: [number, number];
+  maker?: {
+    status?: IMaker["status"] | "disabled";
+    telegram_name?: IMaker["telegram_name"] | null;
+    telegram_username?: IMaker["telegram_username"] | null;
+    description?: IMaker["description"] | null;
+    coordinates?: [number, number] | null;
+  };
 }
 
 const initialState: MainState = {
@@ -131,6 +137,11 @@ const initialState: MainState = {
   massSelectorSlug: "/sell/btc-for-rub",
 };
 
+const ensureMakerDraft = (state: MainState) => {
+  if (!state.maker) state.maker = {};
+  return state.maker;
+};
+
 export const mainSlice = createSlice({
   name: "main",
   // `createSlice` will infer the state type from the `initialState` argument
@@ -149,11 +160,47 @@ export const mainSlice = createSlice({
     ) => {
       state.popularCompleted = action.payload;
     },
-    setP2PCoordinates: (
+    setMakerFields: (
       state: MainState,
-      action: PayloadAction<[number, number] | undefined>,
+      action: PayloadAction<Partial<NonNullable<MainState["maker"]>>>,
     ) => {
-      state.p2pCoordinates = action.payload;
+      const makerDraft = ensureMakerDraft(state);
+      state.maker = { ...makerDraft, ...action.payload };
+    },
+    setMakerStatus: (
+      state: MainState,
+      action: PayloadAction<IMaker["status"] | "disabled" | undefined>,
+    ) => {
+      const makerDraft = ensureMakerDraft(state);
+      makerDraft.status = action.payload;
+    },
+    setMakerTelegramName: (
+      state: MainState,
+      action: PayloadAction<IMaker["telegram_name"] | null | undefined>,
+    ) => {
+      const makerDraft = ensureMakerDraft(state);
+      makerDraft.telegram_name = action.payload ?? null;
+    },
+    setMakerTelegramUsername: (
+      state: MainState,
+      action: PayloadAction<IMaker["telegram_username"] | null | undefined>,
+    ) => {
+      const makerDraft = ensureMakerDraft(state);
+      makerDraft.telegram_username = action.payload ?? null;
+    },
+    setMakerDescription: (
+      state: MainState,
+      action: PayloadAction<IMaker["description"] | null | undefined>,
+    ) => {
+      const makerDraft = ensureMakerDraft(state);
+      makerDraft.description = action.payload ?? null;
+    },
+    setMakerCoordinates: (
+      state: MainState,
+      action: PayloadAction<[number, number] | null | undefined>,
+    ) => {
+      const makerDraft = ensureMakerDraft(state);
+      makerDraft.coordinates = action.payload ?? null;
     },
 
     setPm: (
@@ -558,7 +605,12 @@ export const {
   updateScrollLock,
   setActivePetal,
   setPopularCompleted,
-  setP2PCoordinates,
+  setMakerFields,
+  setMakerStatus,
+  setMakerTelegramName,
+  setMakerTelegramUsername,
+  setMakerDescription,
+  setMakerCoordinates,
   triggerModal,
   incrementSwiper,
   decrementSwiper,

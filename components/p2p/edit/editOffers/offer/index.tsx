@@ -27,7 +27,7 @@ import DirectionPmButton from "./directionPmButton";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
 import DeleteOffer from "./DeleteOffer";
 import OfferCourse from "./course";
-import OfferLimit from "./limit";
+import OfferLimit from "./limits/OfferLimitInput";
 import { fetchP2POfferCourseRates } from "../../../../../redux/thunks";
 import {
   setP2PDirectionPm,
@@ -35,8 +35,12 @@ import {
 } from "../../../../../redux/mainReducer";
 import { powerOfTenOrder } from "../../../../../redux/amountsHelper";
 import { IFullOffer, IMakerOffer } from "../../../../../types/p2p";
-import OfferLimitSlider from "./OfferLimitSlider";
+import OfferLimitSlider from "./limits/OfferLimitSlider";
 import Chart from "../../../../exchange/Chart";
+import RightOptions from "./rightOptions/FollowMarket";
+import OfferLimits from "./limits";
+import OfferFee from "./fee";
+import OfferExplanation from "./OfferExplanation";
 
 type Props = {
   index: number;
@@ -62,8 +66,9 @@ const Offer = ({
     () => ({
       ...(initialOffer || {}),
       ...(storeOffer || {}),
+      index,
     }),
-    [initialOffer, storeOffer],
+    [initialOffer, storeOffer, index],
   );
 
   React.useEffect(() => {
@@ -76,6 +81,8 @@ const Offer = ({
       }> = [
         { field: "side", value: initialOffer.side },
         { field: "isActive", value: initialOffer.isActive },
+        { field: "follow_market", value: initialOffer.follow_market },
+        { field: "fee_enabled", value: initialOffer.fee_enabled },
         { field: "course", value: initialOffer.course },
         { field: "min", value: initialOffer.min },
         { field: "max", value: initialOffer.max },
@@ -160,29 +167,6 @@ const Offer = ({
   }, [dispatch, index, dir, currencyPair]);
 
   const dirExists = fullOffer.givePm && fullOffer.getPm;
-  const side = fullOffer?.side === "get" ? "get" : "give";
-  const toUSD = side === "give" ? fullOffer?.giveToUSD : fullOffer?.getToUSD;
-  const suggestedMin = powerOfTenOrder((toUSD || 0) * 500);
-  const suggestedMax = powerOfTenOrder((toUSD || 0) * 2000);
-  const suggestedMinPossible = powerOfTenOrder((toUSD || 0) * 100);
-  const sliderMin =
-    Number.isFinite(fullOffer?.min) && fullOffer?.min !== null
-      ? fullOffer.min
-      : suggestedMin;
-  const sliderMax =
-    Number.isFinite(fullOffer?.max) && fullOffer?.max !== null
-      ? fullOffer.max
-      : suggestedMax;
-  const sliderMinSeed =
-    sliderMin && Number.isFinite(sliderMin) && sliderMin > 0
-      ? sliderMin
-      : sliderMax && Number.isFinite(sliderMax) && sliderMax > 0
-        ? sliderMax
-        : 0;
-  const sliderMinPossible =
-    suggestedMinPossible > 0
-      ? suggestedMinPossible
-      : powerOfTenOrder(sliderMinSeed);
 
   return (
     <Box3D
@@ -238,55 +222,29 @@ const Offer = ({
       </Grid>
       <Collapse in={index == opened && !!dirExists}>
         {/* <HStack> */}
-        <Divider my="2" />
-        <Grid
-          columnGap="8"
-          mt="4"
+        <Divider my="4" />
+        <HStack
+          w="100%"
           onClick={(event) => event.stopPropagation()}
-          templateColumns=" 1fr auto"
-          templateRows="auto auto"
+          alignItems="start"
         >
-          {/* Left top */}
-
-          <OfferCourse index={index} />
-          {/* Right (double height) */}
-
-          <GridItem rowSpan={2}>
-            <HStack gap="4" alignItems="center">
-              <Divider orientation="vertical" h="140px" mb="4" />
-              <Chart
-                giveCur={givePm?.currency.code.toUpperCase()}
-                getCur={getPm?.currency.code.toUpperCase()}
-                noRate
-                //currentRateOverride={googleRate}
-              />
-            </HStack>
-          </GridItem>
-          <Box w="100%" mx="2">
-            <HStack w="fit-content" spacing="3" my="2">
-              <OfferLimit
-                index={index}
-                field="min"
-                suggested={suggestedMin}
-                fullOffer={fullOffer}
-              />
-              <Divider orientation="vertical" h="5" />
-              <OfferLimit
-                index={index}
-                field="max"
-                suggested={suggestedMax}
-                fullOffer={fullOffer}
-              />
-            </HStack>
-            <OfferLimitSlider
-              index={index}
-              min={sliderMin}
-              max={sliderMax}
-              minPossible={sliderMinPossible}
+          <VStack spacing="4" w="100%" mx="4">
+            <OfferCourse fullOffer={fullOffer} />
+            <OfferLimits fullOffer={fullOffer} />
+            <OfferFee fullOffer={fullOffer} />
+            <OfferExplanation fullOffer={fullOffer} />
+          </VStack>
+          <Divider orientation="vertical" h="200px" mr="1" />
+          <VStack w="100%" spacing="2" alignItems="end">
+            <Chart
+              giveCur={givePm?.currency.code.toUpperCase()}
+              getCur={getPm?.currency.code.toUpperCase()}
+              noRate
+              //currentRateOverride={googleRate}
             />
-          </Box>
-          {/* Left bottom */}
-        </Grid>
+            <RightOptions fullOffer={fullOffer} />
+          </VStack>
+        </HStack>
         {/* <HStack w="100%" justifyContent="space-between" mb="2">
           <Box />
           <DeleteOffer index={index} isFull />

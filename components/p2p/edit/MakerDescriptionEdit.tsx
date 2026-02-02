@@ -1,14 +1,27 @@
 import { Divider, Box, Textarea } from "@chakra-ui/react";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect } from "react";
 import { IoMdInformationCircle } from "react-icons/io";
 import { BoxWrapper, CustomHeader } from "../../shared/BoxWrapper";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { setMakerDescription } from "../../../redux/mainReducer";
 
 export default function MakerDescriptionEdit({
   description,
 }: {
   description?: string | null;
 }) {
-  const [value, setValue] = useState(description || "");
+  const dispatch = useAppDispatch();
+  const reduxDescription = useAppSelector(
+    (state) => state.main.maker?.description,
+  );
+
+  useEffect(() => {
+    if (reduxDescription !== undefined) return;
+    if (description === undefined) return;
+    dispatch(setMakerDescription(description));
+  }, [description, dispatch, reduxDescription]);
+
+  const value = reduxDescription ?? "";
   return (
     <BoxWrapper>
       <CustomHeader text="Описание" Icon={IoMdInformationCircle} />
@@ -26,7 +39,7 @@ export default function MakerDescriptionEdit({
           placeholder={"Ваше описание"}
           value={value}
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-            setValue(e.target.value)
+            dispatch(setMakerDescription(e.target.value))
           }
           //  onKeyDown={(event) => {
           //    if (event.key === "Enter") {

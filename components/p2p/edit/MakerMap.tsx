@@ -7,7 +7,7 @@ import Loader from "../../shared/Loader";
 import { createMapStyles } from "../../map/styles";
 import CitySelector from "../../layout/header/city";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { setP2PCoordinates } from "../../../redux/mainReducer";
+import { setMakerCoordinates } from "../../../redux/mainReducer";
 
 const parseCoordinates = (value?: string | null) => {
   if (!value) return null;
@@ -51,7 +51,9 @@ export default function MakerMap({
   const cityCoordinates = useAppSelector(
     (state) => state.main.city?.coordinates,
   );
-  const p2pCoordinates = useAppSelector((state) => state.main.p2pCoordinates);
+  const makerCoordinates = useAppSelector(
+    (state) => state.main.maker?.coordinates,
+  );
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
@@ -61,6 +63,12 @@ export default function MakerMap({
     () => parseCoordinates(coordinates),
     [coordinates],
   );
+
+  useEffect(() => {
+    if (makerCoordinates !== undefined) return;
+    if (!fallbackCenter) return;
+    dispatch(setMakerCoordinates([fallbackCenter.lat, fallbackCenter.lng]));
+  }, [dispatch, fallbackCenter, makerCoordinates]);
   const cityCenter = useMemo(() => {
     if (
       Array.isArray(cityCoordinates) &&
@@ -78,14 +86,14 @@ export default function MakerMap({
   const circleCenter = useMemo(() => {
     if (!center) return null;
     if (
-      Array.isArray(p2pCoordinates) &&
-      p2pCoordinates.length === 2 &&
-      p2pCoordinates.every((value) => Number.isFinite(value))
+      Array.isArray(makerCoordinates) &&
+      makerCoordinates.length === 2 &&
+      makerCoordinates.every((value) => Number.isFinite(value))
     ) {
-      return { lat: p2pCoordinates[0], lng: p2pCoordinates[1] };
+      return { lat: makerCoordinates[0], lng: makerCoordinates[1] };
     }
     return center;
-  }, [center, p2pCoordinates]);
+  }, [center, makerCoordinates]);
 
   const libraries = useMemo(() => ["places"], []);
 
@@ -149,7 +157,7 @@ export default function MakerMap({
       const lat = event.latLng?.lat();
       const lng = event.latLng?.lng();
       if (lat == null || lng == null) return;
-      dispatch(setP2PCoordinates([lat, lng]));
+      dispatch(setMakerCoordinates([lat, lng]));
     },
     [dispatch],
   );

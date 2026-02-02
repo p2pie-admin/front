@@ -9,9 +9,10 @@ import {
   useColorModeValue,
   useToken,
 } from "@chakra-ui/react";
-import { useAppDispatch } from "../../../../../redux/hooks";
-import { setP2PFullOfferField } from "../../../../../redux/mainReducer";
+
+import { setP2PFullOfferField } from "../../../../../../redux/mainReducer";
 import { RxDragHandleDots2 } from "react-icons/rx";
+import { useAppDispatch } from "../../../../../../redux/hooks";
 
 export default function OfferLimitSlider({
   index,
@@ -131,54 +132,52 @@ export default function OfferLimitSlider({
   const mainColor = useColorModeValue("violet.600", "peach.300");
 
   return (
-    <Box w="100%">
-      <RangeSlider
-        min={0}
-        max={100}
-        step={1}
-        value={range}
-        onChange={handleChange}
+    <RangeSlider
+      min={0}
+      max={100}
+      step={1}
+      value={range}
+      onChange={handleChange}
+    >
+      <RangeSliderTrack>
+        <RangeSliderFilledTrack bg="peach.300" />
+      </RangeSliderTrack>
+      <RangeSliderThumb
+        index={0}
+        boxSize={9}
+        bgColor="transparent"
+        position="relative"
+        boxShadow="none"
       >
-        <RangeSliderTrack>
-          <RangeSliderFilledTrack bg="peach.300" />
-        </RangeSliderTrack>
-        <RangeSliderThumb
-          index={0}
-          boxSize={9}
-          bgColor="transparent"
+        <Box
+          w="5"
+          h="3"
           position="relative"
-          boxShadow="none"
-        >
-          <Box
-            w="5"
-            h="3"
-            position="relative"
-            borderRadius="md"
-            bgColor={mainColor}
-            boxShadow={`0 0 10px -2px ${colorKey}`}
-            color={colorHint}
-            as={RxDragHandleDots2}
-          />
-        </RangeSliderThumb>
-        <RangeSliderThumb
-          index={1}
-          boxSize={9}
-          bgColor="transparent"
+          borderRadius="md"
+          bgColor={mainColor}
+          boxShadow={`0 0 10px -2px ${colorKey}`}
+          color={colorHint}
+          as={RxDragHandleDots2}
+        />
+      </RangeSliderThumb>
+      <RangeSliderThumb
+        index={1}
+        boxSize={9}
+        bgColor="transparent"
+        position="relative"
+        boxShadow="none"
+      >
+        <Box
+          w="5"
+          h="3"
           position="relative"
-          boxShadow="none"
-        >
-          <Box
-            w="5"
-            h="3"
-            position="relative"
-            borderRadius="md"
-            bgColor={mainColor}
-            boxShadow={`0 0 10px -2px ${colorKey}`}
-            color={colorHint}
-            as={RxDragHandleDots2}
-          />
-        </RangeSliderThumb>
-      </RangeSlider>
-    </Box>
+          borderRadius="md"
+          bgColor={mainColor}
+          boxShadow={`0 0 10px -2px ${colorKey}`}
+          color={colorHint}
+          as={RxDragHandleDots2}
+        />
+      </RangeSliderThumb>
+    </RangeSlider>
   );
 }

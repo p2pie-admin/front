@@ -12,6 +12,8 @@ export interface IMakerOffer {
   dir: string;
   side?: "give" | "get";
   isActive?: boolean | null;
+  follow_market?: boolean | null;
+  fee_enabled?: boolean | null;
   course: number;
   min?: number | null;
   max?: number | null;
@@ -22,6 +24,7 @@ export interface IMakerOffer {
 }
 
 export interface IFullOffer extends IMakerOffer {
+  index?: number;
   givePm: IPm;
   getPm: IPm;
   bestRate?: number;
@@ -72,7 +75,7 @@ export interface IMakerPreview {
   slug?: string | null;
   telegram_name?: string | null;
   telegram_username?: string | null;
-  status?: string | null;
+  status?: "active" | "paused" | "disabled" | null;
   createdAt?: string | null;
   offers?: IMakerOffer[] | null;
   exchanger_tags?: IMakerTag[] | null;

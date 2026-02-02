@@ -988,3 +988,33 @@ export const FAQsQuery = gql`
     }
   }
 `;
+
+export const createP2POfferMutation = gql`
+  mutation createP2POffer($data: P2POfferInput!) {
+    createP2POffer(data: $data) {
+      data {
+        id
+      }
+    }
+  }
+`;
+
+export const updateP2POfferMutation = gql`
+  mutation updateP2POffer($id: ID!, $data: P2POfferInput!) {
+    updateP2POffer(id: $id, data: $data) {
+      data {
+        id
+      }
+    }
+  }
+`;
+
+export const updateP2PMakerOffersMutation = gql`
+  mutation updateP2PMakerOffers($id: ID!, $offers: [ID]) {
+    updateP2PMaker(id: $id, data: { offers: $offers }) {
+      data {
+        id
+      }
+    }
+  }
+`;

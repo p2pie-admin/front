@@ -46,6 +46,30 @@ const getToastTone = (status?: string): ITone => {
 };
 
 const components: Record<string, StyleConfig> = {
+  Alert: {
+    baseStyle: (props: any) => {
+      const tone = getToastTone(props.status);
+      const gradient = createGradient(props.theme, tone, true);
+      return {
+        container: {
+          ...gradient,
+          color: mode("bg.900", "bg.50")(props),
+          borderRadius: "xl",
+          px: 4,
+          py: 3,
+        },
+        title: {
+          fontWeight: "600",
+        },
+        description: {
+          color: mode("bg.700", "bg.100")(props),
+        },
+        icon: {
+          color: mode("bg.900", "bg.50")(props),
+        },
+      };
+    },
+  },
   Toast: {
     baseStyle: (props: any) => {
       const tone = getToastTone(props.status);

@@ -1,24 +1,22 @@
 import React from "react";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, HStack } from "@chakra-ui/react";
 import { IFullOffer } from "../../../../../../types/p2p";
-import {
-  beautifyAmount,
-  curToSymbol,
-} from "../../../../../../redux/amountsHelper";
-import { CourseEditor } from "./CorseEditor";
-import { shallowEqual } from "react-redux";
-import { useAppDispatch, useAppSelector } from "../../../../../../redux/hooks";
+import { codeToSymbol } from "../../../../../../redux/amountsHelper";
+
+import { useAppDispatch } from "../../../../../../redux/hooks";
 import { setP2PFullOfferField } from "../../../../../../redux/mainReducer";
 import { ResponsiveText } from "../../../../../../styles/theme/custom";
-import { buildRateString } from "../../../../../shared/helper";
-import Chart from "../../../../../exchange/Chart";
+import CourseAmountInput from "./CourseAmountInput";
+import OfferCourseSlider from "./OfferCourseSlider";
 
-export default function OfferCourse({ index }: { index: number }) {
+export default function OfferCourse({
+  fullOffer,
+}: {
+  fullOffer: Partial<IFullOffer>;
+}) {
   const dispatch = useAppDispatch();
-  const fullOffer = useAppSelector(
-    (state) => state.main.p2pFullOffers[index],
-    shallowEqual,
-  ) as Partial<IFullOffer> | undefined;
+  const offerIndex = fullOffer.index;
+  if (offerIndex === undefined) return null;
 
   const offer = fullOffer || {};
   const givePm = offer.givePm;
@@ -43,7 +41,7 @@ export default function OfferCourse({ index }: { index: number }) {
         : undefined;
 
   const bestRate = offer.bestRate;
-  const bestRateRev = offer.bestRateRev;
+  const bestRateReversed = offer.bestRateRev;
   const googleRate = offer.googleRate;
   const suggestedCourse = offer.suggestedCourse;
 
@@ -54,7 +52,7 @@ export default function OfferCourse({ index }: { index: number }) {
     if (!activeSide) {
       dispatch(
         setP2PFullOfferField({
-          index,
+          index: offerIndex,
           field: "side",
           value: suggestedCourse > 1 ? "give" : "get",
         }),
@@ -62,39 +60,33 @@ export default function OfferCourse({ index }: { index: number }) {
     }
     dispatch(
       setP2PFullOfferField({
-        index,
+        index: offerIndex,
         field: "course",
         value: suggestedCourse,
       }),
     );
-  }, [suggestedCourse, course, giveCur, getCur, dispatch, index]);
+  }, [suggestedCourse, course, giveCur, getCur, dispatch, offerIndex]);
 
   if (!givePm || !getPm) return null;
   if (!giveCur || !getCur) return null;
 
-  const givePmRuName = (givePm.ru_name ?? givePm.en_name)?.toLowerCase();
-  const getPmRuName = (getPm.ru_name ?? getPm.en_name)?.toLowerCase();
-
-  const explanation =
-    normalizedGiveAmount && normalizedGetAmount && course && course >= 1
-      ? `Клиент покупает твой ${getPmRuName} по курсу   ${beautifyAmount(course, 1)} ${curToSymbol(giveCur)} за 1 ${curToSymbol(getCur)}`
-      : normalizedGiveAmount && normalizedGetAmount && course && course < 1
-        ? `Клиент продает тебе ${givePmRuName} по курсу 1 ${curToSymbol(giveCur)} за ${beautifyAmount(1 / course, 1)}  ${curToSymbol(getCur)}`
-        : "Установите курс";
-
   return (
-    <Box w="100%" mx="2">
-      <CourseEditor
-        giveCur={giveCur}
-        getCur={getCur}
-        index={index}
+    <Box w="100%">
+      <HStack w="fit-content" my="2">
+        <ResponsiveText>{"Курс: "}</ResponsiveText>
+
+        <CourseAmountInput index={offerIndex} side="give" />
+        <ResponsiveText>{codeToSymbol(giveCur)}</ResponsiveText>
+        <ResponsiveText>{` = `}</ResponsiveText>
+        <CourseAmountInput index={offerIndex} side="get" />
+        <ResponsiveText>{codeToSymbol(getCur)}</ResponsiveText>
+      </HStack>
+      <OfferCourseSlider
+        index={offerIndex}
         suggestedCourse={suggestedCourse}
         bestRate={bestRate}
-        bestRateReversed={bestRateRev}
+        bestRateReversed={bestRateReversed}
       />
-      <ResponsiveText whiteSpace="unset" variant="shaded" mb="2" size="xs">
-        {explanation}
-      </ResponsiveText>
 
       {/* <Box>
         <Text>

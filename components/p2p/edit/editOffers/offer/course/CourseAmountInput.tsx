@@ -111,7 +111,7 @@ const CourseAmountInput = ({
         size="xs"
         position="relative"
         max={100000000}
-        borderWidth="1px"
+        borderWidth="2px"
         borderRadius="md"
         borderColor={isActive ? "peach.600" : "bg.600"}
         focusBorderColor="peach.300"
@@ -122,7 +122,7 @@ const CourseAmountInput = ({
         {isActive && (
           <NumberInputStepper
             position="absolute"
-            left="0"
+            left="-0.5"
             right="auto"
             border="none"
             w="5"
@@ -141,6 +141,9 @@ const CourseAmountInput = ({
           fontFamily="'Mozilla Text', monospace"
           fontSize="lg"
           value={displayValue} // use raw value for instant update
+          _placeholder={{ color: "bg.500" }}
+          w="100%"
+          border="none"
           onChange={(e) => {
             if (!isActive) return;
             isEditingRef.current = true;
@@ -173,8 +176,6 @@ const CourseAmountInput = ({
               }),
             );
           }}
-          _placeholder={{ color: "bg.500" }}
-          w="100%"
         />
       </NumberInput>
     </InputGroup>
