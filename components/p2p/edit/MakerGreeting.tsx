@@ -1,7 +1,7 @@
 import { VStack } from "@chakra-ui/react";
 import Image from "next/image";
-import greetings from "../../public/greetings.png";
-import CustomTitle from "../shared/CustomTitle";
+import greetings from "../../../public/greetings.png";
+import CustomTitle from "../../shared/CustomTitle";
 
 const MakerGreeting = () => {
   return (
@@ -22,9 +22,9 @@ const MakerGreeting = () => {
         mb="0"
         title={"Прокачай свой p2p обмен"}
         subtitle={
-          "Настрой личную p2p витрину. Накапливай рейтинг доверия за каждую сделку."
+          "Настрой личную p2p витрину. Накапливай уровань доверия за каждую сделку."
         }
-        subtitle2={"Бесплатно. Навсегда."}
+        subtitle2={"Это бесплатно. Навсегда."}
       />
     </VStack>
   );

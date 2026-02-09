@@ -76,14 +76,12 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
         }
       });
 
-      const fullOffers: Partial<IFullOffer>[] = makerWithFullOffers.offers.map(
-        (offer) => {
-          const [giveCode, getCode] = offer.dir.split("_");
-          const givePm = pmsByCode.get((giveCode || "").toUpperCase());
-          const getPm = pmsByCode.get((getCode || "").toUpperCase());
-          return { ...offer, givePm, getPm };
-        }
-      );
+      const fullOffers = makerWithFullOffers.offers.map((offer) => {
+        const [giveCode, getCode] = offer.dir.split("_");
+        const givePm = pmsByCode.get((giveCode || "").toUpperCase());
+        const getPm = pmsByCode.get((getCode || "").toUpperCase());
+        return { ...offer, givePm, getPm };
+      });
       makerWithFullOffers = { ...makerWithFullOffers, offers: fullOffers };
     }
 

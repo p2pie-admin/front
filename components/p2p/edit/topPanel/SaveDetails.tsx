@@ -12,7 +12,7 @@ import { Box3D } from "../../../../styles/theme/custom";
 import useTelegramConfirmPolling from "../../../../services/hooks/telegramConfirmPolling";
 
 export default function SaveDetails({ maker }: { maker: IMaker }) {
-  const telegramUsername = maker.telegram_username?.replace(/^@/, "") || "";
+  const telegramUsername = maker.telegram_username.replace(/^@/, "");
   const dispatch = useAppDispatch();
   const isModalOpen = useAppSelector(
     (state) => state.main?.modal === `save_${telegramUsername}`,
@@ -59,12 +59,12 @@ export default function SaveDetails({ maker }: { maker: IMaker }) {
   };
   return (
     <VStack justifyContent="center" alignItems="center" spacing="4" mt="4">
-      <Text textAlign="center" fontSize="lg" color="bg.300">
+      <Text textAlign="center" fontSize="md" color="bg.300">
         <Highlight
           query={[`${"@" + telegramUsername}`]}
           styles={{ color: "peach.300", fontWeight: "bold" }}
         >
-          {`Чтобы подтвердить изменения, перейдите в телеграм-бота с аккаунта ${"@" + telegramUsername} и нажмите старт. `}
+          {`Чтобы подтвердить изменения, перейди в телеграм-бот с аккаунта ${"@" + telegramUsername} и нажмите старт. `}
         </Highlight>
       </Text>
 

@@ -25,7 +25,7 @@ import { base } from "../../../../services/utils";
 export default function MakersLinks({ maker }: { maker: IMaker }) {
   const dispatch = useAppDispatch();
   const makerSlug = getMakerSlug(maker);
-  const telegramUsername = maker.telegram_username?.replace(/^@/, "");
+  const telegramUsername = maker.telegram_username.replace(/^@/, "");
   const profilePath = `${base}/p2p/${makerSlug}`;
   const botLink = process.env.NEXT_PUBLIC_TELEGRAM_BOT || "";
 
@@ -33,7 +33,7 @@ export default function MakersLinks({ maker }: { maker: IMaker }) {
     {
       text: "Ваша ссылка на обмен",
       icon: RiTelegram2Line,
-      link: telegramUsername ? `https://t.me/${telegramUsername}` : "",
+      link: `https://t.me/${telegramUsername}`,
     },
     {
       text: "Ваша страница обмена",

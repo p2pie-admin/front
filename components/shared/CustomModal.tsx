@@ -19,17 +19,19 @@ const CustomModal = ({
   children,
   id,
   header,
+  size = "lg",
 }: {
   children: ReactElement;
   id: string;
   header: string | ReactElement;
+  size?: string;
 }) => {
   const dispatch = useAppDispatch();
   const isOpen = useAppSelector((state) => state.main.modal === id);
 
   return (
     <Modal
-      size={"lg"}
+      size={size}
       isOpen={isOpen}
       onClose={() => dispatch(triggerModal(undefined))}
     >

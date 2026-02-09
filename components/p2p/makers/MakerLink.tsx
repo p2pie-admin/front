@@ -19,9 +19,7 @@ export default function MakerLink({ maker }: { maker: IMakerPreview }) {
   const statusColor = getMakerStatusColor(maker);
   const offersCount = maker.offers?.length ?? 0;
   const reviewsCount = maker.reviews?.length ?? 0;
-  const telegramUsername = maker.telegram_username
-    ? `@${maker.telegram_username.replace(/^@/, "")}`
-    : "";
+  const telegramUsername = `@${maker.telegram_username.replace(/^@/, "")}`;
 
   return (
     <Box3D
@@ -62,11 +60,9 @@ export default function MakerLink({ maker }: { maker: IMakerPreview }) {
               {displayName}
             </ResponsiveText>
             <HStack spacing="3" color="bg.400" flexWrap="wrap">
-              {telegramUsername ? (
-                <ResponsiveText size="xs" variant="primary">
-                  {telegramUsername}
-                </ResponsiveText>
-              ) : null}
+              <ResponsiveText size="xs" variant="primary">
+                {telegramUsername}
+              </ResponsiveText>
               <ResponsiveText size="xs" variant="primary">
                 Предложений: {offersCount}
               </ResponsiveText>

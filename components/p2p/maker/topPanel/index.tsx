@@ -8,12 +8,13 @@ import { ExchangerTopButtons } from "../../../exchangers/exchanger/exchangerTopP
 const MakerTopPanel = ({ maker }: { maker: IMaker }) => {
   const statusColor: IDotColors =
     maker.status === "active" ? "green" : "orange";
-  const displayName = maker?.telegram_name || (maker?.slug || "").toUpperCase();
+  const displayName =
+    maker.telegram_name || maker.telegram_username.toUpperCase();
 
   return (
     <HStack justifyContent="space-between" gap="2" position="relative">
       <ExchangerName
-        name={maker.telegram_name || maker.slug?.toUpperCase() || ""}
+        name={maker.telegram_name || maker.telegram_username.toUpperCase()}
         logo={maker.avatar}
         statusColor={statusColor}
       />
@@ -21,7 +22,7 @@ const MakerTopPanel = ({ maker }: { maker: IMaker }) => {
       <MakerTags tags={maker.exchanger_tags} />
       <Actions id={maker.id} displayName={displayName} />
       <Box display={{ base: "none", lg: "flex" }} flexDir="row" gap="2">
-        <ExchangerTopButtons ref_link={maker.telegram_username || ""} />
+        <ExchangerTopButtons ref_link={maker.telegram_username} />
       </Box>
     </HStack>
   );

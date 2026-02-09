@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image, { StaticImageData } from "next/image";
-import { Box3D } from "../../../styles/theme/custom";
+
 import { useColorModeValue, Box, useBreakpointValue } from "@chakra-ui/react";
+import { Box3D } from "../../../../styles/theme/custom";
 
 export default function Advantage({
   children,
@@ -14,7 +15,7 @@ export default function Advantage({
 }) {
   const ambientColor = useColorModeValue(
     "rgba(143,92,292,0.2)",
-    "rgba(247, 197, 177, 0.1)"
+    "rgba(247, 197, 177, 0.1)",
   );
 
   const [isVisible, setIsVisible] = useState(false);
@@ -59,6 +60,7 @@ export default function Advantage({
         flex="1"
         w={{ base: "calc(100% - 32px)", lg: "360px" }}
         mx="16px"
+        cursor="pointer"
         variant="contrast"
         position="relative"
         overflow="hidden"

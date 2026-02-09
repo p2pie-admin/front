@@ -15,7 +15,7 @@ import LeaveReview from "../../exchangers/exchanger/leaveReview";
 import ExchangerReviews from "../../exchangers/exchanger/reviews";
 import { IExchangerReview } from "../../../types/exchanger";
 import MakerTopPanel from "./topPanel";
-import MakerStats from "./stats";
+import MakerStats from "../edit/stats";
 import { BoxWrapper } from "../../shared/BoxWrapper";
 import MakerOffers from "./offers";
 import { FaqCategoriesList } from "../../faq";

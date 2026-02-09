@@ -72,15 +72,15 @@ export interface IMakerReview {
 
 export interface IMakerPreview {
   id: string;
-  slug?: string | null;
   telegram_name?: string | null;
-  telegram_username?: string | null;
+  telegram_username: string;
   status?: "active" | "paused" | "disabled" | null;
   createdAt?: string | null;
   offers?: IMakerOffer[] | null;
   exchanger_tags?: IMakerTag[] | null;
   avatar?: IImage | null;
   reviews?: IMakerReview[] | null;
+  p2p_level?: IP2PLevel | null;
 
   deals_finished?: number;
   deals_canceled?: number;
@@ -92,4 +92,30 @@ export interface IMakerPreview {
 export interface IMaker extends IMakerPreview {
   coordinates?: string | null;
   description?: string | null;
+}
+
+export interface IP2PLevel {
+  id: string;
+  level?: number | null;
+  description?: string | null;
+  limit_online_usd?: number | null;
+  limit_offline_usd?: number | null;
+  title?: string | null;
+  deals_needed?: number | null;
+  deposit_usd?: number | null;
+  conditions?: IP2PCondition[] | null;
+}
+
+export interface IP2PCondition {
+  description?: string | null;
+  is_completed?: boolean | null;
+}
+
+export interface IP2PAd {
+  id: string;
+  title?: string | null;
+  description?: string | null;
+  details?: string | null;
+  slug?: string | null;
+  image?: IImage | null;
 }

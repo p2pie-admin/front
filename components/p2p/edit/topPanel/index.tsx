@@ -16,7 +16,7 @@ export default function MakerTopPanel({ maker }: { maker: IMaker }) {
     effectiveStatus === "active" ? "green" : "orange";
   const reduxName = useAppSelector((state) => state.main.maker?.telegram_name);
   const displayName =
-    reduxName || maker.telegram_name || maker.slug?.toUpperCase() || "";
+    reduxName || maker.telegram_name || maker.telegram_username.toUpperCase();
 
   return (
     <HStack justifyContent="space-between" gap="2" position="relative">

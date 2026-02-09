@@ -37,6 +37,7 @@ export default function MakerRating({ value, max = 5, size = 120 }: Props) {
     <Box3D
       h={`${size}px`}
       w={`${size}px`}
+      minW={`${size}px`}
       p="0"
       borderRadius="full"
       position="relative"
@@ -141,7 +142,10 @@ export default function MakerRating({ value, max = 5, size = 120 }: Props) {
           </ResponsiveText>
         </Box>
         <Text fontSize="10" color="bg.400" mt="-1">
-          рейтинг
+          индекс
+        </Text>
+        <Text fontSize="10" color="bg.400" mt="-1">
+          доверия
         </Text>
       </Box>
     </Box3D>

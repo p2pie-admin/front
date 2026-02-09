@@ -29,6 +29,7 @@ export const RegularBox = (props: any) => {
     no_contrast: useColorModeValue("bg.100", "bg.700"),
     contrast: useColorModeValue("bg.50", "bg.800"),
     extra_contrast: useColorModeValue("bg.10", "bg.900"),
+    primary: useColorModeValue("violet.300", "peach.500"),
   };
   const color = useColorModeValue("bg.700", "bg.100");
   const bgVarinat = bgVarinats[variant];

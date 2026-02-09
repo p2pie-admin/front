@@ -33,7 +33,7 @@ export const getStaticProps = async () => {
     const pms = pmsRaw || [];
     const firstRate = popularRates
       ? (Object.values(
-          popularRates
+          popularRates,
         )[0] as IPopularDirRates[keyof IPopularDirRates])
       : null;
     const popularPmCodes = [
@@ -44,7 +44,7 @@ export const getStaticProps = async () => {
     ];
 
     const popularPms = pms?.filter((pm) =>
-      popularPmCodes.find((code) => code === pm.code)
+      popularPmCodes.find((code) => code === pm.code),
     );
 
     const seo: ISEO = {

@@ -9,7 +9,7 @@ export type ITone =
   | "light"
   | "white";
 
-export type IVariant = "contrast" | "extra_contrast" | "no_contrast";
+export type IVariant = "contrast" | "extra_contrast" | "no_contrast" | "primary";
 export type ITextVariant =
   | "contrast"
   | "extra_contrast"

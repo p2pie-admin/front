@@ -5,11 +5,11 @@ import { IMaker } from "../../../types/p2p";
 import { getMakerDisplayName } from "../makers/helper";
 import ExchangerTopPanel from "../../exchangers/exchanger/exchangerTopPanel";
 import { IExchanger, IExchangerTag } from "../../../types/exchanger";
-import MakerStats from "./stats";
+import MakerStats from "../edit/stats";
 import MakerTopPanel from "./topPanel";
 
-const getTelegramLink = (username?: string | null) => {
-  const cleaned = (username || "").replace(/^@/, "").trim();
+const getTelegramLink = (username: string) => {
+  const cleaned = username.replace(/^@/, "").trim();
   return cleaned ? `https://t.me/${cleaned}` : "";
 };
 
@@ -26,9 +26,7 @@ export default function MakerHeader({ maker }: { maker: IMaker }) {
         <HStack spacing="3" w="100%" justifyContent="space-between">
           <HStack spacing="3">
             <ResponsiveText size="sm" color="bg.400" variant="primary">
-              {maker.telegram_username
-                ? `@${maker.telegram_username.replace(/^@/, "")}`
-                : ""}
+              {`@${maker.telegram_username.replace(/^@/, "")}`}
             </ResponsiveText>
             {maker.status ? (
               <Tag colorScheme="orange">{maker.status.toUpperCase()}</Tag>

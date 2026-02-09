@@ -4,7 +4,7 @@ import UniversalSeo from "../../shared/UniversalSeo";
 import Loader from "../../shared/Loader";
 import { ISEO } from "../../../types/general";
 import { IFaqCategory } from "../../../types/faq";
-import { IFullOffer, IMaker } from "../../../types/p2p";
+import { IFullOffer, IMaker, IP2PAd, IP2PLevel } from "../../../types/p2p";
 import { IPm } from "../../../types/selector";
 import MakerDescription from "../maker/MakerDescription";
 import MakerMap from "./MakerMap";
@@ -15,22 +15,25 @@ import LeaveReview from "../../exchangers/exchanger/leaveReview";
 import ExchangerReviews from "../../exchangers/exchanger/reviews";
 import { IExchangerReview } from "../../../types/exchanger";
 import MakerTopPanel from "./topPanel";
-import MakerStats from "../maker/stats";
+import MakerStats from "./stats";
 import { BoxWrapper } from "../../shared/BoxWrapper";
 
 import { FaqCategoriesList } from "../../faq";
 import EditOffers from "./editOffers";
 import MakerDescriptionEdit from "./MakerDescriptionEdit";
-import MakerGreeting from "../MakerGreeting";
+import MakerGreeting from "./MakerGreeting";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { IoMdSave } from "react-icons/io";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 
-import Advantages from "../../main/advantages";
+import P2PAdvantages from "./p2pAdvantages";
 import CustomTitle from "../../shared/CustomTitle";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { setMakerFields, setP2PFullOffers } from "../../../redux/mainReducer";
 import SaveMaker from "./topPanel/SaveMaker";
+import MakerLevels from "./levels";
+import MakerAds from "./ads";
+import Advantages from "../../main/advantages";
 
 export default function MakerEditPage({
   maker,
@@ -38,12 +41,16 @@ export default function MakerEditPage({
   pms,
   faqCategory,
   fullOffers,
+  p2pLevels,
+  p2pAds,
 }: {
   maker: IMaker | null;
   seo: ISEO;
   pms: IPm[] | null;
   faqCategory?: IFaqCategory | null;
   fullOffers?: Partial<IFullOffer>[] | null;
+  p2pLevels?: IP2PLevel[] | null;
+  p2pAds?: IP2PAd[] | null;
 }) {
   const dispatch = useAppDispatch();
   const offersCount = useAppSelector(
@@ -98,7 +105,28 @@ export default function MakerEditPage({
       <UniversalSeo seo={seo} />
       <Box>
         <MakerGreeting />
-        <BoxWrapper variant="no_contrast" data-editing="true">
+        <VStack>
+          <P2PAdvantages />
+        </VStack>
+
+        <CustomTitle
+          as="h3"
+          mb="0"
+          title={"Четкая стратегия роста"}
+          subtitle={
+            "Развивайся от частника до обменника и зарабатывай в разы больше"
+          }
+          subtitle2={"Мы уже прошли этот путь. Поделимся опытом."}
+        />
+        <MakerLevels levels={p2pLevels} />
+        <CustomTitle
+          as="h3"
+          mb="0"
+          mt="20"
+          title={"Твоя p2p страница"}
+          subtitle={"Внеси правки и опубликуй предложения обмена"}
+        />
+        <BoxWrapper variant="no_contrast" data-editing="true" mt="20">
           <MakerTopPanel maker={maker} />
           <Divider my="4" />
           <MakerStats maker={maker} />
@@ -109,7 +137,7 @@ export default function MakerEditPage({
         <MakerMap coordinates={maker.coordinates} />
 
         <Center mb="20" gap="4" flexDir="column">
-          <CustomTitle as="h1" mb="0" title={"Все готово? Публикуй!"} />
+          <CustomTitle as="h3" mb="0" mt="10" title={"Все готово? Публикуй!"} />
 
           <SaveMaker maker={maker} isBig />
         </Center>
@@ -129,9 +157,7 @@ export default function MakerEditPage({
         title={"Преимущества"}
         subtitle={"Работаем на репутацию, а не на прибыль"}
       />
-      <VStack>
-        <Advantages />
-      </VStack>
+      <MakerAds ads={p2pAds} />
     </>
   );
 }

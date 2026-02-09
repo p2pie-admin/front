@@ -33,8 +33,10 @@ import {
   p2pMakerQuery,
   p2pMakersQuery,
   testReviewQuery,
-} from "../pages/p2p/queries";
-import { IMaker, IMakerPreview } from "../types/p2p";
+  p2pLevelsQuery,
+  p2pAdsQuery,
+} from "../services/p2p";
+import { IMaker, IMakerPreview, IP2PAd, IP2PLevel } from "../types/p2p";
 //import { p2pMakerQuery } from "../pages/p2p/queries";
 
 const locale = "ru";
@@ -288,10 +290,10 @@ export const loadMassRates = ({
     }`,
   ) as Promise<IMassRate[]>;
 
-export const loadP2PMaker = (slug: string) =>
-  cachedFetch(`p2p_maker_${slug}`, TTL.fast, async () => {
-    if (!slug) return null;
-    const res = await cmsFetcher(p2pMakerQuery, { slug });
+export const loadP2PMaker = (telegramUsername: string) =>
+  cachedFetch(`p2p_maker_${telegramUsername}`, TTL.fast, async () => {
+    if (!telegramUsername) return null;
+    const res = await cmsFetcher(p2pMakerQuery, { telegramUsername });
     if (Array.isArray(res)) return (res[0] as IMaker) || null;
     return (res as IMaker) || null;
   });
@@ -319,3 +321,19 @@ export const loadTestReview = () =>
     }
     return [];
   });
+
+export const loadP2PLevels = () =>
+  cachedFetch(`p2p_levels`, TTL.slow, async () => {
+    const res = await cmsFetcher(p2pLevelsQuery);
+    if (!res) return [];
+    if (Array.isArray(res)) return res as IP2PLevel[];
+    return [res as IP2PLevel];
+  }) as Promise<IP2PLevel[]>;
+
+export const loadP2PAds = () =>
+  cachedFetch(`p2p_ads`, TTL.slow, async () => {
+    const res = await cmsFetcher(p2pAdsQuery);
+    if (!res) return [];
+    if (Array.isArray(res)) return res as IP2PAd[];
+    return [res as IP2PAd];
+  }) as Promise<IP2PAd[]>;

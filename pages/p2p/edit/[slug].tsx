@@ -1,8 +1,10 @@
 // certain maker page ad
-import { Center } from "@chakra-ui/react";
+import { Box, Center } from "@chakra-ui/react";
 import MakerPage from "../../../components/p2p/edit";
 import Loader from "../../../components/shared/Loader";
 import { nullSeo } from "../../../components/shared/UniversalSeo";
+import Image from "next/image";
+import gridPattern from "../../../public/grid.png";
 import {
   addHeadersToSearchIndex,
   addPathsToSitemap,
@@ -11,13 +13,21 @@ import {
   loadAllP2PMakers,
   loadFAQbyCategoryCode,
   loadP2PMaker,
+  loadP2PAds,
+  loadP2PLevels,
   loadPms,
   loadTestReview,
   TTL,
 } from "../../../cache/loadX";
 import { ISEO } from "../../../types/general";
 import { IFaqCategory } from "../../../types/faq";
-import { IFullOffer, IMaker, IMakerPreview } from "../../../types/p2p";
+import {
+  IFullOffer,
+  IMaker,
+  IMakerPreview,
+  IP2PAd,
+  IP2PLevel,
+} from "../../../types/p2p";
 import { IPm } from "../../../types/selector";
 import {
   getMakerDisplayName,
@@ -30,6 +40,8 @@ type PageProps = {
   pms: IPm[] | null;
   faqCategory: IFaqCategory | null;
   fullOffers: Partial<IFullOffer>[] | null;
+  p2pLevels: IP2PLevel[] | null;
+  p2pAds: IP2PAd[] | null;
 };
 
 export default function P2PMakerEditPage({
@@ -38,6 +50,8 @@ export default function P2PMakerEditPage({
   pms,
   faqCategory,
   fullOffers,
+  p2pLevels,
+  p2pAds,
 }: PageProps) {
   if (!maker) {
     return (
@@ -55,23 +69,48 @@ export default function P2PMakerEditPage({
   }
 
   return (
-    <MakerPage
-      maker={maker}
-      seo={seo}
-      pms={pms}
-      faqCategory={faqCategory}
-      fullOffers={fullOffers}
-    />
+    <Box position="relative" w="100%">
+      <Box
+        position="absolute"
+        top="1%"
+        left="50%"
+        transform="translateX(-50%)"
+        w="100vw"
+        filter={{ base: "opacity(0.5)", lg: "opacity(0.3)" }}
+        zIndex={0}
+        pointerEvents="none"
+      >
+        <Image
+          src={gridPattern}
+          alt="Grid background pattern"
+          width={2000}
+          height={420}
+          priority
+          style={{ width: "100vw", height: "auto" }}
+        />
+      </Box>
+      <MakerPage
+        maker={maker}
+        seo={seo}
+        pms={pms}
+        faqCategory={faqCategory}
+        fullOffers={fullOffers}
+        p2pLevels={p2pLevels}
+        p2pAds={p2pAds}
+      />
+    </Box>
   );
 }
 
 export async function getStaticProps({ params }: { params: { slug: string } }) {
   try {
     const { slug } = params;
-    const [maker, pms, faqCategory] = await Promise.all([
+    const [maker, pms, faqCategory, p2pLevels, p2pAds] = await Promise.all([
       loadP2PMaker(slug),
       loadPms(),
       loadFAQbyCategoryCode("p2p_maker_edit"),
+      loadP2PLevels(),
+      loadP2PAds(),
     ]);
 
     if (!maker) {
@@ -128,6 +167,8 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
         pms: pms || null,
         faqCategory: faqCategory || null,
         fullOffers: fullOffers || null,
+        p2pLevels: p2pLevels || null,
+        p2pAds: p2pAds || null,
       },
       revalidate: TTL.slow,
     };
@@ -141,6 +182,8 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
         pms: null,
         faqCategory: null,
         fullOffers: null,
+        p2pLevels: null,
+        p2pAds: null,
       },
       revalidate: TTL.slow,
     };

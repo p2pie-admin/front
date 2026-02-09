@@ -12,6 +12,7 @@ import { IPm } from "../../../types/selector";
 import RateLink from "./RateLink";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { slugCityToExchange } from "../../exchange/helper";
+import { isCashPm } from "../../shared/helper";
 import { useAppSelector } from "../../../redux/hooks";
 
 const CryptoRates = ({
@@ -27,8 +28,21 @@ const CryptoRates = ({
   };
 }) => {
   const citySlug = useAppSelector((state) =>
-    state.main.city?.en_name.replaceAll(" ", "-").toLowerCase()
+    state.main.city?.en_name.replaceAll(" ", "-").toLowerCase(),
   );
+
+  const getCurrencyCode = (pm?: IPm | null) => {
+    if (!pm) return undefined;
+    if (pm.currency?.code) return pm.currency.code;
+
+    if (isCashPm(pm)) {
+      const match = pm.code?.toUpperCase().match(/CASH([A-Z]{3})/);
+      if (match?.[1]) return match[1];
+    }
+
+    return pm.code;
+  };
+
   return (
     <>
       <Box>
@@ -49,11 +63,16 @@ const CryptoRates = ({
       <Box>
         {buySell.buy.map((rate, index) => {
           const pm = popularPms?.find((pm) => pm?.code == rate?.fiat);
+
           const slug = pmsToSlug({ givePm: pm, getPm: cryptoPm });
           const fullSlug = slugCityToExchange(slug, citySlug);
-          const rateNumber = `${curToSymbol(
-            pm?.currency.code.toUpperCase()
-          )} ${format(rate?.course, 1)} `;
+          const currencyCode = getCurrencyCode(pm);
+
+          const symbol = curToSymbol(currencyCode?.toUpperCase());
+          const rateNumber = `${symbol ? `${symbol} ` : ""}${format(
+            rate?.course,
+            1,
+          )}`;
           return (
             <RateLink
               key={String(rate?.exchangerId) + index + "buy"}
@@ -70,9 +89,12 @@ const CryptoRates = ({
           const slug = pmsToSlug({ givePm: cryptoPm, getPm: pm });
 
           const fullSlug = slugCityToExchange(slug, citySlug);
-          const rateNumber = `${curToSymbol(
-            pm?.currency.code.toUpperCase()
-          )} ${format(rate?.course, 1)} `;
+          const currencyCode = getCurrencyCode(pm);
+          const symbol = curToSymbol(currencyCode?.toUpperCase());
+          const rateNumber = `${symbol ? `${symbol} ` : ""}${format(
+            rate?.course,
+            1,
+          )}`;
           return (
             <RateLink
               key={String(rate?.exchangerId) + index + "sell"}

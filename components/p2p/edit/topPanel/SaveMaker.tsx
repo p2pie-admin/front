@@ -18,7 +18,7 @@ export default function SaveMaker({
   isBig?: boolean;
 }) {
   const dispatch = useAppDispatch();
-  const telegramUsername = maker.telegram_username?.replace(/^@/, "") || "";
+  const telegramUsername = maker.telegram_username.replace(/^@/, "");
 
   const alwaysVerify =
     String(process.env.NEXT_PUBLIC_BOT_ALWAYS_VERIFY).toLowerCase() === "true";

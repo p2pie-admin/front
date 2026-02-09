@@ -26,6 +26,20 @@ export default function MakerStats({ maker }: { maker: IMaker }) {
       }).format(new Date(maker.createdAt))
     : "";
 
+  const level = maker.p2p_level;
+  const conditions = Array.isArray(level?.conditions)
+    ? level?.conditions
+    : [];
+  const conditionsText = conditions
+    .map((condition) => {
+      const description = condition?.description?.trim();
+      if (!description) return null;
+      const mark = condition?.is_completed ? "[x]" : "[ ]";
+      return `${mark} ${description}`;
+    })
+    .filter(Boolean)
+    .join("\n");
+
   return (
     <HStack>
       <MakerRating value={maker.rating} />
@@ -47,6 +61,8 @@ export default function MakerStats({ maker }: { maker: IMaker }) {
           Icon={MdOutlineDateRange}
         />
       </Box>
+      <Divider orientation="vertical" h="80px" mx="2" />
+      <Box whiteSpace="pre-line">{conditionsText}</Box>
     </HStack>
   );
 }

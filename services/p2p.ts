@@ -8,7 +8,6 @@ export const p2pMakersQuery = gql`
       data {
         id
         attributes {
-          slug
           telegram_name
           telegram_username
           status
@@ -27,6 +26,26 @@ export const p2pMakersQuery = gql`
                 fee_amount
                 city_from
                 city_to
+              }
+            }
+          }
+          p2p_level {
+            data {
+              id
+              attributes {
+                level
+                description
+                limit_online_usd
+                limit_offline_usd
+                title
+                deals_needed
+                deposit_usd
+                conditions {
+                  ... on ComponentP2PCondition {
+                    description
+                    is_completed
+                  }
+                }
               }
             }
           }
@@ -63,17 +82,16 @@ export const p2pMakersQuery = gql`
 `;
 
 export const p2pMakerQuery = gql`
-  query p2pMakerQuery($slug: String) {
+  query p2pMakerQuery($telegramUsername: String) {
     p2PMakers(
       filters: {
-        slug: { eqi: $slug }
+        telegram_username: { eqi: $telegramUsername }
         status: { in: ["active", "suspended", "disabled"] }
       }
     ) {
       data {
         id
         attributes {
-          slug
           telegram_name
           telegram_username
           deals_finished
@@ -97,6 +115,26 @@ export const p2pMakerQuery = gql`
                 fee_amount
                 city_from
                 city_to
+              }
+            }
+          }
+          p2p_level {
+            data {
+              id
+              attributes {
+                level
+                description
+                limit_online_usd
+                limit_offline_usd
+                title
+                deals_needed
+                deposit_usd
+                conditions {
+                  ... on ComponentP2PCondition {
+                    description
+                    is_completed
+                  }
+                }
               }
             }
           }
@@ -250,3 +288,51 @@ export const testReviewQuery = gql`
     }
   }
 `;
+
+export const p2pLevelsQuery = `
+{
+  p2PLevels{
+    data{
+      id
+      attributes{
+        level
+        description
+        limit_online_usd
+        limit_offline_usd
+        title
+        deals_needed
+        deposit_usd
+        conditions {
+          ... on ComponentP2PCondition {
+            description
+            is_completed
+          }
+        }
+      }
+    }
+  }
+}`;
+
+export const p2pAdsQuery = `
+{
+  p2PAds{
+    data{
+      id
+     attributes{
+      title
+      description
+      details
+      slug
+      image{
+        data{
+          id
+          attributes{
+            url
+            alternativeText
+          }
+        }
+      }
+    } 
+    }
+  }
+}`;
