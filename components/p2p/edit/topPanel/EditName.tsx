@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useEffect } from "react";
 import {
+  Box,
   Button,
   FormControl,
   FormLabel,
@@ -7,7 +8,7 @@ import {
   Input,
   VStack,
 } from "@chakra-ui/react";
-import { MdOutlineEdit } from "react-icons/md";
+import { MdModeEdit } from "react-icons/md";
 import CustomModal from "../../../shared/CustomModal";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import {
@@ -30,10 +31,7 @@ export default function EditName({ maker }: { maker: IMaker }) {
     if (reduxName === undefined && maker.telegram_name !== undefined) {
       dispatch(setMakerTelegramName(maker.telegram_name));
     }
-    if (
-      reduxUsername === undefined &&
-      maker.telegram_username !== undefined
-    ) {
+    if (reduxUsername === undefined && maker.telegram_username !== undefined) {
       dispatch(setMakerTelegramUsername(maker.telegram_username));
     }
   }, [
@@ -85,12 +83,16 @@ export default function EditName({ maker }: { maker: IMaker }) {
           </HStack>
         </VStack>
       </CustomModal>
-      <Button
-        variant="no_contrast"
+
+      <Box
+        mr="auto"
+        cursor="pointer"
+        filter=" brightness(0.8)"
         onClick={() => dispatch(triggerModal(modalId))}
+        _hover={{ filter: " brightness(1.1)" }}
       >
-        <MdOutlineEdit size="1.2rem" />
-      </Button>
+        <MdModeEdit size="1.2rem" />
+      </Box>
     </>
   );
 }

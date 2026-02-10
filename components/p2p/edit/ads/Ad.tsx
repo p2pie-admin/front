@@ -7,7 +7,6 @@ import CustomImage from "../../../shared/CustomImage";
 export default function Ad({ ad }: { ad: IP2PAd }) {
   return (
     <Box3D
-      key={ad.title}
       flex="0 0 auto"
       minW={{ base: "250px", lg: "800px" }}
       maxW={{ base: "250px", lg: "800px" }}

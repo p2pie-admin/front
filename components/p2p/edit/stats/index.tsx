@@ -1,4 +1,4 @@
-import { Box, Divider, Flex, HStack } from "@chakra-ui/react";
+import { Box, Divider, Flex, HStack, VStack } from "@chakra-ui/react";
 import { IMaker } from "../../../../types/p2p";
 import { FormatedDate } from "../../../shared/BoxWrapper";
 import { Box3D, ResponsiveText } from "../../../../styles/theme/custom";
@@ -8,7 +8,8 @@ import { TbPencil } from "react-icons/tb";
 import { MdOutlineDateRange } from "react-icons/md";
 import { RiExchange2Line } from "react-icons/ri";
 import MakerRating from "./MakerRating";
-
+import { FaCheck } from "react-icons/fa6";
+import { FaXmark } from "react-icons/fa6";
 export default function MakerStats({ maker }: { maker: IMaker }) {
   const offers = Array.isArray(maker.offers) ? maker.offers : null;
   const reviews = Array.isArray(maker.reviews) ? maker.reviews : null;
@@ -27,24 +28,22 @@ export default function MakerStats({ maker }: { maker: IMaker }) {
     : "";
 
   const level = maker.p2p_level;
-  const conditions = Array.isArray(level?.conditions)
-    ? level?.conditions
-    : [];
-  const conditionsText = conditions
-    .map((condition) => {
-      const description = condition?.description?.trim();
-      if (!description) return null;
-      const mark = condition?.is_completed ? "[x]" : "[ ]";
-      return `${mark} ${description}`;
-    })
-    .filter(Boolean)
-    .join("\n");
+  const conditions = Array.isArray(level?.conditions) ? level?.conditions : [];
+
+  const completed = maker.p2p_level?.conditions?.filter(
+    (c) => c.is_completed,
+  )?.length;
+  const total = maker.p2p_level?.conditions?.length;
 
   return (
-    <HStack>
-      <MakerRating value={maker.rating} />
-      <Divider orientation="vertical" h="80px" mx="2" />
-      <Box w="fit-content">
+    <HStack alignItems="start">
+      <MakerRating
+        completed={completed}
+        total={total}
+        level={maker.p2p_level?.level || 1}
+      />
+      <Divider mt="2" orientation="vertical" h="80px" mx="2" />
+      <Box w="fit-content" mt="2">
         <StatItem
           label="Предложений"
           value={offersCount}
@@ -61,8 +60,37 @@ export default function MakerStats({ maker }: { maker: IMaker }) {
           Icon={MdOutlineDateRange}
         />
       </Box>
-      <Divider orientation="vertical" h="80px" mx="2" />
-      <Box whiteSpace="pre-line">{conditionsText}</Box>
+      <Divider mt="2" orientation="vertical" h="80px" mx="2" />
+      <VStack w="100%" mt="2" spacing="1" alignItems="start">
+        <ResponsiveText size="sm" mb="2" ml="2" color="bg.400">
+          Для перехода на следующий уровень необходимо:
+        </ResponsiveText>
+        {conditions.map((c) => (
+          <Box3D
+            cursor="pointer"
+            key={c.description}
+            py="1"
+            px="2"
+            w="100%"
+            variant={c.is_completed ? "contrast" : "extra_contrast"}
+            color={c.is_completed ? "green.300" : "red.300"}
+          >
+            <HStack w="100%" justifyContent="space-between">
+              <ResponsiveText
+                size="sm"
+                color={c.is_completed ? "bg.400" : "bg.200"}
+              >
+                {c.description}
+              </ResponsiveText>
+              {c.is_completed ? (
+                <FaCheck size="1rem" />
+              ) : (
+                <FaXmark size="1rem" />
+              )}
+            </HStack>
+          </Box3D>
+        ))}
+      </VStack>
     </HStack>
   );
 }

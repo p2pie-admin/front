@@ -1,4 +1,4 @@
-import { Box, HStack, Text } from "@chakra-ui/react";
+import { Box, Grid, HStack, Text } from "@chakra-ui/react";
 import React from "react";
 
 export default function AdvantageBottom({
@@ -13,20 +13,24 @@ export default function AdvantageBottom({
   icon: any;
 }) {
   return (
-    <HStack
+    <Grid
       gap="4"
-      color={hovering ? "peach.200" : "bg.200"}
+      color={hovering ? "peach.100" : "peach.200"}
       px="4"
-      mt="-8"
+      mt="-10"
       mb="4"
+      gridTemplateColumns="1.5rem 1fr"
+      alignItems="center"
     >
       {icon}
       <Box>
-        <Text fontSize="lg">{title}</Text>
+        <Text fontSize="lg" fontWeight="bold">
+          {title}
+        </Text>
         <Text fontSize="sm" color="bg.400">
           {subtitle}
         </Text>
       </Box>
-    </HStack>
+    </Grid>
   );
 }

@@ -23,7 +23,7 @@ export default function ReputationAdvantage({
       >
         <Box
           position="absolute"
-          top="-160px"
+          top="-170px"
           boxSize="140px"
           borderRadius="full"
           bgGradient="radial(rgba(242, 197, 182, 0.2) 0%, transparent 60%)"
@@ -37,6 +37,17 @@ export default function ReputationAdvantage({
           zIndex={0}
         >
           <Loader
+            position="absolute"
+            top="50%"
+            left="50%"
+            transform="translate(-50%, -50%)"
+            size={400}
+            src={`/p2p/lottie/particles.lottie`}
+            isActive={hovering}
+            zIndex={0}
+            pointerEvents="none"
+          />
+          <Loader
             size={150}
             src={`/p2p/lottie/REPUTATION.lottie`}
             isActive={hovering}
@@ -47,8 +58,8 @@ export default function ReputationAdvantage({
       <AdvantageBottom
         icon={<BsPersonFillCheck size="1.5rem" />}
         hovering={hovering}
-        title="Быстрый рост доверия"
-        subtitle="Сделки без риска через телеграм-чат"
+        title="Старт без репутации"
+        subtitle="Сделки как прежде: через телеграм-чат, но без риска для обеих сторон, без депозитов"
       />
     </>
   );

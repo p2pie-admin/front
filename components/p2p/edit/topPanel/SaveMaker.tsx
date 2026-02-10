@@ -60,7 +60,7 @@ export default function SaveMaker({
         <SaveDetails maker={maker} />
       </CustomModal>
       {!isBig ? (
-        <Button variant="no_contrast" onClick={(e) => handleSaveProject(e)}>
+        <Button variant="primary" onClick={(e) => handleSaveProject(e)}>
           <IoMdSave size="1.2rem" />
         </Button>
       ) : (

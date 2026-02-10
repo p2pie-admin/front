@@ -81,20 +81,22 @@ export default function MakerEditPage({
 
   useEffect(() => {
     if (!maker) return;
-    const hasDraft =
-      makerDraft &&
-      (makerDraft.status !== undefined ||
-        makerDraft.telegram_name !== undefined ||
-        makerDraft.telegram_username !== undefined ||
-        makerDraft.description !== undefined ||
-        makerDraft.coordinates !== undefined);
-    if (hasDraft) return;
+    const needsBackfill =
+      !makerDraft ||
+      makerDraft.status === undefined ||
+      makerDraft.telegram_name === undefined ||
+      makerDraft.telegram_username === undefined ||
+      makerDraft.description === undefined ||
+      makerDraft.p2p_level === undefined;
+    if (!needsBackfill) return;
     dispatch(
       setMakerFields({
-        status: maker.status ?? undefined,
-        telegram_name: maker.telegram_name ?? null,
-        telegram_username: maker.telegram_username ?? null,
-        description: maker.description ?? null,
+        status: makerDraft?.status ?? maker.status ?? undefined,
+        telegram_name: makerDraft?.telegram_name ?? maker.telegram_name ?? null,
+        telegram_username:
+          makerDraft?.telegram_username ?? maker.telegram_username ?? null,
+        description: makerDraft?.description ?? maker.description ?? null,
+        p2p_level: makerDraft?.p2p_level ?? maker.p2p_level ?? null,
       }),
     );
   }, [dispatch, maker, makerDraft]);
@@ -154,8 +156,10 @@ export default function MakerEditPage({
       </Box>
       <CustomTitle
         as="h3"
-        title={"Преимущества"}
-        subtitle={"Работаем на репутацию, а не на прибыль"}
+        title={"Дополнительные инструменты"}
+        subtitle={
+          "Используй эти опции чтобы улучшить свой сервис и повысить прибыль"
+        }
       />
       <MakerAds ads={p2pAds} />
     </>

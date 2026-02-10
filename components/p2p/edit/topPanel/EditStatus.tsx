@@ -6,11 +6,14 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Text,
 } from "@chakra-ui/react";
 import { RiSettings3Line } from "react-icons/ri";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { setMakerStatus } from "../../../../redux/mainReducer";
 import { IMaker } from "../../../../types/p2p";
+import Dot from "../../../exchangers/Dot";
+import { statusToColor } from "../../../shared/helper";
 
 const statusLabels: Record<"active" | "paused" | "disabled", string> = {
   active: "Активен",
@@ -28,7 +31,7 @@ export default function EditStatus({ maker }: { maker: IMaker }) {
     dispatch(setMakerStatus(maker.status ?? undefined));
   }, [dispatch, maker.status, reduxStatus]);
 
-  const currentStatus = reduxStatus ?? "paused";
+  const effectiveStatus = reduxStatus ?? "paused";
 
   const updateStatus = (next: "active" | "paused" | "disabled") => {
     dispatch(setMakerStatus(next));
@@ -36,10 +39,14 @@ export default function EditStatus({ maker }: { maker: IMaker }) {
 
   return (
     <Menu placement="bottom-end" isLazy>
-      <MenuButton as={Button} variant="no_contrast">
-        <RiSettings3Line size="1.2rem" />
+      <MenuButton
+        as={Button}
+        variant="no_contrast"
+        rightIcon={<Dot color={statusToColor(effectiveStatus)} />}
+      >
+        {statusLabels[effectiveStatus]}
       </MenuButton>
-      <MenuList bgColor="bg.800" minW="200px">
+      <MenuList bgColor="bg.800" minW="200px" borderRadius="lg">
         {(["active", "paused", "disabled"] as const).map((status) => (
           <MenuItem
             key={status}
@@ -47,11 +54,15 @@ export default function EditStatus({ maker }: { maker: IMaker }) {
             _hover={{ bgColor: "bg.700" }}
             onClick={() => updateStatus(status)}
           >
-            <HStack spacing="3" color="bg.300">
-              <span>
-                {statusLabels[status]}
-                {status === currentStatus ? " •" : ""}
-              </span>
+            <HStack
+              spacing="3"
+              w="100%"
+              justifyContent="space-between"
+              fontWeight="bold"
+              color="bg.300"
+            >
+              <Text>{statusLabels[status]}</Text>
+              <Dot color={statusToColor(status)} />
             </HStack>
           </MenuItem>
         ))}

@@ -8,6 +8,7 @@ import AdvantageBottom from "./AdvantageBottom";
 import { useAppSelector } from "../../../../redux/hooks";
 import Dot from "../../../exchangers/Dot";
 import { buildRateString } from "../../../shared/helper";
+import Loader from "../../../shared/Loader";
 
 const pulse = keyframes`
   0% { transform: scale(1); }
@@ -30,6 +31,22 @@ export default function DynamicRateAdvantage({
 
   return (
     <>
+      <Box
+        position="absolute"
+        top="-130px"
+        left="50%"
+        transform="translateX(-50%)"
+        opacity={hovering ? 1 : 0}
+        transition="opacity 0.2s ease"
+        pointerEvents="none"
+      >
+        <Loader
+          size={300}
+          src={`/p2p/lottie/particles.lottie`}
+          isActive={hovering}
+          pointerEvents="none"
+        />
+      </Box>
       <Box top="6" position="absolute" right="6">
         <Text color="bg.400" fontSize="xs" mt="0.5">
           Курс биткойна сейчас:
@@ -50,7 +67,7 @@ export default function DynamicRateAdvantage({
         icon={<RiExchange2Fill size="1.5rem" />}
         hovering={hovering}
         title="Авто-курс"
-        subtitle="Твой курс автоматом следует за рынком"
+        subtitle="Твои курсы могут следовать за рынком автоматически или быть статичными "
       />
     </>
   );

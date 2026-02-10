@@ -1,7 +1,7 @@
 import { Center } from "@chakra-ui/react";
 import React from "react";
 import { FaLock } from "react-icons/fa";
-import { BsShieldLockFill } from "react-icons/bs";
+import { BsPersonFillCheck, BsShieldLockFill } from "react-icons/bs";
 import { FaShield } from "react-icons/fa6";
 import AdvantageBottom from "./AdvantageBottom";
 import { Box3D } from "../../../../styles/theme/custom";
@@ -30,21 +30,21 @@ export default function SecurityAdvantage({ hovering }: { hovering: boolean }) {
               w="16"
               h="16"
               borderRadius="50%"
-              variant="no_contrast"
+              variant="extra_contrast"
               dropShadow="lg"
             >
-              <Center h="14" color={hovering ? "peach.100" : "peach.200"}>
-                <FaLock size="1.6rem" />
+              <Center h="16" color={hovering ? "peach.100" : "peach.200"}>
+                <BsShieldLockFill size="1.7rem" />
               </Center>
             </Box3D>
           </Center>
         </Center>
       </Center>
       <AdvantageBottom
-        icon={<BsShieldLockFill size="1.5rem" />}
+        icon={<BsPersonFillCheck size="1.5rem" />}
         hovering={hovering}
         title="Проверка твоего клиента"
-        subtitle="Сканируем источник средств за тебя"
+        subtitle="Сканируем источник средств клиента, минимизируя возможность мошенничества"
       />
     </>
   );

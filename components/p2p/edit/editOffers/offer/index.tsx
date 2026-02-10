@@ -227,12 +227,12 @@ const Offer = ({
           w="100%"
           onClick={(event) => event.stopPropagation()}
           alignItems="start"
+          mb="4"
         >
           <VStack spacing="4" w="100%" mx="4">
             <OfferCourse fullOffer={fullOffer} />
             <OfferLimits fullOffer={fullOffer} />
             <OfferFee fullOffer={fullOffer} />
-            <OfferExplanation fullOffer={fullOffer} />
           </VStack>
           <Divider orientation="vertical" h="200px" mr="1" />
           <VStack w="100%" spacing="2" alignItems="end">
@@ -245,122 +245,11 @@ const Offer = ({
             <RightOptions fullOffer={fullOffer} />
           </VStack>
         </HStack>
-        {/* <HStack w="100%" justifyContent="space-between" mb="2">
-          <Box />
+        <Divider my="2" />
+        <HStack w="100%" justifyContent="space-between" my="4" spacing="4">
+          <OfferExplanation fullOffer={fullOffer} />
           <DeleteOffer index={index} isFull />
-        </HStack> */}
-        {/* <Box>
-            <Chart giveCur={giveCur} getCur={getCur} noRate />
-          </Box>
-        </HStack> */}
-        {/* <SimpleGrid columns={{ base: 1, md: 2 }} spacing="3">
-            <FormControl>
-              <FormLabel>Active</FormLabel>
-              <Switch
-                isChecked={Boolean(fullOffer?.isActive)}
-                onChange={(e) => setField("isActive", e.target.checked)}
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel>Side</FormLabel>
-              <Select
-                value={fullOffer?.side || ""}
-                onChange={(e) =>
-                  setField(
-                    "side",
-                    (e.target.value || undefined) as IMakerOffer["side"],
-                  )
-                }
-              >
-                <option value="">-</option>
-                <option value="give">give</option>
-                <option value="get">get</option>
-              </Select>
-            </FormControl>
-            <FormControl>
-              <FormLabel>Course</FormLabel>
-              <Input
-                type="number"
-                value={fullOffer?.course ?? ""}
-                onChange={(e) =>
-                  setField(
-                    "course",
-                    e.target.value === "" ? null : Number(e.target.value),
-                  )
-                }
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel>Min</FormLabel>
-              <Input
-                type="number"
-                value={fullOffer?.min ?? ""}
-                onChange={(e) =>
-                  setField(
-                    "min",
-                    e.target.value === "" ? null : Number(e.target.value),
-                  )
-                }
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel>Max</FormLabel>
-              <Input
-                type="number"
-                value={fullOffer?.max ?? ""}
-                onChange={(e) =>
-                  setField(
-                    "max",
-                    e.target.value === "" ? null : Number(e.target.value),
-                  )
-                }
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel>Fee Type</FormLabel>
-              <Select
-                value={fullOffer?.fee_type || ""}
-                onChange={(e) =>
-                  setField(
-                    "fee_type",
-                    (e.target.value || undefined) as IMakerOffer["fee_type"],
-                  )
-                }
-              >
-                <option value="">-</option>
-                <option value="give">give</option>
-                <option value="get">get</option>
-                <option value="percentage">percentage</option>
-              </Select>
-            </FormControl>
-            <FormControl>
-              <FormLabel>Fee Amount</FormLabel>
-              <Input
-                type="number"
-                value={fullOffer?.fee_amount ?? ""}
-                onChange={(e) =>
-                  setField(
-                    "fee_amount",
-                    e.target.value === "" ? null : Number(e.target.value),
-                  )
-                }
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel>City From</FormLabel>
-              <Input
-                value={fullOffer?.city_from ?? ""}
-                onChange={(e) => setField("city_from", e.target.value)}
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel>City To</FormLabel>
-              <Input
-                value={fullOffer?.city_to ?? ""}
-                onChange={(e) => setField("city_to", e.target.value)}
-              />
-            </FormControl>
-          </SimpleGrid> */}
+        </HStack>
       </Collapse>
     </Box3D>
   );

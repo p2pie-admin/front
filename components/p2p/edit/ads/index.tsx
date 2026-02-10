@@ -42,8 +42,8 @@ export default function MakerAds({ ads }: { ads?: IP2PAd[] | null }) {
           >
             <HorizontalShader direction="right" no_contrast={false} />
             <Box w="10" />
-            {ads.map((ad) => (
-              <Ad ad={ad} />
+            {ads.map((ad, index) => (
+              <Ad ad={ad} key={ad.id || ad.slug || ad.title || String(index)} />
             ))}
             <Box w="10" />
             <HorizontalShader direction="left" no_contrast={false} />

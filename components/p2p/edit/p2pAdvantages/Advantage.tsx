@@ -58,8 +58,7 @@ export default function Advantage({
       <Box3D
         h={{ base: "auto", lg: "220px" }}
         flex="1"
-        w={{ base: "calc(100% - 32px)", lg: "360px" }}
-        mx="16px"
+        w={{ base: "calc(100% - 32px)", lg: "380px" }}
         cursor="pointer"
         variant="contrast"
         position="relative"
@@ -78,7 +77,7 @@ export default function Advantage({
           opacity={1}
           h="300px"
         />
-        <Box position="relative" zIndex={1}>
+        <Box position="relative" zIndex={1} mt="-10px">
           <Image alt={alt} src={imageSrc} width={400} height={200} />
 
           {children(isActive)}

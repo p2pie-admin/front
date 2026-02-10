@@ -1,31 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Text, useColorModeValue, useToken } from "@chakra-ui/react";
 import { Box3D, ResponsiveText } from "../../../../styles/theme/custom";
+import Loader from "../../../shared/Loader";
 
 type Props = {
-  value?: number;
-  max?: number;
-  size?: number;
+  completed?: number;
+  total?: number;
+  level?: number;
 };
 
-export default function MakerRating({ value, max = 5, size = 120 }: Props) {
+export default function MakerRating({ completed, total, level }: Props) {
   const id = React.useId();
+  const max = total || 2;
+  const size = 120;
   const radius = 46;
   const strokeWidth = 6;
   const progressWidth = 8;
   const circumference = 2 * Math.PI * radius;
-  const segments = 10;
+  const segments = 9;
   const segmentGapRatio = 0.4;
   const segmentLength = (circumference / segments) * (1 - segmentGapRatio);
   const gapLength = (circumference / segments) * segmentGapRatio;
   const normalized =
-    typeof value === "number" && Number.isFinite(value) && max > 0
-      ? Math.max(0, Math.min(value / max, 1))
+    typeof completed === "number" && Number.isFinite(completed) && max > 0
+      ? Math.max(0, Math.min(completed / max, 1))
       : 0;
   const progressOffset = circumference * (1 - normalized);
   const displayValue =
-    typeof value === "number" && Number.isFinite(value)
-      ? value.toFixed(1)
+    typeof completed === "number" && Number.isFinite(completed)
+      ? completed.toFixed(1)
       : "—";
 
   const [peripheryColor, centerColor] = useToken(
@@ -123,30 +126,10 @@ export default function MakerRating({ value, max = 5, size = 120 }: Props) {
         alignItems="center"
         justifyContent="center"
         pointerEvents="none"
-      >
-        <Box
-          zIndex="1"
-          bgGradient={`linear-gradient(to top right, rgba(0,0,0,0) 10%, ${centerColor} 30%, ${peripheryColor} 70%, rgba(0,0,0,0) 90%)`}
-          bgClip="text"
-          //fontSize={{ base: "xl", lg: "3xl" }}
-          w="100%"
-          textAlign={"center"}
-        >
-          <ResponsiveText
-            fontWeight="semibold"
-            fontFamily="Montserrat, sans-serif"
-            color="inherit"
-            fontSize="xl"
-          >
-            {displayValue}
-          </ResponsiveText>
-        </Box>
-        <Text fontSize="10" color="bg.400" mt="-1">
-          индекс
-        </Text>
-        <Text fontSize="10" color="bg.400" mt="-1">
-          доверия
-        </Text>
+      />
+
+      <Box pos="absolute" top="-10px" left="-10px">
+        <Loader size={140} src={`/p2p/lottie/lvl${level}.lottie`} zIndex={1} />
       </Box>
     </Box3D>
   );

@@ -142,7 +142,7 @@ export type IExchangerPreview = {
   ref_link: string;
 };
 
-export type IExchangerStatus = "active" | "suspended" | "disabled";
+export type IExchangerStatus = "active" | "suspended" | "disabled" | "paused";
 
 export type IErrorCode =
   | "no-rates"

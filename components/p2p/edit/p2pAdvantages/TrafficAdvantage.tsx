@@ -20,7 +20,12 @@ export default function TrafficAdvantage({ hovering }: { hovering: boolean }) {
         filter={`opacity(${hovering ? 0.35 : 0.2})`}
         transform={hovering ? "translateY(2px)" : undefined}
       >
-        <Box3D w="80%" borderRadius="lg" h="14" variant="no_contrast"></Box3D>
+        <Box3D
+          w="80%"
+          borderRadius="lg"
+          h="14"
+          variant="extra_contrast"
+        ></Box3D>
       </Center>
       <Center
         position="absolute"
@@ -30,7 +35,12 @@ export default function TrafficAdvantage({ hovering }: { hovering: boolean }) {
         filter={`opacity(${hovering ? 0.55 : 0.4})`}
         transform={hovering ? "translateY(6px)" : undefined}
       >
-        <Box3D w="85%" borderRadius="lg" h="14" variant="no_contrast"></Box3D>
+        <Box3D
+          w="85%"
+          borderRadius="lg"
+          h="14"
+          variant="extra_contrast"
+        ></Box3D>
       </Center>
       <Center
         position="absolute"
@@ -45,7 +55,7 @@ export default function TrafficAdvantage({ hovering }: { hovering: boolean }) {
           w="90%"
           h="16"
           borderRadius="lg"
-          variant="no_contrast"
+          variant="extra_contrast"
           dropShadow="lg"
           p="2"
         >
@@ -80,7 +90,7 @@ export default function TrafficAdvantage({ hovering }: { hovering: boolean }) {
         icon={<FaBolt size="1rem" />}
         hovering={hovering}
         title="Бесплатный трафик"
-        subtitle="Ищем тебе клиентов в 200+ телеграм групп"
+        subtitle="Ищем твоих потенциальных клиентов в сотнях телеграм групп в реальном времени"
       />
     </>
   );

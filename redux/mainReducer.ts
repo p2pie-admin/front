@@ -113,6 +113,7 @@ export interface MainState {
     telegram_username?: IMaker["telegram_username"] | null;
     description?: IMaker["description"] | null;
     coordinates?: [number, number] | null;
+    p2p_level?: IMaker["p2p_level"] | null;
   };
 }
 

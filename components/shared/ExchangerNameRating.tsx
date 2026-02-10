@@ -15,6 +15,7 @@ import Rating from "../exchange/tv/Rating";
 import CustomImage from "./CustomImage";
 import { IImage } from "../../types/selector";
 import Dot from "../exchangers/Dot";
+import { IDotColors } from "../../types/exchanger";
 
 const ExchangerName = ({
   name,
@@ -27,7 +28,7 @@ const ExchangerName = ({
   logo?: IImage | null;
   admin_rating?: number | null;
   isH1?: boolean;
-  statusColor?: "green" | "orange";
+  statusColor?: IDotColors;
 }) => {
   return (
     <HStack alignItems="center">

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { IPm } from "../../types/selector";
 import { capitalize } from "../main/side/selector/section/PmGroup/helper";
 import { format } from "../../redux/amountsHelper";
+import { IDotColors, IExchangerStatus } from "../../types/exchanger";
 
 /**
  * Markdown renderer with Next.js <Link> for internal navigation
@@ -174,3 +175,10 @@ export const getPmNameFromPm = (pm?: IPm | null, isShort: boolean = false) => {
       : "";
   return cryptoSuffix ? `${baseName} ${cryptoSuffix}` : baseName;
 };
+
+export const statusToColor = (status?: IExchangerStatus | null): IDotColors =>
+  status === "active"
+    ? "green"
+    : status === "paused" || status === "suspended"
+      ? "orange"
+      : "red";

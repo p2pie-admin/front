@@ -95,7 +95,7 @@ export default function MakerLevels({
                   size={150}
                   src={`/p2p/lottie/lvl${index + 1}.lottie`}
                   delay={0.2}
-                  shift={index * 0.5}
+                  shift={index * 1}
                   zIndex={1}
                 />
                 <Box
