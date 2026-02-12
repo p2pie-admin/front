@@ -1,6 +1,6 @@
 import React from "react";
 import { IP2PLevel } from "../../../../types/p2p";
-import { Grid, Box, Text, Divider, HStack } from "@chakra-ui/react";
+import { Grid, Box, Text, Divider, HStack, VStack } from "@chakra-ui/react";
 import { FaArrowRight } from "react-icons/fa";
 import Loader from "../../../shared/Loader";
 import { Box3D } from "../../../../styles/theme/custom";
@@ -74,9 +74,31 @@ export default function MakerLevelsDescription({
                   {level.title}
                 </Box>
               </Box3D>
-              <Box fontSize="sm" color="bg.200" p="2" whiteSpace="pre-line">
-                {level.description}
-              </Box>
+              <VStack
+                fontSize="xs"
+                color="peach.200"
+                p="2"
+                spacing="1"
+                alignItems="start"
+              >
+                <Text color="bg.200" fontSize="sm" whiteSpace="pre-line" mb="2">
+                  {level.description}
+                </Text>
+                {!!level.deals_needed && (
+                  <Text>{`• Сделок минимум: ${level.deals_needed}`}</Text>
+                )}
+                <Text>
+                  {`• Онлайн сделка частями до ~${level.limit_online_usd}$ или одной транзакцией через эскроу-смарт-контракт (только для USDT)`}
+                </Text>
+                <Text>
+                  {`• Личная встреча частями до ~${level.limit_offline_usd}$ или одной транзакцией через эскроу-смарт-контракт (только для USDT)`}
+                </Text>
+                {!!level.deposit_usd && (
+                  <Text>
+                    {`• На этот уровень доверия можно перескочить сразу через депозит ${level.deposit_usd} USDT`}
+                  </Text>
+                )}
+              </VStack>
             </HStack>
             {index + 1 !== 10 ? <Divider my="4" /> : <Box />}
           </Box>

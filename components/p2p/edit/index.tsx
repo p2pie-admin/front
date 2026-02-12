@@ -139,7 +139,14 @@ export default function MakerEditPage({
         <MakerMap coordinates={maker.coordinates} />
 
         <Center mb="20" gap="4" flexDir="column">
-          <CustomTitle as="h3" mb="0" mt="10" title={"Все готово? Публикуй!"} />
+          <CustomTitle
+            as="h3"
+            mb="4"
+            mt="10"
+            title={"Все готово?"}
+            subtitle="Опубликуй предожения и жди оповещений в телеграм-боте."
+            subtitle2="Бот выдаст ссылку на твою личную страницу. Используй ее для обмена."
+          />
 
           <SaveMaker maker={maker} isBig />
         </Center>

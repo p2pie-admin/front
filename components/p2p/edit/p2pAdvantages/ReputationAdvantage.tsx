@@ -59,7 +59,7 @@ export default function ReputationAdvantage({
         icon={<BsPersonFillCheck size="1.5rem" />}
         hovering={hovering}
         title="Старт без репутации"
-        subtitle="Сделки как прежде: через телеграм-чат, но без риска для обеих сторон, без депозитов"
+        subtitle="Сделки как прежде: через телеграм-чат, но без риска для обеих сторон и без депозитов"
       />
     </>
   );

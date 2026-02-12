@@ -168,7 +168,7 @@ export default function MakerMap({
     <BoxWrapper>
       <HStack justifyContent="space-between" alignItems="center" w="100%">
         <CustomHeader
-          text="Выберите район обслуживания на карте"
+          text="Выбери район обслуживания на карте"
           Icon={TbMapPinFilled}
         />
         <CitySelector forceVisible />
