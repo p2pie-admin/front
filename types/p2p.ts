@@ -1,5 +1,23 @@
 import { IImage, IPm } from "./selector";
 
+export type IP2PTopParameterType = "p2p_maker" | "p2p_offer";
+
+export interface IP2PTopParameterParameter {
+  id: string;
+  en_description?: string | null;
+  ru_description?: string | null;
+  icon?: IImage | null;
+}
+
+export interface IP2PTopParameter {
+  id: string;
+  code?: string | null;
+  en_name?: string | null;
+  ru_name?: string | null;
+  type?: IP2PTopParameterType | null;
+  parameter?: IP2PTopParameterParameter | null;
+}
+
 export interface IMakerTag {
   id: string;
   name?: string | null;
@@ -21,6 +39,7 @@ export interface IMakerOffer {
   fee_amount?: number | null;
   city_from?: string;
   city_to?: string;
+  top_parameters?: IP2PTopParameter[] | null;
 }
 
 export interface IFullOffer extends IMakerOffer {
@@ -77,6 +96,7 @@ export interface IMakerPreview {
   status?: "active" | "paused" | "disabled" | null;
   createdAt?: string | null;
   offers?: IMakerOffer[] | null;
+  top_parameters?: IP2PTopParameter[] | null;
   exchanger_tags?: IMakerTag[] | null;
   avatar?: IImage | null;
   reviews?: IMakerReview[] | null;

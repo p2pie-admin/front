@@ -1,4 +1,4 @@
-import { Box, Grid, HStack, Text } from "@chakra-ui/react";
+import { Box, Grid, HStack, Text, Highlight } from "@chakra-ui/react";
 import React from "react";
 
 export default function AdvantageBottom({
@@ -23,12 +23,26 @@ export default function AdvantageBottom({
       alignItems="center"
     >
       {icon}
-      <Box>
-        <Text fontSize="lg" fontWeight="bold">
+      <Box color="bg.400" fontSize="sm">
+        <Text fontSize="lg" fontWeight="bold" color="bg.200">
           {title}
         </Text>
-        <Text fontSize="sm" color="bg.400">
-          {subtitle}
+        <Text whiteSpace="pre-line">{subtitle}</Text>
+
+        <Text>
+          {`Как это работает? `}
+          <Highlight
+            query={["читать далее →"]}
+            styles={{
+              color: "peach.300",
+              textDecoration: "underline",
+              _hover: {
+                color: "peach.100",
+              },
+            }}
+          >
+            читать далее →
+          </Highlight>
         </Text>
       </Box>
     </Grid>

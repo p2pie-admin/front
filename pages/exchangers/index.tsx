@@ -1,4 +1,4 @@
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 
 import { IExchanger } from "../../types/exchanger";
 import ExchangersList from "../../components/exchangers";
@@ -23,11 +23,7 @@ const ExchangersPage = ({
   />
 );
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const rawPage = Array.isArray(query.page) ? query.page[0] : query.page;
-  const parsedPage = Number.parseInt(rawPage || "1", 10);
-  const requestedPage = Number.isFinite(parsedPage) ? parsedPage : 1;
-
+export const getStaticProps: GetStaticProps = async () => {
   const exchangers = await loadExchangers();
 
   if (!exchangers?.length) {
@@ -41,19 +37,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
   const itemsPerPage = 20;
   const totalPages = Math.ceil(exchangers.length / itemsPerPage);
-  const currentPage =
-    requestedPage > 0 ? Math.min(requestedPage, totalPages) : 1;
-
-  if (requestedPage > totalPages && totalPages > 0) {
-    const destination =
-      totalPages === 1 ? "/exchangers" : `/exchangers?page=${totalPages}`;
-    return {
-      redirect: {
-        destination,
-        permanent: false,
-      },
-    };
-  }
+  const currentPage = 1;
 
   const seo: ISEO = {
     title: "Обменники - список всех активных обменников",
@@ -68,6 +52,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       exchangers: exchangers || null,
       initialPage: currentPage,
     },
+    revalidate: 60,
   };
 };
 

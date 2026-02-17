@@ -8,17 +8,42 @@ import {
   loadAllP2PMakers,
   loadFAQbyCategoryCode,
   loadP2PMaker,
+  loadP2PTopParameters,
   loadPms,
   TTL,
 } from "../../cache/loadX";
 import { ISEO } from "../../types/general";
 import { IFaqCategory } from "../../types/faq";
-import { IFullOffer, IMaker, IMakerPreview } from "../../types/p2p";
+import { IFullOffer, IMaker, IMakerPreview, IP2PTopParameter } from "../../types/p2p";
 import { IPm } from "../../types/selector";
 import {
   getMakerDisplayName,
   getMakerSlug,
 } from "../../components/p2p/makers/helper";
+
+const selectTopParametersByIds = (
+  linked: Array<{ id?: string | number | null } | null | undefined> | null | undefined,
+  all: IP2PTopParameter[] | null | undefined,
+) => {
+  if (!Array.isArray(linked) || !Array.isArray(all) || !all.length) return [];
+
+  const byId = new Map<string, IP2PTopParameter>(
+    all.filter((param) => Boolean(param?.id)).map((param) => [String(param.id), param]),
+  );
+  const selected: IP2PTopParameter[] = [];
+  const seen = new Set<string>();
+
+  linked.forEach((param) => {
+    const id = param?.id ? String(param.id) : "";
+    if (!id || seen.has(id)) return;
+    const full = byId.get(id);
+    if (!full) return;
+    selected.push(full);
+    seen.add(id);
+  });
+
+  return selected;
+};
 
 type PageProps = {
   maker: IMaker | null;
@@ -56,18 +81,34 @@ export default function P2PMakerPage({
 export async function getStaticProps({ params }: { params: { slug: string } }) {
   try {
     const { slug } = params;
-    const [maker, pms, faqCategory] = await Promise.all([
-      loadP2PMaker(slug),
-      loadPms(),
-      loadFAQbyCategoryCode("p2p_maker"),
-    ]);
+    const [maker, pms, faqCategory, makerTopParameters, offerTopParameters] =
+      await Promise.all([
+        loadP2PMaker(slug),
+        loadPms(),
+        loadFAQbyCategoryCode("p2p_maker"),
+        loadP2PTopParameters("p2p_maker"),
+        loadP2PTopParameters("p2p_offer"),
+      ]);
 
     if (!maker) {
       console.log(`❌ P2P maker failed to load: ${slug}`);
       return { notFound: true };
     }
 
-    let makerWithFullOffers = maker;
+    let makerWithFullOffers: IMaker = {
+      ...maker,
+      top_parameters: selectTopParametersByIds(maker.top_parameters, makerTopParameters),
+      offers: Array.isArray(maker.offers)
+        ? maker.offers.map((offer) => ({
+            ...offer,
+            top_parameters: selectTopParametersByIds(
+              offer?.top_parameters,
+              offerTopParameters,
+            ),
+          }))
+        : maker.offers,
+    };
+
     if (Array.isArray(makerWithFullOffers.offers) && Array.isArray(pms)) {
       const pmsByCode = new Map<string, IPm>();
       pms.forEach((pm) => {

@@ -15,6 +15,7 @@ import {
   loadP2PMaker,
   loadP2PAds,
   loadP2PLevels,
+  loadP2PTopParameters,
   loadPms,
   loadTestReview,
   TTL,
@@ -27,6 +28,7 @@ import {
   IMakerPreview,
   IP2PAd,
   IP2PLevel,
+  IP2PTopParameter,
 } from "../../../types/p2p";
 import { IPm } from "../../../types/selector";
 import {
@@ -34,10 +36,33 @@ import {
   getMakerSlug,
 } from "../../../components/p2p/makers/helper";
 
+const selectTopParametersByIds = (
+  linked: Array<{ id?: string | number | null } | null | undefined> | null | undefined,
+  all: IP2PTopParameter[] | null | undefined,
+) => {
+  if (!Array.isArray(linked) || !Array.isArray(all) || !all.length) return [];
+
+  const byId = new Map<string, IP2PTopParameter>(
+    all.filter((param) => Boolean(param?.id)).map((param) => [String(param.id), param]),
+  );
+  const selected: IP2PTopParameter[] = [];
+  const seen = new Set<string>();
+
+  linked.forEach((param) => {
+    const id = param?.id ? String(param.id) : "";
+    if (!id || seen.has(id)) return;
+    const full = byId.get(id);
+    if (!full) return;
+    selected.push(full);
+    seen.add(id);
+  });
+
+  return selected;
+};
+
 type PageProps = {
   maker: IMaker | null;
   seo: ISEO;
-  pms: IPm[] | null;
   faqCategory: IFaqCategory | null;
   fullOffers: Partial<IFullOffer>[] | null;
   p2pLevels: IP2PLevel[] | null;
@@ -47,7 +72,6 @@ type PageProps = {
 export default function P2PMakerEditPage({
   maker,
   seo,
-  pms,
   faqCategory,
   fullOffers,
   p2pLevels,
@@ -85,14 +109,12 @@ export default function P2PMakerEditPage({
           alt="Grid background pattern"
           width={2000}
           height={420}
-          priority
           style={{ width: "100vw", height: "auto" }}
         />
       </Box>
       <MakerPage
         maker={maker}
         seo={seo}
-        pms={pms}
         faqCategory={faqCategory}
         fullOffers={fullOffers}
         p2pLevels={p2pLevels}
@@ -105,12 +127,22 @@ export default function P2PMakerEditPage({
 export async function getStaticProps({ params }: { params: { slug: string } }) {
   try {
     const { slug } = params;
-    const [maker, pms, faqCategory, p2pLevels, p2pAds] = await Promise.all([
+    const [
+      maker,
+      pms,
+      faqCategory,
+      p2pLevels,
+      p2pAds,
+      makerTopParameters,
+      offerTopParameters,
+    ] = await Promise.all([
       loadP2PMaker(slug),
       loadPms(),
       loadFAQbyCategoryCode("p2p_maker_edit"),
       loadP2PLevels(),
       loadP2PAds(),
+      loadP2PTopParameters("p2p_maker"),
+      loadP2PTopParameters("p2p_offer"),
     ]);
 
     if (!maker) {
@@ -126,8 +158,25 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
       }
     }
 
+    const makerWithTopParameters: IMaker = {
+      ...makerWithReviews,
+      top_parameters: selectTopParametersByIds(
+        makerWithReviews.top_parameters,
+        makerTopParameters,
+      ),
+      offers: Array.isArray(makerWithReviews.offers)
+        ? makerWithReviews.offers.map((offer) => ({
+            ...offer,
+            top_parameters: selectTopParametersByIds(
+              offer?.top_parameters,
+              offerTopParameters,
+            ),
+          }))
+        : makerWithReviews.offers,
+    };
+
     let fullOffers: Partial<IFullOffer>[] | null = null;
-    if (Array.isArray(makerWithReviews.offers) && Array.isArray(pms)) {
+    if (Array.isArray(makerWithTopParameters.offers) && Array.isArray(pms)) {
       const pmsByCode = new Map<string, IPm>();
       pms.forEach((pm) => {
         if (pm?.code) {
@@ -135,7 +184,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
         }
       });
 
-      fullOffers = makerWithReviews.offers.map((offer) => {
+      fullOffers = makerWithTopParameters.offers.map((offer) => {
         const [giveCode, getCode] = offer.dir.split("_");
         const givePm = pmsByCode.get((giveCode || "").toUpperCase());
         const getPm = pmsByCode.get((getCode || "").toUpperCase());
@@ -143,7 +192,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
       });
     }
 
-    const displayName = getMakerDisplayName(maker);
+    const displayName = getMakerDisplayName(makerWithTopParameters);
     const title = `P2P мейкер ${displayName}`;
     const description = `${displayName}: карточка P2P мейкера`;
 
@@ -162,9 +211,8 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
 
     return {
       props: {
-        maker: makerWithReviews,
+        maker: makerWithTopParameters,
         seo,
-        pms: pms || null,
         faqCategory: faqCategory || null,
         fullOffers: fullOffers || null,
         p2pLevels: p2pLevels || null,
@@ -179,7 +227,6 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
       props: {
         maker: null,
         seo: nullSeo,
-        pms: null,
         faqCategory: null,
         fullOffers: null,
         p2pLevels: null,

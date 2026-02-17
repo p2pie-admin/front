@@ -1,6 +1,4 @@
 import { HStack } from "@chakra-ui/react";
-import { IDotColors } from "../../../../types/exchanger";
-import { IMaker } from "../../../../types/p2p";
 import ExchangerName from "../../../shared/ExchangerNameRating";
 import MakerTags from "../../maker/topPanel/MakerTags";
 import MakersLinks from "./MakerLinks";
@@ -9,8 +7,10 @@ import EditName from "./EditName";
 import EditStatus from "./EditStatus";
 import { useAppSelector } from "../../../../redux/hooks";
 import { statusToColor } from "../../../shared/helper";
+import { useMakerEditContext } from "../MakerEditContext";
 
-export default function MakerTopPanel({ maker }: { maker: IMaker }) {
+export default function MakerTopPanel() {
+  const maker = useMakerEditContext();
   const reduxStatus = useAppSelector((state) => state.main.maker?.status);
   const effectiveStatus = reduxStatus ?? maker.status;
 
@@ -27,13 +27,13 @@ export default function MakerTopPanel({ maker }: { maker: IMaker }) {
           statusColor={statusToColor(effectiveStatus)}
         />
         <MakerTags tags={maker.exchanger_tags} />
-        <EditName maker={maker} />
+        <EditName />
       </HStack>
 
       <HStack gap="2">
-        <EditStatus maker={maker} />
-        <MakersLinks maker={maker} />
-        <SaveMaker maker={maker} />
+        <EditStatus />
+        <MakersLinks />
+        <SaveMaker />
       </HStack>
     </HStack>
   );

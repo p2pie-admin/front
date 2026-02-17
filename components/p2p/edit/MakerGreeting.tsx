@@ -14,7 +14,7 @@ const MakerGreeting = () => {
         alt={`${process.env.NEXT_PUBLIC_NAME} greetings`}
         src={greetings}
         width={250}
-        priority
+        loading="eager"
       />
       <CustomTitle
         as="h1"
@@ -24,9 +24,7 @@ const MakerGreeting = () => {
         subtitle={
           "Настрой личную p2p витрину. Накапливай уровань доверия за каждую сделку."
         }
-        subtitle2={
-          "Расскажем как поднять обменник и попасть на BestChange за 8 месяцев."
-        }
+        subtitle2={"Даем трафик клиентов. Берем безопасность сделок на себя."}
       />
     </VStack>
   );

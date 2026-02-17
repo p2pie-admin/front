@@ -7,14 +7,12 @@ import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { IoAddOutline } from "react-icons/io5";
 import { addP2PDirection } from "../../../../redux/mainReducer";
 import { IFullOffer } from "../../../../types/p2p";
-import { IPm } from "../../../../types/selector";
 
 type Props = {
   offers?: Partial<IFullOffer>[] | null;
-  pms?: IPm[] | null;
 };
 
-export default function EditOffers({ offers, pms }: Props) {
+export default function EditOffers({ offers }: Props) {
   const offersCount = useAppSelector(
     (state) => state.main.p2pFullOffers.length,
   );

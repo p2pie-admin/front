@@ -35,7 +35,8 @@ export interface IParameter {
   code: string;
   en_name: string;
   ru_name: string;
-  color: string;
+  type?: "p2p_maker" | "p2p_offer" | null;
+  color?: string;
   parameter: {
     id: string;
     en_description: string;

@@ -16,9 +16,10 @@ import {
   setMakerTelegramUsername,
   triggerModal,
 } from "../../../../redux/mainReducer";
-import { IMaker } from "../../../../types/p2p";
+import { useMakerEditContext } from "../MakerEditContext";
 
-export default function EditName({ maker }: { maker: IMaker }) {
+export default function EditName() {
+  const maker = useMakerEditContext();
   const dispatch = useAppDispatch();
   const modalId = `edit_name_${maker.id}`;
 

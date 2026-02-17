@@ -8,12 +8,11 @@ import {
   MenuList,
   Text,
 } from "@chakra-ui/react";
-import { RiSettings3Line } from "react-icons/ri";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { setMakerStatus } from "../../../../redux/mainReducer";
-import { IMaker } from "../../../../types/p2p";
 import Dot from "../../../exchangers/Dot";
 import { statusToColor } from "../../../shared/helper";
+import { useMakerEditContext } from "../MakerEditContext";
 
 const statusLabels: Record<"active" | "paused" | "disabled", string> = {
   active: "Активен",
@@ -21,7 +20,8 @@ const statusLabels: Record<"active" | "paused" | "disabled", string> = {
   disabled: "Отключен",
 };
 
-export default function EditStatus({ maker }: { maker: IMaker }) {
+export default function EditStatus() {
+  const maker = useMakerEditContext();
   const dispatch = useAppDispatch();
   const reduxStatus = useAppSelector((state) => state.main.maker?.status);
 

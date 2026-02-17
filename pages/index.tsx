@@ -107,7 +107,7 @@ const Home = (props: any) => {
             alt="Grid background pattern"
             width={2000}
             height={420}
-            priority
+            loading="eager"
             style={{ width: "100vw", height: "auto" }}
           />
         </Box>

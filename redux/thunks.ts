@@ -3,12 +3,9 @@ import React from "react";
 import { IPopularDirRates, IRate } from "../types/rates";
 import axios from "axios";
 import {
-  createP2POfferMutation,
   TopParametersQuery,
   pmGroupsByNamesQuery,
   pmsQuery,
-  updateP2PMakerOffersMutation,
-  updateP2POfferMutation,
 } from "../services/queries";
 import {
   initCMSFetcher,
@@ -29,13 +26,11 @@ import { serverLinkPROD, serverLinkDEV } from "../services/utils";
 import { getSuggestedCourse } from "../components/p2p/edit/editOffers/offer/course/helper";
 import { sendToast } from "./mainReducer";
 import {
-  buildTelegramStartLink,
   clearTelegramConfirmation,
   normalizeTelegramSlug,
   readTelegramConfirmation,
-  verifyTelegramToken,
 } from "../services/telegram";
-import { IMakerOffer } from "../types/p2p";
+import { IFullOffer } from "../types/p2p";
 //import { redirect } from "next/navigation";
 
 // export async function navigate() {
@@ -102,7 +97,16 @@ export const updateDirRates = createAsyncThunk<
 
 export const fetchTopParameters = createAsyncThunk(
   "rates/fetchTopParameters",
-  async () => {
+  async (type?: "p2p_maker" | "p2p_offer") => {
+    try {
+      const query = type ? `?type=${encodeURIComponent(type)}` : "";
+      const response = await fetch(`/api/p2p/top-parameters${query}`);
+      if (response.ok) {
+        const payload = await response.json();
+        if (Array.isArray(payload)) return payload;
+      }
+    } catch {}
+
     const fetcher = initCMSFetcher();
     return await fetcher(TopParametersQuery);
   },
@@ -311,7 +315,7 @@ export const saveProjectP2P = createAsyncThunk(
     thunkAPI,
   ) => {
     const { main } = thunkAPI.getState() as { main: MainState };
-    const offers = main?.p2pFullOffers || [];
+    const offers = (main?.p2pFullOffers || []) as Partial<IFullOffer>[];
     const maker = main?.maker;
 
     const validateP2PProject = ({
@@ -320,7 +324,7 @@ export const saveProjectP2P = createAsyncThunk(
       makerId,
       makerSlug,
     }: {
-      offers: Partial<IMakerOffer>[];
+      offers: Partial<IFullOffer>[];
       maker?: MainState["maker"];
       makerId: string;
       makerSlug: string;
@@ -403,36 +407,35 @@ export const saveProjectP2P = createAsyncThunk(
 
     const normalizedSlug = normalizeTelegramSlug(makerSlug);
     const isConfirmed = Boolean(confirmed);
-    const confirmation = isConfirmed
-      ? { token: "confirmed" }
-      : readTelegramConfirmation(normalizedSlug);
+    const confirmation = readTelegramConfirmation(normalizedSlug);
 
-    if (!confirmation?.token) {
-      const botUsername =
-        process.env.NEXT_PUBLIC_BOT_USERNAME || process.env.BOT_USERNAME;
-      const botStartSecret =
-        process.env.NEXT_PUBLIC_BOT_START_SECRET ||
-        process.env.BOT_START_SECRET;
+    if (!confirmation?.token && !isConfirmed) {
+      let startLinkResponse: Response;
+      let startLinkPayload: { ok?: boolean; link?: string } | null = null;
+      try {
+        startLinkResponse = await fetch(
+          `/api/telegram/start?slug=${encodeURIComponent(normalizedSlug)}`,
+        );
+        startLinkPayload = await startLinkResponse
+          .json()
+          .catch(() => ({ ok: false, error: "invalid_server_response" }));
+      } catch {
+        startLinkResponse = new Response(null, { status: 500 });
+      }
 
-      if (!botUsername || !botStartSecret) {
+      if (!startLinkResponse.ok || !startLinkPayload?.ok || !startLinkPayload?.link) {
         thunkAPI.dispatch(
           sendToast({
             status: "error",
-            title: "Не настроены BOT_USERNAME или BOT_START_SECRET",
+            title: "Не удалось подготовить ссылку Telegram",
             timeBeforeClosing: 4000,
           }),
         );
         return;
       }
 
-      const botLink = await buildTelegramStartLink({
-        slug: normalizedSlug,
-        botUsername,
-        botStartSecret,
-      });
-
       if (typeof window !== "undefined") {
-        window.open(botLink, "_blank", "noopener,noreferrer");
+        window.open(startLinkPayload.link, "_blank", "noopener,noreferrer");
       }
       thunkAPI.dispatch(
         sendToast({
@@ -456,120 +459,53 @@ export const saveProjectP2P = createAsyncThunk(
     p2pSaveInFlight.add(dedupeKey);
 
     try {
-      if (!isConfirmed) {
-        let verifyResponse;
-        try {
-          verifyResponse = await verifyTelegramToken(confirmation.token);
-        } catch (error) {
-          thunkAPI.dispatch(
-            sendToast({
-              status: "error",
-              title: "Не удалось проверить подтверждение Telegram",
-              timeBeforeClosing: 4000,
-            }),
-          );
-          return;
-        }
-        const verifiedSlug = normalizeTelegramSlug(verifyResponse.slug);
-
-        if (!verifyResponse.ok || !verifiedSlug) {
-          clearTelegramConfirmation(normalizedSlug);
-          thunkAPI.dispatch(
-            sendToast({
-              status: "error",
-              title: "Подтверждение Telegram не прошло проверку",
-              timeBeforeClosing: 4000,
-            }),
-          );
-          return;
-        }
-
-        if (verifiedSlug.toLowerCase() !== normalizedSlug.toLowerCase()) {
-          clearTelegramConfirmation(normalizedSlug);
-          thunkAPI.dispatch(
-            sendToast({
-              status: "error",
-              title: "Подтверждение Telegram относится к другому пользователю",
-              timeBeforeClosing: 4000,
-            }),
-          );
-          return;
-        }
-      }
-
-      const fetcher = initCMSFetcher();
-      const offerInputs = offers.map((offer) => {
-        const dir =
-          offer.dir ||
-          (offer.givePm?.code && offer.getPm?.code
-            ? `${offer.givePm.code}_${offer.getPm.code}`
-            : undefined);
-        const data: Record<string, any> = {
-          dir,
-          side: offer.side,
-          isActive: offer.isActive,
-          follow_market: offer.follow_market,
-          fee_enabled: offer.fee_enabled,
-          course: offer.course,
-          min: offer.min ?? null,
-          max: offer.max ?? null,
-          fee_type: offer.fee_type ?? null,
-          fee_amount: offer.fee_amount ?? null,
-          city_from: offer.city_from ?? null,
-          city_to: offer.city_to ?? null,
-        };
-        Object.keys(data).forEach((key) => {
-          if (data[key] === undefined) delete data[key];
-        });
-        return { id: offer.id, data };
+      const response = await fetch("/api/p2p/save", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          makerId,
+          makerSlug: normalizedSlug,
+          maker,
+          offers,
+          confirmToken: confirmation?.token || null,
+        }),
       });
 
-      if (
-        offerInputs.some(
-          (offer) => !offer.data.dir || offer.data.course == null,
-        )
-      ) {
-        thunkAPI.dispatch(
-          sendToast({
-            status: "warning",
-            title: "Заполните курс и направление в каждом оффере",
-            timeBeforeClosing: 3000,
-          }),
-        );
-        return;
-      }
-
-      const createdOfferIds: string[] = [];
-      const existingOfferIds: string[] = [];
-
-      for (const offer of offerInputs) {
-        if (offer.id) {
-          existingOfferIds.push(String(offer.id));
-          await fetcher(updateP2POfferMutation, {
-            id: offer.id,
-            data: offer.data,
-          });
-          continue;
+      const result = await response
+        .json()
+        .catch(() => ({ ok: false, error: "invalid_server_response" }));
+      if (!response.ok || !result?.ok) {
+        if (
+          result?.error === "telegram_confirmation_required" ||
+          result?.error === "telegram_confirmation_expired"
+        ) {
+          clearTelegramConfirmation(normalizedSlug);
+          thunkAPI.dispatch(
+            sendToast({
+              status: "error",
+              title: "Подтвердите сохранение через Telegram",
+              timeBeforeClosing: 4000,
+            }),
+          );
+          return;
         }
-
-        const created = await fetcher(createP2POfferMutation, {
-          data: offer.data,
-        });
-        const createdId = created?.id || created?.data?.id;
-        if (createdId) {
-          createdOfferIds.push(String(createdId));
+        if (result?.error === "offer_dir_or_course_missing") {
+          thunkAPI.dispatch(
+            sendToast({
+              status: "warning",
+              title: "Заполните курс и направление в каждом оффере",
+              timeBeforeClosing: 3000,
+            }),
+          );
+          return;
         }
-      }
-
-      const allOfferIds = [...existingOfferIds, ...createdOfferIds];
-      if (allOfferIds.length) {
-        await fetcher(updateP2PMakerOffersMutation, {
-          id: makerId,
-          offers: allOfferIds,
-        });
+        throw new Error(result?.error || "save_failed");
       }
 
       p2pLastSuccess.set(dedupeKey, Date.now());
+      clearTelegramConfirmation(normalizedSlug);
       thunkAPI.dispatch(
         sendToast({
           status: "success",

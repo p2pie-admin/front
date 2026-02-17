@@ -1,5 +1,4 @@
 import React from "react";
-import { IMaker } from "../../../../types/p2p";
 import { Button, Box, Text, VStack, Highlight } from "@chakra-ui/react";
 import { batch } from "react-redux";
 import { triggerModal } from "../../../../redux/mainReducer";
@@ -10,27 +9,15 @@ import Image from "next/image";
 import telegramStart from "../../../../public/telegram_start.jpg";
 import { Box3D } from "../../../../styles/theme/custom";
 import useTelegramConfirmPolling from "../../../../services/hooks/telegramConfirmPolling";
+import { useMakerEditContext } from "../MakerEditContext";
 
-export default function SaveDetails({ maker }: { maker: IMaker }) {
+export default function SaveDetails() {
+  const maker = useMakerEditContext();
   const telegramUsername = maker.telegram_username.replace(/^@/, "");
   const dispatch = useAppDispatch();
   const isModalOpen = useAppSelector(
     (state) => state.main?.modal === `save_${telegramUsername}`,
   );
-  useTelegramConfirmPolling({
-    enabled: isModalOpen,
-    slug: telegramUsername,
-    onSuccess: () => {
-      dispatch(
-        saveProjectP2P({
-          makerId: String(maker.id),
-          makerSlug: telegramUsername,
-          confirmed: true,
-        }),
-      );
-      dispatch(triggerModal(undefined));
-    },
-  });
   useTelegramConfirmPolling({
     enabled: isModalOpen,
     slug: telegramUsername,

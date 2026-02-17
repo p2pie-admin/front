@@ -32,17 +32,52 @@ import { IExchangerReview } from "../types/exchanger";
 import {
   p2pMakerQuery,
   p2pMakersQuery,
+  p2pMakerTopParametersQuery,
+  p2pOfferTopParametersQuery,
   testReviewQuery,
   p2pLevelsQuery,
   p2pAdsQuery,
 } from "../services/p2p";
-import { IMaker, IMakerPreview, IP2PAd, IP2PLevel } from "../types/p2p";
+import {
+  IMaker,
+  IMakerPreview,
+  IP2PAd,
+  IP2PLevel,
+  IP2PTopParameter,
+  IP2PTopParameterType,
+} from "../types/p2p";
+import { requestStrapiAsService } from "../services/server/strapiClient";
+import normalize from "../services/normalizer";
 //import { p2pMakerQuery } from "../pages/p2p/queries";
 
 const locale = "ru";
 
 const cmsFetcher = initCMSFetcher();
 const parserFetcher = initParserFetcher();
+
+const unwrapGraphqlResult = (data: any) => {
+  if (
+    typeof data === "object" &&
+    data !== null &&
+    !Array.isArray(data) &&
+    Object.keys(data).length === 1
+  ) {
+    return data[Object.keys(data)[0]];
+  }
+  return data;
+};
+
+const fetchCMSWithServiceFallback = async (
+  query: string,
+  variables?: Record<string, any>,
+) => {
+  try {
+    const raw = await requestStrapiAsService<any>(query, variables);
+    return unwrapGraphqlResult(normalize(raw));
+  } catch (error) {
+    return await cmsFetcher(query, variables);
+  }
+};
 
 export const TTL = {
   instant: 60 * 2,
@@ -291,16 +326,18 @@ export const loadMassRates = ({
   ) as Promise<IMassRate[]>;
 
 export const loadP2PMaker = (telegramUsername: string) =>
-  cachedFetch(`p2p_maker_${telegramUsername}`, TTL.fast, async () => {
+  cachedFetch(`p2p_maker_v2_${telegramUsername}`, TTL.fast, async () => {
     if (!telegramUsername) return null;
-    const res = await cmsFetcher(p2pMakerQuery, { telegramUsername });
+    const res = await fetchCMSWithServiceFallback(p2pMakerQuery, {
+      telegramUsername,
+    });
     if (Array.isArray(res)) return (res[0] as IMaker) || null;
     return (res as IMaker) || null;
   });
 
 export const loadAllP2PMakers = () =>
-  cachedFetch(`p2p_makers`, TTL.fast, async () => {
-    const res = await cmsFetcher(p2pMakersQuery);
+  cachedFetch(`p2p_makers_v2`, TTL.fast, async () => {
+    const res = await fetchCMSWithServiceFallback(p2pMakersQuery);
     if (!res) return null;
     if (Array.isArray(res)) return res as IMakerPreview[];
     return [res as IMakerPreview];
@@ -337,3 +374,13 @@ export const loadP2PAds = () =>
     if (Array.isArray(res)) return res as IP2PAd[];
     return [res as IP2PAd];
   }) as Promise<IP2PAd[]>;
+
+export const loadP2PTopParameters = (type: IP2PTopParameterType) =>
+  cachedFetch(`p2p_top_parameters_${type}`, TTL.slow, async () => {
+    const query =
+      type === "p2p_maker" ? p2pMakerTopParametersQuery : p2pOfferTopParametersQuery;
+    const res = await fetchCMSWithServiceFallback(query);
+    if (!res) return [];
+    if (Array.isArray(res)) return res as IP2PTopParameter[];
+    return [res as IP2PTopParameter];
+  }) as Promise<IP2PTopParameter[]>;

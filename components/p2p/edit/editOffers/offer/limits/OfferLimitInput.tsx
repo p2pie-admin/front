@@ -6,7 +6,6 @@ import { InputGroup, NumberInput, NumberInputField } from "@chakra-ui/react";
 import {
   codeToSymbol,
   powerOfTenOrder,
-  R,
 } from "../../../../../../redux/amountsHelper";
 import { ResponsiveText } from "../../../../../../styles/theme/custom";
 
@@ -46,14 +45,13 @@ export default function OfferLimit({
 
   const pm =
     side === "give" || side === "get" ? fullOffer[`${side}Pm`] : undefined;
-  console.log(pm);
   const cur = pm?.currency?.code?.toUpperCase();
 
   const normalizedValue = fieldValue == null ? "" : fieldValue;
   const normalizedDisplay =
-    normalizedValue === "" ? "" : formatPlain(R(Number(normalizedValue), 1));
+    normalizedValue === "" ? "" : formatPlain(Number(normalizedValue));
   const editedDisplay =
-    value === "" ? normalizedDisplay : formatPlain(R(Number(value), 1));
+    value === "" ? normalizedDisplay : formatPlain(Number(value));
   const displayValue = isEditing ? value : editedDisplay;
 
   useEffect(() => {

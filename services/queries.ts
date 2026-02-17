@@ -733,6 +733,7 @@ export const TopParametersQuery = gql`
           code
           en_name
           ru_name
+          type
           parameter {
             id
             en_description
@@ -1012,6 +1013,16 @@ export const updateP2POfferMutation = gql`
 export const updateP2PMakerOffersMutation = gql`
   mutation updateP2PMakerOffers($id: ID!, $offers: [ID]) {
     updateP2PMaker(id: $id, data: { offers: $offers }) {
+      data {
+        id
+      }
+    }
+  }
+`;
+
+export const updateP2PMakerMutation = gql`
+  mutation updateP2PMaker($id: ID!, $data: P2PMakerInput!) {
+    updateP2PMaker(id: $id, data: $data) {
       data {
         id
       }

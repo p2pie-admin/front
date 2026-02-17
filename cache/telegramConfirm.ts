@@ -1,5 +1,3 @@
-import { redisExpire, redisGet, redisSet } from "./redisClient";
-
 export type TelegramConfirmRecord = {
   ok: boolean;
   status: string;
@@ -12,6 +10,8 @@ export type TelegramConfirmRecord = {
 };
 
 const STORAGE_PREFIX = "p2p:telegram:confirm:";
+// Telegram confirmation state is intentionally process-local only.
+// No Redis dependency in this flow.
 const memoryStore = new Map<string, { value: TelegramConfirmRecord; exp: number }>();
 
 const getKey = (slug: string) => `${STORAGE_PREFIX}${slug.toLowerCase()}`;
@@ -29,8 +29,6 @@ export const setTelegramConfirmation = async (
 ) => {
   const key = getKey(record.slug);
   const ttlSeconds = getTtlSeconds(record.expiresAt);
-  await redisSet(key, record);
-  await redisExpire(key, ttlSeconds);
 
   memoryStore.set(key, {
     value: record,
@@ -40,9 +38,6 @@ export const setTelegramConfirmation = async (
 
 export const getTelegramConfirmation = async (slug: string) => {
   const key = getKey(slug);
-  const cached = await redisGet<TelegramConfirmRecord>(key);
-  if (cached) return cached;
-
   const local = memoryStore.get(key);
   if (!local) return null;
   if (local.exp <= Date.now()) {
@@ -55,5 +50,4 @@ export const getTelegramConfirmation = async (slug: string) => {
 export const clearTelegramConfirmation = async (slug: string) => {
   const key = getKey(slug);
   memoryStore.delete(key);
-  await redisExpire(key, 1);
 };

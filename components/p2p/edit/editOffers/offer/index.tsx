@@ -41,6 +41,7 @@ import RightOptions from "./rightOptions/FollowMarket";
 import OfferLimits from "./limits";
 import OfferFee from "./fee";
 import OfferExplanation from "./OfferExplanation";
+import OfferParameters from "./OfferParameters";
 
 type Props = {
   index: number;
@@ -90,6 +91,7 @@ const Offer = ({
         { field: "fee_amount", value: initialOffer.fee_amount },
         { field: "city_from", value: initialOffer.city_from },
         { field: "city_to", value: initialOffer.city_to },
+        { field: "top_parameters", value: initialOffer.top_parameters },
       ];
       seedFields.forEach(({ field, value }) => {
         if (value === undefined) return;
@@ -175,13 +177,12 @@ const Offer = ({
       flex="1"
       px="4"
       py="2"
-      cursor="pointer"
       display="block"
       alignSelf="stretch"
       transition="filter 0.2s ease-in"
       _hover={{ filter: "brightness(1.1)" }}
       variant="extra_contrast"
-      onClick={() => setOpened(index == opened ? 1000 : index)}
+      //
       //minH={fullHeight ? "70px" : "unset"}
     >
       <Grid
@@ -190,6 +191,8 @@ const Offer = ({
         color="bg.500"
         alignItems="center"
         columnGap="2"
+        cursor="pointer"
+        onClick={() => setOpened(index == opened ? 1000 : index)}
       >
         <DirectionPmButton
           side="give"
@@ -246,8 +249,9 @@ const Offer = ({
           </VStack>
         </HStack>
         <Divider my="2" />
+        <OfferExplanation fullOffer={fullOffer} />
         <HStack w="100%" justifyContent="space-between" my="4" spacing="4">
-          <OfferExplanation fullOffer={fullOffer} />
+          <OfferParameters offerIndex={index} />
           <DeleteOffer index={index} isFull />
         </HStack>
       </Collapse>

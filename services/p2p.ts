@@ -1,5 +1,31 @@
 import { gql } from "graphql-request";
 
+const p2pTopParametersFields = `
+  data {
+    id
+    attributes {
+      code
+      en_name
+      ru_name
+      type
+      parameter {
+        id
+        en_description
+        ru_description
+        icon {
+          data {
+            id
+            attributes {
+              url
+              alternativeText
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const p2pMakersQuery = gql`
   query p2pMakersQuery {
     p2PMakers(
@@ -19,6 +45,7 @@ export const p2pMakersQuery = gql`
                 side
                 dir
                 isActive
+                follow_market
                 course
                 min
                 max
@@ -26,8 +53,14 @@ export const p2pMakersQuery = gql`
                 fee_amount
                 city_from
                 city_to
+                top_parameters {
+                  ${p2pTopParametersFields}
+                }
               }
             }
+          }
+          top_parameters {
+            ${p2pTopParametersFields}
           }
           p2p_level {
             data {
@@ -108,6 +141,7 @@ export const p2pMakerQuery = gql`
                 side
                 dir
                 isActive
+                follow_market
                 course
                 min
                 max
@@ -115,8 +149,14 @@ export const p2pMakerQuery = gql`
                 fee_amount
                 city_from
                 city_to
+                top_parameters {
+                  ${p2pTopParametersFields}
+                }
               }
             }
+          }
+          top_parameters {
+            ${p2pTopParametersFields}
           }
           p2p_level {
             data {
@@ -231,6 +271,28 @@ export const p2pMakerQuery = gql`
           }
         }
       }
+    }
+  }
+`;
+
+export const p2pMakerTopParametersQuery = gql`
+  query p2pMakerTopParametersQuery {
+    topParameters(
+      filters: { type: { eq: "p2p_maker" } }
+      pagination: { start: 0, limit: 2000 }
+    ) {
+      ${p2pTopParametersFields}
+    }
+  }
+`;
+
+export const p2pOfferTopParametersQuery = gql`
+  query p2pOfferTopParametersQuery {
+    topParameters(
+      filters: { type: { eq: "p2p_offer" } }
+      pagination: { start: 0, limit: 2000 }
+    ) {
+      ${p2pTopParametersFields}
     }
   }
 `;

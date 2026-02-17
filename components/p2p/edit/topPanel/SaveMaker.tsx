@@ -1,27 +1,22 @@
 import React from "react";
 import CustomModal from "../../../shared/CustomModal";
-import maker from "../../maker";
 import SaveDetails from "./SaveDetails";
-import { IMaker } from "../../../../types/p2p";
 import { Button } from "@chakra-ui/react";
 import { IoMdSave } from "react-icons/io";
 import { useAppDispatch } from "../../../../redux/hooks";
-import { sendToast, triggerModal } from "../../../../redux/mainReducer";
+import { triggerModal } from "../../../../redux/mainReducer";
 import { fetchTelegramConfirmationStatus } from "../../../../services/hooks/telegramConfirmPolling";
 import { saveProjectP2P } from "../../../../redux/thunks";
+import { useMakerEditContext } from "../MakerEditContext";
 
 export default function SaveMaker({
-  maker,
   isBig = false,
 }: {
-  maker: IMaker;
   isBig?: boolean;
 }) {
+  const maker = useMakerEditContext();
   const dispatch = useAppDispatch();
   const telegramUsername = maker.telegram_username.replace(/^@/, "");
-
-  const alwaysVerify =
-    String(process.env.NEXT_PUBLIC_BOT_ALWAYS_VERIFY).toLowerCase() === "true";
 
   const handleSaveProject = async (event: any) => {
     event?.stopPropagation();
@@ -57,7 +52,7 @@ export default function SaveMaker({
         id={`save_${telegramUsername}`}
         header="Публикация предложения обмена "
       >
-        <SaveDetails maker={maker} />
+        <SaveDetails />
       </CustomModal>
       {!isBig ? (
         <Button variant="primary" onClick={(e) => handleSaveProject(e)}>

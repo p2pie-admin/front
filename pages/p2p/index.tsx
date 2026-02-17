@@ -1,4 +1,4 @@
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 
 import MakersList from "../../components/p2p/makers";
 import { ISEO } from "../../types/general";
@@ -16,12 +16,8 @@ const MakersPage = ({
   initialPage: number;
 }) => <MakersList makers={makers} seo={seo} initialPage={initialPage} />;
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+export const getStaticProps: GetStaticProps = async () => {
   const itemsPerPage = 20;
-
-  const rawPage = Array.isArray(query.page) ? query.page[0] : query.page;
-  const parsedPage = Number.parseInt(rawPage || "1", 10);
-  const requestedPage = Number.isFinite(parsedPage) ? parsedPage : 1;
 
   const makers = (await loadAllP2PMakers()) as IMakerPreview[] | null;
 
@@ -36,19 +32,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   }
 
   const totalPages = Math.ceil(makers.length / itemsPerPage);
-  const currentPage =
-    requestedPage > 0 ? Math.min(requestedPage, totalPages) : 1;
-
-  if (requestedPage > totalPages && totalPages > 0) {
-    const destination =
-      totalPages === 1 ? "/p2p/makers" : `/p2p/makers?page=${totalPages}`;
-    return {
-      redirect: {
-        destination,
-        permanent: false,
-      },
-    };
-  }
+  const currentPage = 1;
 
   const seo: ISEO = {
     title: "P2P мейкеры - список активных мейкеров",
@@ -63,6 +47,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       makers: makers || null,
       initialPage: currentPage,
     },
+    revalidate: 60,
   };
 };
 

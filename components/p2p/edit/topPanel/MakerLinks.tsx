@@ -9,7 +9,6 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { FaLink } from "react-icons/fa";
-import { IMaker } from "../../../../types/p2p";
 import { getMakerSlug } from "../../makers/helper";
 import {
   RiPagesLine,
@@ -19,10 +18,11 @@ import {
 } from "react-icons/ri";
 import { useAppDispatch } from "../../../../redux/hooks";
 import { sendToast } from "../../../../redux/mainReducer";
-import { LuSquareArrowOutUpRight } from "react-icons/lu";
 import { base } from "../../../../services/utils";
+import { useMakerEditContext } from "../MakerEditContext";
 
-export default function MakersLinks({ maker }: { maker: IMaker }) {
+export default function MakersLinks() {
+  const maker = useMakerEditContext();
   const dispatch = useAppDispatch();
   const makerSlug = getMakerSlug(maker);
   const telegramUsername = maker.telegram_username.replace(/^@/, "");

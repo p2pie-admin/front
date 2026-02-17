@@ -19,60 +19,6 @@ export const normalizeTelegramSlug = (slug?: string | null) =>
 
 const getStorageKey = (slug: string) => `${STORAGE_PREFIX}${slug}`;
 
-const toBase64Url = (input: string) => {
-  if (typeof btoa !== "function") {
-    throw new Error("btoa is not available");
-  }
-  const base64 = btoa(input);
-  return base64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
-};
-
-const hmacSha256 = async (message: string, secret: string) => {
-  if (!globalThis.crypto?.subtle) {
-    throw new Error("WebCrypto is not available");
-  }
-  const key = await globalThis.crypto.subtle.importKey(
-    "raw",
-    new TextEncoder().encode(secret),
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["sign"],
-  );
-  const sig = await globalThis.crypto.subtle.sign(
-    "HMAC",
-    key,
-    new TextEncoder().encode(message),
-  );
-  const bytes = new Uint8Array(sig).slice(0, 12);
-  let bin = "";
-  bytes.forEach((b) => {
-    bin += String.fromCharCode(b);
-  });
-  return toBase64Url(bin);
-};
-
-export const buildTelegramStartPayload = async (slug: string, secret: string) => {
-  const normalized = normalizeTelegramSlug(slug);
-  const ts = Math.floor(Date.now() / 1000).toString().padStart(10, "0");
-  const message = `${normalized}.${ts}`;
-  const signature = await hmacSha256(message, secret);
-  return `${normalized}${ts}${signature}`;
-};
-
-export const buildTelegramStartLink = async ({
-  slug,
-  botUsername,
-  botStartSecret,
-}: {
-  slug: string;
-  botUsername: string;
-  botStartSecret: string;
-}) => {
-  const payload = await buildTelegramStartPayload(slug, botStartSecret);
-  const normalizedBot = botUsername.replace(/^@/, "");
-  return `https://t.me/${normalizedBot}?start=${payload}`;
-};
-
 export const storeTelegramConfirmation = (data: TelegramConfirmation) => {
   if (typeof window === "undefined") return;
   const key = getStorageKey(normalizeTelegramSlug(data.slug));

@@ -114,6 +114,7 @@ export interface MainState {
     description?: IMaker["description"] | null;
     coordinates?: [number, number] | null;
     p2p_level?: IMaker["p2p_level"] | null;
+    top_parameters?: IMaker["top_parameters"] | null;
   };
 }
 
@@ -202,6 +203,13 @@ export const mainSlice = createSlice({
     ) => {
       const makerDraft = ensureMakerDraft(state);
       makerDraft.coordinates = action.payload ?? null;
+    },
+    setMakerTopParameters: (
+      state: MainState,
+      action: PayloadAction<IMaker["top_parameters"] | null | undefined>,
+    ) => {
+      const makerDraft = ensureMakerDraft(state);
+      makerDraft.top_parameters = action.payload ?? null;
     },
 
     setPm: (
@@ -612,6 +620,7 @@ export const {
   setMakerTelegramUsername,
   setMakerDescription,
   setMakerCoordinates,
+  setMakerTopParameters,
   triggerModal,
   incrementSwiper,
   decrementSwiper,

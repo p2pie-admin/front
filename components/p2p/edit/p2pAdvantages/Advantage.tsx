@@ -1,7 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image, { StaticImageData } from "next/image";
 
-import { useColorModeValue, Box, useBreakpointValue } from "@chakra-ui/react";
+import {
+  useColorModeValue,
+  Box,
+  Text,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import { Box3D } from "../../../../styles/theme/custom";
 
 export default function Advantage({
@@ -56,7 +61,7 @@ export default function Advantage({
   return (
     <Box ref={containerRef} w="100%">
       <Box3D
-        h={{ base: "auto", lg: "220px" }}
+        h={{ base: "auto", lg: "240px" }}
         flex="1"
         w={{ base: "calc(100% - 32px)", lg: "380px" }}
         cursor="pointer"

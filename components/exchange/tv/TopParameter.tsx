@@ -13,6 +13,7 @@ import CustomImage from "../../shared/CustomImage";
 import { useAppSelector } from "../../../redux/hooks";
 import MyTooltip from "../../shared/MyTooltip";
 import { locale } from "../../../services/utils";
+import { capitalize } from "../../main/side/selector/section/PmGroup/helper";
 
 const Parameter = ({
   code,
@@ -24,20 +25,21 @@ const Parameter = ({
   needDescription?: boolean;
 }) => {
   const topParameter = useAppSelector((state) =>
-    state.main.topParameters.find((p) => p.code == code)
+    state.main.topParameters.find((p) => p.code == code),
   );
   const rotationColor = 50 * +(topParameter?.id || 0);
-  const filter = `invert(60%) sepia(97%) ${useColorModeValue(
+  const filter = `invert(40%) sepia(97%) ${useColorModeValue(
     "saturate(550%)",
-    "saturate(150%)"
+    topParameter?.id == "26" ? "saturate(10%)" : "saturate(150%)",
   )} hue-rotate(${rotationColor}deg)`;
 
   if (!topParameter) return <Box display="none"></Box>;
 
-  const [name, description] = [
+  const [raw_name, description] = [
     topParameter[`${locale}_name`],
     topParameter.parameter[`${locale}_description`],
   ];
+  const name = capitalize(raw_name);
 
   const renderParameter = () => (
     <HStack
