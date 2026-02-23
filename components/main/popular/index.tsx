@@ -58,6 +58,8 @@ const Popular = ({
       >
         {Object.entries(popularRates).map(([cryptoCode, buySell], index) => {
           const cryptoPm = popularPms?.find((pm) => pm?.code == cryptoCode);
+          const exchangersCount =
+            buySell.buy?.[0]?.exchangers ?? buySell.sell?.[0]?.exchangers ?? 0;
           if (!cryptoPm) return null; // ✅ Changed from <></> to null
           return (
             <Box3D
@@ -88,9 +90,14 @@ const Popular = ({
                   buySell={buySell}
                 />
               </Grid>
+              <ResponsiveText
+                size="xs"
+                textAlign="end"
+              >{`Всего обменников: ${exchangersCount}`}</ResponsiveText>
             </Box3D>
           );
         })}
+
         <Box h="50" />
       </Box>
 

@@ -30,8 +30,9 @@ import {
   ParserCityDirections,
   ParsedDirection,
 } from "../../types/map";
+import { minRatesMap } from "../../services/utils";
 
-const MAX_COUNT = 5; // начиная со скольки курсов на направление показываем
+// начиная со скольки курсов на направление показываем
 
 const MapCityPage: NextPage<MapCityPageProps> = ({
   city,
@@ -83,6 +84,7 @@ const buildCopy = (city: ICity, cityText?: IDirText | null) => {
     seoDescription: seoDescription || description,
     empty: `Сейчас нет доступных офисов в ${preposition}. Мы обновляем данные карты.`,
     directionsTitle: `Популярные обмены в ${preposition}`,
+    directionsEmpty: `Сейчас нет доступных направлений обмена в ${preposition}. Мы обновляем данные.`,
   };
 };
 
@@ -144,23 +146,23 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       }
       const totalCount = Object.values(directions || {}).reduce(
         (sum, count) => (typeof count === "number" ? sum + count : sum),
-        0
+        0,
       );
       acc[normalizedSlug] = totalCount;
       return acc;
     },
-    {} as Record<string, number>
+    {} as Record<string, number>,
   );
 
   const availableCitySlugs = Object.entries(cityRatesTotals)
     .filter(([slug, total]) => {
       const cityExists = cities?.some((city) => toLower(city.en_name) === slug);
-      return cityExists && total > MAX_COUNT;
+      return cityExists && total >= minRatesMap;
     })
     .map(([slug]) => slug);
 
   const directions: ParsedDirection[] = Object.entries(rawCityDirections)
-    .filter(([, count]) => typeof count === "number" && count > MAX_COUNT)
+    .filter(([, count]) => typeof count === "number" && count >= minRatesMap)
     .map(([dir, count]) => {
       const [give, get] = dir.split("_");
       const givePm = pmMap.get(give?.toUpperCase() || "");
@@ -210,7 +212,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         buy: CityCashSection["buy"];
         sell: CityCashSection["sell"];
       }
-    >
+    >,
   );
 
   const cashSections: CityCashSection[] = Object.entries(cashMap)
@@ -260,7 +262,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         position: 2,
         name: copy.h1,
         item: `https://${process.env.NEXT_PUBLIC_NAME}.com/map/${toLower(
-          currentCity.en_name
+          currentCity.en_name,
         )}`,
       },
     ],
@@ -277,6 +279,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         description: copy.description,
         empty: copy.empty,
         directionsTitle: copy.directionsTitle,
+        directionsEmpty: copy.directionsEmpty,
       },
       cashSections,
       cityText,

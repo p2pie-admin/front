@@ -58,4 +58,5 @@ export interface IPopularRate {
   exchangerId: string;
   course: number;
   fiat: string;
+  exchangers?: number;
 }

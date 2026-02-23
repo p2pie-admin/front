@@ -191,7 +191,7 @@ const MassRate = ({
       <Grid
         {...gridCommonProps}
         display={{ base: "none", md: "grid" }}
-        gridTemplateColumns="3fr 3rem 100px 10px 4fr 3fr"
+        gridTemplateColumns="4fr 3rem 100px 10px 4fr 3fr"
         columnGap={["2", "6"]}
         px={2}
         py={1.5}

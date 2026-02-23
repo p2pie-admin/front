@@ -73,12 +73,24 @@ export const p2pMakersQuery = gql`
                 title
                 deals_needed
                 deposit_usd
-                conditions {
-                  ... on ComponentP2PCondition {
-                    description
-                    is_completed
+                p2p_conditions {
+                  data {
+                    id
+                    attributes {
+                      title
+                      description
+                    }
                   }
                 }
+              }
+            }
+          }
+          p2p_conditions_completed {
+            data {
+              id
+              attributes {
+                title
+                description
               }
             }
           }
@@ -169,12 +181,24 @@ export const p2pMakerQuery = gql`
                 title
                 deals_needed
                 deposit_usd
-                conditions {
-                  ... on ComponentP2PCondition {
-                    description
-                    is_completed
+                p2p_conditions {
+                  data {
+                    id
+                    attributes {
+                      title
+                      description
+                    }
                   }
                 }
+              }
+            }
+          }
+          p2p_conditions_completed {
+            data {
+              id
+              attributes {
+                title
+                description
               }
             }
           }
@@ -364,10 +388,13 @@ export const p2pLevelsQuery = `
         title
         deals_needed
         deposit_usd
-        conditions {
-          ... on ComponentP2PCondition {
-            description
-            is_completed
+        p2p_conditions{
+          data{
+            id
+            attributes{
+              title
+              description
+            }
           }
         }
       }

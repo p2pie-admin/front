@@ -6,6 +6,7 @@ export type MapHeadings = {
   description: string;
   empty: string;
   directionsTitle: string;
+  directionsEmpty: string;
 };
 
 export type CityCashEntry = {
@@ -23,4 +24,3 @@ export type CityCashSection = {
   buy: CityCashEntry[];
   sell: CityCashEntry[];
 };
-

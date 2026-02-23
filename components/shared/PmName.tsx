@@ -1,7 +1,6 @@
 import { Box, HStack, useColorModeValue, VStack } from "@chakra-ui/react";
 import { ResponsiveText } from "../../styles/theme/custom";
 import { IPm } from "../../types/selector";
-import { capitalize } from "../main/side/selector/section/PmGroup/helper";
 import CircularIcon from "./CircularIcon";
 import { getPmNameFromPm } from "./helper";
 
@@ -23,6 +22,7 @@ const PmName = ({
     : useColorModeValue("bg.700", "bg.200");
 
   const name = getPmNameFromPm(pm);
+  const shortName = getPmNameFromPm(pm, true);
 
   return (
     <HStack gap="2" color={color}>

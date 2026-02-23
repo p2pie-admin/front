@@ -57,9 +57,9 @@ export default function OfferExplanation({ fullOffer }: Props) {
 
   const explanation =
     normalizedGiveAmount && normalizedGetAmount && course && course >= 1
-      ? `Клиент покупает твой ${getPmRuName} по курсу ${beautifyAmount(course, 1)} ${curToSymbol(giveCur)} за 1 ${curToSymbol(getCur)}`
+      ? `Клиент покупает твой ${getPmRuName} по курсу ${beautifyAmount(course, 1)} ${curToSymbol(giveCur)} за 1 ${curToSymbol(getCur)}.`
       : normalizedGiveAmount && normalizedGetAmount && course && course < 1
-        ? `Клиент продает тебе ${givePmRuName} по курсу 1 ${curToSymbol(giveCur)} за ${beautifyAmount(1 / course, 1)} ${curToSymbol(getCur)}`
+        ? `Клиент продает тебе ${givePmRuName} по курсу 1 ${curToSymbol(giveCur)} за ${beautifyAmount(1 / course, 1)} ${curToSymbol(getCur)}.`
         : "Установите курс";
 
   const feeSuffix = (() => {
@@ -83,15 +83,15 @@ export default function OfferExplanation({ fullOffer }: Props) {
 
   const blockchainExists = checkBlockchainExists(giveCur, getCur);
   const blockchainSuffix = blockchainExists
-    ? `или через эскроу-смарт-контракт. \n Контракт временно блокирует поступившие средства автоматически. \n Платформе доступны только два действия: перевод получателю или возврат. \n Прямого доступа к средствам у сервиса нет.`
-    : ".";
+    ? `Или используйте эскроу-смарт-контракт для более безопасной сделки в одну транзакцию. Контракт временно блокирует поступившие средства автоматически. Контракту доступны только два действия: перевод получателю или возврат. Прямого доступа к средствам у сервиса p2pie нет.`
+    : "";
 
   const rawLimit = toUSD * (makerP2PLevel?.limit_online_usd || 0);
   const limit =
     Number.isFinite(rawLimit) && rawLimit > 0
       ? beautifyAmount(rawLimit, 2)
       : "0";
-  const limitsSuffix = `\n Сделка свыше ${limit} ${curToSymbol(mainCur)} проводятся частями до ${limit} ${curToSymbol(mainCur)} ${blockchainSuffix}`;
+  const limitsSuffix = ` Сделка свыше ${limit} ${curToSymbol(mainCur)} оплачивается частями не более ${limit} ${curToSymbol(mainCur)}. Чтобы повысить лимит разовой транзакции перейдите на следующий уровень.  ${blockchainSuffix}`;
 
   return (
     <Box w="100%" whiteSpace="preserve-breaks">

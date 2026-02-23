@@ -1,4 +1,4 @@
-import { Box, HStack, Wrap } from "@chakra-ui/react";
+import { HStack } from "@chakra-ui/react";
 import { IPm } from "../../../types/selector";
 import SmartGrid from "./SmartGrid";
 import { ResponsiveText } from "../../../styles/theme/custom";
@@ -30,21 +30,34 @@ const MassFiat = ({
 
   // return (
   //  </LinkWrapper>
+  const fiatItems = codes
+    .map((code) => {
+      const pm = fiatPms[code];
+      if (!pm) return null;
+
+      const url = enrichedLink(pm);
+      if (!url?.trim()) return null;
+
+      return { code, pm, url };
+    })
+    .filter(Boolean) as { code: string; pm: IPm; url: string }[];
+
+  if (!fiatItems.length) return null;
+
   return (
     <SmartGrid wrapThreshold={6} direction={"end"}>
-      {codes.map((code) => (
+      {fiatItems.map(({ code, pm, url }) => (
         <LinkWrapper
-          url={enrichedLink(fiatPms[code])}
-          exists={!!ref_link}
+          key={code}
+          url={url}
+          exists={!!url}
           _blank
         >
-          <HStack key={code} borderRadius="lg" mx="0.5" cursor="pointer">
-            <PmIcon pm={fiatPms[code]} />
+          <HStack borderRadius="lg" mx="0.5" cursor="pointer">
+            <PmIcon pm={pm} />
 
-            {codes.length < 2 && (
-              <ResponsiveText>
-                {capitalize(fiatPms[code]?.en_name)}
-              </ResponsiveText>
+            {fiatItems.length < 2 && (
+              <ResponsiveText>{capitalize(pm?.en_name)}</ResponsiveText>
             )}
           </HStack>
         </LinkWrapper>

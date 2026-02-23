@@ -248,8 +248,9 @@ const Offer = ({
             <RightOptions fullOffer={fullOffer} />
           </VStack>
         </HStack>
-        <Divider my="2" />
+        <Divider my="4" />
         <OfferExplanation fullOffer={fullOffer} />
+        <Divider my="4" />
         <HStack w="100%" justifyContent="space-between" my="4" spacing="4">
           <OfferParameters offerIndex={index} />
           <DeleteOffer index={index} isFull />

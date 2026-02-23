@@ -1,9 +1,10 @@
 import { Heading, HStack, VStack, Text, Box } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
 import { IMassDirText, IMassDirTextId, IMassRate } from "../../types/mass";
 import { IPm } from "../../types/selector";
 import { useEffect, useMemo } from "react";
-import { fetchTopParameters } from "../../redux/thunks";
+import { fetchCity, fetchTopParameters } from "../../redux/thunks";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import MassTable from "./table";
 import MassSideContext from "./sideContext";
@@ -36,11 +37,30 @@ const Mass = ({
     [cryptoPms, massDirTextId.code]
   );
   const city = useAppSelector((state) => state.main.city);
+  const router = useRouter();
 
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchTopParameters());
-  }, []);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!router.isReady) return;
+
+    const rawCity = Array.isArray(router.query.city)
+      ? router.query.city[0]
+      : router.query.city;
+
+    if (!rawCity || typeof rawCity !== "string") return;
+
+    const cityParam = rawCity.trim();
+    if (!cityParam) return;
+
+    const currentCitySlug = city?.en_name?.toLowerCase();
+    if (currentCitySlug === cityParam.toLowerCase()) return;
+
+    dispatch(fetchCity(cityParam));
+  }, [router.isReady, router.query.city, city?.en_name, dispatch]);
 
   return (
     <MassSideContext.Provider

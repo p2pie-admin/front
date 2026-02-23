@@ -142,6 +142,7 @@ const Exchange = ({
               givePm={givePm}
               getPm={getPm}
               dirTextIds={dirTextIds}
+              city={city}
             />
           )}
         </Column>

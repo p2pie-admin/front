@@ -101,6 +101,7 @@ export interface IMakerPreview {
   avatar?: IImage | null;
   reviews?: IMakerReview[] | null;
   p2p_level?: IP2PLevel | null;
+  p2p_conditions_completed?: IP2PCondition[] | null;
 
   deals_finished?: number;
   deals_canceled?: number;
@@ -123,10 +124,13 @@ export interface IP2PLevel {
   title?: string | null;
   deals_needed?: number | null;
   deposit_usd?: number | null;
+  p2p_conditions?: IP2PCondition[] | null;
   conditions?: IP2PCondition[] | null;
 }
 
 export interface IP2PCondition {
+  id?: string | null;
+  title?: string | null;
   description?: string | null;
   is_completed?: boolean | null;
 }

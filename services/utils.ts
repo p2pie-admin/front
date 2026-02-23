@@ -17,6 +17,8 @@ export const internalConverterLink = process.env.INTERNAL_CONVERTER_URL;
 export const internalServerLink = process.env.INTERNAL_SERVER_URL;
 export const internalCmsLink = process.env.INTERNAL_CMS_URL;
 
+export const minRatesMap = +(process.env.NEXT_PUBLIC_MIN_RATES_MAP || 2);
+
 export const resolveInternalUrl = (external: string, internal?: string) =>
   isServerSide && useInternal && internal ? internal : external;
 

@@ -1,15 +1,14 @@
 import { Box, VStack, Text } from "@chakra-ui/react";
-import { Box3D, ResponsiveText } from "../../styles/theme/custom";
 import { IPm } from "../../types/selector";
 import { pmsToSlug } from "../main/side/selector/section/PmGroup/helper";
 import useSWR from "swr";
 import { initParserFetcher } from "../../services/fetchers";
-import { format } from "../../redux/amountsHelper";
 import Dir from "./Dir";
 
 import { IMassDirTextId } from "../../types/mass";
 import renderSimilarMass from "./SimilarMass";
 import { buildRateString } from "../shared/helper";
+import { ICity } from "../../types/exchange";
 
 const MAX_TO_SHOW = 5;
 
@@ -18,11 +17,13 @@ const SimilarList = ({
   givePm,
   getPm,
   dirTextIds,
+  city,
 }: {
   similarPmPairs: IPm[][];
   givePm: IPm;
   getPm: IPm;
   dirTextIds: IMassDirTextId[];
+  city?: ICity | null;
 }) => {
   const fetcher = initParserFetcher();
   const dirs = similarPmPairs
@@ -34,12 +35,14 @@ const SimilarList = ({
       ],
       []
     );
+  const citySlug = city?.en_name?.toLowerCase();
+  const cityQuery = citySlug ? `?city=${encodeURIComponent(citySlug)}` : "";
 
   const { data } = useSWR(
     `similar/dirs=${JSON.stringify(dirs)
       .replace("[", "")
       .replace("]", "")
-      .replaceAll('"', "")}`,
+      .replaceAll('"', "")}${cityQuery}`,
     fetcher
   ) as { data: ([number, number] | [])[] | undefined };
 

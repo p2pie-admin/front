@@ -64,6 +64,7 @@ export interface ICity {
   closest_cities: { en_name: string; ru_name: string }[];
   en_country_name: string;
   ru_country_name: string;
+  channel?: string;
 }
 
 export interface IPmPairs {
