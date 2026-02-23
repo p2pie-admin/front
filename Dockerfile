@@ -1,21 +1,17 @@
-# -------------------------
-# deps
-# -------------------------
 FROM node:20-alpine AS deps
 WORKDIR /app
 
-# (Optional but helpful) ensure CA certs exist for TLS, and pin Yarn via corepack
 RUN apk add --no-cache ca-certificates \
   && corepack enable \
   && corepack prepare yarn@1.22.22 --activate
 
 COPY package.json yarn.lock ./
 
-# Fix common "integrity mismatch" issues: clear cache + use official registry + increase timeout
-RUN yarn config set registry https://registry.npmjs.org \
+# ВАЖНО: yarn v1 использует "resolved" URL из yarn.lock (часто это registry.yarnpkg.com)
+# Меняем на registry.npmjs.org, чтобы реально качать оттуда.
+RUN sed -i 's#https://registry.yarnpkg.com/#https://registry.npmjs.org/#g' yarn.lock \
   && yarn cache clean --all \
   && yarn install --frozen-lockfile --network-timeout 600000
-
 # -------------------------
 # builder
 # -------------------------
