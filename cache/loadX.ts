@@ -282,7 +282,7 @@ export const loadMassDirTextIds = ({ isSell }: { isSell: boolean }) =>
       const massDirTextIds = (await cmsFetcher(massDirTextIdsQuery, {
         isSell,
       })) as IMassDirTextId[];
-      return massDirTextIds;
+      return massDirTextIds || [];
     },
   );
 
@@ -299,13 +299,12 @@ export const loadMassDirText = ({
     }`,
     TTL.slow,
     async () => {
-      const massDirText = (
-        await cmsFetcher(massDirTextQuery, {
-          locale,
-          ...massDirTextId,
-          currencyCode: massDirTextId.currency.code,
-        })
-      )[0] as IMassDirText;
+      const result = (await cmsFetcher(massDirTextQuery, {
+        locale,
+        ...massDirTextId,
+        currencyCode: massDirTextId.currency.code,
+      })) as IMassDirText[] | null;
+      const massDirText = (result?.[0] as IMassDirText) || null;
       return massDirText;
     },
   );

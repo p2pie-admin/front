@@ -1,9 +1,16 @@
 const isServerSide = typeof window === "undefined";
-const useInternal = String(process.env.USE_INTERNAL).toLowerCase() === "true";
 
-export const base = process.env.NEXT_PUBLIC_BASE;
-export const index =
-  process.env.NEXT_PUBLIC_INDEX == "0" ? "" : process.env.NEXT_PUBLIC_INDEX;
+const normalizeEnvValue = (value?: string) => {
+  if (typeof value !== "string") return value;
+  return value.trim().replace(/^['"]|['"]$/g, "");
+};
+
+const useInternal =
+  normalizeEnvValue(process.env.USE_INTERNAL)?.toLowerCase() === "true";
+
+export const base = normalizeEnvValue(process.env.NEXT_PUBLIC_BASE);
+const normalizedIndex = normalizeEnvValue(process.env.NEXT_PUBLIC_INDEX);
+export const index = normalizedIndex == "0" ? "" : normalizedIndex;
 
 export const converterLinkPROD = `https://converter${index}.${base}`;
 export const serverLinkPROD = `https://server${index}.${base}`;
@@ -13,9 +20,13 @@ export const converterLinkDEV = `https://converter${index}.${base}`;
 export const serverLinkDEV = `https://server${index}.${base}`;
 export const cmsLinkDEV = `https://cms${index}.${base}`; //`http://localhost:1337`;
 
-export const internalConverterLink = process.env.INTERNAL_CONVERTER_URL;
-export const internalServerLink = process.env.INTERNAL_SERVER_URL;
-export const internalCmsLink = process.env.INTERNAL_CMS_URL;
+export const internalConverterLink = normalizeEnvValue(
+  process.env.INTERNAL_CONVERTER_URL,
+);
+export const internalServerLink = normalizeEnvValue(
+  process.env.INTERNAL_SERVER_URL,
+);
+export const internalCmsLink = normalizeEnvValue(process.env.INTERNAL_CMS_URL);
 
 export const minRatesMap = +(process.env.NEXT_PUBLIC_MIN_RATES_MAP || 2);
 
