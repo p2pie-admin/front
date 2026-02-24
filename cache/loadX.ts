@@ -107,6 +107,7 @@ export const loadParserExchangers = () =>
 export const loadArticleCodes = () =>
   cachedFetch("articleCodes", TTL.slow, async () => {
     const res = await cmsFetcher(articleCodesQuery);
+    if (!Array.isArray(res)) return [];
     return res.map((a: any) => a.code) as string[];
   });
 
@@ -136,15 +137,18 @@ export const loadArticle = (code: string) =>
 
 export const loadPossibleDirs = () =>
   cachedFetch("dirs", TTL.fast, async () => {
-    const dirs = (await parserFetcher("dirs")) as Record<string, number>; // {"BTC_USDTTRC20": 119, "BTC_ETH": 34, ...}
+    const dirs = (await parserFetcher("dirs")) as
+      | Record<string, number>
+      | null; // {"BTC_USDTTRC20": 119, "BTC_ETH": 34, ...}
 
-    return dirs;
+    return dirs || {};
   });
 
 export const limitedPossibleDirs = (
-  dirs: Record<string, number>,
+  dirs: Record<string, number> | null | undefined,
   strength: "low" | "middle" | "high",
 ): string[] => {
+  if (!dirs || typeof dirs !== "object") return [];
   const limit =
     strength == "low"
       ? 2
