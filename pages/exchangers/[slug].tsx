@@ -28,6 +28,14 @@ import {
 import { addHeadersToSearchIndex, addPathsToSitemap } from "../../cache/cache";
 import { maskReviewList } from "../../services/maskIP";
 
+const diagEnabled =
+  process.env.DEBUG_EXCHANGER_MAP === "true" ||
+  process.env.DEBUG_EXCHANGER_MAP === "1";
+const diagLog = (scope: string, payload: Record<string, any>) => {
+  if (!diagEnabled) return;
+  console.log(`[diag:${scope}]`, payload);
+};
+
 const maskExchangerReviewIPs = <
   T extends { reviews?: IExchangerReview[] | null }
 >(
@@ -70,6 +78,14 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
   try {
     const { slug } = params;
     const name = exchangerSlugToName(slug);
+    diagLog("exchangers.getStaticProps.start", {
+      slug,
+      name,
+      nodeEnv: process.env.NODE_ENV,
+      useInternal: process.env.USE_INTERNAL,
+      base: process.env.NEXT_PUBLIC_BASE,
+      internalCms: process.env.INTERNAL_CMS_URL,
+    });
 
     const [exchanger, articleCodes, pms] = await Promise.all([
       loadExchanger(slug),
@@ -78,7 +94,15 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     ]);
 
     if (!exchanger) {
-      console.log(`❌ Exchanger failed to load: ${name}`);
+      console.warn("[diag:exchangers.getStaticProps.notFound]", {
+        slug,
+        name,
+        articleCodes: Array.isArray(articleCodes) ? articleCodes.length : null,
+        pms: Array.isArray(pms) ? pms.length : null,
+        nodeEnv: process.env.NODE_ENV,
+        useInternal: process.env.USE_INTERNAL,
+        base: process.env.NEXT_PUBLIC_BASE,
+      });
       return { notFound: true };
     }
 
@@ -111,6 +135,13 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     const exchangerWithMaskedIp = maskExchangerReviewIPs(
       enrichedExchanger || exchanger
     );
+    diagLog("exchangers.getStaticProps.ok", {
+      slug,
+      exchangerName: exchanger.name,
+      displayName,
+      status: exchanger.status,
+      reviews: Array.isArray(exchanger.reviews) ? exchanger.reviews.length : 0,
+    });
 
     return {
       props: {
@@ -154,12 +185,20 @@ export async function getStaticPaths() {
 
     const slicedPaths = paths.slice(0, prerenderLimit);
     await addPathsToSitemap(paths, { basePath: "exchangers" });
+    diagLog("exchangers.getStaticPaths", {
+      totalExchangers: exchangers.length,
+      totalPaths: paths.length,
+      prerenderLimit,
+      slicedPaths: slicedPaths.length,
+      sample: slicedPaths.slice(0, 5).map((p) => p.params.slug),
+    });
 
     return {
       paths: slicedPaths,
       fallback: "blocking",
     };
   } catch (error) {
+    console.error("[diag:exchangers.getStaticPaths.error]", error);
     return {
       paths: [],
       fallback: "blocking",

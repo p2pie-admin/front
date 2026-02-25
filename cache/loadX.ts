@@ -54,6 +54,36 @@ const locale = "ru";
 
 const cmsFetcher = initCMSFetcher();
 const parserFetcher = initParserFetcher();
+const diagEnabled =
+  process.env.DEBUG_EXCHANGER_MAP === "true" ||
+  process.env.DEBUG_EXCHANGER_MAP === "1";
+
+const diagLog = (scope: string, payload: Record<string, any>) => {
+  if (!diagEnabled) return;
+  console.log(`[diag:${scope}]`, payload);
+};
+
+const queryLabel = (query: string) => {
+  const normalized = String(query || "").replace(/\s+/g, " ").trim();
+  const namedMatch = normalized.match(/\b(query|mutation)\s+([A-Za-z0-9_]+)/);
+  if (namedMatch?.[2]) return namedMatch[2];
+  if (normalized.includes("parserSetting")) return "citiesQuery";
+  if (normalized.includes("exchangers(") && normalized.includes("offices"))
+    return "exchangersQuery";
+  if (normalized.includes("exchangers(")) return "exchangerQuery";
+  return normalized.slice(0, 60);
+};
+
+const summarizeResult = (value: any) => {
+  if (Array.isArray(value)) return { kind: "array", length: value.length };
+  if (value && typeof value === "object") {
+    return {
+      kind: "object",
+      keys: Object.keys(value).slice(0, 12),
+    };
+  }
+  return { kind: typeof value, value };
+};
 
 const unwrapGraphqlResult = (data: any) => {
   if (
@@ -71,11 +101,31 @@ const fetchCMSWithServiceFallback = async (
   query: string,
   variables?: Record<string, any>,
 ) => {
+  const label = queryLabel(query);
   try {
     const raw = await requestStrapiAsService<any>(query, variables);
-    return unwrapGraphqlResult(normalize(raw));
+    const result = unwrapGraphqlResult(normalize(raw));
+    diagLog("cms.service", {
+      query: label,
+      via: "service-auth",
+      variablesKeys: Object.keys(variables || {}),
+      result: summarizeResult(result),
+    });
+    return result;
   } catch (error) {
-    return await cmsFetcher(query, variables);
+    console.warn("[diag:cms.service] primary failed, falling back to cmsFetcher", {
+      query: label,
+      message: (error as any)?.message || String(error),
+      variablesKeys: Object.keys(variables || {}),
+    });
+    const fallback = await cmsFetcher(query, variables);
+    diagLog("cms.fallback", {
+      query: label,
+      via: "public/internal-cmsFetcher",
+      variablesKeys: Object.keys(variables || {}),
+      result: summarizeResult(fallback),
+    });
+    return fallback;
   }
 };
 
@@ -183,8 +233,21 @@ export const loadPms = async () => {
 export const loadExchanger = (slug: string) =>
   cachedFetch(`exchanger_${slug}`, TTL.fast, async () => {
     const name = exchangerSlugToName(slug);
+    diagLog("loadExchanger.start", { slug, name });
     const res = await fetchCMSWithServiceFallback(exchangerQuery, { name });
-    return (res?.[0] as IExchanger) || null;
+    const exchanger = (res?.[0] as IExchanger) || null;
+    if (!exchanger) {
+      console.warn("[diag:loadExchanger.miss]", { slug, name, result: summarizeResult(res) });
+    } else {
+      diagLog("loadExchanger.hit", {
+        slug,
+        name,
+        exchangerName: exchanger.name,
+        displayName: exchanger.display_name,
+        status: exchanger.status,
+      });
+    }
+    return exchanger;
   });
 
 export const loadExchangers = async () => {
@@ -193,6 +256,16 @@ export const loadExchangers = async () => {
       fetchCMSWithServiceFallback(exchangersQuery),
     ),
   ])) as IExchangerPreview[][];
+  if (!Array.isArray(cmsExchangers)) {
+    console.warn("[diag:loadExchangers.bad-shape]", {
+      result: summarizeResult(cmsExchangers),
+    });
+  } else {
+    diagLog("loadExchangers.ok", {
+      count: cmsExchangers.length,
+      first: cmsExchangers.slice(0, 5).map((e) => e?.name),
+    });
+  }
   return cmsExchangers;
 };
 
@@ -220,11 +293,19 @@ export const loadCities = () =>
   cachedFetch("cities", TTL.slow, async () => {
     const res = await fetchCMSWithServiceFallback(citiesQuery);
 
-    if (Array.isArray(res)) {
-      return res as ICity[];
+    const cities = (Array.isArray(res) ? res : res?.cities || []) as ICity[];
+    if (!Array.isArray(cities) || !cities.length) {
+      console.warn("[diag:loadCities.empty]", {
+        result: summarizeResult(res),
+      });
+    } else {
+      diagLog("loadCities.ok", {
+        count: cities.length,
+        sample: cities.slice(0, 5).map((c) => c?.en_name),
+      });
     }
 
-    return (res?.cities || []) as ICity[];
+    return cities;
   });
 
 export const loadPopular = () =>

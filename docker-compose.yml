@@ -18,6 +18,7 @@ x-front-build-args: &front-build-args
   NEXT_PUBLIC_ALLOW_CRAWLERS: "${NEXT_PUBLIC_ALLOW_CRAWLERS:-}"
   NEXT_PUBLIC_COINGECKO_URL: "${NEXT_PUBLIC_COINGECKO_URL:-}"
   SITE_URL: "${SITE_URL:-}"
+  DEBUG_EXCHANGER_MAP: "${DEBUG_EXCHANGER_MAP:-}"
   # Build defaults to public URLs because Docker build cannot reliably reach Compose service names.
   USE_INTERNAL: "${FRONT_BUILD_USE_INTERNAL:-false}"
   INTERNAL_CMS_URL: "${INTERNAL_CMS_URL:-}"
@@ -25,6 +26,7 @@ x-front-build-args: &front-build-args
   INTERNAL_CONVERTER_URL: "${INTERNAL_CONVERTER_URL:-}"
 
 x-front-runtime-env: &front-runtime-env
+  DEBUG_EXCHANGER_MAP: "${DEBUG_EXCHANGER_MAP:-}"
   USE_INTERNAL: "${USE_INTERNAL:-false}"
   INTERNAL_CMS_URL: "${INTERNAL_CMS_URL:-}"
   INTERNAL_SERVER_URL: "${INTERNAL_SERVER_URL:-}"

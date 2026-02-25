@@ -33,6 +33,13 @@ import {
 import { minRatesMap } from "../../services/utils";
 
 // начиная со скольки курсов на направление показываем
+const diagEnabled =
+  process.env.DEBUG_EXCHANGER_MAP === "true" ||
+  process.env.DEBUG_EXCHANGER_MAP === "1";
+const diagLog = (scope: string, payload: Record<string, any>) => {
+  if (!diagEnabled) return;
+  console.log(`[diag:${scope}]`, payload);
+};
 
 const MapCityPage: NextPage<MapCityPageProps> = ({
   city,
@@ -91,6 +98,14 @@ const buildCopy = (city: ICity, cityText?: IDirText | null) => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const requestedSlug = normalizeCitySlug(params?.city);
   const currentLocale = "ru";
+  diagLog("map.getStaticProps.start", {
+    requestedSlug,
+    nodeEnv: process.env.NODE_ENV,
+    useInternal: process.env.USE_INTERNAL,
+    base: process.env.NEXT_PUBLIC_BASE,
+    internalCms: process.env.INTERNAL_CMS_URL,
+    internalServer: process.env.INTERNAL_SERVER_URL,
+  });
 
   const parserFetcher = initParserFetcher();
 
@@ -100,6 +115,19 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     loadPms(),
     loadPossibleDirs(),
   ]);
+  diagLog("map.getStaticProps.inputs", {
+    requestedSlug,
+    cities: Array.isArray(cities) ? cities.length : null,
+    cityDirectionsKeys:
+      cityDirectionsData && typeof cityDirectionsData === "object"
+        ? Object.keys(cityDirectionsData).length
+        : null,
+    pms: Array.isArray(pms) ? pms.length : null,
+    possibleDirs:
+      allPossibleDirs && typeof allPossibleDirs === "object"
+        ? Object.keys(allPossibleDirs).length
+        : null,
+  });
 
   const defaultCity =
     cities?.find((city) => toLower(city.en_name) === DEFAULT_CITY_SLUG) || null;
@@ -109,6 +137,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     defaultCity;
 
   if (!currentCity) {
+    console.warn("[diag:map.getStaticProps.notFound.no-city]", {
+      requestedSlug,
+      cities: Array.isArray(cities) ? cities.length : null,
+      sampleCities: Array.isArray(cities)
+        ? cities.slice(0, 10).map((c) => c?.en_name)
+        : null,
+      hasCityDirections: Boolean(cityDirectionsData),
+    });
     return { notFound: true };
   }
 
@@ -125,6 +161,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const exchangerList: IExchanger[] = Array.isArray(exchangersResponse)
     ? exchangersResponse
     : exchangersResponse?.exchangers || [];
+  diagLog("map.getStaticProps.cms", {
+    requestedSlug,
+    citySlug,
+    exchangersResponseIsArray: Array.isArray(exchangersResponse),
+    exchangerList: Array.isArray(exchangerList) ? exchangerList.length : null,
+    cityTextIsArray: Array.isArray(cityTextRes),
+    cityTextCount: Array.isArray(cityTextRes) ? cityTextRes.length : null,
+  });
 
   const cityText = (cityTextRes?.[0] || null) as IDirText | null;
 
@@ -177,6 +221,16 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     })
     .filter((item): item is ParsedDirection => Boolean(item))
     .sort((a, b) => b.count - a.count);
+  diagLog("map.getStaticProps.directions", {
+    requestedSlug,
+    citySlug,
+    rawCityDirections:
+      rawCityDirections && typeof rawCityDirections === "object"
+        ? Object.keys(rawCityDirections).length
+        : null,
+    renderedDirections: directions.length,
+    availableCitySlugs: availableCitySlugs.length,
+  });
 
   const cashMap = directions.reduce(
     (acc, direction) => {
@@ -267,6 +321,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       },
     ],
   };
+  diagLog("map.getStaticProps.ok", {
+    requestedSlug,
+    citySlug,
+    city: currentCity.en_name,
+    exchangers: exchangerList.length,
+    cashSections: cashSections.length,
+    closestCities: closestCities.length,
+  });
 
   return {
     props: {
@@ -290,6 +352,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  diagLog("map.getStaticPaths", {
+    paths: [DEFAULT_CITY_SLUG],
+    fallback: "blocking",
+  });
   return {
     paths: [{ params: { city: DEFAULT_CITY_SLUG } }],
     fallback: "blocking",
