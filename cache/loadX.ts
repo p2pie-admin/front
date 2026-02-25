@@ -183,13 +183,15 @@ export const loadPms = async () => {
 export const loadExchanger = (slug: string) =>
   cachedFetch(`exchanger_${slug}`, TTL.fast, async () => {
     const name = exchangerSlugToName(slug);
-    const res = await cmsFetcher(exchangerQuery, { name });
+    const res = await fetchCMSWithServiceFallback(exchangerQuery, { name });
     return (res?.[0] as IExchanger) || null;
   });
 
 export const loadExchangers = async () => {
   const [cmsExchangers] = (await Promise.all([
-    cachedFetch("cms_exchangers", TTL.fast, () => cmsFetcher(exchangersQuery)),
+    cachedFetch("cms_exchangers", TTL.fast, () =>
+      fetchCMSWithServiceFallback(exchangersQuery),
+    ),
   ])) as IExchangerPreview[][];
   return cmsExchangers;
 };
@@ -216,7 +218,12 @@ export const loadBlog = async () => {
 
 export const loadCities = () =>
   cachedFetch("cities", TTL.slow, async () => {
-    const res = await cmsFetcher(citiesQuery);
+    const res = await fetchCMSWithServiceFallback(citiesQuery);
+
+    if (Array.isArray(res)) {
+      return res as ICity[];
+    }
+
     return (res?.cities || []) as ICity[];
   });
 

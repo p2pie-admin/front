@@ -59,6 +59,12 @@ const nextConfig = {
       permanent: true,
     });
 
+    redirects.push({
+      source: "/exchanger/:slug",
+      destination: "/exchangers/:slug",
+      permanent: true,
+    });
+
     return redirects;
   },
 };
