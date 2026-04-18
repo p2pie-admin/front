@@ -33,9 +33,8 @@ export default function RightOptions({
       alignItems="center"
       justifyContent="space-between"
       pb="2"
-      pr="2"
       gap="2"
-      w="280px"
+      w="100%"
     >
       <FormLabel
         display="flex"
@@ -45,6 +44,7 @@ export default function RightOptions({
         flexDir="row"
         gap="2"
         alignItems="center"
+        flex="1"
       >
         <MyTooltip label="test">
           <IoInformationCircle size="1rem" />

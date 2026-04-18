@@ -22,9 +22,14 @@ const DirectionsPicker = ({
   };
 
   const prevOpenedRef = useRef(opened);
+  const hasHandledInitialOpenedRef = useRef(false);
   useEffect(() => {
     const prevOpened = prevOpenedRef.current;
     prevOpenedRef.current = opened;
+    if (!hasHandledInitialOpenedRef.current) {
+      hasHandledInitialOpenedRef.current = true;
+      return;
+    }
     if (prevOpened === opened) return;
     if (prevOpened === 1000 || opened === 1000) return;
     const timer = window.setTimeout(() => {

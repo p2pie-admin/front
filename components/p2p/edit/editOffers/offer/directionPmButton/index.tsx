@@ -1,5 +1,12 @@
-import React, { useState } from "react";
-import { Box, Center, HStack, Text } from "@chakra-ui/react";
+import React from "react";
+import {
+  Box,
+  Center,
+  HStack,
+  Text,
+  useColorModeValue,
+  VStack,
+} from "@chakra-ui/react";
 import { IoAddOutline } from "react-icons/io5";
 import { batch } from "react-redux";
 import { useAppDispatch } from "../../../../../../redux/hooks";
@@ -7,7 +14,6 @@ import {
   setSearchBarInputValue,
   triggerModal,
 } from "../../../../../../redux/mainReducer";
-import ModalButton from "../../../../../main/side/pmModalButton/ModalButton";
 import PmIcons from "../../../../../main/side/pmModalButton/PmIcons";
 import { IPm } from "../../../../../../types/selector";
 
@@ -32,7 +38,6 @@ const DirectionPmButton = ({
   const dispatch = useAppDispatch();
   // const [hovered, setHovered] = useState(false);
   const pms = pm ? [pm] : [];
-  const currencyCode = pms?.[0]?.currency?.code?.toUpperCase();
   const unselectedPmText =
     side === "give" ? "Клиент отдает" : "Клиент получает";
   const modalId = getModalId(directionIndex, side);
@@ -45,7 +50,9 @@ const DirectionPmButton = ({
   };
 
   const pmName = getPmNameFromPm(pms[0]);
-
+  const name = pms[0].en_name;
+  const code = pms[0].currency?.code;
+  const nameSameAsCurrency = code?.toUpperCase() === name.toUpperCase();
   //const shortName = getPmNameFromPm(pms[0], true);
 
   return (
@@ -83,8 +90,19 @@ const DirectionPmButton = ({
         side={side}
         directionIndex={directionIndex}
       />
+
+      {!!pms?.length && (
+        <VStack spacing={0} align="start" hideFrom="lg">
+          <Text fontSize="xs" color={useColorModeValue("bg.800", "bg.100")}>
+            {code?.toUpperCase()}
+          </Text>
+          <Text fontSize="xs" color="bg.300">
+            {!nameSameAsCurrency && capitalize(name)}
+          </Text>
+        </VStack>
+      )}
       <Text
-        fontSize={{ base: "md", lg: "lg" }}
+        hideBelow="lg"
         color="peach.200"
         fontWeight="semibold"
         fontFamily="Montserrat, sans-serif"

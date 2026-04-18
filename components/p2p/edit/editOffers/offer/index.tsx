@@ -245,13 +245,23 @@ const Offer = ({
             w={{ base: "100%", lg: "auto" }}
             mr={{ base: 0, lg: "1" }}
           />
-          <VStack w="100%" spacing="2" alignItems={{ base: "stretch", lg: "end" }}>
-            <Chart
-              giveCur={givePm?.currency.code.toUpperCase()}
-              getCur={getPm?.currency.code.toUpperCase()}
-              noRate
-              //currentRateOverride={googleRate}
-            />
+          <VStack
+            w="100%"
+            spacing="2"
+            alignItems={{ base: "stretch", lg: "end" }}
+          >
+            <Box
+              w="100%"
+              display="flex"
+              justifyContent={{ base: "center", lg: "flex-end" }}
+            >
+              <Chart
+                giveCur={givePm?.currency.code.toUpperCase()}
+                getCur={getPm?.currency.code.toUpperCase()}
+                noRate
+                //currentRateOverride={googleRate}
+              />
+            </Box>
             <RightOptions fullOffer={fullOffer} />
           </VStack>
         </HStack>
