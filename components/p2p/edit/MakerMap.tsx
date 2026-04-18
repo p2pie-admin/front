@@ -170,16 +170,11 @@ export default function MakerMap({
         justifyContent="space-between"
         alignItems={{ base: "stretch", lg: "center" }}
         w="100%"
-        flexDir={{ base: "column", lg: "row" }}
         spacing={{ base: "3", lg: "0" }}
       >
-        <CustomHeader
-          text="Выбери район обслуживания на карте"
-          Icon={FaMapMarkerAlt}
-        />
-        <Box alignSelf={{ base: "flex-end", lg: "auto" }}>
-          <CitySelector forceVisible />
-        </Box>
+        <CustomHeader text="Район обслуживания" Icon={FaMapMarkerAlt} />
+
+        <CitySelector forceVisible />
       </HStack>
       <Divider my="4" />
       <Box borderRadius="lg" overflow="hidden" bg="bg.900">

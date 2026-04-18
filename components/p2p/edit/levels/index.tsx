@@ -47,11 +47,12 @@ export default function MakerLevels({
     <Box mt="4" w="100%">
       <Grid
         gridTemplateColumns={{
-          base: "repeat(2, minmax(0, 1fr))",
+          base: "repeat(3, minmax(0, 1fr))",
           md: "repeat(3, minmax(0, 1fr))",
           lg: "repeat(5, 1fr 1rem)",
         }}
-        gap={{ base: "4", lg: "auto" }}
+        rowGap={{ base: "1", md: "4", lg: "auto" }}
+        columnGap={{ base: "4", lg: "auto" }}
         alignItems="center"
         onClick={openDialog}
       >
@@ -60,12 +61,12 @@ export default function MakerLevels({
           .map((level, index) => (
             <React.Fragment key={level.id}>
               <Box
+                display={{ base: index === 9 ? "none" : "flex", lg: "flex" }}
                 pb="4"
                 position="relative"
-                display="flex"
                 flexDirection="column"
                 alignItems="center"
-                minH="200px"
+                minH={{ base: "160px", md: "200px" }}
                 borderRadius="full"
                 role="group"
                 cursor="pointer"
@@ -124,7 +125,7 @@ export default function MakerLevels({
             </React.Fragment>
           ))}
       </Grid>
-      <Center mt="8">
+      <Center mt={{ base: "3", lg: "8" }}>
         <CustomModal id={`levels`} header="Уровни развития" size="xl">
           <MakerLevelsDescription levels={levels} />
         </CustomModal>
@@ -132,7 +133,8 @@ export default function MakerLevels({
           onClick={() => dispatch(triggerModal(`levels`))}
           variant="ghost"
           color="bg.400"
-          size="lg"
+          size={{ base: "md", lg: "lg" }}
+          px={{ base: "2", lg: "4" }}
           rightIcon={<BsArrowRightShort size="1.2rem" />}
         >
           Подробнее про уровни

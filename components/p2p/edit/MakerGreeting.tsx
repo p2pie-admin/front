@@ -19,7 +19,7 @@ const MakerGreeting = () => {
       />
       <CustomTitle
         as="h1"
-        mt={{ base: "-8", lg: "-20" }}
+        mt={{ base: "-20", lg: "-20" }}
         mb="0"
         title={"Прокачай свой p2p обмен"}
         subtitle={
@@ -27,13 +27,11 @@ const MakerGreeting = () => {
         }
         subtitle2={"Даем трафик клиентов. Берем безопасность сделок на себя."}
         subtitleProps={{
-          fontSize: { base: "lg", lg: "2xl" },
           mt: { base: 4, lg: 5 },
           lineHeight: { base: "1.45", lg: "1.35" },
           px: { base: 4, lg: 0 },
         }}
         subtitle2Props={{
-          fontSize: { base: "lg", lg: "2xl" },
           mt: { base: 5, lg: 6 },
           lineHeight: { base: "1.45", lg: "1.35" },
           px: { base: 4, lg: 0 },

@@ -4,12 +4,7 @@ import UniversalSeo from "../../shared/UniversalSeo";
 import Loader from "../../shared/Loader";
 import { ISEO } from "../../../types/general";
 import { IFaqCategory } from "../../../types/faq";
-import {
-  IFullOffer,
-  IMaker,
-  IP2PAd,
-  IP2PLevel,
-} from "../../../types/p2p";
+import { IFullOffer, IMaker, IP2PAd, IP2PLevel } from "../../../types/p2p";
 import MakerMap from "./MakerMap";
 
 import ExchangerReviews from "../../exchangers/exchanger/reviews";
@@ -114,11 +109,13 @@ export default function MakerEditPage({
       if (!currentLevelRef) return false;
       if (currentLevelRef.id && level?.id) {
         return String(level.id) === String(currentLevelRef.id);
-        }
-        return level?.level === currentLevelRef.level;
+      }
+      return level?.level === currentLevelRef.level;
     }) ??
     (!currentLevelRef
-      ? p2pLevels?.find((level) => level?.level === 1 || String(level?.id) === "1")
+      ? p2pLevels?.find(
+          (level) => level?.level === 1 || String(level?.id) === "1",
+        )
       : null) ??
     null;
 
@@ -144,7 +141,7 @@ export default function MakerEditPage({
           <MakerLevels levels={p2pLevels} />
           <CustomTitle
             as="h3"
-            mb="0"
+            mb="-10"
             mt="20"
             title={"Твоя p2p страница"}
             subtitle={"Внеси правки и опубликуй предложения обмена"}
@@ -152,7 +149,10 @@ export default function MakerEditPage({
           <BoxWrapper variant="no_contrast" data-editing="true" mt="20">
             <MakerTopPanel />
             <Divider my="4" />
-            <MakerStats maker={maker} levelDefinition={currentLevelDefinition} />
+            <MakerStats
+              maker={maker}
+              levelDefinition={currentLevelDefinition}
+            />
           </BoxWrapper>
           <EditOffers offers={offers} />
           <MakerDescriptionEdit description={maker.description} />

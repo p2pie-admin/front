@@ -44,9 +44,19 @@ export default function EditStatus() {
         variant="no_contrast"
         rightIcon={<Dot color={statusToColor(effectiveStatus)} />}
         size={{ base: "sm", lg: "md" } as any}
-        px={{ base: 3, lg: 4 }}
+        px={{ base: 2, lg: 4 }}
+        minW={{ base: "unset", lg: "auto" }}
+        justifyContent={{ base: "center", lg: "flex-start" }}
+        sx={{
+          ".chakra-button__icon": {
+            marginInlineStart: { base: 0, lg: "0.5rem" },
+            marginInlineEnd: 0,
+          },
+        }}
       >
-        {statusLabels[effectiveStatus]}
+        <Text display={{ base: "none", lg: "block" }}>
+          {statusLabels[effectiveStatus]}
+        </Text>
       </MenuButton>
       <MenuList bgColor="bg.800" minW="200px" borderRadius="lg">
         {(["active", "paused", "disabled"] as const).map((status) => (

@@ -66,6 +66,9 @@ const Layout = ({ children }: { children: any }) => {
       ...toastConfig,
       duration: timeBeforeClosing,
       isClosable: true,
+      containerStyle: {
+        zIndex: 2000,
+      },
     });
   }, [myToast, toast]);
 

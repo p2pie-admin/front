@@ -38,7 +38,7 @@ export default function ({
       zIndex="1"
       bgGradient={`radial-gradient(circle at 50% -10%, ${centerColor} 10%, ${peripheryColor} 70%)`}
       bgClip="text"
-      fontSize={{ base: "xl", lg: "5xl" }}
+      fontSize={{ base: "2xl", lg: "5xl" }}
       w="100%"
       textAlign={"center"}
       {...props}
@@ -54,8 +54,9 @@ export default function ({
       </Text>
       {subtitle && (
         <Text
+          mx="2"
           as="p"
-          fontSize={{ base: "md", lg: "xl" }}
+          fontSize={{ base: "sm", lg: "xl" }}
           mt={2}
           color="bg.400"
           fontWeight="light"
@@ -68,8 +69,9 @@ export default function ({
 
       {subtitle2 && (
         <Text
+          mx="2"
           as="p"
-          fontSize={{ base: "md", lg: "xl" }}
+          fontSize={{ base: "sm", lg: "xl" }}
           mt={2}
           color="bg.400"
           fontWeight="light"

@@ -1,4 +1,5 @@
 import { Divider, Box, VStack, Button } from "@chakra-ui/react";
+import { useState } from "react";
 import { IoMdListBox } from "react-icons/io";
 import { BoxWrapper, CustomHeader } from "../../../shared/BoxWrapper";
 
@@ -17,6 +18,7 @@ export default function EditOffers({ offers }: Props) {
     (state) => state.main.p2pFullOffers.length,
   );
   const dispatch = useAppDispatch();
+  const [addDirectionSignal, setAddDirectionSignal] = useState(0);
   const hasInitialOffers = (offers?.length || 0) > 0;
   // все оферы
   return (
@@ -32,7 +34,10 @@ export default function EditOffers({ offers }: Props) {
             Добавьте направление, чтобы выбрать методы оплаты.
           </Box>
         ) : (
-          <DirectionsPicker offers={offers} />
+          <DirectionsPicker
+            offers={offers}
+            addDirectionSignal={addDirectionSignal}
+          />
         )}
         {offersCount < 10 && (
           <Button
@@ -44,8 +49,10 @@ export default function EditOffers({ offers }: Props) {
             border="2px dashed"
             borderColor="peach.500"
             leftIcon={<IoAddOutline size="1.5rem" />}
-            onClick={() => dispatch(addP2PDirection())}
-            zIndex="1"
+            onClick={() => {
+              setAddDirectionSignal((value) => value + 1);
+              dispatch(addP2PDirection());
+            }}
           />
         )}
       </VStack>

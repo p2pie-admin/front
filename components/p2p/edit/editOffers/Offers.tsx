@@ -6,15 +6,17 @@ import { IFullOffer } from "../../../../types/p2p";
 
 const DirectionsPicker = ({
   offers,
+  addDirectionSignal = 0,
 }: {
   offers?: Partial<IFullOffer>[] | null;
+  addDirectionSignal?: number;
 }) => {
   const fullOffersCount = useAppSelector(
     (state) => state.main.p2pFullOffers.length,
   );
-  const [opened, setOpened] = useState(0);
+  const [opened, setOpened] = useState(1000);
   const shouldAutoScrollRef = useRef(false);
-  const hasInitializedCountRef = useRef(false);
+  const prevAddDirectionSignalRef = useRef(addDirectionSignal);
 
   const handleExpand = (event: any, index: number) => {
     if (index !== opened) return;
@@ -22,6 +24,11 @@ const DirectionsPicker = ({
     event.stopPropagation();
     shouldAutoScrollRef.current = true;
     setOpened(index);
+  };
+
+  const handleToggleOpened = (index: number) => {
+    shouldAutoScrollRef.current = true;
+    setOpened((current) => (index === current ? 1000 : index));
   };
 
   const prevOpenedRef = useRef(opened);
@@ -49,18 +56,15 @@ const DirectionsPicker = ({
     [renderCount],
   );
 
-  const prevRenderCountRef = useRef(renderCount);
   useEffect(() => {
-    const prevRenderCount = prevRenderCountRef.current;
-    prevRenderCountRef.current = renderCount;
-    if (!hasInitializedCountRef.current) {
-      hasInitializedCountRef.current = true;
+    const prevSignal = prevAddDirectionSignalRef.current;
+    prevAddDirectionSignalRef.current = addDirectionSignal;
+    if (addDirectionSignal === prevSignal) {
       return;
     }
-    if (renderCount <= prevRenderCount) return;
     shouldAutoScrollRef.current = true;
     setOpened(renderCount - 1);
-  }, [renderCount]);
+  }, [addDirectionSignal, renderCount]);
 
   return (
     <VStack align="stretch" spacing="6" px={{ base: 0, lg: 2 }}>
@@ -69,7 +73,7 @@ const DirectionsPicker = ({
           key={`direction-${index}`}
           index={index}
           opened={opened}
-          setOpened={setOpened}
+          setOpened={handleToggleOpened}
           handleExpand={handleExpand}
           initialOffer={fallbackOffers[index]}
         />

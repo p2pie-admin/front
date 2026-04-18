@@ -46,7 +46,7 @@ import OfferParameters from "./OfferParameters";
 type Props = {
   index: number;
   opened: number;
-  setOpened: React.Dispatch<React.SetStateAction<number>>;
+  setOpened: (index: number) => void;
   handleExpand: (event: React.MouseEvent, index: number) => void;
   initialOffer?: Partial<IFullOffer>;
 };
