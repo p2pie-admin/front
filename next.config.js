@@ -8,7 +8,7 @@ const isDev = process.env.NODE_ENV === "development";
 
 const cspHeader = `
   default-src 'self';
-  script-src 'self' https://maps.googleapis.com https://maps.gstatic.com;
+  script-src 'self' 'wasm-unsafe-eval' https://maps.googleapis.com https://maps.gstatic.com;
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
   img-src 'self' data: https://maps.googleapis.com https://maps.gstatic.com https://cms.p2pie.com https://cms2.p2pie.com https://cms.1nginx.space https://cms2.1nginx.space https://cms.2nginx.space https://cms2.2nginx.space https://converter.p2pie.com https://converter2.p2pie.com https://converter.1nginx.space https://converter2.1nginx.space https://converter.2nginx.space https://converter2.2nginx.space;
   font-src 'self' https://fonts.gstatic.com;

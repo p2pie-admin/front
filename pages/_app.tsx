@@ -181,6 +181,12 @@ const RouteLoadingOverlay = () => {
 function MyApp({ Component, pageProps }: AppProps) {
   const seoConfig = defaultConfig;
 
+  useEffect(() => {
+    import("@lottiefiles/dotlottie-react").then(({ setWasmUrl }) => {
+      setWasmUrl("/dotlottie-player.wasm");
+    });
+  }, []);
+
   return (
     <>
       <Head>
