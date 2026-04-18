@@ -18,7 +18,7 @@ export default function SelectorPmName({
     <>
       {!currencyHidden ? (
         <VStack spacing={0} align="start">
-          <Text fontSize="sm" color={useColorModeValue("bg.800", "bg.100")}>
+          <Text fontSize="xs" color={useColorModeValue("bg.800", "bg.100")}>
             {code?.toUpperCase()}
           </Text>
           <Text fontSize="xs" color="bg.300">
@@ -27,7 +27,7 @@ export default function SelectorPmName({
         </VStack>
       ) : (
         <Text
-          fontSize={name.length > 8 ? "sm" : "md"}
+          fontSize={name.length > 8 ? "sm" : "sm"}
           color={useColorModeValue("bg.800", "bg.100")} // цвет нужен
         >
           {capitalize(name)}

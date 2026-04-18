@@ -175,7 +175,7 @@ const Offer = ({
       id={`direction-item-${index}`}
       w="100%"
       flex="1"
-      px="4"
+      px={{ base: "5", lg: "4" }}
       py="2"
       display="block"
       alignSelf="stretch"
@@ -186,11 +186,11 @@ const Offer = ({
       //minH={fullHeight ? "70px" : "unset"}
     >
       <Grid
-        gridTemplateColumns={"3fr 40px 3fr 2fr"}
+        gridTemplateColumns={{ base: "1fr auto 1fr auto", lg: "3fr 40px 3fr 2fr" }}
         gridTemplateRows="auto"
         color="bg.500"
         alignItems="center"
-        columnGap="2"
+        columnGap={{ base: "1", lg: "2" }}
         cursor="pointer"
         onClick={() => setOpened(index == opened ? 1000 : index)}
       >
@@ -211,7 +211,7 @@ const Offer = ({
         />
         <HStack justifySelf="end">
           {!!dirExists ? (
-            <Button variant="ghost">
+            <Button variant="ghost" minW="unset" px={{ base: "1", lg: "3" }}>
               {index == opened ? (
                 <MdOutlineKeyboardArrowUp size="1.5rem" />
               ) : (
@@ -231,14 +231,21 @@ const Offer = ({
           onClick={(event) => event.stopPropagation()}
           alignItems="start"
           mb="4"
+          flexDir={{ base: "column", lg: "row" }}
+          spacing={{ base: "4", lg: "0" }}
         >
-          <VStack spacing="4" w="100%" mx="4">
+          <VStack spacing="4" w="100%" mx={{ base: 0, lg: "4" }}>
             <OfferCourse fullOffer={fullOffer} />
             <OfferLimits fullOffer={fullOffer} />
             <OfferFee fullOffer={fullOffer} />
           </VStack>
-          <Divider orientation="vertical" h="200px" mr="1" />
-          <VStack w="100%" spacing="2" alignItems="end">
+          <Divider
+            orientation={{ base: "horizontal", lg: "vertical" }}
+            h={{ base: "1px", lg: "200px" }}
+            w={{ base: "100%", lg: "auto" }}
+            mr={{ base: 0, lg: "1" }}
+          />
+          <VStack w="100%" spacing="2" alignItems={{ base: "stretch", lg: "end" }}>
             <Chart
               giveCur={givePm?.currency.code.toUpperCase()}
               getCur={getPm?.currency.code.toUpperCase()}
@@ -251,7 +258,14 @@ const Offer = ({
         <Divider my="4" />
         <OfferExplanation fullOffer={fullOffer} />
         <Divider my="4" />
-        <HStack w="100%" justifyContent="space-between" my="4" spacing="4">
+        <HStack
+          w="100%"
+          justifyContent="space-between"
+          my="4"
+          spacing="4"
+          flexDir={{ base: "column", lg: "row" }}
+          alignItems={{ base: "stretch", lg: "center" }}
+        >
           <OfferParameters offerIndex={index} />
           <DeleteOffer index={index} isFull />
         </HStack>

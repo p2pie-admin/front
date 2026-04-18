@@ -20,7 +20,12 @@ export default function P2PAdvantages() {
     "rgba(247, 197, 177, 0.1)",
   );
   return (
-    <Grid gap="8" gridTemplateColumns="1fr 1fr">
+    <Grid
+      w="100%"
+      gap={{ base: "4", lg: "8" }}
+      gridTemplateColumns={{ base: "1fr", md: "1fr 1fr" }}
+      justifyItems="stretch"
+    >
       <Box
         position="absolute"
         inset={0}

@@ -26,6 +26,12 @@ type CachedToken = {
 
 let cachedToken: CachedToken | null = null;
 
+const extractPartialGraphqlData = (error: any) => {
+  const data = error?.response?.data;
+  if (!data || typeof data !== "object") return null;
+  return data;
+};
+
 const getGraphqlUrl = () => {
   const env = process.env.NODE_ENV;
   const publicBase = env === "production" ? cmsLinkPROD : cmsLinkDEV;
@@ -127,10 +133,28 @@ export const requestStrapiAsService = async <T = any>(
   try {
     return (await client.request(query, variables)) as T;
   } catch (error) {
+    const partialData = extractPartialGraphqlData(error);
+    if (partialData) {
+      console.warn(
+        "[strapi.service] GraphQL returned partial data with errors, continuing with data payload.",
+      );
+      return partialData as T;
+    }
     if (!authErrorLike(error)) throw error;
 
     jwt = await getStrapiJwt(true);
     client = createClient(jwt);
-    return (await client.request(query, variables)) as T;
+    try {
+      return (await client.request(query, variables)) as T;
+    } catch (retryError) {
+      const retryPartialData = extractPartialGraphqlData(retryError);
+      if (retryPartialData) {
+        console.warn(
+          "[strapi.service] GraphQL returned partial data with errors after token refresh, continuing with data payload.",
+        );
+        return retryPartialData as T;
+      }
+      throw retryError;
+    }
   }
 };

@@ -1,5 +1,4 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
-import Image from "next/image";
 import darkPie from "../../../public/darkPie.svg";
 import lightPie from "../../../public/lightPie.svg";
 import { useColorModeValue } from "@chakra-ui/react";
@@ -11,6 +10,7 @@ import { ResponsiveText } from "../../../styles/theme/custom";
 const Logo = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const logoSrc = useColorModeValue(darkPie.src, lightPie.src);
   return (
     <Flex
       flexDir="row"
@@ -21,11 +21,12 @@ const Logo = () => {
       cursor="pointer"
       ml="2"
     >
-      <Image
+      <Box
+        as="img"
         alt={`${process.env.NEXT_PUBLIC_NAME} logo`}
-        src={useColorModeValue(darkPie, lightPie)}
-        width={36}
-        height={36}
+        src={logoSrc}
+        w="36px"
+        h="36px"
       />
       <Text
         fontSize="xl"

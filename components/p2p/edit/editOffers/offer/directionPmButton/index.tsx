@@ -61,9 +61,11 @@ const DirectionPmButton = ({
       }}
       py="2"
       px="4"
+      minW={0}
+      spacing="3"
     >
       {pms?.length ? (
-        <PmIcons pms={pms} />
+        <PmIcons pms={pms} size="sm" />
       ) : (
         <Center
           border="2px dashed"
@@ -82,10 +84,11 @@ const DirectionPmButton = ({
         directionIndex={directionIndex}
       />
       <Text
-        fontSize="lg"
+        fontSize={{ base: "md", lg: "lg" }}
         color="peach.200"
         fontWeight="semibold"
         fontFamily="Montserrat, sans-serif"
+        noOfLines={2}
       >
         {!pms?.length ? unselectedPmText : pmName}
       </Text>

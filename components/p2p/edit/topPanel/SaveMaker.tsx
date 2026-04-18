@@ -55,7 +55,13 @@ export default function SaveMaker({
         <SaveDetails />
       </CustomModal>
       {!isBig ? (
-        <Button variant="primary" onClick={(e) => handleSaveProject(e)}>
+        <Button
+          variant="primary"
+          onClick={(e) => handleSaveProject(e)}
+          size={{ base: "sm", lg: "md" } as any}
+          minW="unset"
+          px={{ base: 3, lg: 4 }}
+        >
           <IoMdSave size="1.2rem" />
         </Button>
       ) : (

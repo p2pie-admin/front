@@ -1,5 +1,5 @@
 import { Box, Text, Divider, HStack, VStack } from "@chakra-ui/react";
-import { IMaker } from "../../../../types/p2p";
+import { IMaker, IP2PLevel } from "../../../../types/p2p";
 import { Box3D, ResponsiveText } from "../../../../styles/theme/custom";
 import StatItem from "./StatItem";
 import { FaRegHandshake } from "react-icons/fa6";
@@ -10,7 +10,13 @@ import MakerRating from "./MakerRating";
 import { FaCheck } from "react-icons/fa6";
 import { FaXmark } from "react-icons/fa6";
 import MyTooltip from "../../../shared/MyTooltip";
-export default function MakerStats({ maker }: { maker: IMaker }) {
+export default function MakerStats({
+  maker,
+  levelDefinition,
+}: {
+  maker: IMaker;
+  levelDefinition?: IP2PLevel | null;
+}) {
   const offers = Array.isArray(maker.offers) ? maker.offers : null;
   const reviews = Array.isArray(maker.reviews) ? maker.reviews : null;
   const offersCount = offers ? offers.length : null;
@@ -25,10 +31,21 @@ export default function MakerStats({ maker }: { maker: IMaker }) {
     : "";
 
   const level = maker.p2p_level;
+  const fallbackLevel =
+    levelDefinition &&
+    (!level ||
+      String(levelDefinition.id) === String(level?.id) ||
+      levelDefinition.level === level?.level)
+      ? levelDefinition
+      : null;
   const levelConditions = Array.isArray(level?.p2p_conditions)
     ? level.p2p_conditions
+    : Array.isArray(fallbackLevel?.p2p_conditions)
+      ? fallbackLevel.p2p_conditions
     : Array.isArray(level?.conditions)
       ? level.conditions
+      : Array.isArray(fallbackLevel?.conditions)
+        ? fallbackLevel.conditions
       : [];
   const completedConditionIds = new Set(
     (Array.isArray(maker.p2p_conditions_completed)
@@ -51,31 +68,37 @@ export default function MakerStats({ maker }: { maker: IMaker }) {
   const total = conditions.length;
 
   return (
-    <HStack alignItems="start">
-      <MakerRating
-        completed={completed}
-        total={total}
-        level={maker.p2p_level?.level || 1}
-      />
-      <Divider mt="2" orientation="vertical" h="80px" mx="2" />
-      <Box w="fit-content" mt="2">
-        <StatItem
-          label="Предложений"
-          value={offersCount}
-          Icon={RiExchange2Line}
+    <VStack w="100%" alignItems="stretch" spacing={{ base: "4", lg: "2" }}>
+      <HStack alignItems="start" spacing={{ base: "4", lg: "2" }} w="100%">
+        <MakerRating
+          completed={completed}
+          total={total}
+          level={maker.p2p_level?.level || 1}
         />
-
-        <StatItem label="Сделок" value={0} Icon={FaRegHandshake} />
-
-        <StatItem label="Отзывов" value={reviewsCount} Icon={TbPencil} />
-
-        <StatItem
-          label="Создан"
-          value={formattedDate}
-          Icon={MdOutlineDateRange}
+        <Divider
+          mt="2"
+          orientation="vertical"
+          h="120px"
+          mx={{ base: 0, lg: "2" }}
         />
-      </Box>
-      <Divider mt="2" orientation="vertical" h="80px" mx="2" />
+        <Box w="100%" mt="2">
+          <StatItem
+            label="Предложений"
+            value={offersCount}
+            Icon={RiExchange2Line}
+          />
+
+          <StatItem label="Сделок" value={0} Icon={FaRegHandshake} />
+
+          <StatItem label="Отзывов" value={reviewsCount} Icon={TbPencil} />
+
+          <StatItem
+            label="Создан"
+            value={formattedDate}
+            Icon={MdOutlineDateRange}
+          />
+        </Box>
+      </HStack>
       <VStack w="100%" mt="2" spacing="1" alignItems="start">
         <Text fontSize="sm" mb="2" ml="2" color="bg.400">
           Для перехода на следующий уровень необходимо:
@@ -91,10 +114,16 @@ export default function MakerStats({ maker }: { maker: IMaker }) {
             color={c.is_completed ? "green.300" : "red.300"}
           >
             <MyTooltip label={c.description || ""}>
-              <HStack w="100%" justifyContent="space-between">
+              <HStack
+                w="100%"
+                justifyContent="space-between"
+                alignItems="flex-start"
+                spacing="3"
+              >
                 <Text
                   fontSize="sm"
                   color={c.is_completed ? "bg.400" : "bg.200"}
+                  pr="2"
                 >
                   {`${index + 1}) ${c.title}`}
                 </Text>
@@ -108,6 +137,6 @@ export default function MakerStats({ maker }: { maker: IMaker }) {
           </Box3D>
         ))}
       </VStack>
-    </HStack>
+    </VStack>
   );
 }

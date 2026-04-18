@@ -31,6 +31,12 @@ const serializeError = (error: any) => {
   return { status, statusText, message, responsePreview };
 };
 
+const extractPartialGraphqlData = (error: any) => {
+  const data = error?.response?.data;
+  if (!data || typeof data !== "object") return null;
+  return data;
+};
+
 const retry = async <T>(fn: () => Promise<T>, retries = 3): Promise<T> => {
   let lastErr;
   for (let i = 0; i < retries; i++) {
@@ -67,6 +73,17 @@ export const initCMSFetcher = () => {
       const data = await retry(() => graphQLClient.request(query, variables));
       return unwrap(normalize(data));
     } catch (e) {
+      const partialData = extractPartialGraphqlData(e);
+      if (partialData) {
+        console.warn("CMS FETCHER partial GraphQL data received with errors:", {
+          url,
+          env,
+          useInternal: process.env.USE_INTERNAL,
+          base: process.env.NEXT_PUBLIC_BASE,
+          error: serializeError(e),
+        });
+        return unwrap(normalize(partialData));
+      }
       console.error("CMS FETCHER ERROR after 3 retries:", {
         url,
         env,

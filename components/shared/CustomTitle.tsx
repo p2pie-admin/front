@@ -3,8 +3,8 @@ import {
   Text,
   useColorModeValue,
   Box,
-  Heading,
   BoxProps,
+  TextProps,
 } from "@chakra-ui/react";
 import React from "react";
 
@@ -13,6 +13,8 @@ type CustomTitleProps = {
   title: string;
   subtitle?: string;
   subtitle2?: string;
+  subtitleProps?: TextProps;
+  subtitle2Props?: TextProps;
 } & BoxProps;
 
 export default function ({
@@ -20,6 +22,8 @@ export default function ({
   title,
   subtitle,
   subtitle2,
+  subtitleProps,
+  subtitle2Props,
   ...props
 }: CustomTitleProps) {
   const [peripheryColor, centerColor] = useToken(
@@ -56,6 +60,7 @@ export default function ({
           color="bg.400"
           fontWeight="light"
           fontFamily="Montserrat, sans-serif"
+          {...subtitleProps}
         >
           {subtitle}
         </Text>
@@ -69,6 +74,7 @@ export default function ({
           color="bg.400"
           fontWeight="light"
           fontFamily="Montserrat, sans-serif"
+          {...subtitle2Props}
         >
           {subtitle2}
         </Text>

@@ -53,11 +53,11 @@ const CircularIcon = ({
     icon?.url ||
     "";
 
-  // Map size keyword to relative rem size; bump base for mobile legibility
+  // Keep PM icon sizes stable across breakpoints so they do not grow on mobile.
   const sizeMap = {
-    sm: { base: "1.8rem", md: "1.4rem" },
-    md: { base: "2.1rem", md: "1.5rem" },
-    lg: { base: "2.6rem", md: "2rem" },
+    sm: "1.4rem",
+    md: "1.5rem",
+    lg: "2rem",
   };
 
   return (

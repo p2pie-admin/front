@@ -1,7 +1,7 @@
 import { Box, Center, Divider, useToken } from "@chakra-ui/react";
 import { Circle, GoogleMap, useLoadScript } from "@react-google-maps/api";
 import { useEffect, useMemo, useState } from "react";
-import { TbMapPinFilled } from "react-icons/tb";
+import { FaMapMarkerAlt } from "react-icons/fa";
 import { BoxWrapper, CustomHeader } from "../../shared/BoxWrapper";
 import Loader from "../../shared/Loader";
 import { createMapStyles } from "../../map/styles";
@@ -113,7 +113,7 @@ export default function MakerMap({
 
   return (
     <BoxWrapper>
-      <CustomHeader text="Примерное место встречи" Icon={TbMapPinFilled} />
+      <CustomHeader text="Примерное место встречи" Icon={FaMapMarkerAlt} />
       <Divider my="4" />
       <Box borderRadius="lg" overflow="hidden" bg="bg.900">
         {isLoaded ? (

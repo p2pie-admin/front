@@ -20,13 +20,15 @@ export default function EditOffers({ offers }: Props) {
   const hasInitialOffers = (offers?.length || 0) > 0;
   // все оферы
   return (
-    <BoxWrapper w="100%">
-      <CustomHeader text="Предложения" Icon={IoMdListBox} />
-      <Divider my="4" />
+    <BoxWrapper w="100%" p={{ base: 0, lg: 4 }}>
+      <Box px={{ base: 4, lg: 0 }} pt={{ base: 4, lg: 0 }}>
+        <CustomHeader text="Предложения" Icon={IoMdListBox} />
+      </Box>
+      <Divider my="4" mx={{ base: 4, lg: 0 }} />
 
       <VStack align="stretch" spacing="3">
         {!offersCount && !hasInitialOffers ? (
-          <Box color="bg.400">
+          <Box color="bg.400" px={{ base: 4, lg: 0 }}>
             Добавьте направление, чтобы выбрать методы оплаты.
           </Box>
         ) : (
@@ -35,7 +37,8 @@ export default function EditOffers({ offers }: Props) {
         {offersCount < 10 && (
           <Button
             minH="12"
-            m="2"
+            mx={{ base: 4, lg: 2 }}
+            my="2"
             variant="no_contrast"
             color="peach.500"
             border="2px dashed"

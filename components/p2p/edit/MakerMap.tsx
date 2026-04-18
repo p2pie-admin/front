@@ -1,7 +1,7 @@
 import { Box, Center, Divider, HStack, useToken } from "@chakra-ui/react";
 import { Circle, GoogleMap, useLoadScript } from "@react-google-maps/api";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { TbMapPinFilled } from "react-icons/tb";
+import { FaMapMarkerAlt } from "react-icons/fa";
 import { BoxWrapper, CustomHeader } from "../../shared/BoxWrapper";
 import Loader from "../../shared/Loader";
 import { createMapStyles } from "../../map/styles";
@@ -166,12 +166,20 @@ export default function MakerMap({
 
   return (
     <BoxWrapper>
-      <HStack justifyContent="space-between" alignItems="center" w="100%">
+      <HStack
+        justifyContent="space-between"
+        alignItems={{ base: "stretch", lg: "center" }}
+        w="100%"
+        flexDir={{ base: "column", lg: "row" }}
+        spacing={{ base: "3", lg: "0" }}
+      >
         <CustomHeader
           text="Выбери район обслуживания на карте"
-          Icon={TbMapPinFilled}
+          Icon={FaMapMarkerAlt}
         />
-        <CitySelector forceVisible />
+        <Box alignSelf={{ base: "flex-end", lg: "auto" }}>
+          <CitySelector forceVisible />
+        </Box>
       </HStack>
       <Divider my="4" />
       <Box borderRadius="lg" overflow="hidden" bg="bg.900">

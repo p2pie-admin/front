@@ -8,16 +8,19 @@ export default function Ad({ ad }: { ad: IP2PAd }) {
   return (
     <Box3D
       flex="0 0 auto"
-      minW={{ base: "250px", lg: "800px" }}
-      maxW={{ base: "250px", lg: "800px" }}
+      minW={{ base: "100%", lg: "800px" }}
+      maxW={{ base: "100%", lg: "800px" }}
       h="100%"
       p="0"
       pb="4"
       variant="no_contrast"
     >
-      <Grid gridTemplateColumns="1fr auto 1fr" gap="2">
-        <CustomImage h="auto" img={ad.image} w="100%" />
+      <Grid gridTemplateColumns={{ base: "1fr", lg: "1fr auto 1fr" }} gap="2">
+        <Box w={{ base: "86%", sm: "78%", lg: "100%" }} mx="auto">
+          <CustomImage h="auto" img={ad.image} w="100%" />
+        </Box>
         <Divider
+          display={{ base: "none", lg: "block" }}
           orientation="vertical"
           h="calc(100% - 10px)"
           mt="auto"

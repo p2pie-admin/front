@@ -86,7 +86,6 @@ export default function EditName() {
       </CustomModal>
 
       <Box
-        mr="auto"
         cursor="pointer"
         filter=" brightness(0.8)"
         onClick={() => dispatch(triggerModal(modalId))}

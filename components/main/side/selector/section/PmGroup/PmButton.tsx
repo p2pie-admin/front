@@ -38,7 +38,9 @@ export default function PmButton({
               )
           : handleToggle
       } // works as choosePm or as open subitems
-      leftIcon={<CircularIcon iconAlt={iconAlt} icon={icon} color={color} />}
+      leftIcon={
+        <CircularIcon iconAlt={iconAlt} icon={icon} color={color} size="sm" />
+      }
       color="transparent"
       transition="filter 0.5s ease"
       _hover={{

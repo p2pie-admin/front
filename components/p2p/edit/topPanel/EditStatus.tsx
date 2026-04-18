@@ -43,6 +43,8 @@ export default function EditStatus() {
         as={Button}
         variant="no_contrast"
         rightIcon={<Dot color={statusToColor(effectiveStatus)} />}
+        size={{ base: "sm", lg: "md" } as any}
+        px={{ base: 3, lg: 4 }}
       >
         {statusLabels[effectiveStatus]}
       </MenuButton>

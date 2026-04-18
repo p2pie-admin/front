@@ -63,7 +63,9 @@ export default function Advantage({
       <Box3D
         h={{ base: "auto", lg: "240px" }}
         flex="1"
-        w={{ base: "calc(100% - 32px)", lg: "380px" }}
+        w={{ base: "calc(100% - 24px)", sm: "calc(100% - 32px)", md: "100%", lg: "380px" }}
+        maxW={{ base: "28rem", md: "none", lg: "380px" }}
+        mx="auto"
         cursor="pointer"
         variant="contrast"
         position="relative"

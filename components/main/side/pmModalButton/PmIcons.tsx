@@ -4,7 +4,13 @@ import CircularIcon from "../../../shared/CircularIcon";
 
 import { IPm } from "../../../../types/selector";
 
-const PmIcons = ({ pms }: { pms: IPm[] }) => {
+const PmIcons = ({
+  pms,
+  size = "md",
+}: {
+  pms: IPm[];
+  size?: "sm" | "md" | "lg";
+}) => {
   return (
     <HStack position="relative">
       <HStack minW={`${pms.length * 8 + 12}px`}>
@@ -18,6 +24,7 @@ const PmIcons = ({ pms }: { pms: IPm[] }) => {
               iconAlt={pm.en_name}
               icon={pm.icon}
               color={pm.color || "gray"}
+              size={size}
             />
           </Box>
         ))}

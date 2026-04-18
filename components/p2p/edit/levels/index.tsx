@@ -46,8 +46,12 @@ export default function MakerLevels({
   return (
     <Box mt="4" w="100%">
       <Grid
-        gridTemplateColumns="repeat(5, 1fr 1rem)"
-        gap="auto"
+        gridTemplateColumns={{
+          base: "repeat(2, minmax(0, 1fr))",
+          md: "repeat(3, minmax(0, 1fr))",
+          lg: "repeat(5, 1fr 1rem)",
+        }}
+        gap={{ base: "4", lg: "auto" }}
         alignItems="center"
         onClick={openDialog}
       >
@@ -70,8 +74,8 @@ export default function MakerLevels({
                   fontSize="xs"
                   color="bg.500"
                   position="absolute"
-                  top="8"
-                  left="8"
+                  top={{ base: "4", lg: "8" }}
+                  left={{ base: "4", lg: "8" }}
                 >
                   {`#${index + 1}`}
                 </Text>
@@ -92,7 +96,7 @@ export default function MakerLevels({
                   zIndex={0}
                 />
                 <Loader
-                  size={150}
+                  size={130}
                   src={`/p2p/lottie/lvl${index + 1}.lottie`}
                   delay={0.2}
                   shift={index * 1}
@@ -111,11 +115,11 @@ export default function MakerLevels({
                 </Box>
               </Box>
               {(index + 1) % 5 ? (
-                <Box color="peach.400">
+                <Box color="peach.400" display={{ base: "none", lg: "block" }}>
                   <FaArrowRight size="1rem" />
                 </Box>
               ) : (
-                <Box />
+                <Box display={{ base: "none", lg: "block" }} />
               )}
             </React.Fragment>
           ))}

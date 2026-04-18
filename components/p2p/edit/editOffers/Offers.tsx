@@ -43,7 +43,7 @@ const DirectionsPicker = ({
   );
 
   return (
-    <VStack align="stretch" spacing="6" px="2">
+    <VStack align="stretch" spacing="6" px={{ base: 0, lg: 2 }}>
       {directionIndexes.map((index) => (
         <Offer
           key={`direction-${index}`}

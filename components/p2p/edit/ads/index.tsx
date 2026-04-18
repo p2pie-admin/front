@@ -19,38 +19,43 @@ export default function MakerAds({ ads }: { ads?: IP2PAd[] | null }) {
   return (
     <>
       <Box
-        w="100vw"
-        maxW="100vw"
+        w={{ base: "100%", lg: "100vw" }}
+        maxW={{ base: "100%", lg: "100vw" }}
         py="2"
-        ml="calc(50% - 50vw)"
-        mr="calc(50% - 50vw)"
+        ml={{ base: 0, lg: "calc(50% - 50vw)" }}
+        mr={{ base: 0, lg: "calc(50% - 50vw)" }}
       >
         <VStack align="stretch" spacing="3" pos="relative">
           <HStack
             ref={scrollRef}
-            spacing="6"
-            overflowX="auto"
+            spacing={{ base: "4", lg: "6" }}
+            overflowX={{ base: "visible", lg: "auto" }}
             py="2"
             w="100%"
             alignItems="stretch"
-            flexWrap="nowrap"
+            flexDir={{ base: "column", lg: "row" }}
+            flexWrap={{ base: "wrap", lg: "nowrap" }}
             sx={{
-              "& > *": { flex: "0 0 auto" },
-              "&::-webkit-scrollbar": { display: "none" },
-              scrollbarWidth: "none",
+              "& > *": { flex: { base: "1 1 auto", lg: "0 0 auto" } },
+              "&::-webkit-scrollbar": { display: { base: "initial", lg: "none" } },
+              scrollbarWidth: { base: "auto", lg: "none" },
             }}
           >
-            <HorizontalShader direction="right" no_contrast={false} />
-            <Box w="10" />
+            <Box display={{ base: "none", lg: "block" }}>
+              <HorizontalShader direction="right" no_contrast={false} />
+            </Box>
+            <Box w="10" display={{ base: "none", lg: "block" }} />
             {ads.map((ad, index) => (
               <Ad ad={ad} key={ad.id || ad.slug || ad.title || String(index)} />
             ))}
-            <Box w="10" />
-            <HorizontalShader direction="left" no_contrast={false} />
+            <Box w="10" display={{ base: "none", lg: "block" }} />
+            <Box display={{ base: "none", lg: "block" }}>
+              <HorizontalShader direction="left" no_contrast={false} />
+            </Box>
           </HStack>
         </VStack>
       </Box>
-      <Box w="100%">
+      <Box w="100%" display={{ base: "none", lg: "block" }}>
         <HStack justifyContent="space-between" spacing="2">
           <Button
             onClick={() => scrollByAmount("left")}

@@ -108,6 +108,19 @@ export default function MakerEditPage({
     );
   }, [dispatch, maker, makerDraft]);
   const reviews = Array.isArray(maker.reviews) ? maker.reviews : null;
+  const currentLevelRef = makerDraft?.p2p_level ?? maker.p2p_level ?? null;
+  const currentLevelDefinition =
+    p2pLevels?.find((level) => {
+      if (!currentLevelRef) return false;
+      if (currentLevelRef.id && level?.id) {
+        return String(level.id) === String(currentLevelRef.id);
+        }
+        return level?.level === currentLevelRef.level;
+    }) ??
+    (!currentLevelRef
+      ? p2pLevels?.find((level) => level?.level === 1 || String(level?.id) === "1")
+      : null) ??
+    null;
 
   return (
     <>
@@ -139,7 +152,7 @@ export default function MakerEditPage({
           <BoxWrapper variant="no_contrast" data-editing="true" mt="20">
             <MakerTopPanel />
             <Divider my="4" />
-            <MakerStats maker={maker} />
+            <MakerStats maker={maker} levelDefinition={currentLevelDefinition} />
           </BoxWrapper>
           <EditOffers offers={offers} />
           <MakerDescriptionEdit description={maker.description} />

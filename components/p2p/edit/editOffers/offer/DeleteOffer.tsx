@@ -5,6 +5,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Text,
 } from "@chakra-ui/react";
 import React from "react";
 import { RxCross2 } from "react-icons/rx";
@@ -33,8 +34,20 @@ export default function DeleteOffer({
         as={Button}
         onClick={(event) => (!isFull ? handleDelete(event) : null)}
         variant={isFull ? "error" : "ghost"}
+        w={isFull ? "100%" : undefined}
+        justifyContent={isFull ? "center" : undefined}
+        leftIcon={
+          isFull ? undefined : <RiDeleteBin2Fill size="1.2rem" />
+        }
       >
-        <RiDeleteBin2Fill size="1.2rem" />
+        {isFull ? (
+          <HStack spacing="2" justifyContent="center" w="100%">
+            <RiDeleteBin2Fill size="1.2rem" />
+            <Text display={{ base: "inline", lg: "none" }}>Удалить</Text>
+          </HStack>
+        ) : (
+          <RiDeleteBin2Fill size="1.2rem" />
+        )}
       </MenuButton>
       <MenuList bgColor="red.800" minW="200px" zIndex="500">
         <MenuItem

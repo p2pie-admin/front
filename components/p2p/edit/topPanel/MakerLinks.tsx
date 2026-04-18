@@ -86,6 +86,9 @@ export default function MakersLinks() {
         as={Button}
         onClick={(e) => e.stopPropagation()}
         variant="no_contrast"
+        size={{ base: "sm", lg: "md" } as any}
+        minW="unset"
+        px={{ base: 3, lg: 4 }}
       >
         <FaLink size="1rem" />
       </MenuButton>
