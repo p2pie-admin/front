@@ -13,23 +13,25 @@ const DirectionsPicker = ({
     (state) => state.main.p2pFullOffers.length,
   );
   const [opened, setOpened] = useState(0);
+  const shouldAutoScrollRef = useRef(false);
+  const hasInitializedCountRef = useRef(false);
 
   const handleExpand = (event: any, index: number) => {
     if (index !== opened) return;
     event.preventDefault();
     event.stopPropagation();
+    shouldAutoScrollRef.current = true;
     setOpened(index);
   };
 
   const prevOpenedRef = useRef(opened);
-  const hasHandledInitialOpenedRef = useRef(false);
   useEffect(() => {
     const prevOpened = prevOpenedRef.current;
     prevOpenedRef.current = opened;
-    if (!hasHandledInitialOpenedRef.current) {
-      hasHandledInitialOpenedRef.current = true;
+    if (!shouldAutoScrollRef.current) {
       return;
     }
+    shouldAutoScrollRef.current = false;
     if (prevOpened === opened) return;
     if (prevOpened === 1000 || opened === 1000) return;
     const timer = window.setTimeout(() => {
@@ -46,6 +48,19 @@ const DirectionsPicker = ({
     () => Array.from({ length: renderCount }, (_, index) => index),
     [renderCount],
   );
+
+  const prevRenderCountRef = useRef(renderCount);
+  useEffect(() => {
+    const prevRenderCount = prevRenderCountRef.current;
+    prevRenderCountRef.current = renderCount;
+    if (!hasInitializedCountRef.current) {
+      hasInitializedCountRef.current = true;
+      return;
+    }
+    if (renderCount <= prevRenderCount) return;
+    shouldAutoScrollRef.current = true;
+    setOpened(renderCount - 1);
+  }, [renderCount]);
 
   return (
     <VStack align="stretch" spacing="6" px={{ base: 0, lg: 2 }}>

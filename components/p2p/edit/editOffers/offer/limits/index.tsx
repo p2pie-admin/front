@@ -1,4 +1,4 @@
-import { Box, Divider, HStack } from "@chakra-ui/react";
+import { Box, Divider, Stack } from "@chakra-ui/react";
 import React from "react";
 import OfferLimitSlider from "./OfferLimitSlider";
 import OfferLimitInput from "./OfferLimitInput";
@@ -39,21 +39,31 @@ export default function OfferLimits({
 
   return (
     <Box w="100%">
-      <HStack w="fit-content" spacing="3" my="2">
+      <Stack
+        w="fit-content"
+        spacing={{ base: "2", lg: "3" }}
+        my="2"
+        direction={{ base: "column", lg: "row" }}
+        align={{ base: "stretch", lg: "center" }}
+      >
         <OfferLimitInput
           index={offerIndex}
           field="min"
           suggested={suggestedMin}
           fullOffer={fullOffer}
         />
-        <Divider orientation="vertical" h="5" />
+        <Divider
+          orientation={{ base: "horizontal", lg: "vertical" }}
+          h={{ base: "1px", lg: "5" }}
+          w={{ base: "100%", lg: "auto" }}
+        />
         <OfferLimitInput
           index={offerIndex}
           field="max"
           suggested={suggestedMax}
           fullOffer={fullOffer}
         />
-      </HStack>
+      </Stack>
       <OfferLimitSlider
         index={offerIndex}
         min={sliderMin}
