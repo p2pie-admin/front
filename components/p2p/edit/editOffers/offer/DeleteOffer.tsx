@@ -34,14 +34,18 @@ export default function DeleteOffer({
         as={Button}
         onClick={(event) => (!isFull ? handleDelete(event) : null)}
         variant={isFull ? "error" : "ghost"}
-        w={isFull ? "100%" : undefined}
-        justifyContent={isFull ? "center" : undefined}
+        w={isFull ? { base: "100%", lg: "auto" } : undefined}
+        justifyContent={isFull ? { base: "center", lg: "flex-start" } : undefined}
         leftIcon={
           isFull ? undefined : <RiDeleteBin2Fill size="1.2rem" />
         }
       >
         {isFull ? (
-          <HStack spacing="2" justifyContent="center" w="100%">
+          <HStack
+            spacing="2"
+            justifyContent={{ base: "center", lg: "flex-start" }}
+            w={{ base: "100%", lg: "auto" }}
+          >
             <RiDeleteBin2Fill size="1.2rem" />
             <Text display={{ base: "inline", lg: "none" }}>Удалить</Text>
           </HStack>
