@@ -1,0 +1,744 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Telegram Report</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f1ea;
+      --panel: #fffaf3;
+      --text: #2a211b;
+      --muted: #7a6b60;
+      --line: #dfd2c4;
+      --accent: #c46d3b;
+    }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: linear-gradient(180deg, #efe6da 0%, var(--bg) 100%);
+      color: var(--text);
+    }
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 40px 20px 64px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(89, 60, 38, 0.08);
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 34px;
+    }
+    p {
+      margin: 0;
+      color: var(--muted);
+    }
+    .meta {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin: 20px 0 28px;
+      font-size: 15px;
+    }
+    .meta strong {
+      color: var(--accent);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      overflow: hidden;
+      border-radius: 14px;
+    }
+    th, td {
+      padding: 14px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+    }
+    th {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    tr:last-child td {
+      border-bottom: 0;
+    }
+    td:first-child, th:first-child {
+      width: 72px;
+    }
+    td:last-child, th:last-child {
+      width: 160px;
+      text-align: right;
+    }
+    @media (max-width: 640px) {
+      h1 {
+        font-size: 28px;
+      }
+      th, td {
+        padding: 12px 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="card">
+      <h1>Авторы сообщений Telegram</h1>
+      <p>Сортировка по activityScore: число сообщений, усиленное свежестью последнего сообщения автора.</p>
+      <div class="meta">
+        <span><strong>Источник:</strong> telegram.txt</span>
+        <span><strong>Аккаунтов:</strong> 78</span>
+        <span><strong>Сообщений:</strong> 532</span>
+        <span><strong>Фильтр:</strong> до 01.01.2026</span>
+        <span><strong>Формула:</strong> messages × (1 + recencyRatio)</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Аккаунт</th>
+            <th>Сообщений</th>
+            <th>Пример сообщения</th>
+            <th>Последнее сообщение</th>
+            <th>Activity</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>1</td>
+          <td>Ab</td>
+          <td>59</td>
+          <td>Продам usdt Есть объем Курс в личку</td>
+          <td>27.01.2026, 00:46</td>
+          <td>117.719</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Deleted Account</td>
+          <td>52</td>
+          <td>Продам юань объем🍋🍋🍋 (Алипей, вичат) Курс: 12.40 сом на объем Продам usdt объем От 100 000 1к1 за $</td>
+          <td>17.01.2026, 03:26</td>
+          <td>101.394</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>R R</td>
+          <td>33</td>
+          <td>In reply to this message Если просто адрес, то можешь скинуть</td>
+          <td>15.01.2026, 09:42</td>
+          <td>64.083</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Kana</td>
+          <td>32</td>
+          <td>Продам 250₽ по 1.103 0703884888</td>
+          <td>03.01.2026, 06:30</td>
+          <td>60.360</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Money Is Power</td>
+          <td>26</td>
+          <td>Продам usdt 500к Либо частями от 100к Бишкек</td>
+          <td>22.01.2026, 01:17</td>
+          <td>51.283</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>$$$$$</td>
+          <td>26</td>
+          <td>Продам usdt 80k за $ 1:1</td>
+          <td>22.01.2026, 00:04</td>
+          <td>51.276</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>Investment Trust</td>
+          <td>24</td>
+          <td>Продам 380000 usdt Личная встреча в офисе -%</td>
+          <td>27.01.2026, 03:27</td>
+          <td>47.898</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>Islam</td>
+          <td>21</td>
+          <td>In reply to this message Когда ищут срочно продают по низу рынка а не наоборот 😁 Next messages</td>
+          <td>28.01.2026, 01:41</td>
+          <td>42.000</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>€$€$€$ !</td>
+          <td>20</td>
+          <td>Продам доллар 87.7 15000 микраши</td>
+          <td>28.01.2026, 00:19</td>
+          <td>39.995</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>Mustafa Sadyrov</td>
+          <td>19</td>
+          <td>Куплю тезер -02 Моссовет Личная встреча</td>
+          <td>21.01.2026, 23:26</td>
+          <td>37.469</td>
+        </tr>
+        <tr>
+          <td>11</td>
+          <td>Амаль</td>
+          <td>19</td>
+          <td>Куплю 6300 usdt 87.70 Перевод на мбанк, оптима</td>
+          <td>21.01.2026, 23:24</td>
+          <td>37.469</td>
+        </tr>
+        <tr>
+          <td>12</td>
+          <td>Group Help</td>
+          <td>18</td>
+          <td>@Croissant_01 [1043994786] заблокирован(а). ✅ Разблокировать</td>
+          <td>15.01.2026, 09:38</td>
+          <td>34.954</td>
+        </tr>
+        <tr>
+          <td>13</td>
+          <td>D . Y</td>
+          <td>14</td>
+          <td>Куплю 180,000 usdt Личная встреча</td>
+          <td>14.01.2026, 23:39</td>
+          <td>27.160</td>
+        </tr>
+        <tr>
+          <td>14</td>
+          <td>Нур</td>
+          <td>13</td>
+          <td>Продам usdt Личная встреча</td>
+          <td>28.01.2026, 00:23</td>
+          <td>25.997</td>
+        </tr>
+        <tr>
+          <td>15</td>
+          <td>Маке</td>
+          <td>10</td>
+          <td>Продаю доллар 2800$ Курс 87,8</td>
+          <td>27.01.2026, 11:50</td>
+          <td>19.974</td>
+        </tr>
+        <tr>
+          <td>16</td>
+          <td>Крипта и Валюта • KG Обмен Бишкек</td>
+          <td>10</td>
+          <td>Перед сделкой обязательно напишите админу чтобы не нарваться на мошенников! Админ: @tellme_7 @tellme_8</td>
+          <td>08.01.2026, 02:14</td>
+          <td>19.084</td>
+        </tr>
+        <tr>
+          <td>17</td>
+          <td>Boxa</td>
+          <td>7</td>
+          <td>Продам $4000 87.70</td>
+          <td>23.01.2026, 14:34</td>
+          <td>13.857</td>
+        </tr>
+        <tr>
+          <td>18</td>
+          <td>А А</td>
+          <td>7</td>
+          <td>Куплю доллар 5200 87,5 район джал</td>
+          <td>11.01.2026, 09:13</td>
+          <td>13.464</td>
+        </tr>
+        <tr>
+          <td>19</td>
+          <td>Bad</td>
+          <td>6</td>
+          <td>Продам 200к usdt Личная встреча в центре</td>
+          <td>15.01.2026, 00:36</td>
+          <td>11.641</td>
+        </tr>
+        <tr>
+          <td>20</td>
+          <td>Bucks💰</td>
+          <td>6</td>
+          <td>In reply to this message Добавь меня в контакты или напиши мне</td>
+          <td>12.01.2026, 11:31</td>
+          <td>11.571</td>
+        </tr>
+        <tr>
+          <td>21</td>
+          <td>Milan Abak1rov</td>
+          <td>6</td>
+          <td>35,000€ сатам под банк 102,6 ЦУМ 0705511061</td>
+          <td>06.01.2026, 03:49</td>
+          <td>11.397</td>
+        </tr>
+        <tr>
+          <td>22</td>
+          <td>Bek</td>
+          <td>6</td>
+          <td>Ассалам алейкум, 4650$ бар Бишкек, юсдт керек на сегодня личная встреча</td>
+          <td>05.01.2026, 00:40</td>
+          <td>11.366</td>
+        </tr>
+        <tr>
+          <td>23</td>
+          <td>A</td>
+          <td>5</td>
+          <td>Куплю USDT на 45000$ предлагайте курс! 0509000111</td>
+          <td>23.01.2026, 05:21</td>
+          <td>9.889</td>
+        </tr>
+        <tr>
+          <td>24</td>
+          <td>Nurs</td>
+          <td>5</td>
+          <td>Если просят просто адрес кошелька, чтобы проверить чистоту тезера, могу ли я скинуть ? Или это тоже новая схема ?</td>
+          <td>15.01.2026, 09:41</td>
+          <td>9.710</td>
+        </tr>
+        <tr>
+          <td>25</td>
+          <td>Тито</td>
+          <td>5</td>
+          <td>In reply to this message В Тиньков открываешь виза карту потом на эту виза карту перевод делаешь и все</td>
+          <td>09.01.2026, 01:50</td>
+          <td>9.564</td>
+        </tr>
+        <tr>
+          <td>26</td>
+          <td>Айбек Кадыров</td>
+          <td>4</td>
+          <td>куплю Usdt курс 1/1$</td>
+          <td>15.01.2026, 05:43</td>
+          <td>7.765</td>
+        </tr>
+        <tr>
+          <td>27</td>
+          <td>Grizz</td>
+          <td>4</td>
+          <td>In reply to this message Да сторонние сайты ваще нельзя подключать к своему кашельку</td>
+          <td>11.01.2026, 03:39</td>
+          <td>7.690</td>
+        </tr>
+        <tr>
+          <td>28</td>
+          <td>🦇</td>
+          <td>3</td>
+          <td>7.500usdt продам 1-1 горит</td>
+          <td>28.01.2026, 01:39</td>
+          <td>6.000</td>
+        </tr>
+        <tr>
+          <td>29</td>
+          <td>Bars Bars</td>
+          <td>3</td>
+          <td>Здравствуйте!! Куплю 26000 usdt!</td>
+          <td>27.01.2026, 06:34</td>
+          <td>5.989</td>
+        </tr>
+        <tr>
+          <td>30</td>
+          <td>Самат Шайлообеков</td>
+          <td>3</td>
+          <td>Есть 3 000 000 на каспи, обменяю на сомы</td>
+          <td>24.01.2026, 16:14</td>
+          <td>5.953</td>
+        </tr>
+        <tr>
+          <td>31</td>
+          <td>K N</td>
+          <td>3</td>
+          <td>Продаю 10.000 usdt личная встреча +0.3</td>
+          <td>22.01.2026, 11:07</td>
+          <td>5.923</td>
+        </tr>
+        <tr>
+          <td>32</td>
+          <td>Zabihillo</td>
+          <td>3</td>
+          <td>Юань алам</td>
+          <td>18.01.2026, 12:12</td>
+          <td>5.868</td>
+        </tr>
+        <tr>
+          <td>33</td>
+          <td>mk</td>
+          <td>3</td>
+          <td>Продам 100000 рубль на карту 1.10 в личку</td>
+          <td>14.01.2026, 04:07</td>
+          <td>5.809</td>
+        </tr>
+        <tr>
+          <td>34</td>
+          <td>Братик</td>
+          <td>2</td>
+          <td>In reply to this message сколько нужно ?</td>
+          <td>27.01.2026, 07:05</td>
+          <td>3.993</td>
+        </tr>
+        <tr>
+          <td>35</td>
+          <td>BM</td>
+          <td>2</td>
+          <td>Есть 25000$ в Оше,нужны наличные в Бишкеке срочно</td>
+          <td>26.01.2026, 11:21</td>
+          <td>3.985</td>
+        </tr>
+        <tr>
+          <td>36</td>
+          <td>Tron</td>
+          <td>2</td>
+          <td>Предоставляем услуги : 1- Приемка наличных через банки КР 2 - Открытие счетов, карт 3 - Регистрация ООО, ИП 4 - помощь в покупке usdt .z</td>
+          <td>26.01.2026, 06:23</td>
+          <td>3.983</td>
+        </tr>
+        <tr>
+          <td>37</td>
+          <td>A.M.R. Rashidbek</td>
+          <td>2</td>
+          <td>Куплю доллары Курс 87.50 Сумма 40.000$ Политех Жал</td>
+          <td>26.01.2026, 02:14</td>
+          <td>3.982</td>
+        </tr>
+        <tr>
+          <td>38</td>
+          <td>Дас</td>
+          <td>2</td>
+          <td>Продаю 5000$, 87.6, асанбай продаю</td>
+          <td>22.01.2026, 06:31</td>
+          <td>3.947</td>
+        </tr>
+        <tr>
+          <td>39</td>
+          <td>King Kong</td>
+          <td>2</td>
+          <td>Нужны usdt В Новосибирске дам рубли Личная встреча!</td>
+          <td>22.01.2026, 04:31</td>
+          <td>3.946</td>
+        </tr>
+        <tr>
+          <td>40</td>
+          <td>Улан Молдалиев</td>
+          <td>2</td>
+          <td>87.7</td>
+          <td>22.01.2026, 02:02</td>
+          <td>3.945</td>
+        </tr>
+        <tr>
+          <td>41</td>
+          <td>Ооо</td>
+          <td>2</td>
+          <td>Продам 660 юсдт по 89</td>
+          <td>16.01.2026, 06:07</td>
+          <td>3.892</td>
+        </tr>
+        <tr>
+          <td>42</td>
+          <td>Сагынбек Абдирайимов</td>
+          <td>2</td>
+          <td>Куплю доллар 87,50</td>
+          <td>15.01.2026, 06:41</td>
+          <td>3.883</td>
+        </tr>
+        <tr>
+          <td>43</td>
+          <td>👌</td>
+          <td>2</td>
+          <td>Куплю доллар 70.000$ Курс 87.75 0508599499 Личная встреча</td>
+          <td>07.01.2026, 23:37</td>
+          <td>3.816</td>
+        </tr>
+        <tr>
+          <td>44</td>
+          <td>Mustafa</td>
+          <td>2</td>
+          <td>Продам 4200 сом Деньги на мбанке Мне нужны рубли на российском банке</td>
+          <td>03.01.2026, 21:09</td>
+          <td>3.778</td>
+        </tr>
+        <tr>
+          <td>45</td>
+          <td>𝐂𝐫𝐲𝐩𝐭𝐨𝐅𝐥𝐨𝐰</td>
+          <td>2</td>
+          <td>Sticker Not included, change data exporting settings to download. 🍟, 71.8 KB</td>
+          <td>Не удалось определить</td>
+          <td>2.000</td>
+        </tr>
+        <tr>
+          <td>46</td>
+          <td>Болот</td>
+          <td>1</td>
+          <td>О</td>
+          <td>28.01.2026, 00:14</td>
+          <td>2.000</td>
+        </tr>
+        <tr>
+          <td>47</td>
+          <td>Li Hua</td>
+          <td>1</td>
+          <td>Добрый вечер, есть кто в Оше продаёт USDT за наличку?</td>
+          <td>27.01.2026, 06:50</td>
+          <td>1.996</td>
+        </tr>
+        <tr>
+          <td>48</td>
+          <td>☺️ 🥰</td>
+          <td>1</td>
+          <td>Есть рубль поменяю на сом !</td>
+          <td>26.01.2026, 06:10</td>
+          <td>1.992</td>
+        </tr>
+        <tr>
+          <td>49</td>
+          <td>Саддам</td>
+          <td>1</td>
+          <td>Куплю 20тыс $ 87.58</td>
+          <td>26.01.2026, 03:04</td>
+          <td>1.991</td>
+        </tr>
+        <tr>
+          <td>50</td>
+          <td>Айнура Жумабек кызы</td>
+          <td>1</td>
+          <td>Куплю доллар 19 мин $ 87.55</td>
+          <td>26.01.2026, 03:02</td>
+          <td>1.991</td>
+        </tr>
+        <tr>
+          <td>51</td>
+          <td>Рыскулов Ислам</td>
+          <td>1</td>
+          <td>Куплю доллар 11Т 87,40</td>
+          <td>25.01.2026, 23:03</td>
+          <td>1.990</td>
+        </tr>
+        <tr>
+          <td>52</td>
+          <td>Sh</td>
+          <td>1</td>
+          <td>Куплю usdt на 5000$ 0707100057</td>
+          <td>24.01.2026, 01:00</td>
+          <td>1.982</td>
+        </tr>
+        <tr>
+          <td>53</td>
+          <td>Timur</td>
+          <td>1</td>
+          <td>Здравствуйте , нужно 20000 рублей на карту сбербанка, оплачу мбанк или оптиму.</td>
+          <td>23.01.2026, 11:28</td>
+          <td>1.979</td>
+        </tr>
+        <tr>
+          <td>54</td>
+          <td>Md❄ .</td>
+          <td>1</td>
+          <td>Ассаламу алейкум Куплю 1500USDT 1=1 оптима</td>
+          <td>21.01.2026, 12:35</td>
+          <td>1.970</td>
+        </tr>
+        <tr>
+          <td>55</td>
+          <td>Radmir Islyamov</td>
+          <td>1</td>
+          <td>куплю 1000 usdt за доллары наличкой 1=1 пишите в личку</td>
+          <td>19.01.2026, 16:24</td>
+          <td>1.962</td>
+        </tr>
+        <tr>
+          <td>56</td>
+          <td>1 1</td>
+          <td>1</td>
+          <td>Юань на карту 6.90</td>
+          <td>19.01.2026, 03:39</td>
+          <td>1.959</td>
+        </tr>
+        <tr>
+          <td>57</td>
+          <td>Gfx</td>
+          <td>1</td>
+          <td>Продам 10к юсдт. Нужны сомы Бишкек курс 87 Скам мимо 👍</td>
+          <td>18.01.2026, 22:59</td>
+          <td>1.958</td>
+        </tr>
+        <tr>
+          <td>58</td>
+          <td>Ш</td>
+          <td>1</td>
+          <td>Куплю 15.000 usdt -0.2%</td>
+          <td>18.01.2026, 06:36</td>
+          <td>1.955</td>
+        </tr>
+        <tr>
+          <td>59</td>
+          <td>King 👑</td>
+          <td>1</td>
+          <td>Нужно 20.400 юаней на Али пей У кого есть напишите !!!</td>
+          <td>16.01.2026, 06:15</td>
+          <td>1.946</td>
+        </tr>
+        <tr>
+          <td>60</td>
+          <td>Главное ни на какие ссылки не переходи</td>
+          <td>1</td>
+          <td>👍</td>
+          <td>15.01.2026, 09:42</td>
+          <td>1.942</td>
+        </tr>
+        <tr>
+          <td>61</td>
+          <td>Темирлан</td>
+          <td>1</td>
+          <td>Нужны рубли 400к 1.095</td>
+          <td>15.01.2026, 09:23</td>
+          <td>1.942</td>
+        </tr>
+        <tr>
+          <td>62</td>
+          <td>🔴🔴🔴</td>
+          <td>1</td>
+          <td>Ассолому алейкум , 170к $ бар Ошто Бишкектен алыш кк Эртен тушко чейин</td>
+          <td>14.01.2026, 13:07</td>
+          <td>1.938</td>
+        </tr>
+        <tr>
+          <td>63</td>
+          <td>Rm777</td>
+          <td>1</td>
+          <td>Куплю 200к usdt Личная встреча Какой курс?</td>
+          <td>14.01.2026, 03:05</td>
+          <td>1.936</td>
+        </tr>
+        <tr>
+          <td>64</td>
+          <td>K</td>
+          <td>1</td>
+          <td>Продам рубли 520000₽ 1.12 срочно</td>
+          <td>14.01.2026, 00:03</td>
+          <td>1.935</td>
+        </tr>
+        <tr>
+          <td>65</td>
+          <td>Thisislocko</td>
+          <td>1</td>
+          <td>Ассаламу алейкум,мне 96 юсдт надо продать, маленькая сумма,но в п2п все офлайн</td>
+          <td>13.01.2026, 15:39</td>
+          <td>1.934</td>
+        </tr>
+        <tr>
+          <td>66</td>
+          <td>А</td>
+          <td>1</td>
+          <td>Продам старый $на новый $ . 2000$</td>
+          <td>11.01.2026, 09:34</td>
+          <td>1.924</td>
+        </tr>
+        <tr>
+          <td>67</td>
+          <td>Шаки</td>
+          <td>1</td>
+          <td>Продаю оптиму и сим карту и мбанк с картой</td>
+          <td>11.01.2026, 06:14</td>
+          <td>1.923</td>
+        </tr>
+        <tr>
+          <td>68</td>
+          <td>In Gabbi</td>
+          <td>1</td>
+          <td>In reply to this message Компаньон банк по номеру телефона можно отправлять на Тинькофф</td>
+          <td>10.01.2026, 03:07</td>
+          <td>1.918</td>
+        </tr>
+        <tr>
+          <td>69</td>
+          <td>Azat</td>
+          <td>1</td>
+          <td>Продам 200usdt</td>
+          <td>10.01.2026, 02:58</td>
+          <td>1.918</td>
+        </tr>
+        <tr>
+          <td>70</td>
+          <td>Заебал бля, уже 7 жалоба поступает; забивается и пропадает</td>
+          <td>1</td>
+          <td>👍 4</td>
+          <td>09.01.2026, 05:18</td>
+          <td>1.914</td>
+        </tr>
+        <tr>
+          <td>71</td>
+          <td>Ali</td>
+          <td>1</td>
+          <td>6000$ доллар керек, сом бар, ким алмашат ? 0705583080</td>
+          <td>08.01.2026, 11:31</td>
+          <td>1.910</td>
+        </tr>
+        <tr>
+          <td>72</td>
+          <td>Ramires Tornadoes</td>
+          <td>1</td>
+          <td>In reply to this message Алейкум салам золотая корона менен которсо болот</td>
+          <td>08.01.2026, 09:14</td>
+          <td>1.910</td>
+        </tr>
+        <tr>
+          <td>73</td>
+          <td>Orozaly Madishov</td>
+          <td>1</td>
+          <td>Ассалому алейкум мбанктан тинькофко кантип акча которсо болот</td>
+          <td>08.01.2026, 09:03</td>
+          <td>1.910</td>
+        </tr>
+        <tr>
+          <td>74</td>
+          <td>Dastan</td>
+          <td>1</td>
+          <td>Куплю 800 usdt Личная встреча</td>
+          <td>08.01.2026, 04:13</td>
+          <td>1.909</td>
+        </tr>
+        <tr>
+          <td>75</td>
+          <td>🥷 🖤</td>
+          <td>1</td>
+          <td>Куплю 50к юсдт Пишите в личку</td>
+          <td>08.01.2026, 01:48</td>
+          <td>1.908</td>
+        </tr>
+        <tr>
+          <td>76</td>
+          <td>Эгемберди Сагыналиев</td>
+          <td>1</td>
+          <td>Асалам алейкуим нужно поменять туртменские манаты 87 тысяч на доллар</td>
+          <td>07.01.2026, 04:17</td>
+          <td>1.904</td>
+        </tr>
+        <tr>
+          <td>77</td>
+          <td>🍋</td>
+          <td>1</td>
+          <td>Ассалам алейкум 11к $ курс 87,5 мбанк при встрече либо наличка на сомы</td>
+          <td>06.01.2026, 13:01</td>
+          <td>1.901</td>
+        </tr>
+        <tr>
+          <td>78</td>
+          <td>E. Zh.</td>
+          <td>1</td>
+          <td>Салам алейкум. Есть кто доллары продает?</td>
+          <td>05.01.2026, 11:17</td>
+          <td>1.896</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+</html>

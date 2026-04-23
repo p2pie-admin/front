@@ -36,9 +36,6 @@ export default function DeleteOffer({
         variant={isFull ? "error" : "ghost"}
         w={isFull ? { base: "100%", lg: "auto" } : undefined}
         justifyContent={isFull ? { base: "center", lg: "flex-start" } : undefined}
-        leftIcon={
-          isFull ? undefined : <RiDeleteBin2Fill size="1.2rem" />
-        }
       >
         {isFull ? (
           <HStack

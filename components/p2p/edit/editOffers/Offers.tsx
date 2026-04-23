@@ -14,7 +14,9 @@ const DirectionsPicker = ({
   const fullOffersCount = useAppSelector(
     (state) => state.main.p2pFullOffers.length,
   );
-  const [opened, setOpened] = useState(1000);
+  const [opened, setOpened] = useState(() =>
+    (offers?.length || fullOffersCount) > 0 ? 0 : 1000,
+  );
   const shouldAutoScrollRef = useRef(false);
   const prevAddDirectionSignalRef = useRef(addDirectionSignal);
 

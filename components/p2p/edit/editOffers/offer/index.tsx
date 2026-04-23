@@ -169,6 +169,67 @@ const Offer = ({
   }, [dispatch, index, dir, currencyPair]);
 
   const dirExists = fullOffer.givePm && fullOffer.getPm;
+  const isExpanded = index == opened && !!dirExists;
+  const isInitialExpanded = index === 0 && isExpanded;
+
+  const offerDetails = (
+    <>
+      <Divider my="4" />
+      <HStack
+        w="100%"
+        onClick={(event) => event.stopPropagation()}
+        alignItems="start"
+        mb="4"
+        flexDir={{ base: "column", lg: "row" }}
+        spacing={{ base: "4", lg: "0" }}
+      >
+        <VStack spacing="4" w="100%" mx={{ base: 0, lg: "4" }}>
+          <OfferCourse fullOffer={fullOffer} />
+          <OfferLimits fullOffer={fullOffer} />
+          <OfferFee fullOffer={fullOffer} />
+        </VStack>
+        <Divider
+          orientation={{ base: "horizontal", lg: "vertical" }}
+          h={{ base: "1px", lg: "200px" }}
+          w={{ base: "100%", lg: "auto" }}
+          mr={{ base: 0, lg: "1" }}
+        />
+        <VStack
+          w="100%"
+          spacing="2"
+          alignItems={{ base: "stretch", lg: "end" }}
+        >
+          <Box
+            w="100%"
+            display="flex"
+            justifyContent={{ base: "center", lg: "flex-end" }}
+          >
+            <Chart
+              giveCur={givePm?.currency.code.toUpperCase()}
+              getCur={getPm?.currency.code.toUpperCase()}
+              noRate
+              //currentRateOverride={googleRate}
+            />
+          </Box>
+          <RightOptions fullOffer={fullOffer} />
+        </VStack>
+      </HStack>
+      <Divider my="4" />
+      <OfferExplanation fullOffer={fullOffer} />
+      <Divider my="4" />
+      <HStack
+        w="100%"
+        justifyContent="space-between"
+        my="4"
+        spacing="4"
+        flexDir={{ base: "column", lg: "row" }}
+        alignItems={{ base: "stretch", lg: "center" }}
+      >
+        <OfferParameters offerIndex={index} />
+        <DeleteOffer index={index} isFull />
+      </HStack>
+    </>
+  );
 
   return (
     <Box3D
@@ -223,63 +284,15 @@ const Offer = ({
           )}
         </HStack>
       </Grid>
-      <Collapse in={index == opened && !!dirExists}>
-        {/* <HStack> */}
-        <Divider my="4" />
-        <HStack
-          w="100%"
-          onClick={(event) => event.stopPropagation()}
-          alignItems="start"
-          mb="4"
-          flexDir={{ base: "column", lg: "row" }}
-          spacing={{ base: "4", lg: "0" }}
-        >
-          <VStack spacing="4" w="100%" mx={{ base: 0, lg: "4" }}>
-            <OfferCourse fullOffer={fullOffer} />
-            <OfferLimits fullOffer={fullOffer} />
-            <OfferFee fullOffer={fullOffer} />
-          </VStack>
-          <Divider
-            orientation={{ base: "horizontal", lg: "vertical" }}
-            h={{ base: "1px", lg: "200px" }}
-            w={{ base: "100%", lg: "auto" }}
-            mr={{ base: 0, lg: "1" }}
-          />
-          <VStack
-            w="100%"
-            spacing="2"
-            alignItems={{ base: "stretch", lg: "end" }}
-          >
-            <Box
-              w="100%"
-              display="flex"
-              justifyContent={{ base: "center", lg: "flex-end" }}
-            >
-              <Chart
-                giveCur={givePm?.currency.code.toUpperCase()}
-                getCur={getPm?.currency.code.toUpperCase()}
-                noRate
-                //currentRateOverride={googleRate}
-              />
-            </Box>
-            <RightOptions fullOffer={fullOffer} />
-          </VStack>
-        </HStack>
-        <Divider my="4" />
-        <OfferExplanation fullOffer={fullOffer} />
-        <Divider my="4" />
-        <HStack
-          w="100%"
-          justifyContent="space-between"
-          my="4"
-          spacing="4"
-          flexDir={{ base: "column", lg: "row" }}
-          alignItems={{ base: "stretch", lg: "center" }}
-        >
-          <OfferParameters offerIndex={index} />
-          <DeleteOffer index={index} isFull />
-        </HStack>
-      </Collapse>
+      {isExpanded ? (
+        isInitialExpanded ? (
+          offerDetails
+        ) : (
+          <Collapse in={isExpanded} animateOpacity>
+            {offerDetails}
+          </Collapse>
+        )
+      ) : null}
     </Box3D>
   );
 };

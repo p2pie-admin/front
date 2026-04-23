@@ -19,7 +19,7 @@ const DirectionSelectorModal = ({
       <>
         Что клиент{" "}
         <Box as="span" color={primary}>
-          продает
+          отдает тебе
         </Box>
         ?
       </>
@@ -27,7 +27,7 @@ const DirectionSelectorModal = ({
       <>
         Что клиент{" "}
         <Box as="span" color={primary}>
-          покупает
+          получает от тебя
         </Box>
         ?
       </>

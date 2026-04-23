@@ -27,7 +27,7 @@ export default function Offer({
       columnGap="2"
     >
       <Box gridColumn="1" display="flex" flexDir="column" gap="1">
-        <PmName pm={givePm} isFull={false} />
+        <PmName pm={givePm} isFull={true} />
       </Box>
 
       <Box gridColumn="2" justifySelf="center">
@@ -35,7 +35,7 @@ export default function Offer({
       </Box>
 
       <Box gridColumn="3" display="flex" flexDir="column" gap="1">
-        <PmName pm={getPm} isFull={false} />
+        <PmName pm={getPm} isFull={true} />
       </Box>
     </Grid>
   );

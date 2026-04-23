@@ -50,8 +50,8 @@ const DirectionPmButton = ({
   };
 
   const pmName = getPmNameFromPm(pms[0]);
-  const name = pms[0].en_name;
-  const code = pms[0].currency?.code;
+  const name = pms[0]?.en_name || `${side}`;
+  const code = pms[0]?.currency?.code;
   const nameSameAsCurrency = code?.toUpperCase() === name.toUpperCase();
   //const shortName = getPmNameFromPm(pms[0], true);
 
@@ -102,6 +102,7 @@ const DirectionPmButton = ({
         </VStack>
       )}
       <Text
+        display={{ lg: "unset", base: "none" }}
         hideBelow="lg"
         color="peach.200"
         fontWeight="semibold"
@@ -109,6 +110,16 @@ const DirectionPmButton = ({
         noOfLines={2}
       >
         {!pms?.length ? unselectedPmText : pmName}
+      </Text>
+      <Text
+        display={{ base: "unset", lg: "none" }}
+        hideBelow="lg"
+        color="peach.200"
+        fontWeight="semibold"
+        fontFamily="Montserrat, sans-serif"
+        noOfLines={2}
+      >
+        {!pms?.length ? "" : pmName}
       </Text>
       <Box ml="auto" color="bg.900">
         <MdOutlineKeyboardArrowDown size="1.5rem" />

@@ -10,6 +10,7 @@ import MakerRating from "./MakerRating";
 import { FaCheck } from "react-icons/fa6";
 import { FaXmark } from "react-icons/fa6";
 import MyTooltip from "../../../shared/MyTooltip";
+import NextLevelConditions from "./NextLevelConditions";
 export default function MakerStats({
   maker,
   levelDefinition,
@@ -42,11 +43,11 @@ export default function MakerStats({
     ? level.p2p_conditions
     : Array.isArray(fallbackLevel?.p2p_conditions)
       ? fallbackLevel.p2p_conditions
-    : Array.isArray(level?.conditions)
-      ? level.conditions
-      : Array.isArray(fallbackLevel?.conditions)
-        ? fallbackLevel.conditions
-      : [];
+      : Array.isArray(level?.conditions)
+        ? level.conditions
+        : Array.isArray(fallbackLevel?.conditions)
+          ? fallbackLevel.conditions
+          : [];
   const completedConditionIds = new Set(
     (Array.isArray(maker.p2p_conditions_completed)
       ? maker.p2p_conditions_completed
@@ -81,7 +82,7 @@ export default function MakerStats({
           h="120px"
           mx={{ base: 0, lg: "2" }}
         />
-        <Box w="100%" mt="2">
+        <Box mt="2" w={{ base: "100%", lg: "35%" }}>
           <StatItem
             label="Предложений"
             value={offersCount}
@@ -98,45 +99,20 @@ export default function MakerStats({
             Icon={MdOutlineDateRange}
           />
         </Box>
+        <Divider
+          display={{ base: "none", lg: "unset" }}
+          mt="2"
+          orientation="vertical"
+          h="120px"
+          mx={{ base: 0, lg: "2" }}
+        />
+        <Box display={{ base: "none", lg: "unset" }} w="75%">
+          <NextLevelConditions conditions={conditions} />
+        </Box>
       </HStack>
-      <VStack w="100%" mt="2" spacing="1" alignItems="start">
-        <Text fontSize="sm" mb="2" ml="2" color="bg.400">
-          Для перехода на следующий уровень необходимо:
-        </Text>
-        {conditions.map((c, index) => (
-          <Box3D
-            cursor="pointer"
-            key={c.id || c.description || `condition-${index}`}
-            py="1"
-            px="2"
-            w="100%"
-            variant={c.is_completed ? "contrast" : "extra_contrast"}
-            color={c.is_completed ? "green.300" : "red.300"}
-          >
-            <MyTooltip label={c.description || ""}>
-              <HStack
-                w="100%"
-                justifyContent="space-between"
-                alignItems="flex-start"
-                spacing="3"
-              >
-                <Text
-                  fontSize="sm"
-                  color={c.is_completed ? "bg.400" : "bg.200"}
-                  pr="2"
-                >
-                  {`${index + 1}) ${c.title}`}
-                </Text>
-                {c.is_completed ? (
-                  <FaCheck size="1rem" />
-                ) : (
-                  <FaXmark size="1rem" />
-                )}
-              </HStack>
-            </MyTooltip>
-          </Box3D>
-        ))}
-      </VStack>
+      <Box display={{ base: "unset", lg: "none" }}>
+        <NextLevelConditions conditions={conditions} />
+      </Box>
     </VStack>
   );
 }
