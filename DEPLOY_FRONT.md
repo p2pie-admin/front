@@ -26,6 +26,16 @@ Use the following sequence:
 ```bash
 DOCKER_BUILDKIT=0 docker build -t front:main .
 ```
+4. Activate the newly built image through the root compose project:
+
+```bash
+docker tag root-front:latest "root-front:rollback-$(date +%Y%m%d-%H%M%S)"
+docker tag front:main root-front:latest
+cd /root
+docker compose up -d --no-deps --no-build --force-recreate front
+```
+
+The running container should be `root-front-1`.
 
 ## Why Docker
 
@@ -86,4 +96,5 @@ nginx -t && systemctl reload nginx
 ## Notes
 
 - The build can emit CMS/Strapi warnings if runtime env vars are not present on the build host. That did not block the image build.
+- `next-sitemap` should report the number of collected dynamic paths before the image is tagged for deploy.
 - If the server build path changes, update this file first so the next deploy does not require a fresh investigation.
