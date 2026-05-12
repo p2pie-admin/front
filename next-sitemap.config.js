@@ -535,6 +535,7 @@ const robotsDisallow = [
   "/*?page=",
   "/preview/",
   "/draft/",
+  "/404",
 ];
 
 const robotsTxt = [

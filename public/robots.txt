@@ -24,7 +24,6 @@ Disallow: /messages/
 Disallow: /notifications/
 Disallow: /search
 Disallow: /search/
-Disallow: /404
 Disallow: /*?*
 Disallow: /*?utm_
 Disallow: /*?ref=
@@ -33,5 +32,6 @@ Disallow: /*?filter=
 Disallow: /*?page=
 Disallow: /preview/
 Disallow: /draft/
+Disallow: /404
 
 Sitemap: https://p2pie.com/sitemap.xml

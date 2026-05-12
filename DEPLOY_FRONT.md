@@ -44,6 +44,24 @@ docker compose up -d front
 
 The running container should be `root-front-1`.
 
+If you do not want to watch the server console interactively, run the same
+sequence in the background and write logs to a file:
+
+```bash
+stamp=$(date +%Y%m%d-%H%M%S)
+log=/root/front-deploy-$stamp.log
+(
+  set -e
+  cd /root/front.deploy.tmp
+  git pull --ff-only origin main
+  rsync -a --delete /root/front.deploy.tmp/ /root/front/
+  cd /root
+  docker compose build front
+  docker compose up -d front
+) >"$log" 2>&1 &
+echo "$log"
+```
+
 ## Why Docker
 
 - The server does not have `node` or `yarn` installed directly.
@@ -103,6 +121,7 @@ nginx -t && systemctl reload nginx
 ## Notes
 
 - The Dockerfile defaults `NEXT_PUBLIC_NAME=p2pie`, `NEXT_PUBLIC_BASE=p2pie.com`, and `NEXT_PUBLIC_INDEX=0`. These values are compiled into the browser bundle, so do not build with empty `NEXT_PUBLIC_BASE`; otherwise the client will request malformed hosts like `https://cms./...` and `https://server./...`.
+- `robots.txt` is effectively generated during `postbuild` by `next-sitemap` from `next-sitemap.config.js`. Editing only `public/robots.txt` is not enough; the source of truth for disallow rules must be updated in `next-sitemap.config.js`.
 - The build can emit CMS/Strapi warnings if runtime env vars are not present on the build host. That did not block the image build.
 - `next-sitemap` should report the number of collected dynamic paths before the image is tagged for deploy.
 - If `docker compose build` fails with `ENOSPC`, free disk before retrying. The quickest checks are:
