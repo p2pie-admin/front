@@ -26,6 +26,13 @@ Use the following sequence:
 ```bash
 DOCKER_BUILDKIT=0 docker build -t front:main .
 ```
+
+The Dockerfile defaults `NEXT_PUBLIC_NAME=p2pie`,
+`NEXT_PUBLIC_BASE=p2pie.com`, and `NEXT_PUBLIC_INDEX=0`. These values are
+compiled into the Next.js browser bundle, so do not build with empty
+`NEXT_PUBLIC_BASE`; otherwise the client will request malformed hosts like
+`https://cms./...` and `https://server./...`.
+
 4. Activate the newly built image through the root compose project:
 
 ```bash
