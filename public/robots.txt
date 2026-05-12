@@ -24,6 +24,7 @@ Disallow: /messages/
 Disallow: /notifications/
 Disallow: /search
 Disallow: /search/
+Disallow: /404
 Disallow: /*?*
 Disallow: /*?utm_
 Disallow: /*?ref=
