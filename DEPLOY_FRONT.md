@@ -4,16 +4,24 @@ This file is the short operational context for building the frontend on the depl
 
 ## Local workflow
 
-1. Make and commit the frontend changes in this repository.
-2. If needed, push the branch to GitHub.
-3. Do not open a PR unless explicitly requested.
+1. Work directly on `main`.
+2. Run a local preflight build before deploy:
+
+```bash
+yarn build
+```
+
+3. Fix local build errors before touching the server.
+4. Commit the deployable state to `main` and push it to `origin/main`.
+5. Do not open a PR unless explicitly requested.
 
 ## Remote server
 
 - Host: `172.16.12.91`
 - User: `root`
-- Real git checkout on the server: `/root/front.deploy.tmp`
-- The `/root/front` directory is not the git checkout used for deploy.
+- Canonical git checkout on the server: `/root/front.deploy.tmp`
+- Docker Compose build context for the `front` service: `/root/front`
+- `/root/front` is a working tree used by Compose and must be refreshed from `/root/front.deploy.tmp` before `docker compose build`.
 
 ## Build procedure on the server
 
@@ -21,25 +29,17 @@ Use the following sequence:
 
 1. `cd /root/front.deploy.tmp`
 2. `git pull --ff-only origin main`
-3. Build with Docker:
+3. Sync the checkout into the Compose build context:
 
 ```bash
-DOCKER_BUILDKIT=0 docker build -t front:main .
+rsync -a --delete /root/front.deploy.tmp/ /root/front/
 ```
-
-The Dockerfile defaults `NEXT_PUBLIC_NAME=p2pie`,
-`NEXT_PUBLIC_BASE=p2pie.com`, and `NEXT_PUBLIC_INDEX=0`. These values are
-compiled into the Next.js browser bundle, so do not build with empty
-`NEXT_PUBLIC_BASE`; otherwise the client will request malformed hosts like
-`https://cms./...` and `https://server./...`.
-
-4. Activate the newly built image through the root compose project:
+4. Build and start from `/root`:
 
 ```bash
-docker tag root-front:latest "root-front:rollback-$(date +%Y%m%d-%H%M%S)"
-docker tag front:main root-front:latest
 cd /root
-docker compose up -d --no-deps --no-build --force-recreate front
+docker compose build front
+docker compose up -d front
 ```
 
 The running container should be `root-front-1`.
@@ -48,15 +48,15 @@ The running container should be `root-front-1`.
 
 - The server does not have `node` or `yarn` installed directly.
 - The project build depends on the repository `Dockerfile`, which installs dependencies with `corepack` and `yarn` inside the container.
-- In practice, the legacy Docker builder (`DOCKER_BUILDKIT=0`) completed successfully on this server.
+- `docker compose build front` uses `/root/front` as context, so the sync step is required.
 
 ## What the build does
 
-- Runs the repo `Dockerfile`
+- Runs the repo `Dockerfile` through Docker Compose
 - Installs dependencies
 - Executes `yarn build`
 - Runs `next-sitemap`
-- Produces the image `front:main`
+- Produces the Compose image for service `front`
 
 ## WWW redirect check
 
@@ -102,6 +102,15 @@ nginx -t && systemctl reload nginx
 
 ## Notes
 
+- The Dockerfile defaults `NEXT_PUBLIC_NAME=p2pie`, `NEXT_PUBLIC_BASE=p2pie.com`, and `NEXT_PUBLIC_INDEX=0`. These values are compiled into the browser bundle, so do not build with empty `NEXT_PUBLIC_BASE`; otherwise the client will request malformed hosts like `https://cms./...` and `https://server./...`.
 - The build can emit CMS/Strapi warnings if runtime env vars are not present on the build host. That did not block the image build.
 - `next-sitemap` should report the number of collected dynamic paths before the image is tagged for deploy.
+- If `docker compose build` fails with `ENOSPC`, free disk before retrying. The quickest checks are:
+
+```bash
+df -h / /var/lib/docker
+docker system df
+docker builder prune -af
+```
+
 - If the server build path changes, update this file first so the next deploy does not require a fresh investigation.
