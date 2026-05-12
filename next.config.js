@@ -54,13 +54,6 @@ const nextConfig = {
     ];
 
     redirects.push({
-      source: "/:path*",
-      has: [{ type: "host", value: "www.p2pie.com" }],
-      destination: "https://p2pie.com/:path*",
-      permanent: true,
-    });
-
-    redirects.push({
       source: "/exchanger/:slug",
       destination: "/exchangers/:slug",
       permanent: true,

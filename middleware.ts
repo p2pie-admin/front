@@ -4,7 +4,20 @@ import type { NextRequest } from "next/server";
 
 export function middleware(req: NextRequest) {
   const host = req.headers.get("host") || "";
-  const base = process.env.NEXT_PUBLIC_BASE || "";
+  const hostname = host.split(":")[0].toLowerCase();
+  const base = (process.env.NEXT_PUBLIC_BASE || "p2pie.com")
+    .trim()
+    .replace(/^['"]|['"]$/g, "");
+  const canonicalHost = base.replace(/^https?:\/\//, "").replace(/\/+$/, "");
+
+  if (canonicalHost && hostname === `www.${canonicalHost}`) {
+    const url = req.nextUrl.clone();
+    url.protocol = "https:";
+    url.hostname = canonicalHost;
+    url.port = "";
+    return NextResponse.redirect(url, 301);
+  }
+
   const expectedHost = base ? `front.${base}` : "";
   const isLocal =
     host.startsWith("localhost") || host.startsWith("127.0.0.1");

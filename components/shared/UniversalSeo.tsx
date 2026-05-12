@@ -13,11 +13,13 @@ const UniversalSeo = ({ seo }: { seo: ISEO }) => {
     title,
     description,
     canonicalSlug,
+    keywords,
     updatedAt = new Date().toISOString(),
     breadcrumbs,
   } = seo;
   const fullCanonicalUrl = `https://${process.env.NEXT_PUBLIC_NAME}.com/${canonicalSlug}`;
   const ogType = updatedAt ? "article" : "website";
+  const metaKeywords = keywords?.trim();
 
   const openGraph = {
     type: ogType,
@@ -56,6 +58,11 @@ const UniversalSeo = ({ seo }: { seo: ISEO }) => {
         description={description}
         canonical={fullCanonicalUrl}
         openGraph={openGraph}
+        additionalMetaTags={
+          metaKeywords
+            ? [{ name: "keywords", content: metaKeywords }]
+            : undefined
+        }
       />
       <BreadcrumbJsonLd
         itemListElements={

@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Box, Text, Heading, Divider } from "@chakra-ui/react";
+import { Box, Heading, Divider } from "@chakra-ui/react";
+import DOMPurify from "isomorphic-dompurify";
 import { ICity, IDirText, IPmData } from "../../types/exchange";
 import { IPm } from "../../types/selector";
 import { capitalize } from "../main/side/selector/section/PmGroup/helper";
@@ -26,7 +27,7 @@ export const fillWords = ({
     `/articles/${pm.en_name.toLowerCase().replace(/\s+/g, "-")}`;
 
   const parts = text.split(
-    /(give_name|get_name|give_currency|get_currency|city_name)/g
+    /(give_name|get_name|give_currency|get_currency|city_name)/g,
   );
 
   return parts.map((part, index) => {
@@ -61,6 +62,135 @@ export const fillWords = ({
   });
 };
 
+const allowedHtmlTags = [
+  "a",
+  "b",
+  "br",
+  "em",
+  "h2",
+  "h3",
+  "i",
+  "li",
+  "ol",
+  "p",
+  "strong",
+  "table",
+  "tbody",
+  "td",
+  "th",
+  "thead",
+  "tr",
+  "ul",
+];
+
+const htmlTagPattern = new RegExp(
+  `</?(?:${allowedHtmlTags.join("|")})(?:\\s|>|/)`,
+  "i",
+);
+
+const sanitizeHtml = (html: string) =>
+  DOMPurify.sanitize(html, {
+    ALLOWED_TAGS: allowedHtmlTags,
+    ALLOWED_ATTR: [
+      "colspan",
+      "headers",
+      "href",
+      "id",
+      "rowspan",
+      "scope",
+      "title",
+    ],
+    ALLOW_DATA_ATTR: false,
+  });
+
+const DirTextBody = ({ text }: { text?: string }) => {
+  if (!text?.trim()) return null;
+
+  const hasHtml = htmlTagPattern.test(text);
+
+  if (!hasHtml) {
+    return <TextToHTML text={text} />;
+  }
+
+  return (
+    <Box
+      className="dir-text-content"
+      color="bg.200"
+      sx={{
+        "& p": {
+          my: "3",
+          lineHeight: "1.85",
+        },
+        "& strong, & b": {
+          color: "bg.100",
+          fontWeight: "700",
+        },
+        "& em, & i": {
+          fontStyle: "italic",
+        },
+        "& h2": {
+          color: "bg.100",
+          fontSize: { base: "xl", md: "2xl" },
+          fontWeight: "700",
+          lineHeight: "1.3",
+          mt: "8",
+          mb: "3",
+        },
+        "& h3": {
+          color: "bg.100",
+          fontSize: { base: "lg", md: "xl" },
+          fontWeight: "700",
+          lineHeight: "1.35",
+          mt: "6",
+          mb: "2",
+        },
+        "& ul, & ol": {
+          my: "3",
+          pl: "6",
+        },
+        "& li": {
+          my: "2",
+          lineHeight: "1.75",
+        },
+        "& a": {
+          color: "peach.300",
+          fontWeight: "600",
+          textDecoration: "underline",
+          textUnderlineOffset: "3px",
+        },
+        "& a:hover": {
+          color: "peach.200",
+        },
+        "& table": {
+          width: "100%",
+          my: "5",
+          borderCollapse: "collapse",
+          overflowX: "auto",
+          display: "block",
+        },
+        "& thead": {
+          bg: "peach.900",
+        },
+        "& th, & td": {
+          borderWidth: "1px",
+          borderColor: "bg.200",
+          color: "bg.200",
+          px: "3",
+          py: "3",
+          textAlign: "left",
+          verticalAlign: "top",
+          lineHeight: "1.6",
+        },
+        "& th": {
+          color: "bg.100",
+          fontWeight: "700",
+        },
+      }}
+      dangerouslySetInnerHTML={{ __html: sanitizeHtml(text) }}
+    />
+  );
+};
+
 const DirText = ({
   dirText,
   givePmData,
@@ -84,7 +214,7 @@ const DirText = ({
 
       <Divider my="5" />
 
-      <Text>{dirText.text}</Text>
+      <DirTextBody text={dirText.text} />
     </Box>
   );
 };

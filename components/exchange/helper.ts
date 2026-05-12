@@ -292,6 +292,7 @@ export const generateExchangeSeo = ({
   return {
     title: dirText?.seo_title || "",
     description: dirText?.seo_description || "",
+    keywords: dirText?.subheader || null,
     canonicalSlug: slugPath,
     breadcrumbs: [
       {

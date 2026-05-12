@@ -18,6 +18,7 @@ export type ISEO = {
   title: string;
   description: string;
   canonicalSlug: string;
+  keywords?: string | null;
   updatedAt?: string | null;
   breadcrumbs?: BreadcrumbItem[];
 };

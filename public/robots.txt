@@ -1,7 +1,36 @@
-User-agent: Yandex
-Clean-param: utm_medium&utm_source&utm_campaign&ybaip&ctime
-Sitemap: https://p2pie.com/sitemap.xml
-Disallow: /cdn-cgi/
-
 User-agent: *
+
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /account/
+Disallow: /profile/
+Disallow: /settings/
+Disallow: /auth/
+Disallow: /login
+Disallow: /logout
+Disallow: /register
+Disallow: /signup
+Disallow: /signin
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /verify
+Disallow: /checkout/
+Disallow: /cart/
+Disallow: /payment/
+Disallow: /orders/
+Disallow: /favorites/
+Disallow: /messages/
+Disallow: /notifications/
+Disallow: /search
+Disallow: /search/
+Disallow: /*?*
+Disallow: /*?utm_
+Disallow: /*?ref=
+Disallow: /*?sort=
+Disallow: /*?filter=
+Disallow: /*?page=
+Disallow: /preview/
+Disallow: /draft/
+
 Sitemap: https://p2pie.com/sitemap.xml
