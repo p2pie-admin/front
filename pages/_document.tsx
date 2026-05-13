@@ -37,6 +37,12 @@ export default function MyDocument() {
           href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;600;700&family=Montserrat:wght@300;600;700&display=swap"
           rel="stylesheet"
         />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="P2PIE Articles RSS"
+          href="https://p2pie.com/rss.xml"
+        />
 
         {/* Meta tags */}
         <meta name="google" content="notranslate" />
