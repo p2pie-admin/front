@@ -550,6 +550,7 @@ const robotsTxt = [
 module.exports = {
   siteUrl,
   generateRobotsTxt: true,
+  generateIndexSitemap: false,
   priority: defaultPriority,
   transform: async (config, loc) => toSitemapEntry(loc, config),
   robotsTxtOptions: allowCrawlers

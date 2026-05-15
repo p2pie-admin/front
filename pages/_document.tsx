@@ -40,7 +40,7 @@ export default function MyDocument() {
         <link
           rel="alternate"
           type="application/rss+xml"
-          title="P2PIE Articles RSS"
+          title="P2PIE Pages RSS"
           href="https://p2pie.com/rss.xml"
         />
 
