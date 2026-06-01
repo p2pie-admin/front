@@ -4,6 +4,7 @@ import { IExchangerCard } from "../../../../types/exchanger";
 import { FaTelegramPlane, FaWhatsapp, FaPhone } from "react-icons/fa";
 import { IoMailOpenSharp } from "react-icons/io5";
 import { formatPhoneNumber } from "../description/helper";
+import { getTelegramLink } from "../../../../services/telegram";
 
 export default function ExchangerContacts({
   exchangerCard,
@@ -18,14 +19,6 @@ export default function ExchangerContacts({
     whatsapp,
   } = exchangerCard;
 
-  const buildTelegramLink = (value?: string | null) => {
-    if (!value) return null;
-    const handle = value.trim();
-    if (!handle) return null;
-    if (/^https?:\/\//i.test(handle)) return handle;
-    return `https://t.me/${handle.replace(/^@/, "")}`;
-  };
-
   const buildWhatsappLink = (value?: string | null) => {
     if (!value) return null;
     const handle = value.trim();
@@ -36,7 +29,7 @@ export default function ExchangerContacts({
     return `https://wa.me/${digits}`;
   };
 
-  const telegramLink = buildTelegramLink(telegram);
+  const telegramLink = getTelegramLink(telegram);
   const whatsappLink = buildWhatsappLink(whatsapp);
   const hasContacts = telegramLink || whatsappLink || phone_number || email;
 

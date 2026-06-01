@@ -18,6 +18,13 @@ import { IDirText } from "../types/exchange";
 import { IExchangerReview } from "../types/exchanger";
 import { maskReviewList } from "../services/maskIP";
 
+const brandHomeTitle = (title?: string | null) => {
+  if (!title) return "P2PIE - мониторинг обмена валют и криптовалют";
+  return /p2pie/i.test(title)
+    ? title
+    : `P2PIE - ${title}`;
+};
+
 export const getStaticProps = async () => {
   try {
     const [mainTexts, rootText, popularRatesRaw, pmsRaw, reviews] =
@@ -48,9 +55,7 @@ export const getStaticProps = async () => {
     );
 
     const seo: ISEO = {
-      title:
-        rootText.seo_title ||
-        "Поиск выгодных курсов обмена криптовалют, банков и наличных",
+      title: brandHomeTitle(rootText.seo_title),
       description:
         rootText.seo_description ||
         "Агрегатор обменных пунктов. Инструмент поиска лучших предложений обмена электронных, наличных и криптовалют",

@@ -16,6 +16,8 @@ export interface IDirText {
   subheader: string;
   updatedAt?: string;
   h1?: string;
+  section_give?: string;
+  section_get?: string;
 }
 
 export interface IPath {

@@ -11,8 +11,10 @@ import { useMakerEditContext } from "../MakerEditContext";
 
 export default function SaveMaker({
   isBig = false,
+  withModal = true,
 }: {
   isBig?: boolean;
+  withModal?: boolean;
 }) {
   const maker = useMakerEditContext();
   const dispatch = useAppDispatch();
@@ -48,12 +50,14 @@ export default function SaveMaker({
 
   return (
     <>
-      <CustomModal
-        id={`save_${telegramUsername}`}
-        header="Публикация предложения обмена "
-      >
-        <SaveDetails />
-      </CustomModal>
+      {withModal ? (
+        <CustomModal
+          id={`save_${telegramUsername}`}
+          header="Публикация предложения обмена "
+        >
+          <SaveDetails />
+        </CustomModal>
+      ) : null}
       {!isBig ? (
         <Button
           variant="primary"

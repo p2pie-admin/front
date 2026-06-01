@@ -51,6 +51,8 @@ import normalize from "../services/normalizer";
 //import { p2pMakerQuery } from "../pages/p2p/queries";
 
 const locale = "ru";
+const normalizeDirTextSection = (value?: string | null) =>
+  (value || "").trim().toLowerCase();
 
 const cmsFetcher = initCMSFetcher();
 const parserFetcher = initParserFetcher();
@@ -361,10 +363,32 @@ export const loadAllReviews = () =>
 //   );
 export const preloadDirTexts = () => {};
 
-export const loadDirText = (sectionGive: string, sectionGet: string) =>
-  cachedFetch(`dirText_${locale}_${sectionGive}_${sectionGet}`, TTL.slow, () =>
-    cmsFetcher(dirsTextQuery, { locale }),
-  ).then((r) => r[0]) as Promise<IDirText>;
+export const loadDirText = (sectionGive: string, sectionGet: string) => {
+  const normalizedGive = normalizeDirTextSection(sectionGive);
+  const normalizedGet = normalizeDirTextSection(sectionGet);
+
+  return cachedFetch(
+    `dirText_${locale}_${normalizedGive}_${normalizedGet}`,
+    TTL.slow,
+    async () => {
+      const res = (await cmsFetcher(dirsTextQuery, {
+        locale,
+        sectionGive: normalizedGive,
+        sectionGet: normalizedGet,
+      })) as IDirText[] | null;
+
+      if (!Array.isArray(res) || !res.length) return null;
+
+      return (
+        res.find(
+          (item) =>
+            normalizeDirTextSection(item?.section_give) === normalizedGive &&
+            normalizeDirTextSection(item?.section_get) === normalizedGet,
+        ) || null
+      );
+    },
+  ) as Promise<IDirText | null>;
+};
 
 export const loadMassDirTextIds = ({ isSell }: { isSell: boolean }) =>
   cachedFetch(

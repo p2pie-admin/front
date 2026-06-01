@@ -84,10 +84,16 @@ export const pmGroupsByNamesQuery = gql`
 
 export const dirsTextQuery = gql`
   query dirsText(
-    $locale: I18NLocaleCode # $section_give: String # $section_get: String
+    $locale: I18NLocaleCode
+    $sectionGive: String
+    $sectionGet: String
   ) {
     dirsTexts(
-      locale: $locale # filters: { #   section_give: { eqi: $section_give } #   section_get: { eqi: $section_get } # }
+      locale: $locale
+      filters: {
+        section_give: { eqi: $sectionGive }
+        section_get: { eqi: $sectionGet }
+      }
     ) {
       data {
         id

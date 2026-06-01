@@ -169,7 +169,7 @@ export default function MakerEditPage({
               subtitle2="Бот выдаст ссылку на твою личную страницу. Используй ее для обмена."
             />
 
-            <SaveMaker isBig />
+            <SaveMaker isBig withModal={false} />
           </Center>
 
           <ExchangerReviews reviews={reviews as IExchangerReview[] | null} />

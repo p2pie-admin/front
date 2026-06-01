@@ -9,7 +9,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postbuild": "next-sitemap"
+    "postbuild": "next-sitemap && node scripts/flatten-sitemap.js"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.0",

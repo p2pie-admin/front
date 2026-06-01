@@ -87,7 +87,7 @@ export const ReviewCompactCard = ({
   }, [location]);
 
   const truncatedText =
-    text && text.length > 62 ? `${text.slice(0, 62)}... читать далее` : text;
+    text && text.length > 62 ? `${text.slice(0, 62)}... >>>` : text;
 
   return (
     <ReviewCardWrapper
@@ -129,8 +129,8 @@ export const ReviewCompactCard = ({
                     type === "positive"
                       ? MdSentimentSatisfiedAlt
                       : type === "negative"
-                      ? MdSentimentVeryDissatisfied
-                      : MdOutlineSentimentNeutral
+                        ? MdSentimentVeryDissatisfied
+                        : MdOutlineSentimentNeutral
                   }
                   w="4"
                   h="4"
@@ -138,8 +138,8 @@ export const ReviewCompactCard = ({
                     type === "positive"
                       ? "green.300"
                       : type === "negative"
-                      ? "red.300"
-                      : "gray.300"
+                        ? "red.300"
+                        : "gray.300"
                   }
                 />
               </Box>
@@ -191,8 +191,8 @@ export const ReviewCompactCard = ({
           {!meta.textIsLink && !!text && (
             <Text fontSize={{ base: "sm", lg: "md" }}>
               <Highlight
-                query={["читать далее"]}
-                styles={{ color: "peach.300", textDecoration: "underline" }}
+                query={[">>>"]}
+                styles={{ color: "peach.300", fontWeight: "bold" }}
               >
                 {truncatedText || ""}
               </Highlight>

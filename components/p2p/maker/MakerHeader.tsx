@@ -7,11 +7,7 @@ import ExchangerTopPanel from "../../exchangers/exchanger/exchangerTopPanel";
 import { IExchanger, IExchangerTag } from "../../../types/exchanger";
 import MakerStats from "../edit/stats";
 import MakerTopPanel from "./topPanel";
-
-const getTelegramLink = (username: string) => {
-  const cleaned = username.replace(/^@/, "").trim();
-  return cleaned ? `https://t.me/${cleaned}` : "";
-};
+import { getTelegramLink } from "../../../services/telegram";
 
 export default function MakerHeader({ maker }: { maker: IMaker }) {
   const displayName = getMakerDisplayName(maker);

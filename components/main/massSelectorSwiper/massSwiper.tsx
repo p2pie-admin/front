@@ -20,10 +20,8 @@ const MassSwiper = forwardRef<MassSwiperHandle, MassSwiperProps>(
 
     const length = items.length;
     const bgColor = useColorModeValue("bg.50", "bg.800");
-    const [mouseEntered, setMouseEntered] = React.useState(false);
-    const originalOverflowRef = React.useRef<string | null>(null);
-    const originalPaddingRef = React.useRef<string | null>(null);
     const containerRef = React.useRef<HTMLDivElement | null>(null);
+    const mouseEnteredRef = React.useRef(false);
 
     const y = useMotionValue(0);
     const controls = useAnimation();
@@ -138,46 +136,17 @@ const MassSwiper = forwardRef<MassSwiperHandle, MassSwiperProps>(
       [stepDown, stepUp]
     );
 
-    const restoreBodyStyles = React.useCallback(() => {
-      if (typeof document === "undefined") return;
-      document.body.style.overflow = originalOverflowRef.current ?? "";
-      document.body.style.paddingRight = originalPaddingRef.current ?? "";
-      originalOverflowRef.current = null;
-      originalPaddingRef.current = null;
+    const handleMouseEnter = React.useCallback(() => {
+      mouseEnteredRef.current = true;
     }, []);
 
-    const handleMouseEnter = React.useCallback(() => {
-      if (isMobile || mouseEntered) return;
-      const scrollbarWidth =
-        window.innerWidth - document.documentElement.clientWidth;
-      originalOverflowRef.current = document.body.style.overflow;
-      originalPaddingRef.current = document.body.style.paddingRight;
-      document.body.style.overflow = "hidden";
-      document.body.style.paddingRight = `${scrollbarWidth}px`;
-      setMouseEntered(true);
-    }, [isMobile, mouseEntered]);
-
     const handleMouseLeave = React.useCallback(() => {
-      if (isMobile) return;
-      restoreBodyStyles();
-      setMouseEntered(false);
-    }, [isMobile, restoreBodyStyles]);
+      mouseEnteredRef.current = false;
+    }, []);
 
     const handleWheel = React.useCallback(
       (event: WheelEvent) => {
-        const containerEl = containerRef.current;
-        const targetNode = event.target as Node | null;
-        const path = (event as any).composedPath?.() as Node[] | undefined;
-        const targetInside =
-          !!containerEl &&
-          (containerEl === targetNode ||
-            (!!targetNode && containerEl.contains(targetNode)) ||
-            (Array.isArray(path) && path.includes(containerEl)));
-
-        if (targetInside && !mouseEntered) {
-          handleMouseEnter();
-        }
-        if (isMobile || !mouseEntered) return;
+        if (isMobile || !mouseEnteredRef.current) return;
         if (!event.deltaY) return;
         const magnitude = Math.min(
           3,
@@ -187,7 +156,7 @@ const MassSwiper = forwardRef<MassSwiperHandle, MassSwiperProps>(
         changeIndexByDelta(direction * magnitude);
         event.preventDefault();
       },
-      [changeIndexByDelta, handleMouseEnter, isMobile, mouseEntered]
+      [changeIndexByDelta, isMobile]
     );
 
     const handleKeyDown = React.useCallback(
@@ -207,6 +176,17 @@ const MassSwiper = forwardRef<MassSwiperHandle, MassSwiperProps>(
         window.removeEventListener("keydown", handleKeyDown);
       };
     }, [handleKeyDown, isMobile]);
+
+    React.useEffect(() => {
+      const container = containerRef.current;
+      if (!container || isMobile) return;
+
+      container.addEventListener("wheel", handleWheel, { passive: false });
+
+      return () => {
+        container.removeEventListener("wheel", handleWheel);
+      };
+    }, [handleWheel, isMobile]);
 
     React.useEffect(() => {
       if (length === 0) return;
@@ -242,12 +222,6 @@ const MassSwiper = forwardRef<MassSwiperHandle, MassSwiperProps>(
       return unsubscribe;
     }, [y, items, centerOffset, step, getIndex, notifySelection]);
 
-    React.useEffect(() => {
-      return () => {
-        restoreBodyStyles();
-      };
-    }, [restoreBodyStyles]);
-
     return (
       <Box h={`${containerHeight}px`} minW="30%">
         <Box
@@ -261,7 +235,6 @@ const MassSwiper = forwardRef<MassSwiperHandle, MassSwiperProps>(
           ref={containerRef}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          onWheel={handleWheel as any}
         >
           <MassShader direction="top" />
           <motion.div

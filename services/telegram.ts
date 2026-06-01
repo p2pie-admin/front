@@ -17,6 +17,20 @@ const STORAGE_PREFIX = "p2p_telegram_confirm:";
 export const normalizeTelegramSlug = (slug?: string | null) =>
   (slug || "").trim().replace(/^@/, "");
 
+export const getTelegramLink = (value?: string | null) => {
+  const raw = (value || "").trim();
+  if (!raw) return "";
+
+  const withoutProtocol = raw.replace(/^https?:\/\//i, "");
+  const withoutHost = withoutProtocol.replace(
+    /^(?:www\.)?(?:t\.me|telegram\.me)\//i,
+    "",
+  );
+  const normalized = withoutHost.replace(/^@/, "").replace(/^\/+/, "");
+
+  return normalized ? `https://t.me/${normalized}` : "";
+};
+
 const getStorageKey = (slug: string) => `${STORAGE_PREFIX}${slug}`;
 
 export const storeTelegramConfirmation = (data: TelegramConfirmation) => {

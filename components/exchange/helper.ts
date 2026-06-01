@@ -66,7 +66,7 @@ export const dirTextHandler = async ({
 }: {
   givePm: IPm;
   getPm: IPm;
-  customDirText?: IDirText;
+  customDirText?: IDirText | null;
   city: ICity | null;
   articleCodes?: string[];
 }): Promise<IDirText> => {
@@ -96,7 +96,6 @@ export const dirTextHandler = async ({
     "subheader",
   ] as const;
 
-  let dirText = {} as IDirText;
   const applyFilledFields = (source: IDirText = {} as IDirText) => {
     const filled = Object.fromEntries(
       fields.map((f) => [
@@ -121,16 +120,18 @@ export const dirTextHandler = async ({
     return applyFilledFields(customDirText);
   }
 
-  const fallbackDirText = await loadDirText(givePm.section, getPm.section);
-  dirText = fallbackDirText;
-
   const cityLabel = city?.preposition || city?.ru_name || city?.en_name || "";
   const citySuffix = cityLabel ? ` в ${cityLabel}` : "";
 
-  dirText.seo_title = `${dirText.seo_title} ${citySuffix}`;
-  dirText.seo_description = `${dirText.seo_description} ${citySuffix}`;
+  const fallbackDirText = await loadDirText(givePm.section, getPm.section);
+  const resolvedDirText = applyFilledFields(fallbackDirText || ({} as IDirText));
 
-  return applyFilledFields(dirText);
+  if (citySuffix) {
+    resolvedDirText.seo_title = `${resolvedDirText.seo_title} ${citySuffix}`.trim();
+    resolvedDirText.seo_description = `${resolvedDirText.seo_description} ${citySuffix}`.trim();
+  }
+
+  return resolvedDirText;
 };
 
 export const fillWords = ({

@@ -33,9 +33,11 @@ export default function DeleteOffer({
       <MenuButton
         as={Button}
         onClick={(event) => (!isFull ? handleDelete(event) : null)}
-        variant={isFull ? "error" : "ghost"}
+        variant={isFull ? "no_contrast" : "ghost"}
         w={isFull ? { base: "100%", lg: "auto" } : undefined}
-        justifyContent={isFull ? { base: "center", lg: "flex-start" } : undefined}
+        justifyContent={
+          isFull ? { base: "center", lg: "flex-start" } : undefined
+        }
       >
         {isFull ? (
           <HStack

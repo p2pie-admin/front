@@ -15,10 +15,11 @@ yarn build
 4. Commit the deployable state to `main` and push it to `origin/main`.
 5. Do not open a PR unless explicitly requested.
 
-## Remote server
+## SSH to server
 
-- Host: `172.16.12.91`
-- User: `root`
+- Command: `ssh root@172.16.12.91 `
+- Password: `@p00l4z`
+
 - Canonical git checkout on the server: `/root/front.deploy.tmp`
 - Docker Compose build context for the `front` service: `/root/front`
 - `/root/front` is a working tree used by Compose and must be refreshed from `/root/front.deploy.tmp` before `docker compose build`.
@@ -34,6 +35,7 @@ Use the following sequence:
 ```bash
 rsync -a --delete /root/front.deploy.tmp/ /root/front/
 ```
+
 4. Build and start from `/root`:
 
 ```bash

@@ -42,6 +42,7 @@ import OfferLimits from "./limits";
 import OfferFee from "./fee";
 import OfferExplanation from "./OfferExplanation";
 import OfferParameters from "./OfferParameters";
+import SaveMaker from "../../topPanel/SaveMaker";
 
 type Props = {
   index: number;
@@ -226,7 +227,15 @@ const Offer = ({
         alignItems={{ base: "stretch", lg: "center" }}
       >
         <OfferParameters offerIndex={index} />
-        <DeleteOffer index={index} isFull />
+
+        <HStack
+          w={{ base: "100%", lg: "auto" }}
+          justifyContent="flex-end"
+          spacing="2"
+        >
+          <DeleteOffer index={index} isFull />
+          <SaveMaker withModal={false} />
+        </HStack>
       </HStack>
     </>
   );
@@ -247,7 +256,10 @@ const Offer = ({
       //minH={fullHeight ? "70px" : "unset"}
     >
       <Grid
-        gridTemplateColumns={{ base: "1fr auto 1fr auto", lg: "3fr 40px 3fr 2fr" }}
+        gridTemplateColumns={{
+          base: "1fr auto 1fr auto",
+          lg: "3fr 40px 3fr 2fr",
+        }}
         gridTemplateRows="auto"
         color="bg.500"
         alignItems="center"
@@ -280,7 +292,10 @@ const Offer = ({
               )}
             </Button>
           ) : (
-            <DeleteOffer index={index} />
+            <>
+              <SaveMaker withModal={false} />
+              <DeleteOffer index={index} />
+            </>
           )}
         </HStack>
       </Grid>

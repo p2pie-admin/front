@@ -7,6 +7,7 @@ import { ICity, IDirText, IPmData } from "../../types/exchange";
 import { IPm } from "../../types/selector";
 import { capitalize } from "../main/side/selector/section/PmGroup/helper";
 import { TextToHTML } from "../shared/helper";
+import { ResponsiveText } from "../../styles/theme/custom";
 
 export const fillWords = ({
   givePmData,
@@ -211,7 +212,7 @@ const DirText = ({
       <Heading as="h1" fontSize="2xl">
         {dirText.header}
       </Heading>
-
+      <ResponsiveText my="2">{dirText.subheader}</ResponsiveText>
       <Divider my="5" />
 
       <DirTextBody text={dirText.text} />

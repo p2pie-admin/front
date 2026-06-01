@@ -81,12 +81,12 @@ export async function getStaticProps({
       givePm,
       getPm,
       pms,
-      Object.values(slugToCodes)
+      Object.values(slugToCodes),
     );
 
     const city = cityParam
       ? cities?.find(
-          (c) => c.en_name?.toLowerCase() === cityParam.toLowerCase()
+          (c) => c.en_name?.toLowerCase() === cityParam.toLowerCase(),
         ) || null
       : null;
 
@@ -95,19 +95,26 @@ export async function getStaticProps({
     const citySlug = cityParam
       ? `${slug}-${normalizeCityKey(cityParam)}`
       : slug;
+    const useTextBox = process.env.NEXT_PUBLIC_DIR_TEXTS_ONLY !== "true";
     const textBoxKeys = cityParam ? [citySlug, slug] : [slug];
-    const [cityCustomDirText, defaultDirText] = await Promise.all(
-      textBoxKeys.map((key) => loadCustomDirText(key))
-    );
-    const customDirText = cityCustomDirText || defaultDirText || null;
+    let cityCustomDirText: IDirText | null = null;
+    let defaultDirText: IDirText | null = null;
+    if (useTextBox) {
+      [cityCustomDirText, defaultDirText] = await Promise.all(
+        textBoxKeys.map((key) => loadCustomDirText(key)),
+      );
+    }
+    const customDirText = useTextBox
+      ? cityCustomDirText || defaultDirText || null
+      : null;
 
     let [giveExists, getExists] = [false, false];
     if (articleCodes.length) {
       giveExists = !!articleCodes?.find(
-        (code) => code?.toUpperCase() == givePm.en_name.toUpperCase()
+        (code) => code?.toUpperCase() == givePm.en_name.toUpperCase(),
       );
       getExists = !!articleCodes?.find(
-        (code) => code?.toUpperCase() == getPm.en_name.toUpperCase()
+        (code) => code?.toUpperCase() == getPm.en_name.toUpperCase(),
       );
     }
 
@@ -186,7 +193,7 @@ export async function getStaticPaths() {
 
   if (!slugToCodes || !cities) {
     console.error(
-      "[getStaticPaths] 'slugToCodes' or 'cities' missing/invalid."
+      "[getStaticPaths] 'slugToCodes' or 'cities' missing/invalid.",
     );
     return { paths: [], fallback: "blocking" };
   }

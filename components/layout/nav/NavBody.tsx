@@ -13,7 +13,12 @@ const NavBody = () => {
   };
   return (
     <>
-      <LinkButton message="Домой" href={"/"} CustomIcon={FiHome} />
+      <LinkButton message="Главная" href={"/"} CustomIcon={FiHome} />
+      <LinkButton
+        message="Добавить обменник"
+        href={"/"}
+        CustomIcon={FiPlusCircle}
+      />
 
       {/* <LinkButton
         message="Suggest Exchange"
@@ -26,13 +31,18 @@ const NavBody = () => {
         CustomIcon={RiTokenSwapLine}
       /> */}
       <LinkButton
-        message="Обменники"
+        message="Список обменников"
         href={"/exchangers"}
         CustomIcon={LiaExchangeAltSolid}
       />
+      <LinkButton
+        message="Офисы на карте"
+        href={"/map"}
+        CustomIcon={RiMapPinLine}
+      />
 
       <LinkButton
-        message="Телеграм"
+        message="Телеграм чат"
         href={`https://t.me/${process.env.NEXT_PUBLIC_NAME}`}
         CustomIcon={LiaTelegramPlane}
       />
@@ -41,11 +51,6 @@ const NavBody = () => {
         href={"https://t.me/p2pie_bot"}
         CustomIcon={RiRobot2Line}
       /> */}
-      <LinkButton
-        message="Офисы"
-        href={"/map"}
-        CustomIcon={RiMapPinLine}
-      />
     </>
   );
 };
