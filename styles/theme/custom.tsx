@@ -152,7 +152,7 @@ export const ResponsiveButton = (props: any) => {
 
   return (
     <Button
-      whiteSpace="nowrap"
+      //whiteSpace="nowrap"
       size={["xs", "sm", "md", "lg"]}
       px={["0.5", "1", "2"]}
       py={["0", "0.5", "1"]}
