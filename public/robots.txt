@@ -34,4 +34,8 @@ Disallow: /preview/
 Disallow: /draft/
 Disallow: /404
 
+User-agent: Yandex
+Allow: /wp-admin/admin-ajax.php
+
+Host: p2pie.com
 Sitemap: https://p2pie.com/sitemap.xml
