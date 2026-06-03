@@ -212,7 +212,7 @@ const DirText = ({
       <Heading as="h1" fontSize="2xl">
         {dirText.header}
       </Heading>
-      <ResponsiveText variant="contrast" my="2" whiteSpace={"nowrap"}>
+      <ResponsiveText variant="contrast" my="2" whiteSpace={"unset"}>
         {dirText.subheader}
       </ResponsiveText>
       <Divider my="5" />
