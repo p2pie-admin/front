@@ -1,5 +1,4 @@
 User-agent: *
-
 Disallow: /api/
 Disallow: /admin/
 Disallow: /dashboard/
@@ -24,18 +23,20 @@ Disallow: /messages/
 Disallow: /notifications/
 Disallow: /search
 Disallow: /search/
-Disallow: /*?*
-Disallow: /*?utm_
-Disallow: /*?ref=
-Disallow: /*?sort=
-Disallow: /*?filter=
-Disallow: /*?page=
+Disallow: /*?utm_*
+Disallow: /*?ref=*
+Disallow: /*?sort=*
+Disallow: /*?filter=*
+Disallow: /*?page=*
 Disallow: /preview/
 Disallow: /draft/
 Disallow: /404
 
 User-agent: Yandex
-Allow: /wp-admin/admin-ajax.php
+Disallow: /api/
+Disallow: /admin/
+Disallow: /auth/
+Allow: /
 
 Host: p2pie.com
 Sitemap: https://p2pie.com/sitemap.xml

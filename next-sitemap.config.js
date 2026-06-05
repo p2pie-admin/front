@@ -13,7 +13,7 @@ function createRedis() {
   const token = process.env.UPSTASH_REDIS_REST_TOKEN;
   if (!url || !token) {
     console.warn(
-      "[sitemap] Upstash credentials missing. Falling back to static paths."
+      "[sitemap] Upstash credentials missing. Falling back to static paths.",
     );
     return null;
   }
@@ -30,7 +30,7 @@ function resolveAllowCrawlers() {
   if (
     Object.prototype.hasOwnProperty.call(
       process.env,
-      "NEXT_PUBLIC_ALLOW_CRAWLERS"
+      "NEXT_PUBLIC_ALLOW_CRAWLERS",
     )
   ) {
     return (
@@ -40,7 +40,9 @@ function resolveAllowCrawlers() {
   const envPath = path.join(process.cwd(), ".env.local");
   if (!fs.existsSync(envPath)) return true;
   const parsed = dotenv.parse(fs.readFileSync(envPath));
-  if (!Object.prototype.hasOwnProperty.call(parsed, "NEXT_PUBLIC_ALLOW_CRAWLERS")) {
+  if (
+    !Object.prototype.hasOwnProperty.call(parsed, "NEXT_PUBLIC_ALLOW_CRAWLERS")
+  ) {
     return true;
   }
   return String(parsed.NEXT_PUBLIC_ALLOW_CRAWLERS).toLowerCase() !== "false";
@@ -48,7 +50,9 @@ function resolveAllowCrawlers() {
 
 const allowCrawlers = resolveAllowCrawlers();
 const siteUrl = process.env.SITE_URL || "https://p2pie.com";
-const sitemapDirectionMinRates = Number(process.env.SITEMAP_DIRECTIONS_MIN_RATES || 2);
+const sitemapDirectionMinRates = Number(
+  process.env.SITEMAP_DIRECTIONS_MIN_RATES || 2,
+);
 const defaultPriority = 0.7;
 const homePriority = 1;
 
@@ -231,7 +235,9 @@ const graphqlRequest = async (query, variables) => {
   });
 
   if (!response.ok) {
-    throw new Error(`GraphQL request failed ${response.status} ${response.statusText}`);
+    throw new Error(
+      `GraphQL request failed ${response.status} ${response.statusText}`,
+    );
   }
 
   const json = await response.json();
@@ -245,7 +251,9 @@ const graphqlRequest = async (query, variables) => {
 const fetchJson = async (url) => {
   const response = await fetch(url);
   if (!response.ok) {
-    throw new Error(`Request failed ${response.status} ${response.statusText}: ${url}`);
+    throw new Error(
+      `Request failed ${response.status} ${response.statusText}: ${url}`,
+    );
   }
   return response.json();
 };
@@ -379,7 +387,9 @@ const fetchP2PPaths = async () => {
   const items = data?.p2PMakers?.data || [];
   return items
     .map((item) => {
-      const slug = normalizeTelegramUsername(item?.attributes?.telegram_username) || item?.id;
+      const slug =
+        normalizeTelegramUsername(item?.attributes?.telegram_username) ||
+        item?.id;
       return slug ? `/p2p/${slug}` : null;
     })
     .filter(Boolean);
@@ -490,8 +500,8 @@ const collectDynamicSitemapPaths = async () => {
         ...exchangePaths,
       ]
         .map(normalizePath)
-        .filter(Boolean)
-    )
+        .filter(Boolean),
+    ),
   );
 };
 
@@ -499,7 +509,7 @@ const toSitemapEntry = (loc, config) => ({
   loc,
   lastmod: new Date().toISOString(),
   changefreq: config.changefreq || "daily",
-  priority: loc === "/" ? homePriority : config.priority ?? defaultPriority,
+  priority: loc === "/" ? homePriority : (config.priority ?? defaultPriority),
 });
 
 const robotsDisallow = [
@@ -540,9 +550,15 @@ const robotsDisallow = [
 
 const robotsTxt = [
   "User-agent: *",
-  "",
   ...robotsDisallow.map((path) => `Disallow: ${path}`),
   "",
+  "User-agent: Yandex",
+  "Disallow: /api/",
+  "Disallow: /admin/",
+  "Disallow: /auth/",
+  "Allow: /",
+  "",
+  "Host: p2pie.com",
   "Sitemap: https://p2pie.com/sitemap.xml",
   "",
 ].join("\n");

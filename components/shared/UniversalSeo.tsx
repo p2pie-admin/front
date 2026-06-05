@@ -63,6 +63,12 @@ const UniversalSeo = ({ seo }: { seo: ISEO }) => {
             ? [{ name: "keywords", content: metaKeywords }]
             : undefined
         }
+        languageAlternates={[
+          {
+            hrefLang: "ru",
+            href: fullCanonicalUrl,
+          },
+        ]}
       />
       <BreadcrumbJsonLd
         itemListElements={
