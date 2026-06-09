@@ -1,5 +1,63 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
+
+  // ============================================
+  // CLINE AI ASSISTANT - OPTIMIZED CONFIGURATION
+  // ============================================
+
+  // Model Configuration - Cost-Effective & Powerful
+  "cline.apiProvider": "anthropic",
+  "cline.apiModelId": "claude-3-5-sonnet-20241022",
+
+  // Context Window Management - Prevent Oversize Issues
+  "cline.maxFileLineCount": 1000,
+  "cline.alwaysAllowReadOnly": true,
+  "cline.alwaysAllowWriteOnly": false,
+
+  // Auto-Approve Safe Operations (saves clicks)
+  "cline.autoApproveReadOnly": true,
+  "cline.autoApproveRepeatedReads": true,
+
+  // Memory & Context Optimization
+  "cline.enableCaching": true,
+  "cline.maxContextTokens": 180000,
+
+  // Diff View Settings
+  "cline.diffEnabled": true,
+  "cline.diffStrategy": "search-replace",
+
+  // Browser Integration (optional)
+  "cline.browserEnabled": false,
+
+  // Task Management
+  "cline.showTaskProgress": true,
+
+  // File Exclusions - Reduce Context Noise
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.cache": true,
+    "**/coverage": true,
+    "**/*.log": true
+  },
+
+  // Search Exclusions - Faster Searches
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/.next": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.cache": true,
+    "**/coverage": true,
+    "**/yarn.lock": true,
+    "**/package-lock.json": true
+  },
+
   "folder-color.pathColors": [
     {
       "folderPath": "front/pages/",

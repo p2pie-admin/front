@@ -1,5 +1,5 @@
 import { Box, Center } from "@chakra-ui/react";
-import React from "react";
+import React, { useMemo } from "react";
 import Dir from "../../../exchange/Dir";
 import { Box3D, ResponsiveText } from "../../../../styles/theme/custom";
 import { IPmPairs } from "../../../../types/exchange";
@@ -21,6 +21,24 @@ const DirCardWithTitle = ({
 }: DirCardWithTitleProps) => {
   const rateData = pair ? getRateData(pair) : null;
 
+  // Add Moscow city to cash directions that don't have a city
+  const adjustedSlug = useMemo(() => {
+    if (!pair) return "";
+
+    const { slug, givePm, getPm } = pair;
+
+    // Check if either payment method is cash (section === "cash")
+    const hasCash = givePm?.section === "cash" || getPm?.section === "cash";
+
+    // If it's a cash direction and slug doesn't contain a city (no underscore after direction)
+    // Example: "usdtrub" should become "usdtrub_moscow"
+    if (hasCash && !slug.includes("_")) {
+      return `${slug}_moscow`;
+    }
+
+    return slug;
+  }, [pair]);
+
   return (
     <Box w="100%" mt="6">
       {pair ? (
@@ -31,7 +49,7 @@ const DirCardWithTitle = ({
           <Dir
             givePm={pair.givePm}
             getPm={pair.getPm}
-            slug={pair.slug}
+            slug={adjustedSlug}
             fullHeight
             bottomLeft={
               rateData ? (

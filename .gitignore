@@ -32,3 +32,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 
+# cline ai assistant
+.cline/
+*.cline_*
+.clinerules.backup
+CLINE_GUIDE.md.backup
+

@@ -1,0 +1,142 @@
+# ============================================
+
+# CLINE PROJECT RULES - P2PIE FRONT
+
+# ============================================
+
+# This file provides context-specific instructions to help Cline work more efficiently
+
+# on this Next.js/TypeScript project while minimizing token usage.
+
+## PROJECT OVERVIEW
+
+- Next.js 13+ application with TypeScript
+- Main domains: P2P exchange platform, exchangers directory, articles, maps
+- Key directories: components/, pages/, services/, types/, cache/
+- State management: Redux Toolkit
+- Styling: Material-UI (MUI) with custom theme
+
+## ARCHITECTURE PATTERNS
+
+- Component structure: Atomic design (shared/ → feature-specific → pages/)
+- API routes in pages/api/
+- Server-side data fetching in cache/ directory
+- Type definitions centralized in types/
+- Service layer in services/ for API calls and utilities
+
+## CODING STANDARDS
+
+- Use TypeScript strict mode
+- Prefer functional components with hooks
+- Use named exports for components
+- Follow existing naming conventions (PascalCase for components, camelCase for functions)
+- Keep components focused and single-responsibility
+- Extract reusable logic into custom hooks
+
+## CONTEXT OPTIMIZATION RULES
+
+### When Reading Files
+
+1. **Start narrow**: Read only the specific file mentioned, not entire directories
+2. **Use search_files**: When looking for patterns across multiple files
+3. **Check types first**: Read type definitions before implementation files
+4. **Avoid node_modules**: Never read files from node_modules, .next, or dist
+
+### When Making Changes
+
+1. **Targeted edits**: Use replace_in_file for small changes, not full rewrites
+2. **Preserve formatting**: Match existing code style and indentation
+3. **Update types**: If changing data structures, update types/ files first
+4. **Test imports**: Verify import paths are correct (use @ alias when available)
+
+### File Priority (Read These First)
+
+- types/\*.ts - Type definitions
+- services/queries.ts - Main API queries
+- components/shared/ - Reusable components
+- pages/index.tsx - Main entry point
+
+### Files to Avoid (Unless Specifically Needed)
+
+- yarn.lock, package-lock.json
+- .next/, node_modules/, dist/
+- \*.log files
+- Large generated files
+
+## COMMON TASKS
+
+### Adding a New Component
+
+1. Create in appropriate directory (shared/ or feature-specific)
+2. Add TypeScript interface/type in types/
+3. Use existing shared components when possible
+4. Follow MUI theming patterns from styles/theme/
+
+### API Integration
+
+1. Add types in types/
+2. Add fetcher in services/fetchers.ts
+3. Add query in services/queries.ts
+4. Use in component with React Query hooks
+
+### Styling
+
+1. Use MUI sx prop for component-specific styles
+2. Reference theme from styles/theme/
+3. Use existing color palette from styles/theme/colors.ts
+4. Responsive: Use theme.breakpoints
+
+## PERFORMANCE TIPS
+
+- Use dynamic imports for heavy components
+- Implement proper memoization (useMemo, useCallback)
+- Optimize images with Next.js Image component
+- Keep bundle size in mind
+
+## DEBUGGING HINTS
+
+- Check browser console for client-side errors
+- Check terminal for server-side errors
+- Verify API responses in Network tab
+- Check Redux DevTools for state issues
+
+## CONTEXT SAVING LIFEHACKS
+
+1. **Ask before exploring**: If task is unclear, ask specific questions first
+2. **Use list_code_definition_names**: Get overview without reading full files
+3. **Search before reading**: Use regex search to find relevant code sections
+4. **Reference existing patterns**: Look for similar implementations first
+5. **Batch operations**: Group related file reads/edits together
+
+## COST OPTIMIZATION
+
+- Prefer Claude 3.5 Sonnet (best balance of cost/performance)
+- Use caching for repeated file reads (enabled in settings)
+- Avoid reading the same file multiple times
+- Use search_files instead of reading many files individually
+- Keep conversations focused on one task at a time
+
+## COMMON PITFALLS TO AVOID
+
+- Don't read entire directories recursively
+- Don't rewrite files when small edits suffice
+- Don't include node_modules in searches
+- Don't ask for clarification on obvious tasks
+- Don't read generated/build files
+
+## PROJECT-SPECIFIC NOTES
+
+- P2P maker editing: components/p2p/edit/
+- Exchanger pages: components/exchangers/exchanger/
+- Main calculator: components/main/side/
+- Map functionality: components/map/
+- Articles: components/articles/
+- Cache/SSR logic: cache/ directory
+- API endpoints: pages/api/
+
+## WHEN IN DOUBT
+
+1. Check existing similar components first
+2. Look at type definitions for data structures
+3. Follow established patterns in the codebase
+4. Ask specific questions rather than exploring broadly
