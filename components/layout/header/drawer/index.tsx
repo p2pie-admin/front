@@ -7,12 +7,14 @@ import {
   DrawerCloseButton,
   useColorModeValue,
   Box,
+  HStack,
 } from "@chakra-ui/react";
 import React from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import NavBody from "../../nav/NavBody";
 import NavButton from "../../nav/NavButton";
 import GlobalSearch from "../../nav/globalSearch";
+import DarkLightTheme from "../../nav/DarkLightTheme";
 
 const SwipeableDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -58,9 +60,9 @@ const SwipeableDrawer = () => {
         >
           <DrawerCloseButton color="bg.500" />
           <DrawerBody>
-            <Box mb="4">
-              <GlobalSearch />
-            </Box>
+            <HStack mb="4">
+              <DarkLightTheme />
+            </HStack>
             <Box onClick={onClose}>
               <NavBody />
             </Box>

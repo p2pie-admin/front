@@ -11,15 +11,16 @@ import Logo from "./Logo";
 
 import SwipeableDrawer from "./drawer";
 import Nav from "../nav";
-import NavHeading from "../nav/NavHeading";
+import NavHeadingDesktop from "../nav/NavHeadingDesktop";
 import CitySelector from "./city";
 import { transparentize } from "@chakra-ui/theme-tools";
+import GlobalSearch from "../nav/globalSearch";
 
 const Header = () => {
   const [bg100, bg1000] = useToken("colors", ["bg.100", "bg.1000"]);
   const bgColor = useColorModeValue(
     transparentize(bg100, 0.95), // 0.2 → 20% more transparent
-    transparentize(bg1000, 0.95)
+    transparentize(bg1000, 0.95),
   );
 
   return (
@@ -42,7 +43,7 @@ const Header = () => {
           <SwipeableDrawer />
 
           <Box display={{ base: "none", xl: "block" }}>
-            <NavHeading />
+            <NavHeadingDesktop />
           </Box>
         </HStack>
       </HStack>

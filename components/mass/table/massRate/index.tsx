@@ -21,10 +21,8 @@ import { IPm } from "../../../../types/selector";
 import { capitalize } from "../../../main/side/selector/section/PmGroup/helper";
 import { useIsMobile } from "../../../exchange/tv/hooks";
 import Rating from "../../../exchange/tv/Rating";
-import TopParameter from "../../../exchange/tv/TopParameter";
 import CustomImage from "../../../shared/CustomImage";
 import MassFiat from "../MassFiat";
-import SmartGrid from "../SmartGrid";
 import { redirect } from "../../../../redux/thunks";
 import MassRateAmount from "./MassRateAmount";
 
@@ -71,26 +69,6 @@ const MassRate = ({
     dispatch(redirect());
     window.open(ref_link, "_blank");
   };
-
-  const renderParametersBig = (suffix: string) => (
-    <SmartGrid>
-      {rate.parameterCodes.map((code, i) => (
-        <TopParameter isExtended={false} code={code} key={code + i + suffix} />
-      ))}
-    </SmartGrid>
-  );
-
-  const renderParametersSmall = (suffix: string) => (
-    <HStack>
-      {rate.parameterCodes.map((code, i) => (
-        <TopParameter
-          isExtended={rate.parameterCodes.length < 4}
-          code={code}
-          key={code + i + suffix}
-        />
-      ))}
-    </HStack>
-  );
 
   const renderRatesSmall = () => (
     <VStack alignItems={"end"} gap="0">
@@ -183,15 +161,12 @@ const MassRate = ({
           {renderRatesSmall()}
         </HStack>
 
-        <HStack justifyContent={"end"}>
-          {renderParametersSmall("mobile-small")}
-        </HStack>
       </Grid>
 
       <Grid
         {...gridCommonProps}
         display={{ base: "none", md: "grid" }}
-        gridTemplateColumns="4fr 3rem 100px 10px 4fr 3fr"
+        gridTemplateColumns="4fr 3rem 4fr 3fr"
         columnGap={["2", "6"]}
         px={2}
         py={1.5}
@@ -219,8 +194,6 @@ const MassRate = ({
 
         <Rating rating={rate.admin_rating || 4.4} />
 
-        {renderParametersBig("mobile")}
-        <Box />
         {renderRatesBig()}
 
         <MassFiat codes={rate.codes} fiatPms={fiatPms} ref_link={ref_link} />

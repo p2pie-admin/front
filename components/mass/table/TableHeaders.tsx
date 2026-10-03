@@ -1,4 +1,4 @@
-import { Box, Grid, HStack, Tooltip } from "@chakra-ui/react";
+import { Grid, HStack, Tooltip } from "@chakra-ui/react";
 import React from "react";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { RiInformationLine } from "react-icons/ri";
@@ -9,7 +9,7 @@ const text =
 export default function Headers() {
   return (
     <Grid
-      gridTemplateColumns="3fr 3rem 100px 10px 4fr 3fr"
+      gridTemplateColumns="4fr 3rem 4fr 3fr"
       w="100%"
       gap={["2", "6"]}
       mt="5"
@@ -19,10 +19,6 @@ export default function Headers() {
     >
       <ResponsiveText size="xs">Обменник</ResponsiveText>
       <ResponsiveText size="xs">Рейтинг</ResponsiveText>
-      <ResponsiveText size="xs" textAlign="end">
-        Параметры
-      </ResponsiveText>
-      <Box />
       <Tooltip openDelay={500} hasArrow label={text} size="md">
         <HStack>
           <ResponsiveText textAlign="end" size="xs">

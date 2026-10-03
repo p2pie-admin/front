@@ -5,20 +5,16 @@ import LinkButton from "../../shared/LinkButton";
 import { Button } from "@chakra-ui/react";
 
 import { LiaExchangeAltSolid } from "react-icons/lia";
+import DarkLightTheme from "./DarkLightTheme";
 
 const NavBody = () => {
-  const handleClearStorage = () => {
-    if (typeof window === "undefined") return;
-    localStorage.clear();
-  };
+  // const handleClearStorage = () => {
+  //   if (typeof window === "undefined") return;
+  //   localStorage.clear();
+  // };
   return (
     <>
       <LinkButton message="Главная" href={"/"} CustomIcon={FiHome} />
-      <LinkButton
-        message="Добавить обменник"
-        href={"/"}
-        CustomIcon={FiPlusCircle}
-      />
 
       {/* <LinkButton
         message="Suggest Exchange"
@@ -31,18 +27,18 @@ const NavBody = () => {
         CustomIcon={RiTokenSwapLine}
       /> */}
       <LinkButton
-        message="Список обменников"
+        message="Обменники"
         href={"/exchangers"}
         CustomIcon={LiaExchangeAltSolid}
       />
       <LinkButton
-        message="Офисы на карте"
+        message="Карта офисов"
         href={"/map"}
         CustomIcon={RiMapPinLine}
       />
 
       <LinkButton
-        message="Телеграм чат"
+        message="Контакты"
         href={`https://t.me/${process.env.NEXT_PUBLIC_NAME}`}
         CustomIcon={LiaTelegramPlane}
       />
