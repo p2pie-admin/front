@@ -11,10 +11,9 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { ResponsiveText } from "../../styles/theme/custom";
-import { localFormat, R } from "../../redux/amountsHelper";
 import { buildRateString, secondsAgo } from "../shared/helper";
 import { exchangerNameToSlug } from "../exchangers/helper";
-import { ISsrRate } from "./ssrRates";
+import { formatAmount, ISsrRate } from "./ssrRates";
 
 // Plain, crawlable table of every offer for the direction. Rendered on the server from
 // page props, so the HTML carries the real exchangers even before any JS runs.
@@ -52,8 +51,8 @@ const OffersTable = ({
               const name = rate.display_name || rate.name || "";
               const side = rate.course > 1 ? "give" : "get";
               const smallCur = side === "give" ? giveCur : getCur;
-              const min = rate.min?.[side] ? R(rate.min[side], 2) : 0;
-              const max = rate.max?.[side] ? R(rate.max[side], 2) : 0;
+              const min = Number(rate.min?.[side]) || 0;
+              const max = Number(rate.max?.[side]) || 0;
               const reserve = Number(rate.reserve?.get) || 0;
               return (
                 <Tr key={`offer_${rate.exchangerId}`}>
@@ -83,14 +82,14 @@ const OffersTable = ({
                   </Td>
                   <Td whiteSpace="nowrap">
                     {min || max
-                      ? `${localFormat(min, smallCur)} — ${localFormat(
+                      ? `${formatAmount(min, smallCur)} — ${formatAmount(
                           max,
                           smallCur,
                         )}`
                       : "—"}
                   </Td>
                   <Td isNumeric whiteSpace="nowrap">
-                    {reserve ? localFormat(reserve, getCur) : "—"}
+                    {reserve ? formatAmount(reserve, getCur) : "—"}
                   </Td>
                   <Td whiteSpace="nowrap">
                     {rate.last_time_updated

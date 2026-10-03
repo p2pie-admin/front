@@ -219,6 +219,7 @@ const Exchange = ({
             donorCity={donorCity}
             dirText={dirText}
             initialDirRates={initialDirRates}
+            initialCount={ratesTotal}
           />
           {initialDirRates?.length ? (
             <>

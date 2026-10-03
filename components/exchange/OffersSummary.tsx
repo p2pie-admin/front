@@ -1,8 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import { ResponsiveText } from "../../styles/theme/custom";
-import { localFormat } from "../../redux/amountsHelper";
 import { buildRateString } from "../shared/helper";
-import { formatMoscowTime, IRatesSummary } from "./ssrRates";
+import { formatAmount, formatMoscowTime, IRatesSummary } from "./ssrRates";
 
 const pluralize = (count: number, one: string, few: string, many: string) => {
   const mod10 = count % 10;
@@ -48,12 +47,12 @@ const OffersSummary = ({
   }
   if (summary.totalReserveGet > 0) {
     sentences.push(
-      `Суммарный резерв обменников: ${localFormat(summary.totalReserveGet, getCur)}.`,
+      `Суммарный резерв обменников: ${formatAmount(summary.totalReserveGet, getCur)}.`,
     );
   }
   if (summary.minAmount) {
     sentences.push(
-      `Минимальная сумма обмена — от ${localFormat(summary.minAmount, smallCur)}.`,
+      `Минимальная сумма обмена — от ${formatAmount(summary.minAmount, smallCur)}.`,
     );
   }
 

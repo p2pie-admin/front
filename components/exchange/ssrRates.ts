@@ -131,6 +131,19 @@ export const buildRatesSummary = (
   };
 };
 
+// Full numbers with ru-RU grouping for the crawlable table/summary (the swiper's
+// kFormatter abbreviates and gives up on very large reserves).
+export const formatAmount = (value: number | null | undefined, cur: string) => {
+  const num = Number(value);
+  if (!Number.isFinite(num)) return "—";
+  const abs = Math.abs(num);
+  const maximumFractionDigits = abs >= 1000 ? 0 : abs >= 1 ? 2 : 6;
+  const formatted = new Intl.NumberFormat("ru-RU", {
+    maximumFractionDigits,
+  }).format(num);
+  return `${formatted} ${cur}`;
+};
+
 export const formatMoscowTime = (ms: number | null) => {
   if (!ms) return null;
   try {

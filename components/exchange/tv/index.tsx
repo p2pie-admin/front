@@ -16,6 +16,7 @@ const TV = ({
   city,
   dirText,
   initialDirRates,
+  initialCount,
 }: {
   dir: string;
   city: ICity | null;
@@ -23,6 +24,8 @@ const TV = ({
   dirText: IDirText | null;
   // Offers fetched in getStaticProps; seeded into Redux before the live fetch.
   initialDirRates?: ISsrRate[] | null;
+  // Total number of offers (the list above is trimmed for HTML size).
+  initialCount?: number | null;
 }) => {
   const loadingStatus = useAppSelector((state) => state.main.loading);
   const containerHeight = useBreakpointValue({ base: 320, md: 416 }) || 416;
@@ -85,7 +88,7 @@ const TV = ({
     dirRates,
     dirText,
     dirRatesReloadTrigger,
-    initialCount: initialDirRates?.length || 0,
+    initialCount: initialCount ?? initialDirRates?.length ?? 0,
   };
 
   return (
