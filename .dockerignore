@@ -9,3 +9,5 @@ Dockerfile
 README.md
 cache/*.json
 *.log
+public/sitemap.xml
+public/sitemap-*.xml
