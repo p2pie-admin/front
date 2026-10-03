@@ -27,8 +27,11 @@ import { initParserFetcher } from "../services/fetchers";
 import { ParserCityDirections } from "../types/map";
 import {
   buildRatesSummary,
+  HISTORY_DAYS,
+  IDirHistory,
   IRatesSummary,
   ISsrRate,
+  prepareDirHistory,
   prepareSsrRates,
   SSR_NOINDEX_BELOW,
   SSR_RATES_LIMIT,
@@ -46,6 +49,7 @@ const ExchangePage = (props: {
   initialDirRates: ISsrRate[] | null;
   ratesTotal: number | null;
   ratesSummary: IRatesSummary | null;
+  rateHistory: IDirHistory | null;
 }) => {
   return <Exchange {...props} />;
 };
@@ -63,12 +67,16 @@ const loadSsrRates = async ({
 }) => {
   const cityName = isCash ? city?.en_name || "moscow" : "";
   const parserFetcher = initParserFetcher();
-  const raw = await parserFetcher(`dir=${dir}/all/${cityName.toLowerCase()}`);
+  const [raw, rawHistory] = await Promise.all([
+    parserFetcher(`dir=${dir}/all/${cityName.toLowerCase()}`),
+    parserFetcher(`history/dir=${dir}?days=${HISTORY_DAYS}`),
+  ]);
   const all = prepareSsrRates(raw, cityName);
   return {
     initialDirRates: all ? all.slice(0, SSR_RATES_LIMIT) : null,
     ratesTotal: all ? all.length : null,
     ratesSummary: buildRatesSummary(all),
+    rateHistory: prepareDirHistory(rawHistory),
     // Only decide on noindex when the API answered; an outage must not hide good pages.
     noindex: Array.isArray(all) && all.length < SSR_NOINDEX_BELOW,
   };
@@ -199,6 +207,7 @@ export async function getStaticProps({
         initialDirRates: ssr.initialDirRates,
         ratesTotal: ssr.ratesTotal,
         ratesSummary: ssr.ratesSummary,
+        rateHistory: ssr.rateHistory,
       },
       // Offers are baked into the HTML, so regenerate often enough to stay fresh.
       revalidate: TTL.fast,
@@ -218,6 +227,7 @@ export async function getStaticProps({
         initialDirRates: null,
         ratesTotal: null,
         ratesSummary: null,
+        rateHistory: null,
       },
       revalidate: TTL.instant,
     };

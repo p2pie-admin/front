@@ -131,6 +131,61 @@ export const buildRatesSummary = (
   };
 };
 
+// Response of server `GET /history/dir=<DIR>?days=N` (server/src/routes/history).
+export type IDirHistoryPoint = {
+  t: number;
+  n: number;
+  best: number;
+  med: number;
+  worst: number;
+  res: number;
+};
+
+export type IDirHistory = {
+  code: string;
+  days: number;
+  points: IDirHistoryPoint[];
+  summary: {
+    days: number;
+    points: number;
+    first: number | null;
+    last: number | null;
+    bestMin: number;
+    bestMax: number;
+    bestAvg: number;
+    bestLast: number;
+    change24hPct: number | null;
+    changePeriodPct: number | null;
+    offersAvg: number;
+    offersMin: number;
+    offersMax: number;
+  } | null;
+};
+
+export const HISTORY_DAYS = 7;
+// Below this many hourly points the history says nothing useful yet.
+export const HISTORY_MIN_POINTS = 6;
+
+export const prepareDirHistory = (raw: unknown): IDirHistory | null => {
+  if (!raw || typeof raw !== "object") return null;
+  const data = raw as IDirHistory;
+  if (!Array.isArray(data.points) || !data.summary) return null;
+  if (data.points.length < HISTORY_MIN_POINTS) return null;
+  return {
+    code: data.code,
+    days: data.days,
+    points: data.points.map((p) => ({
+      t: Number(p.t),
+      n: Number(p.n),
+      best: Number(p.best),
+      med: Number(p.med),
+      worst: Number(p.worst),
+      res: Number(p.res),
+    })),
+    summary: data.summary,
+  };
+};
+
 // Full numbers with ru-RU grouping for the crawlable table/summary (the swiper's
 // kFormatter abbreviates and gives up on very large reserves).
 export const formatAmount = (value: number | null | undefined, cur: string) => {

@@ -45,7 +45,8 @@ import { TitleH2 } from "../shared/TitleH2";
 import Head from "next/head";
 import OffersTable from "./OffersTable";
 import OffersSummary from "./OffersSummary";
-import { IRatesSummary, ISsrRate } from "./ssrRates";
+import RateHistory from "./RateHistory";
+import { IDirHistory, IRatesSummary, ISsrRate } from "./ssrRates";
 import { exchangerNameToSlug } from "../exchangers/helper";
 
 const JSON_LD_ITEMS = 10;
@@ -84,6 +85,7 @@ const Exchange = ({
   initialDirRates,
   ratesTotal,
   ratesSummary,
+  rateHistory,
 }: {
   //article?: IArticle | null;
   seo: ISEO;
@@ -99,6 +101,7 @@ const Exchange = ({
   initialDirRates?: ISsrRate[] | null;
   ratesTotal?: number | null;
   ratesSummary?: IRatesSummary | null;
+  rateHistory?: IDirHistory | null;
 }) => {
   const dispatch = useAppDispatch();
 
@@ -243,6 +246,11 @@ const Exchange = ({
         >
           <OffersSummary
             summary={ratesSummary}
+            giveCur={giveCur}
+            getCur={getCur}
+          />
+          <RateHistory
+            history={rateHistory}
             giveCur={giveCur}
             getCur={getCur}
           />
