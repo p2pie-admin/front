@@ -1,22 +1,18 @@
 import { GetServerSideProps } from "next";
-import { readFile } from "fs/promises";
-import path from "path";
+import {
+  absoluteUrl,
+  collectSitemapEntries,
+  escapeXml,
+  SITE_URL,
+} from "../cache/sitemap";
 
-const RSS_PATH = "https://p2pie.com/rss.xml";
-const SITE_URL = "https://p2pie.com";
-const SITEMAP_PATH = path.join(process.cwd(), "public", "sitemap.xml");
-
-const escapeXml = (value = "") =>
-  String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&apos;");
+const RSS_PATH = `${SITE_URL}/rss.xml`;
+// Only pages with a real change date make sense in a feed.
+const RSS_LIMIT = 100;
 
 type SitemapEntry = {
   loc: string;
-  lastmod?: string;
+  lastmod?: string | null;
 };
 
 const humanizeSegment = (segment: string) =>
@@ -48,19 +44,6 @@ const toItemDescription = (url: string) => {
   }
 };
 
-const parseSitemapEntries = (xml: string): SitemapEntry[] => {
-  const matches = Array.from(
-    xml.matchAll(/<url><loc>(.*?)<\/loc>(?:<lastmod>(.*?)<\/lastmod>)?.*?<\/url>/g),
-  );
-
-  return matches
-    .map((match) => ({
-      loc: match[1],
-      lastmod: match[2],
-    }))
-    .filter((entry) => entry.loc && entry.loc !== RSS_PATH);
-};
-
 const toRssItem = (entry: SitemapEntry) => {
   const pubDate = new Date(entry.lastmod || Date.now()).toUTCString();
   const title = toItemTitle(entry.loc);
@@ -83,14 +66,16 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   let entries: SitemapEntry[] = [];
 
   try {
-    const sitemapXml = await readFile(SITEMAP_PATH, "utf8");
-    entries = parseSitemapEntries(sitemapXml).sort((a, b) => {
-      const left = new Date(b.lastmod || 0).getTime();
-      const right = new Date(a.lastmod || 0).getTime();
-      return left - right;
-    });
+    entries = (await collectSitemapEntries())
+      .filter((entry) => entry.lastmod)
+      .map((entry) => ({ loc: absoluteUrl(entry.loc), lastmod: entry.lastmod }))
+      .sort(
+        (a, b) =>
+          new Date(b.lastmod || 0).getTime() - new Date(a.lastmod || 0).getTime(),
+      )
+      .slice(0, RSS_LIMIT);
   } catch (error) {
-    console.error("[rss] Failed to read sitemap.xml:", error);
+    console.error("[rss] Failed to collect sitemap entries:", error);
   }
 
   const lastBuildDate = new Date(entries[0]?.lastmod || Date.now()).toUTCString();

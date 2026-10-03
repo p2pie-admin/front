@@ -1,19 +1,14 @@
 const fs = require("fs");
 const path = require("path");
 
+// sitemap.xml is served dynamically by pages/sitemap.xml.tsx. next-sitemap still runs in
+// postbuild for robots.txt, but any sitemap files it writes into public/ would shadow the
+// dynamic route (static files win), so remove them here.
 const publicDir = path.join(process.cwd(), "public");
-const sitemapIndexPath = path.join(publicDir, "sitemap.xml");
-const firstChunkPath = path.join(publicDir, "sitemap-0.xml");
 
-if (!fs.existsSync(firstChunkPath)) {
-  process.exit(0);
+for (const name of fs.readdirSync(publicDir)) {
+  if (/^sitemap(-\d+)?\.xml$/.test(name)) {
+    fs.unlinkSync(path.join(publicDir, name));
+    console.log(`[sitemap] removed build-time ${name}; dynamic route serves it`);
+  }
 }
-
-const firstChunk = fs.readFileSync(firstChunkPath, "utf8");
-
-if (!firstChunk.includes("<urlset")) {
-  throw new Error("sitemap-0.xml does not contain a urlset");
-}
-
-fs.writeFileSync(sitemapIndexPath, firstChunk);
-console.log("[sitemap] Flattened sitemap.xml from sitemap-0.xml");
