@@ -32,13 +32,16 @@ import { BoxWrapper } from "../../shared/BoxWrapper";
 import ExchangerTopPanel from "./exchangerTopPanel";
 import { ExchangerTopButtons } from "./exchangerTopPanel/ExchangerTopButtons";
 import Monitorings from "./monitorings";
+import Uptime, { IExchangerUptime } from "./Uptime";
 
 export default function Exchanger({
   exchanger,
   seo,
+  uptime,
 }: {
   exchanger: IExchanger;
   seo: ISEO;
+  uptime?: IExchangerUptime | null;
 }) {
   if (!exchanger || !exchanger.ref_link) {
     return (
@@ -90,6 +93,7 @@ export default function Exchanger({
         </VStack>
       </BoxWrapper>
 
+      <Uptime uptime={uptime} />
       <OfficesDescription offices={exchanger.offices} />
       <ExchangerDescription description={description} />
       <Monitorings monitorings={exchanger.monitorings} />

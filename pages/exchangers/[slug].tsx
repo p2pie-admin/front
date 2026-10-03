@@ -27,6 +27,13 @@ import {
 } from "../../cache/loadX";
 import { addHeadersToSearchIndex, addPathsToSitemap } from "../../cache/cache";
 import { maskReviewList } from "../../services/maskIP";
+import { initParserFetcher } from "../../services/fetchers";
+import {
+  IExchangerUptime,
+  prepareUptime,
+} from "../../components/exchangers/exchanger/Uptime";
+
+const UPTIME_DAYS = 30;
 
 const diagEnabled =
   process.env.DEBUG_EXCHANGER_MAP === "true" ||
@@ -51,9 +58,11 @@ const maskExchangerReviewIPs = <
 export default function ExchangerPage({
   exchanger,
   seo,
+  uptime,
 }: {
   exchanger: IExchanger | null;
   seo: ISEO;
+  uptime?: IExchangerUptime | null;
 }) {
   if (!exchanger) {
     return (
@@ -70,7 +79,7 @@ export default function ExchangerPage({
     );
   }
 
-  return <Exchanger exchanger={exchanger} seo={seo} />;
+  return <Exchanger exchanger={exchanger} seo={seo} uptime={uptime} />;
 }
 
 // Single-locale getStaticProps
@@ -106,11 +115,16 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
       return { notFound: true };
     }
 
-    const enrichedExchanger = await addExchangerCrossLinking(
-      exchanger,
-      articleCodes as string[],
-      pms as IPm[]
-    );
+    const [enrichedExchanger, rawUptime] = await Promise.all([
+      addExchangerCrossLinking(exchanger, articleCodes as string[], pms as IPm[]),
+      // Our monitoring history for this exchanger (null until a day of data exists).
+      exchanger.id
+        ? initParserFetcher()(
+            `history/exchanger/${encodeURIComponent(String(exchanger.id))}?days=${UPTIME_DAYS}`,
+          )
+        : Promise.resolve(null),
+    ]);
+    const uptime: IExchangerUptime | null = prepareUptime(rawUptime);
 
     const displayName = exchanger.display_name || exchanger.name;
     const title = `Обменник ${capitalize(displayName)}`;
@@ -147,6 +161,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
       props: {
         exchanger: exchangerWithMaskedIp,
         seo,
+        uptime,
       },
       revalidate: TTL.slow,
     };
@@ -157,6 +172,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
       props: {
         exchanger: null,
         seo: nullSeo,
+        uptime: null,
       },
       revalidate: TTL.slow,
     };
