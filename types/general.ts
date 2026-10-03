@@ -21,4 +21,6 @@ export type ISEO = {
   keywords?: string | null;
   updatedAt?: string | null;
   breadcrumbs?: BreadcrumbItem[];
+  // Thin pages (e.g. a direction with almost no offers) are kept but hidden from search.
+  noindex?: boolean;
 };

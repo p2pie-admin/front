@@ -16,6 +16,7 @@ const UniversalSeo = ({ seo }: { seo: ISEO }) => {
     keywords,
     updatedAt = new Date().toISOString(),
     breadcrumbs,
+    noindex = false,
   } = seo;
   const fullCanonicalUrl = `https://${process.env.NEXT_PUBLIC_NAME}.com/${canonicalSlug}`;
   const ogType = updatedAt ? "article" : "website";
@@ -57,6 +58,8 @@ const UniversalSeo = ({ seo }: { seo: ISEO }) => {
         title={title}
         description={description}
         canonical={fullCanonicalUrl}
+        noindex={noindex}
+        nofollow={noindex}
         openGraph={openGraph}
         additionalMetaTags={
           metaKeywords

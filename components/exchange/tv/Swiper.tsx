@@ -41,6 +41,8 @@ export const Swiper = (props: {
   dirRates: IRate[];
   dirText: IDirText | null;
   dirRatesReloadTrigger?: DirRatesReloadTrigger;
+  // Number of offers rendered on the server, shown before Redux has any rates.
+  initialCount?: number;
 }) => {
   const {
     isMobile,
@@ -50,6 +52,7 @@ export const Swiper = (props: {
     dirRates,
     dirText,
     dirRatesReloadTrigger,
+    initialCount = 0,
   } = props;
 
   const [initial, setInitial] = useState(true);
@@ -61,8 +64,9 @@ export const Swiper = (props: {
 
   const loadingStatus = useAppSelector((state) => state.main.loading);
   const isError = loadingStatus === "rejected"; //
+  // Keep showing the rates we already have (seeded from the server) while a refresh runs.
   const isLoading =
-    loadingStatus === "pending" || (!initial && !dirRates.length);
+    !dirRates.length && (loadingStatus === "pending" || !initial);
 
   const length = dirRates.length;
   const reloadTrigger: DirRatesReloadTrigger =
@@ -366,7 +370,10 @@ export const Swiper = (props: {
               justifyContent="center"
               pointerEvents="none"
             >
-              <TopLabel text={dirText?.h1} length={dirRates.length} />
+              <TopLabel
+                text={dirText?.h1}
+                length={dirRates.length || initialCount}
+              />
             </MotionBox>
 
             <MotionBox

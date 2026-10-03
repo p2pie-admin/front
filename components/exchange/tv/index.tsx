@@ -4,21 +4,25 @@ import { Box, useBreakpointValue } from "@chakra-ui/react";
 import Swiper from "./Swiper";
 import { useIsMobile } from "./hooks";
 import { updateDirRates } from "../../../redux/thunks";
-import { setLoadingStatus } from "../../../redux/mainReducer";
+import { seedDirRates, setLoadingStatus } from "../../../redux/mainReducer";
 import CustomModal from "../../shared/CustomModal";
 import RateDetails from "./rateDetails";
 import { useRouter } from "next/router";
 import { ICity, IDirText } from "../../../types/exchange";
+import { ISsrRate } from "../ssrRates";
 
 const TV = ({
   dir,
   city,
   dirText,
+  initialDirRates,
 }: {
   dir: string;
   city: ICity | null;
   donorCity: ICity | null;
   dirText: IDirText | null;
+  // Offers fetched in getStaticProps; seeded into Redux before the live fetch.
+  initialDirRates?: ISsrRate[] | null;
 }) => {
   const loadingStatus = useAppSelector((state) => state.main.loading);
   const containerHeight = useBreakpointValue({ base: 320, md: 416 }) || 416;
@@ -37,9 +41,10 @@ const TV = ({
 
   useEffect(() => {
     if (!dir) return;
+    if (initialDirRates?.length) dispatch(seedDirRates(initialDirRates));
     const cityName = isCash ? city?.en_name || "moscow" : "";
     dispatch(updateDirRates({ dir, cityName }));
-  }, [dir, city?.en_name, isCash, dispatch]);
+  }, [dir, city?.en_name, isCash, dispatch, initialDirRates]);
 
   useEffect(() => {
     if (loadingStatus === "pending" && dirRates.length) {
@@ -80,6 +85,7 @@ const TV = ({
     dirRates,
     dirText,
     dirRatesReloadTrigger,
+    initialCount: initialDirRates?.length || 0,
   };
 
   return (

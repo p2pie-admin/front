@@ -42,6 +42,35 @@ import { TextToHTML } from "../shared/helper";
 import { codeToRuName2, codeToRuName3 } from "../../redux/amountsHelper";
 import Loader from "../shared/Loader";
 import { TitleH2 } from "../shared/TitleH2";
+import Head from "next/head";
+import OffersTable from "./OffersTable";
+import OffersSummary from "./OffersSummary";
+import { IRatesSummary, ISsrRate } from "./ssrRates";
+import { exchangerNameToSlug } from "../exchangers/helper";
+
+const JSON_LD_ITEMS = 10;
+
+// schema.org ItemList of the best offers; `<` is escaped so the JSON can never close the script tag.
+const buildOffersJsonLd = (
+  rates: ISsrRate[] | null | undefined,
+  name?: string,
+) => {
+  if (!rates || !rates.length) return null;
+  const base = `https://${process.env.NEXT_PUBLIC_NAME}.com`;
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: name || "Предложения обмена",
+    numberOfItems: rates.length,
+    itemListElement: rates.slice(0, JSON_LD_ITEMS).map((rate, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: rate.display_name || rate.name,
+      url: `${base}/exchangers/${exchangerNameToSlug(rate.name)}`,
+    })),
+  };
+  return JSON.stringify(data).replace(/</g, "\\u003c");
+};
 
 const Exchange = ({
   seo,
@@ -52,6 +81,9 @@ const Exchange = ({
   similarPmPairs,
   donorCity,
   dirTextIds,
+  initialDirRates,
+  ratesTotal,
+  ratesSummary,
 }: {
   //article?: IArticle | null;
   seo: ISEO;
@@ -63,6 +95,10 @@ const Exchange = ({
   similarPmPairs: IPm[][] | null;
   donorCity: ICity | null;
   dirTextIds: IMassDirTextId[];
+  // Server-rendered offers (see pages/[exchange].tsx); null when the rates API was unreachable.
+  initialDirRates?: ISsrRate[] | null;
+  ratesTotal?: number | null;
+  ratesSummary?: IRatesSummary | null;
 }) => {
   const dispatch = useAppDispatch();
 
@@ -101,10 +137,19 @@ const Exchange = ({
 
   const giveCur = givePm.currency.code.toUpperCase();
   const getCur = getPm.currency.code.toUpperCase();
+  const offersJsonLd = buildOffersJsonLd(initialDirRates, dirText?.h1);
 
   return (
     <VStack mt={[0, 4]}>
       <UniversalSeo seo={seo} />
+      {offersJsonLd ? (
+        <Head>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: offersJsonLd }}
+          />
+        </Head>
+      ) : null}
 
       {/* <Box
         bgGradient={`radial-gradient(circle at 50% -10%, ${centerColor} 0%, ${peripheryColor} 60%)`}
@@ -168,7 +213,26 @@ const Exchange = ({
             </TitleH2>
           </Box>
 
-          <TV dir={dir} city={city} donorCity={donorCity} dirText={dirText} />
+          <TV
+            dir={dir}
+            city={city}
+            donorCity={donorCity}
+            dirText={dirText}
+            initialDirRates={initialDirRates}
+          />
+          {initialDirRates?.length ? (
+            <>
+              <TitleH2 isLong={isLong}>
+                <>Все предложения по направлению:</>
+              </TitleH2>
+              <OffersTable
+                rates={initialDirRates}
+                total={ratesTotal}
+                giveCur={giveCur}
+                getCur={getCur}
+              />
+            </>
+          ) : null}
         </Column>
         <Box3D
           p="4"
@@ -176,6 +240,11 @@ const Exchange = ({
           gridColumn={{ base: "unset", lg: "1/3" }}
           gridRow={{ base: "3", lg: "2" }}
         >
+          <OffersSummary
+            summary={ratesSummary}
+            giveCur={giveCur}
+            getCur={getCur}
+          />
           <DirText
             dirText={dirText}
             givePmData={givePmData}

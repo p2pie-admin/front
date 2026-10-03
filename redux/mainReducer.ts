@@ -423,6 +423,16 @@ export const mainSlice = createSlice({
     ) => {
       state.loading = action.payload;
     },
+    // Offers rendered on the server arrive via page props; show them until the live fetch lands.
+    seedDirRates: (state: MainState, action: PayloadAction<IRate[]>) => {
+      if (state.dirRates?.length || !action.payload?.length) return;
+      state.dirRates = action.payload
+        .slice()
+        .sort((a, b) => a.course - b.course);
+      state.loading = "fulfilled";
+      state.dirRatesReloadTrigger = "manual";
+      state.amountOutputs = getAmountOutputs(state, 0, undefined, false);
+    },
     setMassPmsFilter: (state: MainState, action: PayloadAction<string[]>) => {
       state.massPmsFilter = action.payload;
     },
@@ -634,6 +644,7 @@ export const {
   clean,
   sendToast,
   setLoadingStatus,
+  seedDirRates,
   setMassPmsFilter,
   setMassAmount,
   setMassSort,

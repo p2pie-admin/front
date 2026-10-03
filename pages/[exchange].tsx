@@ -25,6 +25,14 @@ import { addHeadersToSearchIndex, addPathsToSitemap } from "../cache/cache";
 import { IMassDirTextId } from "../types/mass";
 import { initParserFetcher } from "../services/fetchers";
 import { ParserCityDirections } from "../types/map";
+import {
+  buildRatesSummary,
+  IRatesSummary,
+  ISsrRate,
+  prepareSsrRates,
+  SSR_NOINDEX_BELOW,
+  SSR_RATES_LIMIT,
+} from "../components/exchange/ssrRates";
 
 const ExchangePage = (props: {
   seo: ISEO;
@@ -35,8 +43,35 @@ const ExchangePage = (props: {
   similarPmPairs: IPm[][] | null;
   donorCity: ICity | null;
   dirTextIds: IMassDirTextId[];
+  initialDirRates: ISsrRate[] | null;
+  ratesTotal: number | null;
+  ratesSummary: IRatesSummary | null;
 }) => {
   return <Exchange {...props} />;
+};
+
+// Offers for the direction, fetched server side so they land in the HTML.
+// Mirrors the client request in components/exchange/tv (same path, same city rule).
+const loadSsrRates = async ({
+  dir,
+  isCash,
+  city,
+}: {
+  dir: string;
+  isCash: boolean;
+  city: ICity | null;
+}) => {
+  const cityName = isCash ? city?.en_name || "moscow" : "";
+  const parserFetcher = initParserFetcher();
+  const raw = await parserFetcher(`dir=${dir}/all/${cityName.toLowerCase()}`);
+  const all = prepareSsrRates(raw, cityName);
+  return {
+    initialDirRates: all ? all.slice(0, SSR_RATES_LIMIT) : null,
+    ratesTotal: all ? all.length : null,
+    ratesSummary: buildRatesSummary(all),
+    // Only decide on noindex when the API answered; an outage must not hide good pages.
+    noindex: Array.isArray(all) && all.length < SSR_NOINDEX_BELOW,
+  };
 };
 
 export async function getStaticProps({
@@ -127,19 +162,23 @@ export async function getStaticProps({
       exists: getExists,
     } as IPmData;
 
-    const dirText = (await dirTextHandler({
-      givePm,
-      getPm,
-      customDirText,
-      city,
-      articleCodes,
-    })) as IDirText;
+    const [dirText, ssr] = await Promise.all([
+      dirTextHandler({
+        givePm,
+        getPm,
+        customDirText,
+        city,
+        articleCodes,
+      }) as Promise<IDirText>,
+      loadSsrRates({ dir, isCash: !!isCash, city }),
+    ]);
 
     const seo = generateExchangeSeo({
       dirText,
       slug,
       city,
     }) as ISEO;
+    seo.noindex = ssr.noindex;
 
     await addHeadersToSearchIndex({
       slug,
@@ -157,8 +196,12 @@ export async function getStaticProps({
         city: city || null,
         similarPmPairs: similarPmPairs || null,
         dirTextIds: dirTextIds || null,
+        initialDirRates: ssr.initialDirRates,
+        ratesTotal: ssr.ratesTotal,
+        ratesSummary: ssr.ratesSummary,
       },
-      revalidate: TTL.slow,
+      // Offers are baked into the HTML, so regenerate often enough to stay fresh.
+      revalidate: TTL.fast,
     };
   } catch (e) {
     console.error(e);
@@ -172,8 +215,11 @@ export async function getStaticProps({
         city: null,
         similarPmPairs: null,
         donorCity: null,
+        initialDirRates: null,
+        ratesTotal: null,
+        ratesSummary: null,
       },
-      revalidate: TTL.slow,
+      revalidate: TTL.instant,
     };
   }
 }
