@@ -12,7 +12,11 @@ function Item({
   index,
   itemHeight,
   containerHeight,
+  giveCur,
+  getCur,
 }: {
+  giveCur?: string;
+  getCur?: string;
   rate: IRate;
   y: MotionValue<number>;
   index: number;
@@ -70,7 +74,7 @@ function Item({
         willChange: "transform",
       }}
     >
-      <ExchangerCard index={index} rate={rate} />
+      <ExchangerCard index={index} rate={rate} giveCur={giveCur} getCur={getCur} />
     </motion.div>
   );
 }

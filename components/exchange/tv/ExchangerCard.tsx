@@ -76,7 +76,17 @@ const MobileParameters = ({
     </Grid>
   );
 };
-const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
+const ExchangerCard = ({
+  index,
+  rate,
+  giveCur: giveCurProp,
+  getCur: getCurProp,
+}: {
+  index: number;
+  rate: IRate;
+  giveCur?: string;
+  getCur?: string;
+}) => {
   const dispatch = useAppDispatch();
   const isMobile = useIsMobile();
   if (!rate) return <></>;
@@ -98,8 +108,8 @@ const ExchangerCard = ({ index, rate }: { index: number; rate: IRate }) => {
   const getPm = useAppSelector((state) => state.main.getPm);
   const cityCode = useAppSelector((state) => state.main.city.codes[0]);
 
-  const giveCur = givePm?.currency.code.toUpperCase() || "";
-  const getCur = getPm?.currency.code.toUpperCase() || "";
+  const giveCur = givePm?.currency.code.toUpperCase() || giveCurProp || "";
+  const getCur = getPm?.currency.code.toUpperCase() || getCurProp || "";
 
   const side = course > 1 ? "give" : "get";
   const smallCur = side === "give" ? giveCur : getCur;

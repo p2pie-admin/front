@@ -10,6 +10,7 @@ import RateDetails from "./rateDetails";
 import { useRouter } from "next/router";
 import { ICity, IDirText } from "../../../types/exchange";
 import { ISsrRate } from "../ssrRates";
+import { IRate } from "../../../types/rates";
 
 const TV = ({
   dir,
@@ -17,7 +18,11 @@ const TV = ({
   dirText,
   initialDirRates,
   initialCount,
+  giveCur,
+  getCur,
 }: {
+  giveCur?: string;
+  getCur?: string;
   dir: string;
   city: ICity | null;
   donorCity: ICity | null;
@@ -32,7 +37,17 @@ const TV = ({
   const router = useRouter();
   const { exchange } = router.query as { exchange: string };
 
-  const dirRates = useAppSelector((state) => state.main.dirRates) || [];
+  const reduxRates = useAppSelector((state) => state.main.dirRates) || [];
+  // Until Redux has rates (server render + first client render) show the offers from
+  // getStaticProps, so the swiper is in the HTML and hydration matches.
+  const ssrRates = React.useMemo(
+    () =>
+      ((initialDirRates || []) as unknown as IRate[])
+        .slice()
+        .sort((a, b) => a.course - b.course),
+    [initialDirRates]
+  );
+  const dirRates = reduxRates.length ? reduxRates : ssrRates;
   const dirRatesReloadTrigger = useAppSelector(
     (state) => state.main.dirRatesReloadTrigger
   );
@@ -89,6 +104,8 @@ const TV = ({
     dirText,
     dirRatesReloadTrigger,
     initialCount: initialCount ?? initialDirRates?.length ?? 0,
+    giveCur,
+    getCur,
   };
 
   return (

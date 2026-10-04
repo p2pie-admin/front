@@ -17,7 +17,7 @@ import { localFormat } from "../../redux/amountsHelper";
 
 // Rows shown at once; the rest sit inside a native <details> so the HTML stays crawlable
 // without a 40-row wall on screen.
-const VISIBLE_ROWS = 12;
+const VISIBLE_ROWS = 100;
 
 // Plain, crawlable table of every offer for the direction. Rendered on the server from
 // page props, so the HTML carries the real exchangers even before any JS runs.

@@ -43,6 +43,9 @@ export const Swiper = (props: {
   dirRatesReloadTrigger?: DirRatesReloadTrigger;
   // Number of offers rendered on the server, shown before Redux has any rates.
   initialCount?: number;
+  // Currency codes from the page props; Redux has none during the server render.
+  giveCur?: string;
+  getCur?: string;
 }) => {
   const {
     isMobile,
@@ -53,6 +56,8 @@ export const Swiper = (props: {
     dirText,
     dirRatesReloadTrigger,
     initialCount = 0,
+    giveCur,
+    getCur,
   } = props;
 
   const [initial, setInitial] = useState(true);
@@ -353,6 +358,8 @@ export const Swiper = (props: {
                       index={index}
                       itemHeight={itemHeight}
                       containerHeight={containerHeight}
+                      giveCur={giveCur}
+                      getCur={getCur}
                     />
                   </Box>
                 );

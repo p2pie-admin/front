@@ -223,6 +223,8 @@ const Exchange = ({
             dirText={dirText}
             initialDirRates={initialDirRates}
             initialCount={ratesTotal}
+            giveCur={giveCur}
+            getCur={getCur}
           />
         </Column>
         <Box3D
@@ -239,10 +241,17 @@ const Exchange = ({
           {/* The full offers table lives in this full-width block: in the 436px column it either
               overflowed (phones) or left the left column with a wall of empty space (desktop). */}
           {initialDirRates?.length ? (
-            <Box mb="4">
-              <TitleH2 isLong={isLong}>
-                <>Все предложения по направлению:</>
-              </TitleH2>
+            <Box as="details" mb="4">
+              <Box
+                as="summary"
+                cursor="pointer"
+                fontSize="sm"
+                color="peach.300"
+                py="2"
+                _hover={{ textDecoration: "underline" }}
+              >
+                Показать все предложения таблицей
+              </Box>
               <OffersTable
                 rates={initialDirRates}
                 total={ratesTotal}
