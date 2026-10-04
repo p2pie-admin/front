@@ -152,97 +152,18 @@ export const exchangerQuery = gql`
               }
             }
           }
+          # Light list: only what the counters (positive / neutral / negative) need. The review cards are
+          # loaded separately, 10 at a time (exchangerReviewsQuery), so the page never ships hundreds of reviews.
           reviews(
             filters: { isApproved: { eq: true } }
             pagination: { limit: 100 }
-            sort: ["createdAt:desc"]
+            sort: ["review_date:desc"]
           ) {
             data {
               id
               attributes {
-                fingerprint
-                ipAddress
-                name
-                text
                 type
                 source
-                external_link
-                external_date
-                isDispute
-                isClosed
-                isApproved
-                review_categories {
-                  data {
-                    id
-                    attributes {
-                      title
-                      description
-                      isNegative
-                      image {
-                        data {
-                          id
-                          attributes {
-                            name
-                            alternativeText
-                            url
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-                userAgent
-                location
-                updatedAt
-                exchanger {
-                  data {
-                    id
-                    attributes {
-                      name
-                      display_name
-                      logo {
-                        data {
-                          id
-                          attributes {
-                            url
-                            alternativeText
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-                screenshots {
-                  data {
-                    id
-                    attributes {
-                      name
-                      alternativeText
-                      url
-                    }
-                  }
-                }
-                review_replies {
-                  data {
-                    id
-                    attributes {
-                      text
-                      from
-                      iaApproved
-                      updatedAt
-                      screenshots {
-                        data {
-                          id
-                          attributes {
-                            name
-                            alternativeText
-                            url
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
               }
             }
           }
@@ -774,6 +695,94 @@ export const reviewFingerprintQuery = gql`
         id
         attributes {
           fingerprint
+        }
+      }
+    }
+  }
+`;
+
+
+// One page of an exchanger's reviews (all sources together), newest first. `$filters` carries exchanger, approval and type.
+export const exchangerReviewsQuery = gql`
+  query ExchangerReviews($filters: ReviewFiltersInput, $start: Int, $limit: Int) {
+    reviews(
+      filters: $filters
+      pagination: { start: $start, limit: $limit }
+      sort: ["review_date:desc", "id:desc"]
+    ) {
+      data {
+        id
+        attributes {
+          fingerprint
+          ipAddress
+          name
+          text
+          type
+          source
+          external_link
+          review_date
+          isDispute
+          isClosed
+          isApproved
+          review_categories {
+            data {
+              id
+              attributes {
+                title
+                description
+                isNegative
+                image {
+                  data {
+                    id
+                    attributes {
+                      name
+                      alternativeText
+                      url
+                    }
+                  }
+                }
+              }
+            }
+          }
+          userAgent
+          location
+          updatedAt
+          screenshots {
+            data {
+              id
+              attributes {
+                name
+                alternativeText
+                url
+              }
+            }
+          }
+          review_replies {
+            data {
+              id
+              attributes {
+                text
+                from
+                iaApproved
+                updatedAt
+                screenshots {
+                  data {
+                    id
+                    attributes {
+                      name
+                      alternativeText
+                      url
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      meta {
+        pagination {
+          total
         }
       }
     }

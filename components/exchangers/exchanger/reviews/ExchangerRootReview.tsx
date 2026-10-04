@@ -14,6 +14,7 @@ import ExchangerReply from "./ExchangerReply";
 import { IExchangerReview } from "../../../../types/exchanger";
 import BoringAvatar from "boring-avatars";
 import UserAgent from "./UserAgent";
+import OutLink from "../../../shared/OutLink";
 
 import {
   MdOutlineSentimentNeutral,
@@ -52,6 +53,7 @@ export default function ExchangerRootReview({
     source,
     external_link,
     external_date,
+    review_date,
   } = review;
 
   const tag = useMemo(() => {
@@ -102,7 +104,8 @@ export default function ExchangerRootReview({
     );
   }, [location]);
 
-  // Reviews copied from another monitoring carry their origin: a tag that links to the original.
+  // Reviews copied from another monitoring carry their origin: a tag that opens the original on click.
+  // Deliberately not an <a>: no outbound link in the HTML.
   const sourceTag = useMemo(() => {
     if (!source) return null;
     const tag = (
@@ -111,16 +114,14 @@ export default function ExchangerRootReview({
       </Tag>
     );
     return external_link ? (
-      <a
+      <OutLink
         href={external_link}
-        target="_blank"
-        rel="nofollow noopener noreferrer"
-        title={`Оригинал отзыва на ${source}`}
+        label={`Оригинал отзыва на ${source}`}
         data-track="external-review-source"
         data-track-label={source}
       >
         {tag}
-      </a>
+      </OutLink>
     ) : (
       tag
     );
@@ -224,7 +225,7 @@ export default function ExchangerRootReview({
             {sourceTag}
           </Wrap>
           <HStack gap="4" color="bg.500">
-            <FormatedDate updatedAt={external_date ?? updatedAt} />
+            <FormatedDate updatedAt={review_date ?? external_date ?? updatedAt} />
             <Box
               justifySelf="end"
               ml="auto"

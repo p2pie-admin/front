@@ -106,6 +106,8 @@ export interface IExchangerReview {
   source?: string | null;
   external_link?: string | null;
   external_date?: string | null;
+  // The date shown and used for sorting (creation time for our own reviews, the original date for copies).
+  review_date?: string | null;
   review_categories?: IReviewCategory[] | null;
   userAgent?: string | null;
   location?: string | null;

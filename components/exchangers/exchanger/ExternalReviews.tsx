@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Link as ChakraLink } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
+import OutLink from "../../shared/OutLink";
 import { BoxWrapper } from "../../shared/BoxWrapper";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { TitleH2 } from "../../shared/TitleH2";
@@ -37,16 +38,14 @@ const ExternalReviews = ({ data }: { data: IExternalReviews | null | undefined }
               {s.url ? (
                 <>
                   {" "}
-                  <ChakraLink
+                  <OutLink
                     href={s.url}
-                    isExternal
-                    rel="nofollow noopener noreferrer"
                     color="peach.300"
                     data-track="external-reviews-source"
                     data-track-label={s.name}
                   >
                     {`Все отзывы на ${s.name} →`}
-                  </ChakraLink>
+                  </OutLink>
                 </>
               ) : null}
             </ResponsiveText>

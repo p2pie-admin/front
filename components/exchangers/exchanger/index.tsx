@@ -2,6 +2,7 @@ import React from "react";
 import {
   IDotColors,
   IExchanger,
+  IExchangerReview,
   IParserExchanger,
 } from "../../../types/exchanger";
 import NextLink from "next/link";
@@ -44,11 +45,16 @@ export default function Exchanger({
   seo,
   uptime,
   externalReviews,
+  initialReviews,
+  reviewsTotal,
 }: {
   exchanger: IExchanger;
   seo: ISEO;
   uptime?: IExchangerUptime | null;
   externalReviews?: IExternalReviews | null;
+  // First page of reviews (all sources, newest first) and the total; the rest loads on demand.
+  initialReviews?: IExchangerReview[] | null;
+  reviewsTotal?: number | null;
 }) {
   if (!exchanger || !exchanger.ref_link) {
     return (
@@ -110,7 +116,11 @@ export default function Exchanger({
       <ExchangerIdProvider exchangerId={exchanger.id}>
         <LeaveReview />
       </ExchangerIdProvider>
-      <ExchangerReviews reviews={exchanger.reviews} />
+      <ExchangerReviews
+        exchangerId={exchanger.id}
+        initialReviews={initialReviews}
+        initialTotal={reviewsTotal}
+      />
       <ExternalReviews data={externalReviews} />
 
       <Text mt="6" fontSize="sm" color="bg.300">

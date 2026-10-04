@@ -29,6 +29,7 @@ import { addHeadersToSearchIndex, addPathsToSitemap } from "../../cache/cache";
 import { maskReviewList } from "../../services/maskIP";
 import { initParserFetcher } from "../../services/fetchers";
 import { IExternalReviews, loadExternalReviews } from "../../services/competitors";
+import { fetchExchangerReviews } from "../../services/exchangerReviews";
 import {
   IExchangerUptime,
   prepareUptime,
@@ -61,11 +62,15 @@ export default function ExchangerPage({
   seo,
   uptime,
   externalReviews,
+  initialReviews,
+  reviewsTotal,
 }: {
   exchanger: IExchanger | null;
   seo: ISEO;
   uptime?: IExchangerUptime | null;
   externalReviews?: IExternalReviews | null;
+  initialReviews?: IExchangerReview[] | null;
+  reviewsTotal?: number | null;
 }) {
   if (!exchanger) {
     return (
@@ -88,6 +93,8 @@ export default function ExchangerPage({
       seo={seo}
       uptime={uptime}
       externalReviews={externalReviews}
+      initialReviews={initialReviews}
+      reviewsTotal={reviewsTotal}
     />
   );
 }
@@ -125,7 +132,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
       return { notFound: true };
     }
 
-    const [enrichedExchanger, rawUptime, externalReviews] = await Promise.all([
+    const [enrichedExchanger, rawUptime, externalReviews, reviewsPage] = await Promise.all([
       addExchangerCrossLinking(exchanger, articleCodes as string[], pms as IPm[]),
       // Our monitoring history for this exchanger (null until a day of data exists).
       exchanger.id
@@ -135,6 +142,8 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
         : Promise.resolve(null),
       // Reviews copied from other monitorings (with source); null when the service is down.
       loadExternalReviews(exchanger.id),
+      // First page (10) of the reviews, all sources merged by date; "show more" loads the rest from /api/exchanger-reviews.
+      exchanger.id ? fetchExchangerReviews({ exchangerId: exchanger.id }) : Promise.resolve(null),
     ]);
     const uptime: IExchangerUptime | null = prepareUptime(rawUptime);
 
@@ -175,6 +184,8 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
         seo,
         uptime,
         externalReviews,
+        initialReviews: reviewsPage ? maskReviewList(reviewsPage.items) : [],
+        reviewsTotal: reviewsPage ? reviewsPage.total : 0,
       },
       revalidate: TTL.slow,
     };
@@ -187,6 +198,8 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
         seo: nullSeo,
         uptime: null,
         externalReviews: null,
+        initialReviews: [],
+        reviewsTotal: 0,
       },
       revalidate: TTL.slow,
     };
