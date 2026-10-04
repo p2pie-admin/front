@@ -48,7 +48,7 @@ const baseUrl = () => {
 
 export const loadExternalReviews = async (
   exchangerId: string | number | undefined | null,
-  limit = 12
+  limit = 0 // counters only: the review texts live in Strapi
 ): Promise<IExternalReviews | null> => {
   const base = baseUrl();
   if (!base || exchangerId == null) return null;

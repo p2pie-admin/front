@@ -49,6 +49,9 @@ export default function ExchangerRootReview({
     review_replies,
     updatedAt,
     isDispute,
+    source,
+    external_link,
+    external_date,
   } = review;
 
   const tag = useMemo(() => {
@@ -98,6 +101,30 @@ export default function ExchangerRootReview({
       </Tag>
     );
   }, [location]);
+
+  // Reviews copied from another monitoring carry their origin: a tag that links to the original.
+  const sourceTag = useMemo(() => {
+    if (!source) return null;
+    const tag = (
+      <Tag size="sm" variant="outline" colorScheme="purple" mt="1.5" cursor={external_link ? "pointer" : undefined}>
+        {`ИСТОЧНИК: ${source.toUpperCase()}${external_link ? " ↗" : ""}`}
+      </Tag>
+    );
+    return external_link ? (
+      <a
+        href={external_link}
+        target="_blank"
+        rel="nofollow noopener noreferrer"
+        title={`Оригинал отзыва на ${source}`}
+        data-track="external-review-source"
+        data-track-label={source}
+      >
+        {tag}
+      </a>
+    ) : (
+      tag
+    );
+  }, [source, external_link]);
 
   const cardMinHeight = meta.textIsLink || slug ? "200px" : "unset";
 
@@ -188,14 +215,16 @@ export default function ExchangerRootReview({
             <HStack display={{ base: "none", lg: "flex" }}>
               {tag}
               {locationTag}
+              {sourceTag}
             </HStack>
           </HStack>
           <Wrap display={{ base: "flex", lg: "none" }}>
             {tag}
             {locationTag}
+            {sourceTag}
           </Wrap>
           <HStack gap="4" color="bg.500">
-            <FormatedDate updatedAt={updatedAt} />
+            <FormatedDate updatedAt={external_date ?? updatedAt} />
             <Box
               justifySelf="end"
               ml="auto"

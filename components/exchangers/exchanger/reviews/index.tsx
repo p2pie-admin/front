@@ -29,8 +29,9 @@ export default function ExchangerReviews({
   const sortedReviews = useMemo(() => {
     if (!reviews) return null;
     return [...reviews].sort((a, b) => {
-      const dateA = new Date(a.updatedAt ?? 0).getTime();
-      const dateB = new Date(b.updatedAt ?? 0).getTime();
+      // Copies from other monitorings sort by the date of the original.
+      const dateA = new Date(a.external_date ?? a.updatedAt ?? 0).getTime();
+      const dateB = new Date(b.external_date ?? b.updatedAt ?? 0).getTime();
       return dateB - dateA;
     });
   }, [reviews]);
@@ -45,6 +46,7 @@ export default function ExchangerReviews({
 
   const reviewsCount = filteredReviews?.length ?? reviews?.length ?? 0;
   const hasAnyReviews = !!(reviews && reviews.length);
+  const hasExternal = !!reviews?.some((r) => r.source);
   return (
     <BoxWrapper variant="contrast">
       <HStack justifyContent="space-between">
@@ -55,6 +57,11 @@ export default function ExchangerReviews({
         />
       </HStack>
       <Divider my="4" />
+      {hasExternal ? (
+        <ResponsiveText size="xs" variant="no_contrast" whiteSpace="normal" mb="2">
+          Отзывы с пометкой «Источник» скопированы с других мониторингов со ссылкой на оригинал. Их написали не пользователи p2pie.
+        </ResponsiveText>
+      ) : null}
       {!hasAnyReviews ? (
         <ResponsiveText>Пока нет отзывов, оставьте отзыв первым</ResponsiveText>
       ) : filteredReviews && filteredReviews.length > 0 ? (

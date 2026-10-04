@@ -102,6 +102,10 @@ export interface IExchangerReview {
   isApproved?: boolean | null;
   isExchangeDone?: boolean | null;
   gossip?: string | null;
+  // Set for reviews copied from another monitoring (e.g. "BestChange"); null for our own users' reviews.
+  source?: string | null;
+  external_link?: string | null;
+  external_date?: string | null;
   review_categories?: IReviewCategory[] | null;
   userAgent?: string | null;
   location?: string | null;

@@ -152,7 +152,11 @@ export const exchangerQuery = gql`
               }
             }
           }
-          reviews(filters: { isApproved: { eq: true } }) {
+          reviews(
+            filters: { isApproved: { eq: true } }
+            pagination: { limit: 100 }
+            sort: ["createdAt:desc"]
+          ) {
             data {
               id
               attributes {
@@ -161,6 +165,9 @@ export const exchangerQuery = gql`
                 name
                 text
                 type
+                source
+                external_link
+                external_date
                 isDispute
                 isClosed
                 isApproved
@@ -776,7 +783,8 @@ export const reviewFingerprintQuery = gql`
 export const allReviewsQuery = gql`
   query AllReviews {
     reviews(
-      filters: { isApproved: { eq: true } }
+      # Copies from other monitorings are shown on exchanger pages only, not in the global feed.
+      filters: { isApproved: { eq: true }, source: { null: true } }
       pagination: { limit: 8 }
       sort: ["updatedAt:desc"]
     ) {
