@@ -2,7 +2,6 @@ import {
   Box,
   Link as ChakraLink,
   Table,
-  TableContainer,
   Tbody,
   Td,
   Th,
@@ -11,12 +10,21 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { ResponsiveText } from "../../styles/theme/custom";
-import { buildRateString, secondsAgo } from "../shared/helper";
+import { buildRateString } from "../shared/helper";
 import { exchangerNameToSlug } from "../exchangers/helper";
-import { formatAmount, ISsrRate } from "./ssrRates";
+import { ISsrRate } from "./ssrRates";
+import { localFormat } from "../../redux/amountsHelper";
+
+// Rows shown at once; the rest sit inside a native <details> so the HTML stays crawlable
+// without a 40-row wall on screen.
+const VISIBLE_ROWS = 12;
 
 // Plain, crawlable table of every offer for the direction. Rendered on the server from
 // page props, so the HTML carries the real exchangers even before any JS runs.
+// Four columns only (#, exchanger with rating + limits underneath, rate, link): the column that
+// hosts the table is 436px wide on desktop, so limits/reserve as extra columns never fit.
+// No time-dependent cells here: anything like "updated 5 s ago" differs between the
+// server render and the client and breaks hydration.
 const OffersTable = ({
   rates,
   total,
@@ -30,94 +38,110 @@ const OffersTable = ({
 }) => {
   if (!rates || !rates.length) return null;
   const hidden = total && total > rates.length ? total - rates.length : 0;
+  const head = rates.slice(0, VISIBLE_ROWS);
+  const tail = rates.slice(VISIBLE_ROWS);
+
+  const renderRows = (list: ISsrRate[], offset: number) =>
+    list.map((rate, index) => {
+      const name = rate.display_name || rate.name || "";
+      const side = rate.course > 1 ? "give" : "get";
+      const smallCur = side === "give" ? giveCur : getCur;
+      const min = Number(rate.min?.[side]) || 0;
+      const max = Number(rate.max?.[side]) || 0;
+      // Same compact style as the swiper cards ("15 тыс ₽ — 250 тыс ₽") so it fits under the name.
+      const limits = min || max ? `${localFormat(min, smallCur)} — ${localFormat(max, smallCur)}` : "";
+      return (
+        <Tr key={`offer_${rate.exchangerId}`}>
+          <Td px={{ base: 1, md: 2 }}>{offset + index + 1}</Td>
+          <Td px={{ base: 1, md: 2 }} maxW={{ base: "128px", md: "165px" }} overflow="hidden">
+            <ChakraLink
+              as={Link}
+              href={`/exchangers/${exchangerNameToSlug(rate.name)}`}
+              prefetch={false}
+              fontWeight="600"
+              display="block"
+              overflow="hidden"
+              textOverflow="ellipsis"
+            >
+              {name}
+            </ChakraLink>
+            <ResponsiveText
+              as="span"
+              size="xs"
+              variant="no_contrast"
+              display="block"
+              whiteSpace="nowrap"
+              overflow="hidden"
+              textOverflow="ellipsis"
+            >
+              {[rate.admin_rating ? `★ ${rate.admin_rating}` : "", limits].filter(Boolean).join(" · ")}
+            </ResponsiveText>
+          </Td>
+          <Td px={{ base: 1, md: 2 }} whiteSpace="nowrap">
+            {buildRateString({ course: rate.course, giveCur, getCur })}
+          </Td>
+          <Td px={{ base: 1, md: 2 }} w="1%">
+            {rate.ref_link ? (
+              <ChakraLink
+                href={rate.ref_link}
+                isExternal
+                rel="nofollow sponsored noopener"
+                color="peach.300"
+                whiteSpace="nowrap"
+                aria-label={`Перейти на ${name}`}
+              >
+                <Box as="span" display={{ base: "none", md: "inline" }}>
+                  Перейти →
+                </Box>
+                <Box as="span" display={{ base: "inline", md: "none" }}>
+                  →
+                </Box>
+              </ChakraLink>
+            ) : null}
+          </Td>
+        </Tr>
+      );
+    });
+
+  const table = (rows: ISsrRate[], offset: number, withHead: boolean) => (
+    <Table size="sm" variant="simple" fontSize={{ base: "xs", md: "sm" }}>
+      {withHead ? (
+        <Thead>
+          <Tr>
+            <Th px={{ base: 1, md: 2 }}>#</Th>
+            <Th px={{ base: 1, md: 2 }}>Обменник</Th>
+            <Th px={{ base: 1, md: 2 }}>Курс</Th>
+            <Th px={{ base: 1, md: 2 }}></Th>
+          </Tr>
+        </Thead>
+      ) : null}
+      <Tbody>{renderRows(rows, offset)}</Tbody>
+    </Table>
+  );
 
   return (
-    <Box mt="6">
-      <TableContainer>
-        <Table size="sm" variant="simple">
-          <Thead>
-            <Tr>
-              <Th>#</Th>
-              <Th>Обменник</Th>
-              <Th>Курс</Th>
-              <Th>Лимиты</Th>
-              <Th isNumeric>Резерв</Th>
-              <Th>Обновлено</Th>
-              <Th></Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {rates.map((rate, index) => {
-              const name = rate.display_name || rate.name || "";
-              const side = rate.course > 1 ? "give" : "get";
-              const smallCur = side === "give" ? giveCur : getCur;
-              const min = Number(rate.min?.[side]) || 0;
-              const max = Number(rate.max?.[side]) || 0;
-              const reserve = Number(rate.reserve?.get) || 0;
-              return (
-                <Tr key={`offer_${rate.exchangerId}`}>
-                  <Td>{index + 1}</Td>
-                  <Td>
-                    <ChakraLink
-                      as={Link}
-                      href={`/exchangers/${exchangerNameToSlug(rate.name)}`}
-                      prefetch={false}
-                      fontWeight="600"
-                    >
-                      {name}
-                    </ChakraLink>
-                    {rate.admin_rating ? (
-                      <ResponsiveText
-                        as="span"
-                        size="xs"
-                        variant="no_contrast"
-                        ml="2"
-                      >
-                        {`★ ${rate.admin_rating}`}
-                      </ResponsiveText>
-                    ) : null}
-                  </Td>
-                  <Td whiteSpace="nowrap">
-                    {buildRateString({ course: rate.course, giveCur, getCur })}
-                  </Td>
-                  <Td whiteSpace="nowrap">
-                    {min || max
-                      ? `${formatAmount(min, smallCur)} — ${formatAmount(
-                          max,
-                          smallCur,
-                        )}`
-                      : "—"}
-                  </Td>
-                  <Td isNumeric whiteSpace="nowrap">
-                    {reserve ? formatAmount(reserve, getCur) : "—"}
-                  </Td>
-                  <Td whiteSpace="nowrap">
-                    {rate.last_time_updated
-                      ? secondsAgo(rate.last_time_updated)
-                      : "—"}
-                  </Td>
-                  <Td>
-                    {rate.ref_link ? (
-                      <ChakraLink
-                        href={rate.ref_link}
-                        isExternal
-                        rel="nofollow sponsored noopener"
-                        color="peach.300"
-                        whiteSpace="nowrap"
-                      >
-                        Перейти →
-                      </ChakraLink>
-                    ) : null}
-                  </Td>
-                </Tr>
-              );
-            })}
-          </Tbody>
-        </Table>
-      </TableContainer>
+    <Box mt="6" w="100%" minW="0" maxW="100%" overflowX="auto">
+      {table(head, 0, true)}
+      {tail.length ? (
+        <Box as="details" mt="2">
+          <Box
+            as="summary"
+            cursor="pointer"
+            fontSize="sm"
+            color="peach.300"
+            py="2"
+            _hover={{ textDecoration: "underline" }}
+          >
+            {`Показать ещё ${tail.length} ${
+              tail.length === 1 ? "предложение" : tail.length < 5 ? "предложения" : "предложений"
+            }`}
+          </Box>
+          {table(tail, head.length, false)}
+        </Box>
+      ) : null}
       {hidden ? (
         <ResponsiveText size="xs" variant="no_contrast" mt="2">
-          {`Ещё ${hidden} предложений доступно в списке выше.`}
+          {`Остальные ${hidden} предложений — в живом списке выше.`}
         </ResponsiveText>
       ) : null}
     </Box>
