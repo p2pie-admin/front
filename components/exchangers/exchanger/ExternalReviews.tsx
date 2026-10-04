@@ -48,12 +48,12 @@ const ReviewItem = ({ r, sourceName }: { r: IExternalReview; sourceName: string 
       {r.country ? <Box as="span" opacity={0.6}>{r.country}</Box> : null}
       <Box as="span" opacity={0.6}>{date(r.postedAt)}</Box>
     </Box>
-    <ResponsiveText mt="1" whiteSpace="pre-line" variant="contrast">
+    <ResponsiveText mt="1" whiteSpace="pre-line" wordBreak="break-word" variant="contrast">
       {r.text}
     </ResponsiveText>
     {r.reply ? (
       <Box mt="2" pl="3" borderLeftWidth="2px" borderColor="whiteAlpha.300">
-        <ResponsiveText size="xs" variant="no_contrast" whiteSpace="pre-line">
+        <ResponsiveText size="xs" variant="no_contrast" whiteSpace="pre-line" wordBreak="break-word">
           {`${r.reply.author || "Ответ обменника"}: ${r.reply.text}`}
         </ResponsiveText>
       </Box>
@@ -149,7 +149,7 @@ const ExternalReviews = ({ data }: { data: IExternalReviews | null | undefined }
         {sources.map((s) => (
           <SourceBlock key={s.source} s={s} />
         ))}
-        <ResponsiveText size="xs" variant="no_contrast" mt="3">
+        <ResponsiveText size="xs" variant="no_contrast" mt="3" whiteSpace="normal" wordBreak="break-word">
           {data.notice}
         </ResponsiveText>
       </Box>
