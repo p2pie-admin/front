@@ -357,6 +357,10 @@ export const mainSlice = createSlice({
       state: MainState,
       action: PayloadAction<ICurrencyConverterRate>,
     ) => {
+      // The layout pushes the generic BTC_RUB rate for the home page. On a direction page the
+      // pair-specific rate (ccRatesPair set) must win, otherwise the chart label shows the BTC
+      // price under a USDT/RUB heading ("1 USDT = 7 092 199 RUB").
+      if (state.ccRatesPair) return;
       state.ccRates = action.payload;
       state.ccRatesPair = undefined;
     },

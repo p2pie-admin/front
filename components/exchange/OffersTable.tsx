@@ -21,8 +21,9 @@ const VISIBLE_ROWS = 12;
 
 // Plain, crawlable table of every offer for the direction. Rendered on the server from
 // page props, so the HTML carries the real exchangers even before any JS runs.
-// Four columns only (#, exchanger with rating + limits underneath, rate, link): the column that
-// hosts the table is 436px wide on desktop, so limits/reserve as extra columns never fit.
+// Rendered in the full-width block under the two columns. Phones: #, exchanger (rating + compact
+// limits underneath), rate, arrow. From md: limits and reserve get their own columns.
+const wideOnly = { base: "none", md: "table-cell" } as const;
 // No time-dependent cells here: anything like "updated 5 s ago" differs between the
 // server render and the client and breaks hydration.
 const OffersTable = ({
@@ -49,11 +50,12 @@ const OffersTable = ({
       const min = Number(rate.min?.[side]) || 0;
       const max = Number(rate.max?.[side]) || 0;
       // Same compact style as the swiper cards ("15 тыс ₽ — 250 тыс ₽") so it fits under the name.
+      const reserve = Number(rate.reserve?.get) || 0;
       const limits = min || max ? `${localFormat(min, smallCur)} — ${localFormat(max, smallCur)}` : "";
       return (
         <Tr key={`offer_${rate.exchangerId}`}>
           <Td px={{ base: 1, md: 2 }}>{offset + index + 1}</Td>
-          <Td px={{ base: 1, md: 2 }} maxW={{ base: "128px", md: "165px" }} overflow="hidden">
+          <Td px={{ base: 1, md: 2 }} maxW={{ base: "128px", md: "unset" }} overflow="hidden">
             <ChakraLink
               as={Link}
               href={`/exchangers/${exchangerNameToSlug(rate.name)}`}
@@ -74,11 +76,22 @@ const OffersTable = ({
               overflow="hidden"
               textOverflow="ellipsis"
             >
-              {[rate.admin_rating ? `★ ${rate.admin_rating}` : "", limits].filter(Boolean).join(" · ")}
+              <Box as="span" display={{ base: "inline", md: "none" }}>
+                {[rate.admin_rating ? `★ ${rate.admin_rating}` : "", limits].filter(Boolean).join(" · ")}
+              </Box>
+              <Box as="span" display={{ base: "none", md: "inline" }}>
+                {rate.admin_rating ? `★ ${rate.admin_rating}` : ""}
+              </Box>
             </ResponsiveText>
           </Td>
           <Td px={{ base: 1, md: 2 }} whiteSpace="nowrap">
             {buildRateString({ course: rate.course, giveCur, getCur })}
+          </Td>
+          <Td display={wideOnly} whiteSpace="nowrap">
+            {limits || "—"}
+          </Td>
+          <Td display={wideOnly} isNumeric whiteSpace="nowrap">
+            {reserve ? localFormat(reserve, getCur) : "—"}
           </Td>
           <Td px={{ base: 1, md: 2 }} w="1%">
             {rate.ref_link ? (
@@ -111,6 +124,10 @@ const OffersTable = ({
             <Th px={{ base: 1, md: 2 }}>#</Th>
             <Th px={{ base: 1, md: 2 }}>Обменник</Th>
             <Th px={{ base: 1, md: 2 }}>Курс</Th>
+            <Th display={wideOnly}>Лимиты</Th>
+            <Th display={wideOnly} isNumeric>
+              Резерв
+            </Th>
             <Th px={{ base: 1, md: 2 }}></Th>
           </Tr>
         </Thead>

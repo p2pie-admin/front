@@ -1,4 +1,4 @@
-import { Box, useColorModeValue } from "@chakra-ui/react";
+import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
 import { ResponsiveText } from "../../styles/theme/custom";
 import { buildRateString } from "../shared/helper";
 import { IDirHistory, IDirHistoryPoint } from "./ssrRates";
@@ -75,6 +75,8 @@ const RateHistory = ({
   getCur: string;
 }) => {
   const stroke = useColorModeValue("#6b46c1", "#f6ad55");
+  const frameBg = useColorModeValue("blackAlpha.50", "whiteAlpha.50");
+  const frameBorder = useColorModeValue("blackAlpha.100", "whiteAlpha.100");
   if (!history || !history.summary || history.points.length < 2) return null;
 
   const { points, summary } = history;
@@ -103,13 +105,41 @@ const RateHistory = ({
     } (от ${summary.offersMin} до ${summary.offersMax}). Снимки берутся раз в час.`,
   ];
 
+  const high = buildRateString({ course: summary.bestMin, giveCur, getCur });
+  const low = buildRateString({ course: summary.bestMax, giveCur, getCur });
+
   return (
     <Box mb="3">
       <ResponsiveText variant="contrast" whiteSpace="unset">
         {sentences.join(" ")}
       </ResponsiveText>
-      <Box mt="2" maxW={`${WIDTH}px`}>
+      {/* Framed like the other cards: label row, the line, then the date range underneath. */}
+      <Box
+        mt="3"
+        maxW={`${WIDTH + 32}px`}
+        p="3"
+        borderRadius="xl"
+        bg={frameBg}
+        border="1px solid"
+        borderColor={frameBorder}
+      >
+        <Flex justify="space-between" mb="1" gap="2" wrap="wrap">
+          <ResponsiveText size="xs" variant="no_contrast">
+            Лучший курс, почасово
+          </ResponsiveText>
+          <ResponsiveText size="xs" variant="no_contrast" whiteSpace="nowrap">
+            {`${low} … ${high}`}
+          </ResponsiveText>
+        </Flex>
         <Sparkline points={points} stroke={stroke} />
+        <Flex justify="space-between" mt="1">
+          <ResponsiveText size="xs" variant="no_contrast">
+            {dayLabel(first.t)}
+          </ResponsiveText>
+          <ResponsiveText size="xs" variant="no_contrast">
+            {dayLabel(last.t)}
+          </ResponsiveText>
+        </Flex>
       </Box>
     </Box>
   );

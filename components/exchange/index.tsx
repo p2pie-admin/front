@@ -224,19 +224,6 @@ const Exchange = ({
             initialDirRates={initialDirRates}
             initialCount={ratesTotal}
           />
-          {initialDirRates?.length ? (
-            <>
-              <TitleH2 isLong={isLong}>
-                <>Все предложения по направлению:</>
-              </TitleH2>
-              <OffersTable
-                rates={initialDirRates}
-                total={ratesTotal}
-                giveCur={giveCur}
-                getCur={getCur}
-              />
-            </>
-          ) : null}
         </Column>
         <Box3D
           p="4"
@@ -249,6 +236,21 @@ const Exchange = ({
             giveCur={giveCur}
             getCur={getCur}
           />
+          {/* The full offers table lives in this full-width block: in the 436px column it either
+              overflowed (phones) or left the left column with a wall of empty space (desktop). */}
+          {initialDirRates?.length ? (
+            <Box mb="4">
+              <TitleH2 isLong={isLong}>
+                <>Все предложения по направлению:</>
+              </TitleH2>
+              <OffersTable
+                rates={initialDirRates}
+                total={ratesTotal}
+                giveCur={giveCur}
+                getCur={getCur}
+              />
+            </Box>
+          ) : null}
           <RateHistory
             history={rateHistory}
             giveCur={giveCur}
