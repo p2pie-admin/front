@@ -28,6 +28,7 @@ export default Footer;
 const aboutLinks = [
   { label: "О проекте", href: "/articles/about" },
   { label: "Партнерство", href: "/partnership" },
+  { label: "Для обменников", href: "/for-exchangers" },
   { label: "Блог", href: "/articles" },
 ];
 

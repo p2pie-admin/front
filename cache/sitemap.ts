@@ -29,6 +29,7 @@ const STATIC_PATHS = [
   "/contacts",
   "/exchangers",
   "/faq",
+  "/for-exchangers",
   "/map",
   "/map/moscow",
   "/p2p",

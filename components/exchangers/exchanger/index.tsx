@@ -4,6 +4,7 @@ import {
   IExchanger,
   IParserExchanger,
 } from "../../../types/exchanger";
+import NextLink from "next/link";
 import {
   Box,
   Center,
@@ -11,6 +12,8 @@ import {
   Flex,
   Grid,
   HStack,
+  Link,
+  Text,
   Tooltip,
   VStack,
 } from "@chakra-ui/react";
@@ -104,6 +107,13 @@ export default function Exchanger({
         <LeaveReview />
       </ExchangerIdProvider>
       <ExchangerReviews reviews={exchanger.reviews} />
+
+      <Text mt="6" fontSize="sm" color="bg.300">
+        Вы владелец этого обменника?{" "}
+        <Link as={NextLink} href="/for-exchangers" color="blue.300">
+          Условия для обменников
+        </Link>
+      </Text>
     </>
   );
 }
