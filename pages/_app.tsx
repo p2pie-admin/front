@@ -13,6 +13,7 @@ import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { useAppDispatch } from "../redux/hooks";
 import { setLoadingStatus } from "../redux/mainReducer";
+import ClickTracker from "../components/shared/ClickTracker";
 
 const RouteLoadingHandler = () => {
   const router = useRouter();
@@ -199,6 +200,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Provider store={store}>
           <Layout>
             <RouteLoadingHandler />
+            <ClickTracker />
             <RouteLoadingOverlay />
             <DefaultSeo {...seoConfig} />
             <Component {...pageProps} />

@@ -44,6 +44,7 @@ import Loader from "../shared/Loader";
 import { TitleH2 } from "../shared/TitleH2";
 import Head from "next/head";
 import OffersTable from "./OffersTable";
+import CityChannelLink from "./CityChannelLink";
 import OffersSummary from "./OffersSummary";
 import RateHistory from "./RateHistory";
 import { IDirHistory, IRatesSummary, ISsrRate } from "./ssrRates";
@@ -238,6 +239,7 @@ const Exchange = ({
             giveCur={giveCur}
             getCur={getCur}
           />
+          <CityChannelLink citySlug={city?.en_name} cityName={city?.ru_name} />
           {/* The full offers table lives in this full-width block: in the 436px column it either
               overflowed (phones) or left the left column with a wall of empty space (desktop). */}
           {initialDirRates?.length ? (
