@@ -28,6 +28,7 @@ import {
 import { addHeadersToSearchIndex, addPathsToSitemap } from "../../cache/cache";
 import { maskReviewList } from "../../services/maskIP";
 import { initParserFetcher } from "../../services/fetchers";
+import { IExternalReviews, loadExternalReviews } from "../../services/competitors";
 import {
   IExchangerUptime,
   prepareUptime,
@@ -59,10 +60,12 @@ export default function ExchangerPage({
   exchanger,
   seo,
   uptime,
+  externalReviews,
 }: {
   exchanger: IExchanger | null;
   seo: ISEO;
   uptime?: IExchangerUptime | null;
+  externalReviews?: IExternalReviews | null;
 }) {
   if (!exchanger) {
     return (
@@ -79,7 +82,14 @@ export default function ExchangerPage({
     );
   }
 
-  return <Exchanger exchanger={exchanger} seo={seo} uptime={uptime} />;
+  return (
+    <Exchanger
+      exchanger={exchanger}
+      seo={seo}
+      uptime={uptime}
+      externalReviews={externalReviews}
+    />
+  );
 }
 
 // Single-locale getStaticProps
@@ -115,7 +125,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
       return { notFound: true };
     }
 
-    const [enrichedExchanger, rawUptime] = await Promise.all([
+    const [enrichedExchanger, rawUptime, externalReviews] = await Promise.all([
       addExchangerCrossLinking(exchanger, articleCodes as string[], pms as IPm[]),
       // Our monitoring history for this exchanger (null until a day of data exists).
       exchanger.id
@@ -123,6 +133,8 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
             `history/exchanger/${encodeURIComponent(String(exchanger.id))}?days=${UPTIME_DAYS}`,
           )
         : Promise.resolve(null),
+      // Reviews copied from other monitorings (with source); null when the service is down.
+      loadExternalReviews(exchanger.id),
     ]);
     const uptime: IExchangerUptime | null = prepareUptime(rawUptime);
 
@@ -162,6 +174,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
         exchanger: exchangerWithMaskedIp,
         seo,
         uptime,
+        externalReviews,
       },
       revalidate: TTL.slow,
     };
@@ -173,6 +186,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
         exchanger: null,
         seo: nullSeo,
         uptime: null,
+        externalReviews: null,
       },
       revalidate: TTL.slow,
     };

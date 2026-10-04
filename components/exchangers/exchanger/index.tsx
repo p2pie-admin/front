@@ -36,15 +36,19 @@ import ExchangerTopPanel from "./exchangerTopPanel";
 import { ExchangerTopButtons } from "./exchangerTopPanel/ExchangerTopButtons";
 import Monitorings from "./monitorings";
 import Uptime, { IExchangerUptime } from "./Uptime";
+import ExternalReviews from "./ExternalReviews";
+import { IExternalReviews } from "../../../services/competitors";
 
 export default function Exchanger({
   exchanger,
   seo,
   uptime,
+  externalReviews,
 }: {
   exchanger: IExchanger;
   seo: ISEO;
   uptime?: IExchangerUptime | null;
+  externalReviews?: IExternalReviews | null;
 }) {
   if (!exchanger || !exchanger.ref_link) {
     return (
@@ -107,6 +111,7 @@ export default function Exchanger({
         <LeaveReview />
       </ExchangerIdProvider>
       <ExchangerReviews reviews={exchanger.reviews} />
+      <ExternalReviews data={externalReviews} />
 
       <Text mt="6" fontSize="sm" color="bg.300">
         Вы владелец этого обменника?{" "}
