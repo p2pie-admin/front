@@ -39,7 +39,7 @@ const NavBody = () => {
 
       <LinkButton
         message="Контакты"
-        href={`https://t.me/${process.env.NEXT_PUBLIC_NAME}`}
+        href={"/contacts"}
         CustomIcon={LiaTelegramPlane}
       />
       {/* <LinkButton
