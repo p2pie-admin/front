@@ -4,7 +4,7 @@ import { HStack, VStack, Text, Image, Box } from "@chakra-ui/react";
 
 export default function WebsiteData() {
   return (
-    <HStack mt="8">
+    <HStack mt="6" mb="6">
       <Image
         w="40px"
         h="40px"

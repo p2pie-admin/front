@@ -1,5 +1,7 @@
 import React from "react";
-import { Center, Divider } from "@chakra-ui/react";
+import { Box, Button, Center, Divider } from "@chakra-ui/react";
+import { BsTelegram } from "react-icons/bs";
+import { getTelegramLink } from "../../../services/telegram";
 import UniversalSeo from "../../shared/UniversalSeo";
 import Loader from "../../shared/Loader";
 import { ISEO } from "../../../types/general";
@@ -48,17 +50,37 @@ export default function MakerPage({
 
   const offers = Array.isArray(maker.offers) ? maker.offers : null;
   const reviews = Array.isArray(maker.reviews) ? maker.reviews : null;
+  const telegramLink = getTelegramLink(maker.telegram_username);
+  const description = (maker.description || "").trim();
 
   return (
     <>
       <UniversalSeo seo={seo} />
       <BoxWrapper variant="no_contrast">
         <MakerTopPanel maker={maker} />
+        {telegramLink ? (
+          // Phones: the main action under the thumb (desktop has it in the top panel).
+          <Box display={{ base: "block", lg: "none" }} mt="4">
+            <Button
+              as="a"
+              href={telegramLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="primary"
+              color="white"
+              w="100%"
+              size="lg"
+              leftIcon={<BsTelegram size="1.2rem" />}
+            >
+              Написать в Telegram
+            </Button>
+          </Box>
+        ) : null}
         <Divider my="4" />
         <MakerStats maker={maker} />
       </BoxWrapper>
-      <MakerOffers offers={offers} pms={pms} />
-      <MakerDescription description={maker.description} />
+      {offers?.length ? <MakerOffers offers={offers} pms={pms} /> : null}
+      {description ? <MakerDescription description={description} /> : null}
       <MakerMap coordinates={maker.coordinates} />
 
       <ExchangerReviewsHeader
@@ -68,7 +90,7 @@ export default function MakerPage({
       <ExchangerIdProvider exchangerId={String(maker.id)}>
         <LeaveReview />
       </ExchangerIdProvider>
-      <ExchangerReviews reviews={reviews as IExchangerReview[] | null} />
+      <ExchangerReviews initialReviews={reviews as IExchangerReview[] | null} />
 
       {faqCategory ? <FaqCategoriesList categories={[faqCategory]} /> : <></>}
     </>

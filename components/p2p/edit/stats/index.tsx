@@ -106,13 +106,17 @@ export default function MakerStats({
           h="120px"
           mx={{ base: 0, lg: "2" }}
         />
-        <Box display={{ base: "none", lg: "unset" }} w="75%">
+        {total ? (
+          <Box display={{ base: "none", lg: "unset" }} w="75%">
+            <NextLevelConditions conditions={conditions} />
+          </Box>
+        ) : null}
+      </HStack>
+      {total ? (
+        <Box display={{ base: "unset", lg: "none" }}>
           <NextLevelConditions conditions={conditions} />
         </Box>
-      </HStack>
-      <Box display={{ base: "unset", lg: "none" }}>
-        <NextLevelConditions conditions={conditions} />
-      </Box>
+      ) : null}
     </VStack>
   );
 }

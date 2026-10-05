@@ -1,4 +1,4 @@
-import { Avatar, Box, HStack, VStack } from "@chakra-ui/react";
+import { Avatar, Box, HStack, Tag, VStack } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
 import { BsArrowRightShort } from "react-icons/bs";
@@ -56,9 +56,14 @@ export default function MakerLink({ maker }: { maker: IMakerPreview }) {
             </Box>
           </Box>
           <VStack alignItems="start" spacing="1">
-            <ResponsiveText size="md" variant="primary" fontWeight="bold">
-              {displayName}
-            </ResponsiveText>
+            <HStack spacing="2" flexWrap="wrap">
+              <ResponsiveText size="md" variant="primary" fontWeight="bold">
+                {displayName}
+              </ResponsiveText>
+              <Tag size="sm" colorScheme="green" variant="subtle" borderRadius="full">
+                Telegram ✓
+              </Tag>
+            </HStack>
             <HStack spacing="3" color="bg.400" flexWrap="wrap">
               <ResponsiveText size="xs" variant="primary">
                 {telegramUsername}

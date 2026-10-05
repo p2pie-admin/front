@@ -49,6 +49,8 @@ import OffersSummary from "./OffersSummary";
 import RateHistory from "./RateHistory";
 import { IDirHistory, IRatesSummary, ISsrRate } from "./ssrRates";
 import { exchangerNameToSlug } from "../exchangers/helper";
+import MobileOffers from "./MobileOffers";
+import HowToAndFaq from "./HowToAndFaq";
 
 const JSON_LD_ITEMS = 10;
 
@@ -209,7 +211,10 @@ const Exchange = ({
           >
             <Calculator />
 
-            <LimitsRange />
+            {/* The vertical amount slider only makes sense next to the swiper (desktop). */}
+            <Box display={{ base: "none", lg: "contents" }}>
+              <LimitsRange />
+            </Box>
           </HStack>
           <Box display={{ base: "none", lg: "block" }}>
             <TitleH2 isLong={isLong}>
@@ -217,16 +222,28 @@ const Exchange = ({
             </TitleH2>
           </Box>
 
-          <TV
-            dir={dir}
-            city={city}
-            donorCity={donorCity}
-            dirText={dirText}
-            initialDirRates={initialDirRates}
-            initialCount={ratesTotal}
-            giveCur={giveCur}
-            getCur={getCur}
-          />
+          {/* Phones: a flat table in the normal page flow (the swiper scrolled inside a 300px box).
+              The swiper stays mounted (display:none) because it owns the live-rates fetch. */}
+          <Box display={{ base: "none", lg: "block" }}>
+            <TV
+              dir={dir}
+              city={city}
+              donorCity={donorCity}
+              dirText={dirText}
+              initialDirRates={initialDirRates}
+              initialCount={ratesTotal}
+              giveCur={giveCur}
+              getCur={getCur}
+            />
+          </Box>
+          <Box display={{ base: "block", lg: "none" }}>
+            <MobileOffers
+              initialDirRates={initialDirRates}
+              ratesTotal={ratesTotal}
+              giveCur={giveCur}
+              getCur={getCur}
+            />
+          </Box>
         </Column>
         <Box3D
           p="4"
@@ -243,7 +260,7 @@ const Exchange = ({
           {/* The full offers table lives in this full-width block: in the 436px column it either
               overflowed (phones) or left the left column with a wall of empty space (desktop). */}
           {initialDirRates?.length ? (
-            <Box as="details" mb="4">
+            <Box as="details" mb="4" display={{ base: "none", lg: "block" }}>
               <Box
                 as="summary"
                 cursor="pointer"
@@ -266,6 +283,14 @@ const Exchange = ({
             history={rateHistory}
             giveCur={giveCur}
             getCur={getCur}
+          />
+          <HowToAndFaq
+            summary={ratesSummary}
+            total={ratesTotal}
+            giveCur={giveCur}
+            getCur={getCur}
+            givePm={givePm}
+            getPm={getPm}
           />
           <DirText
             dirText={dirText}

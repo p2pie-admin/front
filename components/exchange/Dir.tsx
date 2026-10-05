@@ -40,6 +40,8 @@ const Dir = ({
         _hover={{ filter: "brightness(1.1)" }}
         variant="contrast"
         minH={fullHeight ? "70px" : "unset"}
+        minW="0"
+        overflow="hidden"
       >
         <Grid
           gridTemplateColumns={"1fr 40px 1fr"}

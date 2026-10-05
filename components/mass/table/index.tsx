@@ -4,7 +4,6 @@ import { useAppSelector } from "../../../redux/hooks";
 import { Box3D } from "../../../styles/theme/custom";
 import { IMassRate, IMassDirTextId } from "../../../types/mass";
 import { IPm } from "../../../types/selector";
-import Pagination from "./Pagination"; // adjust the path
 import { pickKeys } from "../helper";
 import MassRate from "./massRate";
 import TopPanel from "./topPanel";
@@ -51,18 +50,14 @@ function MassTable({
     return sorted;
   }, [massAmount, filteredMassRates, massSort]);
 
-  // ✅ Pagination logic
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 20;
-  const totalPages = Math.ceil(sortedMassRates.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedRates = sortedMassRates.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
+  // "Show more" instead of page numbers: one URL, the list just grows.
+  const STEP = 20;
+  const [shown, setShown] = useState(STEP);
+  const paginatedRates = sortedMassRates.slice(0, shown);
+  const remaining = Math.max(sortedMassRates.length - shown, 0);
 
   return (
-    <Box3D px={["1", "4"]} py={["2", "4"]} variant="contrast">
+    <Box3D px={["1", "4"]} py={["2", "4"]} variant="contrast" w="100%" minW="0" maxW="100%">
       <TopPanel fiatPms={fiatPms} massDirTextId={massDirTextId} />
       <Box display={{ base: "none", md: "block" }}>
         <TableHeaders />
@@ -85,12 +80,23 @@ function MassTable({
         })}
       </Box>
 
-      {totalPages > 1 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-        />
+      {remaining > 0 && (
+        <Box
+          as="button"
+          type="button"
+          mt="2"
+          w="100%"
+          py="3"
+          borderRadius="xl"
+          border="1px solid"
+          borderColor="bg.500"
+          color="peach.300"
+          fontWeight="600"
+          fontSize="sm"
+          onClick={() => setShown((n) => n + STEP)}
+        >
+          {`Показать ещё ${Math.min(remaining, STEP)} из ${sortedMassRates.length}`}
+        </Box>
       )}
     </Box3D>
   );

@@ -31,9 +31,17 @@ const fetcher = async (url: string) => {
   return res.json();
 };
 
-const GlobalSearch = () => {
+// `alwaysOpen`: render the input expanded (used inside the phone drawer and on the 404 page);
+// `onNavigate` lets the host close itself (e.g. the drawer) after a result is chosen.
+const GlobalSearch = ({
+  alwaysOpen = false,
+  onNavigate,
+}: {
+  alwaysOpen?: boolean;
+  onNavigate?: () => void;
+} = {}) => {
   const router = useRouter();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(alwaysOpen);
   const [value, setValue] = useState("");
   const color = useColorModeValue("violet.700", "peach.300");
   const expandedWidth = useBreakpointValue({ base: 240, md: 400 }) || 400;
@@ -60,7 +68,7 @@ const GlobalSearch = () => {
   };
 
   const handleClose = () => {
-    setOpen(false);
+    setOpen(alwaysOpen);
     setValue("");
   };
 
@@ -100,7 +108,7 @@ const GlobalSearch = () => {
             <NavButton handleClick={handleOpen} icon={BiSearch} />
           ) : (
             <Box3D
-              w={expandedWidth}
+              w={alwaysOpen ? "100%" : expandedWidth}
               boxShadow="lg"
               borderRadius="xl"
               variant="contrast"
@@ -113,10 +121,10 @@ const GlobalSearch = () => {
                   placeholder="Поиск направления, обменника или города"
                   value={value}
                   onChange={(e) => setValue(e.target.value)}
-                  autoFocus
+                  autoFocus={!alwaysOpen}
                   _placeholder={{ color: "bg.500" }}
                 />
-                <InputRightElement borderRadius="50%">
+                <InputRightElement borderRadius="50%" display={alwaysOpen && !value ? "none" : "flex"}>
                   <IconButton
                     mt="2"
                     aria-label="Close search"
@@ -159,6 +167,7 @@ const GlobalSearch = () => {
                 onClick={() => {
                   router.push("/" + r.slug);
                   handleClose();
+                  onNavigate?.();
                 }}
               >
                 <Tooltip

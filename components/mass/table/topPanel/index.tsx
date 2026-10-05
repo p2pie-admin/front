@@ -2,6 +2,7 @@ import { Box, HStack, VStack } from "@chakra-ui/react";
 import MultiSelectMenu from "./MultiSelectMenu";
 import AmountInput from "./AmountInput";
 import MassSortButtons from "./MassSortButtons";
+import PaymentChips from "./PaymentChips";
 import { useState } from "react";
 import { IPm } from "../../../../types/selector";
 import { IMassDirTextId } from "../../../../types/mass";
@@ -22,13 +23,12 @@ const TopPanel = ({
         spacing="3"
         align="stretch"
         w="100%"
+        minW="0"
         py="2"
-        px="4"
+        px="2"
       >
-        <HStack gap="4" align="stretch" w="100%">
-          <MultiSelectMenu fiatPms={fiatPms} />
-          <AmountInput massDirTextId={massDirTextId} />
-        </HStack>
+        <PaymentChips fiatPms={fiatPms} />
+        <AmountInput massDirTextId={massDirTextId} />
         <MassSortButtons />
       </VStack>
 

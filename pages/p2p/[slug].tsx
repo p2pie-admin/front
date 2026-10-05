@@ -130,11 +130,16 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     const title = `P2P мейкер ${displayName}`;
     const description = `${displayName}: карточка P2P мейкера`;
 
+    const offersCount = Array.isArray(makerWithFullOffers.offers)
+      ? makerWithFullOffers.offers.length
+      : 0;
     const seo: ISEO = {
       title,
       description,
       canonicalSlug: `p2p/${slug}`,
       updatedAt: maker.createdAt || new Date().toISOString(),
+      // A profile without offers is a thin page: keep it reachable, keep it out of the index.
+      noindex: offersCount === 0,
     };
 
     await addHeadersToSearchIndex({

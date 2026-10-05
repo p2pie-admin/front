@@ -172,7 +172,7 @@ export default function MakerEditPage({
             <SaveMaker isBig withModal={false} />
           </Center>
 
-          <ExchangerReviews reviews={reviews as IExchangerReview[] | null} />
+          <ExchangerReviews initialReviews={reviews as IExchangerReview[] | null} />
           {faqCategory ? (
             <FaqCategoriesList
               categories={[faqCategory]}

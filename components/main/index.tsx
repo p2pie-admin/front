@@ -29,6 +29,7 @@ import CustomTitle from "../shared/CustomTitle";
 import AllReviews from "./allReviews";
 import { IExchangerReview } from "../../types/exchanger";
 import GeneralStats from "./GeneralStats";
+import PopularDirections from "./PopularDirections";
 
 const MainPageContent = ({
   popularPms,
@@ -84,13 +85,23 @@ const MainPageContent = ({
 
       <CustomTitle
         as="h2"
-        title={"Поиск курсов"}
-        subtitle={
-          "Мы собираем данные с сотен обменников, чтобы выбрать лучший курс для Вас"
-        }
+        title={"Популярные направления"}
+        subtitle={"Лучший курс по каждому направлению прямо сейчас"}
       />
 
-      <MassSelector />
+      <PopularDirections popularRates={popularRates} popularPms={popularPms} />
+
+      {/* The picker wheel stays on desktop only; on phones the cards above replace it. */}
+      <Box display={{ base: "none", lg: "block" }} w="100%">
+        <CustomTitle
+          as="h2"
+          title={"Поиск курсов"}
+          subtitle={
+            "Мы собираем данные с сотен обменников, чтобы выбрать лучший курс для Вас"
+          }
+        />
+        <MassSelector />
+      </Box>
       <CustomTitle
         as="h2"
         title={"Преимущества"}

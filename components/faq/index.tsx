@@ -5,14 +5,22 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
+  Button,
   Divider,
   Flex,
   Grid,
+  HStack,
+  Input,
+  InputGroup,
+  InputLeftElement,
   Text,
   VStack,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { BsQuestionCircle } from "react-icons/bs";
+import { BiSearch } from "react-icons/bi";
+import Head from "next/head";
+import { useMemo, useState } from "react";
 
 import { IFaqCategory } from "../../types/faq";
 import { ISEO } from "../../types/general";
@@ -24,31 +32,55 @@ import { Box3D } from "../../styles/theme/custom";
 import { IoMdInformationCircle } from "react-icons/io";
 import { CustomHeader } from "../shared/BoxWrapper";
 
+const matches = (faq: { question: string; response: string }, q: string) =>
+  !q ||
+  faq.question.toLowerCase().includes(q) ||
+  (faq.response || "").toLowerCase().includes(q);
+
 export function FaqCategoriesList({
   categories,
   customTitle,
+  query = "",
+  defaultOpenFirst = false,
 }: {
   categories: IFaqCategory[];
   customTitle?: string;
+  // Lower-cased search string: questions that do not match are hidden, empty categories too.
+  query?: string;
+  // Open the very first question so the page reads as answers, not a wall of headings.
+  defaultOpenFirst?: boolean;
 }) {
   const accentFallback = useColorModeValue("violet.700", "peach.200");
   const questionColor = useColorModeValue("bg.700", "bg.100");
+  const q = query.trim().toLowerCase();
+  const visible = categories
+    .map((c) => ({ ...c, x_faqs: (c.x_faqs || []).filter((f) => matches(f, q)) }))
+    .filter((c) => c.x_faqs.length || !q);
+  if (q && !visible.length) {
+    return (
+      <Text textAlign="center" color="bg.400" mt="6">
+        По запросу «{query}» ничего не найдено.
+      </Text>
+    );
+  }
 
   return (
     <Grid
-      gridTemplateColumns={categories.length % 2 ? "1fr" : "1fr 1fr"}
+      gridTemplateColumns={{ base: "1fr", md: visible.length % 2 ? "1fr" : "1fr 1fr" }}
       gridGap={{ base: 2, md: 4 }}
       mt="2"
     >
-      {categories.map((category) => {
+      {visible.map((category, categoryIndex) => {
         const accent = category.color || accentFallback;
 
         return (
           <Box3D
             key={category.id}
+            id={`faq-${category.code || category.id}`}
             p={{ base: 4, md: 6 }}
             variant="contrast"
             h="fit-content"
+            scrollMarginTop="72px"
           >
             {!customTitle ? (
               <Flex
@@ -71,7 +103,10 @@ export function FaqCategoriesList({
             )}
 
             {category.x_faqs?.length ? (
-              <Accordion allowMultiple>
+              <Accordion
+                allowMultiple
+                defaultIndex={defaultOpenFirst && categoryIndex === 0 && !q ? [0] : []}
+              >
                 {category.x_faqs.map((faq) => (
                   <AccordionItem
                     key={faq.id}
@@ -120,9 +155,29 @@ export default function FaqPage({
   categories: IFaqCategory[] | null;
   seo: ISEO;
 }) {
+  const [query, setQuery] = useState("");
+  const jsonLd = useMemo(() => {
+    const items = (categories || []).flatMap((c) => c.x_faqs || []);
+    if (!items.length) return null;
+    return JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: items.map((f) => ({
+        "@type": "Question",
+        name: f.question,
+        acceptedAnswer: { "@type": "Answer", text: f.response },
+      })),
+    }).replace(/</g, "\\u003c");
+  }, [categories]);
+
   return (
     <>
       <UniversalSeo seo={seo} />
+      {jsonLd ? (
+        <Head>
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
+        </Head>
+      ) : null}
 
       <CustomTitle
         as="h1"
@@ -139,7 +194,49 @@ export default function FaqPage({
           Пока нет вопросов для отображения.
         </Box>
       ) : (
-        <FaqCategoriesList categories={categories} />
+        <>
+          <Box px={{ base: 2, md: 0 }} mb="3">
+            <InputGroup>
+              <InputLeftElement pointerEvents="none" color="bg.500" h="44px">
+                <BiSearch />
+              </InputLeftElement>
+              <Input
+                h="44px"
+                placeholder="Найти вопрос…"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                borderColor="bg.500"
+                _placeholder={{ color: "bg.500" }}
+              />
+            </InputGroup>
+            {!query ? (
+              <Box
+                overflowX="auto"
+                mt="3"
+                sx={{ scrollbarWidth: "none", "&::-webkit-scrollbar": { display: "none" } }}
+              >
+                <HStack spacing="2" w="max-content">
+                  {categories.map((c) => (
+                    <Button
+                      key={c.id}
+                      as="a"
+                      href={`#faq-${c.code || c.id}`}
+                      size="sm"
+                      borderRadius="full"
+                      variant="outline"
+                      borderColor="bg.500"
+                      color="bg.200"
+                      flexShrink={0}
+                    >
+                      {c.description || c.code}
+                    </Button>
+                  ))}
+                </HStack>
+              </Box>
+            ) : null}
+          </Box>
+          <FaqCategoriesList categories={categories} query={query} defaultOpenFirst />
+        </>
       )}
     </>
   );

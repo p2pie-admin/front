@@ -10,6 +10,8 @@ import MassTable from "./table";
 import MassSideContext from "./sideContext";
 
 import MassTableSelector from "./massTableSelector";
+import Breadcrumbs from "../shared/Breadcrumbs";
+import { addSpaces, curToSymbol, R } from "../../redux/amountsHelper";
 
 const Mass = ({
   massDirTextId,
@@ -29,6 +31,19 @@ const Mass = ({
   slug: string;
 }) => {
   const { header, subheader, text } = massDirText;
+  // Best offer for the summary card: the table's default order (course asc) puts it first.
+  const best = useMemo(() => {
+    const sorted = (massRates || []).filter((r) => r?.course).slice().sort((a, b) => a.course - b.course);
+    const top = sorted[0];
+    if (!top) return null;
+    const shown = top.course < 1 ? 1 / top.course : top.course;
+    const symbol = curToSymbol(massDirTextId.currency.code) || massDirTextId.currency.code.toUpperCase();
+    return {
+      text: `1 ${massDirTextId.code.toUpperCase().slice(0, 4)} ≈ ${addSpaces(R(shown, 1))} ${symbol}`,
+      name: top.name,
+      count: sorted.length,
+    };
+  }, [massRates, massDirTextId]);
   const selectedCryptoPm = useMemo(
     () =>
       cryptoPms.find(
@@ -73,6 +88,14 @@ const Mass = ({
       }}
     >
       <Box p="4">
+        <Breadcrumbs
+          mb="2"
+          items={[
+            { label: "Главная", href: "/" },
+            { label: isSell ? "Продать" : "Купить", href: `/${isSell ? "sell" : "buy"}/${slug}` },
+            { label: header },
+          ]}
+        />
         <Heading
           fontSize={{ base: "xl", lg: "4xl" }}
           as="h1"
@@ -89,16 +112,28 @@ const Mass = ({
         >
           {subheader}
         </ResponsiveText>
-        <ResponsiveText
-          fontSize={{ base: "sm", lg: "xl" }}
-          whiteSpace="unset"
-          variant="no_contrast"
-        >
-          {text}
-        </ResponsiveText>
+        {best ? (
+          <Box3D variant="extra_contrast" px="4" py="3" mt="3" display={{ base: "block", lg: "inline-block" }}>
+            <Text fontSize="xs" color="bg.400" textTransform="uppercase" letterSpacing="wide">
+              Лучший курс сейчас
+            </Text>
+            <Text fontSize={{ base: "xl", lg: "2xl" }} fontWeight="700" color="green.300" lineHeight="1.2">
+              {best.text}
+            </Text>
+            <Text fontSize="sm" color="bg.300">
+              {`${best.name} · ${best.count} ${
+                best.count % 10 === 1 && best.count % 100 !== 11
+                  ? "обменник"
+                  : [2, 3, 4].includes(best.count % 10) && ![12, 13, 14].includes(best.count % 100)
+                    ? "обменника"
+                    : "обменников"
+              }`}
+            </Text>
+          </Box3D>
+        ) : null}
       </Box>
 
-      <VStack gap="5" mt={["2", "8"]}>
+      <VStack gap="5" mt={["2", "8"]} w="100%" minW="0">
         <MassTableSelector cryptoPms={cryptoPms} />
 
         <MassTable
@@ -106,6 +141,26 @@ const Mass = ({
           fiatPms={fiatPms}
           massDirTextId={massDirTextId}
         />
+
+        {/* Descriptive text moved under the table: collapsed on phones, open on desktop.
+            It stays in the HTML either way. */}
+        {text ? (
+          <Box w="100%" px="4">
+            <Box as="details" display={{ base: "block", lg: "none" }}>
+              <Box as="summary" cursor="pointer" color="peach.300" fontSize="sm" fontWeight="600" py="2">
+                {`О ${isSell ? "продаже" : "покупке"}: подробнее`}
+              </Box>
+              <ResponsiveText fontSize="sm" whiteSpace="unset" variant="no_contrast">
+                {text}
+              </ResponsiveText>
+            </Box>
+            <Box display={{ base: "none", lg: "block" }}>
+              <ResponsiveText fontSize="xl" whiteSpace="unset" variant="no_contrast">
+                {text}
+              </ResponsiveText>
+            </Box>
+          </Box>
+        ) : null}
       </VStack>
     </MassSideContext.Provider>
   );

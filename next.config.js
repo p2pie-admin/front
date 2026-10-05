@@ -12,9 +12,9 @@ const cspHeader = `
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
   img-src 'self' data: https://maps.googleapis.com https://maps.gstatic.com https://mc.yandex.ru https://mc.yandex.com https://cms.p2pie.com https://cms2.p2pie.com https://cms.1nginx.space https://cms2.1nginx.space https://cms.2nginx.space https://cms2.2nginx.space https://converter.p2pie.com https://converter2.p2pie.com https://converter.1nginx.space https://converter2.1nginx.space https://converter.2nginx.space https://converter2.2nginx.space;
   font-src 'self' https://fonts.gstatic.com;
-  connect-src 'self' https://maps.googleapis.com https://mc.yandex.ru https://mc.yandex.com https://www.google-analytics.com https://region1.google-analytics.com https://cms.p2pie.com https://cms2.p2pie.com https://server.p2pie.com https://server2.p2pie.com https://converter.p2pie.com https://converter2.p2pie.com https://cms.1nginx.space https://cms2.1nginx.space https://server.1nginx.space https://server2.1nginx.space https://converter.1nginx.space https://converter2.1nginx.space https://cms.2nginx.space https://cms2.2nginx.space https://server.2nginx.space https://server2.2nginx.space https://converter.2nginx.space https://converter2.2nginx.space;
+  connect-src 'self' https://maps.googleapis.com https://mc.yandex.ru https://mc.yandex.com wss://mc.yandex.ru wss://mc.yandex.com https://www.google-analytics.com https://region1.google-analytics.com https://cms.p2pie.com https://cms2.p2pie.com https://server.p2pie.com https://server2.p2pie.com https://converter.p2pie.com https://converter2.p2pie.com https://cms.1nginx.space https://cms2.1nginx.space https://server.1nginx.space https://server2.1nginx.space https://converter.1nginx.space https://converter2.1nginx.space https://cms.2nginx.space https://cms2.2nginx.space https://server.2nginx.space https://server2.2nginx.space https://converter.2nginx.space https://converter2.2nginx.space;
   worker-src 'self' blob:;
-  frame-src 'self' https://www.google.com;
+  frame-src 'self' https://www.google.com https://mc.yandex.ru https://mc.yandex.com;
 `
   .replace(/\s{2,}/g, " ")
   .trim();

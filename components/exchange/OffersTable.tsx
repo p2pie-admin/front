@@ -9,6 +9,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { useState } from "react";
 import { ResponsiveText } from "../../styles/theme/custom";
 import { buildRateString } from "../shared/helper";
 import { exchangerNameToSlug } from "../exchangers/helper";
@@ -31,16 +32,29 @@ const OffersTable = ({
   total,
   giveCur,
   getCur,
+  visibleRows = VISIBLE_ROWS,
+  expandWith = "details",
+  stickyHead = false,
+  hiddenNote = true,
 }: {
   rates: ISsrRate[] | null | undefined;
   total?: number | null;
   giveCur: string;
   getCur: string;
+  // Rows rendered before the fold.
+  visibleRows?: number;
+  // "details": the rest sits in a native <details> (no JS, desktop block);
+  // "button": a "Показать ещё" button reveals it in steps (phone list).
+  expandWith?: "details" | "button";
+  stickyHead?: boolean;
+  hiddenNote?: boolean;
 }) => {
+  const [shown, setShown] = useState(visibleRows);
   if (!rates || !rates.length) return null;
   const hidden = total && total > rates.length ? total - rates.length : 0;
-  const head = rates.slice(0, VISIBLE_ROWS);
-  const tail = rates.slice(VISIBLE_ROWS);
+  const head = rates.slice(0, expandWith === "button" ? shown : visibleRows);
+  const tail = expandWith === "button" ? [] : rates.slice(visibleRows);
+  const remaining = expandWith === "button" ? Math.max(rates.length - shown, 0) : 0;
 
   const renderRows = (list: ISsrRate[], offset: number) =>
     list.map((rate, index) => {
@@ -54,7 +68,7 @@ const OffersTable = ({
       const limits = min || max ? `${localFormat(min, smallCur)} — ${localFormat(max, smallCur)}` : "";
       return (
         <Tr key={`offer_${rate.exchangerId}`}>
-          <Td px={{ base: 1, md: 2 }}>{offset + index + 1}</Td>
+          <Td px={{ base: 1, md: 2 }} py={{ base: 3, md: 2 }}>{offset + index + 1}</Td>
           <Td px={{ base: 1, md: 2 }} maxW={{ base: "128px", md: "unset" }} overflow="hidden">
             <ChakraLink
               as={Link}
@@ -102,6 +116,13 @@ const OffersTable = ({
                 color="peach.300"
                 whiteSpace="nowrap"
                 aria-label={`Перейти на ${name}`}
+                // a real tap target on phones (the glyph alone is ~12px)
+                display="inline-flex"
+                alignItems="center"
+                justifyContent="center"
+                minW={{ base: "40px", md: "unset" }}
+                minH={{ base: "40px", md: "unset" }}
+                fontSize={{ base: "lg", md: "sm" }}
               >
                 <Box as="span" display={{ base: "none", md: "inline" }}>
                   Перейти →
@@ -119,7 +140,12 @@ const OffersTable = ({
   const table = (rows: ISsrRate[], offset: number, withHead: boolean) => (
     <Table size="sm" variant="simple" fontSize={{ base: "xs", md: "sm" }}>
       {withHead ? (
-        <Thead>
+        <Thead
+          position={stickyHead ? "sticky" : "static"}
+          top={stickyHead ? "56px" : undefined}
+          zIndex={stickyHead ? 1 : undefined}
+          bgColor={stickyHead ? "bg.800" : undefined}
+        >
           <Tr>
             <Th px={{ base: 1, md: 2 }}>#</Th>
             <Th px={{ base: 1, md: 2 }}>Обменник</Th>
@@ -156,7 +182,25 @@ const OffersTable = ({
           {table(tail, head.length, false)}
         </Box>
       ) : null}
-      {hidden ? (
+      {remaining ? (
+        <Box
+          as="button"
+          type="button"
+          mt="3"
+          w="100%"
+          py="3"
+          borderRadius="xl"
+          border="1px solid"
+          borderColor="bg.500"
+          color="peach.300"
+          fontWeight="600"
+          fontSize="sm"
+          onClick={() => setShown((n) => n + visibleRows)}
+        >
+          {`Показать ещё ${Math.min(remaining, visibleRows)} из ${rates.length}`}
+        </Box>
+      ) : null}
+      {hidden && hiddenNote ? (
         <ResponsiveText size="xs" variant="no_contrast" mt="2">
           {`Остальные ${hidden} предложений — в живом списке выше.`}
         </ResponsiveText>

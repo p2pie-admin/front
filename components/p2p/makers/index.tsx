@@ -1,4 +1,4 @@
-import { Box, Center, Grid } from "@chakra-ui/react";
+import { Box, Button, Center, Grid, HStack, Text } from "@chakra-ui/react";
 import { useState, useMemo, useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
 import Pagination from "../../mass/table/Pagination";
@@ -28,6 +28,13 @@ export default function MakersList({
   const [searchQuery, setSearchQuery] = useState("");
   const [loadingSearchSort, setLoadingSearchSort] = useState(false);
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
+  // Makers without a single offer are noise for a visitor; hidden by default, one tap to show.
+  const [onlyWithOffers, setOnlyWithOffers] = useState(true);
+  const withOffersCount = useMemo(
+    () => (makers || []).filter((m) => (m.offers?.length || 0) > 0).length,
+    [makers],
+  );
+  const botLink = process.env.NEXT_PUBLIC_TELEGRAM_BOT || "";
 
   const toggleFilter = (status: string) => {
     setLoadingSearchSort(true);
@@ -66,6 +73,7 @@ export default function MakersList({
       const displayName = getMakerDisplayName(maker).toLowerCase();
       const matchesFilter =
         activeFilter === null || activeFilter === getMakerStatusColor(maker);
+      if (onlyWithOffers && !(maker.offers?.length || 0)) return false;
 
       const matchesSearch =
         debouncedQuery === "" ||
@@ -74,7 +82,7 @@ export default function MakersList({
 
       return matchesFilter && matchesSearch;
     });
-  }, [makers, debouncedQuery, activeFilter]);
+  }, [makers, debouncedQuery, activeFilter, onlyWithOffers]);
 
   const sortedMakers = useMemo(() => {
     const sorted = filteredMakers?.slice().sort((a, b) => {
@@ -161,6 +169,54 @@ export default function MakersList({
       <BoxWrapper p="4" variant="no_contrast" mt="10" minH="100vh">
         <MakersHeader makers={makers} />
 
+        <Box px="4" pb="2">
+          <Text fontSize="sm" color="bg.300" maxW="720px">
+            Частные обменники, подтвердившие аккаунт через Telegram. Сделка проходит напрямую
+            между вами и мейкером: p2pie не участвует в обмене и не хранит средства — проверяйте
+            отзывы и начинайте с небольших сумм.
+          </Text>
+          <HStack mt="3" spacing="2" flexWrap="wrap">
+            <Button
+              size="sm"
+              borderRadius="full"
+              variant={onlyWithOffers ? "solid" : "outline"}
+              bgColor={onlyWithOffers ? "peach.300" : "transparent"}
+              color={onlyWithOffers ? "bg.900" : "bg.200"}
+              borderColor="bg.500"
+              _hover={{}}
+              onClick={() => setOnlyWithOffers(true)}
+            >
+              {`С предложениями · ${withOffersCount}`}
+            </Button>
+            <Button
+              size="sm"
+              borderRadius="full"
+              variant={!onlyWithOffers ? "solid" : "outline"}
+              bgColor={!onlyWithOffers ? "peach.300" : "transparent"}
+              color={!onlyWithOffers ? "bg.900" : "bg.200"}
+              borderColor="bg.500"
+              _hover={{}}
+              onClick={() => setOnlyWithOffers(false)}
+            >
+              {`Все · ${makers.length}`}
+            </Button>
+            {botLink ? (
+              <Button
+                as="a"
+                href={botLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                size="sm"
+                variant="primary"
+                color="white"
+                ml={{ base: 0, md: "auto" }}
+              >
+                Стать мейкером
+              </Button>
+            ) : null}
+          </HStack>
+        </Box>
+
         <TopPanel
           toggleFilter={toggleFilter}
           activeFilter={activeFilter}
@@ -191,6 +247,13 @@ export default function MakersList({
                 ))}
               </Grid>
             )}
+            {!loadingSearchSort && !paginatedMakers?.length ? (
+              <Text textAlign="center" color="bg.400" py="10">
+                {onlyWithOffers
+                  ? "Пока нет мейкеров с активными предложениями."
+                  : "Ничего не найдено."}
+              </Text>
+            ) : null}
             {totalPages > 1 && (
               <Pagination
                 currentPage={currentPage}

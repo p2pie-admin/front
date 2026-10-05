@@ -17,6 +17,7 @@ const MakerTopPanel = ({ maker }: { maker: IMaker }) => {
         name={maker.telegram_name || maker.telegram_username.toUpperCase()}
         logo={maker.avatar}
         statusColor={statusColor}
+        isH1
       />
 
       <MakerTags tags={maker.exchanger_tags} />
