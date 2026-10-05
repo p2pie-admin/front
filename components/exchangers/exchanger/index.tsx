@@ -47,6 +47,7 @@ export default function Exchanger({
   externalReviews,
   initialReviews,
   reviewsTotal,
+  reviewCounts,
 }: {
   exchanger: IExchanger;
   seo: ISEO;
@@ -55,6 +56,7 @@ export default function Exchanger({
   // First page of reviews (all sources, newest first) and the total; the rest loads on demand.
   initialReviews?: IExchangerReview[] | null;
   reviewsTotal?: number | null;
+  reviewCounts?: { positive: number; neutral: number; negative: number } | null;
 }) {
   if (!exchanger || !exchanger.ref_link) {
     return (
@@ -90,6 +92,7 @@ export default function Exchanger({
 
           <ExchangerStats
             reviews={exchanger.reviews}
+            reviewCounts={reviewCounts}
             // ratesTotal={exchanger.total_rates}
             reserveTotal={exchanger.exchanger_card?.total_reserve_usd}
             workingTime={exchanger.exchanger_card?.working_time}

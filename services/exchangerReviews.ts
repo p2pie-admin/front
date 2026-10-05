@@ -1,7 +1,7 @@
 import { GraphQLClient } from "graphql-request";
 import normalize from "./normalizer";
 import { cmsLinkDEV, cmsLinkPROD, internalCmsLink, resolveInternalUrl } from "./utils";
-import { exchangerReviewsQuery } from "./queries";
+import { exchangerReviewCountsQuery, exchangerReviewsQuery } from "./queries";
 import { IExchangerReview } from "../types/exchanger";
 
 export const REVIEWS_PAGE_SIZE = 10;
@@ -38,6 +38,23 @@ export const fetchExchangerReviews = async ({
     return { items: Array.isArray(items) ? items : [], total };
   } catch (error) {
     console.error("fetchExchangerReviews failed:", { exchangerId, start, type, message: (error as any)?.message });
+    return null;
+  }
+};
+
+export type ReviewCounts = { all: number; positive: number; neutral: number; negative: number };
+
+// Exact per-tone totals of an exchanger's approved reviews (all sources). null when the CMS is unreachable.
+export const fetchExchangerReviewCounts = async (exchangerId: string | number): Promise<ReviewCounts | null> => {
+  const publicBase = process.env.NODE_ENV === "production" ? cmsLinkPROD : cmsLinkDEV;
+  const url = resolveInternalUrl(publicBase, internalCmsLink) + "/graphql";
+  try {
+    const client = new GraphQLClient(url, { timeout: 15000 });
+    const raw = (await client.request(exchangerReviewCountsQuery, { id: String(exchangerId) })) as any;
+    const n = (k: string) => Number(raw?.[k]?.meta?.pagination?.total ?? 0);
+    return { all: n("all"), positive: n("positive"), neutral: n("neutral"), negative: n("negative") };
+  } catch (error) {
+    console.error("fetchExchangerReviewCounts failed:", { exchangerId, message: (error as any)?.message });
     return null;
   }
 };

@@ -8,11 +8,13 @@ import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { ResponsiveText } from "../../../../styles/theme/custom";
 import { IExchangerReview } from "../../../../types/exchanger";
 
-const ReviewsStats = ({ reviews }: { reviews?: IExchangerReview[] | null }) => {
-  if (!reviews || !reviews.length) return <></>;
-  const positive = reviews.filter((r) => r.type === "positive").length;
-  const negative = reviews.filter((r) => r.type === "negative").length;
-  const neutral = reviews.length - positive - negative;
+// Exact totals (from the CMS) win over counting the (capped) list.
+const ReviewsStats = ({ reviews, counts }: { reviews?: IExchangerReview[] | null; counts?: { positive: number; neutral: number; negative: number } | null }) => {
+  if (!counts && (!reviews || !reviews.length)) return <></>;
+  const positive = counts ? counts.positive : reviews!.filter((r) => r.type === "positive").length;
+  const negative = counts ? counts.negative : reviews!.filter((r) => r.type === "negative").length;
+  const neutral = counts ? counts.neutral : reviews!.length - positive - negative;
+  if (positive + negative + neutral === 0) return <></>;
 
   return (
     <HStack>

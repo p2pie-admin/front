@@ -9,13 +9,14 @@ import { ResponsiveText } from "../../../../styles/theme/custom";
 
 type Props = {
   reviews?: IExchangerReview[] | null;
+  reviewCounts?: { positive: number; neutral: number; negative: number } | null;
   ratesTotal?: number | null;
   reserveTotal?: number | null | string;
   workingTime?: string | null;
 };
 
-const ExchangerStats = ({ reviews, reserveTotal, workingTime }: Props) => {
-  if (!reviews?.length && !reserveTotal && !workingTime) return <></>;
+const ExchangerStats = ({ reviews, reviewCounts, reserveTotal, workingTime }: Props) => {
+  if (!reviews?.length && !reviewCounts && !reserveTotal && !workingTime) return <></>;
 
   return (
     <>
@@ -28,7 +29,7 @@ const ExchangerStats = ({ reviews, reserveTotal, workingTime }: Props) => {
         gap="4"
         px="2"
       >
-        <ReviewsStats reviews={reviews} />
+        <ReviewsStats reviews={reviews} counts={reviewCounts} />
         <ResponsiveText display={{ base: "none", lg: "flex" }}>
           •
         </ResponsiveText>

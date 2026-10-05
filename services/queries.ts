@@ -789,6 +789,16 @@ export const exchangerReviewsQuery = gql`
   }
 `;
 
+// Exact counters for the exchanger page header and stats (the nested `reviews` list is capped at 100).
+export const exchangerReviewCountsQuery = gql`
+  query ExchangerReviewCounts($id: ID!) {
+    all: reviews(filters: { exchanger: { id: { eq: $id } }, isApproved: { eq: true } }, pagination: { limit: 1 }) { meta { pagination { total } } }
+    positive: reviews(filters: { exchanger: { id: { eq: $id } }, isApproved: { eq: true }, type: { eq: "positive" } }, pagination: { limit: 1 }) { meta { pagination { total } } }
+    neutral: reviews(filters: { exchanger: { id: { eq: $id } }, isApproved: { eq: true }, type: { eq: "neutral" } }, pagination: { limit: 1 }) { meta { pagination { total } } }
+    negative: reviews(filters: { exchanger: { id: { eq: $id } }, isApproved: { eq: true }, type: { eq: "negative" } }, pagination: { limit: 1 }) { meta { pagination { total } } }
+  }
+`;
+
 export const allReviewsQuery = gql`
   query AllReviews {
     reviews(
