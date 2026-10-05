@@ -69,6 +69,9 @@ export function ReviewBorder({
 export const FormatedDate = ({ updatedAt }: { updatedAt?: string | null }) => {
   const formattedDate = updatedAt
     ? new Intl.DateTimeFormat("ru-RU", {
+        // Fixed zone: the server renders in UTC, a browser in its own zone — a different string per zone
+        // makes React reject the whole server HTML (hydration errors #418/#425/#423).
+        timeZone: "Europe/Moscow",
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
