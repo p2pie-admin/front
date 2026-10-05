@@ -6,7 +6,7 @@ import { IPm } from "../../types/selector";
 import { pmsToSlug } from "./side/selector/section/PmGroup/helper";
 import { format } from "../../redux/amountsHelper";
 
-const MAX_CARDS = 8;
+const MAX_CARDS = 6;
 
 type Card = {
   slug: string;
@@ -76,7 +76,7 @@ const PopularDirections = ({
         gridTemplateColumns={{
           base: "minmax(0, 1fr)",
           sm: "repeat(2, minmax(0, 1fr))",
-          lg: "repeat(4, minmax(0, 1fr))",
+          lg: "repeat(3, minmax(0, 1fr))",
         }}
         gap="3"
         alignItems="stretch"
