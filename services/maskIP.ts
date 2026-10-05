@@ -1,5 +1,6 @@
 export const maskIP = (ip?: string | null): string | null | undefined => {
-  if (ip == null) return ip;
+  // null (not undefined): getStaticProps cannot serialize undefined.
+  if (ip == null) return null;
   const trimmed = ip.trim();
   if (trimmed.length <= 3) return "***";
   return `${trimmed.slice(0, -3)}***`;
