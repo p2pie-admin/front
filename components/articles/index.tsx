@@ -27,7 +27,10 @@ export default function ArticlesList({
       {!articles ? (
         <> Нет статей </>
       ) : (
-        <Grid gap="4" gridTemplateColumns="1fr 1fr 1fr">
+        <Grid
+          gap="4"
+          gridTemplateColumns={{ base: "1fr", md: "1fr 1fr", lg: "1fr 1fr 1fr" }}
+        >
           {articles.map((article) => {
             const key = article.id || article.code;
             return <ArticlePreview key={key} article={article} />;
