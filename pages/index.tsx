@@ -73,7 +73,7 @@ export const getStaticProps = async () => {
         rootText: (rootText || null) as IDirText | null,
         reviews: maskedReviews as IExchangerReview[],
       },
-      revalidate: TTL.slow,
+      revalidate: TTL.fast,
     };
   } catch (e) {
     console.error("Error during getStaticProps:", e);

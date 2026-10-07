@@ -16,6 +16,7 @@ import {
   FAQbyCategoryCodeQuery,
   FAQsQuery,
   allReviewsQuery,
+  HOME_REVIEW_SOURCES,
 } from "../services/queries";
 import { getPmsFromSelector } from "./helper";
 import { cachedFetch } from "./cache";
@@ -337,22 +338,27 @@ export const loadFAQbyCategoryCode = (code: string) =>
   });
 
 export const loadAllReviews = () =>
-  cachedFetch(`all_reviews_${locale}`, TTL.fast, async () => {
+  cachedFetch(`home_reviews_v2_${locale}`, TTL.fast, async () => {
     const res = (await cmsFetcher(allReviewsQuery, {
       locale,
-    })) as unknown;
+    })) as Record<string, any> | null;
 
     if (!res) return [];
-    if (Array.isArray(res)) return res as IExchangerReview[];
-    if (Array.isArray((res as any).reviews))
-      return (res as any).reviews as IExchangerReview[];
-    if (Array.isArray((res as any)?.reviews?.data)) {
-      return (res as any).reviews.data.map((item: any) => ({
-        id: item?.id?.toString?.() ?? "",
-        ...item?.attributes,
-      }));
-    }
-    return [];
+    // One aliased list per platform (see allReviewsQuery): flatten, newest first.
+    const merged: IExchangerReview[] = HOME_REVIEW_SOURCES.flatMap(
+      ([alias]) => {
+        // cmsFetcher normalizes Strapi's data/attributes; keep the raw shape working too.
+        const list = Array.isArray(res?.[alias]) ? res[alias] : res?.[alias]?.data || [];
+        return list.map((item: any) =>
+          item?.attributes
+            ? { id: item?.id?.toString?.() ?? "", ...item.attributes }
+            : { ...item, id: item?.id?.toString?.() ?? "" },
+        );
+      },
+    );
+    const when = (r: IExchangerReview) =>
+      Date.parse(r.review_date || r.updatedAt || "") || 0;
+    return merged.sort((a, b) => when(b) - when(a));
   });
 
 // export const loadDirsTexts = (locale: "en" | "ru") =>

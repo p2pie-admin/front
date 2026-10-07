@@ -116,7 +116,7 @@ const MainPageContent = ({
         mb="0"
         ml="8"
         title={"Репутация и доверие"}
-        subtitle={"Реальные отзывы клиентов"}
+        subtitle={"Свежие отзывы с p2pie, BestChange, KursExpert и других мониторингов"}
       />
 
       <AllReviews reviews={reviews} />

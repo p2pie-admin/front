@@ -1,8 +1,7 @@
 import { Box, Button, Divider, HStack, VStack } from "@chakra-ui/react";
 import React, { useEffect, useMemo, useRef } from "react";
-import { ReviewCompactCard } from "../../shared/ReviewCompactCard";
+import HomeReviewCard from "./HomeReviewCard";
 import { IExchangerReview } from "../../../types/exchanger";
-import { exchangerNameToSlug } from "../../exchangers/helper";
 import ErrorWrapper from "../../shared/ErrorWrapper";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import CustomTitle from "../../shared/CustomTitle";
@@ -60,7 +59,7 @@ const AllReviews = ({ reviews }: { reviews?: IExchangerReview[] | null }) => {
             <VStack align="stretch" spacing="3" pos="relative">
               <HStack
                 ref={scrollRef}
-                spacing="6"
+                spacing="4"
                 overflowX="auto"
                 py="2"
                 w="100%"
@@ -76,25 +75,12 @@ const AllReviews = ({ reviews }: { reviews?: IExchangerReview[] | null }) => {
                 <Box w="10" />
                 {normalizedReviews.map((review) => (
                   <Box
-                    key={review.id}
+                    key={`${review.source || "p2pie"}-${review.id}`}
                     flex="0 0 auto"
-                    minW={{ base: "250px", lg: "420px" }}
-                    maxW={{ base: "250px", lg: "420px" }}
-                    h="100%"
-                    transformOrigin={{ base: "top left", lg: "center" }}
-                    _hover={{ filter: "brightness(1.1)" }}
+                    w={{ base: "280px", lg: "360px" }}
+                    minH="210px"
                   >
-                    <ReviewCompactCard
-                      review={review}
-                      needTag={false}
-                      href={
-                        review?.exchanger?.name
-                          ? `/exchangers/${exchangerNameToSlug(
-                              review.exchanger.name
-                            )}`
-                          : undefined
-                      }
-                    />
+                    <HomeReviewCard review={review} />
                   </Box>
                 ))}
                 <Box w="10" />

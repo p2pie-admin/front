@@ -799,60 +799,71 @@ export const exchangerReviewCountsQuery = gql`
   }
 `;
 
-export const allReviewsQuery = gql`
-  query AllReviews {
-    reviews(
-      # Copies from other monitorings are shown on exchanger pages only, not in the global feed.
-      filters: { isApproved: { eq: true }, source: { null: true } }
-      pagination: { limit: 8 }
-      sort: ["updatedAt:desc"]
-    ) {
-      data {
-        id
-        attributes {
-          exchanger {
-            data {
-              id
-              attributes {
-                name
-                display_name
-                logo {
-                  data {
-                    id
-                    attributes {
-                      name
-                      alternativeText
-                      url
-                    }
-                  }
+// Home feed: the newest reviews from every platform. One alias per source so BestChange (most of the volume)
+// cannot crowd the others out; the loader merges and sorts them by review_date.
+const homeReviewFields = `
+  data {
+    id
+    attributes {
+      exchanger {
+        data {
+          id
+          attributes {
+            name
+            display_name
+            logo {
+              data {
+                id
+                attributes {
+                  name
+                  alternativeText
+                  url
                 }
-              }
-            }
-          }
-          fingerprint
-          ipAddress
-          name
-          text
-          type
-          isDispute
-          isClosed
-          isApproved
-          userAgent
-          location
-          updatedAt
-          screenshots {
-            data {
-              id
-              attributes {
-                name
-                alternativeText
-                url
               }
             }
           }
         }
       }
+      fingerprint
+      ipAddress
+      name
+      text
+      type
+      isDispute
+      isClosed
+      isApproved
+      userAgent
+      location
+      updatedAt
+      review_date
+      source
+      external_link
     }
+  }
+`;
+
+const homeReviewsAlias = (alias: string, sourceFilter: string, limit: number) => `
+  ${alias}: reviews(
+    filters: { isApproved: { eq: true }, source: ${sourceFilter} }
+    pagination: { limit: ${limit} }
+    sort: ["review_date:desc"]
+  ) {${homeReviewFields}}
+`;
+
+export const HOME_REVIEW_SOURCES: [string, string][] = [
+  ["own", "{ null: true }"],
+  ["bestchange", '{ eq: "BestChange" }'],
+  ["kursexpert", '{ eq: "KursExpert" }'],
+  ["obmify", '{ eq: "Obmify" }'],
+  ["changeinfo", '{ eq: "ChangeInfo" }'],
+  ["emon", '{ eq: "E-mon" }'],
+];
+
+export const allReviewsQuery = gql`
+  query AllReviews {
+    ${HOME_REVIEW_SOURCES.map(([alias, f]) =>
+      homeReviewsAlias(alias, f, alias === "bestchange" ? 6 : 3),
+    ).join("\n")}
   }
 `;
 
