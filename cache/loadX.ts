@@ -338,7 +338,7 @@ export const loadFAQbyCategoryCode = (code: string) =>
   });
 
 export const loadAllReviews = () =>
-  cachedFetch(`home_reviews_v2_${locale}`, TTL.fast, async () => {
+  cachedFetch(`home_reviews_v3_${locale}`, TTL.fast, async () => {
     const res = (await cmsFetcher(allReviewsQuery, {
       locale,
     })) as Record<string, any> | null;
