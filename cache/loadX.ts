@@ -358,7 +358,24 @@ export const loadAllReviews = () =>
     );
     const when = (r: IExchangerReview) =>
       Date.parse(r.review_date || r.updatedAt || "") || 0;
-    return merged.sort((a, b) => when(b) - when(a));
+    // Round-robin by platform (newest first inside each round) so the carousel visibly mixes sources
+    // instead of opening with six BestChange cards in a row.
+    const groups = new Map<string, IExchangerReview[]>();
+    merged
+      .sort((a, b) => when(b) - when(a))
+      .forEach((r) => {
+        const k = r.source || "p2pie";
+        groups.set(k, [...(groups.get(k) || []), r]);
+      });
+    const out: IExchangerReview[] = [];
+    for (let round = 0; out.length < merged.length; round++) {
+      const batch = [...groups.values()]
+        .map((g) => g[round])
+        .filter(Boolean)
+        .sort((a, b) => when(b) - when(a));
+      out.push(...batch);
+    }
+    return out;
   });
 
 // export const loadDirsTexts = (locale: "en" | "ru") =>

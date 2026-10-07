@@ -165,8 +165,10 @@ const RateHistory = ({
   const h = hover !== null ? points[hover] : null;
   const hxy = hover !== null ? geo.xy[hover] : null;
 
-  const marker = (i: number, label: string, above: boolean) => {
+  const marker = (i: number, label: string, preferAbove: boolean) => {
     const [px, py] = geo.xy[i];
+    // Flip the label when it would leave the plot (min near the bottom edge, max near the top).
+    const above = preferAbove ? py > 15 : py > 80;
     return (
       <Box
         key={label}

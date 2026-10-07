@@ -40,6 +40,7 @@ const SourceBadge = ({ source }: { source?: string | null }) => {
 const HomeReviewCard = ({ review }: { review: IExchangerReview }) => {
   const bg = useColorModeValue("white", "bg.900");
   const border = useColorModeValue("blackAlpha.100", "whiteAlpha.100");
+  const ink = useColorModeValue("gray.800", "gray.100");
   const ex = review.exchanger;
   const slug = ex?.name ? exchangerNameToSlug(ex.name) : null;
   const text = (review.text || "").trim();
@@ -53,6 +54,7 @@ const HomeReviewCard = ({ review }: { review: IExchangerReview }) => {
       p="4"
       gap="3"
       bg={bg}
+      color={ink}
       borderRadius="2xl"
       border="1px solid"
       borderColor={border}
