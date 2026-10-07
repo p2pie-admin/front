@@ -38,3 +38,8 @@ yarn-error.log*
 .clinerules.backup
 CLINE_GUIDE.md.backup
 
+
+# secrets (never commit)
+.env
+.env.*
+!.env.example
