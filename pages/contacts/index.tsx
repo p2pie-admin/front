@@ -5,10 +5,12 @@ import {
   Heading,
   HStack,
   Icon,
+  Link,
   Text,
   VStack,
   useColorModeValue,
 } from "@chakra-ui/react";
+import NextLink from "next/link";
 import { FaTelegram, FaEnvelope } from "react-icons/fa";
 import UniversalSeo from "../../components/shared/UniversalSeo";
 import { ISEO } from "../../types/general";
@@ -132,6 +134,21 @@ const ContactsPage = () => {
                 <Text key={t}>• {t}</Text>
               ))}
             </VStack>
+          </Box>
+
+          <Box>
+            <Heading as="h2" size="md" mb={3}>
+              Добавление обменника
+            </Heading>
+            <Text color={muted}>
+              Бесплатно для обменников из BestChange, ExchangeSumo и KursExpert. Проверка
+              новых обменников стоит 0.1 ETH, публикации на наших площадках 50 USDT, всё
+              остальное бесплатно. Подробно на странице{" "}
+              <Link as={NextLink} href="/for-exchangers" color="blue.300">
+                «Для обменников»
+              </Link>
+              .
+            </Text>
           </Box>
 
           <Box>
