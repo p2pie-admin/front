@@ -43,7 +43,14 @@ const MobileOffers = ({
   }
 
   return (
-    <Box mt="-2">
+    <Box mt="4">
+      {/* Same data as the swiper above, just as a table for those who prefer it. */}
+      <ResponsiveText variant="contrast" fontWeight="600">
+        Те же предложения таблицей
+      </ResponsiveText>
+      <ResponsiveText size="xs" variant="no_contrast" mb="-4">
+        {`Все ${total} предложений из списка выше, если так удобнее сравнивать`}
+      </ResponsiveText>
       <OffersTable
         rates={rates}
         total={total}
