@@ -43,10 +43,7 @@ const MobileOffers = ({
   }
 
   return (
-    <Box mt="2">
-      <ResponsiveText variant="contrast" fontWeight="600" mb="-4">
-        {`Найдено ${total} предложений`}
-      </ResponsiveText>
+    <Box mt="-2">
       <OffersTable
         rates={rates}
         total={total}
