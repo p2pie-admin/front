@@ -132,6 +132,11 @@ export type IExchanger = {
   updatedAt?: string;
   status?: IExchangerStatus | null;
   admin_rating?: number | null;
+  // Trust level, score 0..100, reviews counted and the breakdown (see components/shared/trust.ts).
+  trust_level?: string | null;
+  trust_score?: number | null;
+  reviews_count?: number | null;
+  rating_details?: unknown;
   logo?: IImage | null;
   exchanger_card?: IExchangerCard | null;
   exchanger_templates?: IExchangerTemplate[];

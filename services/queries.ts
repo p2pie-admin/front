@@ -129,6 +129,10 @@ export const exchangerQuery = gql`
           status
           ref_link
           admin_rating
+          trust_level
+          trust_score
+          reviews_count
+          rating_details
           exchanger_card {
             id
             telegram
@@ -322,6 +326,8 @@ export const exchangersQuery = gql`
           ref_link
           status
           admin_rating
+          trust_level
+          trust_score
           updatedAt
           exchanger_card {
             en_description

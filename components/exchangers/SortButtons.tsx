@@ -34,7 +34,7 @@ const SortButtons: React.FC<SortButtonsProps> = ({
     {
       key: "admin_rating",
       label: "Рейтинг",
-      tooltip: "Сортировать по рейтингу администратора",
+      tooltip: "Сортировать по оценке клиентов",
     },
   ] as const;
 

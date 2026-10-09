@@ -13,7 +13,7 @@ const pageType = (path: string): string => {
   const first = path.split("?")[0].split("#")[0].split("/").filter(Boolean)[0];
   if (!first) return "home";
   if (
-    ["exchangers", "articles", "buy", "sell", "p2p", "map", "about", "faq", "contacts", "partnership", "for-exchangers", "auth"].includes(first)
+    ["exchangers", "articles", "buy", "sell", "p2p", "map", "about", "faq", "contacts", "partnership", "for-exchangers", "rating", "auth"].includes(first)
   )
     return first;
   return "direction";

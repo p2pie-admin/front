@@ -12,6 +12,7 @@ import StarRatings from "react-star-ratings";
 import { capitalize } from "../main/side/selector/section/PmGroup/helper";
 import { ResponsiveText } from "../../styles/theme/custom";
 import Rating from "../exchange/tv/Rating";
+import TrustBadge from "./TrustBadge";
 import CustomImage from "./CustomImage";
 import { IImage } from "../../types/selector";
 import Dot from "../exchangers/Dot";
@@ -21,12 +22,14 @@ const ExchangerName = ({
   name,
   logo,
   admin_rating,
+  trust_level,
   isH1 = false,
   statusColor = "green",
 }: {
   name: string;
   logo?: IImage | null;
   admin_rating?: number | null;
+  trust_level?: string | null;
   isH1?: boolean;
   statusColor?: IDotColors;
 }) => {
@@ -60,6 +63,7 @@ const ExchangerName = ({
         {capitalize(name)}
       </Text>
       <Rating rating={admin_rating} />
+      <TrustBadge level={trust_level} />
     </HStack>
   );
 };

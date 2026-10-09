@@ -37,6 +37,7 @@ import ExchangerTopPanel from "./exchangerTopPanel";
 import { ExchangerTopButtons } from "./exchangerTopPanel/ExchangerTopButtons";
 import Monitorings from "./monitorings";
 import Uptime, { IExchangerUptime } from "./Uptime";
+import TrustPanel from "./TrustPanel";
 import ExternalReviews from "./ExternalReviews";
 import { IExternalReviews } from "../../../services/competitors";
 
@@ -109,6 +110,7 @@ export default function Exchanger({
         </VStack>
       </BoxWrapper>
 
+      <TrustPanel exchanger={exchanger} />
       <Uptime uptime={uptime} />
       <OfficesDescription offices={exchanger.offices} />
       <ExchangerDescription description={description} />

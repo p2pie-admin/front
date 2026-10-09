@@ -95,7 +95,8 @@ export default function ExchangersList({
         //   result = (a?.total_rates || 0) - (b?.total_rates || 0);
       } else if (sortCriteria === "admin_rating") {
         result =
-          (Number(a?.admin_rating) || 0) - (Number(b?.admin_rating) || 0);
+          (Number(a?.admin_rating) || 0) - (Number(b?.admin_rating) || 0) ||
+          (Number(a?.trust_score) || 0) - (Number(b?.trust_score) || 0);
       }
 
       return sortDirection === "asc" ? result : -result;

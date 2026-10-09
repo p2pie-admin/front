@@ -103,6 +103,7 @@ const aboutLinks = [
   { label: "О проекте", href: "/about" },
   { label: "Партнерство", href: "/partnership" },
   { label: "Для обменников", href: "/for-exchangers" },
+  { label: "Как считается рейтинг", href: "/rating" },
   { label: "Блог", href: "/articles" },
 ];
 

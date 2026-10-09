@@ -15,6 +15,7 @@ const Header = ({ exchanger }: { exchanger: IExchanger }) => {
         name={displayName}
         logo={exchanger.logo}
         admin_rating={exchanger.admin_rating}
+        trust_level={exchanger.trust_level}
         isH1={true}
         statusColor={statusColor}
       />

@@ -154,7 +154,7 @@ const MassRate = ({
             </ResponsiveText>
           </HStack>
 
-          <Rating rating={rate.admin_rating || 4.4} />
+          <Rating rating={rate.admin_rating} />
         </HStack>
         <HStack justifyContent={"space-between"} px="1">
           <MassFiat codes={rate.codes} fiatPms={fiatPms} ref_link={ref_link} />
@@ -192,7 +192,7 @@ const MassRate = ({
           </HStack>
         </HStack>
 
-        <Rating rating={rate.admin_rating || 4.4} />
+        <Rating rating={rate.admin_rating} />
 
         {renderRatesBig()}
 

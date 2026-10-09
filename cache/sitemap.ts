@@ -34,6 +34,7 @@ const STATIC_PATHS = [
   "/map/moscow",
   "/p2p",
   "/partnership",
+  "/rating",
 ];
 
 const articlesQuery = gql`

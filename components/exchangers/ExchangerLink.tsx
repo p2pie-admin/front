@@ -39,6 +39,7 @@ export default function ExchangerPreview({
           name={displayName}
           logo={exchanger.logo}
           admin_rating={exchanger.admin_rating}
+          trust_level={exchanger.trust_level}
           statusColor={getStatus(exchanger)}
         />
         <Box ml="auto" color="inherit">
