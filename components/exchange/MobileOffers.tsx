@@ -6,10 +6,11 @@ import { IRate } from "../../types/rates";
 import OffersTable from "./OffersTable";
 import { ISsrRate, pickSsrRate } from "./ssrRates";
 
-const STEP = 20;
+// Rows shown before "Показать ещё"; the rest sits in a collapsed <details>.
+const VISIBLE = 5;
 
 // Phone view of the offers: the server-rendered list first (so HTML and hydration match),
-// then the live Redux list once the client fetched it. Plain table, page scroll, no slider.
+// then the live Redux list once the client fetched it. Sits under the swiper as a short table.
 const MobileOffers = ({
   initialDirRates,
   ratesTotal,
@@ -51,9 +52,7 @@ const MobileOffers = ({
         total={total}
         giveCur={giveCur}
         getCur={getCur}
-        visibleRows={STEP}
-        expandWith="button"
-        stickyHead
+        visibleRows={VISIBLE}
         hiddenNote={false}
       />
     </Box>

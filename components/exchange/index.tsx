@@ -211,10 +211,7 @@ const Exchange = ({
           >
             <Calculator />
 
-            {/* The vertical amount slider only makes sense next to the swiper (desktop). */}
-            <Box display={{ base: "none", lg: "contents" }}>
-              <LimitsRange />
-            </Box>
+            <LimitsRange />
           </HStack>
           <Box display={{ base: "none", lg: "block" }}>
             <TitleH2 isLong={isLong}>
@@ -222,9 +219,8 @@ const Exchange = ({
             </TitleH2>
           </Box>
 
-          {/* Phones: a flat table in the normal page flow (the swiper scrolled inside a 300px box).
-              The swiper stays mounted (display:none) because it owns the live-rates fetch. */}
-          <Box display={{ base: "none", lg: "block" }}>
+          {/* The swiper on every screen; phones also get a short table under it. */}
+          <Box>
             <TV
               dir={dir}
               city={city}
