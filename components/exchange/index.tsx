@@ -43,13 +43,12 @@ import { codeToRuName2, codeToRuName3 } from "../../redux/amountsHelper";
 import Loader from "../shared/Loader";
 import { TitleH2 } from "../shared/TitleH2";
 import Head from "next/head";
-import OffersTable from "./OffersTable";
 import CityChannelLink from "./CityChannelLink";
 import OffersSummary from "./OffersSummary";
 import RateHistory from "./RateHistory";
 import { IDirHistory, IRatesSummary, ISsrRate } from "./ssrRates";
 import { exchangerNameToSlug } from "../exchangers/helper";
-import MobileOffers from "./MobileOffers";
+import ShortOffers from "./ShortOffers";
 import HowToAndFaq from "./HowToAndFaq";
 
 const JSON_LD_ITEMS = 10;
@@ -233,7 +232,7 @@ const Exchange = ({
             />
           </Box>
           <Box display={{ base: "block", lg: "none" }}>
-            <MobileOffers
+            <ShortOffers
               initialDirRates={initialDirRates}
               ratesTotal={ratesTotal}
               giveCur={giveCur}
@@ -255,26 +254,15 @@ const Exchange = ({
           <CityChannelLink citySlug={city?.en_name} cityName={city?.ru_name} />
           {/* The full offers table lives in this full-width block: in the 436px column it either
               overflowed (phones) or left the left column with a wall of empty space (desktop). */}
-          {initialDirRates?.length ? (
-            <Box as="details" mb="4" display={{ base: "none", lg: "block" }}>
-              <Box
-                as="summary"
-                cursor="pointer"
-                fontSize="sm"
-                color="peach.300"
-                py="2"
-                _hover={{ textDecoration: "underline" }}
-              >
-                Показать все предложения таблицей
-              </Box>
-              <OffersTable
-                rates={initialDirRates}
-                total={ratesTotal}
-                giveCur={giveCur}
-                getCur={getCur}
-              />
-            </Box>
-          ) : null}
+          {/* Desktop: the same short table (phones get it under the swiper). */}
+          <Box mb="4" display={{ base: "none", lg: "block" }}>
+            <ShortOffers
+              initialDirRates={initialDirRates}
+              ratesTotal={ratesTotal}
+              giveCur={giveCur}
+              getCur={getCur}
+            />
+          </Box>
           <RateHistory
             history={rateHistory}
             giveCur={giveCur}

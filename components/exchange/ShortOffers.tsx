@@ -9,9 +9,9 @@ import { ISsrRate, pickSsrRate } from "./ssrRates";
 // Rows shown before "Показать ещё"; the rest sits in a collapsed <details>.
 const VISIBLE = 5;
 
-// Phone view of the offers: the server-rendered list first (so HTML and hydration match),
-// then the live Redux list once the client fetched it. Sits under the swiper as a short table.
-const MobileOffers = ({
+// Short offers table, the swiper's data as rows (phones: under the swiper, desktop: in the wide
+// block). Server-rendered list first (so HTML and hydration match), then the live Redux list.
+const ShortOffers = ({
   initialDirRates,
   ratesTotal,
   giveCur,
@@ -63,4 +63,4 @@ const MobileOffers = ({
   );
 };
 
-export default MobileOffers;
+export default ShortOffers;
