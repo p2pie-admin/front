@@ -49,7 +49,7 @@ const ShortOffers = ({
         Те же предложения таблицей
       </ResponsiveText>
       <ResponsiveText size="xs" variant="no_contrast" mb="-4">
-        {`Все ${total} предложений из списка выше, если так удобнее сравнивать`}
+        Все предложения из списка выше, если так удобнее сравнивать
       </ResponsiveText>
       <OffersTable
         rates={rates}
