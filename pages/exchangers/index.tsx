@@ -32,6 +32,9 @@ export const getStaticProps: GetStaticProps = async () => {
         exchangers: null,
         initialPage: 1,
       },
+      // Retry soon: an empty list here means the CMS fetch failed (e.g. at build time),
+      // without revalidate the "no exchangers" page would be baked in permanently.
+      revalidate: 60,
     };
   }
 
