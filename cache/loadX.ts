@@ -464,7 +464,7 @@ export const loadMassRates = ({
   ) as Promise<IMassRate[]>;
 
 export const loadP2PMaker = (telegramUsername: string) =>
-  cachedFetch(`p2p_maker_v2_${telegramUsername}`, TTL.fast, async () => {
+  cachedFetch(`p2p_maker_v3_${telegramUsername}`, TTL.fast, async () => {
     if (!telegramUsername) return null;
     const res = await fetchCMSWithServiceFallback(p2pMakerQuery, {
       telegramUsername,
@@ -474,7 +474,7 @@ export const loadP2PMaker = (telegramUsername: string) =>
   });
 
 export const loadAllP2PMakers = () =>
-  cachedFetch(`p2p_makers_v2`, TTL.fast, async () => {
+  cachedFetch(`p2p_makers_v3`, TTL.fast, async () => {
     const res = await fetchCMSWithServiceFallback(p2pMakersQuery);
     if (!res) return null;
     if (Array.isArray(res)) return res as IMakerPreview[];

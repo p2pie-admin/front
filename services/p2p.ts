@@ -30,6 +30,7 @@ export const p2pMakersQuery = gql`
   query p2pMakersQuery {
     p2PMakers(
       filters: { status: { in: ["active", "suspended", "disabled"] } }
+      pagination: { limit: 500 }
     ) {
       data {
         id
@@ -38,7 +39,7 @@ export const p2pMakersQuery = gql`
           telegram_username
           status
           createdAt
-          offers {
+          offers(pagination: { limit: 200 }) {
             data {
               id
               attributes {
@@ -133,6 +134,7 @@ export const p2pMakerQuery = gql`
         telegram_username: { eqi: $telegramUsername }
         status: { in: ["active", "suspended", "disabled"] }
       }
+      pagination: { limit: 1 }
     ) {
       data {
         id
@@ -146,7 +148,7 @@ export const p2pMakerQuery = gql`
           deposit_usd
           status
           createdAt
-          offers {
+          offers(pagination: { limit: 200 }) {
             data {
               id
               attributes {

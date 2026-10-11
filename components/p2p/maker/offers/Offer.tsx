@@ -1,4 +1,4 @@
-import { Grid, Box } from "@chakra-ui/react";
+import { Grid, Box, Text } from "@chakra-ui/react";
 import React from "react";
 import { BsArrowRightShort } from "react-icons/bs";
 import PmName from "../../../shared/PmName";
@@ -27,7 +27,7 @@ export default function Offer({
       columnGap="2"
     >
       <Box gridColumn="1" display="flex" flexDir="column" gap="1">
-        <PmName pm={givePm} isFull={true} />
+        {givePm ? <PmName pm={givePm} isFull={true} /> : <Text fontSize="sm">{giveCode}</Text>}
       </Box>
 
       <Box gridColumn="2" justifySelf="center">
@@ -35,7 +35,7 @@ export default function Offer({
       </Box>
 
       <Box gridColumn="3" display="flex" flexDir="column" gap="1">
-        <PmName pm={getPm} isFull={true} />
+        {getPm ? <PmName pm={getPm} isFull={true} /> : <Text fontSize="sm">{getCode}</Text>}
       </Box>
     </Grid>
   );
