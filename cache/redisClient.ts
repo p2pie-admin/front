@@ -65,6 +65,9 @@ export const redisKeys = async (pattern: string): Promise<string[]> =>
 export const redisMGet = async (...keys: string[]): Promise<any[]> =>
   withRedis((client) => client.mget(...keys), []);
 
+export const redisDel = async (...keys: string[]): Promise<number> =>
+  keys.length ? withRedis((client) => client.del(...keys), 0) : 0;
+
 export const redisExpire = async (key: string, ttlSeconds: number) => {
   await withRedis((client) => client.expire(key, ttlSeconds));
 };
