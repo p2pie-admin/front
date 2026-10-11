@@ -16,6 +16,7 @@ import { ISEO } from "../../types/general";
 import { IFaqCategory } from "../../types/faq";
 import { IFullOffer, IMaker, IMakerPreview, IP2PTopParameter } from "../../types/p2p";
 import { IPm } from "../../types/selector";
+import { filterAllowedOffers } from "../../services/p2pSanctions";
 import {
   getMakerDisplayName,
   getMakerSlug,
@@ -99,7 +100,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
       ...maker,
       top_parameters: selectTopParametersByIds(maker.top_parameters, makerTopParameters),
       offers: Array.isArray(maker.offers)
-        ? maker.offers.map((offer) => ({
+        ? filterAllowedOffers(maker.offers, pms).map((offer) => ({
             ...offer,
             top_parameters: selectTopParametersByIds(
               offer?.top_parameters,

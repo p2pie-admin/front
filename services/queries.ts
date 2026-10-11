@@ -10,6 +10,7 @@ const pmGroup = gql`
         ru_name
         countries
         prefix
+        sanctioned
         options {
           ... on ComponentSelectorSubgroup {
             id

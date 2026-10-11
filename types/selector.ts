@@ -36,6 +36,8 @@ interface IPmGroup {
   color: string;
   options: IOption[];
   section?: string;
+  // Sanctioned banks are hidden from P2P offers and deal rooms.
+  sanctioned?: boolean | null;
 }
 
 interface IImage {
@@ -80,6 +82,7 @@ interface IPm {
   color: string;
   popular_as?: IPopularAs | null;
   section: string;
+  sanctioned?: boolean;
 }
 
 type ISide = "give" | "get";

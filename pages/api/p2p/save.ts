@@ -7,6 +7,8 @@ import {
 } from "../../../services/queries";
 import { normalizeTelegramSlug } from "../../../services/telegram";
 import { requestStrapiAsService } from "../../../services/server/strapiClient";
+import { loadPms } from "../../../cache/loadX";
+import { isDirAllowed, sanctionedCodes } from "../../../services/p2pSanctions";
 import {
   verifyTelegramSlugServer,
   verifyTelegramTokenServer,
@@ -428,6 +430,12 @@ export default async function handler(
       ok: false,
       error: "offer_dir_or_course_missing",
     });
+  }
+
+  // New offers may not use sanctioned payment groups; old ones are kept (they are hidden on the site).
+  const blockedCodes = sanctionedCodes(await loadPms());
+  if (offerInputs.some((offer) => !offer.id && !isDirAllowed(offer.data.dir, blockedCodes))) {
+    return res.status(400).json({ ok: false, error: "offer_pm_sanctioned" });
   }
 
   console.log("[p2p/save] prepared offer payload", {

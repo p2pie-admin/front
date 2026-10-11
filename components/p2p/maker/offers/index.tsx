@@ -1,4 +1,5 @@
-import { Divider, Grid, Box, VStack, HStack } from "@chakra-ui/react";
+import { Divider, Grid, Box, VStack, HStack, Button, Link } from "@chakra-ui/react";
+import { dealLink } from "../../../../services/p2pSanctions";
 import { IoMdListBox } from "react-icons/io";
 import { addSpaces } from "../../../../redux/amountsHelper";
 import { ResponsiveText } from "../../../../styles/theme/custom";
@@ -35,6 +36,21 @@ export default function MakerOffers({
           <Box key={offer.id} p="4" borderRadius="xl" bg="bg.900">
             <Offer offer={offer} pmsByCode={pmsByCode} />
             <OfferDetails offer={offer} />
+            {offer.isActive !== false && (
+              <Button
+                as={Link}
+                href={dealLink(offer.id)}
+                isExternal
+                rel="nofollow noopener"
+                mt="3"
+                size="sm"
+                w="full"
+                colorScheme="green"
+                _hover={{ textDecoration: "none" }}
+              >
+                Начать сделку
+              </Button>
+            )}
           </Box>
         )) || null}
       </Grid>

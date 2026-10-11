@@ -3,7 +3,8 @@ import { GetStaticProps } from "next";
 import MakersList from "../../components/p2p/makers";
 import { ISEO } from "../../types/general";
 import { nullSeo } from "../../components/shared/UniversalSeo";
-import { loadAllP2PMakers } from "../../cache/loadX";
+import { loadAllP2PMakers, loadPms } from "../../cache/loadX";
+import { filterAllowedOffers } from "../../services/p2pSanctions";
 import { IMakerPreview } from "../../types/p2p";
 
 const MakersPage = ({
@@ -19,7 +20,11 @@ const MakersPage = ({
 export const getStaticProps: GetStaticProps = async () => {
   const itemsPerPage = 20;
 
-  const makers = (await loadAllP2PMakers()) as IMakerPreview[] | null;
+  const [rawMakers, pms] = await Promise.all([loadAllP2PMakers(), loadPms()]);
+  const makers = ((rawMakers as IMakerPreview[] | null) || null)?.map((maker) => ({
+    ...maker,
+    offers: Array.isArray(maker.offers) ? filterAllowedOffers(maker.offers, pms) : maker.offers,
+  })) as IMakerPreview[] | null;
 
   if (!makers?.length) {
     return {

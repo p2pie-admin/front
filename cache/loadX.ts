@@ -214,7 +214,7 @@ export const limitedPossibleDirs = (
 };
 
 export const loadPms = async () => {
-  const pms = await cachedFetch("pms", TTL.slow, async () => {
+  const pms = await cachedFetch("pms_v2", TTL.slow, async () => {
     try {
       const selector = await cmsFetcher(selectorQuery);
       if (!selector) {

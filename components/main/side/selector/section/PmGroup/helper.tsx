@@ -40,7 +40,7 @@ export const getPmsFromPmGroup = (
   for (const option of pm_group.options) {
     const baseCode = getOptionCode(option, pm_group?.prefix);
     const subgroup_name = (option.name && option.name.toUpperCase()) || null;
-    const { id, en_name, ru_name, section, icon, color } = pm_group;
+    const { id, en_name, ru_name, section, icon, color, sanctioned } = pm_group;
 
     // helper to push a PM entry
     const pushPm = (code: string) => {
@@ -55,6 +55,7 @@ export const getPmsFromPmGroup = (
         color,
         popular_as: popular_as || null,
         section: section ?? "",
+        sanctioned: Boolean(sanctioned),
       });
     };
 

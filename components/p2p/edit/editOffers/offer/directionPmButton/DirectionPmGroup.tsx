@@ -13,7 +13,7 @@ const DirectionPmGroup = ({
   onSelect: (pm: IPm) => void;
 }) => {
   const pms = getPmsFromPmGroup(pm_group, undefined, false);
-  if (!pms?.length) return <></>;
+  if (!pms?.length || pm_group.sanctioned) return <></>;
 
   const choosePm = (sub?: string) => {
     const pm =
