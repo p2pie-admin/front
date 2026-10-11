@@ -188,7 +188,8 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
         const [giveCode, getCode] = offer.dir.split("_");
         const givePm = pmsByCode.get((giveCode || "").toUpperCase());
         const getPm = pmsByCode.get((getCode || "").toUpperCase());
-        return { ...offer, givePm, getPm };
+        // getStaticProps cannot serialize undefined: omit methods missing from the selector.
+        return { ...offer, ...(givePm ? { givePm } : {}), ...(getPm ? { getPm } : {}) };
       });
     }
 
