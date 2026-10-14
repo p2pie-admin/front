@@ -157,7 +157,8 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
         pms: pms || null,
         faqCategory: faqCategory || null,
       },
-      revalidate: TTL.slow,
+      // Offers change often (follow-market re-pricing), keep the page fresh.
+      revalidate: TTL.fast,
     };
   } catch (error) {
     console.error("🚨 getStaticProps error:", error);

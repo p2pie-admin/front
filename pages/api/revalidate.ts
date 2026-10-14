@@ -6,7 +6,7 @@ import { redisDel } from "../../cache/redisClient";
 // editorial scripts after an article is published/refreshed, and by the deploy checks.
 // Header `x-revalidate-secret` must equal REVALIDATE_SECRET.
 // Allowed paths: /exchangers/<slug>, /articles/<code>, /articles, direction pages
-// /<give>-to-<get>[-in-<city>]. Nothing else: this endpoint must not become a general
+// /<give>-to-<get>[-in-<city>], P2P pages /p2p and /p2p/<maker> (the trade bot re-prices offers). Nothing else: this endpoint must not become a general
 // cache-busting tool.
 const MAX_PATHS = 60;
 const LOCALE = "ru";
@@ -23,8 +23,16 @@ const ARTICLES_LIST = "/articles";
 // Direction pages (pages/[exchange].tsx): used to drop a stale 404 after a server/parser blip.
 const DIRECTION_RE = /^\/[a-z0-9]+(?:-[a-z0-9]+)*-to-[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
+const P2P_LIST = "/p2p";
+const P2P_MAKER_RE = /^\/p2p\/([A-Za-z0-9_]+)$/;
+
 const isAllowed = (p: string) =>
-  EXCHANGER_RE.test(p) || ARTICLE_RE.test(p) || p === ARTICLES_LIST || DIRECTION_RE.test(p);
+  EXCHANGER_RE.test(p) ||
+  ARTICLE_RE.test(p) ||
+  p === ARTICLES_LIST ||
+  DIRECTION_RE.test(p) ||
+  p === P2P_LIST ||
+  P2P_MAKER_RE.test(p);
 
 // Article pages read Strapi through the Redis SWR cache (cache/loadX.ts: `article_<code>_ru`,
 // `articleCodes`, `articles`), so ISR alone would re-render stale data. Drop those keys first.
@@ -32,6 +40,9 @@ const cacheKeysFor = (p: string): string[] => {
   const m = p.match(ARTICLE_RE);
   if (m) return [`article_${m[1].toLowerCase()}_${LOCALE}`, "articleCodes"];
   if (p === ARTICLES_LIST) return ["articles", "articleCodes"];
+  const maker = p.match(P2P_MAKER_RE);
+  if (maker) return [`p2p_maker_v3_${maker[1]}`, `p2p_maker_v3_${maker[1].toLowerCase()}`, "p2p_makers_v3"];
+  if (p === P2P_LIST) return ["p2p_makers_v3"];
   return [];
 };
 
