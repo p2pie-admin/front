@@ -132,7 +132,8 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
         useInternal: process.env.USE_INTERNAL,
         base: process.env.NEXT_PUBLIC_BASE,
       });
-      return { notFound: true };
+      // Expire the 404 (a slug requested before the record exists must not stick until a restart).
+      return { notFound: true, revalidate: TTL.fast };
     }
 
     const [enrichedExchanger, rawUptime, externalReviews, reviewsPage, reviewCounts] = await Promise.all([

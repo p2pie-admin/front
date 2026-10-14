@@ -5,8 +5,9 @@ import { redisDel } from "../../cache/redisClient";
 // On-demand ISR. Called by the `competitors` service when new external reviews arrive, by the
 // editorial scripts after an article is published/refreshed, and by the deploy checks.
 // Header `x-revalidate-secret` must equal REVALIDATE_SECRET.
-// Allowed paths: /exchangers/<slug>, /articles/<code>, /articles. Nothing else: this endpoint must
-// not become a general cache-busting tool.
+// Allowed paths: /exchangers/<slug>, /articles/<code>, /articles, direction pages
+// /<give>-to-<get>[-in-<city>]. Nothing else: this endpoint must not become a general
+// cache-busting tool.
 const MAX_PATHS = 60;
 const LOCALE = "ru";
 
@@ -19,9 +20,11 @@ const secretOk = (given: string, expected: string) => {
 const EXCHANGER_RE = /^\/exchangers\/[a-z0-9_-]+$/;
 const ARTICLE_RE = /^\/articles\/([A-Za-z0-9_-]+)$/;
 const ARTICLES_LIST = "/articles";
+// Direction pages (pages/[exchange].tsx): used to drop a stale 404 after a server/parser blip.
+const DIRECTION_RE = /^\/[a-z0-9]+(?:-[a-z0-9]+)*-to-[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 const isAllowed = (p: string) =>
-  EXCHANGER_RE.test(p) || ARTICLE_RE.test(p) || p === ARTICLES_LIST;
+  EXCHANGER_RE.test(p) || ARTICLE_RE.test(p) || p === ARTICLES_LIST || DIRECTION_RE.test(p);
 
 // Article pages read Strapi through the Redis SWR cache (cache/loadX.ts: `article_<code>_ru`,
 // `articleCodes`, `articles`), so ISR alone would re-render stale data. Drop those keys first.
@@ -45,7 +48,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (!allowed.length) {
     return res
       .status(400)
-      .json({ error: "no valid paths (/exchangers/<slug>, /articles/<code>, /articles)" });
+      .json({ error: "no valid paths (/exchangers/<slug>, /articles/<code>, /articles, /<a>-to-<b>)" });
   }
 
   const keys = Array.from(new Set(allowed.flatMap(cacheKeysFor)));

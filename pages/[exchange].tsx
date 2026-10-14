@@ -107,7 +107,7 @@ export async function getStaticProps({
 
     if (!pms || !Array.isArray(pms)) {
       console.error("[getStaticProps] 'pms' is missing or invalid.");
-      return { notFound: true };
+      return { notFound: true, revalidate: TTL.instant };
     }
 
     const dir = slugToCodes?.[slug];
@@ -117,7 +117,8 @@ export async function getStaticProps({
 
     if (!dir || !givePm || !getPm) {
       console.log("dir ERROR", slug);
-      return { notFound: true };
+      // Re-check later: a notFound without revalidate is cached until the next restart.
+      return { notFound: true, revalidate: TTL.fast };
     }
 
     const similarPmPairs = findSimilarPmPairs(
@@ -213,24 +214,9 @@ export async function getStaticProps({
       revalidate: TTL.fast,
     };
   } catch (e) {
-    console.error(e);
-    return {
-      props: {
-        seo: nullSeo,
-        cities: null,
-        givePmData: null,
-        getPmData: null,
-        dirText: null,
-        city: null,
-        similarPmPairs: null,
-        donorCity: null,
-        initialDirRates: null,
-        ratesTotal: null,
-        ratesSummary: null,
-        rateHistory: null,
-      },
-      revalidate: TTL.instant,
-    };
+    // Upstream (server/cms) failed: a short-lived 404 is better than a blank page cached as 200.
+    console.error("[getStaticProps] exchange failed:", e);
+    return { notFound: true, revalidate: TTL.instant };
   }
 }
 //////////////////////////////////////////////////////////////////////////////

@@ -194,7 +194,11 @@ export const loadPossibleDirs = () =>
       | Record<string, number>
       | null; // {"BTC_USDTTRC20": 119, "BTC_ETH": 34, ...}
 
-    return dirs || {};
+    // The server answers {} for a minute while the parser reloads. Never cache that: throwing keeps
+    // the previous (stale) value in Redis and makes getStaticProps fail soft instead of baking
+    // notFound into every direction page (incident 2026-10-14: 404s cached until restart).
+    if (!dirs || !Object.keys(dirs).length) throw new Error("dirs: empty answer from server");
+    return dirs;
   });
 
 export const limitedPossibleDirs = (

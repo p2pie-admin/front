@@ -93,7 +93,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
 
     if (!maker) {
       console.log(`❌ P2P maker failed to load: ${slug}`);
-      return { notFound: true };
+      return { notFound: true, revalidate: TTL.fast };
     }
 
     let makerWithFullOffers: IMaker = {

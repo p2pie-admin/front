@@ -145,7 +145,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         : null,
       hasCityDirections: Boolean(cityDirectionsData),
     });
-    return { notFound: true };
+    return { notFound: true, revalidate: TTL.fast };
   }
 
   const fetcher = initCMSFetcher();
