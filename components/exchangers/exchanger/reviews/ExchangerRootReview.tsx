@@ -31,6 +31,20 @@ import {
 } from "../../../shared/ReviewCardWrapper";
 import { useLocale, useT } from "../../../../services/i18n";
 
+// Review locations are stored as Russian country names (from the reviewer's IP).
+const COUNTRY_EN: Record<string, string> = {
+  россия: "Russia", украина: "Ukraine", беларусь: "Belarus", казахстан: "Kazakhstan", германия: "Germany",
+  польша: "Poland", бельгия: "Belgium", нидерланды: "Netherlands", франция: "France", италия: "Italy",
+  испания: "Spain", сша: "USA", "соединенные штаты": "USA", великобритания: "United Kingdom", турция: "Turkey",
+  грузия: "Georgia", армения: "Armenia", азербайджан: "Azerbaijan", узбекистан: "Uzbekistan", кыргызстан: "Kyrgyzstan",
+  киргизия: "Kyrgyzstan", таджикистан: "Tajikistan", молдова: "Moldova", латвия: "Latvia", литва: "Lithuania",
+  эстония: "Estonia", финляндия: "Finland", швеция: "Sweden", норвегия: "Norway", чехия: "Czechia", австрия: "Austria",
+  швейцария: "Switzerland", израиль: "Israel", оаэ: "UAE", "объединенные арабские эмираты": "UAE", китай: "China",
+  таиланд: "Thailand", вьетнам: "Vietnam", индонезия: "Indonesia", сербия: "Serbia", черногория: "Montenegro",
+  албания: "Albania", кипр: "Cyprus", греция: "Greece", болгария: "Bulgaria", румыния: "Romania", венгрия: "Hungary",
+  канада: "Canada", португалия: "Portugal", ирландия: "Ireland", дания: "Denmark", египет: "Egypt", индия: "India",
+};
+
 export default function ExchangerRootReview({
   review,
   slug,
@@ -99,13 +113,14 @@ export default function ExchangerRootReview({
     const label = typeof location === "string" ? location.trim() : "";
 
     if (!label) return null;
+    const shown = locale === "en" ? COUNTRY_EN[label.toLowerCase()] || label : label;
 
     return (
       <Tag size="sm" variant="outline" colorScheme="blue" mt="1.5">
-        {label.toUpperCase()}
+        {shown.toUpperCase()}
       </Tag>
     );
-  }, [location]);
+  }, [location, locale]);
 
   // Reviews copied from another monitoring carry their origin: a tag that opens the original on click.
   // Deliberately not an <a>: no outbound link in the HTML.

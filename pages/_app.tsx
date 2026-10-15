@@ -181,7 +181,21 @@ const RouteLoadingOverlay = () => {
 
 import { LocaleProvider } from "../services/i18n";
 
-function MyApp({ Component, pageProps }: AppProps) {
+// The 404 page is one static file for both languages: pick the language in the browser by the same rule as middleware.
+const useClientLocale = (pathname: string) => {
+  const [locale, setLocale] = useState<"ru" | "en" | null>(null);
+  useEffect(() => {
+    if (pathname !== "/404" && pathname !== "/_error") return;
+    const cookie = document.cookie.match(/(?:^|; )lang=(ru|en)/);
+    const langs = navigator.languages?.length ? navigator.languages : [navigator.language].filter(Boolean);
+    const russian = langs.some((l) => /^(ru|uk|be|kk|ky|tg|uz|hy|az|ka|tk)\b/i.test(l));
+    setLocale(cookie ? (cookie[1] as "ru" | "en") : russian || !langs.length ? "ru" : "en");
+  }, [pathname]);
+  return locale;
+};
+
+function MyApp({ Component, pageProps, router }: AppProps) {
+  const clientLocale = useClientLocale(router.pathname);
   const seoConfig =
     pageProps?.locale === "en"
       ? {
@@ -208,7 +222,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <ChakraProvider theme={theme}>
         <Provider store={store}>
-          <LocaleProvider locale={pageProps?.locale}>
+          <LocaleProvider locale={pageProps?.locale ?? clientLocale}>
           <Layout>
             <RouteLoadingHandler />
             <ClickTracker />

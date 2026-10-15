@@ -14,10 +14,10 @@ import { ExchangerIdProvider } from "../../exchangers/exchanger/ExchangerContext
 import LeaveReview from "../../exchangers/exchanger/leaveReview";
 import ExchangerReviews from "../../exchangers/exchanger/reviews";
 import { IExchangerReview } from "../../../types/exchanger";
-import MakerTopPanel from "./topPanel";
+import MakerProfileCard from "./MakerProfileCard";
 import MakerStats from "../edit/stats";
 import { BoxWrapper } from "../../shared/BoxWrapper";
-import MakerOffers, { scrollToMakerOffers } from "./offers";
+import MakerOffers from "./offers";
 import { FaqCategoriesList } from "../../faq";
 import { useT } from "../../../services/i18n";
 
@@ -55,17 +55,7 @@ export default function MakerPage({
   return (
     <>
       <UniversalSeo seo={seo} />
-      <BoxWrapper variant="no_contrast">
-        <MakerTopPanel maker={maker} />
-        {/* Phones: the main action under the thumb (desktop has it in the top panel). */}
-        <Box display={{ base: "block", lg: "none" }} mt="4">
-          <Button variant="primary" color="white" w="100%" size="lg" onClick={scrollToMakerOffers}>
-            {t("Начать сделку", "Start a deal")}
-          </Button>
-        </Box>
-        <Divider my="4" />
-        <MakerStats maker={maker} />
-      </BoxWrapper>
+      <MakerProfileCard maker={maker} />
       {offers?.length ? <MakerOffers offers={offers} pms={pms} /> : null}
       {description ? <MakerDescription description={description} /> : null}
       <MakerMap coordinates={maker.coordinates} />
