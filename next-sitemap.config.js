@@ -382,18 +382,9 @@ const fetchExchangerPaths = async () => {
     .map((name) => `/exchangers/${exchangerNameToSlug(name)}`);
 };
 
-const fetchP2PPaths = async () => {
-  const data = await graphqlRequest(p2pMakerSlugsQuery);
-  const items = data?.p2PMakers?.data || [];
-  return items
-    .map((item) => {
-      const slug =
-        normalizeTelegramUsername(item?.attributes?.telegram_username) ||
-        item?.id;
-      return slug ? `/p2p/${slug}` : null;
-    })
-    .filter(Boolean);
-};
+// Makers are not public in Strapi and their Telegram usernames are private: the runtime sitemap
+// (cache/sitemap.ts) lists them by public slug through the service account.
+const fetchP2PPaths = async () => [];
 
 const fetchMassDirectionSlugs = async (isSell) => {
   const data = await graphqlRequest(massDirTextIdsQuery, {
