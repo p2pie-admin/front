@@ -71,6 +71,9 @@ export default function OfferFee({
       />
       <HStack
         spacing="4"
+        // Phones: the unit buttons wrap to a second line instead of running off the card.
+        flexWrap="wrap"
+        rowGap="2"
         opacity={isFeeEnabled ? 1 : 0.3}
         pointerEvents={isFeeEnabled ? "auto" : "none"}
       >
