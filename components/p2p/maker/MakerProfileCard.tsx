@@ -28,6 +28,24 @@ export default function MakerProfileCard({ maker }: { maker: IMaker }) {
     [since, t("На платформе", "On p2pie since")],
   ];
 
+  const statsRow = (
+    <HStack spacing={{ base: "2", lg: "4" }} alignItems="stretch" w="100%">
+              {stats.map(([value, label], i) => (
+                <HStack key={label} spacing={{ base: "2", lg: "4" }} alignItems="stretch" flex={i === 3 ? "1.4" : "1"} minW={0}>
+                  {i > 0 ? <Divider orientation="vertical" h="auto" /> : null}
+                  <VStack alignItems="flex-start" spacing="0" minW={0}>
+                    <Text fontWeight="bold" fontSize={{ base: "sm", lg: "md" }} color={i === 3 ? "peach.300" : undefined} noOfLines={1}>
+                      {value}
+                    </Text>
+                    <Text fontSize="xs" color="bg.400" noOfLines={1}>
+                      {label}
+                    </Text>
+                  </VStack>
+                </HStack>
+              ))}
+            </HStack>
+  );
+
   return (
     <BoxWrapper variant="no_contrast">
       <Flex gap={{ base: "3", lg: "6" }} alignItems="center">
@@ -78,23 +96,13 @@ export default function MakerProfileCard({ maker }: { maker: IMaker }) {
               <Actions id={maker.id} displayName={name} />
             </Box>
           </HStack>
-          <HStack spacing={{ base: "2", lg: "4" }} alignItems="stretch" w="100%">
-            {stats.map(([value, label], i) => (
-              <HStack key={label} spacing={{ base: "2", lg: "4" }} alignItems="stretch" flex={i === 3 ? "1.4" : "1"} minW={0}>
-                {i > 0 ? <Divider orientation="vertical" h="auto" /> : null}
-                <VStack alignItems="flex-start" spacing="0" minW={0}>
-                  <Text fontWeight="bold" fontSize={{ base: "sm", lg: "md" }} color={i === 3 ? "peach.300" : undefined} noOfLines={1}>
-                    {value}
-                  </Text>
-                  <Text fontSize="xs" color="bg.400" noOfLines={1}>
-                    {label}
-                  </Text>
-                </VStack>
-              </HStack>
-            ))}
-          </HStack>
+          <Box display={{ base: "none", lg: "block" }}>{statsRow}</Box>
         </VStack>
       </Flex>
+      {/* Phones: the stats get the full card width under the header. */}
+      <Box display={{ base: "block", lg: "none" }} mt="3">
+        {statsRow}
+      </Box>
     </BoxWrapper>
   );
 }
