@@ -43,3 +43,6 @@ CLINE_GUIDE.md.backup
 .env
 .env.*
 !.env.example
+
+# generated English page copies (scripts/gen-en-pages.js)
+/pages/xen

@@ -70,6 +70,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
       await res.revalidate(path);
       results[path] = "ok";
+      // The English copy is rendered on demand: refresh it too, ignoring "not generated yet".
+      await res.revalidate(path === "/" ? "/xen" : `/xen${path}`).catch(() => undefined);
     } catch {
       results[path] = "error";
     }

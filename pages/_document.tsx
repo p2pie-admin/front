@@ -1,10 +1,12 @@
-import { Html, Head, Main, NextScript } from "next/document";
+import { Html, Head, Main, NextScript, DocumentProps } from "next/document";
 import { ColorModeScript } from "@chakra-ui/react";
 import theme from "../styles/theme";
 
-export default function MyDocument() {
+export default function MyDocument(props: DocumentProps) {
+  // English copies of the pages live under /xen (see services/i18n.tsx).
+  const page = props.__NEXT_DATA__?.page || "";
   return (
-    <Html lang="ru">
+    <Html lang={page === "/xen" || page.startsWith("/xen/") ? "en" : "ru"}>
       <Head>
         {/* Favicon */}
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />

@@ -179,8 +179,18 @@ const RouteLoadingOverlay = () => {
   );
 };
 
+import { LocaleProvider } from "../services/i18n";
+
 function MyApp({ Component, pageProps }: AppProps) {
-  const seoConfig = defaultConfig;
+  const seoConfig =
+    pageProps?.locale === "en"
+      ? {
+          ...defaultConfig,
+          title: "p2pie — exchanger monitoring",
+          description: "Compare crypto and currency exchange rates of verified exchangers and P2P makers.",
+          openGraph: { ...(defaultConfig as any).openGraph, locale: "en_US" },
+        }
+      : defaultConfig;
 
   useEffect(() => {
     import("@lottiefiles/dotlottie-react").then(({ setWasmUrl }) => {
@@ -198,6 +208,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <ChakraProvider theme={theme}>
         <Provider store={store}>
+          <LocaleProvider locale={pageProps?.locale}>
           <Layout>
             <RouteLoadingHandler />
             <ClickTracker />
@@ -205,6 +216,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <DefaultSeo {...seoConfig} />
             <Component {...pageProps} />
           </Layout>
+          </LocaleProvider>
         </Provider>
       </ChakraProvider>
     </>
