@@ -41,8 +41,8 @@ const cacheKeysFor = (p: string): string[] => {
   if (m) return [`article_${m[1].toLowerCase()}_${LOCALE}`, "articleCodes"];
   if (p === ARTICLES_LIST) return ["articles", "articleCodes"];
   const maker = p.match(P2P_MAKER_RE);
-  if (maker) return [`p2p_maker_v3_${maker[1]}`, `p2p_maker_v3_${maker[1].toLowerCase()}`, "p2p_makers_v3"];
-  if (p === P2P_LIST) return ["p2p_makers_v3"];
+  if (maker) return [`p2p_maker_v4_${maker[1].toLowerCase()}`, "p2p_makers_v4"];
+  if (p === P2P_LIST) return ["p2p_makers_v4"];
   return [];
 };
 

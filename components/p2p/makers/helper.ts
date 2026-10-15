@@ -3,14 +3,10 @@ import { IMaker, IMakerPreview } from "../../../types/p2p";
 
 type MakerLike = IMaker | IMakerPreview;
 
-const normalizeTelegramUsername = (username?: string | null) =>
-  (username || "").trim().replace(/^@/, "");
-
 export const getMakerDisplayName = (maker: MakerLike) =>
-  maker.telegram_name || maker.telegram_username || maker.id;
+  maker.telegram_name || maker.slug || maker.id;
 
-export const getMakerSlug = (maker: MakerLike) =>
-  normalizeTelegramUsername(maker.telegram_username) || maker.id;
+export const getMakerSlug = (maker: MakerLike) => maker.slug || maker.id;
 
 export const getMakerStatusColor = (maker: MakerLike) =>
   maker.status === "active" ? "green" : "orange";

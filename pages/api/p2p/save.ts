@@ -24,6 +24,7 @@ const MAKER_OWNERSHIP_QUERY = `
       data {
         id
         attributes {
+          slug
           telegram_username
           offers {
             data {
@@ -120,6 +121,7 @@ type MakerOwnershipResponse = {
     data?: {
       id?: string | number;
       attributes?: {
+        slug?: string | null;
         telegram_username?: string | null;
         offers?: {
           data?: Array<{ id?: string | number }>;
@@ -338,16 +340,23 @@ export default async function handler(
     return res.status(404).json({ ok: false, error: "maker_not_found" });
   }
 
-  const makerTelegramSlug = normalizeTelegramSlug(
-    makerEntity.attributes?.telegram_username,
-  ).toLowerCase();
-  if (!makerTelegramSlug || makerTelegramSlug !== normalizedSlug) {
+  // The confirmation is issued for the public slug; the bot has already matched it with the private Telegram username.
+  const makerPublicSlug = (makerEntity.attributes?.slug || "").toLowerCase();
+  if (!makerPublicSlug || makerPublicSlug !== normalizedSlug) {
     console.warn("[p2p/save] maker ownership mismatch", {
       makerId,
       requestSlug: normalizedSlug,
-      makerTelegramSlug,
+      makerPublicSlug,
     });
     return res.status(403).json({ ok: false, error: "maker_not_owned_by_slug" });
+  }
+
+  // The public name must never reveal the Telegram username (same rule as the Strapi lifecycle).
+  const plain = (value?: string | null) => String(value || "").toLowerCase().replace(/^@/, "").replace(/[^a-z0-9а-яё]/g, "");
+  const privateName = plain(makerEntity.attributes?.telegram_username);
+  const publicName = plain(body.maker?.telegram_name);
+  if (privateName && publicName && (publicName === privateName || (privateName.length >= 4 && publicName.includes(privateName)))) {
+    return res.status(400).json({ ok: false, error: "name_matches_telegram" });
   }
 
   const allowedOfferIds = new Set(

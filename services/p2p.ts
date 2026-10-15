@@ -36,7 +36,7 @@ export const p2pMakersQuery = gql`
         id
         attributes {
           telegram_name
-          telegram_username
+          slug
           status
           createdAt
           offers(pagination: { limit: 200 }) {
@@ -128,10 +128,10 @@ export const p2pMakersQuery = gql`
 `;
 
 export const p2pMakerQuery = gql`
-  query p2pMakerQuery($telegramUsername: String) {
+  query p2pMakerQuery($slug: String) {
     p2PMakers(
       filters: {
-        telegram_username: { eqi: $telegramUsername }
+        slug: { eqi: $slug }
         status: { in: ["active", "suspended", "disabled"] }
       }
       pagination: { limit: 1 }
@@ -140,7 +140,7 @@ export const p2pMakerQuery = gql`
         id
         attributes {
           telegram_name
-          telegram_username
+          slug
           deals_finished
           deals_canceled
           rating

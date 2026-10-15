@@ -1,7 +1,5 @@
 import React from "react";
 import { Box, Button, Center, Divider } from "@chakra-ui/react";
-import { BsTelegram } from "react-icons/bs";
-import { getTelegramLink } from "../../../services/telegram";
 import UniversalSeo from "../../shared/UniversalSeo";
 import Loader from "../../shared/Loader";
 import { ISEO } from "../../../types/general";
@@ -19,7 +17,7 @@ import { IExchangerReview } from "../../../types/exchanger";
 import MakerTopPanel from "./topPanel";
 import MakerStats from "../edit/stats";
 import { BoxWrapper } from "../../shared/BoxWrapper";
-import MakerOffers from "./offers";
+import MakerOffers, { scrollToMakerOffers } from "./offers";
 import { FaqCategoriesList } from "../../faq";
 
 export default function MakerPage({
@@ -50,7 +48,6 @@ export default function MakerPage({
 
   const offers = Array.isArray(maker.offers) ? maker.offers : null;
   const reviews = Array.isArray(maker.reviews) ? maker.reviews : null;
-  const telegramLink = getTelegramLink(maker.telegram_username);
   const description = (maker.description || "").trim();
 
   return (
@@ -58,24 +55,12 @@ export default function MakerPage({
       <UniversalSeo seo={seo} />
       <BoxWrapper variant="no_contrast">
         <MakerTopPanel maker={maker} />
-        {telegramLink ? (
-          // Phones: the main action under the thumb (desktop has it in the top panel).
-          <Box display={{ base: "block", lg: "none" }} mt="4">
-            <Button
-              as="a"
-              href={telegramLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="primary"
-              color="white"
-              w="100%"
-              size="lg"
-              leftIcon={<BsTelegram size="1.2rem" />}
-            >
-              Написать в Telegram
-            </Button>
-          </Box>
-        ) : null}
+        {/* Phones: the main action under the thumb (desktop has it in the top panel). */}
+        <Box display={{ base: "block", lg: "none" }} mt="4">
+          <Button variant="primary" color="white" w="100%" size="lg" onClick={scrollToMakerOffers}>
+            Начать сделку
+          </Button>
+        </Box>
         <Divider my="4" />
         <MakerStats maker={maker} />
       </BoxWrapper>

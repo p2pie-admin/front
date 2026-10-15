@@ -13,7 +13,8 @@ import { useMakerEditContext } from "../MakerEditContext";
 
 export default function SaveDetails() {
   const maker = useMakerEditContext();
-  const telegramUsername = maker.telegram_username.replace(/^@/, "");
+  // The confirmation goes by the public slug; the bot matches it with the private Telegram username.
+  const telegramUsername = maker.slug;
   const dispatch = useAppDispatch();
   const isModalOpen = useAppSelector(
     (state) => state.main?.modal === `save_${telegramUsername}`,
@@ -48,10 +49,10 @@ export default function SaveDetails() {
     <VStack justifyContent="center" alignItems="center" spacing="4" mt="4">
       <Text textAlign="center" fontSize="md" color="bg.300">
         <Highlight
-          query={[`${"@" + telegramUsername}`]}
+          query={["Telegram-аккаунта"]}
           styles={{ color: "peach.300", fontWeight: "bold" }}
         >
-          {`Чтобы подтвердить изменения, перейди в телеграм-бот с аккаунта ${"@" + telegramUsername} и нажмите старт. `}
+          {"Чтобы подтвердить изменения, перейдите в телеграм-бот с Telegram-аккаунта, привязанного к этой странице, и нажмите старт. "}
         </Highlight>
       </Text>
 

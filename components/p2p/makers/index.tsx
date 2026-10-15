@@ -78,7 +78,7 @@ export default function MakersList({
       const matchesSearch =
         debouncedQuery === "" ||
         displayName.includes(debouncedQuery) ||
-        maker.telegram_username.toLowerCase().includes(debouncedQuery);
+        (maker.slug || "").toLowerCase().includes(debouncedQuery);
 
       return matchesFilter && matchesSearch;
     });

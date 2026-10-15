@@ -96,7 +96,8 @@ export interface IMakerReview {
 export interface IMakerPreview {
   id: string;
   telegram_name?: string | null;
-  telegram_username: string;
+  // Public handle and URL part; the Telegram username is private and never reaches the front.
+  slug: string;
   status?: "active" | "paused" | "disabled" | null;
   createdAt?: string | null;
   offers?: IMakerOffer[] | null;

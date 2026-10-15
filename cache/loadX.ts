@@ -467,18 +467,17 @@ export const loadMassRates = ({
     }`,
   ) as Promise<IMassRate[]>;
 
-export const loadP2PMaker = (telegramUsername: string) =>
-  cachedFetch(`p2p_maker_v3_${telegramUsername}`, TTL.fast, async () => {
-    if (!telegramUsername) return null;
-    const res = await fetchCMSWithServiceFallback(p2pMakerQuery, {
-      telegramUsername,
-    });
+// Makers are found by their public slug; Strapi no longer serves makers to the public role.
+export const loadP2PMaker = (slug: string) =>
+  cachedFetch(`p2p_maker_v4_${slug.toLowerCase()}`, TTL.fast, async () => {
+    if (!slug) return null;
+    const res = await fetchCMSWithServiceFallback(p2pMakerQuery, { slug });
     if (Array.isArray(res)) return (res[0] as IMaker) || null;
     return (res as IMaker) || null;
   });
 
 export const loadAllP2PMakers = () =>
-  cachedFetch(`p2p_makers_v3`, TTL.fast, async () => {
+  cachedFetch(`p2p_makers_v4`, TTL.fast, async () => {
     const res = await fetchCMSWithServiceFallback(p2pMakersQuery);
     if (!res) return null;
     if (Array.isArray(res)) return res as IMakerPreview[];

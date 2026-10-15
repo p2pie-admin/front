@@ -84,7 +84,6 @@ export default function MakerEditPage({
       !makerDraft ||
       makerDraft.status === undefined ||
       makerDraft.telegram_name === undefined ||
-      makerDraft.telegram_username === undefined ||
       makerDraft.description === undefined ||
       makerDraft.p2p_level === undefined ||
       makerDraft.top_parameters === undefined;
@@ -93,8 +92,6 @@ export default function MakerEditPage({
       setMakerFields({
         status: makerDraft?.status ?? maker.status ?? undefined,
         telegram_name: makerDraft?.telegram_name ?? maker.telegram_name ?? null,
-        telegram_username:
-          makerDraft?.telegram_username ?? maker.telegram_username ?? null,
         description: makerDraft?.description ?? maker.description ?? null,
         p2p_level: makerDraft?.p2p_level ?? maker.p2p_level ?? null,
         top_parameters:

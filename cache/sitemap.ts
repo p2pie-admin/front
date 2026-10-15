@@ -8,6 +8,7 @@ import {
   TTL,
 } from "./loadX";
 import { initCMSFetcher, initParserFetcher } from "../services/fetchers";
+import { loadAllP2PMakers } from "./loadX";
 import { exchangerNameToSlug } from "../components/exchangers/helper";
 import { SSR_NOINDEX_BELOW } from "../components/exchange/ssrRates";
 import { IMassDirTextId } from "../types/mass";
@@ -76,22 +77,7 @@ const exchangersQuery = gql`
   }
 `;
 
-const makersQuery = gql`
-  query SitemapP2PMakers {
-    p2PMakers(
-      pagination: { start: 0, limit: 2000 }
-      filters: { status: { in: ["active", "suspended", "disabled"] } }
-    ) {
-      data {
-        id
-        attributes {
-          telegram_username
-          updatedAt
-        }
-      }
-    }
-  }
-`;
+
 
 const toIso = (value: unknown): string | null => {
   if (!value) return null;
@@ -149,10 +135,11 @@ const collectMassEntries = async (): Promise<SitemapEntry[]> => {
 
 const collectCmsEntries = async (): Promise<SitemapEntry[]> => {
   const cms = initCMSFetcher();
+  // Makers come through the service account (not public in Strapi) and only their public slug is used.
   const [articles, exchangers, makers] = await Promise.all([
     cms(articlesQuery, { locale: "ru" }),
     cms(exchangersQuery),
-    cms(makersQuery),
+    loadAllP2PMakers().catch(() => null),
   ]);
 
   const entries: SitemapEntry[] = [];
@@ -170,11 +157,10 @@ const collectCmsEntries = async (): Promise<SitemapEntry[]> => {
         lastmod: toIso(e.updatedAt),
       });
   });
-  asArray<{ id?: string; telegram_username?: string; updatedAt?: string }>(
+  asArray<{ id?: string; slug?: string; updatedAt?: string; createdAt?: string }>(
     makers,
   ).forEach((m) => {
-    const slug = (m?.telegram_username || "").trim().replace(/^@/, "") || m?.id;
-    if (slug) entries.push({ loc: `/p2p/${slug}`, lastmod: toIso(m.updatedAt) });
+    if (m?.slug) entries.push({ loc: `/p2p/${m.slug}`, lastmod: toIso(m.updatedAt || m.createdAt) });
   });
   return entries;
 };

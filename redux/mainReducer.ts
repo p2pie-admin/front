@@ -110,7 +110,7 @@ export interface MainState {
   maker?: {
     status?: IMaker["status"] | "disabled";
     telegram_name?: IMaker["telegram_name"] | null;
-    telegram_username?: IMaker["telegram_username"] | null;
+    telegram_username?: string | null;
     description?: IMaker["description"] | null;
     coordinates?: [number, number] | null;
     p2p_level?: IMaker["p2p_level"] | null;
@@ -185,7 +185,7 @@ export const mainSlice = createSlice({
     },
     setMakerTelegramUsername: (
       state: MainState,
-      action: PayloadAction<IMaker["telegram_username"] | null | undefined>,
+      action: PayloadAction<string | null | undefined>,
     ) => {
       const makerDraft = ensureMakerDraft(state);
       makerDraft.telegram_username = action.payload ?? null;

@@ -13,7 +13,6 @@ import { getMakerSlug } from "../../makers/helper";
 import {
   RiPagesLine,
   RiRobot2Line,
-  RiTelegram2Line,
   RiFileCopyLine,
 } from "react-icons/ri";
 import { useAppDispatch } from "../../../../redux/hooks";
@@ -25,16 +24,10 @@ export default function MakersLinks() {
   const maker = useMakerEditContext();
   const dispatch = useAppDispatch();
   const makerSlug = getMakerSlug(maker);
-  const telegramUsername = maker.telegram_username.replace(/^@/, "");
   const profilePath = `${base}/p2p/${makerSlug}`;
   const botLink = process.env.NEXT_PUBLIC_TELEGRAM_BOT || "";
 
   const links = [
-    {
-      text: "Ваша ссылка на обмен",
-      icon: RiTelegram2Line,
-      link: `https://t.me/${telegramUsername}`,
-    },
     {
       text: "Ваша страница обмена",
       icon: RiPagesLine,

@@ -18,7 +18,8 @@ export default function SaveMaker({
 }) {
   const maker = useMakerEditContext();
   const dispatch = useAppDispatch();
-  const telegramUsername = maker.telegram_username.replace(/^@/, "");
+  // The confirmation goes by the public slug; the bot matches it with the private Telegram username.
+  const telegramUsername = maker.slug;
 
   const handleSaveProject = async (event: any) => {
     event?.stopPropagation();

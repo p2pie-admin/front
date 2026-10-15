@@ -4,26 +4,27 @@ import { IMaker } from "../../../../types/p2p";
 import ExchangerName from "../../../shared/ExchangerNameRating";
 import MakerTags from "./MakerTags";
 import Actions from "../../../exchangers/exchanger/exchangerTopPanel/Actions";
-import { ExchangerTopButtons } from "../../../exchangers/exchanger/exchangerTopPanel/ExchangerTopButtons";
+import OwnerEdit from "./OwnerEdit";
+import MakerTopButtons from "./MakerTopButtons";
 const MakerTopPanel = ({ maker }: { maker: IMaker }) => {
   const statusColor: IDotColors =
     maker.status === "active" ? "green" : "orange";
-  const displayName =
-    maker.telegram_name || maker.telegram_username.toUpperCase();
+  const displayName = maker.telegram_name || maker.slug;
 
   return (
     <HStack justifyContent="space-between" gap="2" position="relative">
       <ExchangerName
-        name={maker.telegram_name || maker.telegram_username.toUpperCase()}
+        name={displayName}
         logo={maker.avatar}
         statusColor={statusColor}
         isH1
       />
+      <OwnerEdit slug={maker.slug} />
 
       <MakerTags tags={maker.exchanger_tags} />
       <Actions id={maker.id} displayName={displayName} />
       <Box display={{ base: "none", lg: "flex" }} flexDir="row" gap="2">
-        <ExchangerTopButtons ref_link={maker.telegram_username} />
+        <MakerTopButtons />
       </Box>
     </HStack>
   );

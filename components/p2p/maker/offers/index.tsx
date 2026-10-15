@@ -10,6 +10,15 @@ import { BoxWrapper, CustomHeader } from "../../../shared/BoxWrapper";
 import Offer from "./Offer";
 import OfferDetails from "./OfferDetails";
 
+// Anchor of the offers block: deals start from an offer, so "Начать сделку" buttons elsewhere scroll here.
+export const MAKER_OFFERS_ID = "maker-offers";
+export const scrollToMakerOffers = () => {
+  if (typeof window === "undefined") return;
+  const target = document.getElementById(MAKER_OFFERS_ID);
+  if (!target) return;
+  window.scrollTo({ top: Math.max(target.getBoundingClientRect().top + window.pageYOffset - 100, 0), behavior: "smooth" });
+};
+
 export default function MakerOffers({
   offers,
   pms,
@@ -24,7 +33,7 @@ export default function MakerOffers({
     }
   });
   return (
-    <BoxWrapper>
+    <BoxWrapper id={MAKER_OFFERS_ID}>
       <CustomHeader text="Предложения" Icon={IoMdListBox} />
       <Divider my="4" />
       <Grid

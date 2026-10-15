@@ -4,6 +4,7 @@ import {
   Button,
   FormControl,
   FormLabel,
+  FormHelperText,
   HStack,
   Input,
   VStack,
@@ -13,7 +14,6 @@ import CustomModal from "../../../shared/CustomModal";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import {
   setMakerTelegramName,
-  setMakerTelegramUsername,
   triggerModal,
 } from "../../../../redux/mainReducer";
 import { useMakerEditContext } from "../MakerEditContext";
@@ -24,35 +24,23 @@ export default function EditName() {
   const modalId = `edit_name_${maker.id}`;
 
   const reduxName = useAppSelector((state) => state.main.maker?.telegram_name);
-  const reduxUsername = useAppSelector(
-    (state) => state.main.maker?.telegram_username,
-  );
 
   useEffect(() => {
     if (reduxName === undefined && maker.telegram_name !== undefined) {
       dispatch(setMakerTelegramName(maker.telegram_name));
     }
-    if (reduxUsername === undefined && maker.telegram_username !== undefined) {
-      dispatch(setMakerTelegramUsername(maker.telegram_username));
-    }
   }, [
     dispatch,
     maker.telegram_name,
-    maker.telegram_username,
     reduxName,
-    reduxUsername,
   ]);
 
   const nameValue = reduxName ?? "";
-  const usernameValue = reduxUsername ?? "";
 
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     dispatch(setMakerTelegramName(event.target.value));
   };
 
-  const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setMakerTelegramUsername(event.target.value));
-  };
 
   return (
     <>
@@ -65,14 +53,9 @@ export default function EditName() {
               onChange={handleNameChange}
               placeholder="Введите имя"
             />
-          </FormControl>
-          <FormControl>
-            <FormLabel>Telegram username</FormLabel>
-            <Input
-              value={usernameValue}
-              onChange={handleUsernameChange}
-              placeholder="@username"
-            />
+            <FormHelperText>
+              Имя видят все. Оно не должно совпадать с вашим Telegram-ником: ник знает только бот p2pie.
+            </FormHelperText>
           </FormControl>
           <HStack justifyContent="flex-end">
             <Button

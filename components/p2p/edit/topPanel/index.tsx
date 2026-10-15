@@ -16,7 +16,7 @@ export default function MakerTopPanel() {
 
   const reduxName = useAppSelector((state) => state.main.maker?.telegram_name);
   const displayName =
-    reduxName || maker.telegram_name || maker.telegram_username.toUpperCase();
+    reduxName || maker.telegram_name || maker.slug;
 
   return (
     <HStack

@@ -491,6 +491,16 @@ export const saveProjectP2P = createAsyncThunk(
           );
           return;
         }
+        if (result?.error === "name_matches_telegram") {
+          thunkAPI.dispatch(
+            sendToast({
+              status: "warning",
+              title: "Имя не должно совпадать с вашим Telegram-ником",
+              timeBeforeClosing: 4000,
+            }),
+          );
+          return;
+        }
         if (result?.error === "offer_dir_or_course_missing") {
           thunkAPI.dispatch(
             sendToast({
