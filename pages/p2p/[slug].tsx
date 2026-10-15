@@ -110,6 +110,21 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
         : maker.offers,
     };
 
+    // ai_data of site reviews holds moderation output: only deal-review stars and the chain summary go to the page.
+    if (Array.isArray(makerWithFullOffers.reviews)) {
+      const when = (r: { review_date?: string | null; updatedAt?: string | null }) => Date.parse(r.review_date || r.updatedAt || "") || 0;
+      makerWithFullOffers = {
+        ...makerWithFullOffers,
+        reviews: makerWithFullOffers.reviews
+          .map((r) => {
+            const data = (r as { source?: string | null; ai_data?: { stars?: number; chain?: unknown } | null });
+            const ai_data = data.source === "p2p_deal" && data.ai_data ? { stars: data.ai_data.stars ?? null, chain: data.ai_data.chain ?? null } : null;
+            return { ...r, ai_data };
+          })
+          .sort((a, b) => when(b) - when(a)),
+      };
+    }
+
     if (Array.isArray(makerWithFullOffers.offers) && Array.isArray(pms)) {
       const pmsByCode = new Map<string, IPm>();
       pms.forEach((pm) => {

@@ -108,6 +108,28 @@ export default function ExchangerRootReview({
   // Deliberately not an <a>: no outbound link in the HTML.
   const sourceTag = useMemo(() => {
     if (!source) return null;
+    // A review left after a deal run by the p2pie bot: verified badge, plus the on-chain mark when a transfer was checked.
+    if (source === "p2p_deal") {
+      const chain = review.ai_data?.chain;
+      return (
+        <>
+          <Tag size="sm" variant="solid" colorScheme="green" mt="1.5">
+            ✓ СДЕЛКА ЧЕРЕЗ P2PIE
+          </Tag>
+          {chain && (
+            <Tag
+              size="sm"
+              variant="outline"
+              colorScheme="green"
+              mt="1.5"
+              title={`Перевод ${chain.amount ?? ""} в сети ${chain.network ?? ""} проверен ботом p2pie в блокчейне. Отпечаток sha256: ${chain.proof ?? ""}. Клиент может доказать сделку своим секретным кодом, адреса и хеш не публикуются.`}
+            >
+              ⛓ ПОДТВЕРЖДЕНО В БЛОКЧЕЙНЕ
+            </Tag>
+          )}
+        </>
+      );
+    }
     const tag = (
       <Tag size="sm" variant="outline" colorScheme="purple" mt="1.5" cursor={external_link ? "pointer" : undefined}>
         {`ИСТОЧНИК: ${source.toUpperCase()}${external_link ? " ↗" : ""}`}
@@ -125,7 +147,7 @@ export default function ExchangerRootReview({
     ) : (
       tag
     );
-  }, [source, external_link]);
+  }, [source, external_link, review.ai_data]);
 
   const cardMinHeight = meta.textIsLink || slug ? "200px" : "unset";
 
@@ -197,6 +219,12 @@ export default function ExchangerRootReview({
               mt={{ base: "1", lg: "0" }}
             >
               {meta.displayName}
+              {review.ai_data?.stars ? (
+                <Box as="span" ml="2" color="yellow.300" fontSize="sm" aria-label={`${review.ai_data.stars} из 5`}>
+                  {"★".repeat(review.ai_data.stars)}
+                  <Box as="span" color="bg.500">{"★".repeat(5 - review.ai_data.stars)}</Box>
+                </Box>
+              ) : null}
             </ResponsiveText>
 
             <Box

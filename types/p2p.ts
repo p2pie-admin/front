@@ -85,6 +85,10 @@ export interface IMakerReview {
   userAgent?: string | null;
   location?: string | null;
   screenshots?: IImage[] | null;
+  isVerified?: boolean | null;
+  source?: string | null;
+  review_date?: string | null;
+  ai_data?: { stars?: number | null; chain?: { network?: string; amount?: string; proof?: string } | null } | null;
   updatedAt?: string | null;
   review_replies?: IMakerReviewReply[] | null;
 }

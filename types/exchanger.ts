@@ -103,6 +103,9 @@ export interface IExchangerReview {
   isExchangeDone?: boolean | null;
   gossip?: string | null;
   // Set for reviews copied from another monitoring (e.g. "BestChange"); null for our own users' reviews.
+  isVerified?: boolean | null;
+  // Deal reviews from the P2P bot: stars and the on-chain proof summary (never wallets or the tx hash).
+  ai_data?: { stars?: number | null; chain?: { network?: string; amount?: string; proof?: string } | null } | null;
   source?: string | null;
   external_link?: string | null;
   external_date?: string | null;

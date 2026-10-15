@@ -261,6 +261,10 @@ export const p2pMakerQuery = gql`
                 userAgent
                 location
                 updatedAt
+                isVerified
+                source
+                review_date
+                ai_data
                 screenshots {
                   data {
                     id
