@@ -1,4 +1,4 @@
-import { Heading, Box, HStack, Text, Divider } from "@chakra-ui/react";
+import { Heading, Box } from "@chakra-ui/react";
 
 import React, { useMemo, useRef, useState } from "react";
 import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
@@ -98,12 +98,18 @@ const Article = ({
         <Box>
           {refChapters.map((chapter, idx) => (
             <Box key={"chapter:" + idx}>
-              <HStack fontSize={["md", "lg"]} fontWeight="bold" mt="4">
-                <Text color="peach.300">#</Text>
-                <Text ref={chapter.ref} color={"peach.300"}>
-                  {chapter.title || ""}
-                </Text>
-              </HStack>
+              {/* Real h2 for crawlers (was a decorative "#" + plain text) */}
+              <Heading
+                as="h2"
+                ref={chapter.ref}
+                fontSize={["md", "lg"]}
+                fontWeight="bold"
+                color="peach.300"
+                mt="4"
+                mb="1"
+              >
+                {chapter.title || ""}
+              </Heading>
               <TextToHTML text={chapter.text} />
               {/* Uncomment if disclaimer handling is needed */}
               {/* {chapter.disclaimer && (

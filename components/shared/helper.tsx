@@ -92,7 +92,8 @@ export const enrichText = ({
   });
 
   // Custom "word" matcher that works with Unicode (Cyrillic, etc.)
-  return text.replace(
+  const linkWords = (chunk: string) =>
+    chunk.replace(
     /(^|[^\p{L}\p{N}_-])([\p{L}\p{N}_-]+)/gu,
     (full, prefix, word) => {
       const match = lookup.find(
@@ -112,6 +113,13 @@ export const enrichText = ({
       return `${prefix}[**${word}**](${slug})`;
     },
   );
+
+  // Never touch text that is already a markdown link (`[label](url)`) or an inline
+  // `<a>` tag: auto-linking a word inside them breaks the author's link into raw brackets.
+  return text
+    .split(/(\[[^\]]*\]\([^)]*\)|<a\s[^>]*>[\s\S]*?<\/a>)/g)
+    .map((part, i) => (i % 2 === 1 ? part : linkWords(part)))
+    .join("");
 };
 
 export function secondsAgo(timestamp?: number | string, locale: Locale = "ru"): string {
