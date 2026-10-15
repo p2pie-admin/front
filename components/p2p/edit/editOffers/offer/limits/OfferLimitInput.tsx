@@ -101,6 +101,12 @@ export default function OfferLimit({
           value={displayValue} // use raw value for instant update
           _placeholder={{ color: "bg.500" }}
           w="100%"
+          onBlur={() => {
+            // Leave edit mode: from now on the field shows the stored value again (slider moves included).
+            isEditingRef.current = false;
+            setIsEditing(false);
+            setValue("");
+          }}
           onChange={(e) => {
             isEditingRef.current = true;
             setIsEditing(true);

@@ -4,8 +4,7 @@ import {
   Button,
   ButtonGroup,
   HStack,
-  NumberInput,
-  NumberInputField,
+  Input,
 } from "@chakra-ui/react";
 import { IFullOffer, IMakerOffer } from "../../../../../../types/p2p";
 import { useAppDispatch } from "../../../../../../redux/hooks";
@@ -21,6 +20,11 @@ export default function OfferFee({
   const dispatch = useAppDispatch();
   const t = useT();
   const offerIndex = fullOffer.index;
+  const [feeKind, setFeeKind] = React.useState<"commission" | "surcharge">(
+    "commission",
+  );
+  // What the maker is typing ("1.", "0.0"...): kept locally so the dot is not lost; null = show the stored value.
+  const [draft, setDraft] = React.useState<string | null>(null);
   if (offerIndex === undefined) return null;
 
   const giveCur = fullOffer.givePm?.currency?.code?.toUpperCase();
@@ -30,9 +34,6 @@ export default function OfferFee({
   const isFeeEnabled =
     fullOffer.fee_enabled ??
     (feeAmount !== null && feeAmount !== undefined ? true : Boolean(feeType));
-  const [feeKind, setFeeKind] = React.useState<"commission" | "surcharge">(
-    "commission",
-  );
   const derivedFeeKind =
     typeof feeAmount === "number"
       ? feeAmount < 0
@@ -46,8 +47,6 @@ export default function OfferFee({
   ) => {
     dispatch(setP2PFullOfferField({ index: offerIndex, field, value }));
   };
-
-  const stepValue = feeType === "percentage" ? 0.01 : 1;
 
   React.useEffect(() => {
     if (!isFeeEnabled) return;
@@ -108,49 +107,38 @@ export default function OfferFee({
             {t("Доплата", "Surcharge")}
           </Button>
         </ButtonGroup>
-        <NumberInput
-          value={feeAmount ?? ""}
-          step={stepValue}
-          isValidCharacter={(v) => !!v.match(/^[Ee0-9+\-.,]$/)}
+        <Input
+          value={draft ?? (typeof feeAmount === "number" ? String(Math.abs(feeAmount)) : "")}
+          inputMode="decimal"
           borderWidth="1px"
           borderRadius="lg"
           size="xs"
           focusBorderColor="peach.200"
-          position="relative"
-          max={100000000}
           w={110}
-          min={-100000000}
-          onChange={(valueString) => {
-            const raw = valueString.replace(",", ".");
-            const trimmed = raw.trim();
-            if (trimmed === "") {
+          pr="1"
+          py="0"
+          textAlign="end"
+          placeholder={"0.00"}
+          fontFamily="'Mozilla Text', monospace"
+          fontSize="lg"
+          _placeholder={{ color: "bg.500" }}
+          onBlur={() => setDraft(null)}
+          onChange={(event) => {
+            const raw = event.target.value.replace(",", ".").trim();
+            if (!/^\d*\.?\d*$/.test(raw)) return;
+            setDraft(raw);
+            if (raw === "" || raw === ".") {
               setField("fee_amount", null);
               return;
             }
-            if (trimmed.endsWith(".") || trimmed.endsWith(",")) {
-              return;
-            }
-            const parsed = Number(trimmed);
+            const parsed = Number(raw);
             if (!Number.isFinite(parsed)) return;
-            const normalizedValue =
-              derivedFeeKind === "surcharge"
-                ? -Math.abs(parsed)
-                : Math.abs(parsed);
-            setField("fee_amount", normalizedValue);
+            setField(
+              "fee_amount",
+              derivedFeeKind === "surcharge" ? -parsed : parsed,
+            );
           }}
-        >
-          <NumberInputField
-            pr="1"
-            py="0"
-            float="right"
-            textAlign="end"
-            placeholder={"0.00"}
-            fontFamily="'Mozilla Text', monospace"
-            fontSize="lg"
-            _placeholder={{ color: "bg.500" }}
-            w="100%"
-          />
-        </NumberInput>
+        />
         <ButtonGroup
           size="xs"
           isAttached

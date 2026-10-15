@@ -85,7 +85,12 @@ export default function MakerStats({
           h="120px"
           mx={{ base: 0, lg: "2" }}
         />
-        <Box mt="2" w={{ base: "100%", lg: "35%" }}>
+        <VStack
+          mt="2"
+          w={{ base: "100%", lg: "35%" }}
+          alignItems="stretch"
+          spacing={{ base: "4", lg: "0" }}
+        >
           <StatItem
             label={t("Предложений", "Offers")}
             value={offersCount}
@@ -101,7 +106,7 @@ export default function MakerStats({
             value={formattedDate}
             Icon={MdOutlineDateRange}
           />
-        </Box>
+        </VStack>
         <Divider
           display={{ base: "none", lg: "unset" }}
           mt="2"

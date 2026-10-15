@@ -217,6 +217,9 @@ const OfferCourseSlider = ({
 
   return (
     <Slider
+      // Without this Chakra focuses the thumb whenever the value changes, which blurs the
+      // rate input on every keystroke and closes the phone keyboard.
+      focusThumbOnChange={false}
       min={1}
       max={100}
       step={1}

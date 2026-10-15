@@ -5,7 +5,7 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import { BoxWrapper, CustomHeader } from "../../shared/BoxWrapper";
 import Loader from "../../shared/Loader";
 import { createMapStyles } from "../../map/styles";
-import CitySelector from "../../layout/header/city";
+import MakerCitySearch, { PickedPlace } from "./MakerCitySearch";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { setMakerCoordinates } from "../../../redux/mainReducer";
 import { useT } from "../../../services/i18n";
@@ -84,7 +84,16 @@ export default function MakerMap({
     }
     return null;
   }, [cityCoordinates]);
-  const center = cityCenter || fallbackCenter;
+  // A city found through the search box; cleared when a city from the regular list is chosen.
+  const [picked, setPicked] = useState<PickedPlace | null>(null);
+  useEffect(() => {
+    setPicked(null);
+  }, [cityCoordinates]);
+  const pickedCenter = useMemo(
+    () => (picked ? ({ lat: picked.lat, lng: picked.lng } as google.maps.LatLngLiteral) : null),
+    [picked],
+  );
+  const center = pickedCenter || cityCenter || fallbackCenter;
   const circleCenter = useMemo(() => {
     if (!center) return null;
     if (
@@ -176,7 +185,7 @@ export default function MakerMap({
       >
         <CustomHeader text={t("Район обслуживания", "Service area")} Icon={FaMapMarkerAlt} />
 
-        <CitySelector forceVisible />
+        <MakerCitySearch picked={picked} onPick={setPicked} />
       </HStack>
       <Divider my="4" />
       <Box borderRadius="lg" overflow="hidden" bg="bg.900">

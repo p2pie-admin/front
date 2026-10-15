@@ -144,6 +144,12 @@ const CourseAmountInput = ({
           _placeholder={{ color: "bg.500" }}
           w="100%"
           border="none"
+          onBlur={() => {
+            // Leave edit mode: from now on the field shows the stored value again (slider moves included).
+            isEditingRef.current = false;
+            setIsEditing(false);
+            setValue("");
+          }}
           onChange={(e) => {
             if (!isActive) return;
             isEditingRef.current = true;

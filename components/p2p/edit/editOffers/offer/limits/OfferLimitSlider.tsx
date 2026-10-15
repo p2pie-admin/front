@@ -133,6 +133,7 @@ export default function OfferLimitSlider({
 
   return (
     <RangeSlider
+      focusThumbOnChange={false}
       min={0}
       max={100}
       step={1}

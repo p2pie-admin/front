@@ -38,7 +38,7 @@ const PmModalButton = () => {
     });
   };
   const unselectedPmText =
-    side === "give" ? tr(locale, "Отдаю", "I give") : tr(locale, "Получаю", "I get");
+    side === "give" ? tr(locale, "Отдаю", "Give") : tr(locale, "Получаю", "Get");
 
   const currencyCode = pms?.[0]?.currency.code.toUpperCase();
   return (
