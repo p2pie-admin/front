@@ -21,7 +21,8 @@ export default function MakerLink({ maker }: { maker: IMakerPreview }) {
   const statusColor = getMakerStatusColor(maker);
   const offersCount = maker.offers?.length ?? 0;
   const reviewsCount = maker.reviews?.length ?? 0;
-  const publicId = `ID ${maker.slug}`;
+  // The Telegram username is known only to the bot; the site always shows this literal mask.
+  const publicId = "@*****";
 
   return (
     <Box3D

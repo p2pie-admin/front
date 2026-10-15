@@ -59,6 +59,11 @@ export default function EditName() {
               {t("Имя видят все. Оно не должно совпадать с вашим Telegram-ником: ник знает только бот p2pie.", "Everyone sees the name. It must not match your Telegram username: only the p2pie bot knows the username.")}
             </FormHelperText>
           </FormControl>
+          <FormControl>
+            <FormLabel>Telegram</FormLabel>
+            {/* Literal mask: the username is never sent to the browser. */}
+            <Input value="@*****" isReadOnly />
+          </FormControl>
           <HStack justifyContent="flex-end">
             <Button
               variant="primary"
