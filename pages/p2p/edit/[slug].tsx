@@ -245,7 +245,8 @@ export async function getStaticPaths() {
       console.warn("⚠️ No P2P makers found, returning empty paths");
       return {
         paths: [],
-        fallback: false,
+        // Never lock the route: a failed maker list at build time must not 404 every maker page.
+        fallback: "blocking",
       };
     }
 
