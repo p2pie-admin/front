@@ -11,6 +11,7 @@ import {
 import { Box3D, ResponsiveText } from "../../../../../styles/theme/custom";
 import SentimentButtons from "../SentimentButtons";
 import ReviewCategory from "./ReviewCategory";
+import { useT } from "../../../../../services/i18n";
 
 export default function ReviewCategories({
   categories,
@@ -33,6 +34,7 @@ export default function ReviewCategories({
   onToggleExchangeDone: (value: boolean) => void;
   onChangeGossip: (value: string) => void;
 }) {
+  const t = useT();
   if (!categories || !categories?.length) return <></>;
 
   const negativeCategories = categories.filter((c) => !!c.isNegative);
@@ -45,17 +47,17 @@ export default function ReviewCategories({
     >
       <Box3D variant="extra_contrast" p="4" w="100%">
         <HStack justifyContent="space-between" alignItems="center">
-          <ResponsiveText>Ваш опыт:</ResponsiveText>
+          <ResponsiveText>{t("Ваш опыт:", "Your experience:")}</ResponsiveText>
           <SentimentButtons sentiment={sentiment} isDisabled={false} />
         </HStack>
       </Box3D>
       <Box3D variant="extra_contrast" p="4" w="100%">
         <HStack justifyContent="space-between" alignItems="center">
-          <ResponsiveText>Вы совершили обмен?</ResponsiveText>
+          <ResponsiveText>{t("Вы совершили обмен?", "Did you complete an exchange?")}</ResponsiveText>
           <HStack spacing="2">
             {[
-              { label: "Да", value: true },
-              { label: "Нет", value: false },
+              { label: t("Да", "Yes"), value: true },
+              { label: t("Нет", "No"), value: false },
             ].map((option) => {
               const isActive = isExchangeDone === option.value;
               return (
@@ -82,7 +84,7 @@ export default function ReviewCategories({
         <Collapse in={isExchangeDone === true} animateOpacity>
           <Input
             mt="4"
-            placeholder="Направление, номер заявки, сумма"
+            placeholder={t("Направление, номер заявки, сумма", "Direction, order number, amount")}
             value={gossip}
             onChange={(e) => onChangeGossip(e.target.value)}
             borderWidth="2px"
@@ -93,7 +95,7 @@ export default function ReviewCategories({
         </Collapse>
       </Box3D>
       <Box3D variant="extra_contrast" p="4" w="100%">
-        <ResponsiveText mb="4">Чем порадовал обменник?</ResponsiveText>
+        <ResponsiveText mb="4">{t("Чем порадовал обменник?", "What did you like about the exchanger?")}</ResponsiveText>
         <Wrap gap="4">
           {positiveCategories.map((category) => (
             <ReviewCategory
@@ -106,7 +108,7 @@ export default function ReviewCategories({
       </Box3D>
 
       <Box3D variant="extra_contrast" p="4" w="100%">
-        <ResponsiveText mb="4">Чем огорчил обменник?</ResponsiveText>
+        <ResponsiveText mb="4">{t("Чем огорчил обменник?", "What disappointed you about the exchanger?")}</ResponsiveText>
         <Wrap gap="4">
           {negativeCategories.map((category) => (
             <ReviewCategory

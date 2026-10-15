@@ -8,6 +8,7 @@ import { IPm } from "../../types/selector";
 import { capitalize } from "../main/side/selector/section/PmGroup/helper";
 import { TextToHTML } from "../shared/helper";
 import { ResponsiveText } from "../../styles/theme/custom";
+import { useLocale } from "../../services/i18n";
 
 export const fillWords = ({
   givePmData,
@@ -204,6 +205,7 @@ const DirText = ({
   dirText: IDirText | null;
 }) => {
   //  const cityName = city ? city[`${locale}_name`] : "";
+  const locale = useLocale();
 
   if (!dirText) return <></>;
 
@@ -217,7 +219,8 @@ const DirText = ({
       </ResponsiveText>
       <Divider my="5" />
 
-      <DirTextBody text={dirText.text} />
+      {/* CMS SEO texts are Russian-only: hidden on English pages. */}
+      {locale === "en" ? null : <DirTextBody text={dirText.text} />}
     </Box>
   );
 };

@@ -27,6 +27,7 @@ import SaveMaker from "./topPanel/SaveMaker";
 import MakerLevels from "./levels";
 import MakerAds from "./ads";
 import { MakerEditProvider } from "./MakerEditContext";
+import { useT } from "../../../services/i18n";
 
 export default function MakerEditPage({
   maker,
@@ -44,6 +45,7 @@ export default function MakerEditPage({
   p2pAds?: IP2PAd[] | null;
 }) {
   const dispatch = useAppDispatch();
+  const t = useT();
   const offersCount = useAppSelector(
     (state) => state.main.p2pFullOffers.length,
   );
@@ -129,19 +131,19 @@ export default function MakerEditPage({
           <CustomTitle
             as="h3"
             mb="0"
-            title={"Четкая стратегия роста"}
+            title={t("Четкая стратегия роста", "A clear growth strategy")}
             subtitle={
-              "Развивайся от частника до обменника и зарабатывай в разы больше"
+              t("Развивайся от частника до обменника и зарабатывай в разы больше", "Grow from a private trader to an exchanger and earn many times more")
             }
-            subtitle2={"Мы уже прошли этот путь. Поделимся опытом."}
+            subtitle2={t("Мы уже прошли этот путь. Поделимся опытом.", "We have been down this road. We will share our experience.")}
           />
           <MakerLevels levels={p2pLevels} />
           <CustomTitle
             as="h3"
             mb="-10"
             mt="20"
-            title={"Твоя p2p страница"}
-            subtitle={"Внеси правки и опубликуй предложения обмена"}
+            title={t("Твоя p2p страница", "Your p2p page")}
+            subtitle={t("Внеси правки и опубликуй предложения обмена", "Make your edits and publish your exchange offers")}
           />
           <BoxWrapper variant="no_contrast" data-editing="true" mt="20">
             <MakerTopPanel />
@@ -161,9 +163,9 @@ export default function MakerEditPage({
               as="h3"
               mb="4"
               mt="10"
-              title={"Все готово?"}
-              subtitle="Опубликуй предожения и жди оповещений в телеграм-боте."
-              subtitle2="Бот выдаст ссылку на твою личную страницу. Используй ее для обмена."
+              title={t("Все готово?", "All set?")}
+              subtitle={t("Опубликуй предожения и жди оповещений в телеграм-боте.", "Publish your offers and wait for notifications in the Telegram bot.")}
+              subtitle2={t("Бот выдаст ссылку на твою личную страницу. Используй ее для обмена.", "The bot will give you a link to your personal page. Use it for exchanges.")}
             />
 
             <SaveMaker isBig withModal={false} />
@@ -173,7 +175,7 @@ export default function MakerEditPage({
           {faqCategory ? (
             <FaqCategoriesList
               categories={[faqCategory]}
-              customTitle={"Зачем нужен p2pie"}
+              customTitle={t("Зачем нужен p2pie", "Why p2pie")}
             />
           ) : (
             <></>
@@ -181,9 +183,9 @@ export default function MakerEditPage({
         </Box>
         <CustomTitle
           as="h3"
-          title={"Дополнительные инструменты"}
+          title={t("Дополнительные инструменты", "Additional tools")}
           subtitle={
-            "Используй эти опции чтобы улучшить свой сервис и повысить прибыль"
+            t("Используй эти опции чтобы улучшить свой сервис и повысить прибыль", "Use these options to improve your service and increase profit")
           }
         />
         <MakerAds ads={p2pAds} />

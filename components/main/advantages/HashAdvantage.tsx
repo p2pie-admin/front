@@ -4,8 +4,10 @@ import { FaLock } from "react-icons/fa";
 import { Box3D } from "../../../styles/theme/custom";
 import { FaShield } from "react-icons/fa6";
 import AdvantageBottom from "./AdvantageBottom";
+import { useT } from "../../../services/i18n";
 
 export default function HashAdvantage({ hovering }: { hovering: boolean }) {
+  const t = useT();
   const ringOpacity = hovering ? "whiteAlpha.300" : "whiteAlpha.100";
 
   return (
@@ -42,8 +44,11 @@ export default function HashAdvantage({ hovering }: { hovering: boolean }) {
       <AdvantageBottom
         icon={<FaShield size="1rem" />}
         hovering={hovering}
-        title="Безопасность"
-        subtitle="Мы отвечаем за надежность обменников"
+        title={t("Безопасность", "Security")}
+        subtitle={t(
+          "Мы отвечаем за надежность обменников",
+          "We vouch for the reliability of exchangers"
+        )}
       />
     </>
   );

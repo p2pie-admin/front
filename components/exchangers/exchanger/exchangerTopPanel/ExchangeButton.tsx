@@ -3,6 +3,7 @@ import { TbExternalLink } from "react-icons/tb";
 import { LinkWrapper } from "../../../shared/LinkWrapper";
 import { enrichLink } from "../../../../redux/helper";
 import { useAppSelector } from "../../../../redux/hooks";
+import { useT } from "../../../../services/i18n";
 
 type Props = {
   refLink?: string | null;
@@ -10,6 +11,7 @@ type Props = {
 };
 
 const ExchangeButton = ({ refLink, fullWidth = false }: Props) => {
+  const t = useT();
   const enrichedLink = useAppSelector((state) => {
     const { city, givePm, getPm } = state.main;
     return enrichLink({
@@ -32,7 +34,7 @@ const ExchangeButton = ({ refLink, fullWidth = false }: Props) => {
         w="100%"
         onClick={(e) => e.stopPropagation()}
       >
-        Обмен
+        {t("Обмен", "Exchange")}
       </Button>
     </LinkWrapper>
   );

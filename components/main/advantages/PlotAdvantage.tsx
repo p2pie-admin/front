@@ -7,6 +7,7 @@ import Dot from "../../exchangers/Dot";
 import { RiExchange2Fill } from "react-icons/ri";
 import AdvantageBottom from "./AdvantageBottom";
 import { buildRateString } from "../../shared/helper";
+import { useT } from "../../../services/i18n";
 const pulse = keyframes`
   0% { transform: scale(1); }
   50% { transform: scale(1.25); }
@@ -14,8 +15,9 @@ const pulse = keyframes`
 `;
 
 export default function PlotAdvantage({ hovering }: { hovering: boolean }) {
+  const t = useT();
   const ccRates = useAppSelector((state) => state.main.ccRates);
-  const [giveCur, getCur] = ["BTC", "руб."];
+  const [giveCur, getCur] = ["BTC", t("руб.", "RUB")];
   const course = ccRates?.currentRate || 0;
   // const rate =
   //   course < 1
@@ -26,7 +28,7 @@ export default function PlotAdvantage({ hovering }: { hovering: boolean }) {
     <>
       <Box top="6" position="absolute" right="6">
         <Text color="bg.400" fontSize="xs" mt="0.5">
-          Курс биткойна сейчас:
+          {t("Курс биткойна сейчас:", "Bitcoin rate now:")}
         </Text>
         <HStack gap="2" alignItems="center">
           <Text color="peach.200" fontSize="sm" mt="0.5">
@@ -43,8 +45,11 @@ export default function PlotAdvantage({ hovering }: { hovering: boolean }) {
       <AdvantageBottom
         icon={<RiExchange2Fill size="1rem" />}
         hovering={hovering}
-        title="Актуальный курс"
-        subtitle="Обменники опрашиваются раз в пару минут"
+        title={t("Актуальный курс", "Up-to-date rates")}
+        subtitle={t(
+          "Обменники опрашиваются раз в пару минут",
+          "Exchangers are polled every couple of minutes"
+        )}
       />
     </>
   );

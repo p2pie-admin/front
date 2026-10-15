@@ -1,4 +1,4 @@
-import { locale } from "../services/utils";
+import { Locale } from "../services/i18n";
 import { AmountInput, AmountOutputs } from "../types/amount";
 import { IRate } from "../types/rates";
 
@@ -149,7 +149,7 @@ export class FeesCalculator {
   };
 }
 
-export const kFormatter = (num: number) => {
+export const kFormatter = (num: number, locale: Locale = "ru") => {
   const abs = Math.abs(num);
   if (abs <= 1000) return num;
 
@@ -231,9 +231,9 @@ export const isClose = (a: number, b: number): boolean =>
 export const beautifyAmount = (number: number, strength?: number) =>
   addSpaces(R(number, strength) + " ");
 
-export const localFormat = (n: number, cur: string) => {
+export const localFormat = (n: number, cur: string, locale: Locale = "ru") => {
   const symbol = codeToSymbol(cur) || cur;
-  return `${kFormatter(R(n, 1))} ${symbol}`;
+  return `${kFormatter(R(n, 1), locale)} ${symbol}`;
 };
 
 export const curToSymbol = (cur?: string) => {

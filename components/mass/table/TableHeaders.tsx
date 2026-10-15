@@ -2,11 +2,14 @@ import { Grid, HStack, Tooltip } from "@chakra-ui/react";
 import React from "react";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { RiInformationLine } from "react-icons/ri";
-
-const text =
-  "Курсы с разными способами оплаты объединяются при отличии не более, чем на 1%";
+import { useT } from "../../../services/i18n";
 
 export default function Headers() {
+  const t = useT();
+  const text = t(
+    "Курсы с разными способами оплаты объединяются при отличии не более, чем на 1%",
+    "Rates with different payment methods are merged when they differ by no more than 1%"
+  );
   return (
     <Grid
       gridTemplateColumns="4fr 3rem 4fr 3fr"
@@ -17,18 +20,18 @@ export default function Headers() {
       borderRadius="lg"
       color="bg.400"
     >
-      <ResponsiveText size="xs">Обменник</ResponsiveText>
-      <ResponsiveText size="xs">Рейтинг</ResponsiveText>
+      <ResponsiveText size="xs">{t("Обменник", "Exchanger")}</ResponsiveText>
+      <ResponsiveText size="xs">{t("Рейтинг", "Rating")}</ResponsiveText>
       <Tooltip openDelay={500} hasArrow label={text} size="md">
         <HStack>
           <ResponsiveText textAlign="end" size="xs">
-            Курс
+            {t("Курс", "Rate")}
           </ResponsiveText>
           <RiInformationLine size="1.2rem" />
         </HStack>
       </Tooltip>
       <ResponsiveText textAlign="end" size="xs">
-        Способы оплаты
+        {t("Способы оплаты", "Payment methods")}
       </ResponsiveText>
     </Grid>
   );

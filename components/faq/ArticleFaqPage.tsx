@@ -8,6 +8,7 @@ import CustomTitle from "../shared/CustomTitle";
 import UniversalSeo from "../shared/UniversalSeo";
 import { TextToHTML } from "../shared/helper";
 import { FaqCategoriesList } from "./index";
+import { useT } from "../../services/i18n";
 
 export default function ArticleFaqPage({
   article,
@@ -18,6 +19,7 @@ export default function ArticleFaqPage({
   faqCategory: IFaqCategory | null;
   seo: ISEO;
 }) {
+  const t = useT();
   return (
     <>
       <UniversalSeo seo={seo} />
@@ -64,7 +66,7 @@ export default function ArticleFaqPage({
                 }}
               />
             ) : (
-              <Text color="bg.300">Материал скоро появится.</Text>
+              <Text color="bg.300">{t("Материал скоро появится.", "Content coming soon.")}</Text>
             )}
           </BoxWrapper>
         ) : (

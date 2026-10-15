@@ -8,14 +8,16 @@ import CustomModal from "../../../shared/CustomModal";
 import Countries from "./Countries";
 import React from "react";
 import { useRouter } from "next/router";
-import { locale } from "../../../../services/utils";
+import { useLocale, useT } from "../../../../services/i18n";
 
 const CitySelector = ({ forceVisible }: { forceVisible?: boolean }) => {
   const router = useRouter();
+  const locale = useLocale();
+  const t = useT();
 
   const path = router.asPath;
   const currentCityName = useAppSelector(
-    (state) => state.main?.city[`${locale}_name`]
+    (state) => state.main?.city[`${locale}_name`] || state.main?.city?.ru_name
   );
 
   const dispatch = useAppDispatch();
@@ -34,7 +36,7 @@ const CitySelector = ({ forceVisible }: { forceVisible?: boolean }) => {
 
   return (
     <Box>
-      <CustomModal id="location" header="Выберите город:">
+      <CustomModal id="location" header={t("Выберите город:", "Choose a city:")}>
         <Countries pageType={pageType} />
       </CustomModal>
 
@@ -46,7 +48,7 @@ const CitySelector = ({ forceVisible }: { forceVisible?: boolean }) => {
         rightIcon={<Arrow isUp={false} />}
         onClick={() => dispatch(triggerModal("location"))}
       >
-        {currentCityName || "Город"}
+        {currentCityName || t("Город", "City")}
       </ResponsiveButton>
     </Box>
   );

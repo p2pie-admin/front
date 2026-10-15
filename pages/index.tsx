@@ -17,6 +17,7 @@ import {
 import { IDirText } from "../types/exchange";
 import { IExchangerReview } from "../types/exchanger";
 import { maskReviewList } from "../services/maskIP";
+import { localeOf } from "../services/i18n";
 
 const brandHomeTitle = (title?: string | null) => {
   if (!title) return "P2PIE - мониторинг обмена валют и криптовалют";
@@ -25,11 +26,12 @@ const brandHomeTitle = (title?: string | null) => {
     : `P2PIE - ${title}`;
 };
 
-export const getStaticProps = async () => {
+export const getStaticProps = async (ctx?: { locale?: string }) => {
+  const locale = localeOf(ctx);
   try {
     const [mainTexts, rootText, popularRatesRaw, pmsRaw, reviews] =
       await Promise.all([
-        loadMainTexts(),
+        loadMainTexts(locale),
         loadRootText(),
         loadPopular(),
         loadPms(),
@@ -54,13 +56,22 @@ export const getStaticProps = async () => {
       popularPmCodes.find((code) => code === pm.code),
     );
 
-    const seo: ISEO = {
-      title: brandHomeTitle(rootText.seo_title),
-      description:
-        rootText.seo_description ||
-        "Агрегатор обменных пунктов. Инструмент поиска лучших предложений обмена электронных, наличных и криптовалют",
-      canonicalSlug: "",
-    };
+    // The root text box is Russian-only CMS content, so English SEO is fixed text.
+    const seo: ISEO =
+      locale === "en"
+        ? {
+            title: "P2PIE - currency and crypto exchange monitoring",
+            description:
+              "Exchanger monitoring: compare rates of verified exchangers and P2P makers for crypto, e-money and cash exchange.",
+            canonicalSlug: "",
+          }
+        : {
+            title: brandHomeTitle(rootText.seo_title),
+            description:
+              rootText.seo_description ||
+              "Агрегатор обменных пунктов. Инструмент поиска лучших предложений обмена электронных, наличных и криптовалют",
+            canonicalSlug: "",
+          };
 
     const maskedReviews = maskReviewList(reviews as IExchangerReview[]) || [];
 

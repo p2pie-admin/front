@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { intlLocale, Locale, useLocale, useT } from "../../services/i18n";
 
 const plural = (n: number, one: string, few: string, many: string) => {
   const m10 = n % 10;
@@ -6,6 +7,22 @@ const plural = (n: number, one: string, few: string, many: string) => {
   if (m10 === 1 && m100 !== 11) return one;
   if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return few;
   return many;
+};
+
+const pluralEn = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many} ago`;
+
+export const relativeEn = (ms: number, now: number) => {
+  const sec = Math.max(0, Math.round((now - ms) / 1000));
+  if (sec < 60) return "just now";
+  const min = Math.floor(sec / 60);
+  if (min < 60) return pluralEn(min, "minute", "minutes");
+  const h = Math.floor(min / 60);
+  if (h < 24) return pluralEn(h, "hour", "hours");
+  const d = Math.floor(h / 24);
+  if (d < 30) return pluralEn(d, "day", "days");
+  const mo = Math.floor(d / 30);
+  if (mo < 12) return pluralEn(mo, "month", "months");
+  return pluralEn(Math.floor(d / 365), "year", "years");
 };
 
 export const relativeRu = (ms: number, now: number) => {
@@ -23,8 +40,8 @@ export const relativeRu = (ms: number, now: number) => {
   return `${y} ${plural(y, "год", "года", "лет")} назад`;
 };
 
-const absolute = (ms: number) =>
-  new Intl.DateTimeFormat("ru-RU", {
+const absolute = (ms: number, locale: Locale = "ru") =>
+  new Intl.DateTimeFormat(intlLocale(locale), {
     // Fixed zone so the server and the browser render the same string (no hydration mismatch).
     timeZone: "Europe/Moscow",
     day: "numeric",
@@ -36,6 +53,8 @@ const absolute = (ms: number) =>
 // "1 час назад". The static (ISR) HTML carries the absolute date; the relative form is computed in the browser
 // after mount and refreshed every minute, so a cached page never shows a stale "5 минут назад".
 const RelativeTime = ({ date }: { date?: string | null }) => {
+  const locale = useLocale();
+  const t = useT();
   const ms = date ? Date.parse(date) : NaN;
   const [now, setNow] = useState<number | null>(null);
   useEffect(() => {
@@ -45,8 +64,8 @@ const RelativeTime = ({ date }: { date?: string | null }) => {
   }, []);
   if (!Number.isFinite(ms)) return null;
   return (
-    <time dateTime={new Date(ms).toISOString()} title={`${absolute(ms)} МСК`}>
-      {now === null ? absolute(ms) : relativeRu(ms, now)}
+    <time dateTime={new Date(ms).toISOString()} title={`${absolute(ms, locale)} ${t("МСК", "MSK")}`}>
+      {now === null ? absolute(ms, locale) : locale === "en" ? relativeEn(ms, now) : relativeRu(ms, now)}
     </time>
   );
 };

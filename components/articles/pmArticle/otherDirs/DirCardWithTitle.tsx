@@ -5,6 +5,7 @@ import { Box3D, ResponsiveText } from "../../../../styles/theme/custom";
 import { IPmPairs } from "../../../../types/exchange";
 import { dirTitle } from "./dirTitle";
 import { GetRateDataFn } from "./useDirRates";
+import { useLocale, useT } from "../../../../services/i18n";
 
 type DirCardWithTitleProps = {
   pair?: IPmPairs | null;
@@ -19,6 +20,8 @@ const DirCardWithTitle = ({
   getRateData,
   placeholderHeight,
 }: DirCardWithTitleProps) => {
+  const locale = useLocale();
+  const t = useT();
   const rateData = pair ? getRateData(pair) : null;
 
   // Add Moscow city to cash directions that don't have a city
@@ -44,7 +47,7 @@ const DirCardWithTitle = ({
       {pair ? (
         <Box minH={placeholderHeight}>
           <ResponsiveText as="h4" size="xs" variant="shaded" mb="2">
-            {dirTitle(pair, side)}
+            {dirTitle(pair, side, locale)}
           </ResponsiveText>
           <Dir
             givePm={pair.givePm}
@@ -54,7 +57,7 @@ const DirCardWithTitle = ({
             bottomLeft={
               rateData ? (
                 <ResponsiveText size="xs" variant="no_contrast">
-                  {`Предложений: ${rateData.amountOfCourses}`}
+                  {t(`Предложений: ${rateData.amountOfCourses}`, `Offers: ${rateData.amountOfCourses}`)}
                 </ResponsiveText>
               ) : null
             }
@@ -70,7 +73,7 @@ const DirCardWithTitle = ({
       ) : (
         <Box>
           <ResponsiveText as="h4" size="xs" variant="shaded" mb="2">
-            Нет обратного направления
+            {t("Нет обратного направления", "No reverse direction")}
           </ResponsiveText>
           <Box3D variant="extra_contrast">
             <Center minH={placeholderHeight} w="100%" color="whiteAlpha.200">

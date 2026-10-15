@@ -17,7 +17,7 @@ import { ICity } from "../../types/exchange";
 import { IExchanger } from "../../types/exchanger";
 import { ISEO } from "../../types/general";
 import { IPm } from "../../types/selector";
-import { codeToRuName } from "../../redux/amountsHelper";
+import { codeToEnName, codeToRuName } from "../../redux/amountsHelper";
 import { IDirText } from "../../types/exchange";
 import {
   getClosestCitiesByCoordinates,
@@ -31,6 +31,7 @@ import {
   ParsedDirection,
 } from "../../types/map";
 import { minRatesMap } from "../../services/utils";
+import { Locale, localeOf, tr } from "../../services/i18n";
 
 // начиная со скольки курсов на направление показываем
 const diagEnabled =
@@ -73,7 +74,24 @@ const normalizeCitySlug = (value?: string | string[] | null) => {
 const toLower = (value?: string | null) =>
   value ? value.toLowerCase() : value;
 
-const buildCopy = (city: ICity, cityText?: IDirText | null) => {
+// English pages: template copy only (the CMS city texts are Russian-only and hidden there).
+const buildCopyEn = (city: ICity) => {
+  const cityEn = city.en_name || city.ru_name;
+  const description = `Addresses, contacts and opening hours of exchange offices in ${cityEn}. Interactive map of currency exchange offices in ${cityEn}.`;
+  return {
+    h1: `Find cash exchange offices in ${cityEn}`,
+    h2: `Show exchanger offices on the map of ${cityEn}`,
+    description,
+    title: `Currency exchange offices in ${cityEn} | P2P.Exchange`,
+    seoDescription: description,
+    empty: `There are no offices available in ${cityEn} right now. We are updating the map data.`,
+    directionsTitle: `Popular exchanges in ${cityEn}`,
+    directionsEmpty: `There are no exchange directions available in ${cityEn} right now. We are updating the data.`,
+  };
+};
+
+const buildCopy = (city: ICity, cityText?: IDirText | null, locale: Locale = "ru") => {
+  if (locale === "en") return buildCopyEn(city);
   const cityRu = city.ru_name;
   const preposition = city.preposition || cityRu;
   const header = cityText?.header?.trim();
@@ -95,8 +113,11 @@ const buildCopy = (city: ICity, cityText?: IDirText | null) => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  const { params } = ctx;
+  const locale = localeOf(ctx);
   const requestedSlug = normalizeCitySlug(params?.city);
+  // City text boxes exist in Russian only.
   const currentLocale = "ru";
   diagLog("map.getStaticProps.start", {
     requestedSlug,
@@ -170,9 +191,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     cityTextCount: Array.isArray(cityTextRes) ? cityTextRes.length : null,
   });
 
-  const cityText = (cityTextRes?.[0] || null) as IDirText | null;
+  // English pages hide the Russian-only CMS city text (header and long description).
+  const cityText = locale === "en" ? null : ((cityTextRes?.[0] || null) as IDirText | null);
 
-  const copy = buildCopy(currentCity, cityText);
+  const copy = buildCopy(currentCity, cityText, locale);
 
   const pmMap = new Map((pms || []).map((pm) => [pm.code.toUpperCase(), pm]));
   const dirs = limitedPossibleDirs(allPossibleDirs, "low");
@@ -273,12 +295,21 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     .map(([code, data]) => {
       const buy = [...data.buy].sort((a, b) => b.count - a.count);
       const sell = [...data.sell].sort((a, b) => b.count - a.count);
-      const cashName = codeToRuName(code);
+      const cashName = locale === "en" ? codeToEnName(code) : codeToRuName(code);
+      const cityEn = currentCity.en_name || currentCity.ru_name;
       const totalCount =
         buy.reduce((sum, item) => sum + item.count, 0) +
         sell.reduce((sum, item) => sum + item.count, 0);
-      const buyTitle = `Купить криптовалюту за наличные ${cashName} в ${currentCity.preposition}`;
-      const sellTitle = `Продать криптовалюту за наличные ${cashName} в ${currentCity.preposition}`;
+      const buyTitle = tr(
+        locale,
+        `Купить криптовалюту за наличные ${cashName} в ${currentCity.preposition}`,
+        `Buy crypto for cash ${cashName} in ${cityEn}`,
+      );
+      const sellTitle = tr(
+        locale,
+        `Продать криптовалюту за наличные ${cashName} в ${currentCity.preposition}`,
+        `Sell crypto for cash ${cashName} in ${cityEn}`,
+      );
       return {
         currencyCode: code,
         currencyName: cashName,
@@ -309,7 +340,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     breadcrumbs: [
       {
         position: 1,
-        name: "Главная",
+        name: tr(locale, "Главная", "Home"),
         item: `https://${process.env.NEXT_PUBLIC_NAME}.com`,
       },
       {

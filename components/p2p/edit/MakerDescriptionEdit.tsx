@@ -4,6 +4,7 @@ import { IoMdInformationCircle } from "react-icons/io";
 import { BoxWrapper, CustomHeader } from "../../shared/BoxWrapper";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { setMakerDescription } from "../../../redux/mainReducer";
+import { useT } from "../../../services/i18n";
 
 export default function MakerDescriptionEdit({
   description,
@@ -11,6 +12,7 @@ export default function MakerDescriptionEdit({
   description?: string | null;
 }) {
   const dispatch = useAppDispatch();
+  const t = useT();
   const reduxDescription = useAppSelector(
     (state) => state.main.maker?.description,
   );
@@ -24,7 +26,7 @@ export default function MakerDescriptionEdit({
   const value = reduxDescription ?? "";
   return (
     <BoxWrapper>
-      <CustomHeader text="Описание" Icon={IoMdInformationCircle} />
+      <CustomHeader text={t("Описание", "Description")} Icon={IoMdInformationCircle} />
       <Divider my="4" />
       <Box px="2" color="bg.400">
         <Textarea
@@ -36,7 +38,7 @@ export default function MakerDescriptionEdit({
           _focus={{
             borderColor: "peach.500",
           }}
-          placeholder={"Ваше описание"}
+          placeholder={t("Ваше описание", "Your description")}
           value={value}
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
             dispatch(setMakerDescription(e.target.value))

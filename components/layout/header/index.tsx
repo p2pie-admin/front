@@ -15,6 +15,7 @@ import NavHeadingDesktop from "../nav/NavHeadingDesktop";
 import CitySelector from "./city";
 import { transparentize } from "@chakra-ui/theme-tools";
 import GlobalSearch from "../nav/globalSearch";
+import Language from "../nav/Language";
 
 const Header = () => {
   const [bg100, bg1000] = useToken("colors", ["bg.100", "bg.1000"]);
@@ -40,6 +41,7 @@ const Header = () => {
 
         <HStack>
           <CitySelector />
+          <Language />
           <SwipeableDrawer />
 
           <Box display={{ base: "none", xl: "block" }}>

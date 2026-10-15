@@ -4,12 +4,16 @@ import { Grid, Box, Text, Divider, HStack, VStack } from "@chakra-ui/react";
 import { FaArrowRight } from "react-icons/fa";
 import Loader from "../../../shared/Loader";
 import { Box3D } from "../../../../styles/theme/custom";
+import { localized } from "../../i18n";
+import { useLocale, useT } from "../../../../services/i18n";
 
 export default function MakerLevelsDescription({
   levels,
 }: {
   levels: IP2PLevel[];
 }) {
+  const locale = useLocale();
+  const t = useT();
   return (
     <Box mt="4">
       {[...levels]
@@ -71,7 +75,7 @@ export default function MakerLevelsDescription({
                   zIndex={1}
                   maxW="120px"
                 >
-                  {level.title}
+                  {localized(level, "title", locale)}
                 </Box>
               </Box3D>
               <VStack
@@ -82,20 +86,20 @@ export default function MakerLevelsDescription({
                 alignItems="start"
               >
                 <Text color="bg.200" fontSize="sm" whiteSpace="pre-line" mb="2">
-                  {level.description}
+                  {localized(level, "description", locale)}
                 </Text>
                 {!!level.deals_needed && (
-                  <Text>{`• Сделок минимум: ${level.deals_needed}`}</Text>
+                  <Text>{t(`• Сделок минимум: ${level.deals_needed}`, `• Minimum deals: ${level.deals_needed}`)}</Text>
                 )}
                 <Text>
-                  {`• Онлайн сделка частями до ~${level.limit_online_usd}$ или одной транзакцией через эскроу-смарт-контракт (только для USDT)`}
+                  {t(`• Онлайн сделка частями до ~${level.limit_online_usd}$ или одной транзакцией через эскроу-смарт-контракт (только для USDT)`, `• Online deal in parts up to ~${level.limit_online_usd}$ or in one transaction via an escrow smart contract (USDT only)`)}
                 </Text>
                 <Text>
-                  {`• Личная встреча частями до ~${level.limit_offline_usd}$ или одной транзакцией через эскроу-смарт-контракт (только для USDT)`}
+                  {t(`• Личная встреча частями до ~${level.limit_offline_usd}$ или одной транзакцией через эскроу-смарт-контракт (только для USDT)`, `• In-person meeting in parts up to ~${level.limit_offline_usd}$ or in one transaction via an escrow smart contract (USDT only)`)}
                 </Text>
                 {!!level.deposit_usd && (
                   <Text>
-                    {`• На этот уровень доверия можно перескочить сразу через депозит ${level.deposit_usd} USDT`}
+                    {t(`• На этот уровень доверия можно перескочить сразу через депозит ${level.deposit_usd} USDT`, `• You can jump straight to this trust level with a deposit of ${level.deposit_usd} USDT`)}
                   </Text>
                 )}
               </VStack>

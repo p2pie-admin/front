@@ -10,12 +10,15 @@ import telegramStart from "../../../../public/telegram_start.jpg";
 import { Box3D } from "../../../../styles/theme/custom";
 import useTelegramConfirmPolling from "../../../../services/hooks/telegramConfirmPolling";
 import { useMakerEditContext } from "../MakerEditContext";
+import { useLocale, useT } from "../../../../services/i18n";
 
 export default function SaveDetails() {
   const maker = useMakerEditContext();
   // The confirmation goes by the public slug; the bot matches it with the private Telegram username.
   const telegramUsername = maker.slug;
   const dispatch = useAppDispatch();
+  const locale = useLocale();
+  const t = useT();
   const isModalOpen = useAppSelector(
     (state) => state.main?.modal === `save_${telegramUsername}`,
   );
@@ -28,6 +31,7 @@ export default function SaveDetails() {
           makerId: String(maker.id),
           makerSlug: telegramUsername,
           confirmed: true,
+          locale,
         }),
       );
       dispatch(triggerModal(undefined));
@@ -41,6 +45,7 @@ export default function SaveDetails() {
           makerId: String(maker.id),
           makerSlug: telegramUsername,
           confirmed: false,
+          locale,
         }),
       );
     });
@@ -49,10 +54,10 @@ export default function SaveDetails() {
     <VStack justifyContent="center" alignItems="center" spacing="4" mt="4">
       <Text textAlign="center" fontSize="md" color="bg.300">
         <Highlight
-          query={["Telegram-аккаунта"]}
+          query={[t("Telegram-аккаунта", "Telegram account")]}
           styles={{ color: "peach.300", fontWeight: "bold" }}
         >
-          {"Чтобы подтвердить изменения, перейдите в телеграм-бот с Telegram-аккаунта, привязанного к этой странице, и нажмите старт. "}
+          {t("Чтобы подтвердить изменения, перейдите в телеграм-бот с Telegram-аккаунта, привязанного к этой странице, и нажмите старт. ", "To confirm the changes, open the Telegram bot from the Telegram account linked to this page and press Start. ")}
         </Highlight>
       </Text>
 
@@ -79,7 +84,7 @@ export default function SaveDetails() {
         colorScheme="blue"
         rightIcon={<RiTelegram2Fill size="1rem" />}
       >
-        Перейти в телеграм
+        {t("Перейти в телеграм", "Open Telegram")}
       </Button>
     </VStack>
   );

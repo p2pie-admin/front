@@ -17,10 +17,12 @@ import PmIcons from "./PmIcons";
 import ModalButton from "./ModalButton";
 import { fetchPossiblePairs } from "../../../../redux/thunks";
 import { IoAddOutline } from "react-icons/io5";
+import { tr, useLocale } from "../../../../services/i18n";
 
 const PmModalButton = () => {
   const dispatch = useAppDispatch();
   const side = useContext(SideContext) as "give" | "get";
+  const locale = useLocale();
 
   const pms = useAppSelector((state) => {
     const pm = state.main?.[`${side}Pm`];
@@ -35,7 +37,8 @@ const PmModalButton = () => {
       dispatch(setSearchBarInputValue(""));
     });
   };
-  const unselectedPmText = side === "give" ? "Отдаю" : "Получаю";
+  const unselectedPmText =
+    side === "give" ? tr(locale, "Отдаю", "I give") : tr(locale, "Получаю", "I get");
 
   const currencyCode = pms?.[0]?.currency.code.toUpperCase();
   return (

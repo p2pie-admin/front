@@ -22,18 +22,20 @@ import NavBody from "../../nav/NavBody";
 import NavButton from "../../nav/NavButton";
 import GlobalSearch from "../../nav/globalSearch";
 import DarkLightTheme from "../../nav/DarkLightTheme";
+import { useT } from "../../../../services/i18n";
 
 // Quick entry points into the money pages; also plain internal links for crawlers.
 export const POPULAR_DIRECTIONS = [
-  { label: "USDT → Сбер", href: "/tether-usdt-trc20-to-sber-rub" },
-  { label: "BTC → Сбер", href: "/bitcoin-btc-to-sber-rub" },
-  { label: "USDT → T-bank", href: "/tether-usdt-trc20-to-t-bank-rub" },
-  { label: "USDT → СБП", href: "/tether-usdt-trc20-to-sbp-rub" },
-  { label: "Сбер → USDT", href: "/sber-rub-to-tether-usdt-trc20" },
-  { label: "Наличные → USDT", href: "/cash-rub-to-tether-usdt-trc20" },
+  { label: "USDT → Сбер", en: "USDT → Sber", href: "/tether-usdt-trc20-to-sber-rub" },
+  { label: "BTC → Сбер", en: "BTC → Sber", href: "/bitcoin-btc-to-sber-rub" },
+  { label: "USDT → T-bank", en: "USDT → T-bank", href: "/tether-usdt-trc20-to-t-bank-rub" },
+  { label: "USDT → СБП", en: "USDT → SBP", href: "/tether-usdt-trc20-to-sbp-rub" },
+  { label: "Сбер → USDT", en: "Sber → USDT", href: "/sber-rub-to-tether-usdt-trc20" },
+  { label: "Наличные → USDT", en: "Cash → USDT", href: "/cash-rub-to-tether-usdt-trc20" },
 ];
 
 const SwipeableDrawer = () => {
+  const t = useT();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const bgColor = useColorModeValue("bg.100", "bg.700");
@@ -88,7 +90,7 @@ const SwipeableDrawer = () => {
 
             <Divider my="3" />
             <Text fontSize="xs" color="bg.400" mb="2" ml="2" textTransform="uppercase" letterSpacing="wide">
-              Популярные направления
+              {t("Популярные направления", "Popular pairs")}
             </Text>
             <Wrap spacing="2" mb="4" onClick={onClose}>
               {POPULAR_DIRECTIONS.map((d) => (
@@ -103,7 +105,7 @@ const SwipeableDrawer = () => {
                     color="bg.200"
                     fontWeight="500"
                   >
-                    {d.label}
+                    {t(d.label, d.en)}
                   </Button>
                 </WrapItem>
               ))}

@@ -5,6 +5,7 @@ import { ResponsiveText } from "../../styles/theme/custom";
 import { IRate } from "../../types/rates";
 import OffersTable from "./OffersTable";
 import { ISsrRate, pickSsrRate } from "./ssrRates";
+import { useT } from "../../services/i18n";
 
 // Rows shown before "Показать ещё"; the rest sits in a collapsed <details>.
 const VISIBLE = 5;
@@ -22,6 +23,7 @@ const ShortOffers = ({
   giveCur: string;
   getCur: string;
 }) => {
+  const t = useT();
   const reduxRates = useAppSelector((state) => state.main.dirRates) || [];
   const rates = useMemo<ISsrRate[]>(() => {
     if (reduxRates.length) {
@@ -37,7 +39,7 @@ const ShortOffers = ({
   if (!rates.length) {
     return (
       <ResponsiveText variant="no_contrast" mt="2">
-        Сейчас по этому направлению нет предложений.
+        {t("Сейчас по этому направлению нет предложений.", "There are no offers for this direction right now.")}
       </ResponsiveText>
     );
   }
@@ -46,10 +48,13 @@ const ShortOffers = ({
     <Box mt="4">
       {/* Same data as the swiper above, just as a table for those who prefer it. */}
       <ResponsiveText variant="contrast" fontWeight="600">
-        Те же предложения таблицей
+        {t("Те же предложения таблицей", "The same offers as a table")}
       </ResponsiveText>
       <ResponsiveText size="xs" variant="no_contrast" mb="-4">
-        Все предложения из списка выше, если так удобнее сравнивать
+        {t(
+          "Все предложения из списка выше, если так удобнее сравнивать",
+          "All offers from the list above, if a table is easier to compare",
+        )}
       </ResponsiveText>
       <OffersTable
         rates={rates}

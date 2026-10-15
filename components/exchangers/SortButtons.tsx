@@ -1,6 +1,7 @@
 import { Button, HStack, Tooltip, useColorModeValue } from "@chakra-ui/react";
 import { FaArrowUpWideShort, FaArrowDownShortWide } from "react-icons/fa6";
 import React from "react";
+import { useT } from "../../services/i18n";
 
 interface SortButtonsProps {
   sortCriteria: "name" | "total_rates" | "admin_rating";
@@ -13,6 +14,7 @@ const SortButtons: React.FC<SortButtonsProps> = ({
   sortDirection,
   toggleSort,
 }) => {
+  const t = useT();
   const activeBg = useColorModeValue("bg.100", "bg.600");
 
   const getIcon = (criteria: SortButtonsProps["sortCriteria"]) =>
@@ -25,16 +27,16 @@ const SortButtons: React.FC<SortButtonsProps> = ({
     ) : undefined; // ✅ instead of `null`
 
   const buttons = [
-    { key: "name", label: "Имя", tooltip: "Сортировать по имени" },
+    { key: "name", label: t("Имя", "Name"), tooltip: t("Сортировать по имени", "Sort by name") },
     {
       key: "total_rates",
-      label: "Курсы",
-      tooltip: "Сортировать по количеству курсов",
+      label: t("Курсы", "Rates"),
+      tooltip: t("Сортировать по количеству курсов", "Sort by number of rates"),
     },
     {
       key: "admin_rating",
-      label: "Рейтинг",
-      tooltip: "Сортировать по оценке клиентов",
+      label: t("Рейтинг", "Rating"),
+      tooltip: t("Сортировать по оценке клиентов", "Sort by customer rating"),
     },
   ] as const;
 

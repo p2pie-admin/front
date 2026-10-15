@@ -9,6 +9,7 @@ import { useAppSelector } from "../../../../redux/hooks";
 import Dot from "../../../exchangers/Dot";
 import { buildRateString } from "../../../shared/helper";
 import Loader from "../../../shared/Loader";
+import { useT } from "../../../../services/i18n";
 
 const pulse = keyframes`
   0% { transform: scale(1); }
@@ -21,8 +22,9 @@ export default function DynamicRateAdvantage({
 }: {
   hovering: boolean;
 }) {
+  const t = useT();
   const ccRates = useAppSelector((state) => state.main.ccRates);
-  const [giveCur, getCur] = ["BTC", "руб."];
+  const [giveCur, getCur] = ["BTC", t("руб.", "RUB")];
   const course = ccRates?.currentRate || 0;
   // const rate =
   //   course < 1
@@ -49,7 +51,7 @@ export default function DynamicRateAdvantage({
       </Box>
       <Box top="6" position="absolute" right="6">
         <Text color="bg.400" fontSize="xs" mt="0.5">
-          Курс биткойна сейчас:
+          {t("Курс биткойна сейчас:", "Bitcoin rate now:")}
         </Text>
         <HStack gap="2" alignItems="center">
           <Text color="peach.200" fontSize="sm" mt="0.5">
@@ -66,8 +68,8 @@ export default function DynamicRateAdvantage({
       <AdvantageBottom
         icon={<RiExchange2Fill size="1.5rem" />}
         hovering={hovering}
-        title="Авто-курс"
-        subtitle="Твои курсы могут следовать за рынком автоматически или быть статичными "
+        title={t("Авто-курс", "Auto rate")}
+        subtitle={t("Твои курсы могут следовать за рынком автоматически или быть статичными ", "Your rates can follow the market automatically or stay fixed ")}
       />
     </>
   );

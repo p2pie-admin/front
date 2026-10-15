@@ -2,6 +2,7 @@ import { Box, Divider, HStack, Icon, BoxProps } from "@chakra-ui/react";
 import React from "react";
 import { IconType } from "react-icons";
 import { Box3D, ResponsiveText } from "../../styles/theme/custom";
+import { intlLocale, useLocale } from "../../services/i18n";
 
 type BoxWrapperProps = React.ComponentProps<typeof Box3D> & {
   variant?: "contrast" | "no_contrast" | "extra_contrast";
@@ -67,8 +68,9 @@ export function ReviewBorder({
 }
 
 export const FormatedDate = ({ updatedAt }: { updatedAt?: string | null }) => {
+  const locale = useLocale();
   const formattedDate = updatedAt
-    ? new Intl.DateTimeFormat("ru-RU", {
+    ? new Intl.DateTimeFormat(intlLocale(locale), {
         // Fixed zone: the server renders in UTC, a browser in its own zone — a different string per zone
         // makes React reject the whole server HTML (hydration errors #418/#425/#423).
         timeZone: "Europe/Moscow",

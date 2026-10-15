@@ -23,6 +23,7 @@ import { getPmNameFromPm } from "../../../../../shared/helper";
 import { capitalize } from "../../../../../main/side/selector/section/PmGroup/helper";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import DirectionSelectorModal from "./DirectionSelectorModal";
+import { useT } from "../../../../../../services/i18n";
 
 const DirectionPmButton = ({
   side,
@@ -36,10 +37,13 @@ const DirectionPmButton = ({
   handleExpand: (event: any, index: number) => void;
 }) => {
   const dispatch = useAppDispatch();
+  const t = useT();
   // const [hovered, setHovered] = useState(false);
   const pms = pm ? [pm] : [];
   const unselectedPmText =
-    side === "give" ? "Клиент отдает" : "Клиент получает";
+    side === "give"
+      ? t("Клиент отдает", "Client gives")
+      : t("Клиент получает", "Client gets");
   const modalId = getModalId(directionIndex, side);
 
   const openDialog = () => {

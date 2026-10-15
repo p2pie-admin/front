@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { IoAddOutline } from "react-icons/io5";
 import { addP2PDirection } from "../../../../redux/mainReducer";
 import { IFullOffer } from "../../../../types/p2p";
+import { useT } from "../../../../services/i18n";
 
 type Props = {
   offers?: Partial<IFullOffer>[] | null;
@@ -18,20 +19,21 @@ export default function EditOffers({ offers }: Props) {
     (state) => state.main.p2pFullOffers.length,
   );
   const dispatch = useAppDispatch();
+  const t = useT();
   const [addDirectionSignal, setAddDirectionSignal] = useState(0);
   const hasInitialOffers = (offers?.length || 0) > 0;
   // все оферы
   return (
     <BoxWrapper w="100%" p={{ base: 0, lg: 4 }}>
       <Box px={{ base: 4, lg: 0 }} pt={{ base: 4, lg: 0 }}>
-        <CustomHeader text="Предложения" Icon={IoMdListBox} />
+        <CustomHeader text={t("Предложения", "Offers")} Icon={IoMdListBox} />
       </Box>
       <Divider my="4" mx={{ base: 4, lg: 0 }} />
 
       <VStack align="stretch" spacing="3">
         {!offersCount && !hasInitialOffers ? (
           <Box color="bg.400" px={{ base: 4, lg: 0 }}>
-            Добавьте направление, чтобы выбрать методы оплаты.
+            {t("Добавьте направление, чтобы выбрать методы оплаты.", "Add an exchange direction to choose payment methods.")}
           </Box>
         ) : (
           <DirectionsPicker

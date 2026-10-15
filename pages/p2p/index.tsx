@@ -6,6 +6,7 @@ import { nullSeo } from "../../components/shared/UniversalSeo";
 import { loadAllP2PMakers, loadPms } from "../../cache/loadX";
 import { filterAllowedOffers } from "../../services/p2pSanctions";
 import { IMakerPreview } from "../../types/p2p";
+import { localeOf, tr } from "../../services/i18n";
 
 const MakersPage = ({
   makers,
@@ -17,7 +18,8 @@ const MakersPage = ({
   initialPage: number;
 }) => <MakersList makers={makers} seo={seo} initialPage={initialPage} />;
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  const locale = localeOf(ctx);
   const itemsPerPage = 20;
 
   const [rawMakers, pms] = await Promise.all([loadAllP2PMakers(), loadPms()]);
@@ -40,8 +42,8 @@ export const getStaticProps: GetStaticProps = async () => {
   const currentPage = 1;
 
   const seo: ISEO = {
-    title: "P2P мейкеры - список активных мейкеров",
-    description: "Проверьте статусы, предложения и отзывы P2P мейкеров",
+    title: tr(locale, "P2P мейкеры - список активных мейкеров", "P2P makers - list of active makers"),
+    description: tr(locale, "Проверьте статусы, предложения и отзывы P2P мейкеров", "Check statuses, offers and reviews of P2P makers"),
     canonicalSlug:
       currentPage > 1 ? `p2p/makers?page=${currentPage}` : "p2p/makers",
   };

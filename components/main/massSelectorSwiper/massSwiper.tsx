@@ -3,6 +3,7 @@ import { useMotionValue, useAnimation, motion } from "framer-motion";
 import React, { forwardRef, useImperativeHandle } from "react";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import MassShader from "../../mass/MassShader";
+import { pickName, useLocale } from "../../../services/i18n";
 
 const [dragElastic, inertiaPower, inertiaTimeConstant] = [0.1, 0.4, 240];
 
@@ -15,6 +16,7 @@ type MassSwiperProps = {
 const MassSwiper = forwardRef<MassSwiperHandle, MassSwiperProps>(
   ({ initialId, items, set }, ref) => {
     const isMobile = false;
+    const locale = useLocale();
     const itemHeight = 40;
     const containerHeight = 120;
 
@@ -267,7 +269,7 @@ const MassSwiper = forwardRef<MassSwiperHandle, MassSwiperProps>(
                 fontSize={{ base: "md", lg: "2xl" }}
               >
                 <Text color="bg.300" fontSize="inherit">
-                  {item.ru_label}
+                  {pickName(item, locale, "label")}
                 </Text>
               </Box>
             ))}

@@ -11,6 +11,7 @@ import { FaCheck } from "react-icons/fa6";
 import { FaXmark } from "react-icons/fa6";
 import MyTooltip from "../../../shared/MyTooltip";
 import NextLevelConditions from "./NextLevelConditions";
+import { intlLocale, useLocale, useT } from "../../../../services/i18n";
 export default function MakerStats({
   maker,
   levelDefinition,
@@ -18,13 +19,15 @@ export default function MakerStats({
   maker: IMaker;
   levelDefinition?: IP2PLevel | null;
 }) {
+  const locale = useLocale();
+  const t = useT();
   const offers = Array.isArray(maker.offers) ? maker.offers : null;
   const reviews = Array.isArray(maker.reviews) ? maker.reviews : null;
   const offersCount = offers ? offers.length : null;
   const reviewsCount = reviews ? reviews.length : null;
 
   const formattedDate = maker.createdAt
-    ? new Intl.DateTimeFormat("ru-RU", {
+    ? new Intl.DateTimeFormat(intlLocale(locale), {
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
@@ -84,17 +87,17 @@ export default function MakerStats({
         />
         <Box mt="2" w={{ base: "100%", lg: "35%" }}>
           <StatItem
-            label="Предложений"
+            label={t("Предложений", "Offers")}
             value={offersCount}
             Icon={RiExchange2Line}
           />
 
-          <StatItem label="Сделок" value={0} Icon={FaRegHandshake} />
+          <StatItem label={t("Сделок", "Deals")} value={0} Icon={FaRegHandshake} />
 
-          <StatItem label="Отзывов" value={reviewsCount} Icon={TbPencil} />
+          <StatItem label={t("Отзывов", "Reviews")} value={reviewsCount} Icon={TbPencil} />
 
           <StatItem
-            label="Создан"
+            label={t("Создан", "Created")}
             value={formattedDate}
             Icon={MdOutlineDateRange}
           />

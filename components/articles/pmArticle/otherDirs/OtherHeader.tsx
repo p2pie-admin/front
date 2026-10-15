@@ -2,6 +2,36 @@ import { Heading } from "@chakra-ui/react";
 import React from "react";
 import { capitalize } from "../../../main/side/selector/section/PmGroup/helper";
 import { IPm } from "../../../../types/selector";
+import { Locale, pickName } from "../../../../services/i18n";
+
+// English headings for the "other directions" blocks (one wording for H3 and H4; the Russian
+// variants below differ only for SEO diversity).
+const EN_SECTION_SUFFIX: Record<string, string> = {
+  bank: " by card",
+  crypto: " for crypto",
+  cash: " for cash",
+  transfer: " by transfer",
+  digital: " via e-wallets",
+};
+
+const enOthers = (mainPm: IPm, section: string, withCurrency: boolean, emptyIfUnknown: boolean) => {
+  const fullName = capitalize(
+    [pickName(mainPm, "en"), mainPm.subgroup_name, withCurrency ? mainPm.currency?.code : ""]
+      .filter(Boolean)
+      .join(" ")
+  );
+  const main = (mainPm.section || "").toLowerCase();
+  const sec = (section || "").toLowerCase();
+  const knownMain = ["crypto", "bank", "cash", "transfer", "digital"].includes(main);
+  let suffix: string | undefined = EN_SECTION_SUFFIX[sec];
+  if (main === "cash" && sec === "cash") suffix = "";
+  if (main === "digital" && sec === "digital") suffix = " in another wallet";
+  if (main === "transfer" && sec === "transfer") suffix = undefined;
+  if (!knownMain || suffix === undefined) {
+    return emptyIfUnknown ? { sell: "", buy: "" } : { buy: `Buy ${fullName}`.trim(), sell: `Sell ${fullName}`.trim() };
+  }
+  return { buy: `Buy ${fullName}${suffix}`, sell: `Sell ${fullName}${suffix}` };
+};
 
 export default function OtherHeaders({ text }: { text: string }) {
   return (
@@ -20,7 +50,8 @@ export default function OtherHeaders({ text }: { text: string }) {
   );
 }
 
-export const H3ForOthers = (mainPm: IPm, section: string) => {
+export const H3ForOthers = (mainPm: IPm, section: string, locale: Locale = "ru") => {
+  if (locale === "en") return enOthers(mainPm, section, true, true);
   // Section-level headings to diversify wording from H4ForOthers
   const {
     ru_name,
@@ -205,7 +236,8 @@ export const H3ForOthers = (mainPm: IPm, section: string) => {
   };
 };
 
-export const H4ForOthers = (mainPm: IPm, section: string) => {
+export const H4ForOthers = (mainPm: IPm, section: string, locale: Locale = "ru") => {
+  if (locale === "en") return enOthers(mainPm, section, false, false);
   // possible sections: banks, crypto, transfer, digital, cash
   const {
     ru_name,

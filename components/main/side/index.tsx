@@ -6,10 +6,16 @@ import { useContext } from "react";
 import SideContext from "../../shared/contexts/SideContext";
 import { capitalize } from "./selector/section/PmGroup/helper";
 import { useAppSelector } from "../../../redux/hooks";
-import { codeToRuName, codeToRuName2 } from "../../../redux/amountsHelper";
+import {
+  codeToEnName,
+  codeToRuName,
+  codeToRuName2,
+} from "../../../redux/amountsHelper";
+import { useLocale } from "../../../services/i18n";
 
 const Side = () => {
   const side = useContext(SideContext) as "give" | "get";
+  const locale = useLocale();
   const pm = useAppSelector((state) => state.main?.[`${side}Pm`]);
 
   const pmCur = pm?.currency.code;
@@ -60,9 +66,11 @@ const Side = () => {
             bottom={{ base: "1", lg: "2" }}
             left="3"
           >
-            {`${side === "give" ? "Отдаете" : "Получаете"}  ${codeToRuName(
-              pmCur,
-            )}`}
+            {locale === "en"
+              ? `You ${side === "give" ? "give" : "get"} ${codeToEnName(pmCur)}`
+              : `${side === "give" ? "Отдаете" : "Получаете"}  ${codeToRuName(
+                  pmCur,
+                )}`}
           </Text>
         )}
       </VStack>

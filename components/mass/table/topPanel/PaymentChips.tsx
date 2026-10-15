@@ -4,11 +4,13 @@ import { setMassPmsFilter } from "../../../../redux/mainReducer";
 import { IPm } from "../../../../types/selector";
 import { getPmNameFromPm } from "../../../shared/helper";
 import PmIcon from "../../../shared/PmIcon";
+import { useT } from "../../../../services/i18n";
 
 // Phone replacement for the icon-stack dropdown: one horizontally scrollable row of
 // payment-method chips. Multi-select; "Все" clears the filter.
 const PaymentChips = ({ fiatPms }: { fiatPms: Record<string, IPm> }) => {
   const dispatch = useAppDispatch();
+  const t = useT();
   const selected = useAppSelector((state) => state.main.massPmsFilter);
   const codes = Object.keys(fiatPms);
   if (codes.length < 2) return null;
@@ -55,7 +57,7 @@ const PaymentChips = ({ fiatPms }: { fiatPms: Record<string, IPm> }) => {
       px="2"
     >
       <HStack spacing="2" w="max-content" py="1">
-        {chip(!selected.length, () => dispatch(setMassPmsFilter([])), "Все", "all")}
+        {chip(!selected.length, () => dispatch(setMassPmsFilter([])), t("Все", "All"), "all")}
         {codes.map((code) =>
           chip(
             selected.includes(code),

@@ -4,6 +4,7 @@ import { ResponsiveText } from "../../styles/theme/custom";
 import { buildRateString } from "../shared/helper";
 import { format } from "../../redux/amountsHelper";
 import { IDirHistory, IDirHistoryPoint } from "./ssrRates";
+import { intlLocale, Locale, useLocale, useT } from "../../services/i18n";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 // The line/area SVG is stretched to the container (preserveAspectRatio="none"); everything that must not be
@@ -18,16 +19,22 @@ const displayed = (course: number) => (course < 1 ? 1 / course : course);
 const pct = (from: number, to: number) =>
   from > 0 ? ((to - from) / from) * 100 : 0;
 
-const signed = (value: number) =>
-  `${value > 0 ? "+" : ""}${value.toFixed(2).replace(".", ",")} %`;
+const signed = (value: number, locale: Locale = "ru") =>
+  locale === "en"
+    ? `${value > 0 ? "+" : ""}${value.toFixed(2)}%`
+    : `${value > 0 ? "+" : ""}${value.toFixed(2).replace(".", ",")} %`;
 
-const fmtDate = (ms: number, opts: Intl.DateTimeFormatOptions) =>
-  new Intl.DateTimeFormat("ru-RU", { timeZone: "Europe/Moscow", ...opts }).format(
+const fmtDate = (ms: number, opts: Intl.DateTimeFormatOptions, locale: Locale = "ru") =>
+  new Intl.DateTimeFormat(intlLocale(locale), { timeZone: "Europe/Moscow", ...opts }).format(
     new Date(ms),
   );
-const dayLabel = (ms: number) => fmtDate(ms, { day: "numeric", month: "short" });
-const timeLabel = (ms: number) =>
-  fmtDate(ms, { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+const dayLabel = (ms: number, locale: Locale = "ru") =>
+  fmtDate(ms, { day: "numeric", month: "short" }, locale);
+const timeLabel = (ms: number, locale: Locale = "ru") =>
+  fmtDate(ms, { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }, locale);
+
+const daysWord = (n: number, locale: Locale) =>
+  locale === "en" ? (n === 1 ? "day" : "days") : n === 1 ? "день" : n < 5 ? "дня" : "дней";
 
 // Moscow midnights inside [t0, t1] for the vertical day ticks (MSK = UTC+3, no DST).
 const MSK_OFFSET = 3 * 60 * 60 * 1000;
@@ -75,6 +82,8 @@ const RateHistory = ({
   giveCur: string;
   getCur: string;
 }) => {
+  const locale = useLocale();
+  const t = useT();
   const stroke = useColorModeValue("#6b46c1", "#f6ad55");
   const gridColor = useColorModeValue("rgba(0,0,0,0.08)", "rgba(255,255,255,0.07)");
   const frameBg = useColorModeValue(
@@ -126,10 +135,23 @@ const RateHistory = ({
     dayAgo !== last ? pct(displayed(dayAgo.best), displayed(last.best)) : null;
   const changePeriod = pct(displayed(first.best), displayed(last.best));
   // Unit of the plotted number: "RUB за 1 USDT" or "RUB за 1 BTC" etc.
-  const unit = last.best < 1 ? `${getCur} за 1 ${giveCur}` : `${giveCur} за 1 ${getCur}`;
+  const per = t("за", "per");
+  const unit = last.best < 1 ? `${getCur} ${per} 1 ${giveCur}` : `${giveCur} ${per} 1 ${getCur}`;
   const num = (v: number) => format(v, 1);
 
-  const sentences = [
+  const offersAvg = Math.round(summary.offersAvg);
+  const sentences = locale === "en" ? [
+    `Over ${spanDays} ${daysWord(spanDays, locale)} (${dayLabel(first.t, locale)} to ${dayLabel(
+      last.t,
+      locale,
+    )}) the best offer ranged from ${bestLow} to ${bestHigh}.`,
+    `Now ${now}${
+      change24h !== null ? `, ${signed(change24h, locale)} in 24 hours` : ""
+    }, ${signed(changePeriod, locale)} over the period.`,
+    `On average ${offersAvg} ${offersAvg === 1 ? "exchanger" : "exchangers"} served this direction (from ${
+      summary.offersMin
+    } to ${summary.offersMax}). Snapshots are taken hourly.`,
+  ] : [
     `Динамика за ${spanDays} ${spanDays === 1 ? "день" : spanDays < 5 ? "дня" : "дней"} (${dayLabel(
       first.t,
     )} — ${dayLabel(last.t)}): лучшее предложение колебалось от ${bestLow} до ${bestHigh}.`,
@@ -203,10 +225,13 @@ const RateHistory = ({
         <Flex justify="space-between" align="flex-start" gap="3" wrap="wrap" mb="4">
           <Box>
             <ResponsiveText size="sm" variant="contrast" fontWeight="semibold">
-              Лучший курс, почасово
+              {t("Лучший курс, почасово", "Best rate, hourly")}
             </ResponsiveText>
             <ResponsiveText size="xs" variant="no_contrast">
-              {`${unit} · ${spanDays} ${spanDays === 1 ? "день" : spanDays < 5 ? "дня" : "дней"} · снимок раз в час`}
+              {t(
+                `${unit} · ${spanDays} ${spanDays === 1 ? "день" : spanDays < 5 ? "дня" : "дней"} · снимок раз в час`,
+                `${unit} · ${spanDays} ${daysWord(spanDays, locale)} · hourly snapshot`,
+              )}
             </ResponsiveText>
           </Box>
           <Flex align="baseline" gap="2" wrap="wrap" justify="flex-end">
@@ -230,7 +255,9 @@ const RateHistory = ({
               opacity={0.85}
               whiteSpace="nowrap"
             >
-              {`${up ? "▲" : "▼"} ${signed(change24h ?? changePeriod)} ${change24h !== null ? "за сутки" : "за период"}`}
+              {`${up ? "▲" : "▼"} ${signed(change24h ?? changePeriod, locale)} ${
+                change24h !== null ? t("за сутки", "in 24h") : t("за период", "over the period")
+              }`}
             </Box>
           </Flex>
         </Flex>
@@ -276,7 +303,10 @@ const RateHistory = ({
               height="100%"
               preserveAspectRatio="none"
               role="img"
-              aria-label={`График лучшего курса: от ${bestLow} до ${bestHigh}`}
+              aria-label={t(
+                `График лучшего курса: от ${bestLow} до ${bestHigh}`,
+                `Best rate chart: from ${bestLow} to ${bestHigh}`,
+              )}
               style={{ position: "absolute", inset: 0, overflow: "visible" }}
             >
               <defs>
@@ -296,8 +326,8 @@ const RateHistory = ({
                 vectorEffect="non-scaling-stroke"
               />
             </svg>
-            {marker(geo.iMax, "макс", true)}
-            {geo.iMin !== geo.iMax && marker(geo.iMin, "мин", false)}
+            {marker(geo.iMax, t("макс", "max"), true)}
+            {geo.iMin !== geo.iMax && marker(geo.iMin, t("мин", "min"), false)}
             {/* Current value: dot with a halo at the end of the line. */}
             <Box
               pos="absolute"
@@ -353,13 +383,13 @@ const RateHistory = ({
                   minW="170px"
                 >
                   <ResponsiveText size="xs" variant="no_contrast">
-                    {`${timeLabel(h.t)} МСК`}
+                    {`${timeLabel(h.t, locale)} ${t("МСК", "MSK")}`}
                   </ResponsiveText>
                   <ResponsiveText size="sm" variant="contrast" fontWeight="bold" whiteSpace="nowrap">
                     {buildRateString({ course: h.best, giveCur, getCur })}
                   </ResponsiveText>
                   <ResponsiveText size="xs" variant="no_contrast" whiteSpace="nowrap">
-                    {`Обменников: ${h.n}`}
+                    {`${t("Обменников", "Exchangers")}: ${h.n}`}
                   </ResponsiveText>
                 </Box>
               </>
@@ -395,17 +425,17 @@ const RateHistory = ({
                 color="bg.500"
                 whiteSpace="nowrap"
               >
-                {dayLabel(d)}
+                {dayLabel(d, locale)}
               </Box>
             ))}
         </Box>
 
         <SimpleGrid columns={{ base: 2, md: 4 }} spacing="2" mt="4">
-          <Stat label="Сейчас" value={now} />
-          <Stat label="Лучший за период" value={bestHigh} />
-          <Stat label="Худший за период" value={bestLow} />
+          <Stat label={t("Сейчас", "Now")} value={now} />
+          <Stat label={t("Лучший за период", "Best for the period")} value={bestHigh} />
+          <Stat label={t("Худший за период", "Worst for the period")} value={bestLow} />
           <Stat
-            label="Обменников"
+            label={t("Обменников", "Exchangers")}
             value={`${Math.round(summary.offersAvg)} (${summary.offersMin}–${summary.offersMax})`}
           />
         </SimpleGrid>

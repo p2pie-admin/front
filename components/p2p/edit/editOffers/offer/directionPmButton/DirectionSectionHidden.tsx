@@ -10,6 +10,7 @@ import { IPmGroup, IPm } from "../../../../../../types/selector";
 import SectionGrid from "../../../../../main/side/selector/section/SectionGrid";
 import Arrow from "../../../../../shared/Arrow";
 import DirectionPmGroup from "./DirectionPmGroup";
+import { useT } from "../../../../../../services/i18n";
 
 const DirectionSectionHidden = ({
   pmGroups,
@@ -23,6 +24,7 @@ const DirectionSectionHidden = ({
     "rgba(225,200,255,0.1)",
   );
   const [folded, setFolded] = React.useState(true);
+  const t = useT();
   const [mounted, setMounted] = React.useState(false);
   const mount = () => setMounted(true);
   const unmount = () => setTimeout(() => setMounted(!mounted), 300);
@@ -61,7 +63,7 @@ const DirectionSectionHidden = ({
         color="bg.500"
       >
         <Text fontSize="md" m="0 2px">
-          {folded ? "показать все" : "скрыть"}
+          {folded ? t("показать все", "show all") : t("скрыть", "hide")}
         </Text>
         <Arrow isUp={!folded} />
       </Button>

@@ -12,7 +12,7 @@ import { IParameter } from "../../../types/rates";
 import CustomImage from "../../shared/CustomImage";
 import { useAppSelector } from "../../../redux/hooks";
 import MyTooltip from "../../shared/MyTooltip";
-import { locale } from "../../../services/utils";
+import { pickName, useLocale } from "../../../services/i18n";
 import { capitalize } from "../../main/side/selector/section/PmGroup/helper";
 
 const Parameter = ({
@@ -24,6 +24,7 @@ const Parameter = ({
   isExtended?: boolean;
   needDescription?: boolean;
 }) => {
+  const locale = useLocale();
   const topParameter = useAppSelector((state) =>
     state.main.topParameters.find((p) => p.code == code),
   );
@@ -36,8 +37,8 @@ const Parameter = ({
   if (!topParameter) return <Box display="none"></Box>;
 
   const [raw_name, description] = [
-    topParameter[`${locale}_name`],
-    topParameter.parameter[`${locale}_description`],
+    pickName(topParameter, locale),
+    pickName(topParameter.parameter, locale, "description"),
   ];
   const name = capitalize(raw_name);
 

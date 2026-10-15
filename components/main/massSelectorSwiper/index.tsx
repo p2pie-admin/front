@@ -14,12 +14,14 @@ import {
 } from "react-icons/md";
 import type { MassSwiperHandle } from "./massSwiper";
 import { LinkWrapper } from "../../shared/LinkWrapper";
+import { useT } from "../../../services/i18n";
 
 const MassSelector = () => {
   // const massSelectorSlug = initialSlug
   //   ? ""
   //   : useAppSelector((state) => state.main.massSelectorSlug);
   const dispatch = useAppDispatch();
+  const tr_ = useT();
 
   let f = "";
   let s = "";
@@ -183,7 +185,7 @@ const MassSelector = () => {
           >
             <HStack color="white">
               <ResponsiveText color="inherit" size="xl">
-                Искать курсы
+                {tr_("Искать курсы", "Search rates")}
               </ResponsiveText>
               <FaSearch size="1.5rem" />
             </HStack>

@@ -124,6 +124,8 @@ export interface IExchangerTag {
   id: string;
   name: string;
   description?: string | null;
+  en_name?: string | null;
+  en_description?: string | null;
   color?: string | null;
 }
 

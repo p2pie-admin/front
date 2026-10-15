@@ -4,23 +4,25 @@ import { MdModeEdit } from "react-icons/md";
 import CustomModal from "../../../shared/CustomModal";
 import { useAppDispatch } from "../../../../redux/hooks";
 import { triggerModal } from "../../../../redux/mainReducer";
+import { useT } from "../../../../services/i18n";
 
 // Pencil on the public maker page: asks whether the visitor owns the page; only the owner goes to the editor
 // (where ownership is still proven through the Telegram bot).
 export default function OwnerEdit({ slug }: { slug: string }) {
   const dispatch = useAppDispatch();
+  const t = useT();
   const router = useRouter();
   const modalId = `owner_edit_${slug}`;
   const close = () => dispatch(triggerModal(undefined));
 
   return (
     <>
-      <CustomModal id={modalId} header="Редактирование страницы">
+      <CustomModal id={modalId} header={t("Редактирование страницы", "Edit page")}>
         <VStack align="stretch" spacing="5" p="6">
-          <Text>Вы владелец этой страницы?</Text>
+          <Text>{t("Вы владелец этой страницы?", "Are you the owner of this page?")}</Text>
           <HStack justifyContent="flex-end" spacing="3">
             <Button variant="outline" onClick={close}>
-              Нет
+              {t("Нет", "No")}
             </Button>
             <Button
               variant="primary"
@@ -29,14 +31,14 @@ export default function OwnerEdit({ slug }: { slug: string }) {
                 router.push(`/p2p/edit/${slug}`);
               }}
             >
-              Да
+              {t("Да", "Yes")}
             </Button>
           </HStack>
         </VStack>
       </CustomModal>
       <Box
         as="button"
-        aria-label="Редактировать страницу"
+        aria-label={t("Редактировать страницу", "Edit page")}
         cursor="pointer"
         filter=" brightness(0.8)"
         onClick={() => dispatch(triggerModal(modalId))}

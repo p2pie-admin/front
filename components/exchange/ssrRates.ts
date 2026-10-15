@@ -1,4 +1,5 @@
 import { IRate } from "../../types/rates";
+import { intlLocale, Locale } from "../../services/i18n";
 
 // Offers rendered into the HTML of a direction page (server side), so that crawlers
 // and users without JS see real exchangers, not "Найдено 0 предложений".
@@ -188,21 +189,25 @@ export const prepareDirHistory = (raw: unknown): IDirHistory | null => {
 
 // Full numbers with ru-RU grouping for the crawlable table/summary (the swiper's
 // kFormatter abbreviates and gives up on very large reserves).
-export const formatAmount = (value: number | null | undefined, cur: string) => {
+export const formatAmount = (
+  value: number | null | undefined,
+  cur: string,
+  locale: Locale = "ru",
+) => {
   const num = Number(value);
   if (!Number.isFinite(num)) return "—";
   const abs = Math.abs(num);
   const maximumFractionDigits = abs >= 1000 ? 0 : abs >= 1 ? 2 : 6;
-  const formatted = new Intl.NumberFormat("ru-RU", {
+  const formatted = new Intl.NumberFormat(intlLocale(locale), {
     maximumFractionDigits,
   }).format(num);
   return `${formatted} ${cur}`;
 };
 
-export const formatMoscowTime = (ms: number | null) => {
+export const formatMoscowTime = (ms: number | null, locale: Locale = "ru") => {
   if (!ms) return null;
   try {
-    return new Intl.DateTimeFormat("ru-RU", {
+    return new Intl.DateTimeFormat(intlLocale(locale), {
       timeZone: "Europe/Moscow",
       day: "numeric",
       month: "long",

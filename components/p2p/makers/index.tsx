@@ -12,6 +12,7 @@ import MakersHeader from "./MakersHeader";
 import TopPanel from "./TopPanel";
 import { getMakerDisplayName, getMakerStatusColor } from "./helper";
 import { SortCriteria } from "./SortButtons";
+import { usePublicPathname, useT } from "../../../services/i18n";
 
 export default function MakersList({
   makers,
@@ -23,6 +24,9 @@ export default function MakersList({
   initialPage: number;
 }) {
   const router = useRouter();
+  const t = useT();
+  // English pages live under /xen internally; links and navigation use the public path.
+  const pathname = usePublicPathname();
   const [sortCriteria, setSortCriteria] = useState<SortCriteria>("name");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
   const [searchQuery, setSearchQuery] = useState("");
@@ -137,15 +141,15 @@ export default function MakersList({
       } else {
         nextQuery.page = String(nextPage);
       }
-      router.push({ pathname: router.pathname, query: nextQuery });
+      router.push({ pathname, query: nextQuery });
     },
-    [router.isReady, router.pathname, router.query, rawPage, totalPages],
+    [router.isReady, pathname, router.query, rawPage, totalPages],
   );
 
   const getPageHref = useCallback(
     (page: number) =>
-      page > 1 ? `${router.pathname}?page=${page}` : router.pathname,
-    [router.pathname],
+      page > 1 ? `${pathname}?page=${page}` : pathname,
+    [pathname],
   );
 
   const effectiveSeo = useMemo(() => {
@@ -160,7 +164,7 @@ export default function MakersList({
     }
   }, [router.isReady, totalPages, rawPage, setPage]);
 
-  if (!makers?.length) return <>no makers</>;
+  if (!makers?.length) return <>{t("Мейкеров нет", "No makers")}</>;
 
   return (
     <>
@@ -171,9 +175,10 @@ export default function MakersList({
 
         <Box px="4" pb="2">
           <Text fontSize="sm" color="bg.300" maxW="720px">
-            Частные обменники, подтвердившие аккаунт через Telegram. Сделка проходит напрямую
-            между вами и мейкером: p2pie не участвует в обмене и не хранит средства — проверяйте
-            отзывы и начинайте с небольших сумм.
+            {t(
+              "Частные обменники, подтвердившие аккаунт через Telegram. Сделка проходит напрямую между вами и мейкером: p2pie не участвует в обмене и не хранит средства — проверяйте отзывы и начинайте с небольших сумм.",
+              "Private exchangers who verified their account via Telegram. The deal goes directly between you and the maker: p2pie does not take part in the exchange and does not hold funds, so check the reviews and start with small amounts.",
+            )}
           </Text>
           <HStack mt="3" spacing="2" flexWrap="wrap">
             <Button
@@ -186,7 +191,7 @@ export default function MakersList({
               _hover={{}}
               onClick={() => setOnlyWithOffers(true)}
             >
-              {`С предложениями · ${withOffersCount}`}
+              {t(`С предложениями · ${withOffersCount}`, `With offers · ${withOffersCount}`)}
             </Button>
             <Button
               size="sm"
@@ -198,7 +203,7 @@ export default function MakersList({
               _hover={{}}
               onClick={() => setOnlyWithOffers(false)}
             >
-              {`Все · ${makers.length}`}
+              {t(`Все · ${makers.length}`, `All · ${makers.length}`)}
             </Button>
             {botLink ? (
               <Button
@@ -211,7 +216,7 @@ export default function MakersList({
                 color="white"
                 ml={{ base: 0, md: "auto" }}
               >
-                Стать мейкером
+                {t("Стать мейкером", "Become a maker")}
               </Button>
             ) : null}
           </HStack>
@@ -250,8 +255,8 @@ export default function MakersList({
             {!loadingSearchSort && !paginatedMakers?.length ? (
               <Text textAlign="center" color="bg.400" py="10">
                 {onlyWithOffers
-                  ? "Пока нет мейкеров с активными предложениями."
-                  : "Ничего не найдено."}
+                  ? t("Пока нет мейкеров с активными предложениями.", "No makers with active offers yet.")
+                  : t("Ничего не найдено.", "Nothing found.")}
               </Text>
             ) : null}
             {totalPages > 1 && (

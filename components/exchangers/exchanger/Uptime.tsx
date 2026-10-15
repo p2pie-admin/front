@@ -2,6 +2,7 @@ import { Box } from "@chakra-ui/react";
 import { BoxWrapper } from "../../shared/BoxWrapper";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { TitleH2 } from "../../shared/TitleH2";
+import { intlLocale, Locale, useLocale } from "../../../services/i18n";
 
 // Response of server GET /history/exchanger/<id>?days=N (summary part).
 export type IExchangerUptime = {
@@ -24,9 +25,9 @@ export const prepareUptime = (raw: unknown): IExchangerUptime | null => {
   return summary;
 };
 
-const formatMoscow = (ms: number | null) => {
+const formatMoscow = (ms: number | null, locale: Locale = "ru") => {
   if (!ms) return null;
-  return new Intl.DateTimeFormat("ru-RU", {
+  return new Intl.DateTimeFormat(intlLocale(locale), {
     timeZone: "Europe/Moscow",
     day: "numeric",
     month: "long",
@@ -44,12 +45,24 @@ const pluralDays = (n: number) =>
 
 // Our own monitoring data: how often the exchanger actually answered rate requests.
 const Uptime = ({ uptime }: { uptime: IExchangerUptime | null | undefined }) => {
+  const locale = useLocale();
   if (!uptime) return null;
   const spanDays = Math.max(1, Math.round(uptime.points / 24));
-  const pct = uptime.uptimePct.toFixed(1).replace(".", ",");
-  const lastOk = formatMoscow(uptime.lastOk);
+  const pct = locale === "en" ? uptime.uptimePct.toFixed(1) : uptime.uptimePct.toFixed(1).replace(".", ",");
+  const lastOk = formatMoscow(uptime.lastOk, locale);
 
-  const sentences = [
+  const sentences = locale === "en" ? [
+    `Over the last ${spanDays} ${spanDays === 1 ? "day" : "days"} the exchanger answered rate requests in ${pct}% of hourly checks` +
+      (uptime.downHours
+        ? ` (down for about ${uptime.downHours} h in total).`
+        : ", with no outages."),
+    `On average it returned ${Math.round(uptime.ratesAvg)} exchange directions.`,
+    uptime.lastError
+      ? `Rates are not responding right now (${uptime.lastError})${lastOk ? `, last successful response ${lastOk} MSK` : ""}.`
+      : lastOk
+        ? `Last successful check ${lastOk} MSK.`
+        : "",
+  ].filter(Boolean) : [
     `За последние ${spanDays} ${pluralDays(spanDays)} обменник отвечал на запросы курсов в ${pct} % ежечасных проверок` +
       (uptime.downHours
         ? ` (недоступен суммарно около ${uptime.downHours} ч).`
@@ -66,7 +79,7 @@ const Uptime = ({ uptime }: { uptime: IExchangerUptime | null | undefined }) => 
     <BoxWrapper variant="no_contrast">
       <Box w="100%">
         <TitleH2 isLong={false}>
-          <>Доступность по данным мониторинга</>
+          <>{locale === "en" ? "Availability according to our monitoring" : "Доступность по данным мониторинга"}</>
         </TitleH2>
         <ResponsiveText variant="contrast" whiteSpace="unset">
           {sentences.join(" ")}

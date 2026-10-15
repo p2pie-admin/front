@@ -1,16 +1,18 @@
 import { Box, HStack, Link as ChakraLink, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { useT } from "../../services/i18n";
 
 export type Crumb = { label: string; href?: string };
 
 // Visible breadcrumb trail (the BreadcrumbList JSON-LD lives in UniversalSeo). Last item
 // is plain text; the rest are internal links. Wraps on narrow screens.
 const Breadcrumbs = ({ items, ...props }: { items: Crumb[]; [k: string]: any }) => {
+  const t = useT();
   if (!items?.length) return null;
   return (
     <HStack
       as="nav"
-      aria-label="Хлебные крошки"
+      aria-label={t("Хлебные крошки", "Breadcrumbs")}
       spacing="1"
       flexWrap="wrap"
       fontSize="xs"

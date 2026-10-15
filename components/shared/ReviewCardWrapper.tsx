@@ -4,8 +4,10 @@ import { IExchangerReview } from "../../types/exchanger";
 import { BoxWrapper } from "./BoxWrapper";
 import { LinkWrapper } from "./LinkWrapper";
 import { useColorModeValue } from "@chakra-ui/react";
+import { useT } from "../../services/i18n";
 
 export const useReviewCardMeta = (review: IExchangerReview) => {
+  const t = useT();
   const defaultAmbientColor = useColorModeValue(
     "rgba(143,92,292,0.2)",
     "rgba(128, 125, 121, 0.25)"
@@ -41,7 +43,7 @@ export const useReviewCardMeta = (review: IExchangerReview) => {
     [review.fingerprint, review.name, review.id]
   );
 
-  const displayName = review.name?.trim() || "Аноним";
+  const displayName = review.name?.trim() || t("Аноним", "Anonymous");
 
   return {
     ambientColor,

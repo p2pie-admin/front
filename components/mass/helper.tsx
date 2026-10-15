@@ -2,6 +2,7 @@ import { ISEO } from "../../types/general";
 import { IMassDirText, IMassDirTextId, IMassRate } from "../../types/mass";
 import { IPm } from "../../types/selector";
 import { capitalize } from "../main/side/selector/section/PmGroup/helper";
+import { Locale, pickName } from "../../services/i18n";
 
 export const generateMassSeo = ({
   title,
@@ -69,9 +70,10 @@ export const getCryptoPms = (pms: IPm[]) => {
   return cryptoPms;
 };
 
-const pickPmName = (code: string, pms: IPm[]) => {
+const pickPmName = (code: string, pms: IPm[], locale: Locale = "ru") => {
   const pm = pms.find((item) => item.code.toUpperCase() === code.toUpperCase());
   if (!pm) return code.toUpperCase();
+  if (locale === "en") return pickName(pm, locale) || code.toUpperCase();
   return (
     pm.ru_name ||
     pm.en_name ||
@@ -83,13 +85,28 @@ export const createDefaultMassDirText = ({
   massDirTextId,
   pms,
   isSell,
+  locale = "ru",
 }: {
   massDirTextId: IMassDirTextId;
   pms: IPm[];
   isSell: boolean;
+  locale?: Locale;
 }): IMassDirText => {
-  const assetName = pickPmName(massDirTextId.code, pms);
-  const fiatName = pickPmName(massDirTextId.currency.code, pms);
+  const assetName = pickPmName(massDirTextId.code, pms, locale);
+  const fiatName = pickPmName(massDirTextId.currency.code, pms, locale);
+  if (locale === "en") {
+    // English pages: template header/SEO only, the long text stays Russian-only (empty here).
+    const action = isSell ? "Sell" : "Buy";
+    const header = `${action} ${assetName} for ${fiatName}`;
+    return {
+      ...massDirTextId,
+      header,
+      subheader: `${action} ${assetName} for ${fiatName} with reliable exchangers and pick the best terms.`,
+      seo_title: `${header}: best exchanger rates`,
+      seo_description: `Compare the best offers to ${action.toLowerCase()} ${assetName} for ${fiatName}.`,
+      text: "",
+    };
+  }
   const actionWord = isSell ? "Продать" : "Купить";
   const actionVerb = isSell ? "продать" : "купить";
   const connector = "за";

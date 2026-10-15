@@ -5,6 +5,7 @@ import {
   MdOutlineShield,
   MdVerifiedUser,
 } from "react-icons/md";
+import { intlLocale, Locale } from "../../services/i18n";
 
 // Trust level of an exchanger: how much evidence stands behind it (not how good its reviews are).
 // Computed by the `competitors` service (core/rating.ts) and stored in Strapi; the method is described on /rating.
@@ -46,11 +47,21 @@ export type IRatingDetails = {
 
 export const TRUST_LEVELS: Record<
   ITrustLevel,
-  { label: string; hint: string; color: string; glow: boolean; icon: IconType }
+  {
+    label: string;
+    hint: string;
+    en_label: string;
+    en_hint: string;
+    color: string;
+    glow: boolean;
+    icon: IconType;
+  }
 > = {
   reliable: {
     label: "Надёжный",
     hint: "Много отзывов, долгая история и несколько независимых площадок",
+    en_label: "Reliable",
+    en_hint: "Many reviews, a long history and several independent platforms",
     color: "green.300",
     glow: true,
     icon: MdVerifiedUser,
@@ -58,6 +69,8 @@ export const TRUST_LEVELS: Record<
   verified: {
     label: "Проверенный",
     hint: "Данных достаточно, серьёзных замечаний нет",
+    en_label: "Verified",
+    en_hint: "Enough data and no serious issues",
     color: "blue.300",
     glow: true,
     icon: MdGppGood,
@@ -65,6 +78,8 @@ export const TRUST_LEVELS: Record<
   unknown: {
     label: "Мало данных",
     hint: "Отзывов и истории пока недостаточно для вывода. Это не значит, что обменник плохой",
+    en_label: "Little data",
+    en_hint: "Not enough reviews and history to draw a conclusion yet. This does not mean the exchanger is bad",
     color: "bg.300",
     glow: false,
     icon: MdOutlineShield,
@@ -72,11 +87,19 @@ export const TRUST_LEVELS: Record<
   caution: {
     label: "Осторожно",
     hint: "Есть открытые претензии, заметная доля негатива или замечания нашей проверки",
+    en_label: "Caution",
+    en_hint: "Open claims, a notable share of negative reviews or issues found by our check",
     color: "orange.300",
     glow: true,
     icon: MdGppMaybe,
   },
 };
+
+// Label and hint of a trust level in the given language.
+export const trustLabel = (meta: (typeof TRUST_LEVELS)[ITrustLevel], locale: Locale = "ru") =>
+  locale === "en" ? meta.en_label : meta.label;
+export const trustHint = (meta: (typeof TRUST_LEVELS)[ITrustLevel], locale: Locale = "ru") =>
+  locale === "en" ? meta.en_hint : meta.hint;
 
 export const isTrustLevel = (v: unknown): v is ITrustLevel =>
   typeof v === "string" && v in TRUST_LEVELS;
@@ -98,6 +121,25 @@ export const FLAG_LABELS: Record<IRatingDetails["flags"][number], string> = {
   negative_share: "больше 10 % отзывов отрицательные",
 };
 
+export const FACTOR_LABELS_EN: Record<IRatingFactorKey, string> = {
+  reviews: "Reviews",
+  age: "Age",
+  monitorings: "Monitorings",
+  check: "P2PIE check",
+  live: "Live rates",
+  claims: "Open claims",
+  negative: "Negative share",
+};
+
+export const FLAG_LABELS_EN: Record<IRatingDetails["flags"][number], string> = {
+  check_red: "our check found serious issues",
+  check_block: "our check found serious issues",
+  claims: "three or more open claims on monitorings",
+  negative_share: "more than 10% of reviews are negative",
+};
+
+const pluralEn = (n: number, one: string, many: string) => (n === 1 ? one : many);
+
 const plural = (n: number, one: string, few: string, many: string) =>
   n % 10 === 1 && n % 100 !== 11
     ? one
@@ -105,16 +147,24 @@ const plural = (n: number, one: string, few: string, many: string) =>
       ? few
       : many;
 
-export const reviewsText = (n: number) =>
-  `${n.toLocaleString("ru-RU")} ${plural(n, "отзыв", "отзыва", "отзывов")}`;
+export const reviewsText = (n: number, locale: Locale = "ru") =>
+  locale === "en"
+    ? `${n.toLocaleString(intlLocale(locale))} ${pluralEn(n, "review", "reviews")}`
+    : `${n.toLocaleString("ru-RU")} ${plural(n, "отзыв", "отзыва", "отзывов")}`;
 
-export const sourcesText = (n: number) =>
-  `${n} ${plural(n, "площадке", "площадках", "площадках")}`;
+export const sourcesText = (n: number, locale: Locale = "ru") =>
+  locale === "en"
+    ? `${n} ${pluralEn(n, "platform", "platforms")}`
+    : `${n} ${plural(n, "площадке", "площадках", "площадках")}`;
 
-export const ageText = (months: number | null | undefined) => {
+export const ageText = (months: number | null | undefined, locale: Locale = "ru") => {
   if (months == null) return null;
   if (months < 12)
-    return `${months} ${plural(months, "месяц", "месяца", "месяцев")}`;
+    return locale === "en"
+      ? `${months} ${pluralEn(months, "month", "months")}`
+      : `${months} ${plural(months, "месяц", "месяца", "месяцев")}`;
   const years = Math.floor(months / 12);
-  return `${years} ${plural(years, "год", "года", "лет")}`;
+  return locale === "en"
+    ? `${years} ${pluralEn(years, "year", "years")}`
+    : `${years} ${plural(years, "год", "года", "лет")}`;
 };

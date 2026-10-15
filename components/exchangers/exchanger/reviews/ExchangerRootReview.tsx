@@ -29,6 +29,7 @@ import {
   ReviewCardWrapper,
   useReviewCardMeta,
 } from "../../../shared/ReviewCardWrapper";
+import { useLocale, useT } from "../../../../services/i18n";
 
 export default function ExchangerRootReview({
   review,
@@ -37,6 +38,8 @@ export default function ExchangerRootReview({
   review: IExchangerReview;
   slug?: string;
 }) {
+  const locale = useLocale();
+  const t = useT();
   const meta = useReviewCardMeta(review);
   const userIP = useAppSelector((state) => maskIP(state.main.fingerprint?.ip));
   const shouldEqualizeHeight = Boolean(slug);
@@ -67,7 +70,7 @@ export default function ExchangerRootReview({
           colorScheme="green"
           mt="1.5"
         >
-          РЕШЕН ✓
+          {t("РЕШЕН ✓", "RESOLVED ✓")}
         </Tag>
       );
     }
@@ -82,13 +85,13 @@ export default function ExchangerRootReview({
           colorScheme="red"
           mt="1.5"
         >
-          ДИСПУТ ✕
+          {t("ДИСПУТ ✕", "DISPUTE ✕")}
         </Tag>
       );
     }
 
     return null;
-  }, [isDispute]);
+  }, [isDispute, locale]);
 
   const locationTag = useMemo(() => {
     if (!location) return null;
@@ -114,7 +117,7 @@ export default function ExchangerRootReview({
       return (
         <>
           <Tag size="sm" variant="solid" colorScheme="green" mt="1.5">
-            ✓ СДЕЛКА ЧЕРЕЗ P2PIE
+            {t("✓ СДЕЛКА ЧЕРЕЗ P2PIE", "✓ DEAL VIA P2PIE")}
           </Tag>
           {chain && (
             <Tag
@@ -122,9 +125,13 @@ export default function ExchangerRootReview({
               variant="outline"
               colorScheme="green"
               mt="1.5"
-              title={`Перевод ${chain.amount ?? ""} в сети ${chain.network ?? ""} проверен ботом p2pie в блокчейне. Отпечаток sha256: ${chain.proof ?? ""}. Клиент может доказать сделку своим секретным кодом, адреса и хеш не публикуются.`}
+              title={
+                locale === "en"
+                  ? `Transfer of ${chain.amount ?? ""} on ${chain.network ?? ""} verified on the blockchain by the p2pie bot. sha256 fingerprint: ${chain.proof ?? ""}. The customer can prove the deal with their secret code; addresses and the hash are not published.`
+                  : `Перевод ${chain.amount ?? ""} в сети ${chain.network ?? ""} проверен ботом p2pie в блокчейне. Отпечаток sha256: ${chain.proof ?? ""}. Клиент может доказать сделку своим секретным кодом, адреса и хеш не публикуются.`
+              }
             >
-              ⛓ ПОДТВЕРЖДЕНО В БЛОКЧЕЙНЕ
+              {t("⛓ ПОДТВЕРЖДЕНО В БЛОКЧЕЙНЕ", "⛓ VERIFIED ON BLOCKCHAIN")}
             </Tag>
           )}
         </>
@@ -132,13 +139,13 @@ export default function ExchangerRootReview({
     }
     const tag = (
       <Tag size="sm" variant="outline" colorScheme="purple" mt="1.5" cursor={external_link ? "pointer" : undefined}>
-        {`ИСТОЧНИК: ${source.toUpperCase()}${external_link ? " ↗" : ""}`}
+        {`${t("ИСТОЧНИК", "SOURCE")}: ${source.toUpperCase()}${external_link ? " ↗" : ""}`}
       </Tag>
     );
     return external_link ? (
       <OutLink
         href={external_link}
-        label={`Оригинал отзыва на ${source}`}
+        label={`${t("Оригинал отзыва на", "Original review on")} ${source}`}
         data-track="external-review-source"
         data-track-label={source}
       >
@@ -147,7 +154,7 @@ export default function ExchangerRootReview({
     ) : (
       tag
     );
-  }, [source, external_link, review.ai_data]);
+  }, [source, external_link, review.ai_data, locale]);
 
   const cardMinHeight = meta.textIsLink || slug ? "200px" : "unset";
 
@@ -220,7 +227,7 @@ export default function ExchangerRootReview({
             >
               {meta.displayName}
               {review.ai_data?.stars ? (
-                <Box as="span" ml="2" color="yellow.300" fontSize="sm" aria-label={`${review.ai_data.stars} из 5`}>
+                <Box as="span" ml="2" color="yellow.300" fontSize="sm" aria-label={`${review.ai_data.stars} ${t("из", "of")} 5`}>
                   {"★".repeat(review.ai_data.stars)}
                   <Box as="span" color="bg.500">{"★".repeat(5 - review.ai_data.stars)}</Box>
                 </Box>
@@ -275,11 +282,11 @@ export default function ExchangerRootReview({
           )}
           {!meta.textIsLink && !!text && (
             <Highlight
-              query={["читать далее"]}
+              query={[t("читать далее", "read more")]}
               styles={{ color: "peach.300", textDecoration: "underline" }}
             >
               {slug && text.length > 62
-                ? `${text.slice(0, 62)}... читать далее`
+                ? `${text.slice(0, 62)}... ${t("читать далее", "read more")}`
                 : text}
             </Highlight>
           )}

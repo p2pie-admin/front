@@ -5,8 +5,10 @@ import { BsPersonFillCheck, BsShieldLockFill } from "react-icons/bs";
 import { FaShield } from "react-icons/fa6";
 import AdvantageBottom from "./AdvantageBottom";
 import { Box3D } from "../../../../styles/theme/custom";
+import { useT } from "../../../../services/i18n";
 
 export default function SecurityAdvantage({ hovering }: { hovering: boolean }) {
+  const t = useT();
   const ringOpacity = hovering ? "whiteAlpha.300" : "whiteAlpha.100";
 
   return (
@@ -43,8 +45,8 @@ export default function SecurityAdvantage({ hovering }: { hovering: boolean }) {
       <AdvantageBottom
         icon={<BsPersonFillCheck size="1.5rem" />}
         hovering={hovering}
-        title="Проверка твоего клиента"
-        subtitle="Сканируем источник средств клиента, минимизируя возможность мошенничества"
+        title={t("Проверка твоего клиента", "Client screening")}
+        subtitle={t("Сканируем источник средств клиента, минимизируя возможность мошенничества", "We scan the source of the client's funds to minimize the chance of fraud")}
       />
     </>
   );

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { BiLinkExternal } from "react-icons/bi";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { IoSearch } from "react-icons/io5";
+import { useT } from "../../../services/i18n";
 
 const RateLink = ({
   slug,
@@ -13,6 +14,7 @@ const RateLink = ({
   rateNumber: string;
   side: "buy" | "sell";
 }) => {
+  const t = useT();
   const green = useColorModeValue("green.700", "green.200");
   const pink = useColorModeValue("pink.700", "pink.200");
   const bgColor = useColorModeValue("bg.10", "bg.800");
@@ -33,7 +35,7 @@ const RateLink = ({
         filter="opacity(0.8)"
       >
         <Text color="bg.500" fontSize="sm">
-          {side === "buy" ? "от" : "до"}
+          {side === "buy" ? t("от", "from") : t("до", "to")}
         </Text>
         <ResponsiveText color={side === "buy" ? pink : green} textAlign="end">
           {rateNumber}

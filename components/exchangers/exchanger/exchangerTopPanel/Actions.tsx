@@ -20,6 +20,7 @@ import { IExchanger } from "../../../../types/exchanger";
 import { useAppDispatch } from "../../../../redux/hooks";
 import { triggerModal } from "../../../../redux/mainReducer";
 import exchanger from "..";
+import { useT } from "../../../../services/i18n";
 
 const storageKeys = {
   bookmark: (id: string) => `exchanger:${id}:bookmark`,
@@ -27,6 +28,7 @@ const storageKeys = {
 };
 
 const Actions = ({ id, displayName }: { displayName: string; id: string }) => {
+  const t = useT();
   const dispatch = useAppDispatch();
   const inputColor = useColorModeValue("violet.700", "peach.300");
 
@@ -109,7 +111,7 @@ const Actions = ({ id, displayName }: { displayName: string; id: string }) => {
       >
         <CustomModal
           id={"exchangerBookmark"}
-          header={"Добавьте пометку для себя"}
+          header={t("Добавьте пометку для себя", "Add a private note")}
         >
           <Box p="4">
             <Textarea
@@ -117,7 +119,7 @@ const Actions = ({ id, displayName }: { displayName: string; id: string }) => {
               rows={3}
               color={inputColor}
               boxShadow="none !important"
-              placeholder={"Ваш комментарий"}
+              placeholder={t("Ваш комментарий", "Your comment")}
               value={bookmark}
               onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
                 setBookmark(e.target.value)
@@ -131,9 +133,9 @@ const Actions = ({ id, displayName }: { displayName: string; id: string }) => {
               _placeholder={{ color: "bg.500" }}
             />
             <HStack mt="4" spacing="4" justifyContent="end">
-              <Button onClick={handleBookmarkClear}>Отмена</Button>
+              <Button onClick={handleBookmarkClear}>{t("Отмена", "Cancel")}</Button>
               <Button variant="primary" onClick={handleBookmarkSave}>
-                Сохранить
+                {t("Сохранить", "Save")}
               </Button>
             </HStack>
           </Box>

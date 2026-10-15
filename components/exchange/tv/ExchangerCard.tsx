@@ -28,6 +28,7 @@ import Link from "next/link";
 import ExchangerName from "../../shared/ExchangerNameRating";
 import CustomModal from "../../shared/CustomModal";
 import RateDetails from "./rateDetails";
+import { useLocale, useT } from "../../../services/i18n";
 
 const DesktopParameters = ({
   parameterCodes,
@@ -89,6 +90,8 @@ const ExchangerCard = ({
 }) => {
   const dispatch = useAppDispatch();
   const isMobile = useIsMobile();
+  const locale = useLocale();
+  const t = useT();
   if (!rate) return <></>;
 
   const {
@@ -146,7 +149,7 @@ const ExchangerCard = ({
       }}
       // bgColor removed for test
     >
-      <CustomModal id={`details_${displayName}`} header="Условия обмена">
+      <CustomModal id={`details_${displayName}`} header={t("Условия обмена", "Exchange terms")}>
         <RateDetails rate={rate} />
       </CustomModal>
       <Box w="100%">
@@ -161,12 +164,13 @@ const ExchangerCard = ({
         </HStack>
         <Box mt="1">
           <ResponsiveText size="sm">
-            {`Курс: ${buildRateString({ course, giveCur, getCur })}`}
+            {`${t("Курс", "Rate")}: ${buildRateString({ course, giveCur, getCur })}`}
           </ResponsiveText>
           <ResponsiveText size="xs" variant="no_contrast">
-            {`Лимиты: ${localFormat(MIN, smallCur)} — ${localFormat(
+            {`${t("Лимиты", "Limits")}: ${localFormat(MIN, smallCur, locale)} — ${localFormat(
               MAX,
-              smallCur
+              smallCur,
+              locale
             )}`}
           </ResponsiveText>
         </Box>

@@ -6,6 +6,7 @@ import {
 } from "@chakra-ui/react";
 import { MdOutlineClear } from "react-icons/md";
 import { RiSearchLine } from "react-icons/ri";
+import { useT } from "../../services/i18n";
 
 type OfficeSearchInputProps = {
   value: string;
@@ -16,8 +17,10 @@ type OfficeSearchInputProps = {
 const OfficeSearchInput = ({
   value,
   onChange,
-  placeholder = "Поиск офиса",
+  placeholder,
 }: OfficeSearchInputProps) => {
+  const t = useT();
+  placeholder = placeholder ?? t("Поиск офиса", "Search offices");
   const isEmptyInput = value.trim().length === 0;
 
   return (

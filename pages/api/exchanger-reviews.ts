@@ -9,6 +9,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const id = String(req.query.id ?? "");
   const start = Number(req.query.start ?? 0);
   const type = req.query.type ? String(req.query.type) : null;
+  // Language of review category names: ?lang=en, else the `lang` cookie set by the middleware.
+  const locale = (req.query.lang ?? req.cookies?.lang) === "en" ? "en" : "ru";
   if (!/^\d{1,10}$/.test(id)) return res.status(400).json({ error: "bad id" });
   if (!Number.isInteger(start) || start < 0 || start > 5000) return res.status(400).json({ error: "bad start" });
   if (type && !["positive", "neutral", "negative"].includes(type)) return res.status(400).json({ error: "bad type" });
@@ -18,8 +20,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     start,
     limit: REVIEWS_PAGE_SIZE,
     type: type as ReviewTypeFilter | null,
+    locale,
   });
   if (!page) return res.status(502).json({ error: "reviews unavailable" });
+  res.setHeader("Vary", "Cookie");
   res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
   return res.status(200).json({ items: maskReviewList(page.items), total: page.total });
 }

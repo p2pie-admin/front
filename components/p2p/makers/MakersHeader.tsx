@@ -4,8 +4,10 @@ import { ResponsiveText } from "../../../styles/theme/custom";
 import Dot from "../../exchangers/Dot";
 import { IMakerPreview } from "../../../types/p2p";
 import { getMakerStatusColor } from "./helper";
+import { useT } from "../../../services/i18n";
 
 export default function MakersHeader({ makers }: { makers: IMakerPreview[] }) {
+  const t = useT();
   const statusCounts = useMemo(() => {
     const counts = { green: 0, orange: 0 };
     makers?.forEach((maker) => {
@@ -29,26 +31,26 @@ export default function MakersHeader({ makers }: { makers: IMakerPreview[] }) {
         variant="primary"
         as="h1"
       >
-        P2P мейкеры
+        {t("P2P мейкеры", "P2P makers")}
       </ResponsiveText>
       <HStack gap={{ base: "4", lg: "8" }} color="bg.200" mx="2">
         <HStack>
           <Dot />
-          <ResponsiveText size="sm" variant="no_contrast">{`Всего: ${
+          <ResponsiveText size="sm" variant="no_contrast">{`${t("Всего", "Total")}: ${
             makers?.length || "-"
           }`}</ResponsiveText>
         </HStack>
 
         <HStack>
           <Dot color="green" />
-          <ResponsiveText size="sm" variant="no_contrast">{`Активные: ${
+          <ResponsiveText size="sm" variant="no_contrast">{`${t("Активные", "Active")}: ${
             statusCounts.green || "-"
           }`}</ResponsiveText>
         </HStack>
 
         <HStack>
           <Dot color="orange" />
-          <ResponsiveText size="sm" variant="no_contrast">{`Неактивные: ${
+          <ResponsiveText size="sm" variant="no_contrast">{`${t("Неактивные", "Inactive")}: ${
             statusCounts.orange || "-"
           }`}</ResponsiveText>
         </HStack>

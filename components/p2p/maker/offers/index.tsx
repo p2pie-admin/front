@@ -9,6 +9,7 @@ import { BoxWrapper, CustomHeader } from "../../../shared/BoxWrapper";
 
 import Offer from "./Offer";
 import OfferDetails from "./OfferDetails";
+import { useT } from "../../../../services/i18n";
 
 // Anchor of the offers block: deals start from an offer, so "Начать сделку" buttons elsewhere scroll here.
 export const MAKER_OFFERS_ID = "maker-offers";
@@ -26,6 +27,7 @@ export default function MakerOffers({
   offers: IMaker["offers"];
   pms: IPm[] | null;
 }) {
+  const t = useT();
   const pmsByCode = new Map<string, IPm>();
   (pms || []).forEach((pm) => {
     if (pm?.code) {
@@ -34,7 +36,7 @@ export default function MakerOffers({
   });
   return (
     <BoxWrapper id={MAKER_OFFERS_ID}>
-      <CustomHeader text="Предложения" Icon={IoMdListBox} />
+      <CustomHeader text={t("Предложения", "Offers")} Icon={IoMdListBox} />
       <Divider my="4" />
       <Grid
         templateColumns={{ base: "1fr", lg: "repeat(2, 1fr)" }}
@@ -57,7 +59,7 @@ export default function MakerOffers({
                 colorScheme="green"
                 _hover={{ textDecoration: "none" }}
               >
-                Начать сделку
+                {t("Начать сделку", "Start a deal")}
               </Button>
             )}
           </Box>

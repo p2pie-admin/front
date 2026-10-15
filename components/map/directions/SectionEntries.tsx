@@ -9,6 +9,7 @@ import Dir from "../../exchange/Dir";
 import useSWR from "swr";
 import { initParserFetcher } from "../../../services/fetchers";
 import { buildRateString } from "../../shared/helper";
+import { useT } from "../../../services/i18n";
 
 type SectionEntriesProps = {
   title: string;
@@ -25,6 +26,7 @@ const SectionEntries = ({
   direction,
   cityName,
 }: SectionEntriesProps) => {
+  const t = useT();
   const [showAll, setShowAll] = useState(false);
   const fetcher = initParserFetcher();
   if (!entries.length) return null;
@@ -85,7 +87,7 @@ const SectionEntries = ({
         slug={slug}
         bottomLeft={
           <Text fontSize="sm" whiteSpace="nowrap" variant="no_contrast" mt="1">
-            {`Предложений: ${rateData?.amountOfCourses ?? entry.count}`}
+            {`${t("Предложений", "Offers")}: ${rateData?.amountOfCourses ?? entry.count}`}
           </Text>
         }
         bottomRight={
@@ -145,7 +147,7 @@ const SectionEntries = ({
             onClick={() => setShowAll((prev) => !prev)}
             rightIcon={<Arrow isUp={showAll} />}
           >
-            {showAll ? "Скрыть" : "Показать все"}
+            {showAll ? t("Скрыть", "Hide") : t("Показать все", "Show all")}
           </Button>
         </>
       )}

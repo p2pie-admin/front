@@ -6,13 +6,19 @@ import SideContext from "../../../shared/contexts/SideContext";
 import CustomModal from "../../../shared/CustomModal";
 
 import Selector from ".";
+import { useLocale } from "../../../../services/i18n";
 
 const SelectorModal = ({ id }: { id: string }) => {
   const side = useContext(SideContext) as "give" | "get";
   const primary = useColorModeValue("violet.700", "peach.300");
+  const locale = useLocale();
 
   const header =
-    side === "give" ? (
+    locale === "en" ? (
+      <Highlight query={side === "give" ? "selling" : "buying"} styles={{ color: primary }}>
+        {side === "give" ? "What are you selling?" : "What are you buying?"}
+      </Highlight>
+    ) : side === "give" ? (
       <Highlight query="продаете" styles={{ color: primary }}>
         Что вы продаете?
       </Highlight>

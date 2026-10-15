@@ -12,6 +12,7 @@ import {
   loadPms,
   TTL,
 } from "../../cache/loadX";
+import { localeOf, tr } from "../../services/i18n";
 import { ISEO } from "../../types/general";
 import { IFaqCategory } from "../../types/faq";
 import { IFullOffer, IMaker, IMakerPreview, IP2PTopParameter } from "../../types/p2p";
@@ -79,14 +80,16 @@ export default function P2PMakerPage({
   );
 }
 
-export async function getStaticProps({ params }: { params: { slug: string } }) {
+export async function getStaticProps(ctx: { params: { slug: string }; locale?: string }) {
+  const { params } = ctx;
+  const locale = localeOf(ctx);
   try {
     const { slug } = params;
     const [maker, pms, faqCategory, makerTopParameters, offerTopParameters] =
       await Promise.all([
         loadP2PMaker(slug),
         loadPms(),
-        loadFAQbyCategoryCode("p2p_maker"),
+        loadFAQbyCategoryCode("p2p_maker", locale),
         loadP2PTopParameters("p2p_maker"),
         loadP2PTopParameters("p2p_offer"),
       ]);
@@ -144,8 +147,8 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     }
 
     const displayName = getMakerDisplayName(makerWithFullOffers);
-    const title = `P2P мейкер ${displayName}`;
-    const description = `${displayName}: карточка P2P мейкера`;
+    const title = tr(locale, `P2P мейкер ${displayName}`, `P2P maker ${displayName}`);
+    const description = tr(locale, `${displayName}: карточка P2P мейкера`, `${displayName}: P2P maker profile`);
 
     const offersCount = Array.isArray(makerWithFullOffers.offers)
       ? makerWithFullOffers.offers.length
@@ -159,7 +162,8 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
       noindex: offersCount === 0,
     };
 
-    await addHeadersToSearchIndex({
+    // The shared search index is Russian only.
+    if (locale === "ru") await addHeadersToSearchIndex({
       slug: `p2p/${slug}`,
       header: `P2P мейкер ${displayName}`,
       wordsToSearchFrom: displayName,

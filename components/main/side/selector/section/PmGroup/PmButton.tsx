@@ -2,6 +2,7 @@ import { Button, useColorModeValue } from "@chakra-ui/react";
 import CircularIcon from "../../../../../shared/CircularIcon";
 import { sendToast } from "../../../../../../redux/mainReducer";
 import { useAppDispatch } from "../../../../../../redux/hooks";
+import { useT } from "../../../../../../services/i18n";
 
 export default function PmButton({
   children,
@@ -19,6 +20,7 @@ export default function PmButton({
   iconAlt?: string;
 }) {
   const dispatch = useAppDispatch();
+  const t = useT();
   return (
     <Button
       w="100%"
@@ -32,7 +34,7 @@ export default function PmButton({
               dispatch(
                 sendToast({
                   status: "info",
-                  title: "Направление обмена не доступно",
+                  title: t("Направление обмена не доступно", "This exchange direction is not available"),
                   timeBeforeClosing: 4000,
                 })
               )

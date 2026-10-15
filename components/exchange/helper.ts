@@ -4,6 +4,7 @@ import { IPm } from "../../types/selector";
 import { loadDirText } from "../../cache/loadX";
 import { ISEO } from "../../types/general";
 import { getPmNameFromPm } from "../shared/helper";
+import { Locale, pickName, tr } from "../../services/i18n";
 
 
 export const generateExchangeH1 = (
@@ -13,7 +14,8 @@ export const generateExchangeH1 = (
   options?: {
     articleCodes?: string[];
     cityPageExists?: boolean;
-  }
+  },
+  locale: Locale = "ru"
 ) => {
   const { articleCodes = [], cityPageExists = !!city } = options || {};
 
@@ -35,8 +37,11 @@ export const generateExchangeH1 = (
   const linkedGetName = wrapWithArticleLink(getPm);
 
   // City addon
+  // Russian uses the prepositional form ("в Москве"), English just the city name ("in Moscow").
   const cityLabel = city
-    ? (city.preposition || city.ru_name || city.en_name || "") ?? ""
+    ? locale === "en"
+      ? city.en_name || city.ru_name || ""
+      : (city.preposition || city.ru_name || city.en_name || "") ?? ""
     : "";
 
   const citySlug = city ? toSlug(city.en_name) : "";
@@ -45,7 +50,7 @@ export const generateExchangeH1 = (
       ? `[${cityLabel}](/map/${citySlug})`
       : cityLabel;
 
-  const cityAddon = cityLabel ? ` в ${linkedCity}` : "";
+  const cityAddon = cityLabel ? tr(locale, ` в ${linkedCity}`, ` in ${linkedCity}`) : "";
 
   // Subgroup
   const giveSubgroup = givePm.subgroup_name ? ` ${givePm.subgroup_name}` : "";
@@ -54,7 +59,11 @@ export const generateExchangeH1 = (
   const giveCur = givePm.currency.code.toUpperCase();
   const getCur = getPm.currency.code.toUpperCase();
 
-  return `Обмен ${linkedGiveName}  на ${linkedGetName}   ${cityAddon}`;
+  return tr(
+    locale,
+    `Обмен ${linkedGiveName}  на ${linkedGetName}   ${cityAddon}`,
+    `Exchange ${linkedGiveName} to ${linkedGetName}${cityAddon}`
+  );
 };
 
 export const dirTextHandler = async ({
@@ -63,18 +72,35 @@ export const dirTextHandler = async ({
   customDirText,
   city,
   articleCodes,
+  locale = "ru",
 }: {
   givePm: IPm;
   getPm: IPm;
   customDirText?: IDirText | null;
   city: ICity | null;
   articleCodes?: string[];
+  locale?: Locale;
 }): Promise<IDirText> => {
   // Default header
-  const h1 = generateExchangeH1(givePm, getPm, city, {
-    articleCodes,
-    cityPageExists: !!city,
-  });
+  const h1 = generateExchangeH1(
+    givePm,
+    getPm,
+    city,
+    {
+      articleCodes,
+      cityPageExists: !!city,
+    },
+    locale
+  );
+
+  // CMS dir texts are Russian-only: English pages get headers/SEO built from a template and no long text.
+  if (locale === "en") {
+    return {
+      ...(customDirText || ({} as IDirText)),
+      ...buildEnDirText(givePm, getPm, city),
+      h1,
+    };
+  }
 
   const cityName = city?.preposition || city?.ru_name || city?.en_name || "";
 
@@ -132,6 +158,24 @@ export const dirTextHandler = async ({
   }
 
   return resolvedDirText;
+};
+
+// English header/SEO fields for a direction page (the long SEO text is not translated, so it is empty).
+const buildEnDirText = (givePm: IPm, getPm: IPm, city: ICity | null) => {
+  const giveName = capitalize(pickName(givePm, "en"));
+  const getName = capitalize(pickName(getPm, "en"));
+  const giveCur = givePm.currency.code.toUpperCase();
+  const getCur = getPm.currency.code.toUpperCase();
+  const cityName = city ? city.en_name || city.ru_name || "" : "";
+  const cityAddon = cityName ? ` in ${cityName}` : "";
+  const header = `Exchange ${giveName} ${giveCur} to ${getName} ${getCur}${cityAddon}`;
+  return {
+    seo_title: `${giveName} ${giveCur} to ${getName} ${getCur}${cityAddon}: best exchange rates today`,
+    seo_description: `Compare ${giveName} ${giveCur} to ${getName} ${getCur} rates from verified exchangers${cityAddon}. Reserves, limits and reviews updated in real time on ${process.env.NEXT_PUBLIC_NAME}.`,
+    header,
+    subheader: `${giveName} → ${getName}${cityAddon}: rates, reserves and exchanger reviews`,
+    text: "",
+  };
 };
 
 export const fillWords = ({
@@ -283,10 +327,12 @@ export const generateExchangeSeo = ({
   dirText,
   slug,
   city,
+  locale = "ru",
 }: {
   dirText: IDirText;
   slug: string;
   city: ICity | null;
+  locale?: Locale;
 }): ISEO => {
   const slugPath = slugCityToExchange(slug, city?.en_name);
 
@@ -298,7 +344,7 @@ export const generateExchangeSeo = ({
     breadcrumbs: [
       {
         position: 1,
-        name: "Главная",
+        name: tr(locale, "Главная", "Home"),
         item: `https://${process.env.NEXT_PUBLIC_NAME}.com`,
       },
       {

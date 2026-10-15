@@ -1,11 +1,13 @@
 import { Input } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { useT } from "../../services/i18n";
 
 interface ExchangerSearchProps {
   onSearch: (query: string) => void;
 }
 
 const ExchangerSearch: React.FC<ExchangerSearchProps> = ({ onSearch }) => {
+  const t = useT();
   const [value, setValue] = useState("");
   const [debouncedValue, setDebouncedValue] = useState("");
 
@@ -25,7 +27,7 @@ const ExchangerSearch: React.FC<ExchangerSearchProps> = ({ onSearch }) => {
 
   return (
     <Input
-      placeholder="Поиск по имени..."
+      placeholder={t("Поиск по имени...", "Search by name...")}
       value={value}
       onChange={(e) => setValue(e.target.value)}
       borderWidth="2px"

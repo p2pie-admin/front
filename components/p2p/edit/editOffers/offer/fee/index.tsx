@@ -11,6 +11,7 @@ import { IFullOffer, IMakerOffer } from "../../../../../../types/p2p";
 import { useAppDispatch } from "../../../../../../redux/hooks";
 import { setP2PFullOfferField } from "../../../../../../redux/mainReducer";
 import OfferSwitch from "../OfferSwitch";
+import { useT } from "../../../../../../services/i18n";
 
 export default function OfferFee({
   fullOffer,
@@ -18,6 +19,7 @@ export default function OfferFee({
   fullOffer: Partial<IFullOffer>;
 }) {
   const dispatch = useAppDispatch();
+  const t = useT();
   const offerIndex = fullOffer.index;
   if (offerIndex === undefined) return null;
 
@@ -91,7 +93,7 @@ export default function OfferFee({
             }}
             bg={derivedFeeKind === "commission" ? "bg.700" : "transparent"}
           >
-            Комиссия
+            {t("Комиссия", "Fee")}
           </Button>
           <Button
             borderRadius="lg"
@@ -103,7 +105,7 @@ export default function OfferFee({
             }}
             bg={derivedFeeKind === "surcharge" ? "bg.700" : "transparent"}
           >
-            Доплата
+            {t("Доплата", "Surcharge")}
           </Button>
         </ButtonGroup>
         <NumberInput

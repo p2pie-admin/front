@@ -13,6 +13,7 @@ import { RxCross2 } from "react-icons/rx";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import { useAppDispatch } from "../../../../../redux/hooks";
 import { removeP2PDirection } from "../../../../../redux/mainReducer";
+import { useT } from "../../../../../services/i18n";
 
 export default function DeleteOffer({
   index,
@@ -22,6 +23,7 @@ export default function DeleteOffer({
   isFull?: boolean;
 }) {
   const dispatch = useAppDispatch();
+  const t = useT();
 
   const handleDelete = (event?: React.MouseEvent) => {
     event?.stopPropagation();
@@ -46,7 +48,7 @@ export default function DeleteOffer({
             w={{ base: "100%", lg: "auto" }}
           >
             <RiDeleteBin2Fill size="1.2rem" />
-            <Text display={{ base: "inline", lg: "none" }}>Удалить</Text>
+            <Text display={{ base: "inline", lg: "none" }}>{t("Удалить", "Delete")}</Text>
           </HStack>
         ) : (
           <RiDeleteBin2Fill size="1.2rem" />
@@ -62,7 +64,7 @@ export default function DeleteOffer({
         >
           <HStack spacing="3" color="bg.300">
             <RxCross2 size="1rem" />
-            <span>Удалить предложение</span>
+            <span>{t("Удалить предложение", "Delete offer")}</span>
           </HStack>
         </MenuItem>
       </MenuList>

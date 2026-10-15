@@ -13,16 +13,18 @@ import { setMakerStatus } from "../../../../redux/mainReducer";
 import Dot from "../../../exchangers/Dot";
 import { statusToColor } from "../../../shared/helper";
 import { useMakerEditContext } from "../MakerEditContext";
+import { useT } from "../../../../services/i18n";
 
-const statusLabels: Record<"active" | "paused" | "disabled", string> = {
-  active: "Активен",
-  paused: "Пауза",
-  disabled: "Отключен",
-};
 
 export default function EditStatus() {
   const maker = useMakerEditContext();
   const dispatch = useAppDispatch();
+  const t = useT();
+  const statusLabels: Record<"active" | "paused" | "disabled", string> = {
+    active: t("Активен", "Active"),
+    paused: t("Пауза", "Paused"),
+    disabled: t("Отключен", "Disabled"),
+  };
   const reduxStatus = useAppSelector((state) => state.main.maker?.status);
 
   useEffect(() => {

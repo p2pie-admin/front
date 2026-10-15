@@ -8,6 +8,7 @@ import { triggerModal } from "../../../../redux/mainReducer";
 import { fetchTelegramConfirmationStatus } from "../../../../services/hooks/telegramConfirmPolling";
 import { saveProjectP2P } from "../../../../redux/thunks";
 import { useMakerEditContext } from "../MakerEditContext";
+import { useLocale, useT } from "../../../../services/i18n";
 
 export default function SaveMaker({
   isBig = false,
@@ -18,6 +19,8 @@ export default function SaveMaker({
 }) {
   const maker = useMakerEditContext();
   const dispatch = useAppDispatch();
+  const locale = useLocale();
+  const t = useT();
   // The confirmation goes by the public slug; the bot matches it with the private Telegram username.
   const telegramUsername = maker.slug;
 
@@ -41,6 +44,7 @@ export default function SaveMaker({
           makerId: String(maker.id),
           makerSlug: telegramUsername,
           confirmed: true,
+          locale,
         }),
       );
       return;
@@ -54,7 +58,7 @@ export default function SaveMaker({
       {withModal ? (
         <CustomModal
           id={`save_${telegramUsername}`}
-          header="Публикация предложения обмена "
+          header={t("Публикация предложения обмена ", "Publishing the exchange offer ")}
         >
           <SaveDetails />
         </CustomModal>
@@ -75,7 +79,7 @@ export default function SaveMaker({
           rightIcon={<IoMdSave size="1.2rem" />}
           onClick={(e) => handleSaveProject(e)}
         >
-          Опубликовать
+          {t("Опубликовать", "Publish")}
         </Button>
       )}
     </>

@@ -11,6 +11,7 @@ import { RxDragHandleDots2 } from "react-icons/rx";
 import { kFormatter, localFormat } from "../../../redux/amountsHelper";
 import { useState } from "react";
 import { useAppSelector } from "../../../redux/hooks";
+import { useLocale } from "../../../services/i18n";
 
 const Thumb = ({
   mainCur,
@@ -23,6 +24,7 @@ const Thumb = ({
   MAX: number;
   stickyAmount: number;
 }) => {
+  const locale = useLocale();
   const isEdited = useAppSelector((state) => !!state.main.amountInput);
 
   const [primary300, secondary600] = useToken("colors", [
@@ -53,7 +55,7 @@ const Thumb = ({
       isOpen={showTooltip}
       size="lg"
       fontSize="lg"
-      label={localFormat(stickyAmount, mainCur)}
+      label={localFormat(stickyAmount, mainCur, locale)}
     >
       <SliderThumb
         boxSize={9}

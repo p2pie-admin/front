@@ -30,6 +30,7 @@ import AllReviews from "./allReviews";
 import { IExchangerReview } from "../../types/exchanger";
 import GeneralStats from "./GeneralStats";
 import PopularDirections from "./PopularDirections";
+import { useLocale, useT } from "../../services/i18n";
 
 const MainPageContent = ({
   popularPms,
@@ -46,6 +47,8 @@ const MainPageContent = ({
 }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const locale = useLocale();
+  const t = useT();
   const { slug } = router.query;
 
   useEffect(() => {
@@ -66,15 +69,18 @@ const MainPageContent = ({
           <Calculator />
         </Column>
         <Column index={4}>
-          <Box p="2">
-            <ResponsiveText variant="contrast" whiteSpace="normal" size="lg">
-              {rootText?.header || ""}
-            </ResponsiveText>
-            <Divider my="2" />
-            <ResponsiveText variant="no_contrast" whiteSpace="normal">
-              {rootText?.text || ""}
-            </ResponsiveText>
-          </Box>
+          {/* The root text-box is a Russian-only CMS text: hidden on English pages. */}
+          {locale === "en" ? null : (
+            <Box p="2">
+              <ResponsiveText variant="contrast" whiteSpace="normal" size="lg">
+                {rootText?.header || ""}
+              </ResponsiveText>
+              <Divider my="2" />
+              <ResponsiveText variant="no_contrast" whiteSpace="normal">
+                {rootText?.text || ""}
+              </ResponsiveText>
+            </Box>
+          )}
         </Column>
         <Column index={2}>
           <Popular popularRates={popularRates} popularPms={popularPms} />
@@ -85,8 +91,11 @@ const MainPageContent = ({
 
       <CustomTitle
         as="h2"
-        title={"Популярные направления"}
-        subtitle={"Лучший курс по каждому направлению прямо сейчас"}
+        title={t("Популярные направления", "Popular directions")}
+        subtitle={t(
+          "Лучший курс по каждому направлению прямо сейчас",
+          "The best rate for each direction right now"
+        )}
       />
 
       <PopularDirections popularRates={popularRates} popularPms={popularPms} />
@@ -95,17 +104,21 @@ const MainPageContent = ({
       <Box display={{ base: "none", lg: "block" }} w="100%">
         <CustomTitle
           as="h2"
-          title={"Поиск курсов"}
-          subtitle={
-            "Мы собираем данные с сотен обменников, чтобы выбрать лучший курс для Вас"
-          }
+          title={t("Поиск курсов", "Rate search")}
+          subtitle={t(
+            "Мы собираем данные с сотен обменников, чтобы выбрать лучший курс для Вас",
+            "We collect data from hundreds of exchangers to find the best rate for you"
+          )}
         />
         <MassSelector />
       </Box>
       <CustomTitle
         as="h2"
-        title={"Преимущества"}
-        subtitle={"Работаем на репутацию, а не на прибыль"}
+        title={t("Преимущества", "Advantages")}
+        subtitle={t(
+          "Работаем на репутацию, а не на прибыль",
+          "We work for reputation, not for profit"
+        )}
       />
 
       <Advantages />
@@ -115,8 +128,11 @@ const MainPageContent = ({
         as="h2"
         mb="0"
         ml="8"
-        title={"Репутация и доверие"}
-        subtitle={"Свежие отзывы с p2pie, BestChange, KursExpert и других мониторингов"}
+        title={t("Репутация и доверие", "Reputation and trust")}
+        subtitle={t(
+          "Свежие отзывы с p2pie, BestChange, KursExpert и других мониторингов",
+          "Fresh reviews from p2pie, BestChange, KursExpert and other monitoring sites"
+        )}
       />
 
       <AllReviews reviews={reviews} />

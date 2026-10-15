@@ -8,6 +8,7 @@ import { createMapStyles } from "../../map/styles";
 import CitySelector from "../../layout/header/city";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { setMakerCoordinates } from "../../../redux/mainReducer";
+import { useT } from "../../../services/i18n";
 
 const parseCoordinates = (value?: string | null) => {
   if (!value) return null;
@@ -48,6 +49,7 @@ export default function MakerMap({
   coordinates?: string | null;
 }) {
   const dispatch = useAppDispatch();
+  const t = useT();
   const cityCoordinates = useAppSelector(
     (state) => state.main.city?.coordinates,
   );
@@ -172,7 +174,7 @@ export default function MakerMap({
         w="100%"
         spacing={{ base: "3", lg: "0" }}
       >
-        <CustomHeader text="Район обслуживания" Icon={FaMapMarkerAlt} />
+        <CustomHeader text={t("Район обслуживания", "Service area")} Icon={FaMapMarkerAlt} />
 
         <CitySelector forceVisible />
       </HStack>

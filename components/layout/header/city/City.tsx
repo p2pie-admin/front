@@ -10,6 +10,7 @@ import { weights } from "./helper";
 import { setLoadingStatus, triggerModal } from "../../../../redux/mainReducer";
 import { batch } from "react-redux";
 import { slugCityToExchange } from "../../../exchange/helper";
+import { pickName, useLocale } from "../../../../services/i18n";
 
 export default function City({
   city,
@@ -26,6 +27,7 @@ export default function City({
 
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const locale = useLocale();
 
   const handleChooseCity = (en_name: string) => {
     const citySlug = en_name.replaceAll(" ", "-").toLowerCase();
@@ -63,7 +65,7 @@ export default function City({
       fontSize={city.en_name.length < 10 ? weight?.fontSize : "lg"}
       variant={weight?.variant || "extra_contrast"}
     >
-      {city.ru_name || city.en_name}
+      {pickName(city, locale)}
     </Text>
     // </Link>
   );

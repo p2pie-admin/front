@@ -738,6 +738,17 @@ export const exchangerReviewsQuery = gql`
                 title
                 description
                 isNegative
+                locale
+                localizations {
+                  data {
+                    id
+                    attributes {
+                      title
+                      description
+                      locale
+                    }
+                  }
+                }
                 image {
                   data {
                     id
@@ -875,8 +886,8 @@ export const allReviewsQuery = gql`
 `;
 
 export const exchangerReviewCategoriesQuery = gql`
-  query ExchangerReviewCategories {
-    reviewCategories(pagination: { limit: 2000 }) {
+  query ExchangerReviewCategories($locale: I18NLocaleCode) {
+    reviewCategories(locale: $locale, pagination: { limit: 2000 }) {
       data {
         id
         attributes {
@@ -981,6 +992,7 @@ export const FAQbyCategoryCodeQuery = gql`
         attributes {
           code
           description
+          en_description
           color
           x_faqs {
             data {
@@ -988,6 +1000,8 @@ export const FAQbyCategoryCodeQuery = gql`
               attributes {
                 question
                 response
+                en_question
+                en_response
               }
             }
           }
@@ -1015,6 +1029,7 @@ export const FAQsQuery = gql`
         attributes {
           code
           description
+          en_description
           color
           x_faqs {
             data {
@@ -1022,6 +1037,8 @@ export const FAQsQuery = gql`
               attributes {
                 question
                 response
+                en_question
+                en_response
               }
             }
           }

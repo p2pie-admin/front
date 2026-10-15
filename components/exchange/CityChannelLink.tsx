@@ -2,6 +2,7 @@ import { Link as ChakraLink } from "@chakra-ui/react";
 import { FaTelegramPlane } from "react-icons/fa";
 import { ResponsiveText } from "../../styles/theme/custom";
 import { cityChannel } from "./tgChannels";
+import { useT } from "../../services/i18n";
 
 // Plain one-line link under the offers summary: daily cash rates of the city in Telegram.
 // The click is recorded by the global ClickTracker through the data-track attributes.
@@ -12,6 +13,7 @@ const CityChannelLink = ({
   citySlug?: string | null;
   cityName?: string | null;
 }) => {
+  const t = useT();
   const channel = cityChannel(citySlug);
   if (!channel) return null;
   return (
@@ -28,7 +30,10 @@ const CityChannelLink = ({
         data-track-label={channel}
       >
         <FaTelegramPlane />
-        {`Курсы${cityName ? ` ${cityName}` : ""} каждый день в Telegram: @${channel}`}
+        {t(
+          `Курсы${cityName ? ` ${cityName}` : ""} каждый день в Telegram: @${channel}`,
+          `${cityName ? `${cityName} rates` : "Rates"} every day on Telegram: @${channel}`,
+        )}
       </ChakraLink>
     </ResponsiveText>
   );

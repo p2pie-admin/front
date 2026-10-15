@@ -8,12 +8,15 @@ import {
 import { useAppSelector } from "../../../../../redux/hooks";
 import { ResponsiveText } from "../../../../../styles/theme/custom";
 import { checkBlockchainExists } from "./helpers";
+import { useLocale, useT } from "../../../../../services/i18n";
 
 type Props = {
   fullOffer: Partial<IFullOffer>;
 };
 
 export default function OfferExplanation({ fullOffer }: Props) {
+  const locale = useLocale();
+  const t = useT();
   const makerP2PLevel = useAppSelector((state) => state.main.maker?.p2p_level);
   const offerIndex = fullOffer?.index;
   const storeOffer = useAppSelector((state) =>
@@ -52,20 +55,34 @@ export default function OfferExplanation({ fullOffer }: Props) {
         ? 1 / course
         : undefined;
 
-  const givePmRuName = (givePm.ru_name ?? givePm.en_name)?.toLowerCase();
-  const getPmRuName = (getPm.ru_name ?? getPm.en_name)?.toLowerCase();
+  const givePmRuName =
+    locale === "en"
+      ? givePm.en_name ?? givePm.ru_name
+      : (givePm.ru_name ?? givePm.en_name)?.toLowerCase();
+  const getPmRuName =
+    locale === "en"
+      ? getPm.en_name ?? getPm.ru_name
+      : (getPm.ru_name ?? getPm.en_name)?.toLowerCase();
 
   const explanation =
     normalizedGiveAmount && normalizedGetAmount && course && course >= 1
-      ? `Клиент покупает твой ${getPmRuName} по курсу ${beautifyAmount(course, 1)} ${curToSymbol(giveCur)} за 1 ${curToSymbol(getCur)}.`
+      ? t(
+          `Клиент покупает твой ${getPmRuName} по курсу ${beautifyAmount(course, 1)} ${curToSymbol(giveCur)} за 1 ${curToSymbol(getCur)}.`,
+          `The client buys your ${getPmRuName} at a rate of ${beautifyAmount(course, 1)} ${curToSymbol(giveCur)} per 1 ${curToSymbol(getCur)}.`,
+        )
       : normalizedGiveAmount && normalizedGetAmount && course && course < 1
-        ? `Клиент продает тебе ${givePmRuName} по курсу 1 ${curToSymbol(giveCur)} за ${beautifyAmount(1 / course, 1)} ${curToSymbol(getCur)}.`
-        : "Установите курс";
+        ? t(
+            `Клиент продает тебе ${givePmRuName} по курсу 1 ${curToSymbol(giveCur)} за ${beautifyAmount(1 / course, 1)} ${curToSymbol(getCur)}.`,
+            `The client sells you ${givePmRuName} at a rate of 1 ${curToSymbol(giveCur)} per ${beautifyAmount(1 / course, 1)} ${curToSymbol(getCur)}.`,
+          )
+        : t("Установите курс", "Set the rate");
 
   const feeSuffix = (() => {
     if (!feeEnabled) return "";
     const feeLabel =
-      feeAmount && feeAmount < 0 ? "Твоя доплата:" : "Твоя комиссия:";
+      feeAmount && feeAmount < 0
+        ? t("Твоя доплата:", "Your surcharge:")
+        : t("Твоя комиссия:", "Your fee:");
     if (feeAmount === null || feeAmount === undefined || !feeType) {
       return "";
     }
@@ -83,7 +100,10 @@ export default function OfferExplanation({ fullOffer }: Props) {
 
   const blockchainExists = checkBlockchainExists(giveCur, getCur);
   const blockchainSuffix = blockchainExists
-    ? `Или используйте эскроу-смарт-контракт для более безопасной сделки в одну транзакцию. Контракт временно блокирует поступившие средства автоматически. Контракту доступны только два действия: перевод получателю или возврат. Прямого доступа к средствам у сервиса p2pie нет.`
+    ? t(
+        `Или используйте эскроу-смарт-контракт для более безопасной сделки в одну транзакцию. Контракт временно блокирует поступившие средства автоматически. Контракту доступны только два действия: перевод получателю или возврат. Прямого доступа к средствам у сервиса p2pie нет.`,
+        `Or use an escrow smart contract for a safer deal in one transaction. The contract automatically holds the incoming funds for a while. It can do only two things: pay the recipient or refund. The p2pie service has no direct access to the funds.`,
+      )
     : "";
 
   const rawLimit = toUSD * (makerP2PLevel?.limit_online_usd || 0);
@@ -91,7 +111,10 @@ export default function OfferExplanation({ fullOffer }: Props) {
     Number.isFinite(rawLimit) && rawLimit > 0
       ? beautifyAmount(rawLimit, 2)
       : "0";
-  const limitsSuffix = ` Сделка свыше ${limit} ${curToSymbol(mainCur)} оплачивается частями не более ${limit} ${curToSymbol(mainCur)}. Чтобы повысить лимит разовой транзакции перейдите на следующий уровень.  ${blockchainSuffix}`;
+  const limitsSuffix = t(
+    ` Сделка свыше ${limit} ${curToSymbol(mainCur)} оплачивается частями не более ${limit} ${curToSymbol(mainCur)}. Чтобы повысить лимит разовой транзакции перейдите на следующий уровень.  ${blockchainSuffix}`,
+    ` A deal over ${limit} ${curToSymbol(mainCur)} is paid in parts of no more than ${limit} ${curToSymbol(mainCur)}. To raise the single transaction limit, move to the next level.  ${blockchainSuffix}`,
+  );
 
   return (
     <Box w="100%" whiteSpace="preserve-breaks">

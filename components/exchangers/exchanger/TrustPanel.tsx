@@ -8,13 +8,17 @@ import { IExchanger } from "../../../types/exchanger";
 import {
   ageText,
   FACTOR_LABELS,
+  FACTOR_LABELS_EN,
   FLAG_LABELS,
+  FLAG_LABELS_EN,
   IRatingDetails,
   isTrustLevel,
   reviewsText,
   sourcesText,
   TRUST_LEVELS,
+  trustHint,
 } from "../../shared/trust";
+import { intlLocale, useLocale, useT } from "../../../services/i18n";
 
 const Bar = ({ points, max, color }: { points: number; max: number; color: string }) => (
   <Box flex="1" h="1.5" minW="60px" borderRadius="full" bgColor="blackAlpha.400" overflow="hidden">
@@ -29,22 +33,27 @@ const Bar = ({ points, max, color }: { points: number; max: number; color: strin
 
 // Stars (what customers say) and trust level (how much evidence there is), with the breakdown behind both.
 const TrustPanel = ({ exchanger }: { exchanger: IExchanger }) => {
+  const locale = useLocale();
+  const t = useT();
   const level = exchanger.trust_level;
   if (!isTrustLevel(level)) return null;
   const meta = TRUST_LEVELS[level];
   const details = (exchanger.rating_details || null) as IRatingDetails | null;
   const total = details?.reviews?.total ?? exchanger.reviews_count ?? 0;
   const sources = details?.reviews?.sources || [];
-  const age = ageText(details?.ageMonths);
+  const age = ageText(details?.ageMonths, locale);
   const stars = Number(exchanger.admin_rating) || 0;
   const factors = details?.factors || [];
-  const flags = [...new Set((details?.flags || []).map((f) => FLAG_LABELS[f]))];
+  const flagLabels = locale === "en" ? FLAG_LABELS_EN : FLAG_LABELS;
+  const factorLabels = locale === "en" ? FACTOR_LABELS_EN : FACTOR_LABELS;
+  const nf = intlLocale(locale);
+  const flags = [...new Set((details?.flags || []).map((f) => flagLabels[f]))];
 
   return (
     <BoxWrapper variant="no_contrast">
       <VStack alignItems="stretch" gap="3" w="100%">
         <TitleH2 isLong={false}>
-          <>Оценка и уровень доверия</>
+          <>{t("Оценка и уровень доверия", "Rating and trust level")}</>
         </TitleH2>
 
         <Flex gap={{ base: 3, lg: 8 }} flexDir={{ base: "column", lg: "row" }}>
@@ -54,21 +63,21 @@ const TrustPanel = ({ exchanger }: { exchanger: IExchanger }) => {
                 <FaStar size="1.2rem" />
               </Box>
               <Text fontSize="2xl" fontWeight="bold" color="bg.100" lineHeight="1">
-                {total > 0 && stars ? stars.toFixed(2).replace(".", ",") : "нет оценки"}
+                {total > 0 && stars ? (locale === "en" ? stars.toFixed(2) : stars.toFixed(2).replace(".", ",")) : t("нет оценки", "no rating")}
               </Text>
             </HStack>
             <Text fontSize="sm" color="bg.300">
               {total > 0
-                ? `Оценка клиентов: ${reviewsText(total)}${sources.length ? ` на ${sourcesText(sources.length)}` : ""}`
-                : "Отзывов пока нет, оценку не из чего считать"}
+                ? `${t("Оценка клиентов", "Customer rating")}: ${reviewsText(total, locale)}${sources.length ? ` ${t("на", "on")} ${sourcesText(sources.length, locale)}` : ""}`
+                : t("Отзывов пока нет, оценку не из чего считать", "No reviews yet, so there is nothing to rate")}
             </Text>
             {sources.length > 0 && (
               <Text fontSize="sm" color="bg.300">
                 {sources
                   .map((s) =>
                     s.positive == null
-                      ? `${s.name}: ${s.total.toLocaleString("ru-RU")}`
-                      : `${s.name}: ${s.positive.toLocaleString("ru-RU")} положительных, ${(s.negative ?? 0).toLocaleString("ru-RU")} отрицательных`
+                      ? `${s.name}: ${s.total.toLocaleString(nf)}`
+                      : `${s.name}: ${s.positive.toLocaleString(nf)} ${t("положительных", "positive")}, ${(s.negative ?? 0).toLocaleString(nf)} ${t("отрицательных", "negative")}`
                   )
                   .join(" · ")}
               </Text>
@@ -80,17 +89,17 @@ const TrustPanel = ({ exchanger }: { exchanger: IExchanger }) => {
               <TrustBadge level={level} withLabel size="1.2rem" />
               {exchanger.trust_score != null && (
                 <Text fontSize="sm" color="bg.300">
-                  {exchanger.trust_score} из 100
+                  {exchanger.trust_score} {t("из", "of")} 100
                 </Text>
               )}
             </HStack>
             <Text fontSize="sm" color="bg.300">
-              {meta.hint}
-              {age ? `. На рынке ${age}` : ""}.
+              {trustHint(meta, locale)}
+              {age ? `. ${t("На рынке", "On the market for")} ${age}` : ""}.
             </Text>
             {flags.length > 0 && (
               <Text fontSize="sm" color="orange.300">
-                Причина: {flags.join("; ")}.
+                {t("Причина", "Reason")}: {flags.join("; ")}.
               </Text>
             )}
           </VStack>
@@ -108,7 +117,7 @@ const TrustPanel = ({ exchanger }: { exchanger: IExchanger }) => {
               .map((f) => (
                 <HStack key={f.key} gap="3">
                   <Text fontSize="sm" color="bg.300" w="150px" flexShrink={0}>
-                    {FACTOR_LABELS[f.key]}
+                    {factorLabels[f.key]}
                   </Text>
                   {f.max > 0 && f.points >= 0 ? (
                     <Bar points={f.points} max={f.max} color={meta.color} />
@@ -125,7 +134,7 @@ const TrustPanel = ({ exchanger }: { exchanger: IExchanger }) => {
                     {f.points < 0
                       ? `−${Math.abs(f.points)}`
                       : f.max > 0
-                        ? `${Math.round(f.points)} из ${f.max}`
+                        ? `${Math.round(f.points)} ${t("из", "of")} ${f.max}`
                         : f.points}
                   </Text>
                 </HStack>
@@ -134,9 +143,12 @@ const TrustPanel = ({ exchanger }: { exchanger: IExchanger }) => {
         )}
 
         <Text fontSize="sm" color="bg.300">
-          Оценка показывает, что пишут клиенты, а уровень доверия показывает, сколько за ней данных.{" "}
+          {t(
+            "Оценка показывает, что пишут клиенты, а уровень доверия показывает, сколько за ней данных.",
+            "The rating shows what customers say, and the trust level shows how much data stands behind it.",
+          )}{" "}
           <Link as={NextLink} href="/rating" color="blue.300">
-            Как считается рейтинг
+            {t("Как считается рейтинг", "How the rating is calculated")}
           </Link>
         </Text>
       </VStack>

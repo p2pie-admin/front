@@ -21,6 +21,7 @@ import PmName from "../../../shared/PmName";
 import { IoIosArrowDown } from "react-icons/io";
 import { useAppDispatch } from "../../../../redux/hooks";
 import { setMassPmsFilter } from "../../../../redux/mainReducer";
+import { useT } from "../../../../services/i18n";
 import MassSideContext from "../../sideContext";
 
 export type Option = { value: string; label: string };
@@ -43,6 +44,7 @@ export const MultiSelectMenu: React.FC<Props> = ({
   const { isSell } = useContext(MassSideContext);
 
   const dispatch = useAppDispatch();
+  const t = useT();
 
   const saveSelection = () => {
     dispatch(setMassPmsFilter(selected));
@@ -114,7 +116,7 @@ export const MultiSelectMenu: React.FC<Props> = ({
             onClick={removeAll}
             leftIcon={<IoMdClose size="1.2rem" />}
           >
-            Снять выбор
+            {t("Снять выбор", "Clear selection")}
           </Button>
         )}
         <VStack spacing={0} align="stretch" width="200px" p="1">

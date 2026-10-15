@@ -4,17 +4,19 @@ import React from "react";
 import { TextToHTML } from "../../../shared/helper";
 import { IoMdInformationCircle } from "react-icons/io";
 import { BoxWrapper, CustomHeader } from "../../../shared/BoxWrapper";
+import { useT } from "../../../../services/i18n";
 
 export default function ExchangerDescription({
   description,
 }: {
   description?: string;
 }) {
+  const t = useT();
   if (!description) return <></>;
 
   return (
     <BoxWrapper>
-      <CustomHeader text={`Описание`} Icon={IoMdInformationCircle} />
+      <CustomHeader text={t(`Описание`, `Description`)} Icon={IoMdInformationCircle} />
       <Divider my="4" />
       <Box px="2" color="bg.400">
         {description && (

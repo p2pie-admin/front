@@ -8,6 +8,7 @@ import { setP2PFullOfferField } from "../../../../../../redux/mainReducer";
 import { ResponsiveText } from "../../../../../../styles/theme/custom";
 import CourseAmountInput from "./CourseAmountInput";
 import OfferCourseSlider from "./OfferCourseSlider";
+import { useT } from "../../../../../../services/i18n";
 
 export default function OfferCourse({
   fullOffer,
@@ -15,6 +16,7 @@ export default function OfferCourse({
   fullOffer: Partial<IFullOffer>;
 }) {
   const dispatch = useAppDispatch();
+  const t = useT();
   const offerIndex = fullOffer.index;
   if (offerIndex === undefined) return null;
 
@@ -73,7 +75,7 @@ export default function OfferCourse({
   return (
     <Box w="100%">
       <HStack w="fit-content" my="2">
-        <ResponsiveText>{"Курс: "}</ResponsiveText>
+        <ResponsiveText>{t("Курс: ", "Rate: ")}</ResponsiveText>
 
         <CourseAmountInput index={offerIndex} side="give" />
         <ResponsiveText>{codeToSymbol(giveCur)}</ResponsiveText>

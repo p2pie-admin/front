@@ -8,10 +8,19 @@ import {
   MdSentimentSatisfiedAlt,
   MdSentimentVeryDissatisfied,
 } from "react-icons/md";
+import { useLocale } from "../../../../services/i18n";
+
 const tooltipLabels: Record<IDotColors, string> = {
   green: "Показать только позитивные",
   gray: "Показать нейтральные",
   red: "Показать только негативные",
+  orange: "",
+};
+
+const tooltipLabelsEn: Record<IDotColors, string> = {
+  green: "Show only positive",
+  gray: "Show neutral",
+  red: "Show only negative",
   orange: "",
 };
 
@@ -22,6 +31,7 @@ export default function ReviewsFilters({
   toggleFilter: (color: IDotColors | null) => void;
   activeFilter: IDotColors | null;
 }) {
+  const labels = useLocale() === "en" ? tooltipLabelsEn : tooltipLabels;
   const colors: IDotColors[] = ["green", "gray", "red"];
   const sentimentIcons: Record<IDotColors, React.ComponentType> = {
     green: MdSentimentSatisfiedAlt,
@@ -48,10 +58,10 @@ export default function ReviewsFilters({
       {colors.map((color) => (
         <Tooltip
           key={color}
-          label={tooltipLabels[color]}
+          label={labels[color]}
           hasArrow
           placement="top"
-          isDisabled={!tooltipLabels[color]}
+          isDisabled={!labels[color]}
         >
           <Button
             onClick={() => toggleFilter(color)}

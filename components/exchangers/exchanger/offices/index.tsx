@@ -6,16 +6,18 @@ import CustomImage from "../../../shared/CustomImage";
 import { LinkWrapper } from "../../../shared/LinkWrapper";
 import { TbMapPinFilled } from "react-icons/tb";
 import { BoxWrapper, CustomHeader } from "../../../shared/BoxWrapper";
+import { useT } from "../../../../services/i18n";
 
 export default function OfficesDescription({
   offices,
 }: {
   offices?: IExchangerOffice[];
 }) {
+  const t = useT();
   if (!offices || !offices.length) return <></>;
   return (
     <BoxWrapper variant="contrast" w="100%">
-      <CustomHeader text={` Адреса офисов`} Icon={TbMapPinFilled} />
+      <CustomHeader text={t(` Адреса офисов`, ` Office addresses`)} Icon={TbMapPinFilled} />
       {offices.map((office) => (
         <React.Fragment key={office.id + office.address}>
           <Divider my="4" />
@@ -54,7 +56,7 @@ export default function OfficesDescription({
               >
                 {office.working_time && (
                   <ResponsiveText>
-                    Время работы: {office.working_time}
+                    {t("Время работы", "Working hours")}: {office.working_time}
                   </ResponsiveText>
                 )}
                 <HStack w="100%" justifyContent="end">
@@ -71,7 +73,7 @@ export default function OfficesDescription({
                         </Box>
                       }
                     >
-                      Показать на карте
+                      {t("Показать на карте", "Show on map")}
                     </Button>
                   </LinkWrapper>
                 </HStack>

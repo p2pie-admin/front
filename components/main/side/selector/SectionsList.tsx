@@ -8,11 +8,13 @@ import Section from "./section";
 
 import { SectionContext } from "../../../shared/contexts/SectionContext";
 import { ISection } from "../../../../types/selector";
+import { pickName, useLocale } from "../../../../services/i18n";
 
 const SectionsList = ({ sections }: { sections: ISection[] }) => {
   //   const list = [];
   //   const { i18n } = useTranslation();
   //const list = listFilter.filterJsonByString(inputFieldValue.value, pmsList);
+  const locale = useLocale();
   const isSmall = useBreakpointValue({
     base: true,
     md: false,
@@ -34,7 +36,7 @@ const SectionsList = ({ sections }: { sections: ISection[] }) => {
           >
             <Section
               key={section.id}
-              title={section.ru_title || section.en_title}
+              title={pickName(section, locale, "title")}
               itemsToShow={
                 isSmall
                   ? section.columns * 2 - 2

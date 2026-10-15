@@ -7,6 +7,7 @@ import { Button, Divider, HStack } from "@chakra-ui/react";
 
 import ReviewsFilters from "./ReviewsFilters";
 import { BoxWrapper, CustomHeader } from "../../../shared/BoxWrapper";
+import { useT } from "../../../../services/i18n";
 
 const PAGE_SIZE = 10;
 
@@ -42,6 +43,7 @@ export default function ExchangerReviews({
   initialReviews?: IExchangerReview[] | null;
   initialTotal?: number | null;
 }) {
+  const t = useT();
   const [activeFilter, setActiveFilter] = useState<IDotColors | null>(null);
   const [items, setItems] = useState<IExchangerReview[]>(initialReviews ?? []);
   const [total, setTotal] = useState<number>(initialTotal ?? initialReviews?.length ?? 0);
@@ -103,25 +105,28 @@ export default function ExchangerReviews({
   return (
     <BoxWrapper variant="contrast">
       <HStack justifyContent="space-between">
-        <CustomHeader text={`Отзывы (${total})`} Icon={PiChatsFill} />
+        <CustomHeader text={`${t("Отзывы", "Reviews")} (${total})`} Icon={PiChatsFill} />
         <ReviewsFilters toggleFilter={handleToggleFilter} activeFilter={activeFilter} />
       </HStack>
       <Divider my="4" />
       {items.some((r) => r.source) ? (
         <ResponsiveText size="xs" variant="no_contrast" whiteSpace="normal" mb="2">
-          Отзывы с пометкой «Источник» скопированы с других мониторингов. Их написали не пользователи p2pie.
+          {t(
+            "Отзывы с пометкой «Источник» скопированы с других мониторингов. Их написали не пользователи p2pie.",
+            "Reviews marked “Source” are copied from other monitorings. They were not written by p2pie users.",
+          )}
         </ResponsiveText>
       ) : null}
       {!hasAnyReviews ? (
-        <ResponsiveText>Пока нет отзывов, оставьте отзыв первым</ResponsiveText>
+        <ResponsiveText>{t("Пока нет отзывов, оставьте отзыв первым", "No reviews yet, be the first to leave one")}</ResponsiveText>
       ) : items.length > 0 ? (
         items.map((review) => <ExchangerRootReview key={review.id} review={review} />)
       ) : busy ? null : (
-        <ResponsiveText>Нет отзывов по выбранному фильтру</ResponsiveText>
+        <ResponsiveText>{t("Нет отзывов по выбранному фильтру", "No reviews match the selected filter")}</ResponsiveText>
       )}
       {error ? (
         <ResponsiveText size="sm" color="red.300" mt="2">
-          Не удалось загрузить отзывы. Попробуйте ещё раз.
+          {t("Не удалось загрузить отзывы. Попробуйте ещё раз.", "Could not load reviews. Please try again.")}
         </ResponsiveText>
       ) : null}
       {remaining > 0 ? (
@@ -131,11 +136,14 @@ export default function ExchangerReviews({
           variant="outline"
           onClick={showMore}
           isLoading={busy}
-          loadingText="Загружаем…"
+          loadingText={t("Загружаем…", "Loading…")}
           data-track="reviews-show-more"
           data-track-label={`+${Math.min(PAGE_SIZE, remaining)}`}
         >
-          {`Показать ещё ${Math.min(PAGE_SIZE, remaining)} из ${remaining}`}
+          {t(
+            `Показать ещё ${Math.min(PAGE_SIZE, remaining)} из ${remaining}`,
+            `Show ${Math.min(PAGE_SIZE, remaining)} more of ${remaining}`,
+          )}
         </Button>
       ) : null}
     </BoxWrapper>

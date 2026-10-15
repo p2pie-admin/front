@@ -50,7 +50,9 @@ import {
 import { requestStrapiAsService } from "../services/server/strapiClient";
 import normalize from "../services/normalizer";
 //import { p2pMakerQuery } from "../pages/p2p/queries";
+import { Locale } from "../services/i18n";
 
+// Locale of CMS content that is not translated (text boxes, direction texts, articles): always ru.
 const locale = "ru";
 const normalizeDirTextSection = (value?: string | null) =>
   (value || "").trim().toLowerCase();
@@ -149,10 +151,13 @@ export const loadRootText = () =>
     return res?.[0] || null;
   });
 
-export const loadMainTexts = () =>
-  cachedFetch(`main_texts_${locale}`, TTL.slow, () =>
-    cmsFetcher(MainTextsQuery, { locale }),
-  );
+// main-text is a Strapi-i18n type: English entries when they exist, Russian otherwise.
+export const loadMainTexts = (locale: Locale = "ru") =>
+  cachedFetch(`main_texts_${locale}`, TTL.slow, async () => {
+    const res = await cmsFetcher(MainTextsQuery, { locale });
+    if (locale === "ru" || (Array.isArray(res) && res.length)) return res;
+    return cmsFetcher(MainTextsQuery, { locale: "ru" });
+  });
 
 export const loadParserExchangers = () =>
   cachedFetch("exchangers", TTL.fast, () => parserFetcher("exchangers"));
@@ -327,18 +332,35 @@ export const loadCustomDirText = (slug: string) =>
     return res?.[0] as IDirText;
   });
 
-export const loadFAQs = () =>
-  cachedFetch(`faqs_${locale}`, TTL.slow, async () => {
+// FAQ entities carry en_* fields; the loader puts the right language into the usual fields
+// (question/response/description), falling back to Russian when the English text is empty.
+const localizeFaqCategory = (category: any, locale: Locale): IFaqCategory => {
+  if (!category || locale !== "en") return category;
+  return {
+    ...category,
+    description: category.en_description || category.description,
+    x_faqs: Array.isArray(category.x_faqs)
+      ? category.x_faqs.map((f: any) => ({
+          ...f,
+          question: f?.en_question || f?.question,
+          response: f?.en_response || f?.response,
+        }))
+      : category.x_faqs,
+  };
+};
+
+export const loadFAQs = (locale: Locale = "ru") =>
+  cachedFetch(`faqs_v2_${locale}`, TTL.slow, async () => {
     const res = (await cmsFetcher(FAQsQuery)) as IFaqCategory[] | null;
-    return res || [];
+    return (res || []).map((c) => localizeFaqCategory(c, locale));
   });
 
-export const loadFAQbyCategoryCode = (code: string) =>
-  cachedFetch(`faq_${code.toLowerCase()}_${locale}`, TTL.slow, async () => {
+export const loadFAQbyCategoryCode = (code: string, locale: Locale = "ru") =>
+  cachedFetch(`faq_v2_${code.toLowerCase()}_${locale}`, TTL.slow, async () => {
     const res = (await cmsFetcher(FAQbyCategoryCodeQuery, {
       code,
     })) as IFaqCategory[] | null;
-    return res?.[0] || null;
+    return res?.[0] ? localizeFaqCategory(res[0], locale) : null;
   });
 
 export const loadAllReviews = () =>

@@ -4,8 +4,10 @@ import { Box, HStack, Text, VStack } from "@chakra-ui/react";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { exchangerNameToSlug } from "../../exchangers/helper";
 import Link from "next/link";
+import { useT } from "../../../services/i18n";
 
 const FoundError = () => {
+  const t = useT();
   return (
     <Box w="100%">
       <Link
@@ -23,11 +25,11 @@ const FoundError = () => {
           gap="2"
         >
           <ResponsiveText variant="no_contrast" size="lg">
-            Есть замечания?
+            {t("Есть замечания?", "Any remarks?")}
           </ResponsiveText>
           <HStack>
             <ResponsiveText variant="shaded" size="sm">
-              Обсудить в чате →
+              {t("Обсудить в чате →", "Discuss in the chat →")}
             </ResponsiveText>
             <BsTelegram size="1.2rem" />
           </HStack>

@@ -31,6 +31,21 @@ import CustomIcon from "./CustomIcon";
 import { Box3D } from "../../styles/theme/custom";
 import { IoMdInformationCircle } from "react-icons/io";
 import { CustomHeader } from "../shared/BoxWrapper";
+import { Locale, useLocale, useT } from "../../services/i18n";
+
+// Swap in the English question/answer/category texts on English pages, falling back to Russian.
+export const localizeFaqCategories = (categories: IFaqCategory[], locale: Locale): IFaqCategory[] =>
+  locale !== "en"
+    ? categories
+    : categories.map((c) => ({
+        ...c,
+        description: c.en_description || c.description,
+        x_faqs: (c.x_faqs || []).map((f) => ({
+          ...f,
+          question: f.en_question || f.question,
+          response: f.en_response || f.response,
+        })),
+      }));
 
 const matches = (faq: { question: string; response: string }, q: string) =>
   !q ||
@@ -50,16 +65,18 @@ export function FaqCategoriesList({
   // Open the very first question so the page reads as answers, not a wall of headings.
   defaultOpenFirst?: boolean;
 }) {
+  const locale = useLocale();
+  const t = useT();
   const accentFallback = useColorModeValue("violet.700", "peach.200");
   const questionColor = useColorModeValue("bg.700", "bg.100");
   const q = query.trim().toLowerCase();
-  const visible = categories
+  const visible = localizeFaqCategories(categories, locale)
     .map((c) => ({ ...c, x_faqs: (c.x_faqs || []).filter((f) => matches(f, q)) }))
     .filter((c) => c.x_faqs.length || !q);
   if (q && !visible.length) {
     return (
       <Text textAlign="center" color="bg.400" mt="6">
-        По запросу «{query}» ничего не найдено.
+        {locale === "en" ? <>Nothing found for “{query}”.</> : <>По запросу «{query}» ничего не найдено.</>}
       </Text>
     );
   }
@@ -139,7 +156,7 @@ export function FaqCategoriesList({
                 ))}
               </Accordion>
             ) : (
-              <Text color="bg.400">Вопросы скоро появятся.</Text>
+              <Text color="bg.400">{t("Вопросы скоро появятся.", "Questions coming soon.")}</Text>
             )}
           </Box3D>
         );
@@ -155,9 +172,11 @@ export default function FaqPage({
   categories: IFaqCategory[] | null;
   seo: ISEO;
 }) {
+  const locale = useLocale();
+  const t = useT();
   const [query, setQuery] = useState("");
   const jsonLd = useMemo(() => {
-    const items = (categories || []).flatMap((c) => c.x_faqs || []);
+    const items = localizeFaqCategories(categories || [], locale).flatMap((c) => c.x_faqs || []);
     if (!items.length) return null;
     return JSON.stringify({
       "@context": "https://schema.org",
@@ -168,7 +187,7 @@ export default function FaqPage({
         acceptedAnswer: { "@type": "Answer", text: f.response },
       })),
     }).replace(/</g, "\\u003c");
-  }, [categories]);
+  }, [categories, locale]);
 
   return (
     <>
@@ -184,14 +203,14 @@ export default function FaqPage({
         title={seo.title || "FAQ"}
         subtitle={
           seo.description ||
-          "Ответы на популярные вопросы о сервисе и P2P обменах"
+          t("Ответы на популярные вопросы о сервисе и P2P обменах", "Answers to common questions about the service and P2P exchanges")
         }
         my="12"
       />
 
       {!categories?.length ? (
         <Box textAlign="center" color="bg.400" mt="6">
-          Пока нет вопросов для отображения.
+          {t("Пока нет вопросов для отображения.", "No questions to show yet.")}
         </Box>
       ) : (
         <>
@@ -202,7 +221,7 @@ export default function FaqPage({
               </InputLeftElement>
               <Input
                 h="44px"
-                placeholder="Найти вопрос…"
+                placeholder={t("Найти вопрос…", "Find a question…")}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 borderColor="bg.500"
@@ -228,7 +247,7 @@ export default function FaqPage({
                       color="bg.200"
                       flexShrink={0}
                     >
-                      {c.description || c.code}
+                      {(locale === "en" ? c.en_description || c.description : c.description) || c.code}
                     </Button>
                   ))}
                 </HStack>

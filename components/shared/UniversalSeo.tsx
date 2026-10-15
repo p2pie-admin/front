@@ -1,5 +1,6 @@
 import { NextSeo, BreadcrumbJsonLd } from "next-seo";
 import { ISEO, BreadcrumbItem } from "../../types/general";
+import { useLocale } from "../../services/i18n";
 export const nullSeo = {
   title: null,
   description: null,
@@ -9,6 +10,7 @@ export const nullSeo = {
 };
 
 const UniversalSeo = ({ seo }: { seo: ISEO }) => {
+  const locale = useLocale();
   const {
     title,
     description,
@@ -28,7 +30,7 @@ const UniversalSeo = ({ seo }: { seo: ISEO }) => {
     title,
     description,
     site_name: `${process.env.NEXT_PUBLIC_NAME}`,
-    locale: "ru_RU",
+    locale: locale === "en" ? "en_US" : "ru_RU",
     ...(updatedAt
       ? {
           article: {
@@ -42,7 +44,7 @@ const UniversalSeo = ({ seo }: { seo: ISEO }) => {
   const defaultBreadcrumbs: BreadcrumbItem[] = [
     {
       position: 1,
-      name: "Главная",
+      name: locale === "en" ? "Home" : "Главная",
       item: `https://${process.env.NEXT_PUBLIC_NAME}.com`,
     },
     {

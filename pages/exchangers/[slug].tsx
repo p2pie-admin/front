@@ -30,6 +30,7 @@ import { maskReviewList } from "../../services/maskIP";
 import { initParserFetcher } from "../../services/fetchers";
 import { IExternalReviews, loadExternalReviews } from "../../services/competitors";
 import { fetchExchangerReviewCounts, fetchExchangerReviews, ReviewCounts } from "../../services/exchangerReviews";
+import { localeOf, tr } from "../../services/i18n";
 import {
   IExchangerUptime,
   prepareUptime,
@@ -103,7 +104,9 @@ export default function ExchangerPage({
 }
 
 // Single-locale getStaticProps
-export async function getStaticProps({ params }: { params: { slug: string } }) {
+export async function getStaticProps(ctx: { params: { slug: string }; locale?: string }) {
+  const { params } = ctx;
+  const locale = localeOf(ctx);
   try {
     const { slug } = params;
     const name = exchangerSlugToName(slug);
@@ -147,17 +150,19 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
       // Reviews copied from other monitorings (with source); null when the service is down.
       loadExternalReviews(exchanger.id),
       // First page (10) of the reviews, all sources merged by date; "show more" loads the rest from /api/exchanger-reviews.
-      exchanger.id ? fetchExchangerReviews({ exchangerId: exchanger.id }) : Promise.resolve(null),
+      exchanger.id ? fetchExchangerReviews({ exchangerId: exchanger.id, locale }) : Promise.resolve(null),
       exchanger.id ? fetchExchangerReviewCounts(exchanger.id) : Promise.resolve(null),
     ]);
     const uptime: IExchangerUptime | null = prepareUptime(rawUptime);
 
     const displayName = exchanger.display_name || exchanger.name;
-    const title = `Обменник ${capitalize(displayName)}`;
+    const title = tr(locale, `Обменник ${capitalize(displayName)}`, `${capitalize(displayName)} exchanger`);
 
-    const description = `${capitalize(displayName)}: ${
-      "Карточка обменника, рейтинг и информация"
-    }`;
+    const description = `${capitalize(displayName)}: ${tr(
+      locale,
+      "Карточка обменника, рейтинг и информация",
+      "exchanger profile, rating and details",
+    )}`;
 
     const seo: ISEO = {
       title,
@@ -166,7 +171,8 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
       updatedAt: exchanger.updatedAt || new Date().toISOString(),
     };
 
-    await addHeadersToSearchIndex({
+    // The shared search index is Russian; English headers are built on the fly by /api/search-index?lang=en.
+    if (locale === "ru") await addHeadersToSearchIndex({
       slug: `exchangers/${slug}`,
       header: `Обменник ${capitalize(displayName)}`,
       wordsToSearchFrom: displayName,

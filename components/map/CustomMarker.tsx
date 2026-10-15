@@ -7,6 +7,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useState, memo, useEffect, useRef } from "react";
+import { useT } from "../../services/i18n";
 import { FaLocationPin } from "react-icons/fa6";
 import { IExchanger, IExchangerOffice } from "../../types/exchanger";
 import { MarkerTooltipContent } from "./MarkerTooltipContent";
@@ -31,6 +32,7 @@ const CustomMarker = ({
   activeMarkerId,
   setActiveMarkerId,
 }: CustomMarkerProps) => {
+  const t = useT();
   const [currentEntryIndex, setCurrentEntryIndex] = useState(0);
   const [localActive, setLocalActive] = useState(false);
   const [hoveredMarker, setHoveredMarker] = useState(false);
@@ -121,7 +123,7 @@ const CustomMarker = ({
           {hasMultipleEntries && (
             <HStack justifyContent="space-between" alignItems="center">
               <Text fontSize="xs" color="bg.200">
-                {`Обменник ${currentEntryIndex + 1} из ${totalEntries}`}
+                {`${t("Обменник", "Exchanger")} ${currentEntryIndex + 1} ${t("из", "of")} ${totalEntries}`}
               </Text>
               <HStack>
                 <IconButton

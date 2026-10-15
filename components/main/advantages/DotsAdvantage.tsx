@@ -4,8 +4,10 @@ import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
 import { BsCurrencyBitcoin } from "react-icons/bs";
 import AdvantageBottom from "./AdvantageBottom";
 import { FaBolt } from "react-icons/fa6";
+import { useT } from "../../../services/i18n";
 
 export default function PlotAdvantage({ hovering }: { hovering: boolean }) {
+  const t = useT();
   const accentOpacity = hovering ? "0.9" : "0.4";
 
   return (
@@ -60,7 +62,7 @@ export default function PlotAdvantage({ hovering }: { hovering: boolean }) {
               variant="shaded"
               color={`rgba(255,255,255,${accentOpacity})`}
             >
-              сейчас
+              {t("сейчас", "now")}
             </ResponsiveText>
           </HStack>
           <ResponsiveText
@@ -68,15 +70,18 @@ export default function PlotAdvantage({ hovering }: { hovering: boolean }) {
             mt="1"
             color={`rgba(255,255,255,${accentOpacity})`}
           >
-            Отправлено с кошелька: 1FfmbHfn4uOp0x...0xP
+            {t("Отправлено с кошелька", "Sent from wallet")}: 1FfmbHfn4uOp0x...0xP
           </ResponsiveText>
         </Box3D>
       </Center>
       <AdvantageBottom
         icon={<FaBolt size="1rem" />}
         hovering={hovering}
-        title="Быстрый обмен"
-        subtitle="Выгодный курс без скрытых комиссий"
+        title={t("Быстрый обмен", "Fast exchange")}
+        subtitle={t(
+          "Выгодный курс без скрытых комиссий",
+          "Good rates with no hidden fees"
+        )}
       />
     </>
   );

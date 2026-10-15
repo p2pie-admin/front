@@ -18,10 +18,12 @@ const DotLottieReact = dynamic(
 );
 
 import LinkButton from "./LinkButton";
+import { useT } from "../../services/i18n";
 import { BsTelegram } from "react-icons/bs";
 
 import { IoSearch } from "react-icons/io5";
 const Error = ({ primaryMessage = "", secondaryMessage = "" }) => {
+  const t = useT();
   const iconColor = useColorModeValue("orange.400", "bg.500");
   const mainColor = useColorModeValue("bg.700", "bg.300");
   return (
@@ -48,7 +50,7 @@ const Error = ({ primaryMessage = "", secondaryMessage = "" }) => {
         href={
           String(process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT) || "https://t.me"
         }
-        message={"Сообщить об ошибке"}
+        message={t("Сообщить об ошибке", "Report a problem")}
         CustomIcon={BsTelegram}
       />
     </Flex>

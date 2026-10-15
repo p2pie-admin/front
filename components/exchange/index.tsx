@@ -39,7 +39,7 @@ import { ISEO } from "../../types/general";
 import { IMassDirTextId } from "../../types/mass";
 
 import { TextToHTML } from "../shared/helper";
-import { codeToRuName2, codeToRuName3 } from "../../redux/amountsHelper";
+import { codeToEnName, codeToRuName2, codeToRuName3 } from "../../redux/amountsHelper";
 import Loader from "../shared/Loader";
 import { TitleH2 } from "../shared/TitleH2";
 import Head from "next/head";
@@ -50,6 +50,7 @@ import { IDirHistory, IRatesSummary, ISsrRate } from "./ssrRates";
 import { exchangerNameToSlug } from "../exchangers/helper";
 import ShortOffers from "./ShortOffers";
 import HowToAndFaq from "./HowToAndFaq";
+import { Locale, pickName, tr, useLocale, useT } from "../../services/i18n";
 
 const JSON_LD_ITEMS = 10;
 
@@ -57,13 +58,14 @@ const JSON_LD_ITEMS = 10;
 const buildOffersJsonLd = (
   rates: ISsrRate[] | null | undefined,
   name?: string,
+  locale: Locale = "ru",
 ) => {
   if (!rates || !rates.length) return null;
   const base = `https://${process.env.NEXT_PUBLIC_NAME}.com`;
   const data = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: name || "Предложения обмена",
+    name: name || tr(locale, "Предложения обмена", "Exchange offers"),
     numberOfItems: rates.length,
     itemListElement: rates.slice(0, JSON_LD_ITEMS).map((rate, index) => ({
       "@type": "ListItem",
@@ -106,6 +108,8 @@ const Exchange = ({
   rateHistory?: IDirHistory | null;
 }) => {
   const dispatch = useAppDispatch();
+  const locale = useLocale();
+  const t = useT();
 
   const [peripheryColor, centerColor] = useToken(
     "colors",
@@ -142,7 +146,14 @@ const Exchange = ({
 
   const giveCur = givePm.currency.code.toUpperCase();
   const getCur = getPm.currency.code.toUpperCase();
-  const offersJsonLd = buildOffersJsonLd(initialDirRates, dirText?.h1);
+  // English: strip markdown article links from the H1 so JSON-LD gets plain text.
+  const offersJsonLd = buildOffersJsonLd(
+    initialDirRates,
+    locale === "en"
+      ? dirText?.h1?.replace(/\[([^\]]*)\]\([^)]*\)/g, "$1").replace(/\s+/g, " ").trim()
+      : dirText?.h1,
+    locale,
+  );
 
   return (
     <VStack mt={[0, 4]}>
@@ -176,14 +187,17 @@ const Exchange = ({
       <ColumnGrid>
         <Column index={0}>
           <TitleH2 isLong={isLong}>
-            <>{`Курс ${codeToRuName2(giveCur)} к ${codeToRuName3(
+            <>{t(
+              `Курс ${codeToRuName2(giveCur)} к ${codeToRuName3(
               getCur
-            )} на сегодня`}</>
+            )} на сегодня`,
+              `${codeToEnName(giveCur)} to ${codeToEnName(getCur)} rate today`
+            )}</>
           </TitleH2>
 
           <Chart giveCur={giveCur} getCur={getCur} />
           <TitleH2 isLong={isLong}>
-            <>Похожие направления:</>
+            <>{t("Похожие направления:", "Similar directions:")}</>
           </TitleH2>
 
           {similarPmPairs && (
@@ -214,7 +228,7 @@ const Exchange = ({
           </HStack>
           <Box display={{ base: "none", lg: "block" }}>
             <TitleH2 isLong={isLong}>
-              <>Предложения обмена:</>
+              <>{t("Предложения обмена:", "Exchange offers:")}</>
             </TitleH2>
           </Box>
 
@@ -251,7 +265,10 @@ const Exchange = ({
             giveCur={giveCur}
             getCur={getCur}
           />
-          <CityChannelLink citySlug={city?.en_name} cityName={city?.ru_name} />
+          <CityChannelLink
+            citySlug={city?.en_name}
+            cityName={locale === "en" ? pickName(city, locale) : city?.ru_name}
+          />
           {/* The full offers table lives in this full-width block: in the 436px column it either
               overflowed (phones) or left the left column with a wall of empty space (desktop). */}
           {/* Desktop: the same short table (phones get it under the swiper). */}

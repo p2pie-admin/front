@@ -6,8 +6,10 @@ import AdvantageBottom from "./AdvantageBottom";
 import { FaBolt } from "react-icons/fa6";
 import { Box3D, ResponsiveText } from "../../../../styles/theme/custom";
 import { BiSolidFace } from "react-icons/bi";
+import { useT } from "../../../../services/i18n";
 
 export default function TrafficAdvantage({ hovering }: { hovering: boolean }) {
+  const t = useT();
   const accentOpacity = hovering ? "1" : "0.8";
 
   return (
@@ -68,12 +70,12 @@ export default function TrafficAdvantage({ hovering }: { hovering: boolean }) {
                 mt="0.5"
                 color="inherit"
               >
-                Алексей
+                {t("Алексей", "Alex")}
               </ResponsiveText>
             </HStack>
 
             <ResponsiveText size="xs" variant="shaded" color={"bg.400"}>
-              сейчас
+              {t("сейчас", "now")}
             </ResponsiveText>
           </HStack>
           <ResponsiveText
@@ -82,15 +84,15 @@ export default function TrafficAdvantage({ hovering }: { hovering: boolean }) {
             ml="1"
             color={`rgba(255,255,255,${accentOpacity})`}
           >
-            Есть кто продает USDT за наличку в Москве?
+            {t("Есть кто продает USDT за наличку в Москве?", "Anyone selling USDT for cash in Moscow?")}
           </ResponsiveText>
         </Box3D>
       </Center>
       <AdvantageBottom
         icon={<FaBolt size="1rem" />}
         hovering={hovering}
-        title="Бесплатный трафик"
-        subtitle="Ищем твоих потенциальных клиентов в сотнях телеграм групп в реальном времени"
+        title={t("Бесплатный трафик", "Free traffic")}
+        subtitle={t("Ищем твоих потенциальных клиентов в сотнях телеграм групп в реальном времени", "We find your potential clients in hundreds of Telegram groups in real time")}
       />
     </>
   );

@@ -11,8 +11,10 @@ import {
   getMakerSlug,
   getMakerStatusColor,
 } from "./helper";
+import { useT } from "../../../services/i18n";
 
 export default function MakerLink({ maker }: { maker: IMakerPreview }) {
+  const t = useT();
   const displayName = getMakerDisplayName(maker);
   const slug = getMakerSlug(maker);
   const avatarSrc = getAvatarSrc(maker.avatar?.url);
@@ -69,10 +71,10 @@ export default function MakerLink({ maker }: { maker: IMakerPreview }) {
                 {publicId}
               </ResponsiveText>
               <ResponsiveText size="xs" variant="primary">
-                Предложений: {offersCount}
+                {t("Предложений", "Offers")}: {offersCount}
               </ResponsiveText>
               <ResponsiveText size="xs" variant="primary">
-                Отзывы: {reviewsCount}
+                {t("Отзывы", "Reviews")}: {reviewsCount}
               </ResponsiveText>
             </HStack>
           </VStack>

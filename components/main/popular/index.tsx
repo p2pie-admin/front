@@ -7,6 +7,7 @@ import React, { useEffect, useRef, useState } from "react";
 import CryptoPm from "./CryptoPm";
 import { Box3D, ResponsiveText } from "../../../styles/theme/custom";
 import Shader from "../../shared/Shader";
+import { useT } from "../../../services/i18n";
 
 const Popular = ({
   popularRates,
@@ -15,6 +16,7 @@ const Popular = ({
   popularRates?: IPopularDirRates;
   popularPms?: IPm[];
 }) => {
+  const t = useT();
   const isBase = useBreakpointValue({ base: true, md: false });
   const [isMidVisible, setIsMidVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -78,10 +80,10 @@ const Popular = ({
                 <CryptoPm cryptoPm={cryptoPm} />
 
                 <ResponsiveText size="sm" fontWeight="bold">
-                  {`Купить ${cryptoPm.currency.code.toUpperCase()}`}
+                  {`${t("Купить", "Buy")} ${cryptoPm.currency.code.toUpperCase()}`}
                 </ResponsiveText>
                 <ResponsiveText size="sm" fontWeight="bold">
-                  {`Продать ${cryptoPm.currency.code.toUpperCase()}`}
+                  {`${t("Продать", "Sell")} ${cryptoPm.currency.code.toUpperCase()}`}
                 </ResponsiveText>
                 <CryptoRates
                   key={cryptoCode}
@@ -93,7 +95,7 @@ const Popular = ({
               <ResponsiveText
                 size="xs"
                 textAlign="end"
-              >{`Всего обменников: ${exchangersCount}`}</ResponsiveText>
+              >{`${t("Всего обменников", "Total exchangers")}: ${exchangersCount}`}</ResponsiveText>
             </Box3D>
           );
         })}

@@ -1,5 +1,6 @@
 import { Box, Grid, HStack, Text, Highlight } from "@chakra-ui/react";
 import React from "react";
+import { useT } from "../../../../services/i18n";
 
 export default function AdvantageBottom({
   hovering,
@@ -12,6 +13,7 @@ export default function AdvantageBottom({
   subtitle: string;
   icon: any;
 }) {
+  const t = useT();
   return (
     <Grid
       gap="4"
@@ -30,9 +32,9 @@ export default function AdvantageBottom({
         <Text whiteSpace="pre-line">{subtitle}</Text>
 
         <Text>
-          {`Как это работает? `}
+          {t(`Как это работает? `, `How does it work? `)}
           <Highlight
-            query={["читать далее →"]}
+            query={[t("читать далее →", "read more →")]}
             styles={{
               color: "peach.300",
               textDecoration: "underline",
@@ -41,7 +43,7 @@ export default function AdvantageBottom({
               },
             }}
           >
-            читать далее →
+            {t("читать далее →", "read more →")}
           </Highlight>
         </Text>
       </Box>

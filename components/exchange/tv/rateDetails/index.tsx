@@ -37,6 +37,7 @@ import { capitalize } from "../../../main/side/selector/section/PmGroup/helper";
 import FoundError from "../../../articles/pmArticle/FoundError";
 import ErrorWrapper from "../../../shared/ErrorWrapper";
 import exchanger from "../../../exchangers/exchanger";
+import { pickName, useLocale, useT } from "../../../../services/i18n";
 
 const cmsFetcher = initCMSFetcher();
 
@@ -48,6 +49,8 @@ const RateDetails = ({ rate }: { rate: IRate }) => {
   const mainColor = useColorModeValue("violet.700", "peach.300");
   const exchangerName = (rate?.display_name || rate?.name)?.trim();
   const dispatch = useAppDispatch();
+  const locale = useLocale();
+  const t = useT();
   const {
     name: rateName,
     display_name: rateDisplayName,
@@ -90,22 +93,22 @@ const RateDetails = ({ rate }: { rate: IRate }) => {
   }
   const rateProps = [
     {
-      name: "Курс:",
+      name: t("Курс:", "Rate:"),
       give: amounts[0],
       get: amounts[1],
     },
     {
-      name: "Сумма MIN:",
+      name: t("Сумма MIN:", "Amount MIN:"),
       give: rate.min.give,
       get: rate.min.get,
     },
     {
-      name: "Сумма MAX:",
+      name: t("Сумма MAX:", "Amount MAX:"),
       give: rate.max.give,
       get: rate.max.get,
     },
     {
-      name: "Резерв:",
+      name: t("Резерв:", "Reserve:"),
       give: rate.reserve.give,
       get: rate.reserve.get,
     },
@@ -121,8 +124,10 @@ const RateDetails = ({ rate }: { rate: IRate }) => {
 
   const giveCur = givePm.currency.code.toUpperCase();
   const getCur = getPm.currency.code.toUpperCase();
-  const giveName = givePm.ru_name ?? givePm.en_name ?? "";
-  const getName = getPm.ru_name ?? getPm.en_name ?? "";
+  const giveName =
+    locale === "en" ? pickName(givePm, locale) : givePm.ru_name ?? givePm.en_name ?? "";
+  const getName =
+    locale === "en" ? pickName(getPm, locale) : getPm.ru_name ?? getPm.en_name ?? "";
 
   // City addon
 
@@ -195,7 +200,7 @@ const RateDetails = ({ rate }: { rate: IRate }) => {
       {isError && (
         <Box px="2" py="1">
           <Text fontSize="sm" color="bg.400">
-            Нет деталей об обменнике
+            {t("Нет деталей об обменнике", "No exchanger details")}
           </Text>
         </Box>
       )}

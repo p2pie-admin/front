@@ -3,9 +3,11 @@ import { FaArrowUpWideShort, FaArrowDownShortWide } from "react-icons/fa6";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { IMassSort } from "../../../../types/mass";
 import { setMassSort } from "../../../../redux/mainReducer";
+import { useT } from "../../../../services/i18n";
 
 const MassSortButtons = () => {
   const activeBg = useColorModeValue("bg.100", "bg.600");
+  const t = useT();
 
   const massSort = useAppSelector((state) => state.main.massSort);
 
@@ -26,18 +28,18 @@ const MassSortButtons = () => {
   const buttons = [
     {
       key: "course",
-      label: "Курс",
-      tooltip: "Сортировать по курсу",
+      label: t("Курс", "Rate"),
+      tooltip: t("Сортировать по курсу", "Sort by rate"),
     },
     {
       key: "limit",
-      label: "Лимиты",
-      tooltip: "Сортировать по лимитам",
+      label: t("Лимиты", "Limits"),
+      tooltip: t("Сортировать по лимитам", "Sort by limits"),
     },
     {
       key: "admin_rating",
-      label: "Рейтинг",
-      tooltip: "Сортировать по рейтингу",
+      label: t("Рейтинг", "Rating"),
+      tooltip: t("Сортировать по рейтингу", "Sort by rating"),
     },
   ] as const;
 

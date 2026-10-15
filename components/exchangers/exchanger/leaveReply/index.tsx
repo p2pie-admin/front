@@ -17,6 +17,7 @@ import {
   selectReplyText,
   setReplyText,
 } from "../../../../redux/leaveFeedbackSlice";
+import { useT } from "../../../../services/i18n";
 
 export default function ReplyText({
   text,
@@ -25,6 +26,7 @@ export default function ReplyText({
   text?: string | null;
   canReply?: boolean;
 }) {
+  const t = useT();
   const dispatch = useAppDispatch();
   const replyText = useAppSelector(selectReplyText);
 
@@ -48,17 +50,17 @@ export default function ReplyText({
         {text}
       </Text>
       {canReply && (
-        <Tooltip openDelay={500} label={"Ответить"} fontSize="sm">
+        <Tooltip openDelay={500} label={t("Ответить", "Reply")} fontSize="sm">
           <Button size="xs" variant="ghost" onClick={handleSubmitClick}>
             <Box transform="rotate(180deg) scaleX(-1)" color="bg.300">
               <HiReply size="1rem" />
             </Box>
           </Button>
 
-          <CustomModal id={"reply"} header={"Ответить на отзыв"}>
+          <CustomModal id={"reply"} header={t("Ответить на отзыв", "Reply to review")}>
             <Box>
               <Textarea
-                placeholder="Ваш комментарий"
+                placeholder={t("Ваш комментарий", "Your comment")}
                 minH="100px"
                 borderWidth="2px"
                 borderRadius="xl"
@@ -73,14 +75,14 @@ export default function ReplyText({
                   variant="no_contrast"
                   onClick={handleClose}
                 >
-                  Отмена
+                  {t("Отмена", "Cancel")}
                 </Button>
                 <Button
                   alignSelf="flex-end"
                   variant="primary"
                   onClick={handleSend}
                 >
-                  Отправить
+                  {t("Отправить", "Send")}
                 </Button>
               </HStack>
             </Box>

@@ -2,8 +2,10 @@ import { VStack } from "@chakra-ui/react";
 import Image from "next/image";
 import greetings from "../../../public/greetings.png";
 import CustomTitle from "../../shared/CustomTitle";
+import { useT } from "../../../services/i18n";
 
 const MakerGreeting = () => {
+  const t = useT();
   return (
     <VStack
       gap={{ base: "4", lg: "-20" }}
@@ -21,11 +23,11 @@ const MakerGreeting = () => {
         as="h1"
         mt={{ base: "-20", lg: "-20" }}
         mb="0"
-        title={"Прокачай свой p2p обмен"}
+        title={t("Прокачай свой p2p обмен", "Level up your p2p exchange")}
         subtitle={
-          "Настрой личную p2p витрину. Накапливай уровань доверия за каждую сделку."
+          t("Настрой личную p2p витрину. Накапливай уровань доверия за каждую сделку.", "Set up your personal p2p storefront. Build trust with every deal.")
         }
-        subtitle2={"Даем трафик клиентов. Берем безопасность сделок на себя."}
+        subtitle2={t("Даем трафик клиентов. Берем безопасность сделок на себя.", "We bring you clients. We take care of deal security.")}
         subtitleProps={{
           mt: { base: 4, lg: 5 },
           lineHeight: { base: "1.45", lg: "1.35" },

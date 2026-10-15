@@ -25,6 +25,7 @@ import { addHeadersToSearchIndex, addPathsToSitemap } from "../cache/cache";
 import { IMassDirTextId } from "../types/mass";
 import { initParserFetcher } from "../services/fetchers";
 import { ParserCityDirections } from "../types/map";
+import { localeOf } from "../services/i18n";
 import {
   buildRatesSummary,
   HISTORY_DAYS,
@@ -82,11 +83,12 @@ const loadSsrRates = async ({
   };
 };
 
-export async function getStaticProps({
-  params,
-}: {
+export async function getStaticProps(ctx: {
   params: { exchange: string };
+  locale?: string;
 }) {
+  const { params } = ctx;
+  const locale = localeOf(ctx);
   try {
     const { exchange } = params;
     const [slug, cityParam] = exchangeToSlugCity(exchange);
@@ -178,6 +180,7 @@ export async function getStaticProps({
         customDirText,
         city,
         articleCodes,
+        locale,
       }) as Promise<IDirText>,
       loadSsrRates({ dir, isCash: !!isCash, city }),
     ]);
@@ -186,10 +189,12 @@ export async function getStaticProps({
       dirText,
       slug,
       city,
+      locale,
     }) as ISEO;
     seo.noindex = ssr.noindex;
 
-    await addHeadersToSearchIndex({
+    // The shared search index is Russian only.
+    if (locale === "ru") await addHeadersToSearchIndex({
       slug,
       header: dirText.h1 || dirText.seo_title,
       wordsToSearchFrom: `${dirText.h1} ${dirText.seo_title} ${dirText.header}`,

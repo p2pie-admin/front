@@ -5,6 +5,7 @@ import { IPopularDirRates } from "../../types/rates";
 import { IPm } from "../../types/selector";
 import { pmsToSlug } from "./side/selector/section/PmGroup/helper";
 import { format } from "../../redux/amountsHelper";
+import { useT } from "../../services/i18n";
 
 const MAX_CARDS = 6;
 
@@ -67,6 +68,7 @@ const PopularDirections = ({
   popularRates?: IPopularDirRates | null;
   popularPms?: IPm[] | null;
 }) => {
+  const t = useT();
   const cards = buildCards(popularRates, popularPms);
   if (!cards.length) return null;
   return (
@@ -91,7 +93,7 @@ const PopularDirections = ({
             bottomLeft={
               c.offers ? (
                 <Text fontSize="xs" color="bg.400" whiteSpace="nowrap" mt="1">
-                  {`Обменников: ${c.offers}`}
+                  {`${t("Обменников", "Exchangers")}: ${c.offers}`}
                 </Text>
               ) : null
             }
@@ -113,7 +115,7 @@ const PopularDirections = ({
           borderColor="bg.500"
           color="bg.200"
         >
-          Все курсы обмена
+          {t("Все курсы обмена", "All exchange rates")}
         </Button>
       </Box>
     </Box>

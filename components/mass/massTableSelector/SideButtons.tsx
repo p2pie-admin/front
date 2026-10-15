@@ -3,9 +3,11 @@ import React, { useContext } from "react";
 import MassSideContext from "../sideContext";
 
 import NextLink from "next/link";
+import { useT } from "../../../services/i18n";
 
 function SideButtons() {
   const { isSell, slug } = useContext(MassSideContext);
+  const t = useT();
   return (
     <HStack
       gap="0"
@@ -22,7 +24,7 @@ function SideButtons() {
           size="md"
           colorScheme="green"
         >
-          {"Купить"}
+          {t("Купить", "Buy")}
         </Button>
       </NextLink>
       <NextLink href={`/sell/${slug}`} passHref>
@@ -33,7 +35,7 @@ function SideButtons() {
           size="md"
           colorScheme="pink"
         >
-          {"Продать"}
+          {t("Продать", "Sell")}
         </Button>
       </NextLink>
     </HStack>

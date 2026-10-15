@@ -5,6 +5,7 @@ import { IPm } from "../../types/selector";
 import { capitalize } from "../main/side/selector/section/PmGroup/helper";
 import { format } from "../../redux/amountsHelper";
 import { IDotColors, IExchangerStatus } from "../../types/exchanger";
+import { Locale, tr } from "../../services/i18n";
 
 /**
  * Markdown renderer with Next.js <Link> for internal navigation
@@ -113,17 +114,17 @@ export const enrichText = ({
   );
 };
 
-export function secondsAgo(timestamp?: number | string): string {
+export function secondsAgo(timestamp?: number | string, locale: Locale = "ru"): string {
   if (!timestamp) return "";
   const ts = typeof timestamp === "string" ? Number(timestamp) : timestamp;
   const now = Date.now();
   const diffSec = Math.floor((now - ts) / 1000);
 
-  if (diffSec < 0) return "в будущем";
-  if (diffSec < 60) return `${diffSec}с`;
-  if (diffSec < 3600) return `${Math.floor(diffSec / 60)}м`;
-  if (diffSec < 86400) return `${Math.floor(diffSec / 3600)}ч`;
-  return `${Math.floor(diffSec / 86400)}д`;
+  if (diffSec < 0) return tr(locale, "в будущем", "in the future");
+  if (diffSec < 60) return `${diffSec}${tr(locale, "с", "s")}`;
+  if (diffSec < 3600) return `${Math.floor(diffSec / 60)}${tr(locale, "м", "m")}`;
+  if (diffSec < 86400) return `${Math.floor(diffSec / 3600)}${tr(locale, "ч", "h")}`;
+  return `${Math.floor(diffSec / 86400)}${tr(locale, "д", "d")}`;
 }
 
 export const waitSec = (seconds: number) => {

@@ -13,8 +13,10 @@ import { IMaker } from "../../../types/p2p";
 
 import { TiDeleteOutline } from "react-icons/ti";
 import { RiDeleteBin2Fill } from "react-icons/ri";
+import { useT } from "../../../services/i18n";
 
 export default function DeleteMaker({ maker }: { maker: IMaker }) {
+  const t = useT();
   return (
     <Menu placement="bottom-end" isLazy>
       <MenuButton
@@ -33,7 +35,7 @@ export default function DeleteMaker({ maker }: { maker: IMaker }) {
         >
           <HStack spacing="3" color="bg.300">
             <RxCross2 size="1rem" />
-            <span>Удалить проект</span>
+            <span>{t("Удалить проект", "Delete project")}</span>
           </HStack>
         </MenuItem>
       </MenuList>

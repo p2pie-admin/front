@@ -19,6 +19,7 @@ import MakerStats from "../edit/stats";
 import { BoxWrapper } from "../../shared/BoxWrapper";
 import MakerOffers, { scrollToMakerOffers } from "./offers";
 import { FaqCategoriesList } from "../../faq";
+import { useT } from "../../../services/i18n";
 
 export default function MakerPage({
   maker,
@@ -31,6 +32,7 @@ export default function MakerPage({
   pms: IPm[] | null;
   faqCategory?: IFaqCategory | null;
 }) {
+  const t = useT();
   if (!maker) {
     return (
       <Center
@@ -58,7 +60,7 @@ export default function MakerPage({
         {/* Phones: the main action under the thumb (desktop has it in the top panel). */}
         <Box display={{ base: "block", lg: "none" }} mt="4">
           <Button variant="primary" color="white" w="100%" size="lg" onClick={scrollToMakerOffers}>
-            Начать сделку
+            {t("Начать сделку", "Start a deal")}
           </Button>
         </Box>
         <Divider my="4" />
@@ -69,7 +71,7 @@ export default function MakerPage({
       <MakerMap coordinates={maker.coordinates} />
 
       <ExchangerReviewsHeader
-        title={"Уже совершали сделку с этим p2p мейкером?"}
+        title={t("Уже совершали сделку с этим p2p мейкером?", "Have you made a deal with this p2p maker?")}
       />
 
       <ExchangerIdProvider exchangerId={String(maker.id)}>

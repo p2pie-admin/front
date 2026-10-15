@@ -4,6 +4,7 @@ import { IExchanger, IExchangerOffice } from "../../types/exchanger";
 import { ResponsiveText } from "../../styles/theme/custom";
 import ExchangerName from "../shared/ExchangerNameRating";
 import CustomImage from "../shared/CustomImage";
+import { useT } from "../../services/i18n";
 
 export const MarkerTooltipContent = memo(
   ({
@@ -13,6 +14,7 @@ export const MarkerTooltipContent = memo(
     exchanger: IExchanger;
     office?: IExchangerOffice | null;
   }) => {
+    const t = useT();
     const { exchanger_card, offices, admin_rating, logo } = exchanger;
     const displayName = exchanger.display_name || exchanger.name;
 
@@ -38,7 +40,7 @@ export const MarkerTooltipContent = memo(
           <HStack alignItems="center">
             <Box w="8px" h="8px" bg="green.200" borderRadius="50%" />
             <ResponsiveText fontSize="sm" whiteSpace="unset">
-              {`Время работы: ${resolvedOffice?.working_time}`}
+              {`${t("Время работы", "Working hours")}: ${resolvedOffice?.working_time}`}
             </ResponsiveText>
           </HStack>
         )}

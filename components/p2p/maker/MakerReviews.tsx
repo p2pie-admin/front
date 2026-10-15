@@ -4,15 +4,17 @@ import { CustomHeader, FormatedDate } from "../../shared/BoxWrapper";
 import { BoxWrapper } from "../../shared/BoxWrapper";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { IMaker } from "../../../types/p2p";
+import { useT } from "../../../services/i18n";
 
 export default function MakerReviews({
   reviews,
 }: {
   reviews: IMaker["reviews"];
 }) {
+  const t = useT();
   return (
     <BoxWrapper>
-      <CustomHeader text="Отзывы" Icon={IoMdChatboxes} />
+      <CustomHeader text={t("Отзывы", "Reviews")} Icon={IoMdChatboxes} />
       <Divider my="4" />
       <VStack alignItems="start" spacing="4" px="2">
         {reviews?.map((review) => (

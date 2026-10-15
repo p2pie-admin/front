@@ -4,11 +4,13 @@ import React from "react";
 import AdvantageBottom from "./AdvantageBottom";
 import { BsPersonFillCheck } from "react-icons/bs";
 import Loader from "../../../shared/Loader";
+import { useT } from "../../../../services/i18n";
 export default function ReputationAdvantage({
   hovering,
 }: {
   hovering: boolean;
 }) {
+  const t = useT();
   const accentOpacity = hovering ? "0.9" : "0.4";
 
   return (
@@ -58,9 +60,9 @@ export default function ReputationAdvantage({
       <AdvantageBottom
         icon={<BsPersonFillCheck size="1.5rem" />}
         hovering={hovering}
-        title="Твой гарант репутации"
+        title={t("Твой гарант репутации", "Your reputation guarantor")}
         subtitle={
-          "Работай через телеграм-чат, как прежде.\nБез риска, без комиссий, без депозитов."
+          t("Работай через телеграм-чат, как прежде.\nБез риска, без комиссий, без депозитов.", "Keep working through Telegram chat as before.\nNo risk, no fees, no deposits.")
         }
       />
     </>

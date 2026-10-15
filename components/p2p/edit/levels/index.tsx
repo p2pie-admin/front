@@ -10,7 +10,9 @@ import { IP2PLevel } from "../../../../types/p2p";
 import { BsArrowRightShort } from "react-icons/bs";
 import CustomModal from "../../../shared/CustomModal";
 import MakerLevelsDescription from "./MakerLevelsDescription";
+import { localized } from "../../i18n";
 import src from "resize-observer-polyfill";
+import { useLocale, useT } from "../../../../services/i18n";
 
 export default function MakerLevels({
   levels,
@@ -18,6 +20,8 @@ export default function MakerLevels({
   levels?: IP2PLevel[] | null;
 }) {
   const dispatch = useAppDispatch();
+  const locale = useLocale();
+  const t = useT();
 
   const openDialog = () => {
     batch(() => {
@@ -112,7 +116,7 @@ export default function MakerLevels({
                   zIndex={1}
                   maxW="120px"
                 >
-                  {level.title}
+                  {localized(level, "title", locale)}
                 </Box>
               </Box>
               {(index + 1) % 5 ? (
@@ -126,7 +130,7 @@ export default function MakerLevels({
           ))}
       </Grid>
       <Center mt={{ base: "3", lg: "8" }}>
-        <CustomModal id={`levels`} header="Уровни развития" size="xl">
+        <CustomModal id={`levels`} header={t("Уровни развития", "Growth levels")} size="xl">
           <MakerLevelsDescription levels={levels} />
         </CustomModal>
         <Button
@@ -137,7 +141,7 @@ export default function MakerLevels({
           px={{ base: "2", lg: "4" }}
           rightIcon={<BsArrowRightShort size="1.2rem" />}
         >
-          Подробнее про уровни
+          {t("Подробнее про уровни", "More about levels")}
         </Button>
       </Center>
     </Box>

@@ -6,24 +6,29 @@ import { ClosestCityMatch } from "../helper";
 import { TbMapSearch } from "react-icons/tb";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { RiPinDistanceFill } from "react-icons/ri";
+import { pickName, useLocale, useT } from "../../../services/i18n";
 
 type ClosestCitiesProps = {
   city: ICity;
   closestCities: ClosestCityMatch[];
 };
 
-const formatDistance = (distanceKm: number) =>
-  `${Math.round(distanceKm)} км`;
+const formatDistance = (distanceKm: number, unit = "км") =>
+  `${Math.round(distanceKm)} ${unit}`;
 
 const ClosestCities = ({ city, closestCities }: ClosestCitiesProps) => {
+  const locale = useLocale();
+  const t = useT();
   if (!closestCities.length) {
     return null;
   }
 
-  const heading = "Города рядом";
+  const heading = t("Города рядом", "Nearby cities");
 
   const getCityName = (target: ICity) =>
-    target.preposition || target.ru_name || target.en_name;
+    locale === "en"
+      ? pickName(target, locale)
+      : target.preposition || target.ru_name || target.en_name;
 
   return (
     <BoxWrapper mt="8">
@@ -42,7 +47,7 @@ const ClosestCities = ({ city, closestCities }: ClosestCitiesProps) => {
               color="bg.300"
             >
               <HStack>
-                <ResponsiveText fontWeight="thin">{`Обмен ${
+                <ResponsiveText fontWeight="thin">{locale === "en" ? "Exchange in" : `Обмен ${
                   cityName.startsWith("В") ? "во" : "в"
                 }`}</ResponsiveText>
                 <ResponsiveText variant="primary">{`${cityName}`}</ResponsiveText>
@@ -50,7 +55,7 @@ const ClosestCities = ({ city, closestCities }: ClosestCitiesProps) => {
                   size="xs"
                   mt="1"
                   display={{ base: "none", lg: "unset" }}
-                >{`(${ratesTotal} предложений)`}</ResponsiveText>
+                >{`(${ratesTotal} ${t("предложений", ratesTotal === 1 ? "offer" : "offers")})`}</ResponsiveText>
                 {cityName.length < 12 && (
                   <ResponsiveText
                     size="xs"
@@ -62,7 +67,7 @@ const ClosestCities = ({ city, closestCities }: ClosestCitiesProps) => {
               <HStack>
                 <RiPinDistanceFill size="1.2rem" />
                 <ResponsiveText>
-                  {formatDistance(distanceKm)}
+                  {formatDistance(distanceKm, t("км", "km"))}
                 </ResponsiveText>
               </HStack>
             </Button>

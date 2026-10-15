@@ -15,6 +15,7 @@ import { buildRateString } from "../shared/helper";
 import { exchangerNameToSlug } from "../exchangers/helper";
 import { ISsrRate } from "./ssrRates";
 import { localFormat } from "../../redux/amountsHelper";
+import { useLocale, useT } from "../../services/i18n";
 
 // Rows shown at once; the rest sit inside a native <details> so the HTML stays crawlable
 // without a 40-row wall on screen.
@@ -50,6 +51,8 @@ const OffersTable = ({
   hiddenNote?: boolean;
 }) => {
   const [shown, setShown] = useState(visibleRows);
+  const locale = useLocale();
+  const t = useT();
   if (!rates || !rates.length) return null;
   const hidden = total && total > rates.length ? total - rates.length : 0;
   const head = rates.slice(0, expandWith === "button" ? shown : visibleRows);
@@ -65,7 +68,7 @@ const OffersTable = ({
       const max = Number(rate.max?.[side]) || 0;
       // Same compact style as the swiper cards ("15 тыс ₽ — 250 тыс ₽") so it fits under the name.
       const reserve = Number(rate.reserve?.get) || 0;
-      const limits = min || max ? `${localFormat(min, smallCur)} — ${localFormat(max, smallCur)}` : "";
+      const limits = min || max ? `${localFormat(min, smallCur, locale)} — ${localFormat(max, smallCur, locale)}` : "";
       return (
         <Tr key={`offer_${rate.exchangerId}`}>
           <Td px={{ base: 1, md: 2 }} py={{ base: 3, md: 2 }}>{offset + index + 1}</Td>
@@ -105,7 +108,7 @@ const OffersTable = ({
             {limits || "—"}
           </Td>
           <Td display={wideOnly} isNumeric whiteSpace="nowrap">
-            {reserve ? localFormat(reserve, getCur) : "—"}
+            {reserve ? localFormat(reserve, getCur, locale) : "—"}
           </Td>
           <Td px={{ base: 1, md: 2 }} w="1%">
             {rate.ref_link ? (
@@ -115,7 +118,7 @@ const OffersTable = ({
                 rel="nofollow sponsored noopener"
                 color="peach.300"
                 whiteSpace="nowrap"
-                aria-label={`Перейти на ${name}`}
+                aria-label={t(`Перейти на ${name}`, `Go to ${name}`)}
                 // a real tap target on phones (the glyph alone is ~12px)
                 display="inline-flex"
                 alignItems="center"
@@ -125,7 +128,7 @@ const OffersTable = ({
                 fontSize={{ base: "lg", md: "sm" }}
               >
                 <Box as="span" display={{ base: "none", md: "inline" }}>
-                  Перейти →
+                  {t("Перейти →", "Visit →")}
                 </Box>
                 <Box as="span" display={{ base: "inline", md: "none" }}>
                   →
@@ -148,11 +151,11 @@ const OffersTable = ({
         >
           <Tr>
             <Th px={{ base: 1, md: 2 }}>#</Th>
-            <Th px={{ base: 1, md: 2 }}>Обменник</Th>
-            <Th px={{ base: 1, md: 2 }}>Курс</Th>
-            <Th display={wideOnly}>Лимиты</Th>
+            <Th px={{ base: 1, md: 2 }}>{t("Обменник", "Exchanger")}</Th>
+            <Th px={{ base: 1, md: 2 }}>{t("Курс", "Rate")}</Th>
+            <Th display={wideOnly}>{t("Лимиты", "Limits")}</Th>
             <Th display={wideOnly} isNumeric>
-              Резерв
+              {t("Резерв", "Reserve")}
             </Th>
             <Th px={{ base: 1, md: 2 }}></Th>
           </Tr>
@@ -175,9 +178,12 @@ const OffersTable = ({
             py="2"
             _hover={{ textDecoration: "underline" }}
           >
-            {`Показать ещё ${tail.length} ${
-              tail.length === 1 ? "предложение" : tail.length < 5 ? "предложения" : "предложений"
-            }`}
+            {t(
+              `Показать ещё ${tail.length} ${
+                tail.length === 1 ? "предложение" : tail.length < 5 ? "предложения" : "предложений"
+              }`,
+              `Show ${tail.length} more ${tail.length === 1 ? "offer" : "offers"}`,
+            )}
           </Box>
           {table(tail, head.length, false)}
         </Box>
@@ -197,12 +203,18 @@ const OffersTable = ({
           fontSize="sm"
           onClick={() => setShown((n) => n + visibleRows)}
         >
-          {`Показать ещё ${Math.min(remaining, visibleRows)} из ${rates.length}`}
+          {t(
+            `Показать ещё ${Math.min(remaining, visibleRows)} из ${rates.length}`,
+            `Show ${Math.min(remaining, visibleRows)} more of ${rates.length}`,
+          )}
         </Box>
       ) : null}
       {hidden && hiddenNote ? (
         <ResponsiveText size="xs" variant="no_contrast" mt="2">
-          {`Остальные ${hidden} предложений — в живом списке выше.`}
+          {t(
+            `Остальные ${hidden} предложений — в живом списке выше.`,
+            `The other ${hidden} offers are in the live list above.`,
+          )}
         </ResponsiveText>
       ) : null}
     </Box>

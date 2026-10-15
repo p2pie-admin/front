@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ResponsiveText } from "../../../styles/theme/custom";
 import { RiArrowDownWideLine } from "react-icons/ri";
 import { RiSearchLine } from "react-icons/ri";
+import { useT } from "../../../services/i18n";
 
 function pluralize(
   count: number,
@@ -28,6 +29,7 @@ interface TopLabelProps {
 
 const TopLabel: React.FC<TopLabelProps> = ({ text, length }) => {
   const isLong = text ? text.length > 30 : true;
+  const t = useT();
 
   return (
     <VStack
@@ -46,12 +48,15 @@ const TopLabel: React.FC<TopLabelProps> = ({ text, length }) => {
       <HStack>
         {/* <RiSearchLine size="1rem" /> */}
         <ResponsiveText textAlign="center" size="lg" color="inherit">
-          {`Найдено ${length} ${pluralize(
-            length,
-            "предложение",
-            "предложения",
-            "предложений"
-          )}`}
+          {t(
+            `Найдено ${length} ${pluralize(
+              length,
+              "предложение",
+              "предложения",
+              "предложений"
+            )}`,
+            `Found ${length} ${length === 1 ? "offer" : "offers"}`
+          )}
         </ResponsiveText>
       </HStack>
 

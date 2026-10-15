@@ -14,6 +14,7 @@ import { ResponsiveText } from "../../../styles/theme/custom";
 import { slugCityToExchange } from "../../exchange/helper";
 import { isCashPm } from "../../shared/helper";
 import { useAppSelector } from "../../../redux/hooks";
+import { pickName, useLocale } from "../../../services/i18n";
 
 const CryptoRates = ({
   cryptoPm,
@@ -27,6 +28,7 @@ const CryptoRates = ({
     sell: IPopularRate[];
   };
 }) => {
+  const locale = useLocale();
   const citySlug = useAppSelector((state) =>
     state.main.city?.en_name.replaceAll(" ", "-").toLowerCase(),
   );
@@ -55,7 +57,9 @@ const CryptoRates = ({
               _hover={{ color: "bg.200" }}
               my="1"
             >
-              {`${capitalize(pm?.ru_name || pm?.en_name)}`}
+              {`${capitalize(
+                locale === "en" ? pickName(pm, locale) : pm?.ru_name || pm?.en_name
+              )}`}
             </ResponsiveText>
           );
         })}

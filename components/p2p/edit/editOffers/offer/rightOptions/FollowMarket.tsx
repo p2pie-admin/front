@@ -7,6 +7,7 @@ import OfferSwitch from "../OfferSwitch";
 import { useAppDispatch } from "../../../../../../redux/hooks";
 import { setP2PFullOfferField } from "../../../../../../redux/mainReducer";
 import { IFullOffer } from "../../../../../../types/p2p";
+import { useT } from "../../../../../../services/i18n";
 
 export default function RightOptions({
   fullOffer,
@@ -14,6 +15,7 @@ export default function RightOptions({
   fullOffer: Partial<IFullOffer>;
 }) {
   const dispatch = useAppDispatch();
+  const t = useT();
   const offerIndex = fullOffer.index;
   if (offerIndex === undefined) return null;
 
@@ -49,7 +51,7 @@ export default function RightOptions({
         <MyTooltip label="test">
           <IoInformationCircle size="1rem" />
         </MyTooltip>
-        <ResponsiveText>Следовать за рынком</ResponsiveText>
+        <ResponsiveText>{t("Следовать за рынком", "Follow the market")}</ResponsiveText>
       </FormLabel>
       <OfferSwitch
         id={`follow-market-${offerIndex}`}

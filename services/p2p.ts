@@ -69,6 +69,8 @@ export const p2pMakersQuery = gql`
               attributes {
                 level
                 description
+                en_title
+                en_description
                 limit_online_usd
                 limit_offline_usd
                 title
@@ -80,6 +82,8 @@ export const p2pMakersQuery = gql`
                     attributes {
                       title
                       description
+                      en_title
+                      en_description
                     }
                   }
                 }
@@ -92,6 +96,8 @@ export const p2pMakersQuery = gql`
               attributes {
                 title
                 description
+                en_title
+                en_description
               }
             }
           }
@@ -102,6 +108,8 @@ export const p2pMakersQuery = gql`
               attributes {
                 name
                 description
+                en_name
+                en_description
                 color
               }
             }
@@ -178,6 +186,8 @@ export const p2pMakerQuery = gql`
               attributes {
                 level
                 description
+                en_title
+                en_description
                 limit_online_usd
                 limit_offline_usd
                 title
@@ -189,6 +199,8 @@ export const p2pMakerQuery = gql`
                     attributes {
                       title
                       description
+                      en_title
+                      en_description
                     }
                   }
                 }
@@ -201,6 +213,8 @@ export const p2pMakerQuery = gql`
               attributes {
                 title
                 description
+                en_title
+                en_description
               }
             }
           }
@@ -211,6 +225,8 @@ export const p2pMakerQuery = gql`
               attributes {
                 name
                 description
+                en_name
+                en_description
                 color
               }
             }
@@ -389,6 +405,8 @@ export const p2pLevelsQuery = `
       attributes{
         level
         description
+        en_title
+        en_description
         limit_online_usd
         limit_offline_usd
         title
@@ -400,6 +418,8 @@ export const p2pLevelsQuery = `
             attributes{
               title
               description
+              en_title
+              en_description
             }
           }
         }
@@ -417,6 +437,9 @@ export const p2pAdsQuery = `
       title
       description
       details
+      en_title
+      en_description
+      en_details
       slug
       image{
         data{

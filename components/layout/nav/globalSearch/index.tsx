@@ -24,6 +24,7 @@ import { useRouter } from "next/router";
 import { filterSearchResults } from "./helper";
 import Transliterator from "../../../../services/transliterator";
 import Loader from "../../../shared/Loader";
+import { useLocale, useT } from "../../../../services/i18n";
 const transliterator = new Transliterator();
 
 const fetcher = async (url: string) => {
@@ -41,12 +42,14 @@ const GlobalSearch = ({
   onNavigate?: () => void;
 } = {}) => {
   const router = useRouter();
+  const locale = useLocale();
+  const t = useT();
   const [open, setOpen] = useState(alwaysOpen);
   const [value, setValue] = useState("");
   const color = useColorModeValue("violet.700", "peach.300");
   const expandedWidth = useBreakpointValue({ base: 240, md: 400 }) || 400;
 
-  const { data, error } = useSWR(open ? "/api/search-index" : null, fetcher, {
+  const { data, error } = useSWR(open ? (locale === "en" ? "/api/search-index?lang=en" : "/api/search-index") : null, fetcher, {
     revalidateOnFocus: false,
   });
 
@@ -118,7 +121,7 @@ const GlobalSearch = ({
                   h="10"
                   color={color}
                   border="none"
-                  placeholder="Поиск направления, обменника или города"
+                  placeholder={t("Поиск направления, обменника или города", "Search a pair, exchanger or city")}
                   value={value}
                   onChange={(e) => setValue(e.target.value)}
                   autoFocus={!alwaysOpen}
@@ -186,7 +189,7 @@ const GlobalSearch = ({
             ))
           ) : (
             <Box textAlign="center" py="2" color="bg.500">
-              Ничего не найдено
+              {t("Ничего не найдено", "Nothing found")}
             </Box>
           )}
         </PopoverBody>

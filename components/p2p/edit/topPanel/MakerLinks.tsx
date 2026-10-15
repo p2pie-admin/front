@@ -19,22 +19,24 @@ import { useAppDispatch } from "../../../../redux/hooks";
 import { sendToast } from "../../../../redux/mainReducer";
 import { base } from "../../../../services/utils";
 import { useMakerEditContext } from "../MakerEditContext";
+import { useT } from "../../../../services/i18n";
 
 export default function MakersLinks() {
   const maker = useMakerEditContext();
   const dispatch = useAppDispatch();
+  const t = useT();
   const makerSlug = getMakerSlug(maker);
   const profilePath = `${base}/p2p/${makerSlug}`;
   const botLink = process.env.NEXT_PUBLIC_TELEGRAM_BOT || "";
 
   const links = [
     {
-      text: "Ваша страница обмена",
+      text: t("Ваша страница обмена", "Your exchange page"),
       icon: RiPagesLine,
       link: profilePath,
     },
     {
-      text: "Ваш телеграм бот",
+      text: t("Ваш телеграм бот", "Your Telegram bot"),
       icon: RiRobot2Line,
       link: botLink,
     },
@@ -58,7 +60,7 @@ export default function MakersLinks() {
       dispatch(
         sendToast({
           status: "success",
-          title: "Ссылка скопирована",
+          title: t("Ссылка скопирована", "Link copied"),
           timeBeforeClosing: 2000,
         }),
       );
@@ -66,7 +68,7 @@ export default function MakersLinks() {
       dispatch(
         sendToast({
           status: "error",
-          title: "Не удалось скопировать ссылку",
+          title: t("Не удалось скопировать ссылку", "Could not copy the link"),
           timeBeforeClosing: 2000,
         }),
       );

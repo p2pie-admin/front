@@ -23,6 +23,7 @@ import { pmFromPmGroups } from "../components/main/side/selector/section/PmGroup
 import { CreateRedirectMutation } from "../components/exchange/tv/queries";
 import { ICity } from "../types/exchange";
 import { serverLinkPROD, serverLinkDEV } from "../services/utils";
+import { Locale, tr } from "../services/i18n";
 import { getSuggestedCourse } from "../components/p2p/edit/editOffers/offer/course/helper";
 import { sendToast } from "./mainReducer";
 import {
@@ -311,7 +312,8 @@ export const saveProjectP2P = createAsyncThunk(
       makerId,
       makerSlug,
       confirmed,
-    }: { makerId: string; makerSlug: string; confirmed?: boolean },
+      locale = "ru",
+    }: { makerId: string; makerSlug: string; confirmed?: boolean; locale?: Locale },
     thunkAPI,
   ) => {
     const { main } = thunkAPI.getState() as { main: MainState };
@@ -333,7 +335,7 @@ export const saveProjectP2P = createAsyncThunk(
         thunkAPI.dispatch(
           sendToast({
             status: "error",
-            title: "Не удалось определить мейкера",
+            title: tr(locale, "Не удалось определить мейкера", "Could not identify the maker"),
             timeBeforeClosing: 3000,
           }),
         );
@@ -344,7 +346,7 @@ export const saveProjectP2P = createAsyncThunk(
         thunkAPI.dispatch(
           sendToast({
             status: "warning",
-            title: "Добавьте хотя бы одно направление",
+            title: tr(locale, "Добавьте хотя бы одно направление", "Add at least one exchange direction"),
             timeBeforeClosing: 2500,
           }),
         );
@@ -356,7 +358,7 @@ export const saveProjectP2P = createAsyncThunk(
         thunkAPI.dispatch(
           sendToast({
             status: "warning",
-            title: "Заполните все направления",
+            title: tr(locale, "Заполните все направления", "Fill in all exchange directions"),
             timeBeforeClosing: 2500,
           }),
         );
@@ -375,7 +377,7 @@ export const saveProjectP2P = createAsyncThunk(
         thunkAPI.dispatch(
           sendToast({
             status: "warning",
-            title: "Уберите повторяющиеся направления",
+            title: tr(locale, "Уберите повторяющиеся направления", "Remove duplicate exchange directions"),
             timeBeforeClosing: 2500,
           }),
         );
@@ -386,7 +388,7 @@ export const saveProjectP2P = createAsyncThunk(
         thunkAPI.dispatch(
           sendToast({
             status: "warning",
-            title: "Данные мейкера не загружены",
+            title: tr(locale, "Данные мейкера не загружены", "Maker data is not loaded"),
             timeBeforeClosing: 2500,
           }),
         );
@@ -427,7 +429,7 @@ export const saveProjectP2P = createAsyncThunk(
         thunkAPI.dispatch(
           sendToast({
             status: "error",
-            title: "Не удалось подготовить ссылку Telegram",
+            title: tr(locale, "Не удалось подготовить ссылку Telegram", "Could not prepare the Telegram link"),
             timeBeforeClosing: 4000,
           }),
         );
@@ -440,7 +442,7 @@ export const saveProjectP2P = createAsyncThunk(
       thunkAPI.dispatch(
         sendToast({
           status: "info",
-          title: "Откройте бота в Telegram и подтвердите",
+          title: tr(locale, "Откройте бота в Telegram и подтвердите", "Open the bot in Telegram and confirm"),
           timeBeforeClosing: 4000,
         }),
       );
@@ -485,7 +487,7 @@ export const saveProjectP2P = createAsyncThunk(
           thunkAPI.dispatch(
             sendToast({
               status: "error",
-              title: "Подтвердите сохранение через Telegram",
+              title: tr(locale, "Подтвердите сохранение через Telegram", "Confirm saving via Telegram"),
               timeBeforeClosing: 4000,
             }),
           );
@@ -495,7 +497,7 @@ export const saveProjectP2P = createAsyncThunk(
           thunkAPI.dispatch(
             sendToast({
               status: "warning",
-              title: "Имя не должно совпадать с вашим Telegram-ником",
+              title: tr(locale, "Имя не должно совпадать с вашим Telegram-ником", "The name must not match your Telegram username"),
               timeBeforeClosing: 4000,
             }),
           );
@@ -505,7 +507,7 @@ export const saveProjectP2P = createAsyncThunk(
           thunkAPI.dispatch(
             sendToast({
               status: "warning",
-              title: "Заполните курс и направление в каждом оффере",
+              title: tr(locale, "Заполните курс и направление в каждом оффере", "Fill in the rate and direction in every offer"),
               timeBeforeClosing: 3000,
             }),
           );
@@ -519,7 +521,7 @@ export const saveProjectP2P = createAsyncThunk(
       thunkAPI.dispatch(
         sendToast({
           status: "success",
-          title: "Данные сохранены",
+          title: tr(locale, "Данные сохранены", "Data saved"),
           timeBeforeClosing: 2500,
         }),
       );
@@ -527,7 +529,7 @@ export const saveProjectP2P = createAsyncThunk(
       thunkAPI.dispatch(
         sendToast({
           status: "error",
-          title: "Не удалось сохранить данные",
+          title: tr(locale, "Не удалось сохранить данные", "Could not save data"),
           timeBeforeClosing: 4000,
         }),
       );

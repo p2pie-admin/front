@@ -36,6 +36,7 @@ import { ReviewPowChallenge, solvePowChallenge } from "./helper";
 import { IReview } from "../../../../types/exchanger";
 import { ICity } from "../../../../types/exchange";
 import { locale } from "../../../../services/utils";
+import { tr, useLocale } from "../../../../services/i18n";
 import { waitSec } from "../../../shared/helper";
 import { useExchangerId } from "../ExchangerContext";
 import SentimentButtons from "./SentimentButtons";
@@ -45,6 +46,9 @@ const TELEGRAM_CHAT_URL =
   String(process.env.NEXT_PUBLIC_TELEGRAM_CHAT) || "https://t.me/p2pie_chat";
 
 export default function LeaveReview() {
+  // Interface language (the imported `locale` is the CMS city-name field prefix, a different thing).
+  const uiLocale = useLocale();
+  const t = (ru: string, en: string) => tr(uiLocale, ru, en);
   const exchangerId = useExchangerId();
   const dispatch = useAppDispatch();
   const { fingerprintInfo, city, modalId } = useAppSelector((state) => ({
@@ -223,14 +227,14 @@ export default function LeaveReview() {
           status: "success",
           title: (
             <span>
-              Спасибо за отзыв! Обсудите обменник в нашем{" "}
+              {t("Спасибо за отзыв! Обсудите обменник в нашем", "Thanks for your review! Discuss the exchanger in our")}{" "}
               <Link
                 href={TELEGRAM_CHAT_URL}
                 isExternal
                 color="peach.900"
                 textDecoration="underline"
               >
-                телеграм-чате
+                {t("телеграм-чате", "Telegram chat")}
               </Link>
             </span>
           ),
@@ -254,6 +258,7 @@ export default function LeaveReview() {
     fingerprintInfo,
     city,
     dispatch,
+    uiLocale,
   ]);
 
   useEffect(() => {
@@ -296,7 +301,7 @@ export default function LeaveReview() {
   return (
     <BoxWrapper id={LEAVE_REVIEW_SECTION_ID}>
       <HStack justifyContent="space-between" flexWrap="wrap" gap="3">
-        <CustomHeader text={"Оставить отзыв"} Icon={RiChatNewFill} />
+        <CustomHeader text={t("Оставить отзыв", "Leave a review")} Icon={RiChatNewFill} />
         <SentimentButtons
           sentiment={sentiment}
           isDisabled={hasSubmitted}
@@ -307,7 +312,7 @@ export default function LeaveReview() {
       </HStack>
       <Divider my="4" />
       <Textarea
-        placeholder="Ваш отзыв"
+        placeholder={t("Ваш отзыв", "Your review")}
         value={value}
         minH="100px"
         onChange={(e) =>
@@ -319,7 +324,7 @@ export default function LeaveReview() {
         borderColor="peach.500"
         focusBorderColor="peach.200"
       />
-      <CustomModal id={reviewModalId} header={"Хотите дополнить отзыв?"}>
+      <CustomModal id={reviewModalId} header={t("Хотите дополнить отзыв?", "Want to add details to your review?")}>
         <ReviewAddons
           sentiment={sentiment}
           selectedCategoryIds={selectedCategoryIds}
@@ -345,7 +350,10 @@ export default function LeaveReview() {
         <HStack color="bg.400" ml="2">
           <LuTriangleAlert size="0.8rem" />
           <ResponsiveText size="xs" color="inherit">
-            Запрещены мат, оскорбления и публикация личных данных
+            {t(
+              "Запрещены мат, оскорбления и публикация личных данных",
+              "No profanity, insults or personal data",
+            )}
           </ResponsiveText>
           <Input
             size="xs"
@@ -378,10 +386,10 @@ export default function LeaveReview() {
           }
         >
           {hasSubmitted
-            ? "Отправлено"
+            ? t("Отправлено", "Sent")
             : isSending
-            ? "Отправляем..."
-            : "Отправить"}
+            ? t("Отправляем...", "Sending...")
+            : t("Отправить", "Send")}
         </Button>
       </Flex>
     </BoxWrapper>

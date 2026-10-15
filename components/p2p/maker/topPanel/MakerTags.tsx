@@ -2,8 +2,11 @@ import { Box, HStack, Tooltip, useToken } from "@chakra-ui/react";
 import React from "react";
 import { IMaker, IMakerTag } from "../../../../types/p2p";
 import { resolveColorToken } from "../../../shared/CircularIcon";
+import { localized } from "../../i18n";
+import { useLocale } from "../../../../services/i18n";
 
 export default function MakerTags({ tags }: { tags?: IMakerTag[] | null }) {
+  const locale = useLocale();
   if (!tags || !tags.length) return <></>;
   const colorTokens = tags.map((tag) => resolveColorToken(tag.color));
   const colorHexes = useToken("colors", colorTokens);
@@ -24,7 +27,7 @@ export default function MakerTags({ tags }: { tags?: IMakerTag[] | null }) {
             key={tag.id}
             openDelay={500}
             hasArrow
-            label={tag.description}
+            label={localized(tag, "description", locale)}
           >
             <Box
               borderRadius="md"
@@ -39,7 +42,7 @@ export default function MakerTags({ tags }: { tags?: IMakerTag[] | null }) {
               fontFamily="Montserrat, sans-serif"
               fontWeight="bold"
             >
-              {tag.name && tag.name.toUpperCase()}
+              {localized(tag, "name", locale).toUpperCase()}
             </Box>
           </Tooltip>
         );

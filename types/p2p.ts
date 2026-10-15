@@ -22,6 +22,8 @@ export interface IMakerTag {
   id: string;
   name?: string | null;
   description?: string | null;
+  en_name?: string | null;
+  en_description?: string | null;
   color?: string | null;
 }
 
@@ -124,9 +126,11 @@ export interface IP2PLevel {
   id: string;
   level?: number | null;
   description?: string | null;
+  en_description?: string | null;
   limit_online_usd?: number | null;
   limit_offline_usd?: number | null;
   title?: string | null;
+  en_title?: string | null;
   deals_needed?: number | null;
   deposit_usd?: number | null;
   p2p_conditions?: IP2PCondition[] | null;
@@ -137,6 +141,8 @@ export interface IP2PCondition {
   id?: string | null;
   title?: string | null;
   description?: string | null;
+  en_title?: string | null;
+  en_description?: string | null;
   is_completed?: boolean | null;
 }
 
@@ -145,6 +151,9 @@ export interface IP2PAd {
   title?: string | null;
   description?: string | null;
   details?: string | null;
+  en_title?: string | null;
+  en_description?: string | null;
+  en_details?: string | null;
   slug?: string | null;
   image?: IImage | null;
 }

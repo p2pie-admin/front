@@ -40,6 +40,7 @@ import Uptime, { IExchangerUptime } from "./Uptime";
 import TrustPanel from "./TrustPanel";
 import ExternalReviews from "./ExternalReviews";
 import { IExternalReviews } from "../../../services/competitors";
+import { useLocale, useT } from "../../../services/i18n";
 
 export default function Exchanger({
   exchanger,
@@ -59,6 +60,8 @@ export default function Exchanger({
   reviewsTotal?: number | null;
   reviewCounts?: { positive: number; neutral: number; negative: number } | null;
 }) {
+  const locale = useLocale();
+  const t = useT();
   if (!exchanger || !exchanger.ref_link) {
     return (
       <Center
@@ -77,11 +80,13 @@ export default function Exchanger({
   const { exchanger_card: exchangerCard } = exchanger;
 
   const ruText = exchangerCard?.text?.trim();
+  // English pages prefer the English card description, falling back to the Russian text.
   const description =
+    (locale === "en" ? exchangerCard?.en_description : null) ||
     ruText ||
     exchangerCard?.ru_description ||
     exchangerCard?.en_description ||
-    "Пока нет описания";
+    t("Пока нет описания", "No description yet");
 
   return (
     <>
@@ -117,7 +122,7 @@ export default function Exchanger({
       <Monitorings monitorings={exchanger.monitorings} />
       <ExchangerContacts exchangerCard={exchangerCard} />
 
-      <ExchangerReviewsHeader title={"Уже пользовались этим обменником?"} />
+      <ExchangerReviewsHeader title={t("Уже пользовались этим обменником?", "Have you used this exchanger?")} />
       <ExchangerIdProvider exchangerId={exchanger.id}>
         <LeaveReview />
       </ExchangerIdProvider>
@@ -129,9 +134,9 @@ export default function Exchanger({
       <ExternalReviews data={externalReviews} />
 
       <Text mt="6" fontSize="sm" color="bg.300">
-        Вы владелец этого обменника?{" "}
+        {t("Вы владелец этого обменника?", "Do you own this exchanger?")}{" "}
         <Link as={NextLink} href="/for-exchangers" color="blue.300">
-          Условия для обменников
+          {t("Условия для обменников", "Terms for exchangers")}
         </Link>
       </Text>
     </>

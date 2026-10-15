@@ -6,6 +6,7 @@ import { IArticle } from "../../types/pages";
 import UniversalSeo from "../shared/UniversalSeo";
 import ArticlePreview from "./ArticlePreview";
 import CustomTitle from "../shared/CustomTitle";
+import { useT } from "../../services/i18n";
 
 export default function ArticlesList({
   articles,
@@ -14,6 +15,7 @@ export default function ArticlesList({
   articles: IArticle[] | null;
   seo: ISEO;
 }) {
+  const t = useT();
   return (
     <>
       <UniversalSeo seo={seo} />
@@ -21,11 +23,14 @@ export default function ArticlesList({
       <CustomTitle
         my="16"
         as="h1"
-        title={"Последние новости"}
-        subtitle={"Узнавайте новости из мира криптовалюты первыми"}
+        title={t("Последние новости", "Latest news")}
+        subtitle={t(
+          "Узнавайте новости из мира криптовалюты первыми",
+          "Be the first to know crypto news. Articles are available in Russian only.",
+        )}
       />
       {!articles ? (
-        <> Нет статей </>
+        <> {t("Нет статей", "No articles")} </>
       ) : (
         <Grid
           gap="4"

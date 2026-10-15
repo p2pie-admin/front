@@ -4,6 +4,7 @@ import { Box, Text, Collapse, Grid } from "@chakra-ui/react";
 
 
 import City from "./City";
+import { pickName, useLocale } from "../../../../services/i18n";
 
 export default function Country({
   country,
@@ -14,6 +15,8 @@ export default function Country({
   dir?: string;
   pageType?: string;
 }) {
+  const locale = useLocale();
+  const cityName = (c: { ru_name?: string; en_name: string }) => pickName(c as Record<string, any>, locale);
   return (
     <>
       <Text
@@ -24,12 +27,12 @@ export default function Country({
         variant={"extra_contrast"}
         cursor="pointer"
       >
-        {(country.ru_country_name || country.en_country_name) + ":"}
+        {pickName(country, locale, "country_name") + ":"}
       </Text>
       <Grid gridTemplateColumns="1fr  1fr" mt="2" p="2">
         {[...country.cities]
           .sort((a, b) =>
-            (a.ru_name || a.en_name).localeCompare(b.ru_name || b.en_name)
+            cityName(a).localeCompare(cityName(b))
           )
           .map((city) => {
             // const popularCityName =

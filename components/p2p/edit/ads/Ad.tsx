@@ -3,8 +3,11 @@ import { IP2PAd } from "../../../../types/p2p";
 import { Box, Divider, Grid, Text } from "@chakra-ui/react";
 import { Box3D, ResponsiveText } from "../../../../styles/theme/custom";
 import CustomImage from "../../../shared/CustomImage";
+import { localized } from "../../i18n";
+import { useLocale } from "../../../../services/i18n";
 
 export default function Ad({ ad }: { ad: IP2PAd }) {
+  const locale = useLocale();
   return (
     <Box3D
       flex="0 0 auto"
@@ -27,9 +30,9 @@ export default function Ad({ ad }: { ad: IP2PAd }) {
           mr="2"
         />
         <Box p="4">
-          <ResponsiveText size="lg">{ad.title}</ResponsiveText>
+          <ResponsiveText size="lg">{localized(ad, "title", locale)}</ResponsiveText>
           <Text mt="4" whiteSpace="preserve-breaks">
-            {ad.description}
+            {localized(ad, "description", locale)}
           </Text>
         </Box>
       </Grid>

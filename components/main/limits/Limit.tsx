@@ -1,6 +1,7 @@
 import { Box, HStack, Text, useColorModeValue } from "@chakra-ui/react";
 import { kFormatter, R } from "../../../redux/amountsHelper";
 import { CgSync } from "react-icons/cg";
+import { useLocale } from "../../../services/i18n";
 
 const Limit = ({
   label,
@@ -15,6 +16,7 @@ const Limit = ({
   needMargin?: boolean;
   changeSide: Function;
 }) => {
+  const locale = useLocale();
   const ml = needMargin
     ? label === "max"
       ? "20"
@@ -37,7 +39,7 @@ const Limit = ({
       <Text
         whiteSpace="nowrap"
         color={useColorModeValue("bg.800", "bg.100")}
-      >{`${label.toUpperCase()}: ${kFormatter(R(value, 2))}`}</Text>
+      >{`${label.toUpperCase()}: ${kFormatter(R(value, 2), locale)}`}</Text>
       <Text
         mx="2px !important"
         color={useColorModeValue("violet.700", "peach.300")}

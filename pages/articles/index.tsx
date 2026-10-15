@@ -3,6 +3,7 @@ import { nullSeo } from "../../components/shared/UniversalSeo";
 import { loadBlog, TTL } from "../../cache/loadX";
 import { IArticle } from "../../types/pages";
 import ArticlesList from "../../components/articles";
+import { localeOf, tr } from "../../services/i18n";
 
 const ArticlesPage = ({
   articles,
@@ -12,7 +13,8 @@ const ArticlesPage = ({
   seo: ISEO;
 }) => <ArticlesList articles={articles} seo={seo} />;
 
-export const getStaticProps = async () => {
+export const getStaticProps = async (ctx?: { locale?: string }) => {
+  const locale = localeOf(ctx);
   const articles = (await loadBlog()) as IArticle[];
 
   if (!articles?.length) {
@@ -26,9 +28,12 @@ export const getStaticProps = async () => {
   }
 
   const seo: ISEO = {
-    title: `Блог ${process.env.NEXT_PUBLIC_NAME || ""}`,
-    description:
+    title: tr(locale, `Блог ${process.env.NEXT_PUBLIC_NAME || ""}`, `${process.env.NEXT_PUBLIC_NAME || ""} blog`),
+    description: tr(
+      locale,
       "Список всех статей и разборов по криптовалютам, банкам и обмену",
+      "All articles and guides on crypto, banks and exchange (in Russian)",
+    ),
     canonicalSlug: "articles",
   };
 

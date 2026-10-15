@@ -9,6 +9,7 @@ import { IMassDirTextId } from "../../types/mass";
 import renderSimilarMass from "./SimilarMass";
 import { buildRateString } from "../shared/helper";
 import { ICity } from "../../types/exchange";
+import { tr, useLocale } from "../../services/i18n";
 
 const MAX_TO_SHOW = 5;
 
@@ -25,6 +26,7 @@ const SimilarList = ({
   dirTextIds: IMassDirTextId[];
   city?: ICity | null;
 }) => {
+  const locale = useLocale();
   const fetcher = initParserFetcher();
   const dirs = similarPmPairs
     .slice(0, MAX_TO_SHOW)
@@ -67,6 +69,7 @@ const SimilarList = ({
     getPm,
     dirTextIds,
     similarPmPairs: similarPmPairs.slice(3, 11),
+    locale,
   });
 
   return (
@@ -99,7 +102,7 @@ const SimilarList = ({
                       variant="no_contrast"
                       mt="1"
                     >
-                      {`Предложений: ${rateData.amountOfCourses}`}
+                      {`${tr(locale, "Предложений", "Offers")}: ${rateData.amountOfCourses}`}
                     </Text>
                   ) : null
                 }

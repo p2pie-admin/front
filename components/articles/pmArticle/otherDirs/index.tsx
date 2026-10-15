@@ -5,6 +5,7 @@ import { IPm } from "../../../../types/selector";
 import { H3ForOthers } from "./OtherHeader";
 import SectionColumns, { PairedRow } from "./SectionColumns";
 import { useDirRates } from "./useDirRates";
+import { useLocale } from "../../../../services/i18n";
 
 const PLACEHOLDER_MIN_HEIGHT = "70px";
 const VISIBLE_ROWS = 3;
@@ -16,6 +17,7 @@ const OtherDirs = ({
   otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] };
   mainPm: IPm;
 }) => {
+  const locale = useLocale();
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const allPairs = useMemo(
     () => [...(otherDirs.buy || []), ...(otherDirs.sell || [])],
@@ -101,7 +103,7 @@ const OtherDirs = ({
   return (
     <VStack mt="4" w="100%" gap="4">
       {groupedRows.map(({ section, rows }) => {
-        const headers = H3ForOthers(mainPm, section || "");
+        const headers = H3ForOthers(mainPm, section || "", locale);
         const sectionKey = section || "unknown";
 
         return (

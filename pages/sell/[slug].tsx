@@ -1,3 +1,4 @@
+import { localeOf } from "../../services/i18n";
 import { GetStaticPaths } from "next";
 import {
   convertMassDirTextIntoSlug,
@@ -45,11 +46,12 @@ const SellPage = (props: Props) => (
 );
 
 /////////////////////////////////////////////////////////////////////////
-export const getStaticProps = async ({
-  params,
-}: {
+export const getStaticProps = async (ctx: {
   params: { slug: string };
+  locale?: string;
 }) => {
+  const { params } = ctx;
+  const locale = localeOf(ctx);
   const { slug } = params;
   const massDirTextId = convertSlugIntoMassDirText(slug, isSell);
 
@@ -66,13 +68,16 @@ export const getStaticProps = async ({
     }),
   ]);
 
+  // Mass dir texts in the CMS are Russian-only: English pages use the template text (no long body).
   const massDirText =
-    massDirTextResponse ||
-    createDefaultMassDirText({
-      massDirTextId,
-      pms,
-      isSell,
-    });
+    locale === "en"
+      ? createDefaultMassDirText({ massDirTextId, pms, isSell, locale })
+      : massDirTextResponse ||
+        createDefaultMassDirText({
+          massDirTextId,
+          pms,
+          isSell,
+        });
 
   const { seo_title, seo_description, header } = massDirText;
 
@@ -87,7 +92,8 @@ export const getStaticProps = async ({
       isSell,
     }) as ISEO;
 
-    await addHeadersToSearchIndex({
+    // The shared search index is Russian only.
+    if (locale === "ru") await addHeadersToSearchIndex({
       slug: `${isSell ? "sell" : "buy"}/${slug}`,
       header: seo_title,
       wordsToSearchFrom: `${header} ${seo_title}`,

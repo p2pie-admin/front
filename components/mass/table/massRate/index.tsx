@@ -15,6 +15,7 @@ import {
   localFormat,
 } from "../../../../redux/amountsHelper";
 import { useAppDispatch } from "../../../../redux/hooks";
+import { useLocale, useT } from "../../../../services/i18n";
 import { Box3D, ResponsiveText } from "../../../../styles/theme/custom";
 import { IMassRate, IMassDirTextId } from "../../../../types/mass";
 import { IPm } from "../../../../types/selector";
@@ -53,6 +54,8 @@ const MassRate = ({
     min?.[side] && max?.[side] ? [R(min[side], 2), R(max[side], 2)] : [0, 0];
 
   const dispatch = useAppDispatch();
+  const locale = useLocale();
+  const t = useT();
 
   if (!rate) return <></>;
 
@@ -82,7 +85,7 @@ const MassRate = ({
           size="lg"
           variant={amount && MIN > amount ? "red" : "no_contrast"}
         >
-          {`от ${localFormat(MIN, currency.code)}`}
+          {`${t("от", "from")} ${localFormat(MIN, currency.code, locale)}`}
         </ResponsiveText>
         <ResponsiveText size="xs" variant="no_contrast">
           {"—"}
@@ -91,7 +94,7 @@ const MassRate = ({
           size="md"
           variant={amount && MAX < amount ? "red" : "no_contrast"}
         >
-          {`до ${localFormat(MAX, currency.code)}`}
+          {`${t("до", "to")} ${localFormat(MAX, currency.code, locale)}`}
         </ResponsiveText>
       </HStack>
     </VStack>
@@ -109,7 +112,7 @@ const MassRate = ({
           size="xs"
           variant={amount && MIN > amount ? "red" : "no_contrast"}
         >
-          {`от ${localFormat(MIN, currency.code)}`}
+          {`${t("от", "from")} ${localFormat(MIN, currency.code, locale)}`}
         </ResponsiveText>
         <ResponsiveText size="xs" variant="no_contrast">
           {"—"}
@@ -118,7 +121,7 @@ const MassRate = ({
           size="xs"
           variant={amount && MAX < amount ? "red" : "no_contrast"}
         >
-          {`до ${localFormat(MAX, currency.code)}`}
+          {`${t("до", "to")} ${localFormat(MAX, currency.code, locale)}`}
         </ResponsiveText>
       </HStack>
     </VStack>

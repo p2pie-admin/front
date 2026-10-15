@@ -1,5 +1,6 @@
 import { Box, HStack, Text, Tooltip, useToken } from "@chakra-ui/react";
-import { isTrustLevel, TRUST_LEVELS } from "./trust";
+import { isTrustLevel, TRUST_LEVELS, trustHint, trustLabel } from "./trust";
+import { useLocale } from "../../services/i18n";
 
 // Glowing shield for the exchanger trust level. `withLabel` adds the text status (exchanger page, /rating);
 // without it the icon alone sits next to the stars in lists, with the status in a tooltip.
@@ -12,10 +13,13 @@ export default function TrustBadge({
   withLabel?: boolean;
   size?: string;
 }) {
+  const locale = useLocale();
   const meta = isTrustLevel(level) ? TRUST_LEVELS[level] : null;
   const [tc] = useToken("colors", [meta?.color || "bg.300"]);
   if (!meta) return null;
   const Icon = meta.icon;
+  const prefix = locale === "en" ? "Trust level" : "Уровень доверия";
+  const label = trustLabel(meta, locale);
 
   const icon = (
     <Box
@@ -23,7 +27,7 @@ export default function TrustBadge({
       display="inline-flex"
       color={meta.color}
       filter={meta.glow ? `drop-shadow(0 0 6px ${tc})` : undefined}
-      aria-label={`Уровень доверия: ${meta.label}`}
+      aria-label={`${prefix}: ${label}`}
     >
       <Icon size={size} />
     </Box>
@@ -34,7 +38,7 @@ export default function TrustBadge({
       <Tooltip
         openDelay={300}
         hasArrow
-        label={`Уровень доверия: ${meta.label}. ${meta.hint}`}
+        label={`${prefix}: ${label}. ${trustHint(meta, locale)}`}
         fontSize="sm"
       >
         {icon}
@@ -59,7 +63,7 @@ export default function TrustBadge({
     >
       {icon}
       <Text as="span" fontSize="sm" fontWeight="bold" color={meta.color}>
-        {meta.label}
+        {label}
       </Text>
     </HStack>
   );

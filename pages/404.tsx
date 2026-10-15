@@ -4,19 +4,21 @@ import NextLink from "next/link";
 import { BsTelegram } from "react-icons/bs";
 import { Box3D } from "../styles/theme/custom";
 import GlobalSearch from "../components/layout/nav/globalSearch";
+import { useT } from "../services/i18n";
 
 const LINKS = [
-  { label: "Главная", href: "/" },
-  { label: "Курсы обмена", href: "/buy/usdttrc20-for-rub" },
-  { label: "Обменники", href: "/exchangers" },
-  { label: "Карта офисов", href: "/map" },
-  { label: "Блог", href: "/articles" },
-  { label: "FAQ", href: "/faq" },
+  { label: "Главная", en: "Home", href: "/" },
+  { label: "Курсы обмена", en: "Exchange rates", href: "/buy/usdttrc20-for-rub" },
+  { label: "Обменники", en: "Exchangers", href: "/exchangers" },
+  { label: "Карта офисов", en: "Office map", href: "/map" },
+  { label: "Блог", en: "Blog", href: "/articles" },
+  { label: "FAQ", en: "FAQ", href: "/faq" },
 ];
 
 // 404 with a way out: search (same index as the header search) and the main sections.
 function NotFound() {
   const support = process.env.NEXT_PUBLIC_TELEGRAM_SUPPORT || "https://t.me/p2pie";
+  const t = useT();
   return (
     <Flex width="100%" justifyContent="center" alignItems="center" mt="5" px="3">
       <Box3D w="100%" maxW="520px" p={{ base: 5, md: 8 }} variant="extra_contrast" textAlign="center">
@@ -24,10 +26,10 @@ function NotFound() {
           404
         </Heading>
         <Text fontSize="lg" mt="2" mb="5">
-          Такой страницы нет
+          {t("Такой страницы нет", "This page does not exist")}
         </Text>
         <Text fontSize="sm" color="bg.400" mb="2">
-          Найти обменник или направление:
+          {t("Найти обменник или направление:", "Find an exchanger or exchange direction:")}
         </Text>
         <Box mb="5">
           <GlobalSearch alwaysOpen />
@@ -44,7 +46,7 @@ function NotFound() {
                 borderColor="bg.500"
                 color="bg.200"
               >
-                {l.label}
+                {t(l.label, l.en)}
               </Button>
             </WrapItem>
           ))}
@@ -58,7 +60,7 @@ function NotFound() {
           alignItems="center"
           gap="2"
         >
-          <BsTelegram /> Сообщить об ошибке
+          <BsTelegram /> {t("Сообщить об ошибке", "Report a problem")}
         </Link>
       </Box3D>
     </Flex>

@@ -17,10 +17,12 @@ import {
   triggerModal,
 } from "../../../../redux/mainReducer";
 import { useMakerEditContext } from "../MakerEditContext";
+import { useT } from "../../../../services/i18n";
 
 export default function EditName() {
   const maker = useMakerEditContext();
   const dispatch = useAppDispatch();
+  const t = useT();
   const modalId = `edit_name_${maker.id}`;
 
   const reduxName = useAppSelector((state) => state.main.maker?.telegram_name);
@@ -44,17 +46,17 @@ export default function EditName() {
 
   return (
     <>
-      <CustomModal id={modalId} header="Редактировать имя">
+      <CustomModal id={modalId} header={t("Редактировать имя", "Edit name")}>
         <VStack align="stretch" spacing="4" p="6">
           <FormControl>
-            <FormLabel>Имя</FormLabel>
+            <FormLabel>{t("Имя", "Name")}</FormLabel>
             <Input
               value={nameValue}
               onChange={handleNameChange}
-              placeholder="Введите имя"
+              placeholder={t("Введите имя", "Enter a name")}
             />
             <FormHelperText>
-              Имя видят все. Оно не должно совпадать с вашим Telegram-ником: ник знает только бот p2pie.
+              {t("Имя видят все. Оно не должно совпадать с вашим Telegram-ником: ник знает только бот p2pie.", "Everyone sees the name. It must not match your Telegram username: only the p2pie bot knows the username.")}
             </FormHelperText>
           </FormControl>
           <HStack justifyContent="flex-end">
@@ -62,7 +64,7 @@ export default function EditName() {
               variant="primary"
               onClick={() => dispatch(triggerModal(undefined))}
             >
-              Готово
+              {t("Готово", "Done")}
             </Button>
           </HStack>
         </VStack>

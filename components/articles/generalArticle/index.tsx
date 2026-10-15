@@ -21,6 +21,26 @@ import CustomTitle from "../../shared/CustomTitle";
 
 import CustomImage from "../../shared/CustomImage";
 import ArticleStats from "./ArticleStats";
+import { useLocale } from "../../../services/i18n";
+// English pages keep the Russian article body (articles are not translated).
+export const RussianOnlyNote = () => (
+  <HStack
+    px="3"
+    py="2"
+    mb="3"
+    spacing="2"
+    borderRadius="md"
+    bgColor="blackAlpha.200"
+    color="bg.300"
+    fontSize="sm"
+  >
+    <IoMdInformationCircle size="1.1rem" />
+    <Text as="span" lang="en">
+      This article is available in Russian only.
+    </Text>
+  </HStack>
+);
+
 export default function GeneralArticle({
   article,
   seo,
@@ -28,6 +48,7 @@ export default function GeneralArticle({
   article: IArticle | null;
   seo: ISEO;
 }) {
+  const isEn = useLocale() === "en";
   const quoteBg = useColorModeValue("peach.50", "peach.1000");
   const quoteBorder = useColorModeValue("peach.300", "peach.300");
   const quoteText = useColorModeValue("peach.700", "peach.200");
@@ -79,6 +100,7 @@ export default function GeneralArticle({
       >
         <ArticleStats article={article} />
         <Divider my="4" />
+        {isEn ? <RussianOnlyNote /> : null}
 
         <Box px="2" color="bg.400">
           {article?.text && (

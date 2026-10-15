@@ -10,6 +10,7 @@ import {
 import { getSlugToCodes } from "../../cache/helper";
 import { generateExchangeH1 } from "../../components/exchange/helper";
 import { exchangerNameToSlug } from "../../components/exchangers/helper";
+import { Locale, pickName, tr } from "../../services/i18n";
 
 type SearchIndexEntry = {
   slug: string;
@@ -27,6 +28,8 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method !== "GET") return res.status(405).end();
+  // ?lang=en: English headers (the prebuilt Redis index holds Russian ones, so it is skipped then).
+  const locale: Locale = req.query.lang === "en" ? "en" : "ru";
 
   const cached =
     ((await redisGet("search:index")) as SearchIndexCache | null) || {
@@ -35,7 +38,7 @@ export default async function handler(
     };
 
   try {
-    const cachedData = Array.isArray(cached.data) ? cached.data : [];
+    const cachedData = locale === "ru" && Array.isArray(cached.data) ? cached.data : [];
 
     const [dirs, pms, exchangers, cities] = await Promise.all([
       loadPossibleDirs(),
@@ -60,7 +63,7 @@ export default async function handler(
         const header = generateExchangeH1(givePm, getPm, null, {
           articleCodes: [],
           cityPageExists: false,
-        });
+        }, locale);
         const wordsToSearchFrom = [
           givePm.en_name,
           givePm.ru_name,
@@ -89,7 +92,7 @@ export default async function handler(
             const displayName = ex.display_name || ex.name;
             return {
               slug: `exchangers/${exchangerNameToSlug(ex.name)}`,
-              header: `Обменник ${displayName}`,
+              header: tr(locale, `Обменник ${displayName}`, `${displayName} exchanger`),
               wordsToSearchFrom: `${displayName} ${ex.name}`,
             };
           })
@@ -103,7 +106,7 @@ export default async function handler(
               .toLowerCase()
               .replace(/\s+/g, "-")
               .trim();
-            const cityName = city.ru_name || city.en_name || "Город";
+            const cityName = pickName(city as Record<string, any>, locale) || tr(locale, "Город", "City");
             const wordsToSearchFrom = [
               city.en_name,
               city.ru_name,
@@ -147,6 +150,6 @@ export default async function handler(
     });
   } catch (error) {
     console.error("[search-index] Failed to load search index:", error);
-    return res.status(200).json(cached);
+    return res.status(200).json(locale === "ru" ? cached : { data: [], updatedAt: null });
   }
 }

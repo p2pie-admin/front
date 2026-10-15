@@ -8,6 +8,7 @@ import {
   powerOfTenOrder,
 } from "../../../../../../redux/amountsHelper";
 import { ResponsiveText } from "../../../../../../styles/theme/custom";
+import { useT } from "../../../../../../services/i18n";
 
 export default function OfferLimit({
   index,
@@ -21,6 +22,7 @@ export default function OfferLimit({
   fullOffer: Partial<IFullOffer>;
 }) {
   const dispatch = useAppDispatch();
+  const t = useT();
 
   const setField = (
     value: IMakerOffer[keyof IMakerOffer] | null | undefined,
@@ -68,7 +70,7 @@ export default function OfferLimit({
   // };
   const stepValue = powerOfTenOrder(Number(displayValue)) / 100;
 
-  const ruName = field == "min" ? "Мин: " : "Макс: ";
+  const ruName = field == "min" ? t("Мин: ", "Min: ") : t("Макс: ", "Max: ");
 
   return (
     <InputGroup>

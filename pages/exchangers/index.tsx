@@ -6,6 +6,7 @@ import ExchangersList from "../../components/exchangers";
 import { ISEO } from "../../types/general";
 import { nullSeo } from "../../components/shared/UniversalSeo";
 import { loadExchangers } from "../../cache/loadX";
+import { localeOf, tr } from "../../services/i18n";
 
 const ExchangersPage = ({
   exchangers,
@@ -23,7 +24,8 @@ const ExchangersPage = ({
   />
 );
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  const locale = localeOf(ctx);
   const exchangers = await loadExchangers();
 
   if (!exchangers?.length) {
@@ -43,8 +45,8 @@ export const getStaticProps: GetStaticProps = async () => {
   const currentPage = 1;
 
   const seo: ISEO = {
-    title: "Обменники - список всех активных обменников",
-    description: "Проверьте статусы обменников, рейтинг и описание",
+    title: tr(locale, "Обменники - список всех активных обменников", "Exchangers - list of all active exchangers"),
+    description: tr(locale, "Проверьте статусы обменников, рейтинг и описание", "Check exchanger statuses, ratings and descriptions"),
     canonicalSlug:
       currentPage > 1 ? `exchangers?page=${currentPage}` : "exchangers",
   };

@@ -12,6 +12,7 @@ import Arrow from "../../../../shared/Arrow";
 import SectionGridWrapper from "./SectionGrid";
 import PmGroup from "./PmGroup";
 import { IPmGroup } from "../../../../../types/selector";
+import { useT } from "../../../../../services/i18n";
 
 const SectionHidden = ({ children }: { children: IPmGroup[] }) => {
   const dividerColor = useColorModeValue(
@@ -20,6 +21,7 @@ const SectionHidden = ({ children }: { children: IPmGroup[] }) => {
   );
   // const [foldedSections, showSection] = React.useState({});
   const [folded, setFolded] = React.useState(true);
+  const t = useT();
   const [mounted, setMounted] = React.useState(false);
   const mount = () => setMounted(true);
   const unmount = () => setTimeout(() => setMounted(!mounted), 300);
@@ -54,7 +56,7 @@ const SectionHidden = ({ children }: { children: IPmGroup[] }) => {
         color="bg.500"
       >
         <Text fontSize="md" m="0 2px">
-          {folded ? "показать все" : "скрыть"}
+          {folded ? t("показать все", "show all") : t("скрыть", "hide")}
         </Text>
         <Arrow isUp={!folded} />
       </Button>

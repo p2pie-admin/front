@@ -12,7 +12,8 @@ import OtherDirs from "./otherDirs";
 import TopImage from "./TopImage";
 import Stats from "./Stats";
 import { IPm } from "../../../types/selector";
-import { locale } from "../../../services/utils";
+import { useLocale } from "../../../services/i18n";
+import { RussianOnlyNote } from "../generalArticle";
 import ContentPreview from "../helper";
 
 const Article = ({
@@ -26,6 +27,7 @@ const Article = ({
   article?: IArticle | null;
   otherDirs: { buy: IPmPairs[]; sell: IPmPairs[] } | null;
 }) => {
+  const isEn = useLocale() === "en";
   // Early fallback before any hooks
   if (!article) {
     return <>No article</>;
@@ -81,6 +83,12 @@ const Article = ({
         <ResponsiveText fontSize="md">{`${timestampToDate(
           article.updatedAt
         )} • ${minToRead} minutes read`}</ResponsiveText>
+
+        {isEn ? (
+          <Box mt="3">
+            <RussianOnlyNote />
+          </Box>
+        ) : null}
 
         <Stats stats={article.stats} />
 

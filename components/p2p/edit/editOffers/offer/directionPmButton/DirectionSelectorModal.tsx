@@ -3,6 +3,7 @@ import { Box, useColorModeValue } from "@chakra-ui/react";
 import CustomModal from "../../../../../shared/CustomModal";
 import { DirectionSide } from "../types";
 import DirectionSelector from "./DirectionSelector";
+import { useT } from "../../../../../../services/i18n";
 
 const DirectionSelectorModal = ({
   id,
@@ -14,20 +15,21 @@ const DirectionSelectorModal = ({
   directionIndex: number;
 }) => {
   const primary = useColorModeValue("violet.700", "peach.300");
+  const t = useT();
   const header =
     side === "give" ? (
       <>
-        Что клиент{" "}
+        {t("Что клиент", "What does the client")}{" "}
         <Box as="span" color={primary}>
-          отдает тебе
+          {t("отдает тебе", "give you")}
         </Box>
         ?
       </>
     ) : (
       <>
-        Что клиент{" "}
+        {t("Что клиент", "What does the client")}{" "}
         <Box as="span" color={primary}>
-          получает от тебя
+          {t("получает от тебя", "get from you")}
         </Box>
         ?
       </>

@@ -3,6 +3,24 @@ import normalize from "./normalizer";
 import { cmsLinkDEV, cmsLinkPROD, internalCmsLink, resolveInternalUrl } from "./utils";
 import { exchangerReviewCountsQuery, exchangerReviewsQuery } from "./queries";
 import { IExchangerReview } from "../types/exchanger";
+import { Locale } from "./i18n";
+
+// review-category is a Strapi-i18n type: a review links the Russian entry; on English pages take the
+// title/description of its "en" localization when it exists.
+const localizeReviewCategories = (items: any[], locale: Locale) => {
+  if (locale !== "en") return items;
+  return items.map((review) => {
+    if (!Array.isArray(review?.review_categories)) return review;
+    return {
+      ...review,
+      review_categories: review.review_categories.map((cat: any) => {
+        const list = Array.isArray(cat?.localizations) ? cat.localizations : [];
+        const en = cat?.locale === "en" ? cat : list.find((l: any) => l?.locale === "en");
+        return en ? { ...cat, title: en.title || cat.title, description: en.description || cat.description } : cat;
+      }),
+    };
+  });
+};
 
 export const REVIEWS_PAGE_SIZE = 10;
 
@@ -17,11 +35,13 @@ export const fetchExchangerReviews = async ({
   start = 0,
   limit = REVIEWS_PAGE_SIZE,
   type,
+  locale = "ru",
 }: {
   exchangerId: string | number;
   start?: number;
   limit?: number;
   type?: ReviewTypeFilter | null;
+  locale?: Locale;
 }): Promise<ReviewsPage | null> => {
   const publicBase = process.env.NODE_ENV === "production" ? cmsLinkPROD : cmsLinkDEV;
   const url = resolveInternalUrl(publicBase, internalCmsLink) + "/graphql";
@@ -35,7 +55,7 @@ export const fetchExchangerReviews = async ({
     const raw = (await client.request(exchangerReviewsQuery, { filters, start, limit })) as any;
     const total = Number(raw?.reviews?.meta?.pagination?.total ?? 0);
     const items = normalize(raw?.reviews?.data ?? []) as IExchangerReview[];
-    return { items: Array.isArray(items) ? items : [], total };
+    return { items: Array.isArray(items) ? (localizeReviewCategories(items, locale) as IExchangerReview[]) : [], total };
   } catch (error) {
     console.error("fetchExchangerReviews failed:", { exchangerId, start, type, message: (error as any)?.message });
     return null;

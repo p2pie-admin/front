@@ -5,16 +5,18 @@ import { BoxWrapper, CustomHeader } from "../../../shared/BoxWrapper";
 import { IExchangerMonitoring } from "../../../../types/exchanger";
 import { Box3D } from "../../../../styles/theme/custom";
 import CustomImage from "../../../shared/CustomImage";
+import { useT } from "../../../../services/i18n";
 
 export default function Monitorings({
   monitorings,
 }: {
   monitorings?: IExchangerMonitoring[] | null;
 }) {
+  const t = useT();
   if (!monitorings?.length) return <></>;
   return (
     <BoxWrapper>
-      <CustomHeader text={`Мониторинги`} Icon={IoMdCheckmarkCircle} />
+      <CustomHeader text={t(`Мониторинги`, `Monitorings`)} Icon={IoMdCheckmarkCircle} />
       <Divider my="4" />
       <Wrap gap="2">
         {monitorings.map((m) => (

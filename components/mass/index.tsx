@@ -12,6 +12,8 @@ import MassSideContext from "./sideContext";
 import MassTableSelector from "./massTableSelector";
 import Breadcrumbs from "../shared/Breadcrumbs";
 import { addSpaces, curToSymbol, R } from "../../redux/amountsHelper";
+import { useLocale, useT } from "../../services/i18n";
+import { createDefaultMassDirText } from "./helper";
 
 const Mass = ({
   massDirTextId,
@@ -30,7 +32,21 @@ const Mass = ({
   isSell: boolean;
   slug: string;
 }) => {
-  const { header, subheader, text } = massDirText;
+  const locale = useLocale();
+  const t = useT();
+  // CMS mass texts are Russian-only: English pages use the template header and no long text.
+  const { header, subheader, text } = useMemo(
+    () =>
+      locale === "en"
+        ? createDefaultMassDirText({
+            massDirTextId,
+            pms: [...cryptoPms, ...Object.values(fiatPms || {})],
+            isSell,
+            locale,
+          })
+        : massDirText,
+    [locale, massDirText, massDirTextId, cryptoPms, fiatPms, isSell],
+  );
   // Best offer for the summary card: the table's default order (course asc) puts it first.
   const best = useMemo(() => {
     const sorted = (massRates || []).filter((r) => r?.course).slice().sort((a, b) => a.course - b.course);
@@ -91,8 +107,8 @@ const Mass = ({
         <Breadcrumbs
           mb="2"
           items={[
-            { label: "Главная", href: "/" },
-            { label: isSell ? "Продать" : "Купить", href: `/${isSell ? "sell" : "buy"}/${slug}` },
+            { label: t("Главная", "Home"), href: "/" },
+            { label: isSell ? t("Продать", "Sell") : t("Купить", "Buy"), href: `/${isSell ? "sell" : "buy"}/${slug}` },
             { label: header },
           ]}
         />
@@ -115,18 +131,22 @@ const Mass = ({
         {best ? (
           <Box3D variant="extra_contrast" px="4" py="3" mt="3" display={{ base: "block", lg: "inline-block" }}>
             <Text fontSize="xs" color="bg.400" textTransform="uppercase" letterSpacing="wide">
-              Лучший курс сейчас
+              {t("Лучший курс сейчас", "Best rate now")}
             </Text>
             <Text fontSize={{ base: "xl", lg: "2xl" }} fontWeight="700" color="green.300" lineHeight="1.2">
               {best.text}
             </Text>
             <Text fontSize="sm" color="bg.300">
               {`${best.name} · ${best.count} ${
-                best.count % 10 === 1 && best.count % 100 !== 11
-                  ? "обменник"
-                  : [2, 3, 4].includes(best.count % 10) && ![12, 13, 14].includes(best.count % 100)
-                    ? "обменника"
-                    : "обменников"
+                locale === "en"
+                  ? best.count === 1
+                    ? "exchanger"
+                    : "exchangers"
+                  : best.count % 10 === 1 && best.count % 100 !== 11
+                    ? "обменник"
+                    : [2, 3, 4].includes(best.count % 10) && ![12, 13, 14].includes(best.count % 100)
+                      ? "обменника"
+                      : "обменников"
               }`}
             </Text>
           </Box3D>
@@ -148,7 +168,7 @@ const Mass = ({
           <Box w="100%" px="4">
             <Box as="details" display={{ base: "block", lg: "none" }}>
               <Box as="summary" cursor="pointer" color="peach.300" fontSize="sm" fontWeight="600" py="2">
-                {`О ${isSell ? "продаже" : "покупке"}: подробнее`}
+                {t(`О ${isSell ? "продаже" : "покупке"}: подробнее`, `About ${isSell ? "selling" : "buying"}: more`)}
               </Box>
               <ResponsiveText fontSize="sm" whiteSpace="unset" variant="no_contrast">
                 {text}

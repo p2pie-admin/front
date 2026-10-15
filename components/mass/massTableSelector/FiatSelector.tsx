@@ -19,7 +19,7 @@ import {
 } from "../../../cache/helper";
 import MassSideContext from "../sideContext";
 import { IMassDirTextId } from "../../../types/mass";
-import { locale } from "../../../services/utils";
+import { pickName, useLocale, useT } from "../../../services/i18n";
 
 export type Option = { value: string; label: string };
 
@@ -27,22 +27,22 @@ const fiatCurrencies = {
   usd: {
     symbol: "$",
     ru_name: "Доллары USD",
-    en_name: "dollars",
+    en_name: "US dollars USD",
   },
   rub: {
     symbol: "₽",
     ru_name: "Рубли RUB",
-    en_name: "rubles",
+    en_name: "Rubles RUB",
   },
   uah: {
     symbol: "₴",
     ru_name: "Гривны UAH",
-    en_name: "hryvnias",
+    en_name: "Hryvnias UAH",
   },
   eur: {
     symbol: "€",
     ru_name: "Евро EUR",
-    en_name: "euros",
+    en_name: "Euros EUR",
   },
 } as const;
 
@@ -50,6 +50,8 @@ type FiatCode = keyof typeof fiatCurrencies;
 
 export const FiatSelector = () => {
   const { isSell, slug } = useContext(MassSideContext);
+  const locale = useLocale();
+  const t = useT();
   const { code: currentCode, currency: selectedCurrency } =
     convertSlugIntoMassDirText(slug, isSell);
 
@@ -61,11 +63,10 @@ export const FiatSelector = () => {
 
   const buttonContentFull = (
     <ResponsiveText overflow="hidden" textOverflow="ellipsis" fontSize="lg">
-      {`за ${
-        fiatCurrencies[selectedCurrency.code.toLowerCase() as FiatCode]?.[
-          `${locale}_name`
-        ]
-      }`}
+      {`${t("за", "for")} ${pickName(
+        fiatCurrencies[selectedCurrency.code.toLowerCase() as FiatCode],
+        locale
+      )}`}
     </ResponsiveText>
   );
 
@@ -99,11 +100,11 @@ export const FiatSelector = () => {
 
         <MenuList bgColor="bg.800" maxH="400" overflowY="auto">
           <ResponsiveText mx="4" fontWeight="bold">
-            Выберите валюту:
+            {t("Выберите валюту:", "Choose a currency:")}
           </ResponsiveText>
           <VStack spacing={0} align="stretch" width="200px" p="1">
             {Object.entries(fiatCurrencies).map(
-              ([code, { symbol, ru_name }]) => {
+              ([code, fiat]) => {
                 const newData = {
                   code: currentCode,
                   currency: {
@@ -122,7 +123,7 @@ export const FiatSelector = () => {
                       cursor="pointer"
                       py="2"
                     >
-                      {ru_name}
+                      {pickName(fiat, locale)}
                     </MenuItem>
                   </Link>
                 );

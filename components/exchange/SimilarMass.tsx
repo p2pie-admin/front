@@ -8,17 +8,20 @@ import SmartGrid from "../mass/table/SmartGrid";
 import { IMassDirTextId } from "../../types/mass";
 import PmName from "../shared/PmName";
 import { LinkWrapper } from "../shared/LinkWrapper";
+import { Locale, tr } from "../../services/i18n";
 
 const renderSimilarMass = ({
   similarPmPairs,
   givePm,
   getPm,
   dirTextIds,
+  locale = "ru",
 }: {
   similarPmPairs: IPm[][];
   givePm: IPm;
   getPm: IPm;
   dirTextIds: IMassDirTextId[];
+  locale?: Locale;
 }) => {
   const pms = getOtherMass(similarPmPairs, givePm, getPm);
   const [side, cryptoPm, fiatPm] =
@@ -63,9 +66,13 @@ const renderSimilarMass = ({
         mt="1"
         textAlign="start"
       >
-        {`${
-          side == "sell" ? "Продать" : "Купить"
-        } ${cryptoPm.currency.code.toUpperCase()} за  ${fiatPm.currency.code.toUpperCase()}`}
+        {tr(
+          locale,
+          `${
+            side == "sell" ? "Продать" : "Купить"
+          } ${cryptoPm.currency.code.toUpperCase()} за  ${fiatPm.currency.code.toUpperCase()}`,
+          `${side == "sell" ? "Sell" : "Buy"} ${cryptoPm.currency.code.toUpperCase()} for ${fiatPm.currency.code.toUpperCase()}`,
+        )}
       </Text>
     </VStack>
   );

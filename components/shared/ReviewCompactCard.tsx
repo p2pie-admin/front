@@ -22,6 +22,7 @@ import { ReviewBorder, FormatedDate } from "./BoxWrapper";
 import CustomImage from "./CustomImage";
 import UserAgent from "../exchangers/exchanger/reviews/UserAgent";
 import { ReviewCardWrapper, useReviewCardMeta } from "./ReviewCardWrapper";
+import { useLocale, useT } from "../../services/i18n";
 
 type ReviewCompactCardProps = {
   review: IExchangerReview;
@@ -34,6 +35,8 @@ export const ReviewCompactCard = ({
   href,
   needTag = true,
 }: ReviewCompactCardProps) => {
+  const locale = useLocale();
+  const t = useT();
   const meta = useReviewCardMeta(review);
 
   const { location, text, type, userAgent, updatedAt, isDispute } = review;
@@ -49,7 +52,7 @@ export const ReviewCompactCard = ({
           colorScheme="green"
           mt="1.5"
         >
-          РЕШЕН ✓
+          {t("РЕШЕН ✓", "RESOLVED ✓")}
         </Tag>
       );
     }
@@ -64,13 +67,13 @@ export const ReviewCompactCard = ({
           colorScheme="red"
           mt="1.5"
         >
-          ДИСПУТ ✕
+          {t("ДИСПУТ ✕", "DISPUTE ✕")}
         </Tag>
       );
     }
 
     return null;
-  }, [isDispute]);
+  }, [isDispute, locale]);
 
   const locationTag = useMemo(() => {
     if (!location || !needTag) return null;

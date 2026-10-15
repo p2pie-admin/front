@@ -8,6 +8,7 @@ import { pickKeys } from "../helper";
 import MassRate from "./massRate";
 import TopPanel from "./topPanel";
 import TableHeaders from "./TableHeaders";
+import { useT } from "../../../services/i18n";
 
 function MassTable({
   massRates,
@@ -18,6 +19,7 @@ function MassTable({
   fiatPms: Record<string, IPm>;
   massDirTextId: IMassDirTextId;
 }) {
+  const t = useT();
   const massPmsFilter = useAppSelector((state) => state.main.massPmsFilter);
   const filterSet = new Set(massPmsFilter.map((f) => f.toLowerCase()));
   const massSort = useAppSelector((state) => state.main.massSort);
@@ -95,7 +97,10 @@ function MassTable({
           fontSize="sm"
           onClick={() => setShown((n) => n + STEP)}
         >
-          {`Показать ещё ${Math.min(remaining, STEP)} из ${sortedMassRates.length}`}
+          {t(
+            `Показать ещё ${Math.min(remaining, STEP)} из ${sortedMassRates.length}`,
+            `Show ${Math.min(remaining, STEP)} more of ${sortedMassRates.length}`
+          )}
         </Box>
       )}
     </Box3D>

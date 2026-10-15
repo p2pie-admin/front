@@ -10,6 +10,7 @@ import { exchangerReviewCategoriesQuery } from "../../../../../services/queries"
 import ErrorWrapper from "../../../../shared/ErrorWrapper";
 import ReviewCategory from "./ReviewCategory";
 import ReviewCategories from "./ReviewCategories";
+import { useT } from "../../../../../services/i18n";
 
 type ReviewAddonsProps = {
   onClose?: () => void;
@@ -34,6 +35,7 @@ export default function ReviewAddons({
   onToggleExchangeDone,
   onChangeGossip,
 }: ReviewAddonsProps) {
+  const t = useT();
   const fetcher = initCMSFetcher();
 
   const { data, error } = useSWR(exchangerReviewCategoriesQuery, fetcher) as {
@@ -78,10 +80,10 @@ export default function ReviewAddons({
           variant="no_contrast"
           onClick={handleClose}
         >
-          Пропустить
+          {t("Пропустить", "Skip")}
         </Button>
         <Button alignSelf="flex-end" variant="primary" onClick={handleClose}>
-          Готово
+          {t("Готово", "Done")}
         </Button>
       </HStack>
     </VStack>

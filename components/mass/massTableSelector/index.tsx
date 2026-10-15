@@ -9,11 +9,16 @@ import FiatSelector from "./FiatSelector";
 import { IPm } from "../../../types/selector";
 import MassSideContext from "../sideContext";
 import { capitalize } from "../../main/side/selector/section/PmGroup/helper";
+import { pickName, useLocale, useT } from "../../../services/i18n";
 
 export default function MassTableSelector({ cryptoPms }: { cryptoPms: IPm[] }) {
   const { currentCryptoPm } = useContext(MassSideContext);
+  const locale = useLocale();
+  const t = useT();
   const fullName = `${capitalize(
-    currentCryptoPm?.ru_name || currentCryptoPm?.en_name
+    locale === "en"
+      ? pickName(currentCryptoPm, locale)
+      : currentCryptoPm?.ru_name || currentCryptoPm?.en_name
   )} ${
     currentCryptoPm?.subgroup_name?.toUpperCase() ||
     currentCryptoPm?.currency.code?.toUpperCase()
@@ -44,7 +49,7 @@ export default function MassTableSelector({ cryptoPms }: { cryptoPms: IPm[] }) {
             </Text>
           </Box>
           <Text display={{ base: "block", lg: "none" }} fontWeight="bold">
-            {"за"}
+            {t("за", "for")}
           </Text>
           <Divider />
 

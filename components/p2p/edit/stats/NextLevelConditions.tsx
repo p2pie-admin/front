@@ -4,6 +4,8 @@ import { FaCheck } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import { Box3D } from "../../../../styles/theme/custom";
 import MyTooltip from "../../../shared/MyTooltip";
+import { localized } from "../../i18n";
+import { useLocale, useT } from "../../../../services/i18n";
 
 export default function NextLevelConditions({
   conditions,
@@ -15,10 +17,12 @@ export default function NextLevelConditions({
     description?: string | null | undefined;
   }[];
 }) {
+  const locale = useLocale();
+  const t = useT();
   return (
     <VStack w="100%" mt="2" spacing="1" alignItems="start">
       <Text fontSize="sm" mb="2" ml="2" color="bg.400">
-        Для перехода на следующий уровень необходимо:
+        {t("Для перехода на следующий уровень необходимо:", "To reach the next level you need to:")}
       </Text>
       {conditions.map((c, index) => (
         <Box3D
@@ -30,7 +34,7 @@ export default function NextLevelConditions({
           variant={c.is_completed ? "contrast" : "extra_contrast"}
           color={c.is_completed ? "green.300" : "red.300"}
         >
-          <MyTooltip label={c.description || ""}>
+          <MyTooltip label={localized(c, "description", locale)}>
             <HStack
               w="100%"
               justifyContent="space-between"
@@ -42,7 +46,7 @@ export default function NextLevelConditions({
                 color={c.is_completed ? "bg.400" : "bg.200"}
                 pr="2"
               >
-                {`${index + 1}) ${c.title}`}
+                {`${index + 1}) ${localized(c, "title", locale)}`}
               </Text>
               {c.is_completed ? (
                 <FaCheck size="1rem" />

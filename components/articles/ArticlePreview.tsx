@@ -12,8 +12,11 @@ import {
   VStack,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useT } from "../../services/i18n";
 
 export default function ArticlePreview({ article }: { article: IArticle }) {
+  const t = useT();
+  const readMore = t("читать далее", "read more (in Russian)");
   const ambientColor = useColorModeValue(
     "rgba(143,92,292,0.2)",
     "rgba(247, 197, 177, 0.15)"
@@ -53,10 +56,10 @@ export default function ArticlePreview({ article }: { article: IArticle }) {
           <Text as="h3" fontSize="md" color="bg.300">
             {article.subheader}{" "}
             <Highlight
-              query={["читать далее"]}
+              query={[readMore]}
               styles={{ color: "peach.300", textDecoration: "underline" }}
             >
-              читать далее
+              {readMore}
             </Highlight>
           </Text>
         </Box>

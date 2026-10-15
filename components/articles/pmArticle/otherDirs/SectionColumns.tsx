@@ -6,6 +6,7 @@ import OtherHeader from "./OtherHeader";
 import DirCardWithTitle from "./DirCardWithTitle";
 import { GetRateDataFn } from "./useDirRates";
 import Arrow from "../../../shared/Arrow";
+import { useT } from "../../../../services/i18n";
 
 export type PairedRow = {
   key: string;
@@ -35,6 +36,7 @@ const Column = ({
   placeholderHeight,
   hiddenRows,
 }: ColumnProps) => {
+  const t = useT();
   return (
     <Box3D borderRadius="lg" variant="extra_contrast" w="100%">
       <OtherHeader text={`${header}`} />
@@ -69,7 +71,7 @@ const Column = ({
               onClick={onToggle}
               rightIcon={<Arrow isUp={expanded} />}
             >
-              {expanded ? "скрыть" : "показать все"}
+              {expanded ? t("скрыть", "hide") : t("показать все", "show all")}
             </Button>
           </>
         )}

@@ -10,6 +10,7 @@ import { IExchangerReview } from "../../../types/exchanger";
 import { exchangerNameToSlug } from "../../exchangers/helper";
 import CustomImage from "../../shared/CustomImage";
 import RelativeTime from "../../shared/RelativeTime";
+import { useT } from "../../../services/i18n";
 
 const TEXT_MAX = 180;
 
@@ -38,6 +39,7 @@ const SourceBadge = ({ source }: { source?: string | null }) => {
 };
 
 const HomeReviewCard = ({ review }: { review: IExchangerReview }) => {
+  const t = useT();
   const bg = useColorModeValue("white", "bg.900");
   const border = useColorModeValue("blackAlpha.100", "whiteAlpha.100");
   const ink = useColorModeValue("gray.800", "gray.100");
@@ -67,7 +69,7 @@ const HomeReviewCard = ({ review }: { review: IExchangerReview }) => {
         </Box>
         <Box minW="0" flex="1">
           <Text fontWeight="bold" fontSize="sm" noOfLines={1}>
-            {ex?.display_name || ex?.name || "Обменник"}
+            {ex?.display_name || ex?.name || t("Обменник", "Exchanger")}
           </Text>
           <Text fontSize="xs" color="bg.500" noOfLines={1}>
             <RelativeTime date={review.review_date || review.updatedAt} />
@@ -91,7 +93,7 @@ const HomeReviewCard = ({ review }: { review: IExchangerReview }) => {
           <BoringAvatar size={18} name={review.fingerprint || review.name || review.id} variant="marble" />
         </Box>
         <Text noOfLines={1} flex="1">
-          {review.name?.trim() || "Аноним"}
+          {review.name?.trim() || t("Аноним", "Anonymous")}
         </Text>
         <Icon
           as={
@@ -104,7 +106,13 @@ const HomeReviewCard = ({ review }: { review: IExchangerReview }) => {
           w="4"
           h="4"
           color={tone === "positive" ? "green.300" : tone === "negative" ? "red.300" : "gray.400"}
-          aria-label={tone === "positive" ? "положительный" : tone === "negative" ? "отрицательный" : "нейтральный"}
+          aria-label={
+            tone === "positive"
+              ? t("положительный", "positive")
+              : tone === "negative"
+                ? t("отрицательный", "negative")
+                : t("нейтральный", "neutral")
+          }
         />
       </HStack>
     </Flex>

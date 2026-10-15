@@ -5,6 +5,7 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import { BoxWrapper, CustomHeader } from "../../shared/BoxWrapper";
 import Loader from "../../shared/Loader";
 import { createMapStyles } from "../../map/styles";
+import { useT } from "../../../services/i18n";
 
 const parseCoordinates = (value?: string | null) => {
   if (!value) return null;
@@ -44,6 +45,7 @@ export default function MakerMap({
 }: {
   coordinates?: string | null;
 }) {
+  const t = useT();
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
@@ -113,7 +115,7 @@ export default function MakerMap({
 
   return (
     <BoxWrapper>
-      <CustomHeader text="Примерное место встречи" Icon={FaMapMarkerAlt} />
+      <CustomHeader text={t("Примерное место встречи", "Approximate meeting place")} Icon={FaMapMarkerAlt} />
       <Divider my="4" />
       <Box borderRadius="lg" overflow="hidden" bg="bg.900">
         {isLoaded ? (

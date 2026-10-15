@@ -4,6 +4,7 @@ import { ResponsiveText } from "../../styles/theme/custom";
 import { RiCopperCoinLine } from "react-icons/ri";
 import { RiExchange2Line } from "react-icons/ri";
 import { RiBarChartBoxLine } from "react-icons/ri";
+import { useT } from "../../services/i18n";
 
 const GeneralStat = ({
   colorScheme,
@@ -44,6 +45,7 @@ const GeneralStat = ({
 };
 
 export default function GeneralStats() {
+  const t = useT();
   return (
     <HStack
       w="100%"
@@ -55,19 +57,19 @@ export default function GeneralStats() {
     >
       <GeneralStat
         colorScheme="orange"
-        label="Обменников:"
+        label={t("Обменников:", "Exchangers:")}
         value="670"
         icon={<RiCopperCoinLine size="1.5rem" />}
       />
       <GeneralStat
         colorScheme="purple"
-        label="Направлений:"
+        label={t("Направлений:", "Directions:")}
         value="24 450"
         icon={<RiExchange2Line size="1.5rem" />}
       />
       <GeneralStat
         colorScheme="cyan"
-        label="Курсов:"
+        label={t("Курсов:", "Rates:")}
         value="12 570 900"
         icon={<RiBarChartBoxLine size="1.5rem" />}
       />
