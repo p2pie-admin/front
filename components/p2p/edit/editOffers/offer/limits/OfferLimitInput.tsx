@@ -76,7 +76,8 @@ export default function OfferLimit({
     <InputGroup>
       <ResponsiveText mr="2">{ruName}</ResponsiveText>
       <NumberInput
-        value={displayValue || suggested}
+        // While typing show exactly what was typed (an emptied field must stay empty, not jump to the suggestion).
+        value={isEditing ? value : displayValue || suggested}
         isValidCharacter={(v) => !!v.match(/^[Ee0-9+\.,]$/)}
         step={stepValue}
         borderWidth="2px"
