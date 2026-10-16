@@ -8,11 +8,11 @@ import { useT } from "../../../../services/i18n";
 
 // Pencil on the public maker page: asks whether the visitor owns the page; only the owner goes to the editor
 // (where ownership is still proven through the Telegram bot).
-export default function OwnerEdit({ slug }: { slug: string }) {
+export default function OwnerEdit({ slug, place = "main" }: { slug: string; place?: string }) {
   const dispatch = useAppDispatch();
   const t = useT();
   const router = useRouter();
-  const modalId = `owner_edit_${slug}`;
+  const modalId = `owner_edit_${place}_${slug}`;
   const close = () => dispatch(triggerModal(undefined));
 
   return (

@@ -4,9 +4,30 @@ import { IMaker } from "../../../types/p2p";
 import { BoxWrapper } from "../../shared/BoxWrapper";
 import Actions from "../../exchangers/exchanger/exchangerTopPanel/Actions";
 import MakerRating from "../edit/stats/MakerRating";
-import OwnerEdit from "./topPanel/OwnerEdit";
 import { getAvatarSrc, getMakerDisplayName } from "../makers/helper";
-import { intlLocale, useLocale, useT } from "../../../services/i18n";
+import { useLocale, useT } from "../../../services/i18n";
+
+const ruPlural = (n: number, [one, few, many]: [string, string, string]) => {
+  const d = n % 10, h = n % 100;
+  if (d === 1 && h !== 11) return one;
+  if (d >= 2 && d <= 4 && (h < 12 || h > 14)) return few;
+  return many;
+};
+
+// Time on the platform, rounded to the largest sensible unit: "5 дней", "2 недели", "3 месяца", "1 год".
+const platformAge = (createdAt: string, locale: string) => {
+  const days = Math.max(0, (Date.now() - new Date(createdAt).getTime()) / 86400000);
+  const units: Array<{ from: number; size: number; ru: [string, string, string]; en: string }> = [
+    { from: 365, size: 365, ru: ["год", "года", "лет"], en: "year" },
+    { from: 60, size: 30.44, ru: ["месяц", "месяца", "месяцев"], en: "month" },
+    { from: 14, size: 7, ru: ["неделя", "недели", "недель"], en: "week" },
+    { from: 1, size: 1, ru: ["день", "дня", "дней"], en: "day" },
+  ];
+  const unit = units.find((u) => days >= u.from);
+  if (!unit) return locale === "en" ? "today" : "сегодня";
+  const n = Math.max(1, Math.round(days / unit.size));
+  return locale === "en" ? `${n} ${unit.en}${n === 1 ? "" : "s"}` : `${n} ${ruPlural(n, unit.ru)}`;
+};
 
 // Top card of the public maker page: level ring, square logo, name with status, actions and a compact stats row.
 export default function MakerProfileCard({ maker }: { maker: IMaker }) {
@@ -18,14 +39,12 @@ export default function MakerProfileCard({ maker }: { maker: IMaker }) {
   const online = maker.status === "active";
   const offers = Array.isArray(maker.offers) ? maker.offers.length : 0;
   const reviews = Array.isArray(maker.reviews) ? maker.reviews.length : 0;
-  const since = maker.createdAt
-    ? new Intl.DateTimeFormat(intlLocale(locale), { day: "2-digit", month: "2-digit", year: "numeric" }).format(new Date(maker.createdAt))
-    : "—";
+  const since = maker.createdAt ? platformAge(maker.createdAt, locale) : "—";
   const stats: Array<[string | number, string]> = [
     [offers, t("Предложений", "Offers")],
     [maker.deals_finished || 0, t("Сделок", "Deals")],
     [reviews, t("Отзывы", "Reviews")],
-    [since, t("На платформе", "On p2pie since")],
+    [since, t("На платформе", "On p2pie")],
   ];
 
   // Content-sized items spread over the row, so long labels never touch the dividers on phones.
@@ -35,7 +54,7 @@ export default function MakerProfileCard({ maker }: { maker: IMaker }) {
         <HStack key={label} spacing={{ base: "2", lg: "4" }} alignItems="stretch" flex="0 1 auto" minW={0}>
           {i > 0 ? <Divider orientation="vertical" h="auto" /> : null}
           <VStack alignItems="flex-start" spacing="0" minW={0}>
-            <Text fontWeight="bold" fontSize={{ base: "sm", lg: "md" }} color={i === 3 ? "peach.300" : undefined} noOfLines={1}>
+            <Text fontWeight="bold" fontSize={{ base: "sm", lg: "md" }} color={i === 3 ? "peach.300" : undefined} noOfLines={1} suppressHydrationWarning>
               {value}
             </Text>
             <Text fontSize={{ base: "11px", lg: "xs" }} color="bg.400" noOfLines={1}>
@@ -89,7 +108,6 @@ export default function MakerProfileCard({ maker }: { maker: IMaker }) {
               <MdVerified size="1.1rem" />
             </Box>
           ) : null}
-          <OwnerEdit slug={maker.slug} />
         </Box>
       </Box>
       <HStack spacing="1.5">

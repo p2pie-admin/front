@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Divider, Grid, Box, VStack, HStack, Button, Link, Text, IconButton, Input } from "@chakra-ui/react";
-import { BsArrowRight, BsArrowRightShort } from "react-icons/bs";
+import { BsArrowRightShort } from "react-icons/bs";
+import { FiArrowRight } from "react-icons/fi";
+import OwnerEdit from "../topPanel/OwnerEdit";
 import { IoSearch } from "react-icons/io5";
 import PmName from "../../../shared/PmName";
 import { dealLink } from "../../../../services/p2pSanctions";
@@ -96,7 +98,7 @@ function MakerOfferCard({ offer, pmsByCode, locale }: { offer: IMakerOffer; pmsB
             title={t("Начать сделку", "Start a deal")}
             _hover={{ textDecoration: "none" }}
           >
-            <BsArrowRight size="1.4rem" />
+            <FiArrowRight size="1.5rem" strokeWidth={3} />
           </Button>
         ) : null}
       </HStack>
@@ -107,9 +109,11 @@ function MakerOfferCard({ offer, pmsByCode, locale }: { offer: IMakerOffer; pmsB
 export default function MakerOffers({
   offers,
   pms,
+  slug,
 }: {
   offers: IMaker["offers"];
   pms: IPm[] | null;
+  slug: string;
 }) {
   const t = useT();
   const locale = intlLocale(useLocale());
@@ -134,7 +138,10 @@ export default function MakerOffers({
   return (
     <BoxWrapper id={MAKER_OFFERS_ID} p={{ base: "3", lg: "4" }}>
       <HStack justifyContent="space-between">
-        <CustomHeader text={t("Предложения", "Offers")} Icon={IoMdListBox} />
+        <HStack spacing="3" color="peach.200">
+          <CustomHeader text={t("Предложения", "Offers")} Icon={IoMdListBox} />
+          <OwnerEdit slug={slug} place="offers" />
+        </HStack>
         <IconButton
           aria-label={t("Поиск по предложениям", "Search offers")}
           icon={<IoSearch size="1.2rem" />}
