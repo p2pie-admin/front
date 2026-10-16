@@ -19,7 +19,7 @@ const MakerTopPanel = ({ maker }: { maker: IMaker }) => {
         statusColor={statusColor}
         isH1
       />
-      <OwnerEdit slug={maker.slug} />
+      <OwnerEdit maker={maker} />
 
       <MakerTags tags={maker.exchanger_tags} />
       <Actions id={maker.id} displayName={displayName} />

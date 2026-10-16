@@ -57,8 +57,8 @@ export default function MakerPage({
     <Box px={{ base: "2", lg: "0" }}>
       <UniversalSeo seo={seo} />
       <MakerProfileCard maker={maker} />
-      {offers?.length ? <MakerOffers offers={offers} pms={pms} slug={maker.slug} /> : null}
-      {description ? <MakerDescription description={description} slug={maker.slug} /> : null}
+      {offers?.length ? <MakerOffers offers={offers} pms={pms} maker={maker} /> : null}
+      {description ? <MakerDescription description={description} maker={maker} /> : null}
       <MakerMap coordinates={maker.coordinates} />
 
       <ExchangerReviewsHeader

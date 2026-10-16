@@ -109,11 +109,11 @@ function MakerOfferCard({ offer, pmsByCode, locale }: { offer: IMakerOffer; pmsB
 export default function MakerOffers({
   offers,
   pms,
-  slug,
+  maker,
 }: {
   offers: IMaker["offers"];
   pms: IPm[] | null;
-  slug: string;
+  maker: IMaker;
 }) {
   const t = useT();
   const locale = intlLocale(useLocale());
@@ -140,7 +140,7 @@ export default function MakerOffers({
       <HStack justifyContent="space-between">
         <HStack spacing="3" color="peach.200">
           <CustomHeader text={t("Предложения", "Offers")} Icon={IoMdListBox} />
-          <OwnerEdit slug={slug} place="offers" />
+          <OwnerEdit maker={maker} place="offers" />
         </HStack>
         <IconButton
           aria-label={t("Поиск по предложениям", "Search offers")}
