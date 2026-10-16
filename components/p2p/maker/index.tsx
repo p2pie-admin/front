@@ -53,7 +53,8 @@ export default function MakerPage({
   const description = (maker.description || "").trim();
 
   return (
-    <>
+    // Phones: a small side gutter so the cards do not touch the screen edges (owner's mockup).
+    <Box px={{ base: "2", lg: "0" }}>
       <UniversalSeo seo={seo} />
       <MakerProfileCard maker={maker} />
       {offers?.length ? <MakerOffers offers={offers} pms={pms} /> : null}
@@ -70,6 +71,6 @@ export default function MakerPage({
       <ExchangerReviews initialReviews={reviews as IExchangerReview[] | null} />
 
       {faqCategory ? <FaqCategoriesList categories={[faqCategory]} /> : <></>}
-    </>
+    </Box>
   );
 }

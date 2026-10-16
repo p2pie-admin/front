@@ -132,7 +132,7 @@ export default function MakerOffers({
   });
 
   return (
-    <BoxWrapper id={MAKER_OFFERS_ID}>
+    <BoxWrapper id={MAKER_OFFERS_ID} p={{ base: "3", lg: "4" }}>
       <HStack justifyContent="space-between">
         <CustomHeader text={t("Предложения", "Offers")} Icon={IoMdListBox} />
         <IconButton

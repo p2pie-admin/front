@@ -6,7 +6,7 @@ import { useT } from "../../../../services/i18n";
 export default function ExchangerReviewsHeader({ title }: { title: string }) {
   const t = useT();
   return (
-    <VStack my="20" w="100%">
+    <VStack my={{ base: "8", lg: "20" }} px={{ base: "2", lg: "0" }} w="100%">
       <ResponsiveText whiteSpace="unset" size="3xl" textAlign="center">
         {title}
       </ResponsiveText>
