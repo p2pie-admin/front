@@ -2,11 +2,26 @@ import { env } from "process";
 import { getArray, getItem, setArray } from "./redis";
 import { redisGet, redisSet } from "./redisClient";
 
+export type CachedFetchOptions<T> = {
+  /** Return false to keep the previous cached value instead of storing `data`
+   * (e.g. a list that suddenly shrank while the upstream was reloading). */
+  accept?: (data: T, prev: T | null) => boolean;
+};
+
 export async function cachedFetch<T>(
   key: string,
   ttlSeconds: number,
-  fetcher: () => Promise<T>
+  fetcher: () => Promise<T>,
+  options: CachedFetchOptions<T> = {}
 ): Promise<T> {
+  const accepted = (data: T, prev: T | null) => {
+    if (data === null || data === undefined) return false;
+    if (options.accept && !options.accept(data, prev)) {
+      console.warn(`cachedFetch: rejected a suspicious answer for key "${key}", keeping the previous value`);
+      return false;
+    }
+    return true;
+  };
   let cached: { data: T; updatedAt: number } | null = null;
 
   cached = await redisGet<{ data: T; updatedAt: number }>(key);
@@ -17,9 +32,10 @@ export async function cachedFetch<T>(
 
     if (isStale) {
       // Refresh in background
+      const prev = cached.data;
       fetcher()
         .then((data) => {
-          if (data !== null && data !== undefined) {
+          if (accepted(data, prev)) {
             return redisSet(key, { data, updatedAt: Date.now() });
           }
         })
@@ -34,7 +50,7 @@ export async function cachedFetch<T>(
   // No cache → fetch synchronously
   const data = await fetcher();
 
-  if (data !== null && data !== undefined) {
+  if (accepted(data, null)) {
     void redisSet(key, { data, updatedAt: Date.now() });
   }
 

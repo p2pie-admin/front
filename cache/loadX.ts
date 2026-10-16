@@ -194,17 +194,27 @@ export const loadArticle = (code: string) =>
   });
 
 export const loadPossibleDirs = () =>
-  cachedFetch("dirs", TTL.fast, async () => {
-    const dirs = (await parserFetcher("dirs")) as
-      | Record<string, number>
-      | null; // {"BTC_USDTTRC20": 119, "BTC_ETH": 34, ...}
+  cachedFetch(
+    "dirs",
+    TTL.fast,
+    async () => {
+      const dirs = (await parserFetcher("dirs")) as
+        | Record<string, number>
+        | null; // {"BTC_USDTTRC20": 119, "BTC_ETH": 34, ...}
 
-    // The server answers {} for a minute while the parser reloads. Never cache that: throwing keeps
-    // the previous (stale) value in Redis and makes getStaticProps fail soft instead of baking
-    // notFound into every direction page (incident 2026-10-14: 404s cached until restart).
-    if (!dirs || !Object.keys(dirs).length) throw new Error("dirs: empty answer from server");
-    return dirs;
-  });
+      // The server answers {} for a minute while the parser reloads. Never cache that: throwing keeps
+      // the previous (stale) value in Redis and makes getStaticProps fail soft instead of baking
+      // notFound into every direction page (incident 2026-10-14: 404s cached until restart).
+      if (!dirs || !Object.keys(dirs).length) throw new Error("dirs: empty answer from server");
+      return dirs;
+    },
+    {
+      // A list that shrank by more than 20 % is a partial answer caught mid-reload (2026-10-16:
+      // two directions were 404 for 12 min with the server healthy). Keep the previous list.
+      accept: (dirs, prev) =>
+        !prev || Object.keys(dirs).length >= 0.8 * Object.keys(prev).length,
+    },
+  );
 
 export const limitedPossibleDirs = (
   dirs: Record<string, number> | null | undefined,
@@ -223,21 +233,17 @@ export const limitedPossibleDirs = (
 };
 
 export const loadPms = async () => {
+  // Never cache an empty list: `[]` used to be stored for TTL.slow (1 h) whenever the CMS failed,
+  // and every direction page became notFound for that hour. Throwing keeps the previous value in
+  // Redis (stale refresh) or makes getStaticProps fail soft with a 2-minute 404 (no cache yet).
   const pms = await cachedFetch("pms_v2", TTL.slow, async () => {
-    try {
-      const selector = await cmsFetcher(selectorQuery);
-      if (!selector) {
-        console.error(
-          "Selector is undefined - check selectorQueryAll and CMS response",
-        );
-        return []; // safe fallback
-      }
-
-      return getPmsFromSelector(selector);
-    } catch (e) {
-      console.log("error loading pms: ", e);
-      return [];
+    const selector = await cmsFetcher(selectorQuery);
+    if (!selector) {
+      throw new Error("pms: selector is undefined - check selectorQuery and the CMS");
     }
+    const result = getPmsFromSelector(selector);
+    if (!result.length) throw new Error("pms: selector has no payment methods");
+    return result;
   });
   return pms;
 };
