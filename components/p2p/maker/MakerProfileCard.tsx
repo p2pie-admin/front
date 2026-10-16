@@ -50,8 +50,8 @@ export default function MakerProfileCard({ maker }: { maker: IMaker }) {
   const logo = (
     <Box
       flexShrink={0}
-      w={{ base: "40px", lg: "52px" }}
-      h={{ base: "40px", lg: "52px" }}
+      w={{ base: "36px", lg: "48px" }}
+      h={{ base: "36px", lg: "48px" }}
       borderRadius="xl"
       overflow="hidden"
       bg="bg.800"
@@ -69,19 +69,29 @@ export default function MakerProfileCard({ maker }: { maker: IMaker }) {
     </Box>
   );
 
+  // The logo sits on the level ring's lower right corner, like an avatar badge.
+  const logoBadge = (
+    <Box position="absolute" right="-6px" bottom="-6px" zIndex={3} borderRadius="xl" borderWidth="2px" borderColor="bg.900" lineHeight={0}>
+      {logo}
+    </Box>
+  );
+
   const title = (
     <VStack alignItems="flex-start" spacing="0.5" flex="1" minW={0}>
-      <HStack spacing="1.5" minW={0} maxW="100%">
-        <Text as="h1" fontWeight="bold" fontSize={{ base: "lg", lg: "xl" }} lineHeight="short" noOfLines={2} wordBreak="break-word" variant="primary">
+      {/* Badge and pencil flow right after the last word, so a two-line name keeps them next to the text. */}
+      <Box noOfLines={3} wordBreak="break-word" lineHeight="short">
+        <Text as="h1" display="inline" fontWeight="bold" fontSize={{ base: "lg", lg: "xl" }} variant="primary">
           {name}
         </Text>
-        {level > 1 ? (
-          <Box color="peach.300" title={t("Проверенный мейкер", "Verified maker")} flexShrink={0}>
-            <MdVerified size="1.1rem" />
-          </Box>
-        ) : null}
-        <OwnerEdit slug={maker.slug} />
-      </HStack>
+        <Box as="span" display="inline-flex" alignItems="center" gap="1.5" ml="1.5" verticalAlign="middle">
+          {level > 1 ? (
+            <Box as="span" color="peach.300" title={t("Проверенный мейкер", "Verified maker")}>
+              <MdVerified size="1.1rem" />
+            </Box>
+          ) : null}
+          <OwnerEdit slug={maker.slug} />
+        </Box>
+      </Box>
       <HStack spacing="1.5">
         <Box w="8px" h="8px" borderRadius="full" bg={online ? "green.400" : "orange.400"} />
         <Text fontSize="sm" color="bg.400">
@@ -99,33 +109,33 @@ export default function MakerProfileCard({ maker }: { maker: IMaker }) {
 
   return (
     <BoxWrapper variant="no_contrast">
-      {/* Desktop: ring | logo + name + actions, stats underneath. */}
+      {/* Desktop: ring with the logo badge | name + actions, stats underneath. */}
       <Flex display={{ base: "none", lg: "flex" }} gap="6" alignItems="center">
-        <MakerRating level={level} completed={0} total={0} />
+        <Box flexShrink={0} position="relative">
+          <MakerRating level={level} completed={0} total={0} />
+          {logoBadge}
+        </Box>
         <VStack alignItems="stretch" spacing="3" flex="1" minW={0}>
-          <HStack alignItems="flex-start" spacing="3">
-            {logo}
+          <HStack alignItems="center" spacing="3">
             {title}
             {actions}
           </HStack>
           {statsRow}
         </VStack>
       </Flex>
-      {/* Phones: a smaller ring, then logo + actions on one line and the name with the full column width below. */}
+      {/* Phones: one row = level ring with the logo as a corner badge | name and status | stacked actions. */}
       <Box display={{ base: "block", lg: "none" }}>
         <Flex gap="3" alignItems="center">
           <Box flexShrink={0} w="84px" h="84px" position="relative">
             <Box position="absolute" top="0" left="0" transform="scale(0.7)" transformOrigin="top left">
               <MakerRating level={level} completed={0} total={0} />
             </Box>
+            {logoBadge}
           </Box>
-          <VStack alignItems="stretch" spacing="2" flex="1" minW={0}>
-            <HStack justifyContent="space-between" alignItems="center" spacing="2">
-              {logo}
-              {actions}
-            </HStack>
-            {title}
-          </VStack>
+          {title}
+          <Box flexShrink={0} w="52px">
+            <Actions id={maker.id} displayName={name} stacked />
+          </Box>
         </Flex>
         <Divider my="3" />
         {statsRow}

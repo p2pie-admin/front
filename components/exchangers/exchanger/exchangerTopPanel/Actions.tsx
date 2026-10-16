@@ -27,7 +27,8 @@ const storageKeys = {
   liked: (id: string) => `exchanger:${id}:liked`,
 };
 
-const Actions = ({ id, displayName }: { displayName: string; id: string }) => {
+// stacked: bookmark above like, for the narrow phone header of the maker page.
+const Actions = ({ id, displayName, stacked = false }: { displayName: string; id: string; stacked?: boolean }) => {
   const t = useT();
   const dispatch = useAppDispatch();
   const inputColor = useColorModeValue("violet.700", "peach.300");
@@ -97,14 +98,15 @@ const Actions = ({ id, displayName }: { displayName: string; id: string }) => {
     <Flex
       gap="2"
       alignItems="stretch"
-      flexWrap={{ base: "wrap", lg: "nowrap" }}
-      flexDir="row"
+      flexWrap={stacked ? "nowrap" : { base: "wrap", lg: "nowrap" }}
+      flexDir={stacked ? "column" : "row"}
       justifyContent="start"
       ml="auto"
     >
       <Button
         p="0"
-        w="4"
+        w={stacked ? "100%" : "4"}
+        h={stacked ? "36px" : undefined}
         variant="no_contrast"
         onClick={handleBookmarkOpen}
         color={bookmark ? "red.400" : "bg.200"}
@@ -152,6 +154,7 @@ const Actions = ({ id, displayName }: { displayName: string; id: string }) => {
         onClick={handleLike}
         fontWeight="unset"
         px="2"
+        h={stacked ? "36px" : undefined}
         color={liked ? "red.400" : "bg.200"}
         rightIcon={
           liked ? <HiHeart size="1rem" /> : <HiOutlineHeart size="1rem" />
