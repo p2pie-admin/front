@@ -3,26 +3,50 @@ import { GetStaticProps } from "next";
 import MakersList from "../../components/p2p/makers";
 import { ISEO } from "../../types/general";
 import { nullSeo } from "../../components/shared/UniversalSeo";
-import { loadAllP2PMakers, loadPms } from "../../cache/loadX";
+import { loadAllP2PMakers, loadCities, loadPms } from "../../cache/loadX";
 import { filterAllowedOffers } from "../../services/p2pSanctions";
-import { IMakerPreview } from "../../types/p2p";
+import { IMakerCity, IMakerPreview } from "../../types/p2p";
+import { ICity } from "../../types/exchange";
+import { cityKey, getMakerCityKeys } from "../../components/p2p/makers/helper";
 import { localeOf, tr } from "../../services/i18n";
 
 const MakersPage = ({
   makers,
   seo,
   initialPage,
+  cities,
 }: {
   makers: IMakerPreview[] | null;
   seo: ISEO;
   initialPage: number;
-}) => <MakersList makers={makers} seo={seo} initialPage={initialPage} />;
+  cities?: IMakerCity[] | null;
+}) => <MakersList makers={makers} seo={seo} initialPage={initialPage} cities={cities || []} />;
+
+// Only cities mentioned in makers' offers make it to the selector, named from our city list when we know them.
+const collectMakerCities = (makers: IMakerPreview[], known: ICity[] | null): IMakerCity[] => {
+  const byKey = new Map<string, ICity>();
+  (known || []).forEach((city) => {
+    const key = cityKey(city?.en_name);
+    if (key && !byKey.has(key)) byKey.set(key, city);
+  });
+  const counts = new Map<string, number>();
+  makers.forEach((maker) =>
+    getMakerCityKeys(maker).forEach((key) => counts.set(key, (counts.get(key) || 0) + 1)),
+  );
+  return Array.from(counts.entries())
+    .map(([key, count]) => {
+      const city = byKey.get(key);
+      const fallback = key.charAt(0).toUpperCase() + key.slice(1);
+      return { key, count, ru_name: city?.ru_name || fallback, en_name: city?.en_name || fallback };
+    })
+    .sort((a, b) => b.count - a.count || a.ru_name.localeCompare(b.ru_name, "ru"));
+};
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const locale = localeOf(ctx);
   const itemsPerPage = 20;
 
-  const [rawMakers, pms] = await Promise.all([loadAllP2PMakers(), loadPms()]);
+  const [rawMakers, pms, knownCities] = await Promise.all([loadAllP2PMakers(), loadPms(), loadCities()]);
   const makers = ((rawMakers as IMakerPreview[] | null) || null)?.map((maker) => ({
     ...maker,
     offers: Array.isArray(maker.offers) ? filterAllowedOffers(maker.offers, pms) : maker.offers,
@@ -53,6 +77,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       seo: seo || nullSeo,
       makers: makers || null,
       initialPage: currentPage,
+      cities: collectMakerCities(makers, (knownCities as ICity[] | null) || null),
     },
     revalidate: 60,
   };

@@ -95,6 +95,14 @@ export interface IMakerReview {
   review_replies?: IMakerReviewReply[] | null;
 }
 
+// A city of the makers list filter: only cities that makers' offers actually mention.
+export interface IMakerCity {
+  key: string;
+  ru_name: string;
+  en_name: string;
+  count: number;
+}
+
 export interface IMakerPreview {
   id: string;
   telegram_name?: string | null;

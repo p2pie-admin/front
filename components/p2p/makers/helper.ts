@@ -17,3 +17,19 @@ export const getAvatarSrc = (url?: string | null) => {
   const base = env === "production" ? cmsLinkPROD : cmsLinkDEV;
   return `${base}${url}`;
 };
+
+// Offer cities are stored as lowercase English codes ("tbilisi"); this key also matches "Nizhny Novgorod".
+export const cityKey = (value?: string | null) =>
+  (value || "").toLowerCase().replace(/[^a-z]/g, "");
+
+// Cities a maker works in, taken from the from/to cities of its offers.
+export const getMakerCityKeys = (maker: MakerLike) => {
+  const keys = new Set<string>();
+  (maker.offers || []).forEach((offer) => {
+    [offer?.city_from, offer?.city_to].forEach((city) => {
+      const key = cityKey(city);
+      if (key) keys.add(key);
+    });
+  });
+  return Array.from(keys);
+};

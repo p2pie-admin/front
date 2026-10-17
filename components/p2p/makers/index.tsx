@@ -1,4 +1,4 @@
-import { Box, Button, Center, Grid, HStack, Text } from "@chakra-ui/react";
+import { Box, Button, Center, Grid, HStack, Select, Text } from "@chakra-ui/react";
 import { useState, useMemo, useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
 import Pagination from "../../mass/table/Pagination";
@@ -6,25 +6,28 @@ import { BoxWrapper } from "../../shared/BoxWrapper";
 import Loader from "../../shared/Loader";
 import UniversalSeo from "../../shared/UniversalSeo";
 import { ISEO } from "../../../types/general";
-import { IMakerPreview } from "../../../types/p2p";
+import { IMakerCity, IMakerPreview } from "../../../types/p2p";
 import MakerLink from "./MakerLink";
 import MakersHeader from "./MakersHeader";
 import TopPanel from "./TopPanel";
-import { getMakerDisplayName, getMakerStatusColor } from "./helper";
+import { getMakerCityKeys, getMakerDisplayName, getMakerStatusColor } from "./helper";
 import { SortCriteria } from "./SortButtons";
-import { usePublicPathname, useT } from "../../../services/i18n";
+import { useLocale, usePublicPathname, useT } from "../../../services/i18n";
 
 export default function MakersList({
   makers,
   seo,
   initialPage,
+  cities = [],
 }: {
   makers: IMakerPreview[] | null;
   seo: ISEO;
   initialPage: number;
+  cities?: IMakerCity[];
 }) {
   const router = useRouter();
   const t = useT();
+  const locale = useLocale();
   // English pages live under /xen internally; links and navigation use the public path.
   const pathname = usePublicPathname();
   const [sortCriteria, setSortCriteria] = useState<SortCriteria>("name");
@@ -34,6 +37,8 @@ export default function MakersList({
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   // Makers without a single offer are noise for a visitor; hidden by default, one tap to show.
   const [onlyWithOffers, setOnlyWithOffers] = useState(true);
+  // City key from the makers' offers ("" = any city).
+  const [cityFilter, setCityFilter] = useState("");
   const withOffersCount = useMemo(
     () => (makers || []).filter((m) => (m.offers?.length || 0) > 0).length,
     [makers],
@@ -78,6 +83,7 @@ export default function MakersList({
       const matchesFilter =
         activeFilter === null || activeFilter === getMakerStatusColor(maker);
       if (onlyWithOffers && !(maker.offers?.length || 0)) return false;
+      if (cityFilter && !getMakerCityKeys(maker).includes(cityFilter)) return false;
 
       const matchesSearch =
         debouncedQuery === "" ||
@@ -86,7 +92,7 @@ export default function MakersList({
 
       return matchesFilter && matchesSearch;
     });
-  }, [makers, debouncedQuery, activeFilter, onlyWithOffers]);
+  }, [makers, debouncedQuery, activeFilter, onlyWithOffers, cityFilter]);
 
   const sortedMakers = useMemo(() => {
     const sorted = filteredMakers?.slice().sort((a, b) => {
@@ -205,6 +211,29 @@ export default function MakersList({
             >
               {t(`Все · ${makers.length}`, `All · ${makers.length}`)}
             </Button>
+            {cities.length ? (
+              <Select
+                size="sm"
+                w="auto"
+                maxW="220px"
+                borderRadius="full"
+                borderColor={cityFilter ? "peach.300" : "bg.500"}
+                color={cityFilter ? "peach.200" : "bg.200"}
+                aria-label={t("Город", "City")}
+                value={cityFilter}
+                onChange={(e) => {
+                  setCityFilter(e.target.value);
+                  setPage(1);
+                }}
+              >
+                <option value="">{t("Все города", "All cities")}</option>
+                {cities.map((city) => (
+                  <option key={city.key} value={city.key}>
+                    {`${locale === "en" ? city.en_name : city.ru_name} · ${city.count}`}
+                  </option>
+                ))}
+              </Select>
+            ) : null}
             {botLink ? (
               <Button
                 as="a"
@@ -254,7 +283,9 @@ export default function MakersList({
             )}
             {!loadingSearchSort && !paginatedMakers?.length ? (
               <Text textAlign="center" color="bg.400" py="10">
-                {onlyWithOffers
+                {cityFilter
+                  ? t("В этом городе пока нет мейкеров.", "No makers in this city yet.")
+                  : onlyWithOffers
                   ? t("Пока нет мейкеров с активными предложениями.", "No makers with active offers yet.")
                   : t("Ничего не найдено.", "Nothing found.")}
               </Text>

@@ -6,7 +6,6 @@ import { ISEO } from "../../../types/general";
 import { IFaqCategory } from "../../../types/faq";
 import { IMaker } from "../../../types/p2p";
 import { IPm } from "../../../types/selector";
-import MakerDescription from "./MakerDescription";
 import MakerMap from "./MakerMap";
 
 import ExchangerReviewsHeader from "../../exchangers/exchanger/reviews/ExchangerReviewsHeader";
@@ -50,7 +49,6 @@ export default function MakerPage({
 
   const offers = Array.isArray(maker.offers) ? maker.offers : null;
   const reviews = Array.isArray(maker.reviews) ? maker.reviews : null;
-  const description = (maker.description || "").trim();
 
   return (
     // Phones: a small side gutter so the cards do not touch the screen edges (owner's mockup).
@@ -58,7 +56,6 @@ export default function MakerPage({
       <UniversalSeo seo={seo} />
       <MakerProfileCard maker={maker} />
       {offers?.length ? <MakerOffers offers={offers} pms={pms} maker={maker} /> : null}
-      {description ? <MakerDescription description={description} maker={maker} /> : null}
       <MakerMap coordinates={maker.coordinates} />
 
       <ExchangerReviewsHeader

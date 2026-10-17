@@ -39,6 +39,7 @@ export default function MakerProfileCard({ maker }: { maker: IMaker }) {
   const online = maker.status === "active";
   const offers = Array.isArray(maker.offers) ? maker.offers.length : 0;
   const reviews = Array.isArray(maker.reviews) ? maker.reviews.length : 0;
+  const description = (maker.description || "").trim();
   const since = maker.createdAt ? platformAge(maker.createdAt, locale) : "—";
   const stats: Array<[string | number, string]> = [
     [offers, t("Предложений", "Offers")],
@@ -158,6 +159,12 @@ export default function MakerProfileCard({ maker }: { maker: IMaker }) {
         <Divider my="3" />
         {statsRow}
       </Box>
+      {/* The maker's own description sits right under the stats; its edit form stays on /p2p/edit. */}
+      {description ? (
+        <Text mt={{ base: "3", lg: "4" }} fontSize="sm" color="bg.300" whiteSpace="pre-line" wordBreak="break-word">
+          {description}
+        </Text>
+      ) : null}
     </BoxWrapper>
   );
 }
