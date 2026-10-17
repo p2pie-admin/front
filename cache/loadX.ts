@@ -528,6 +528,33 @@ export const loadTestReview = () =>
     return [];
   });
 
+// RU/EN names of the cities in makers' offers (lowercase English codes like "tbilisi") from the geo-city table.
+const geoCityNamesQuery = `
+  query GeoCityNames($or: [GeoCityFiltersInput]) {
+    geoCities(filters: { or: $or }, sort: ["population:desc"], pagination: { limit: 200 }) {
+      data {
+        attributes {
+          ru_name
+          en_name
+        }
+      }
+    }
+  }
+`;
+
+export const loadGeoCityNames = (keys: string[]) =>
+  cachedFetch(`geo_city_names_${keys.slice().sort().join("_")}`, TTL.slow, async () => {
+    if (!keys.length) return [];
+    const res: any = await cmsFetcher(geoCityNamesQuery, {
+      or: keys.map((key) => ({ en_name: { containsi: key } })),
+    });
+    const raw = res?.geoCities?.data ?? res?.geoCities ?? res?.data ?? res;
+    if (!Array.isArray(raw)) return [];
+    return raw
+      .map((item: any) => item?.attributes ?? item)
+      .filter((c: any) => c?.en_name && c?.ru_name) as Array<{ ru_name: string; en_name: string }>;
+  }) as Promise<Array<{ ru_name: string; en_name: string }>>;
+
 export const loadP2PLevels = () =>
   cachedFetch(`p2p_levels`, TTL.slow, async () => {
     const res = await cmsFetcher(p2pLevelsQuery);

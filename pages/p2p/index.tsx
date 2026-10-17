@@ -3,7 +3,7 @@ import { GetStaticProps } from "next";
 import MakersList from "../../components/p2p/makers";
 import { ISEO } from "../../types/general";
 import { nullSeo } from "../../components/shared/UniversalSeo";
-import { loadAllP2PMakers, loadCities, loadPms } from "../../cache/loadX";
+import { loadAllP2PMakers, loadCities, loadGeoCityNames, loadPms } from "../../cache/loadX";
 import { filterAllowedOffers } from "../../services/p2pSanctions";
 import { IMakerCity, IMakerPreview } from "../../types/p2p";
 import { ICity } from "../../types/exchange";
@@ -23,8 +23,10 @@ const MakersPage = ({
 }) => <MakersList makers={makers} seo={seo} initialPage={initialPage} cities={cities || []} />;
 
 // Only cities mentioned in makers' offers make it to the selector, named from our city list when we know them.
-const collectMakerCities = (makers: IMakerPreview[], known: ICity[] | null): IMakerCity[] => {
-  const byKey = new Map<string, ICity>();
+type CityNames = Pick<ICity, "ru_name" | "en_name">;
+
+const collectMakerCities = async (makers: IMakerPreview[], known: ICity[] | null): Promise<IMakerCity[]> => {
+  const byKey = new Map<string, CityNames>();
   (known || []).forEach((city) => {
     const key = cityKey(city?.en_name);
     if (key && !byKey.has(key)) byKey.set(key, city);
@@ -33,6 +35,15 @@ const collectMakerCities = (makers: IMakerPreview[], known: ICity[] | null): IMa
   makers.forEach((maker) =>
     getMakerCityKeys(maker).forEach((key) => counts.set(key, (counts.get(key) || 0) + 1)),
   );
+  // Our city list is mostly Russian cities; the rest get their names from the geo-city table (biggest match first).
+  const missing = Array.from(counts.keys()).filter((key) => !byKey.has(key));
+  if (missing.length) {
+    const geo = await loadGeoCityNames(missing).catch(() => []);
+    (geo || []).forEach((city) => {
+      const key = cityKey(city.en_name);
+      if (missing.includes(key) && !byKey.has(key)) byKey.set(key, city);
+    });
+  }
   return Array.from(counts.entries())
     .map(([key, count]) => {
       const city = byKey.get(key);
@@ -77,7 +88,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       seo: seo || nullSeo,
       makers: makers || null,
       initialPage: currentPage,
-      cities: collectMakerCities(makers, (knownCities as ICity[] | null) || null),
+      cities: await collectMakerCities(makers, (knownCities as ICity[] | null) || null),
     },
     revalidate: 60,
   };
