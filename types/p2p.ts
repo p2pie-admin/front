@@ -128,6 +128,8 @@ export interface IMakerPreview {
 export interface IMaker extends IMakerPreview {
   coordinates?: string | null;
   description?: string | null;
+  // English text of the description, filled by the site team (the maker edits `description`).
+  en_description?: string | null;
 }
 
 export interface IP2PLevel {

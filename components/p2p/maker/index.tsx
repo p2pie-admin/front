@@ -6,7 +6,7 @@ import { ISEO } from "../../../types/general";
 import { IFaqCategory } from "../../../types/faq";
 import { IMaker } from "../../../types/p2p";
 import { IPm } from "../../../types/selector";
-import MakerMap from "./MakerMap";
+import MakerMap, { MapCity } from "./MakerMap";
 
 import ExchangerReviewsHeader from "../../exchangers/exchanger/reviews/ExchangerReviewsHeader";
 import { ExchangerIdProvider } from "../../exchangers/exchanger/ExchangerContext";
@@ -25,11 +25,13 @@ export default function MakerPage({
   seo,
   pms,
   faqCategory,
+  mapCity,
 }: {
   maker: IMaker | null;
   seo: ISEO;
   pms: IPm[] | null;
   faqCategory?: IFaqCategory | null;
+  mapCity?: MapCity | null;
 }) {
   const t = useT();
   if (!maker) {
@@ -56,7 +58,7 @@ export default function MakerPage({
       <UniversalSeo seo={seo} />
       <MakerProfileCard maker={maker} />
       {offers?.length ? <MakerOffers offers={offers} pms={pms} maker={maker} /> : null}
-      <MakerMap coordinates={maker.coordinates} />
+      <MakerMap coordinates={maker.coordinates} city={mapCity} />
 
       <ExchangerReviewsHeader
         title={t("Уже совершали сделку с этим p2p мейкером?", "Have you made a deal with this p2p maker?")}

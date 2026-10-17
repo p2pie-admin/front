@@ -1,4 +1,4 @@
-import { Box, Center, Divider, useToken } from "@chakra-ui/react";
+import { Box, Center, Divider, Text, useToken } from "@chakra-ui/react";
 import { Circle, GoogleMap, useLoadScript } from "@react-google-maps/api";
 import { useEffect, useMemo, useState } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
@@ -6,6 +6,12 @@ import { BoxWrapper, CustomHeader } from "../../shared/BoxWrapper";
 import Loader from "../../shared/Loader";
 import { createMapStyles } from "../../map/styles";
 import { useT } from "../../../services/i18n";
+import { useAppSelector } from "../../../redux/hooks";
+
+// Center for makers without a saved point: the first city of their offers.
+export type MapCity = { lat: number; lng: number; ru_name: string; en_name: string };
+
+const MOSCOW = { lat: 55.7558, lng: 37.6173 };
 
 const parseCoordinates = (value?: string | null) => {
   if (!value) return null;
@@ -42,18 +48,27 @@ const parseCoordinates = (value?: string | null) => {
 
 export default function MakerMap({
   coordinates,
+  city,
 }: {
   coordinates?: string | null;
+  city?: MapCity | null;
 }) {
   const t = useT();
+  const siteCity = useAppSelector((state) => state.main.city?.coordinates);
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
   }, []);
-  const center = useMemo(
-    () => parseCoordinates(coordinates),
-    [coordinates],
-  );
+  const point = useMemo(() => parseCoordinates(coordinates), [coordinates]);
+  // The map is always shown; without the maker's point it is centered on the offer city, then the site city.
+  const center = useMemo(() => {
+    if (point) return point;
+    if (city) return { lat: city.lat, lng: city.lng };
+    if (Array.isArray(siteCity) && siteCity.length === 2 && siteCity.every((v) => Number.isFinite(v))) {
+      return { lat: siteCity[0], lng: siteCity[1] };
+    }
+    return MOSCOW;
+  }, [point, city, siteCity]);
   const libraries = useMemo(() => ["places"], []);
 
   const { isLoaded } = useLoadScript({
@@ -111,12 +126,19 @@ export default function MakerMap({
     [mapStyles],
   );
 
-  if (!mounted || !center) return null;
+  if (!mounted) return null;
 
   return (
     <BoxWrapper>
       <CustomHeader text={t("Примерное место встречи", "Approximate meeting place")} Icon={FaMapMarkerAlt} />
       <Divider my="4" />
+      {!point ? (
+        <Text fontSize="sm" color="bg.400" mb="3">
+          {city
+            ? t(`Мейкер пока не отметил район на карте. Город из предложений: ${city.ru_name}.`, `The maker has not marked an area on the map yet. City from the offers: ${city.en_name}.`)
+            : t("Мейкер пока не отметил район на карте.", "The maker has not marked an area on the map yet.")}
+        </Text>
+      ) : null}
       <Box borderRadius="lg" overflow="hidden" bg="bg.900">
         {isLoaded ? (
           <GoogleMap
@@ -125,17 +147,19 @@ export default function MakerMap({
             center={center}
             mapContainerStyle={containerStyle}
           >
-            <Circle
-              center={center}
-              radius={1000}
-              options={{
-                fillColor: "#f0baa3",
-                fillOpacity: 0.35,
-                strokeColor: "#f0baa3",
-                strokeOpacity: 0.6,
-                strokeWeight: 1,
-              }}
-            />
+            {point ? (
+              <Circle
+                center={point}
+                radius={1000}
+                options={{
+                  fillColor: "#f0baa3",
+                  fillOpacity: 0.35,
+                  strokeColor: "#f0baa3",
+                  strokeOpacity: 0.6,
+                  strokeWeight: 1,
+                }}
+              />
+            ) : null}
           </GoogleMap>
         ) : (
           <Center h="50vh">

@@ -50,12 +50,12 @@ const Footer = () => {
 
         <Wrap
           spacing={{ base: "3", md: "8" }}
-          justify="center"
+          justify="flex-start"
           mt="6"
           w={{ base: "100%", lg: "80%" }}
         >
           {TRUST.map((item) => (
-            <WrapItem key={item.text} alignItems="center" maxW={{ base: "100%", md: "30%" }}>
+            <WrapItem key={item.text} alignItems="flex-start" maxW={{ base: "100%", md: "30%" }}>
               <HStack alignItems="start" spacing="2">
                 <Icon as={item.icon} color="peach.300" boxSize="5" mt="0.5" flexShrink={0} />
                 <Text fontSize="xs" color="bg.400" lineHeight="1.4">

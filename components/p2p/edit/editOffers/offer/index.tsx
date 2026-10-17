@@ -42,7 +42,6 @@ import OfferLimits from "./limits";
 import OfferFee from "./fee";
 import OfferExplanation from "./OfferExplanation";
 import OfferParameters from "./OfferParameters";
-import SaveMaker from "../../topPanel/SaveMaker";
 
 type Props = {
   index: number;
@@ -234,7 +233,6 @@ const Offer = ({
           spacing="2"
         >
           <DeleteOffer index={index} isFull />
-          <SaveMaker withModal={false} />
         </HStack>
       </HStack>
     </>
@@ -292,10 +290,7 @@ const Offer = ({
               )}
             </Button>
           ) : (
-            <>
-              <SaveMaker withModal={false} />
-              <DeleteOffer index={index} />
-            </>
+            <DeleteOffer index={index} />
           )}
         </HStack>
       </Grid>

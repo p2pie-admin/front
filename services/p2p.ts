@@ -241,6 +241,7 @@ export const p2pMakerQuery = gql`
             }
           }
           description
+          en_description
 
           reviews(filters: { isApproved: { eq: true } }) {
             data {

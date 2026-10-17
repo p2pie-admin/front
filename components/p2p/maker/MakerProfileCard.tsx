@@ -39,7 +39,7 @@ export default function MakerProfileCard({ maker }: { maker: IMaker }) {
   const online = maker.status === "active";
   const offers = Array.isArray(maker.offers) ? maker.offers.length : 0;
   const reviews = Array.isArray(maker.reviews) ? maker.reviews.length : 0;
-  const description = (maker.description || "").trim();
+  const description = ((locale === "en" && maker.en_description) || maker.description || "").trim();
   const since = maker.createdAt ? platformAge(maker.createdAt, locale) : "—";
   const stats: Array<[string | number, string]> = [
     [offers, t("Предложений", "Offers")],

@@ -5,6 +5,7 @@ import type { NextRequest } from "next/server";
 // Interface language on the same URLs: English visitors are rewritten to the generated /xen/* copies.
 // Rule: cookie `lang` wins; otherwise any Russian-family language in Accept-Language → ru, other languages → en,
 // no header at all (crawlers) → ru. Direct /xen/* links are sent back to the public URL with the cookie set.
+// Links may force the language with `?lang=en` / `?lang=ru` (any page): cookie set, 307 to the URL without it.
 const EN_PREFIX = "/xen";
 const RU_FAMILY = /(^|,)\s*(ru|uk|be|kk|ky|tg|uz|hy|az|ka|tk|ro-md)(-[a-z]+)?\s*(;|,|$)/i;
 const NOT_A_PAGE = /^\/(api|_next\/static|_next\/image|static|uploads)(\/|$)|\.[a-z0-9]+$/i;
@@ -17,13 +18,29 @@ const pickLocale = (req: NextRequest): "ru" | "en" => {
   return "en";
 };
 
+const LANG_COOKIE = { path: "/", maxAge: 60 * 60 * 24 * 365, sameSite: "lax" as const };
+
 const languageRoute = (req: NextRequest) => {
   const url = req.nextUrl.clone();
   const { pathname } = url;
+  // `?lang=en|ru` on any page: remember the choice and send the visitor to the clean URL. A redirect keeps the
+  // parameter out of the index (no duplicate URLs, the canonical page stays the only one crawlers see).
+  const langParam = (url.searchParams.get("lang") || "").toLowerCase();
+  if (url.searchParams.has("lang") && !NOT_A_PAGE.test(pathname)) {
+    url.searchParams.delete("lang");
+    if (pathname === EN_PREFIX || pathname.startsWith(`${EN_PREFIX}/`)) {
+      url.pathname = pathname.slice(EN_PREFIX.length) || "/";
+    }
+    const res = NextResponse.redirect(url, 307);
+    if (langParam === "en" || langParam === "ru") res.cookies.set("lang", langParam, LANG_COOKIE);
+    res.headers.set("X-Robots-Tag", "noindex");
+    res.headers.set("Cache-Control", "private, no-store");
+    return res;
+  }
   if (pathname === EN_PREFIX || pathname.startsWith(`${EN_PREFIX}/`)) {
     url.pathname = pathname.slice(EN_PREFIX.length) || "/";
     const res = NextResponse.redirect(url, 307);
-    res.cookies.set("lang", "en", { path: "/", maxAge: 60 * 60 * 24 * 365, sameSite: "lax" });
+    res.cookies.set("lang", "en", LANG_COOKIE);
     return res;
   }
   if (NOT_A_PAGE.test(pathname) || pathname === "/sitemap.xml" || pathname === "/rss.xml") return null;

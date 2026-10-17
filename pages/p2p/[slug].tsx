@@ -7,6 +7,7 @@ import { addHeadersToSearchIndex, addPathsToSitemap } from "../../cache/cache";
 import {
   loadAllP2PMakers,
   loadFAQbyCategoryCode,
+  loadGeoCityNames,
   loadP2PMaker,
   loadP2PTopParameters,
   loadPms,
@@ -19,9 +20,12 @@ import { IFullOffer, IMaker, IMakerPreview, IP2PTopParameter } from "../../types
 import { IPm } from "../../types/selector";
 import { filterAllowedOffers } from "../../services/p2pSanctions";
 import {
+  cityKey,
+  getMakerCityKeys,
   getMakerDisplayName,
   getMakerSlug,
 } from "../../components/p2p/makers/helper";
+import { MapCity } from "../../components/p2p/maker/MakerMap";
 
 const selectTopParametersByIds = (
   linked: Array<{ id?: string | number | null } | null | undefined> | null | undefined,
@@ -52,6 +56,7 @@ type PageProps = {
   seo: ISEO;
   pms: IPm[] | null;
   faqCategory: IFaqCategory | null;
+  mapCity?: MapCity | null;
 };
 
 export default function P2PMakerPage({
@@ -59,6 +64,7 @@ export default function P2PMakerPage({
   seo,
   pms,
   faqCategory,
+  mapCity,
 }: PageProps) {
   if (!maker) {
     return (
@@ -76,7 +82,7 @@ export default function P2PMakerPage({
   }
 
   return (
-    <MakerPage maker={maker} seo={seo} pms={pms} faqCategory={faqCategory} />
+    <MakerPage maker={maker} seo={seo} pms={pms} faqCategory={faqCategory} mapCity={mapCity || null} />
   );
 }
 
@@ -146,6 +152,17 @@ export async function getStaticProps(ctx: { params: { slug: string }; locale?: s
       makerWithFullOffers = { ...makerWithFullOffers, offers: fullOffers };
     }
 
+    // No saved point on the map: center it on the first city of the maker's offers.
+    let mapCity: MapCity | null = null;
+    const offerCity = maker.coordinates ? "" : getMakerCityKeys(makerWithFullOffers)[0] || "";
+    if (offerCity) {
+      const geo = await loadGeoCityNames([offerCity]).catch(() => []);
+      const city = (geo || []).find((c) => cityKey(c.en_name) === offerCity);
+      if (city && Number.isFinite(city.lat) && Number.isFinite(city.lng)) {
+        mapCity = { lat: Number(city.lat), lng: Number(city.lng), ru_name: city.ru_name, en_name: city.en_name };
+      }
+    }
+
     const displayName = getMakerDisplayName(makerWithFullOffers);
     const title = tr(locale, `P2P мейкер ${displayName}`, `P2P maker ${displayName}`);
     const description = tr(locale, `${displayName}: карточка P2P мейкера`, `${displayName}: P2P maker profile`);
@@ -175,6 +192,7 @@ export async function getStaticProps(ctx: { params: { slug: string }; locale?: s
         seo,
         pms: pms || null,
         faqCategory: faqCategory || null,
+        mapCity,
       },
       // Offers change often (follow-market re-pricing), keep the page fresh.
       revalidate: TTL.fast,
@@ -188,6 +206,7 @@ export async function getStaticProps(ctx: { params: { slug: string }; locale?: s
         seo: nullSeo,
         pms: null,
         faqCategory: null,
+        mapCity: null,
       },
       revalidate: TTL.slow,
     };

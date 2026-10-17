@@ -536,14 +536,18 @@ const geoCityNamesQuery = `
         attributes {
           ru_name
           en_name
+          lat
+          lng
         }
       }
     }
   }
 `;
 
+export type IGeoCityName = { ru_name: string; en_name: string; lat?: number | null; lng?: number | null };
+
 export const loadGeoCityNames = (keys: string[]) =>
-  cachedFetch(`geo_city_names_${keys.slice().sort().join("_")}`, TTL.slow, async () => {
+  cachedFetch(`geo_city_names_v2_${keys.slice().sort().join("_")}`, TTL.slow, async () => {
     if (!keys.length) return [];
     const res: any = await cmsFetcher(geoCityNamesQuery, {
       or: keys.map((key) => ({ en_name: { containsi: key } })),
@@ -552,8 +556,8 @@ export const loadGeoCityNames = (keys: string[]) =>
     if (!Array.isArray(raw)) return [];
     return raw
       .map((item: any) => item?.attributes ?? item)
-      .filter((c: any) => c?.en_name && c?.ru_name) as Array<{ ru_name: string; en_name: string }>;
-  }) as Promise<Array<{ ru_name: string; en_name: string }>>;
+      .filter((c: any) => c?.en_name && c?.ru_name) as IGeoCityName[];
+  }) as Promise<IGeoCityName[]>;
 
 export const loadP2PLevels = () =>
   cachedFetch(`p2p_levels`, TTL.slow, async () => {

@@ -8,6 +8,7 @@ import {
 import { normalizeTelegramSlug } from "../../../services/telegram";
 import { requestStrapiAsService } from "../../../services/server/strapiClient";
 import { loadPms } from "../../../cache/loadX";
+import { redisDel } from "../../../cache/redisClient";
 import { isDirAllowed, sanctionedCodes } from "../../../services/p2pSanctions";
 import {
   verifyTelegramSlugServer,
@@ -382,7 +383,8 @@ export default async function handler(
     body.maker.coordinates.every((value) => Number.isFinite(value))
   ) {
     const [lat, lng] = body.maker.coordinates;
-    makerData.coordinates = `POINT(${lng} ${lat})`;
+    // Latitude first: the map components read the first number as latitude whenever it fits.
+    makerData.coordinates = `POINT(${lat} ${lng})`;
   }
 
   Object.keys(makerData).forEach((key) => {
@@ -523,6 +525,17 @@ export default async function handler(
     }
 
     await clearTelegramConfirmation(normalizedSlug);
+
+    // Show the saved data right away: drop the Redis copies and re-render the maker pages (RU and EN).
+    try {
+      await redisDel(`p2p_maker_v4_${normalizedSlug}`, "p2p_makers_v4");
+      for (const path of ["/p2p", `/p2p/${normalizedSlug}`, `/p2p/edit/${normalizedSlug}`]) {
+        await res.revalidate(path).catch(() => undefined);
+        await res.revalidate(`/xen${path}`).catch(() => undefined);
+      }
+    } catch (revalidateError) {
+      console.warn("[p2p/save] revalidation failed", { slug: normalizedSlug });
+    }
 
     return res.status(200).json({
       ok: true,

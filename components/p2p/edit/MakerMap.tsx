@@ -1,6 +1,6 @@
 import { Box, Center, Divider, HStack, useToken } from "@chakra-ui/react";
 import { Circle, GoogleMap, useLoadScript } from "@react-google-maps/api";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { BoxWrapper, CustomHeader } from "../../shared/BoxWrapper";
 import Loader from "../../shared/Loader";
@@ -86,14 +86,19 @@ export default function MakerMap({
   }, [cityCoordinates]);
   // A city found through the search box; cleared when a city from the regular list is chosen.
   const [picked, setPicked] = useState<PickedPlace | null>(null);
+  // Becomes true once the maker picks a city from the regular list in this session.
+  const initialCity = useRef(cityCoordinates);
+  const [cityChosen, setCityChosen] = useState(false);
   useEffect(() => {
     setPicked(null);
+    if (cityCoordinates !== initialCity.current) setCityChosen(true);
   }, [cityCoordinates]);
   const pickedCenter = useMemo(
     () => (picked ? ({ lat: picked.lat, lng: picked.lng } as google.maps.LatLngLiteral) : null),
     [picked],
   );
-  const center = pickedCenter || cityCenter || fallbackCenter;
+  // The saved point wins over the visitor's site city, so a reopened editor shows the maker's own area.
+  const center = pickedCenter || (cityChosen ? cityCenter : null) || fallbackCenter || cityCenter;
   const circleCenter = useMemo(() => {
     if (!center) return null;
     if (
