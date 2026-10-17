@@ -159,6 +159,7 @@ const ExchangerCard = ({
               name={displayNameShort}
               logo={logo}
               admin_rating={rate.admin_rating}
+              trust_level={rate.trust_level}
             />
           </HStack>
         </HStack>

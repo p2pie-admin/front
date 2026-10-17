@@ -55,6 +55,7 @@ const RateDetails = ({ rate }: { rate: IRate }) => {
     name: rateName,
     display_name: rateDisplayName,
     admin_rating: rateAdminRating,
+    trust_level: rateTrustLevel,
     logo: rateLogo,
     ref_link: rateRefLink,
   } = rate;
@@ -158,6 +159,7 @@ const RateDetails = ({ rate }: { rate: IRate }) => {
               <ExchangerName
                 name={baseName}
                 admin_rating={baseAdminRating}
+                trust_level={rateTrustLevel}
                 logo={baseLogo}
               />
             </Box>
@@ -182,6 +184,7 @@ const RateDetails = ({ rate }: { rate: IRate }) => {
             <ExchangerName
               name={baseName}
               admin_rating={baseAdminRating}
+              trust_level={rateTrustLevel}
               logo={baseLogo}
             />
           </Box>

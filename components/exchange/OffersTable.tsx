@@ -16,6 +16,7 @@ import { exchangerNameToSlug } from "../exchangers/helper";
 import { ISsrRate } from "./ssrRates";
 import { localFormat } from "../../redux/amountsHelper";
 import { useLocale, useT } from "../../services/i18n";
+import TrustBadge from "../shared/TrustBadge";
 
 // Rows shown at once; the rest sit inside a native <details> so the HTML stays crawlable
 // without a 40-row wall on screen.
@@ -69,6 +70,12 @@ const OffersTable = ({
       // Same compact style as the swiper cards ("15 тыс ₽ — 250 тыс ₽") so it fits under the name.
       const reserve = Number(rate.reserve?.get) || 0;
       const limits = min || max ? `${localFormat(min, smallCur, locale)} — ${localFormat(max, smallCur, locale)}` : "";
+      // Trust shield next to the stars, same as on the exchanger page and /exchangers (null for unknown levels).
+      const trust = rate.trust_level ? (
+        <Box as="span" display="inline-flex" verticalAlign="middle" ml="1">
+          <TrustBadge level={rate.trust_level} size="0.9em" />
+        </Box>
+      ) : null;
       return (
         <Tr key={`offer_${rate.exchangerId}`}>
           <Td px={{ base: 1, md: 2 }} py={{ base: 3, md: 2 }}>{offset + index + 1}</Td>
@@ -95,9 +102,11 @@ const OffersTable = ({
             >
               <Box as="span" display={{ base: "inline", md: "none" }}>
                 {[rate.admin_rating ? `★ ${rate.admin_rating}` : "", limits].filter(Boolean).join(" · ")}
+                {trust}
               </Box>
               <Box as="span" display={{ base: "none", md: "inline" }}>
                 {rate.admin_rating ? `★ ${rate.admin_rating}` : ""}
+                {trust}
               </Box>
             </ResponsiveText>
           </Td>

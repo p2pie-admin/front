@@ -20,6 +20,7 @@ export type IMassRate = {
   exchangerId: number;
   name: string;
   admin_rating: number;
+  trust_level?: string | null;
   course: number;
   parameterCodes: string[];
   ref_link: string;

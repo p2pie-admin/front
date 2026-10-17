@@ -15,6 +15,7 @@ export type ISsrRate = Pick<
   | "name"
   | "display_name"
   | "admin_rating"
+  | "trust_level"
   | "course"
   | "min"
   | "max"
@@ -58,6 +59,7 @@ export const pickSsrRate = (rate: IRate): ISsrRate => ({
   name: rate.name,
   display_name: rate.display_name,
   admin_rating: rate.admin_rating,
+  trust_level: rate.trust_level ?? null,
   course: rate.course,
   min: rate.min,
   max: rate.max,

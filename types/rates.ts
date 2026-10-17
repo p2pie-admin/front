@@ -8,6 +8,7 @@ interface IBaseRate {
   name: string;
   display_name: string;
   admin_rating: number;
+  trust_level?: string | null;
   course: number;
   p2pRatio?: number;
   min_fee?: string;

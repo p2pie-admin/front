@@ -23,6 +23,7 @@ import { capitalize } from "../../../main/side/selector/section/PmGroup/helper";
 import { useIsMobile } from "../../../exchange/tv/hooks";
 import Rating from "../../../exchange/tv/Rating";
 import CustomImage from "../../../shared/CustomImage";
+import TrustBadge from "../../../shared/TrustBadge";
 import MassFiat from "../MassFiat";
 import { redirect } from "../../../../redux/thunks";
 import MassRateAmount from "./MassRateAmount";
@@ -157,7 +158,10 @@ const MassRate = ({
             </ResponsiveText>
           </HStack>
 
-          <Rating rating={rate.admin_rating} />
+          <HStack spacing="1">
+            <Rating rating={rate.admin_rating} />
+            <TrustBadge level={rate.trust_level} />
+          </HStack>
         </HStack>
         <HStack justifyContent={"space-between"} px="1">
           <MassFiat codes={rate.codes} fiatPms={fiatPms} ref_link={ref_link} />
@@ -195,7 +199,10 @@ const MassRate = ({
           </HStack>
         </HStack>
 
-        <Rating rating={rate.admin_rating} />
+        <HStack spacing="1">
+          <Rating rating={rate.admin_rating} />
+          <TrustBadge level={rate.trust_level} />
+        </HStack>
 
         {renderRatesBig()}
 
