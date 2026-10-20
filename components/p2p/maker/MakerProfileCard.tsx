@@ -48,23 +48,24 @@ export default function MakerProfileCard({ maker }: { maker: IMaker }) {
     [offers, t("Предложений", "Offers"), IoMdListBox],
     [maker.deals_finished || 0, t("Сделок", "Deals"), FaHandshake],
     [reviews, t("Отзывы", "Reviews"), FaStar],
-    [since, t("На платформе", "On p2pie"), FaRegClock],
+    [since, t("На p2pie", "On p2pie"), FaRegClock],
   ];
 
   // Four equal cells with vertical dividers: icon, number, label (owner's mockup 2026-10-17).
+  // Cells clip instead of overlapping: flex 1 + overflow hidden on the text column.
   const statsRow = (
     <Flex alignItems="stretch" w="100%">
       {stats.map(([value, label, StatIcon], i) => (
-        <HStack key={label} spacing={{ base: "1.5", lg: "3" }} alignItems="center" flex="1 1 0" minW={0} px={{ base: "1", lg: "3" }} py="1"
+        <HStack key={label} spacing={{ base: "1", lg: "3" }} alignItems="center" flex="1 1 0" minW={0} px={{ base: "1", lg: "3" }} py="1"
           borderLeftWidth={i > 0 ? "1px" : 0} borderColor="whiteAlpha.200" justifyContent={{ base: "flex-start", lg: "center" }}>
-          <Box color="peach.300" flexShrink={0} display={{ base: i === 1 ? "none" : "block", sm: "block" }}>
-            <StatIcon size="1.1rem" />
+          <Box color="peach.300" flexShrink={0}>
+            <StatIcon size="1rem" />
           </Box>
-          <VStack alignItems="flex-start" spacing="0" minW={0}>
-            <Text fontWeight="bold" fontSize={{ base: "sm", lg: "md" }} lineHeight="1.2" noOfLines={1} suppressHydrationWarning>
+          <VStack alignItems="flex-start" spacing="0" flex="1 1 0" minW={0} overflow="hidden">
+            <Text fontWeight="bold" fontSize={{ base: "sm", lg: "md" }} lineHeight="1.2" whiteSpace="nowrap" suppressHydrationWarning>
               {value}
             </Text>
-            <Text fontSize={{ base: "10px", lg: "xs" }} color="bg.400" lineHeight="1.2" noOfLines={1}>
+            <Text fontSize={{ base: "9px", lg: "xs" }} color="bg.400" lineHeight="1.2" whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis" w="100%">
               {label}
             </Text>
           </VStack>

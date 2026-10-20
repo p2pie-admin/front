@@ -65,31 +65,28 @@ function MakerOfferCard({ offer, pmsByCode, locale }: { offer: IMakerOffer; pmsB
         </Box>
         {getPm ? <PmName pm={getPm} isTwoLines /> : <Text fontSize="sm">{getCode}</Text>}
       </Grid>
-      <HStack mt="3" justifyContent="space-between" alignItems="center" spacing="3">
-        <VStack alignItems="flex-start" spacing="1" minW={0}>
-          {rate ? (
-            <Text fontSize={{ base: "xl", lg: "2xl" }} fontWeight="semibold" lineHeight="1.2">
-              {`1 ${rate.from} = `}
-              <Text as="span" color="peach.300">
-                {fmt(rate.value, locale)}
+      {rate ? (
+        <Text mt="3" fontSize={{ base: "xl", lg: "2xl" }} fontWeight="semibold" lineHeight="1.2">
+          {`1 ${rate.from} = `}
+          <Text as="span" color="peach.300">
+            {fmt(rate.value, locale)}
+          </Text>
+          {` ${rate.to}`}
+        </Text>
+      ) : null}
+      {/* Limits on the left, the CTA pill on the right; the rate above has the full card width. */}
+      <HStack mt="2" justifyContent="space-between" alignItems="center" spacing="3">
+        {hasLimits ? (
+          <VStack alignItems="flex-start" spacing="0" minW={0} fontSize="sm">
+            <Text color="bg.400" fontSize="xs">{t("Лимиты", "Limits")}</Text>
+            <Text noOfLines={1}>{`${range(offer.min, offer.max)} ${inGet ? get : give}`}</Text>
+            {course > 0 ? (
+              <Text color="bg.500" fontSize="xs" noOfLines={1}>
+                {`${range(offer.min != null ? convert(offer.min) : null, offer.max != null ? convert(offer.max) : null)} ${inGet ? give : get}`}
               </Text>
-              {` ${rate.to}`}
-            </Text>
-          ) : null}
-          {hasLimits ? (
-            <HStack alignItems="flex-start" spacing="4" fontSize="sm">
-              <Text color="bg.400">{t("Лимиты", "Limits")}</Text>
-              <VStack alignItems="flex-start" spacing="0">
-                <Text>{`${range(offer.min, offer.max)} ${inGet ? get : give}`}</Text>
-                {course > 0 ? (
-                  <Text color="bg.500" fontSize="xs">
-                    {`${range(offer.min != null ? convert(offer.min) : null, offer.max != null ? convert(offer.max) : null)} ${inGet ? give : get}`}
-                  </Text>
-                ) : null}
-              </VStack>
-            </HStack>
-          ) : null}
-        </VStack>
+            ) : null}
+          </VStack>
+        ) : <Box />}
         {offer.isActive !== false ? (
           <Button
             as={Link}
@@ -98,7 +95,7 @@ function MakerOfferCard({ offer, pmsByCode, locale }: { offer: IMakerOffer; pmsB
             rel="nofollow noopener"
             variant="primary"
             flexShrink={0}
-            h={{ base: "44px", lg: "48px" }}
+            h={{ base: "40px", lg: "48px" }}
             px={{ base: "3", lg: "4" }}
             borderRadius="xl"
             fontSize={{ base: "sm", lg: "md" }}
