@@ -52,24 +52,34 @@ export default function MakerProfileCard({ maker }: { maker: IMaker }) {
   ];
 
   // Four equal cells with vertical dividers: icon, number, label (owner's mockup 2026-10-17).
-  // Cells clip instead of overlapping: flex 1 + overflow hidden on the text column.
+  // Phones: icon + number on one line, label below on the full cell width (wraps, no clipping);
+  // desktop: icon left, number over label. Cells share the width equally (flex 1 + minW 0).
   const statsRow = (
     <Flex alignItems="stretch" w="100%">
       {stats.map(([value, label, StatIcon], i) => (
-        <HStack key={label} spacing={{ base: "1", lg: "3" }} alignItems="center" flex="1 1 0" minW={0} px={{ base: "1", lg: "3" }} py="1"
+        <Flex key={label} direction={{ base: "column", lg: "row" }} alignItems={{ base: "flex-start", lg: "center" }}
+          gap={{ base: "0", lg: "3" }} flex="1 1 0" minW={0} px={{ base: "1", lg: "3" }} py="1"
           borderLeftWidth={i > 0 ? "1px" : 0} borderColor="whiteAlpha.200" justifyContent={{ base: "flex-start", lg: "center" }}>
-          <Box color="peach.300" flexShrink={0}>
-            <StatIcon size="1rem" />
-          </Box>
-          <VStack alignItems="flex-start" spacing="0" flex="1 1 0" minW={0} overflow="hidden">
-            <Text fontWeight="bold" fontSize={{ base: "sm", lg: "md" }} lineHeight="1.2" whiteSpace="nowrap" suppressHydrationWarning>
+          <HStack spacing="1" alignItems="center" minW={0} maxW="100%">
+            <Box color="peach.300" flexShrink={0} display={{ base: "block", lg: "none" }}>
+              <StatIcon size="0.85rem" />
+            </Box>
+            <Box color="peach.300" flexShrink={0} display={{ base: "none", lg: "block" }}>
+              <StatIcon size="1rem" />
+            </Box>
+            <Text fontWeight="bold" fontSize={{ base: "xs", lg: "md" }} lineHeight="1.2" whiteSpace="nowrap" display={{ base: "block", lg: "none" }} suppressHydrationWarning>
               {value}
             </Text>
-            <Text fontSize={{ base: "9px", lg: "xs" }} color="bg.400" lineHeight="1.2" whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis" w="100%">
+          </HStack>
+          <VStack alignItems="flex-start" spacing="0" flex={{ base: "0 0 auto", lg: "1 1 0" }} minW={0} w={{ base: "100%", lg: "auto" }}>
+            <Text fontWeight="bold" fontSize="md" lineHeight="1.2" whiteSpace="nowrap" display={{ base: "none", lg: "block" }} suppressHydrationWarning>
+              {value}
+            </Text>
+            <Text fontSize={{ base: "9px", lg: "xs" }} color="bg.400" lineHeight="1.2" w="100%" wordBreak="break-word">
               {label}
             </Text>
           </VStack>
-        </HStack>
+        </Flex>
       ))}
     </Flex>
   );
