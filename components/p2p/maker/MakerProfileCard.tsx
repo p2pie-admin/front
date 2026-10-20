@@ -17,17 +17,19 @@ const ruPlural = (n: number, [one, few, many]: [string, string, string]) => {
 };
 
 // Time on the platform, rounded to the largest sensible unit: "5 дней", "2 недели", "3 месяца", "1 год".
-const platformAge = (createdAt: string, locale: string) => {
+// `short` = compact form for narrow phone cells: "10 мес.", "6 дн.", "2 нед.", "1 г." / "10 mo", "6 d", "2 wk", "1 yr".
+const platformAge = (createdAt: string, locale: string, short = false) => {
   const days = Math.max(0, (Date.now() - new Date(createdAt).getTime()) / 86400000);
-  const units: Array<{ from: number; size: number; ru: [string, string, string]; en: string }> = [
-    { from: 365, size: 365, ru: ["год", "года", "лет"], en: "year" },
-    { from: 60, size: 30.44, ru: ["месяц", "месяца", "месяцев"], en: "month" },
-    { from: 14, size: 7, ru: ["неделя", "недели", "недель"], en: "week" },
-    { from: 1, size: 1, ru: ["день", "дня", "дней"], en: "day" },
+  const units: Array<{ from: number; size: number; ru: [string, string, string]; ruShort: string; en: string; enShort: string }> = [
+    { from: 365, size: 365, ru: ["год", "года", "лет"], ruShort: "г.", en: "year", enShort: "yr" },
+    { from: 60, size: 30.44, ru: ["месяц", "месяца", "месяцев"], ruShort: "мес.", en: "month", enShort: "mo" },
+    { from: 14, size: 7, ru: ["неделя", "недели", "недель"], ruShort: "нед.", en: "week", enShort: "wk" },
+    { from: 1, size: 1, ru: ["день", "дня", "дней"], ruShort: "дн.", en: "day", enShort: "d" },
   ];
   const unit = units.find((u) => days >= u.from);
   if (!unit) return locale === "en" ? "today" : "сегодня";
   const n = Math.max(1, Math.round(days / unit.size));
+  if (short) return `${n} ${locale === "en" ? unit.enShort : unit.ruShort}`;
   return locale === "en" ? `${n} ${unit.en}${n === 1 ? "" : "s"}` : `${n} ${ruPlural(n, unit.ru)}`;
 };
 
@@ -44,11 +46,13 @@ export default function MakerProfileCard({ maker }: { maker: IMaker }) {
   const reviews = Array.isArray(maker.reviews) ? maker.reviews.length : 0;
   const description = ((locale === "en" && maker.en_description) || maker.description || "").trim();
   const since = maker.createdAt ? platformAge(maker.createdAt, locale) : "—";
-  const stats: Array<[string | number, string, IconType]> = [
-    [offers, t("Предложений", "Offers"), IoMdListBox],
-    [maker.deals_finished || 0, t("Сделок", "Deals"), FaHandshake],
-    [reviews, t("Отзывы", "Reviews"), FaStar],
-    [since, t("На p2pie", "On p2pie"), FaRegClock],
+  const sinceShort = maker.createdAt ? platformAge(maker.createdAt, locale, true) : "—";
+  // [value, phone value, label, icon]; the label keeps a non-breaking space so it reads as two words at 9 px.
+  const stats: Array<[string | number, string | number, string, IconType]> = [
+    [offers, offers, t("Предложений", "Offers"), IoMdListBox],
+    [maker.deals_finished || 0, maker.deals_finished || 0, t("Сделок", "Deals"), FaHandshake],
+    [reviews, reviews, t("Отзывы", "Reviews"), FaStar],
+    [since, sinceShort, t("На\u00a0p2pie", "On\u00a0p2pie"), FaRegClock],
   ];
 
   // Four equal cells with vertical dividers: icon, number, label (owner's mockup 2026-10-17).
@@ -56,7 +60,7 @@ export default function MakerProfileCard({ maker }: { maker: IMaker }) {
   // desktop: icon left, number over label. Cells share the width equally (flex 1 + minW 0).
   const statsRow = (
     <Flex alignItems="stretch" w="100%">
-      {stats.map(([value, label, StatIcon], i) => (
+      {stats.map(([value, phoneValue, label, StatIcon], i) => (
         <Flex key={label} direction={{ base: "column", lg: "row" }} alignItems={{ base: "flex-start", lg: "center" }}
           gap={{ base: "0", lg: "3" }} flex="1 1 0" minW={0} px={{ base: "1", lg: "3" }} py="1"
           borderLeftWidth={i > 0 ? "1px" : 0} borderColor="whiteAlpha.200" justifyContent={{ base: "flex-start", lg: "center" }}>
@@ -67,8 +71,8 @@ export default function MakerProfileCard({ maker }: { maker: IMaker }) {
             <Box color="peach.300" flexShrink={0} display={{ base: "none", lg: "block" }}>
               <StatIcon size="1rem" />
             </Box>
-            <Text fontWeight="bold" fontSize={{ base: "xs", lg: "md" }} lineHeight="1.2" whiteSpace="nowrap" display={{ base: "block", lg: "none" }} suppressHydrationWarning>
-              {value}
+            <Text fontWeight="bold" fontSize="xs" lineHeight="1.2" whiteSpace="nowrap" display={{ base: "block", lg: "none" }} suppressHydrationWarning>
+              {phoneValue}
             </Text>
           </HStack>
           <VStack alignItems="flex-start" spacing="0" flex={{ base: "0 0 auto", lg: "1 1 0" }} minW={0} w={{ base: "100%", lg: "auto" }}>
