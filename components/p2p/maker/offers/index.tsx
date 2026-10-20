@@ -6,7 +6,7 @@ import OwnerEdit from "../topPanel/OwnerEdit";
 import { IoSearch } from "react-icons/io5";
 import PmName from "../../../shared/PmName";
 import { dealLink } from "../../../../services/p2pSanctions";
-import { IoMdListBox } from "react-icons/io";
+import { IoMdListBox, IoMdList } from "react-icons/io";
 import { IMaker, IMakerOffer } from "../../../../types/p2p";
 import { IPm } from "../../../../types/selector";
 import { BoxWrapper, CustomHeader } from "../../../shared/BoxWrapper";
@@ -31,6 +31,13 @@ const rateParts = (offer: IMakerOffer, give: string, get: string) => {
   const fee = offer.fee_amount && (offer.fee_type === "percentage" || !offer.fee_type) ? offer.fee_amount / 100 : 0;
   const getPerGive = (1 / course) * (1 - fee);
   return getPerGive >= 1 ? { from: give, value: getPerGive, to: get } : { from: get, value: 1 / getPerGive, to: give };
+};
+
+// Currency pair of an offer as shown on the filter chips: "EUR → USDT".
+const pairLabel = (offer: IMakerOffer, pmsByCode: Map<string, IPm>) => {
+  const [giveCode, getCode] = offer.dir.split("_");
+  const code = (c: string) => (pmsByCode.get((c || "").toUpperCase())?.currency?.code || c || "").toUpperCase();
+  return `${code(giveCode)} → ${code(getCode)}`;
 };
 
 function MakerOfferCard({ offer, pmsByCode, locale }: { offer: IMakerOffer; pmsByCode: Map<string, IPm>; locale: string }) {
@@ -91,14 +98,16 @@ function MakerOfferCard({ offer, pmsByCode, locale }: { offer: IMakerOffer; pmsB
             rel="nofollow noopener"
             variant="primary"
             flexShrink={0}
-            w="52px"
-            h="52px"
+            h={{ base: "44px", lg: "48px" }}
+            px={{ base: "3", lg: "4" }}
             borderRadius="xl"
+            fontSize={{ base: "sm", lg: "md" }}
+            fontWeight="bold"
+            rightIcon={<FiArrowRight size="1.1rem" strokeWidth={3} />}
             aria-label={t("Начать сделку", "Start a deal")}
-            title={t("Начать сделку", "Start a deal")}
             _hover={{ textDecoration: "none" }}
           >
-            <FiArrowRight size="1.5rem" strokeWidth={3} />
+            {t("Начать сделку", "Start deal")}
           </Button>
         ) : null}
       </HStack>
@@ -119,6 +128,8 @@ export default function MakerOffers({
   const locale = intlLocale(useLocale());
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
+  // "" = all offers; otherwise one of the pair labels built from the offers themselves.
+  const [pair, setPair] = useState("");
   const pmsByCode = new Map<string, IPm>();
   (pms || []).forEach((pm) => {
     if (pm?.code) {
@@ -127,7 +138,9 @@ export default function MakerOffers({
   });
   const q = query.trim().toLowerCase();
   // Search by currency code or payment method name on either side.
+  const pairs = Array.from(new Set((offers || []).map((offer) => pairLabel(offer, pmsByCode))));
   const shown = (offers || []).filter((offer) => {
+    if (pair && pairLabel(offer, pmsByCode) !== pair) return false;
     if (!q) return true;
     return offer.dir.split("_").some((code) => {
       const pm = pmsByCode.get(code.toUpperCase());
@@ -139,7 +152,7 @@ export default function MakerOffers({
     <BoxWrapper id={MAKER_OFFERS_ID} p={{ base: "3", lg: "4" }}>
       <HStack justifyContent="space-between">
         <HStack spacing="3" color="peach.200">
-          <CustomHeader text={t("Предложения", "Offers")} Icon={IoMdListBox} />
+          <CustomHeader text={`${t("Предложения", "Offers")} (${(offers || []).length})`} Icon={IoMdListBox} />
           <OwnerEdit maker={maker} place="offers" />
         </HStack>
         <IconButton
@@ -152,7 +165,23 @@ export default function MakerOffers({
       {searchOpen ? (
         <Input mt="3" autoFocus value={query} onChange={(e) => setQuery(e.target.value)} placeholder={t("Валюта или способ оплаты", "Currency or payment method")} />
       ) : null}
-      <Divider my="4" />
+      <Divider my={{ base: "3", lg: "4" }} />
+      {/* Direction filter chips: gradient "All" + one outline chip per unique pair; scrolls sideways on phones. */}
+      {pairs.length > 1 ? (
+        <HStack spacing="2" mb={{ base: "3", lg: "4" }} overflowX="auto" flexWrap="nowrap" pb="1"
+          sx={{ scrollbarWidth: "none", "::-webkit-scrollbar": { display: "none" } }}>
+          <Button size="sm" borderRadius="full" flexShrink={0} variant={pair ? "outline" : "primary"} leftIcon={<IoMdList size="1rem" />}
+            onClick={() => setPair("")} fontWeight="semibold">
+            {t("Все", "All")}
+          </Button>
+          {pairs.map((label) => (
+            <Button key={label} size="sm" borderRadius="full" flexShrink={0} variant={pair === label ? "primary" : "outline"}
+              onClick={() => setPair(pair === label ? "" : label)} fontWeight="semibold">
+              {label}
+            </Button>
+          ))}
+        </HStack>
+      ) : null}
       <Grid templateColumns={{ base: "1fr", lg: "repeat(2, 1fr)" }} gap="3">
         {shown.map((offer) => (
           <MakerOfferCard key={offer.id} offer={offer} pmsByCode={pmsByCode} locale={locale} />

@@ -27,11 +27,13 @@ const storageKeys = {
   liked: (id: string) => `exchanger:${id}:liked`,
 };
 
-// stacked: bookmark above like, for the narrow phone header of the maker page.
-const Actions = ({ id, displayName, stacked = false }: { displayName: string; id: string; stacked?: boolean }) => {
+// stacked: bookmark above like, for a narrow header. square: two equal square outline buttons side by side
+// (maker page header); the like count moves into the button title.
+const Actions = ({ id, displayName, stacked = false, square = false }: { displayName: string; id: string; stacked?: boolean; square?: boolean }) => {
   const t = useT();
   const dispatch = useAppDispatch();
   const inputColor = useColorModeValue("violet.700", "peach.300");
+  const sq = { base: "44px", lg: "52px" };
 
   const bookmarkStorageKey = useMemo(() => storageKeys.bookmark(id), [id]);
   const likedStorageKey = useMemo(() => storageKeys.liked(id), [id]);
@@ -105,11 +107,14 @@ const Actions = ({ id, displayName, stacked = false }: { displayName: string; id
     >
       <Button
         p="0"
-        w={stacked ? "100%" : "4"}
-        h={stacked ? "36px" : undefined}
-        variant="no_contrast"
+        w={square ? sq : stacked ? "100%" : "4"}
+        h={square ? sq : stacked ? "36px" : undefined}
+        minW={square ? sq : undefined}
+        variant={square ? "outline" : "no_contrast"}
+        borderRadius="xl"
         onClick={handleBookmarkOpen}
         color={bookmark ? "red.400" : "bg.200"}
+        aria-label={t("Пометка для себя", "Private note")}
       >
         <CustomModal
           id={"exchangerBookmark"}
@@ -149,6 +154,22 @@ const Actions = ({ id, displayName, stacked = false }: { displayName: string; id
         )}
       </Button>
 
+      {square ? (
+        <Button
+          p="0"
+          w={sq}
+          h={sq}
+          minW={sq}
+          variant="outline"
+          borderRadius="xl"
+          onClick={handleLike}
+          color={liked ? "red.400" : "bg.200"}
+          aria-label={t("Нравится", "Like")}
+          title={`${initialLikes}`}
+        >
+          {liked ? <HiHeart size="1.2rem" /> : <HiOutlineHeart size="1.2rem" />}
+        </Button>
+      ) : (
       <Button
         variant="no_contrast"
         onClick={handleLike}
@@ -164,6 +185,7 @@ const Actions = ({ id, displayName, stacked = false }: { displayName: string; id
           {initialLikes}
         </Text>
       </Button>
+      )}
     </Flex>
   );
 };

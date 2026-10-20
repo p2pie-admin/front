@@ -1,9 +1,11 @@
 import { Box, Divider, Flex, HStack, Image, Text, VStack } from "@chakra-ui/react";
 import { MdVerified } from "react-icons/md";
+import { FaHandshake, FaStar, FaRegClock } from "react-icons/fa";
+import { IoMdListBox } from "react-icons/io";
+import { IconType } from "react-icons";
 import { IMaker } from "../../../types/p2p";
 import { BoxWrapper } from "../../shared/BoxWrapper";
 import Actions from "../../exchangers/exchanger/exchangerTopPanel/Actions";
-import MakerRating from "../edit/stats/MakerRating";
 import { getAvatarSrc, getMakerDisplayName } from "../makers/helper";
 import { useLocale, useT } from "../../../services/i18n";
 
@@ -29,7 +31,8 @@ const platformAge = (createdAt: string, locale: string) => {
   return locale === "en" ? `${n} ${unit.en}${n === 1 ? "" : "s"}` : `${n} ${ruPlural(n, unit.ru)}`;
 };
 
-// Top card of the public maker page: level ring, square logo, name with status, actions and a compact stats row.
+// Top card of the public maker page (owner's mockup 2026-10-17): large logo, name with status, square actions,
+// a small level badge, four stat cells with icons and the maker's description underneath.
 export default function MakerProfileCard({ maker }: { maker: IMaker }) {
   const t = useT();
   const locale = useLocale();
@@ -41,66 +44,77 @@ export default function MakerProfileCard({ maker }: { maker: IMaker }) {
   const reviews = Array.isArray(maker.reviews) ? maker.reviews.length : 0;
   const description = ((locale === "en" && maker.en_description) || maker.description || "").trim();
   const since = maker.createdAt ? platformAge(maker.createdAt, locale) : "—";
-  const stats: Array<[string | number, string]> = [
-    [offers, t("Предложений", "Offers")],
-    [maker.deals_finished || 0, t("Сделок", "Deals")],
-    [reviews, t("Отзывы", "Reviews")],
-    [since, t("На платформе", "On p2pie")],
+  const stats: Array<[string | number, string, IconType]> = [
+    [offers, t("Предложений", "Offers"), IoMdListBox],
+    [maker.deals_finished || 0, t("Сделок", "Deals"), FaHandshake],
+    [reviews, t("Отзывы", "Reviews"), FaStar],
+    [since, t("На платформе", "On p2pie"), FaRegClock],
   ];
 
-  // Content-sized items spread over the row, so long labels never touch the dividers on phones.
+  // Four equal cells with vertical dividers: icon, number, label (owner's mockup 2026-10-17).
   const statsRow = (
-    <HStack spacing={{ base: "2", lg: "4" }} alignItems="stretch" justifyContent="space-between" w="100%">
-      {stats.map(([value, label], i) => (
-        <HStack key={label} spacing={{ base: "2", lg: "4" }} alignItems="stretch" flex="0 1 auto" minW={0}>
-          {i > 0 ? <Divider orientation="vertical" h="auto" /> : null}
+    <Flex alignItems="stretch" w="100%">
+      {stats.map(([value, label, StatIcon], i) => (
+        <HStack key={label} spacing={{ base: "1.5", lg: "3" }} alignItems="center" flex="1 1 0" minW={0} px={{ base: "1", lg: "3" }} py="1"
+          borderLeftWidth={i > 0 ? "1px" : 0} borderColor="whiteAlpha.200" justifyContent={{ base: "flex-start", lg: "center" }}>
+          <Box color="peach.300" flexShrink={0} display={{ base: i === 1 ? "none" : "block", sm: "block" }}>
+            <StatIcon size="1.1rem" />
+          </Box>
           <VStack alignItems="flex-start" spacing="0" minW={0}>
-            <Text fontWeight="bold" fontSize={{ base: "sm", lg: "md" }} color={i === 3 ? "peach.300" : undefined} noOfLines={1} suppressHydrationWarning>
+            <Text fontWeight="bold" fontSize={{ base: "sm", lg: "md" }} lineHeight="1.2" noOfLines={1} suppressHydrationWarning>
               {value}
             </Text>
-            <Text fontSize={{ base: "11px", lg: "xs" }} color="bg.400" noOfLines={1}>
+            <Text fontSize={{ base: "10px", lg: "xs" }} color="bg.400" lineHeight="1.2" noOfLines={1}>
               {label}
             </Text>
           </VStack>
         </HStack>
       ))}
-    </HStack>
+    </Flex>
   );
 
+  // The logo is the hero of the card: a large rounded square on a light background.
   const logo = (
     <Box
       flexShrink={0}
-      w={{ base: "36px", lg: "48px" }}
-      h={{ base: "36px", lg: "48px" }}
-      borderRadius="xl"
+      w={{ base: "72px", lg: "96px" }}
+      h={{ base: "72px", lg: "96px" }}
+      borderRadius="2xl"
       overflow="hidden"
-      bg="bg.800"
+      bg="bg.100"
       display="flex"
       alignItems="center"
       justifyContent="center"
     >
       {avatar ? (
-        <Image src={avatar} alt={name} w="100%" h="100%" objectFit="cover" />
+        <Image src={avatar} alt={name} w="100%" h="100%" objectFit="contain" />
       ) : (
-        <Text fontWeight="bold" fontSize="lg">
+        <Text fontWeight="bold" fontSize="2xl" color="bg.900">
           {name.slice(0, 1).toUpperCase()}
         </Text>
       )}
     </Box>
   );
 
-  // The logo sits on the level ring's lower right corner, like an avatar badge.
-  const logoBadge = (
-    <Box position="absolute" right="-6px" bottom="-6px" zIndex={3} borderRadius="xl" borderWidth="2px" borderColor="bg.900" lineHeight={0}>
-      {logo}
-    </Box>
+  // Level as a small square badge with a ring and a "Lv. N" caption; it no longer competes with the logo.
+  const levelBadge = (
+    <VStack spacing="0" flexShrink={0} w={{ base: "56px", lg: "64px" }} h={{ base: "72px", lg: "80px" }} borderRadius="xl" bg="bg.900" borderWidth="1px" borderColor="whiteAlpha.200" justifyContent="center" title={t(`Уровень ${level}`, `Level ${level}`)}>
+      <Box w={{ base: "34px", lg: "40px" }} h={{ base: "34px", lg: "40px" }} borderRadius="full" borderWidth="3px" borderColor="peach.300" display="flex" alignItems="center" justifyContent="center" boxShadow="0 0 10px rgba(255,179,107,0.45)">
+        <Text fontWeight="bold" fontSize={{ base: "sm", lg: "md" }} color="peach.300" lineHeight="1">
+          {level}
+        </Text>
+      </Box>
+      <Text fontSize="10px" color="bg.300" mt="1" lineHeight="1">
+        {`Lv. ${level}`}
+      </Text>
+    </VStack>
   );
 
   const title = (
     <VStack alignItems="flex-start" spacing="0.5" flex="1" minW={0}>
       {/* Badge and pencil flow right after the last word, so a two-line name keeps them next to the text. */}
-      <Box noOfLines={3} wordBreak="break-word" lineHeight="short">
-        <Text as="h1" display="inline" fontWeight="bold" fontSize={{ base: "lg", lg: "xl" }} variant="primary">
+      <Box noOfLines={2} wordBreak="break-word" lineHeight="short">
+        <Text as="h1" display="inline" fontWeight="bold" fontSize={{ base: "md", lg: "xl" }} variant="primary">
           {name}
         </Text>
         <Box as="span" display="inline-flex" alignItems="center" gap="1.5" ml="1.5" verticalAlign="middle">
@@ -120,50 +134,27 @@ export default function MakerProfileCard({ maker }: { maker: IMaker }) {
     </VStack>
   );
 
-  const actions = (
-    <Box flexShrink={0}>
-      <Actions id={maker.id} displayName={name} />
-    </Box>
-  );
-
   return (
-    <BoxWrapper variant="no_contrast">
-      {/* Desktop: ring with the logo badge | name + actions, stats underneath. */}
-      <Flex display={{ base: "none", lg: "flex" }} gap="6" alignItems="center">
-        <Box flexShrink={0} position="relative">
-          <MakerRating level={level} completed={0} total={0} />
-          {logoBadge}
+    <BoxWrapper variant="no_contrast" p={{ base: "3", lg: "4" }}>
+      {/* One row on every width: logo | name + status | bookmark + like | level badge. */}
+      <Flex gap={{ base: "2.5", lg: "4" }} alignItems="center">
+        {logo}
+        {title}
+        <Box flexShrink={0}>
+          <Actions id={maker.id} displayName={name} square />
         </Box>
-        <VStack alignItems="stretch" spacing="3" flex="1" minW={0}>
-          <HStack alignItems="center" spacing="3">
-            {title}
-            {actions}
-          </HStack>
-          {statsRow}
-        </VStack>
+        {levelBadge}
       </Flex>
-      {/* Phones: one row = level ring with the logo as a corner badge | name and status | stacked actions. */}
-      <Box display={{ base: "block", lg: "none" }}>
-        <Flex gap="3" alignItems="center">
-          <Box flexShrink={0} w="84px" h="84px" position="relative">
-            <Box position="absolute" top="0" left="0" transform="scale(0.7)" transformOrigin="top left">
-              <MakerRating level={level} completed={0} total={0} />
-            </Box>
-            {logoBadge}
-          </Box>
-          {title}
-          <Box flexShrink={0} w="52px">
-            <Actions id={maker.id} displayName={name} stacked />
-          </Box>
-        </Flex>
-        <Divider my="3" />
-        {statsRow}
-      </Box>
+      <Divider my="3" />
+      {statsRow}
       {/* The maker's own description sits right under the stats; its edit form stays on /p2p/edit. */}
       {description ? (
-        <Text mt={{ base: "3", lg: "4" }} fontSize="sm" color="bg.300" whiteSpace="pre-line" wordBreak="break-word">
-          {description}
-        </Text>
+        <>
+          <Divider my="3" />
+          <Text fontSize="sm" color="bg.300" whiteSpace="pre-line" wordBreak="break-word">
+            {description}
+          </Text>
+        </>
       ) : null}
     </BoxWrapper>
   );
