@@ -38,6 +38,8 @@ import { ExchangerTopButtons } from "./exchangerTopPanel/ExchangerTopButtons";
 import Monitorings from "./monitorings";
 import Uptime, { IExchangerUptime } from "./Uptime";
 import TrustPanel from "./TrustPanel";
+import OwnerPanel from "./OwnerPanel";
+import DownNotice, { isExchangerDown } from "./DownNotice";
 import ExternalReviews from "./ExternalReviews";
 import { IExternalReviews } from "../../../services/competitors";
 import { useLocale, useT } from "../../../services/i18n";
@@ -78,6 +80,8 @@ export default function Exchanger({
   }
 
   const { exchanger_card: exchangerCard } = exchanger;
+  const aggregated = (exchanger.rating_details as { reviews?: { total: number; positive?: number; negative?: number } } | null)?.reviews || null;
+  const down = isExchangerDown(exchanger, uptime);
 
   const ruText = exchangerCard?.text?.trim();
   // English pages prefer the English card description, falling back to the Russian text.
@@ -94,11 +98,12 @@ export default function Exchanger({
 
       <BoxWrapper variant="no_contrast">
         <VStack alignItems="start" gap="4" w="100%">
-          <ExchangerTopPanel exchanger={exchanger} />
+          <ExchangerTopPanel exchanger={exchanger} down={down} />
 
           <ExchangerStats
             reviews={exchanger.reviews}
             reviewCounts={reviewCounts}
+            aggregated={aggregated}
             // ratesTotal={exchanger.total_rates}
             reserveTotal={exchanger.exchanger_card?.total_reserve_usd}
             workingTime={exchanger.exchanger_card?.working_time}
@@ -110,10 +115,12 @@ export default function Exchanger({
             gridTemplateColumns="1fr 1fr"
             w="100%"
           >
-            <ExchangerTopButtons ref_link={exchanger.ref_link} />
+            <ExchangerTopButtons ref_link={exchanger.ref_link} down={down} />
           </Box>
         </VStack>
       </BoxWrapper>
+
+      {down && <DownNotice uptime={uptime} />}
 
       <TrustPanel exchanger={exchanger} />
       <Uptime uptime={uptime} />
@@ -130,15 +137,11 @@ export default function Exchanger({
         exchangerId={exchanger.id}
         initialReviews={initialReviews}
         initialTotal={reviewsTotal}
+        aggregatedTotal={aggregated?.total ?? null}
       />
       <ExternalReviews data={externalReviews} />
+      <OwnerPanel exchanger={exchanger} />
 
-      <Text mt="6" fontSize="sm" color="bg.300">
-        {t("Вы владелец этого обменника?", "Do you own this exchanger?")}{" "}
-        <Link as={NextLink} href="/for-exchangers" color="blue.300">
-          {t("Условия для обменников", "Terms for exchangers")}
-        </Link>
-      </Text>
     </>
   );
 }

@@ -132,7 +132,11 @@ const ForExchangersPage = () => {
             {t(
               "Всё остальное бесплатно. Место в таблице не продаётся: сортировка всегда идёт по курсу. Будем рады ссылке на вашу страницу в мониторинге в блоке «мы на мониторингах» на вашем сайте.",
               "Everything else is free. Table positions are not for sale: sorting is always by rate. We will appreciate a link to your monitoring page in the “we are on monitorings” block of your website.",
-            )}
+            )}{" "}
+            <Link as={NextLink} href="/for-exchangers/badge" color="blue.300">
+              {t("Бейдж с живым рейтингом для сайта", "Live rating badge for your website")}
+            </Link>
+            .
           </P>
 
           <H2>{t("Кабинет обменника", "Exchanger dashboard")}</H2>

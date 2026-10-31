@@ -38,10 +38,13 @@ export default function ExchangerReviews({
   exchangerId,
   initialReviews,
   initialTotal,
+  aggregatedTotal,
 }: {
   exchangerId?: string | null;
   initialReviews?: IExchangerReview[] | null;
   initialTotal?: number | null;
+  // All reviews across monitorings (rating); we only hold a copy of the latest ones.
+  aggregatedTotal?: number | null;
 }) {
   const t = useT();
   const [activeFilter, setActiveFilter] = useState<IDotColors | null>(null);
@@ -105,7 +108,14 @@ export default function ExchangerReviews({
   return (
     <BoxWrapper variant="contrast">
       <HStack justifyContent="space-between">
-        <CustomHeader text={`${t("Отзывы", "Reviews")} (${total})`} Icon={PiChatsFill} />
+        <CustomHeader
+          text={
+            aggregatedTotal && aggregatedTotal > total && !activeFilter
+              ? `${t("Последние отзывы", "Latest reviews")} (${total} ${t("из", "of")} ${aggregatedTotal.toLocaleString("ru-RU")})`
+              : `${t("Отзывы", "Reviews")} (${total})`
+          }
+          Icon={PiChatsFill}
+        />
         <ReviewsFilters toggleFilter={handleToggleFilter} activeFilter={activeFilter} />
       </HStack>
       <Divider my="4" />

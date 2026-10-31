@@ -44,6 +44,10 @@ const nextConfig = {
       "server.p2pie.com",
     ],
   },
+  // Rating badges for exchanger websites: /badge/<slug>-<size>.svg
+  async rewrites() {
+    return [{ source: "/badge/:file", destination: "/api/badge/:file" }];
+  },
   async redirects() {
     const redirects = [
       {

@@ -31,6 +31,7 @@ import { initParserFetcher } from "../../services/fetchers";
 import { IExternalReviews, loadExternalReviews } from "../../services/competitors";
 import { fetchExchangerReviewCounts, fetchExchangerReviews, ReviewCounts } from "../../services/exchangerReviews";
 import { localeOf, tr } from "../../services/i18n";
+import { IRatingDetails, isTrustLevel, reviewsText, TRUST_LEVELS, trustLabel } from "../../components/shared/trust";
 import {
   IExchangerUptime,
   prepareUptime,
@@ -156,13 +157,32 @@ export async function getStaticProps(ctx: { params: { slug: string }; locale?: s
     const uptime: IExchangerUptime | null = prepareUptime(rawUptime);
 
     const displayName = exchanger.display_name || exchanger.name;
-    const title = tr(locale, `Обменник ${capitalize(displayName)}`, `${capitalize(displayName)} exchanger`);
-
-    const description = `${capitalize(displayName)}: ${tr(
-      locale,
-      "Карточка обменника, рейтинг и информация",
-      "exchanger profile, rating and details",
-    )}`;
+    const brand = capitalize(displayName);
+    // Brand queries come as «<brand> отзывы» / «<brand> обменник»: say both, with the numbers, in title and description.
+    const details = (exchanger.rating_details || null) as IRatingDetails | null;
+    const total = details?.reviews?.total ?? exchanger.reviews_count ?? 0;
+    const stars = Number(exchanger.admin_rating) || 0;
+    const starsText = total > 0 && stars ? (locale === "en" ? stars.toFixed(2) : stars.toFixed(2).replace(".", ",")) : null;
+    const sourceNames = (details?.reviews?.sources || []).filter((x) => x.total > 0).map((x) => x.name);
+    const level = isTrustLevel(exchanger.trust_level) ? trustLabel(TRUST_LEVELS[exchanger.trust_level], locale) : null;
+    const title = total > 0
+      ? tr(
+          locale,
+          `${brand}: отзывы (${total.toLocaleString("ru-RU")}), рейтинг${starsText ? ` ${starsText}` : ""}, курсы обменника`,
+          `${brand} exchanger: ${total.toLocaleString("en-US")} reviews${starsText ? `, rating ${starsText}` : ""}, rates`,
+        )
+      : tr(locale, `Обменник ${brand}: отзывы, курсы и доступность`, `${brand} exchanger: reviews, rates and uptime`);
+    const description = total > 0
+      ? tr(
+          locale,
+          `${brand}: ${reviewsText(total, locale)}${sourceNames.length ? ` с ${sourceNames.join(", ")}` : ""}${starsText ? `, оценка ${starsText}` : ""}${level ? `, уровень доверия «${level}»` : ""}. Курсы, доступность и история обменника по данным мониторинга p2pie.`,
+          `${brand}: ${reviewsText(total, locale)}${sourceNames.length ? ` from ${sourceNames.join(", ")}` : ""}${starsText ? `, rating ${starsText}` : ""}${level ? `, trust level “${level}”` : ""}. Rates, uptime and history from p2pie monitoring.`,
+        )
+      : tr(
+          locale,
+          `${brand}: карточка обменника в мониторинге p2pie. Курсы, доступность по ежечасным проверкам, отзывы клиентов.`,
+          `${brand}: exchanger profile on p2pie monitoring. Rates, hourly uptime checks, customer reviews.`,
+        );
 
     const seo: ISEO = {
       title,

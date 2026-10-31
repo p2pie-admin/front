@@ -71,3 +71,7 @@ export const redisDel = async (...keys: string[]): Promise<number> =>
 export const redisExpire = async (key: string, ttlSeconds: number) => {
   await withRedis((client) => client.expire(key, ttlSeconds));
 };
+
+// Counter (badge impressions); no-op without Redis.
+export const redisIncr = async (key: string): Promise<number> =>
+  withRedis((client) => client.incr(key), 0);

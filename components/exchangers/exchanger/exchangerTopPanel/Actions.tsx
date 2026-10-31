@@ -66,10 +66,8 @@ const Actions = ({ id, displayName, stacked = false, square = false }: { display
     }
   }, [bookmark, bookmarkLoaded, bookmarkStorageKey]);
 
-  const initialLikes = useMemo(
-    () => (!(displayName.length % 3) ? 0 : 1) + Number(liked),
-    [displayName.length, liked],
-  );
+  // Likes live only in this browser; no invented base count.
+  const initialLikes = Number(liked);
 
   const handleLike = () => {
     setLiked((prev) => {

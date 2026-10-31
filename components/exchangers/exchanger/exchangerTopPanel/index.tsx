@@ -6,7 +6,7 @@ import Actions from "./Actions";
 import { ExchangerTopButtons } from "./ExchangerTopButtons";
 import TagBadges from "./TagBadges";
 
-const ExchangerTopPanel = ({ exchanger }: { exchanger: IExchanger }) => {
+const ExchangerTopPanel = ({ exchanger, down = false }: { exchanger: IExchanger; down?: boolean }) => {
   const displayName = exchanger.display_name || exchanger.name;
 
   return (
@@ -19,7 +19,7 @@ const ExchangerTopPanel = ({ exchanger }: { exchanger: IExchanger }) => {
           </Box>
           <Actions displayName={displayName} id={exchanger.id} />
           <Box display={{ base: "none", lg: "flex" }} flexDir="row" gap="2">
-            <ExchangerTopButtons ref_link={exchanger.ref_link} />
+            <ExchangerTopButtons ref_link={exchanger.ref_link} down={down} />
           </Box>
         </HStack>
       </Box>

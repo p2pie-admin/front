@@ -44,6 +44,8 @@ const GeneralStat = ({
   );
 };
 
+// Lower bounds of what the monitoring really has (2026-10-31: 145 active exchangers, ~2 480 directions,
+// ~680 000 reviews collected from 5 monitorings). Earlier figures (670 / 24 450 / 12 570 900) were not ours.
 export default function GeneralStats() {
   const t = useT();
   return (
@@ -58,19 +60,19 @@ export default function GeneralStats() {
       <GeneralStat
         colorScheme="orange"
         label={t("Обменников:", "Exchangers:")}
-        value="670"
+        value="140+"
         icon={<RiCopperCoinLine size="1.5rem" />}
       />
       <GeneralStat
         colorScheme="purple"
         label={t("Направлений:", "Directions:")}
-        value="24 450"
+        value="2 400+"
         icon={<RiExchange2Line size="1.5rem" />}
       />
       <GeneralStat
         colorScheme="cyan"
-        label={t("Курсов:", "Rates:")}
-        value="12 570 900"
+        label={t("Отзывов:", "Reviews:")}
+        value="680 000+"
         icon={<RiBarChartBoxLine size="1.5rem" />}
       />
     </HStack>

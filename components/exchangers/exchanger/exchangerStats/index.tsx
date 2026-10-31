@@ -13,10 +13,11 @@ type Props = {
   ratesTotal?: number | null;
   reserveTotal?: number | null | string;
   workingTime?: string | null;
+  aggregated?: { total: number; positive?: number; negative?: number } | null;
 };
 
-const ExchangerStats = ({ reviews, reviewCounts, reserveTotal, workingTime }: Props) => {
-  if (!reviews?.length && !reviewCounts && !reserveTotal && !workingTime) return <></>;
+const ExchangerStats = ({ reviews, reviewCounts, reserveTotal, workingTime, aggregated }: Props) => {
+  if (!reviews?.length && !reviewCounts && !aggregated?.total && !reserveTotal && !workingTime) return <></>;
 
   return (
     <>
@@ -29,7 +30,7 @@ const ExchangerStats = ({ reviews, reviewCounts, reserveTotal, workingTime }: Pr
         gap="4"
         px="2"
       >
-        <ReviewsStats reviews={reviews} counts={reviewCounts} />
+        <ReviewsStats reviews={reviews} counts={reviewCounts} aggregated={aggregated} />
         <ResponsiveText display={{ base: "none", lg: "flex" }}>
           •
         </ResponsiveText>

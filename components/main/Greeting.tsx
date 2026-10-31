@@ -24,8 +24,8 @@ const Greeting = () => {
         mb="0"
         title={t("Все обменники в одном месте", "All exchangers in one place")}
         subtitle={t(
-          "Поиск курсов обмена среди 1000+ обменников и p2p",
-          "Search exchange rates across 1000+ exchangers and p2p"
+          "Курсы 140+ обменников и p2p-мейкеров, отзывы с пяти мониторингов",
+          "Rates of 140+ exchangers and p2p makers, reviews from five monitorings"
         )}
       />
     </VStack>

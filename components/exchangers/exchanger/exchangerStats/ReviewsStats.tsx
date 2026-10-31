@@ -9,13 +9,29 @@ import { ResponsiveText } from "../../../../styles/theme/custom";
 import { IExchangerReview } from "../../../../types/exchanger";
 import { useT } from "../../../../services/i18n";
 
-// Exact totals (from the CMS) win over counting the (capped) list.
-const ReviewsStats = ({ reviews, counts }: { reviews?: IExchangerReview[] | null; counts?: { positive: number; neutral: number; negative: number } | null }) => {
+type Counts = { positive: number; neutral: number; negative: number };
+
+// The rating's totals across all monitorings win over our copied subset, which wins over counting the (capped) list.
+// Otherwise the header said «44» while the rating block said «592 on 3 platforms».
+const ReviewsStats = ({
+  reviews,
+  counts,
+  aggregated,
+}: {
+  reviews?: IExchangerReview[] | null;
+  counts?: Counts | null;
+  aggregated?: { total: number; positive?: number; negative?: number } | null;
+}) => {
   const t = useT();
-  if (!counts && (!reviews || !reviews.length)) return <></>;
-  const positive = counts ? counts.positive : reviews!.filter((r) => r.type === "positive").length;
-  const negative = counts ? counts.negative : reviews!.filter((r) => r.type === "negative").length;
-  const neutral = counts ? counts.neutral : reviews!.length - positive - negative;
+  const agg = aggregated && aggregated.total > 0 && aggregated.positive != null ? aggregated : null;
+  if (!agg && !counts && (!reviews || !reviews.length)) return <></>;
+  const positive = agg ? agg.positive! : counts ? counts.positive : reviews!.filter((r) => r.type === "positive").length;
+  const negative = agg ? agg.negative ?? 0 : counts ? counts.negative : reviews!.filter((r) => r.type === "negative").length;
+  const neutral = agg
+    ? Math.max(0, agg.total - positive - negative)
+    : counts
+      ? counts.neutral
+      : reviews!.length - positive - negative;
   if (positive + negative + neutral === 0) return <></>;
 
   return (
