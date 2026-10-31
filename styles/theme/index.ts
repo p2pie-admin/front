@@ -25,6 +25,10 @@ const fonts = {
 
 const styles = {
   global: (props: any) => ({
+    // Zoom is allowed (search engines flag a locked viewport); 16px inputs keep iOS from zooming in on focus.
+    "@media (max-width: 767px)": {
+      "input, select, textarea": { fontSize: "16px !important" },
+    },
     body: {
       bg: mode("bg.200", "bg.900")(props),
       color: "bg.100",

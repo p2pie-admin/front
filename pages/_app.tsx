@@ -14,6 +14,7 @@ import dynamic from "next/dynamic";
 import { useAppDispatch } from "../redux/hooks";
 import { setLoadingStatus } from "../redux/mainReducer";
 import ClickTracker from "../components/shared/ClickTracker";
+import ReviewPrompt from "../components/shared/ReviewPrompt";
 
 const RouteLoadingHandler = () => {
   const router = useRouter();
@@ -217,7 +218,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
       <Head>
         <meta
           name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+          content="width=device-width, initial-scale=1"
         />
       </Head>
       <ChakraProvider theme={theme}>
@@ -226,6 +227,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
           <Layout>
             <RouteLoadingHandler />
             <ClickTracker />
+            <ReviewPrompt />
             <RouteLoadingOverlay />
             <DefaultSeo {...seoConfig} />
             <Component {...pageProps} />

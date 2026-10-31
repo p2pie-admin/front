@@ -101,7 +101,8 @@ export const ResponsiveText = (props: any) => {
     variant: ITextVariant;
   } = props;
   const sizes = {
-    xs: ["0.65rem", "0.65rem", "xs", "sm"],
+    // 12px floor on phones: smaller text fails mobile-friendliness checks.
+    xs: ["xs", "xs", "xs", "sm"],
     sm: ["xs", "xs", "sm", "md"],
     md: ["sm", "sm", "md", "lg"],
     lg: ["md", "md", "lg", "xl"],
