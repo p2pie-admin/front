@@ -23,11 +23,12 @@ Disallow: /messages/
 Disallow: /notifications/
 Disallow: /search
 Disallow: /search/
-Disallow: /*?utm_*
-Disallow: /*?ref=*
-Disallow: /*?sort=*
-Disallow: /*?filter=*
-Disallow: /*?page=*
+Disallow: /*?*
+Disallow: /*?utm_
+Disallow: /*?ref=
+Disallow: /*?sort=
+Disallow: /*?filter=
+Disallow: /*?page=
 Disallow: /preview/
 Disallow: /draft/
 Disallow: /404
