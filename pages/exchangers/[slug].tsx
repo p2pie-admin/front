@@ -21,6 +21,7 @@ import { IPm } from "../../types/selector";
 import {
   loadArticleCodes,
   loadExchanger,
+  resolveExchangerAlias,
   loadExchangers,
   loadPms,
   TTL,
@@ -136,6 +137,15 @@ export async function getStaticProps(ctx: { params: { slug: string }; locale?: s
         useInternal: process.env.USE_INTERNAL,
         base: process.env.NEXT_PUBLIC_BASE,
       });
+      // A brand URL without a record of its own (/exchangers/exway while the record is `exway-io`) goes to the
+      // listed exchanger it means; 301 so the search demand lands on the real page.
+      const canonical = await resolveExchangerAlias(slug).catch(() => null);
+      if (canonical) {
+        return {
+          redirect: { destination: `/exchangers/${canonical}`, permanent: true },
+          revalidate: TTL.slow,
+        };
+      }
       // Expire the 404 (a slug requested before the record exists must not stick until a restart).
       return { notFound: true, revalidate: TTL.fast };
     }

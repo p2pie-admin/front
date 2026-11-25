@@ -268,6 +268,41 @@ export const loadExchanger = (slug: string) =>
     return exchanger;
   });
 
+// Brand URLs that have no record of their own. People search «exway обменник» and land on /exchangers/exway, while
+// the record is named after the domain (`exway-io`); GSC showed 515 impressions for that 404 (2026-11). Resolves a
+// missing slug to the one listed exchanger it clearly means, or null:
+//   same letters, other separators   pocketexchange / pocket_exchange -> pocket-exchange
+//   brand without the domain zone    exway -> exway-io, thegrail -> thegrail-exchange
+//   domain zone that the record lacks bitcash-io -> bitcash
+// Ambiguous matches (two candidates) resolve to nothing: a wrong redirect is worse than a 404.
+const DOMAIN_ZONES = new Set(
+  "com net org ru su io cc pro one me pw top by biz co is bz ws in to eu uk kz ua exchange money cash online site info app xyz vip club live moscow trade finance".split(
+    " ",
+  ),
+);
+export const resolveExchangerAlias = async (slug: string): Promise<string | null> => {
+  const wanted = String(slug || "").trim().toLowerCase();
+  const letters = (v: string) => v.replace(/[^a-z0-9]/g, "");
+  if (letters(wanted).length < 3) return null;
+  const list = await loadExchangers();
+  if (!Array.isArray(list)) return null;
+  const slugs = Array.from(
+    new Set(list.map((e) => exchangerNameToSlug(e?.name || "")).filter(Boolean)),
+  );
+  if (slugs.includes(wanted)) return null;
+  const zoneOf = (v: string) => {
+    const i = v.lastIndexOf("-");
+    return i > 0 && DOMAIN_ZONES.has(v.slice(i + 1)) ? v.slice(0, i) : null;
+  };
+  const hits = slugs.filter(
+    (candidate) =>
+      letters(candidate) === letters(wanted) ||
+      zoneOf(candidate) === wanted ||
+      zoneOf(wanted) === candidate,
+  );
+  return hits.length === 1 ? hits[0] : null;
+};
+
 export const loadExchangers = async () => {
   const [cmsExchangers] = (await Promise.all([
     cachedFetch("cms_exchangers", TTL.fast, () =>
