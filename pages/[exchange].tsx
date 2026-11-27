@@ -20,6 +20,7 @@ import {
   exchangeToSlugCity,
   findSimilarPmPairs,
   generateExchangeSeo,
+  isDirectionSlug,
 } from "../components/exchange/helper";
 import { addHeadersToSearchIndex, addPathsToSitemap } from "../cache/cache";
 import { IMassDirTextId } from "../types/mass";
@@ -55,6 +56,24 @@ const ExchangePage = (props: {
   return <Exchange {...props} />;
 };
 
+// Reference direction: the most liquid one on the site (100+ offers at any hour). When it has no offers either,
+// the backend has no rates at all (parser dead, allRatesID missing, server down), and an empty answer for some
+// other direction says nothing about that direction.
+const CANARY_DIR = "USDTTRC20_SBERRUB";
+const CANARY_TTL_MS = 60 * 1000;
+let backendCheck: { at: number; alive: boolean } | null = null;
+const backendHasRates = async (
+  parserFetcher: (slug: string) => Promise<unknown>,
+) => {
+  if (backendCheck && Date.now() - backendCheck.at < CANARY_TTL_MS) {
+    return backendCheck.alive;
+  }
+  const raw = await parserFetcher(`dir=${CANARY_DIR}/all/`);
+  const alive = Array.isArray(raw) && raw.length > 0;
+  backendCheck = { at: Date.now(), alive };
+  return alive;
+};
+
 // Offers for the direction, fetched server side so they land in the HTML.
 // Mirrors the client request in components/exchange/tv (same path, same city rule).
 const loadSsrRates = async ({
@@ -73,6 +92,17 @@ const loadSsrRates = async ({
     parserFetcher(`history/dir=${dir}?days=${HISTORY_DAYS}`),
   ]);
   const all = prepareSsrRates(raw, cityName);
+  // No offers came back. Either this direction really has none right now (then the page may be rendered empty
+  // and noindex), or the whole backend has no rates. The second case must be an error: getStaticProps throws,
+  // ISR keeps the last good HTML and retries on the next request. 2026-11-16…25 the parser hung, the server
+  // answered `[]` for everything and every direction page was regenerated with 0 offers and noindex for 9 days.
+  if (!all || !all.length) {
+    if (dir === CANARY_DIR || !(await backendHasRates(parserFetcher))) {
+      throw new Error(
+        `rates: the backend has no rates at all (asked ${dir}), keeping the last good page`,
+      );
+    }
+  }
   return {
     initialDirRates: all ? all.slice(0, SSR_RATES_LIMIT) : null,
     ratesTotal: all ? all.length : null,
@@ -91,6 +121,12 @@ export async function getStaticProps(ctx: {
   const locale = localeOf(ctx);
   try {
     const { exchange } = params;
+    // Not a direction slug (scanner junk like /.env or /wp-config.php, typos): 404 without touching the CMS or
+    // the server. Redis is off in prod, so every loader below is a live call; ~50 such requests in a minute made
+    // Strapi time out and healthy direction pages were cached as 404 (2026-11-26 twice, 2026-11-27).
+    if (!isDirectionSlug(exchange)) {
+      return { notFound: true, revalidate: TTL.slow };
+    }
     const [slug, cityParam] = exchangeToSlugCity(exchange);
 
     const isCash =
@@ -108,8 +144,7 @@ export async function getStaticProps(ctx: {
     const slugToCodes = getSlugToCodes(dirs, pms);
 
     if (!pms || !Array.isArray(pms)) {
-      console.error("[getStaticProps] 'pms' is missing or invalid.");
-      return { notFound: true, revalidate: TTL.instant };
+      throw new Error("pms: missing or invalid");
     }
 
     const dir = slugToCodes?.[slug];
@@ -219,9 +254,15 @@ export async function getStaticProps(ctx: {
       revalidate: TTL.fast,
     };
   } catch (e) {
-    // Upstream (server/cms) failed: a short-lived 404 is better than a blank page cached as 200.
-    console.error("[getStaticProps] exchange failed:", e);
-    return { notFound: true, revalidate: TTL.instant };
+    // Upstream (server / CMS) failed. Throw: during an ISR refresh Next keeps serving the last good HTML and retries
+    // on the next request; a page that was never generated answers 500, which crawlers treat as temporary.
+    // Returning notFound here cached a 404 over healthy pages for minutes (2026-10-14, 2026-11-26, 2026-11-27).
+    console.error(
+      "[getStaticProps] exchange failed:",
+      params?.exchange,
+      (e as Error)?.message || e,
+    );
+    throw e;
   }
 }
 //////////////////////////////////////////////////////////////////////////////

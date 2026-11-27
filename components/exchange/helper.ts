@@ -304,6 +304,15 @@ export const findSimilarPmPairs = (
     .slice(0, 11);
 };
 
+// A direction slug always looks like "<give>-to-<get>[-in-<city>]" (see pmsToSlug). pages/[exchange].tsx is the
+// catch-all for every unknown root path, so vulnerability scanners walking /.env, /wp-config.php, /backup.sh …
+// land there too. Such paths must be answered before any CMS / server call (see getStaticProps).
+const DIRECTION_SLUG = /^[^\s/]+-to-[^\s/]+$/;
+export const isDirectionSlug = (exchange: unknown): exchange is string =>
+  typeof exchange === "string" &&
+  exchange.length <= 160 &&
+  DIRECTION_SLUG.test(exchange);
+
 export const exchangeToSlugCity = (exchange: string) => {
   if (
     !exchange?.includes("-in-") ||
