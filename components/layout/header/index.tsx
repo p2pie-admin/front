@@ -39,7 +39,9 @@ const Header = () => {
       <HStack w={{ base: "100%", md: "888px" }} justifyContent="space-between">
         <Logo />
 
-        <HStack>
+        {/* minW=0: on a 375px phone a long city name must shrink (ellipsis) instead of pushing the
+            menu button off the screen and squeezing the logo. */}
+        <HStack minW="0" spacing={{ base: 1, sm: 2 }}>
           <CitySelector />
           <Language />
           <SwipeableDrawer />

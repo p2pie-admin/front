@@ -1,4 +1,4 @@
-import { Link as ChakraLink } from "@chakra-ui/react";
+import { Box, Link as ChakraLink } from "@chakra-ui/react";
 import { FaTelegramPlane } from "react-icons/fa";
 import { ResponsiveText } from "../../styles/theme/custom";
 import { cityChannel } from "./tgChannels";
@@ -17,7 +17,9 @@ const CityChannelLink = ({
   const channel = cityChannel(citySlug);
   if (!channel) return null;
   return (
-    <ResponsiveText size="sm" mt="3">
+    // ResponsiveText is nowrap by default: this line is ~410px, wider than a phone, and it used to
+    // stretch the whole page column past the viewport on city pages.
+    <ResponsiveText size="sm" mt="3" whiteSpace="normal">
       <ChakraLink
         href={`https://t.me/${channel}`}
         isExternal
@@ -29,7 +31,9 @@ const CityChannelLink = ({
         data-track="city-channel"
         data-track-label={channel}
       >
-        <FaTelegramPlane />
+        <Box as="span" display="inline-flex" flexShrink={0}>
+          <FaTelegramPlane />
+        </Box>
         {t(
           `Курсы${cityName ? ` ${cityName}` : ""} каждый день в Telegram: @${channel}`,
           `${cityName ? `${cityName} rates` : "Rates"} every day on Telegram: @${channel}`,

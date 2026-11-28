@@ -20,6 +20,7 @@ const Logo = () => {
       }}
       cursor="pointer"
       ml="2"
+      flexShrink={0}
     >
       <Box
         as="img"

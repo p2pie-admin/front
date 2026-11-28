@@ -50,7 +50,7 @@ const ShortOffers = ({
       <ResponsiveText variant="contrast" fontWeight="600">
         {t("Те же предложения таблицей", "The same offers as a table")}
       </ResponsiveText>
-      <ResponsiveText size="xs" variant="no_contrast" mb="-4">
+      <ResponsiveText size="xs" variant="no_contrast" mb="-4" whiteSpace="normal">
         {t(
           "Все предложения из списка выше, если так удобнее сравнивать",
           "All offers from the list above, if a table is easier to compare",

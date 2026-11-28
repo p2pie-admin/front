@@ -15,7 +15,7 @@ const Language = () => {
   };
 
   return (
-    <HStack spacing="0" mx="1" aria-label="Language / Язык">
+    <HStack spacing="0" mx="1" flexShrink={0} aria-label="Language / Язык">
       {LANGS.map((l, i) => (
         <HStack key={l} spacing="0">
           {i > 0 && (

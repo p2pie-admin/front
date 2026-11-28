@@ -61,7 +61,7 @@ const SwipeableDrawer = () => {
   };
 
   return (
-    <Box display={{ base: "block", xl: "none" }}>
+    <Box display={{ base: "block", xl: "none" }} flexShrink={0}>
       <NavButton handleClick={onOpen} icon={AiOutlineMenu} />
 
       <Drawer

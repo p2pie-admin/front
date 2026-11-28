@@ -257,6 +257,9 @@ const Exchange = ({
         <Box3D
           p="4"
           variant="no_contrast"
+          // Same reason as in Column: a grid item is min-width:auto, one long nowrap line inside
+          // (the city Telegram link) made the whole grid wider than the phone.
+          minW="0"
           gridColumn={{ base: "unset", lg: "1/3" }}
           gridRow={{ base: "3", lg: "2" }}
         >
